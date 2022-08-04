@@ -19,6 +19,7 @@ package com.android.incallui.maps.stub;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+
 import com.fissy.dialer.common.Assert;
 import com.android.incallui.maps.Maps;
 import dagger.Binds;
