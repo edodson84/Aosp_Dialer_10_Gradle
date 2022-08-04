@@ -19,6 +19,7 @@ package com.android.incallui.maps.impl;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+
 import com.android.incallui.maps.Maps;
 import javax.inject.Inject;
 
@@ -35,6 +36,6 @@ final class MapsImpl implements Maps {
   @Override
   @NonNull
   public Fragment createStaticMapFragment(@NonNull Location location) {
-    return StaticMapFragment.newInstance(location);
+    return null;
   }
 }
