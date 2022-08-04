@@ -1,0 +1,7 @@
+# Keep the annotation, classes, methods, and fields marked as UsedByReflection
+-keep class com.fissy.dialer.proguard.UsedByReflection
+-keep @com.fissy.dialer.proguard.UsedByReflection class *
+-keepclassmembers class * {
+    @com.fissy.dialer.proguard.UsedByReflection *;
+}
+-keep class android.support.design.widget.FloatingActionButton$* { *; }

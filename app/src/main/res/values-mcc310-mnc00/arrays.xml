@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="motorola_enabled_spn">
+        <item>Sprint</item>
+        <item>moto</item>
+    </string-array>
+</resources>

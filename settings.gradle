@@ -1,0 +1,5 @@
+include ':Backup'
+include ':RootComponentGenerator'
+include ':PhoneCommon'
+include ':app'
+rootProject.name = "Dialer_10"

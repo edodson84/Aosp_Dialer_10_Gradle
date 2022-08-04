@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="a11y_minutes">
+        <item quantity="other">dakika</item>
+        <item quantity="one">dakika</item>
+    </plurals>
+    <plurals name="a11y_new_call_log_entry_answered_call">
+        <item quantity="other">^1 arama, son cevaplanmış arama: ^2</item>
+        <item quantity="one">^1 cevaplanmış arama, arayan: ^2</item>
+    </plurals>
+    <plurals name="a11y_new_call_log_entry_blocked_call">
+        <item quantity="other">^1 arama, son engellenmiş arama: ^2</item>
+        <item quantity="one">^1 engellenmiş arama, arayan: ^2</item>
+    </plurals>
+    <plurals name="a11y_new_call_log_entry_missed_call">
+        <item quantity="other">^1 arama, son cevapsız arama: ^2</item>
+        <item quantity="one">^1 cevapsız arama, arayan: ^2</item>
+    </plurals>
+    <plurals name="a11y_new_call_log_entry_outgoing_call">
+        <item quantity="other">^1 arama, son giden arama: ^2</item>
+        <item quantity="one">^1 giden arama, aranan: ^2</item>
+    </plurals>
+    <plurals name="a11y_seconds">
+        <item quantity="other">saniye</item>
+        <item quantity="one">saniye</item>
+    </plurals>
+    <plurals name="delete_voicemails_confirmation_dialog_title">
+        <item quantity="other">&lt;b>Bu sesli mesajlar silinsin mi? &lt;/b></item>
+        <item quantity="one">&lt;b>Bu sesli mesaj silinsin mi? &lt;/b></item>
+    </plurals>
+    <plurals name="notification_voicemail_title">
+        <item quantity="other">%1$d Sesli Mesaj</item>
+        <item quantity="one">Sesli Mesaj</item>
+    </plurals>
+    <plurals name="tab_title_with_unread_items">
+        <item quantity="other">%1$s sekmesi. %2$d okunmamış öğe.</item>
+        <item quantity="one">%1$s sekmesi. %2$d okunmamış öğe.</item>
+    </plurals>
+</resources>

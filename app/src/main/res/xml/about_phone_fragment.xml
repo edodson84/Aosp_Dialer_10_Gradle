@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference android:persistent="false" android:title="@string/build_version_label" android:key="@string/build_version_key" />
+    <Preference android:persistent="false" android:title="@string/licenseActivityLabel" android:key="@string/open_source_licenses_key" android:summary="@string/open_source_license_detail_label" />
+    <Preference android:persistent="false" android:title="@string/privacy_policy_label" android:key="@string/privacy_policy_key">
+        <intent android:action="android.intent.action.VIEW" android:data="@string/privacy_policy_url" />
+    </Preference>
+    <Preference android:persistent="false" android:title="@string/terms_of_service_label" android:key="@string/terms_of_service_key">
+        <intent android:action="android.intent.action.VIEW" android:data="@string/terms_of_service_url" />
+    </Preference>
+</PreferenceScreen>

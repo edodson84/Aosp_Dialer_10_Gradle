@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notification_call_wifi_brand">[ŴĻÅÑ Çåļļ one two]</string>
+    <string name="notification_call_wifi_work_brand">[ŴĻÅÑ ŵöŕķ çåļļ one two three]</string>
+</resources>

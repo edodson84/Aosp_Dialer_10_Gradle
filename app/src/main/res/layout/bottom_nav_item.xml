@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.fissy.dialer.main.impl.bottomnav.BottomNavItem android:gravity="center" android:orientation="vertical" android:background="?android:selectableItemBackgroundBorderless" android:layout_width="wrap_content" android:layout_height="wrap_content" android:minWidth="80.0dip" android:minHeight="56.0dip"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <FrameLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
+        <ImageView android:id="@id/bottom_nav_item_image" android:layout_width="24.0dip" android:layout_height="24.0dip" android:layout_marginTop="8.0dip" />
+        <TextView android:textSize="12.0sp" android:textColor="?android:textColorPrimaryInverse" android:gravity="center" android:layout_gravity="end|center|top" android:id="@id/notification_badge" android:background="@drawable/notification_badge" android:paddingBottom="1.0dip" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="2.0dip" android:minWidth="20.0dip" android:minHeight="20.0dip" android:fontFamily="sans-serif-medium" android:paddingStart="6.0dip" android:paddingEnd="6.0dip" />
+    </FrameLayout>
+    <TextView android:textSize="12.0sp" android:gravity="center_horizontal" android:id="@id/bottom_nav_item_text" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="8.0dip" style="@style/Dialer.TextAppearance.Secondary" />
+</com.fissy.dialer.main.impl.bottomnav.BottomNavItem>

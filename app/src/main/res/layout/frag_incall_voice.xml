@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <RelativeLayout android:id="@id/incall_ui_container" android:fitsSystemWindows="true" android:clipChildren="false" android:clipToPadding="false" android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <LinearLayout android:gravity="center_horizontal" android:orientation="vertical" android:id="@id/incall_contact_grid" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="12.0dip">
+            <ImageView android:id="@id/contactgrid_avatar" android:layout_width="@dimen/incall_avatar_size" android:layout_height="@dimen/incall_avatar_size" android:layout_marginBottom="8.0dip" android:elevation="2.0dip" />
+            <include android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="@dimen/incall_window_margin_horizontal" android:layout_marginEnd="@dimen/incall_window_margin_horizontal" layout="@layout/incall_contactgrid_top_row" />
+            <com.android.incallui.autoresizetext.AutoResizeTextView android:textAppearance="@style/Dialer.Incall.TextAppearance.Large" android:id="@id/contactgrid_contact_name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="4.0dip" android:singleLine="true" android:layout_marginStart="@dimen/incall_window_margin_horizontal" android:layout_marginEnd="@dimen/incall_window_margin_horizontal" app:autoResizeText_minTextSize="28.0sp" />
+            <include android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="@dimen/incall_window_margin_horizontal" android:layout_marginEnd="@dimen/incall_window_margin_horizontal" layout="@layout/incall_contactgrid_bottom_row" />
+            <FrameLayout android:id="@id/incall_location_holder" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+            <include android:layout_width="fill_parent" android:layout_height="wrap_content" layout="@layout/device_number_row" />
+        </LinearLayout>
+        <com.fissy.dialer.widget.LockableViewPager android:id="@id/incall_pager" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_above="@id/incall_paginator" android:layout_below="@id/incall_contact_grid" android:layout_centerHorizontal="true" />
+        <com.android.incallui.incall.impl.InCallPaginator android:id="@id/incall_paginator" android:visibility="gone" android:layout_width="@dimen/paginator_width" android:layout_height="@dimen/paginator_height" android:layout_above="@id/incall_end_call" android:layout_centerHorizontal="true" />
+        <FrameLayout android:id="@id/incall_dialpad_container" android:clipChildren="false" android:clipToPadding="false" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_alignParentBottom="true" style="@style/DialpadContainer" />
+        <ImageButton android:id="@id/incall_end_call" android:layout_marginTop="16.0dip" android:layout_marginBottom="36.0dip" android:layout_alignParentBottom="true" android:layout_centerHorizontal="true" android:contentDescription="@string/incall_content_description_end_call" style="@style/Incall.Button.End" />
+    </RelativeLayout>
+    <FrameLayout android:layout_gravity="top" android:id="@id/incall_on_hold_banner" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+</FrameLayout>

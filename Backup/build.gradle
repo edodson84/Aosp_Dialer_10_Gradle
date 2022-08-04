@@ -1,0 +1,12 @@
+apply plugin: 'java-library'
+
+
+dependencies {
+    compileOnly files('libs/framework_10.jar')
+    implementation "com.android.support:appcompat-v7:${rootProject.ext.SUPPORT_VERSION}"
+    implementation 'com.google.guava:guava:23.0-android'
+}
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}

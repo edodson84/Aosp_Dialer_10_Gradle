@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <android.support.v7.widget.RecyclerView android:id="@id/recycler_view" android:background="?android:colorBackground" android:paddingBottom="@dimen/floating_action_button_list_bottom_padding" android:clipToPadding="false" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+    <com.fissy.dialer.contactsfragment.FastScroller android:id="@id/fast_scroller" android:visibility="gone" android:clipChildren="false" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginTop="8.0dip" android:layout_marginBottom="8.0dip">
+        <TextView android:textSize="48.0sp" android:textColor="?android:textColorPrimaryInverse" android:gravity="center" android:id="@id/fast_scroller_container" android:background="@drawable/fast_scroller_container_background" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_toLeftOf="@id/fast_scroller_scroll_bar" />
+        <ImageView android:id="@id/fast_scroller_scroll_bar" android:paddingRight="16.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="8.0dip" android:src="@drawable/fast_scroller_scroll_bar" android:layout_alignParentRight="true" />
+    </com.fissy.dialer.contactsfragment.FastScroller>
+    <include layout="@layout/header" />
+    <com.fissy.dialer.widget.EmptyContentView android:layout_gravity="center" android:id="@id/empty_list_view" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+</FrameLayout>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="a11y_minutes">
+        <item quantity="other">minuuttia</item>
+        <item quantity="one">minuutti</item>
+    </plurals>
+    <plurals name="a11y_new_call_log_entry_answered_call">
+        <item quantity="other">^1 vastattua puhelua, joista viimeisimmän soitti ^2</item>
+        <item quantity="one">^1 vastattu puhelu, jonka soitti ^2</item>
+    </plurals>
+    <plurals name="a11y_new_call_log_entry_blocked_call">
+        <item quantity="other">^1 estettyä puhelua, joista viimeisimmän soitti ^2</item>
+        <item quantity="one">^1 estetty puhelu, jonka soitti ^2</item>
+    </plurals>
+    <plurals name="a11y_new_call_log_entry_missed_call">
+        <item quantity="other">^1 vastaamatonta puhelua, joista viimeisimmän soitti ^2</item>
+        <item quantity="one">^1 vastaamaton puhelu, jonka soitti ^2</item>
+    </plurals>
+    <plurals name="a11y_new_call_log_entry_outgoing_call">
+        <item quantity="other">^1 lähtevää puhelua, joista viimeisimmän vastaanottaja oli ^2</item>
+        <item quantity="one">^1 lähtevä puhelu, jonka vastaanottaja oli ^2</item>
+    </plurals>
+    <plurals name="a11y_seconds">
+        <item quantity="other">sekuntia</item>
+        <item quantity="one">sekunti</item>
+    </plurals>
+    <plurals name="delete_voicemails_confirmation_dialog_title">
+        <item quantity="other">&lt;b>Poistetaanko nämä vastaajaviestit? &lt;/b></item>
+        <item quantity="one">&lt;b>Poistetaanko tämä vastaajaviesti? &lt;/b></item>
+    </plurals>
+    <plurals name="notification_voicemail_title">
+        <item quantity="other">%1$d vastaajaviestiä</item>
+        <item quantity="one">Vastaajaviesti</item>
+    </plurals>
+    <plurals name="tab_title_with_unread_items">
+        <item quantity="other">%1$s-välilehti. %2$d lukematonta kohdetta.</item>
+        <item quantity="one">%1$s-välilehti. %2$d lukematon kohde.</item>
+    </plurals>
+</resources>
