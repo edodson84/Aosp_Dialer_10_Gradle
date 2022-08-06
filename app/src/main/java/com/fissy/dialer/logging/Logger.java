@@ -17,33 +17,37 @@
 package com.fissy.dialer.logging;
 
 import android.content.Context;
+
 import java.util.Objects;
 
-/** Single entry point for all logging/analytics-related work for all user interactions. */
+/**
+ * Single entry point for all logging/analytics-related work for all user interactions.
+ */
 public class Logger {
 
-  private static LoggingBindings loggingBindings;
+    private static LoggingBindings loggingBindings;
 
-  private Logger() {}
-
-  public static LoggingBindings get(Context context) {
-    Objects.requireNonNull(context);
-    if (loggingBindings != null) {
-      return loggingBindings;
+    private Logger() {
     }
 
-    Context application = context.getApplicationContext();
-    if (application instanceof LoggingBindingsFactory) {
-      loggingBindings = ((LoggingBindingsFactory) application).newLoggingBindings();
+    public static LoggingBindings get(Context context) {
+        Objects.requireNonNull(context);
+        if (loggingBindings != null) {
+            return loggingBindings;
+        }
+
+        Context application = context.getApplicationContext();
+        if (application instanceof LoggingBindingsFactory) {
+            loggingBindings = ((LoggingBindingsFactory) application).newLoggingBindings();
+        }
+
+        if (loggingBindings == null) {
+            loggingBindings = new LoggingBindingsStub();
+        }
+        return loggingBindings;
     }
 
-    if (loggingBindings == null) {
-      loggingBindings = new LoggingBindingsStub();
+    public static void setForTesting(LoggingBindings loggingBindings) {
+        Logger.loggingBindings = loggingBindings;
     }
-    return loggingBindings;
-  }
-
-  public static void setForTesting(LoggingBindings loggingBindings) {
-    Logger.loggingBindings = loggingBindings;
-  }
 }

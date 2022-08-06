@@ -22,9 +22,11 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.provider.CallLog;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
+
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.telecom.TelecomUtil;
+
 import java.util.Objects;
 
 /**
@@ -34,88 +36,90 @@ import java.util.Objects;
  */
 public class DeleteBlockedCallTask extends AsyncTask<Void, Void, Long> {
 
-  public static final String IDENTIFIER = "DeleteBlockedCallTask";
+    public static final String IDENTIFIER = "DeleteBlockedCallTask";
 
-  // Try to identify if a call log entry corresponds to a number which was blocked. We match by
-  // by comparing its creation time to the time it was added in the InCallUi and seeing if they
-  // fall within a certain threshold.
-  private static final int MATCH_BLOCKED_CALL_THRESHOLD_MS = 3000;
+    // Try to identify if a call log entry corresponds to a number which was blocked. We match by
+    // by comparing its creation time to the time it was added in the InCallUi and seeing if they
+    // fall within a certain threshold.
+    private static final int MATCH_BLOCKED_CALL_THRESHOLD_MS = 3000;
 
-  private final Context context;
-  private final Listener listener;
-  private final String number;
-  private final long timeAddedMillis;
+    private final Context context;
+    private final Listener listener;
+    private final String number;
+    private final long timeAddedMillis;
 
-  /**
-   * Creates the task to delete the new {@link CallLog} entry from the given blocked number.
-   *
-   * @param number The blocked number.
-   * @param timeAddedMillis The time at which the call from the blocked number was placed.
-   */
-  public DeleteBlockedCallTask(
-      Context context, Listener listener, String number, long timeAddedMillis) {
-    this.context = Objects.requireNonNull(context);
-    this.listener = Objects.requireNonNull(listener);
-    this.number = number;
-    this.timeAddedMillis = timeAddedMillis;
-  }
-
-  @Override
-  public Long doInBackground(Void... params) {
-    if (ContextCompat.checkSelfPermission(context, permission.READ_CALL_LOG)
-            != PackageManager.PERMISSION_GRANTED
-        || ContextCompat.checkSelfPermission(context, permission.WRITE_CALL_LOG)
-            != PackageManager.PERMISSION_GRANTED) {
-      LogUtil.i("DeleteBlockedCallTask.doInBackground", "missing call log permissions");
-      return -1L;
+    /**
+     * Creates the task to delete the new {@link CallLog} entry from the given blocked number.
+     *
+     * @param number          The blocked number.
+     * @param timeAddedMillis The time at which the call from the blocked number was placed.
+     */
+    public DeleteBlockedCallTask(
+            Context context, Listener listener, String number, long timeAddedMillis) {
+        this.context = Objects.requireNonNull(context);
+        this.listener = Objects.requireNonNull(listener);
+        this.number = number;
+        this.timeAddedMillis = timeAddedMillis;
     }
 
-    // First, lookup the call log entry of the most recent call with this number.
-    try (Cursor cursor =
-        context
-            .getContentResolver()
-            .query(
-                TelecomUtil.getCallLogUri(context),
-                CallLogDeleteBlockedCallQuery.PROJECTION,
-                CallLog.Calls.NUMBER + "= ?",
-                new String[] {number},
-                CallLog.Calls.DATE + " DESC LIMIT 1")) {
-
-      // If match is found, delete this call log entry and return the call log entry id.
-      if (cursor != null && cursor.moveToFirst()) {
-        long creationTime = cursor.getLong(CallLogDeleteBlockedCallQuery.DATE_COLUMN_INDEX);
-        if (timeAddedMillis > creationTime
-            && timeAddedMillis - creationTime < MATCH_BLOCKED_CALL_THRESHOLD_MS) {
-          long callLogEntryId = cursor.getLong(CallLogDeleteBlockedCallQuery.ID_COLUMN_INDEX);
-          context
-              .getContentResolver()
-              .delete(
-                  TelecomUtil.getCallLogUri(context),
-                  CallLog.Calls._ID + " IN (" + callLogEntryId + ")",
-                  null);
-          return callLogEntryId;
+    @Override
+    public Long doInBackground(Void... params) {
+        if (ContextCompat.checkSelfPermission(context, permission.READ_CALL_LOG)
+                != PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(context, permission.WRITE_CALL_LOG)
+                != PackageManager.PERMISSION_GRANTED) {
+            LogUtil.i("DeleteBlockedCallTask.doInBackground", "missing call log permissions");
+            return -1L;
         }
-      }
+
+        // First, lookup the call log entry of the most recent call with this number.
+        try (Cursor cursor =
+                     context
+                             .getContentResolver()
+                             .query(
+                                     TelecomUtil.getCallLogUri(context),
+                                     CallLogDeleteBlockedCallQuery.PROJECTION,
+                                     CallLog.Calls.NUMBER + "= ?",
+                                     new String[]{number},
+                                     CallLog.Calls.DATE + " DESC LIMIT 1")) {
+
+            // If match is found, delete this call log entry and return the call log entry id.
+            if (cursor != null && cursor.moveToFirst()) {
+                long creationTime = cursor.getLong(CallLogDeleteBlockedCallQuery.DATE_COLUMN_INDEX);
+                if (timeAddedMillis > creationTime
+                        && timeAddedMillis - creationTime < MATCH_BLOCKED_CALL_THRESHOLD_MS) {
+                    long callLogEntryId = cursor.getLong(CallLogDeleteBlockedCallQuery.ID_COLUMN_INDEX);
+                    context
+                            .getContentResolver()
+                            .delete(
+                                    TelecomUtil.getCallLogUri(context),
+                                    CallLog.Calls._ID + " IN (" + callLogEntryId + ")",
+                                    null);
+                    return callLogEntryId;
+                }
+            }
+        }
+        return -1L;
     }
-    return -1L;
-  }
 
-  @Override
-  public void onPostExecute(Long callLogEntryId) {
-    listener.onDeleteBlockedCallTaskComplete(callLogEntryId >= 0);
-  }
+    @Override
+    public void onPostExecute(Long callLogEntryId) {
+        listener.onDeleteBlockedCallTaskComplete(callLogEntryId >= 0);
+    }
 
-  /** Callback invoked when delete is complete. */
-  public interface Listener {
+    /**
+     * Callback invoked when delete is complete.
+     */
+    public interface Listener {
 
-    void onDeleteBlockedCallTaskComplete(boolean didFindEntry);
-  }
+        void onDeleteBlockedCallTaskComplete(boolean didFindEntry);
+    }
 
-  private static class CallLogDeleteBlockedCallQuery {
+    private static class CallLogDeleteBlockedCallQuery {
 
-    static final String[] PROJECTION = new String[] {CallLog.Calls._ID, CallLog.Calls.DATE};
+        static final String[] PROJECTION = new String[]{CallLog.Calls._ID, CallLog.Calls.DATE};
 
-    static final int ID_COLUMN_INDEX = 0;
-    static final int DATE_COLUMN_INDEX = 1;
-  }
+        static final int ID_COLUMN_INDEX = 0;
+        static final int DATE_COLUMN_INDEX = 1;
+    }
 }

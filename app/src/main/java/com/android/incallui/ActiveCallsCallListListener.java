@@ -17,57 +17,67 @@
 package com.android.incallui;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import com.fissy.dialer.activecalls.ActiveCallInfo;
-import com.fissy.dialer.activecalls.ActiveCallsComponent;
+import androidx.annotation.NonNull;
+
 import com.android.incallui.call.CallList;
 import com.android.incallui.call.DialerCall;
 import com.android.incallui.call.state.DialerCallState;
+import com.fissy.dialer.activecalls.ActiveCallInfo;
+import com.fissy.dialer.activecalls.ActiveCallsComponent;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 
-/** Updates {@link com.fissy.dialer.activecalls.ActiveCalls} */
+/**
+ * Updates {@link com.fissy.dialer.activecalls.ActiveCalls}
+ */
 @SuppressWarnings("Guava")
 public class ActiveCallsCallListListener implements CallList.Listener {
 
-  private final Context appContext;
+    private final Context appContext;
 
-  ActiveCallsCallListListener(Context appContext) {
-    this.appContext = appContext;
-  }
-
-  @Override
-  public void onIncomingCall(DialerCall call) {}
-
-  @Override
-  public void onUpgradeToVideo(DialerCall call) {}
-
-  @Override
-  public void onSessionModificationStateChange(DialerCall call) {}
-
-  @Override
-  public void onCallListChange(CallList callList) {
-    ImmutableList.Builder<ActiveCallInfo> activeCalls = ImmutableList.builder();
-    for (DialerCall call : callList.getAllCalls()) {
-      if (call.getState() != DialerCallState.DISCONNECTED && call.getAccountHandle() != null) {
-        activeCalls.add(
-            ActiveCallInfo.builder()
-                .setPhoneAccountHandle(Optional.of(call.getAccountHandle()))
-                .build());
-      }
+    ActiveCallsCallListListener(Context appContext) {
+        this.appContext = appContext;
     }
-    ActiveCallsComponent.get(appContext).activeCalls().setActiveCalls(activeCalls.build());
-  }
 
-  @Override
-  public void onDisconnect(DialerCall call) {}
+    @Override
+    public void onIncomingCall(DialerCall call) {
+    }
 
-  @Override
-  public void onWiFiToLteHandover(DialerCall call) {}
+    @Override
+    public void onUpgradeToVideo(DialerCall call) {
+    }
 
-  @Override
-  public void onHandoverToWifiFailed(DialerCall call) {}
+    @Override
+    public void onSessionModificationStateChange(DialerCall call) {
+    }
 
-  @Override
-  public void onInternationalCallOnWifi(@NonNull DialerCall call) {}
+    @Override
+    public void onCallListChange(CallList callList) {
+        ImmutableList.Builder<ActiveCallInfo> activeCalls = ImmutableList.builder();
+        for (DialerCall call : callList.getAllCalls()) {
+            if (call.getState() != DialerCallState.DISCONNECTED && call.getAccountHandle() != null) {
+                activeCalls.add(
+                        ActiveCallInfo.builder()
+                                .setPhoneAccountHandle(Optional.of(call.getAccountHandle()))
+                                .build());
+            }
+        }
+        ActiveCallsComponent.get(appContext).activeCalls().setActiveCalls(activeCalls.build());
+    }
+
+    @Override
+    public void onDisconnect(DialerCall call) {
+    }
+
+    @Override
+    public void onWiFiToLteHandover(DialerCall call) {
+    }
+
+    @Override
+    public void onHandoverToWifiFailed(DialerCall call) {
+    }
+
+    @Override
+    public void onInternationalCallOnWifi(@NonNull DialerCall call) {
+    }
 }

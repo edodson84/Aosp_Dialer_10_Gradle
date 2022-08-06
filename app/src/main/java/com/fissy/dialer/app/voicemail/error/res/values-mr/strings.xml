@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- 
+<?xml version="1.0" encoding="UTF-8"?><!--
   ~ Copyright (C) 2016 The Android Open Source Project
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,8 +14,7 @@
   ~ limitations under the License
    -->
 
-<resources xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="voicemail_error_activating_title" msgid="2428457130578359186">"दृश्‍यमान व्हॉइसमेल सक्रिय करीत आहे"</string>
     <string name="voicemail_error_activating_message" msgid="7157030596259443393">"व्हिज्युअल व्हॉइसमेल पूर्णपणे सक्रिय होईपर्यंत आपल्याला व्हॉइसमेल सूचना प्राप्त होऊ शकत नाहीत. व्हॉइसमेल पूर्णपणे सक्रिय होईपर्यंत नवीन संदेश पुनर्प्राप्त करण्यासाठी व्हॉइसमेल बोलवा."</string>
     <string name="voicemail_error_not_activate_no_signal_title" msgid="742273366199085615">"दृश्‍यमान व्हॉइसमेल सक्रिय करू शकत नाही"</string>

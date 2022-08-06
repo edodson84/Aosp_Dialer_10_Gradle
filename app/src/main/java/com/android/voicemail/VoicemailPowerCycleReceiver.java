@@ -19,20 +19,23 @@ package com.android.voicemail;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+
 import com.fissy.dialer.common.Assert;
 
-/** Receives {@link Intent#ACTION_BOOT_COMPLETED} and {@link Intent#ACTION_SHUTDOWN} */
+/**
+ * Receives {@link Intent#ACTION_BOOT_COMPLETED} and {@link Intent#ACTION_SHUTDOWN}
+ */
 public class VoicemailPowerCycleReceiver extends BroadcastReceiver {
 
-  @Override
-  public void onReceive(Context context, Intent intent) {
-    VoicemailClient voicemailClient = VoicemailComponent.get(context).getVoicemailClient();
-    if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
-      voicemailClient.onBoot(context);
-    } else if (Intent.ACTION_SHUTDOWN.equals(intent.getAction())) {
-      voicemailClient.onShutdown(context);
-    } else {
-      throw Assert.createAssertionFailException("unexpected action: " + intent.getAction());
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        VoicemailClient voicemailClient = VoicemailComponent.get(context).getVoicemailClient();
+        if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
+            voicemailClient.onBoot(context);
+        } else if (Intent.ACTION_SHUTDOWN.equals(intent.getAction())) {
+            voicemailClient.onShutdown(context);
+        } else {
+            throw Assert.createAssertionFailException("unexpected action: " + intent.getAction());
+        }
     }
-  }
 }

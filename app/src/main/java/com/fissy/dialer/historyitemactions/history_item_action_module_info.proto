@@ -7,7 +7,7 @@ option optimize_for = LITE_RUNTIME;
 
 package com.fissy.dialer.historyitemactions;
 
-import "java/com/android/dialer/logging/contact_source.proto";
+import "java/com/fissy/dialer/logging/contact_source.proto";
 
 // Contains information needed to construct items (modules) in a bottom sheet.
 // Next ID: 17

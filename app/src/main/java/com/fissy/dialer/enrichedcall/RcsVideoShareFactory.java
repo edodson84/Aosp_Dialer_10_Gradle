@@ -16,16 +16,19 @@
 
 package com.fissy.dialer.enrichedcall;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
+
 import com.android.incallui.videotech.VideoTech;
 import com.android.incallui.videotech.VideoTech.VideoTechListener;
 
-/** Interface for creating new RCS video tech instances. */
+/**
+ * Interface for creating new RCS video tech instances.
+ */
 public interface RcsVideoShareFactory {
 
-  @NonNull
-  VideoTech newRcsVideoShare(
-      @NonNull EnrichedCallManager enrichedCallManager,
-      @NonNull VideoTechListener videoTechListener,
-      @NonNull String number);
+    @NonNull
+    VideoTech newRcsVideoShare(
+            @NonNull EnrichedCallManager enrichedCallManager,
+            @NonNull VideoTechListener videoTechListener,
+            @NonNull String number);
 }

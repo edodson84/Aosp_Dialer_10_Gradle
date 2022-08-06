@@ -27,38 +27,38 @@ import android.content.Intent;
  */
 public class MainComponent {
 
-  public static final String EXTRA_CLEAR_NEW_VOICEMAILS = "EXTRA_CLEAR_NEW_VOICEMAILS";
+    public static final String EXTRA_CLEAR_NEW_VOICEMAILS = "EXTRA_CLEAR_NEW_VOICEMAILS";
 
-  /**
-   * @param context Context of the application package implementing MainActivity class.
-   * @return intent for MainActivity.class
-   */
-  public static Intent getIntent(Context context) {
-    Intent intent = new Intent();
-    intent.setComponent(new ComponentName(context, getComponentName()));
-    intent.setAction(Intent.ACTION_VIEW);
-    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    return intent;
-  }
+    /**
+     * @param context Context of the application package implementing MainActivity class.
+     * @return intent for MainActivity.class
+     */
+    public static Intent getIntent(Context context) {
+        Intent intent = new Intent();
+        intent.setComponent(new ComponentName(context, getComponentName()));
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        return intent;
+    }
 
-  public static Intent getShowCallLogIntent(Context context) {
-    Intent intent = new Intent();
-    intent.setComponent(new ComponentName(context, getComponentName()));
-    intent.setAction("ACTION_SHOW_TAB");
-    intent.putExtra("EXTRA_SHOW_TAB", 1);
-    return intent;
-  }
+    public static Intent getShowCallLogIntent(Context context) {
+        Intent intent = new Intent();
+        intent.setComponent(new ComponentName(context, getComponentName()));
+        intent.setAction("ACTION_SHOW_TAB");
+        intent.putExtra("EXTRA_SHOW_TAB", 1);
+        return intent;
+    }
 
-  public static Intent getShowVoicemailIntent(Context context) {
-    Intent intent = new Intent();
-    intent.setComponent(new ComponentName(context, getComponentName()));
-    intent.setAction("ACTION_SHOW_TAB");
-    intent.putExtra("EXTRA_SHOW_TAB", 3);
-    intent.putExtra(EXTRA_CLEAR_NEW_VOICEMAILS, true);
-    return intent;
-  }
+    public static Intent getShowVoicemailIntent(Context context) {
+        Intent intent = new Intent();
+        intent.setComponent(new ComponentName(context, getComponentName()));
+        intent.setAction("ACTION_SHOW_TAB");
+        intent.putExtra("EXTRA_SHOW_TAB", 3);
+        intent.putExtra(EXTRA_CLEAR_NEW_VOICEMAILS, true);
+        return intent;
+    }
 
-  private static String getComponentName() {
-    return "com.fissy.dialer.app.DialtactsActivity";
-  }
+    private static String getComponentName() {
+        return "com.fissy.dialer.app.DialtactsActivity";
+    }
 }

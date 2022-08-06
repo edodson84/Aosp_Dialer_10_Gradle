@@ -16,38 +16,40 @@
 
 package com.android.incallui.incall.protocol;
 
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import android.view.accessibility.AccessibilityEvent;
 
-/** Interface for the call card module. */
+/**
+ * Interface for the call card module.
+ */
 public interface InCallScreen {
 
-  void setPrimary(@NonNull PrimaryInfo primaryInfo);
+    void setPrimary(@NonNull PrimaryInfo primaryInfo);
 
-  void setSecondary(@NonNull SecondaryInfo secondaryInfo);
+    void setSecondary(@NonNull SecondaryInfo secondaryInfo);
 
-  void setCallState(@NonNull PrimaryCallState primaryCallState);
+    void setCallState(@NonNull PrimaryCallState primaryCallState);
 
-  void setEndCallButtonEnabled(boolean enabled, boolean animate);
+    void setEndCallButtonEnabled(boolean enabled, boolean animate);
 
-  void showManageConferenceCallButton(boolean visible);
+    void showManageConferenceCallButton(boolean visible);
 
-  boolean isManageConferenceVisible();
+    boolean isManageConferenceVisible();
 
-  void dispatchPopulateAccessibilityEvent(AccessibilityEvent event);
+    void dispatchPopulateAccessibilityEvent(AccessibilityEvent event);
 
-  void showNoteSentToast();
+    void showNoteSentToast();
 
-  void updateInCallScreenColors();
+    void updateInCallScreenColors();
 
-  void onInCallScreenDialpadVisibilityChange(boolean isShowing);
+    void onInCallScreenDialpadVisibilityChange(boolean isShowing);
 
-  int getAnswerAndDialpadContainerResourceId();
+    int getAnswerAndDialpadContainerResourceId();
 
-  void showLocationUi(Fragment locationUi);
+    void showLocationUi(Fragment locationUi);
 
-  boolean isShowingLocationUi();
+    boolean isShowingLocationUi();
 
-  Fragment getInCallScreenFragment();
+    Fragment getInCallScreenFragment();
 }

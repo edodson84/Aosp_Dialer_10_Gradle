@@ -17,7 +17,7 @@
 package com.fissy.dialer.speeddial;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -32,72 +32,78 @@ import com.fissy.dialer.speeddial.database.SpeedDialEntry.Channel;
 import com.fissy.dialer.speeddial.loader.SpeedDialUiItem;
 import com.fissy.dialer.widget.ContactPhotoView;
 
-/** ViewHolder for displaying suggested contacts in {@link SpeedDialFragment}. */
+/**
+ * ViewHolder for displaying suggested contacts in {@link SpeedDialFragment}.
+ */
 public class SuggestionViewHolder extends RecyclerView.ViewHolder implements OnClickListener {
 
-  private final SuggestedContactsListener listener;
+    private final SuggestedContactsListener listener;
 
-  private final ContactPhotoView photoView;
-  private final TextView nameOrNumberView;
-  private final TextView numberView;
+    private final ContactPhotoView photoView;
+    private final TextView nameOrNumberView;
+    private final TextView numberView;
 
-  private SpeedDialUiItem speedDialUiItem;
+    private SpeedDialUiItem speedDialUiItem;
 
-  SuggestionViewHolder(View view, SuggestedContactsListener listener) {
-    super(view);
-    photoView = view.findViewById(R.id.avatar);
-    nameOrNumberView = view.findViewById(R.id.name);
-    numberView = view.findViewById(R.id.number);
-    itemView.setOnClickListener(this);
-    view.findViewById(R.id.overflow).setOnClickListener(this);
-    this.listener = listener;
-  }
-
-  public void bind(Context context, SpeedDialUiItem speedDialUiItem) {
-    Assert.isNotNull(speedDialUiItem.defaultChannel());
-    this.speedDialUiItem = speedDialUiItem;
-    String number =
-        PhoneNumberHelper.formatNumber(
-            context,
-            speedDialUiItem.defaultChannel().number(),
-            GeoUtil.getCurrentCountryIso(context));
-
-    String label = speedDialUiItem.defaultChannel().label();
-    String secondaryInfo =
-        TextUtils.isEmpty(label)
-            ? number
-            : context.getString(R.string.call_subject_type_and_number, label, number);
-
-    nameOrNumberView.setText(speedDialUiItem.name());
-    numberView.setText(secondaryInfo);
-
-    photoView.setPhoto(speedDialUiItem.getPhotoInfo());
-  }
-
-  @Override
-  public void onClick(View v) {
-    if (v.getId() == R.id.overflow) {
-      listener.onOverFlowMenuClicked(speedDialUiItem, getHeaderInfo());
-    } else {
-      listener.onRowClicked(speedDialUiItem.defaultChannel());
+    SuggestionViewHolder(View view, SuggestedContactsListener listener) {
+        super(view);
+        photoView = view.findViewById(R.id.avatar);
+        nameOrNumberView = view.findViewById(R.id.name);
+        numberView = view.findViewById(R.id.number);
+        itemView.setOnClickListener(this);
+        view.findViewById(R.id.overflow).setOnClickListener(this);
+        this.listener = listener;
     }
-  }
 
-  private HistoryItemBottomSheetHeaderInfo getHeaderInfo() {
-    return HistoryItemBottomSheetHeaderInfo.newBuilder()
-        .setPhotoInfo(speedDialUiItem.getPhotoInfo())
-        .setPrimaryText(nameOrNumberView.getText().toString())
-        .setSecondaryText(numberView.getText().toString())
-        .build();
-  }
+    public void bind(Context context, SpeedDialUiItem speedDialUiItem) {
+        Assert.isNotNull(speedDialUiItem.defaultChannel());
+        this.speedDialUiItem = speedDialUiItem;
+        String number =
+                PhoneNumberHelper.formatNumber(
+                        context,
+                        speedDialUiItem.defaultChannel().number(),
+                        GeoUtil.getCurrentCountryIso(context));
 
-  /** Listener/Callback for {@link SuggestionViewHolder} parents. */
-  public interface SuggestedContactsListener {
+        String label = speedDialUiItem.defaultChannel().label();
+        String secondaryInfo =
+                TextUtils.isEmpty(label)
+                        ? number
+                        : context.getString(R.string.call_subject_type_and_number, label, number);
 
-    void onOverFlowMenuClicked(
-        SpeedDialUiItem speedDialUiItem, HistoryItemBottomSheetHeaderInfo headerInfo);
+        nameOrNumberView.setText(speedDialUiItem.name());
+        numberView.setText(secondaryInfo);
 
-    /** Called when a suggested contact is clicked. */
-    void onRowClicked(Channel channel);
-  }
+        photoView.setPhoto(speedDialUiItem.getPhotoInfo());
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.overflow) {
+            listener.onOverFlowMenuClicked(speedDialUiItem, getHeaderInfo());
+        } else {
+            listener.onRowClicked(speedDialUiItem.defaultChannel());
+        }
+    }
+
+    private HistoryItemBottomSheetHeaderInfo getHeaderInfo() {
+        return HistoryItemBottomSheetHeaderInfo.newBuilder()
+                .setPhotoInfo(speedDialUiItem.getPhotoInfo())
+                .setPrimaryText(nameOrNumberView.getText().toString())
+                .setSecondaryText(numberView.getText().toString())
+                .build();
+    }
+
+    /**
+     * Listener/Callback for {@link SuggestionViewHolder} parents.
+     */
+    public interface SuggestedContactsListener {
+
+        void onOverFlowMenuClicked(
+                SpeedDialUiItem speedDialUiItem, HistoryItemBottomSheetHeaderInfo headerInfo);
+
+        /**
+         * Called when a suggested contact is clicked.
+         */
+        void onRowClicked(Channel channel);
+    }
 }

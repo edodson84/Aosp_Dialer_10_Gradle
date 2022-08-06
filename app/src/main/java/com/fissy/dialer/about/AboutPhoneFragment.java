@@ -26,41 +26,43 @@ import android.text.TextUtils;
 
 import com.fissy.dialer.R;
 
-/** The fragment for information about the Phone App */
+/**
+ * The fragment for information about the Phone App
+ */
 public class AboutPhoneFragment extends PreferenceFragment {
 
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    addPreferencesFromResource(R.xml.about_phone_fragment);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        addPreferencesFromResource(R.xml.about_phone_fragment);
 
-    // We set the intent here, instead of in XML, to avoid specifying a target package, which
-    // differs between AOSP and the GoogleDialer.
-    Intent openSourceActivity =
-        new Intent(getActivity().getApplicationContext(), LicenseMenuActivity.class);
-    findPreference(getString(R.string.open_source_licenses_key)).setIntent(openSourceActivity);
-    populateBuildVersion();
-  }
-
-  private void populateBuildVersion() {
-    Preference buildVersion = findPreference(getResources().getString(R.string.build_version_key));
-    String versionName = getVersionName();
-    if (!TextUtils.isEmpty(versionName)) {
-      buildVersion.setSummary(versionName);
+        // We set the intent here, instead of in XML, to avoid specifying a target package, which
+        // differs between AOSP and the GoogleDialer.
+        Intent openSourceActivity =
+                new Intent(getActivity().getApplicationContext(), LicenseMenuActivity.class);
+        findPreference(getString(R.string.open_source_licenses_key)).setIntent(openSourceActivity);
+        populateBuildVersion();
     }
-  }
 
-  private String getVersionName() {
-    Context context = getContext();
-    try {
-      return context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionName;
-    } catch (NameNotFoundException e) {
-      return "";
+    private void populateBuildVersion() {
+        Preference buildVersion = findPreference(getResources().getString(R.string.build_version_key));
+        String versionName = getVersionName();
+        if (!TextUtils.isEmpty(versionName)) {
+            buildVersion.setSummary(versionName);
+        }
     }
-  }
 
-  @Override
-  public Context getContext() {
-    return getActivity();
-  }
+    private String getVersionName() {
+        Context context = getContext();
+        try {
+            return context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionName;
+        } catch (NameNotFoundException e) {
+            return "";
+        }
+    }
+
+    @Override
+    public Context getContext() {
+        return getActivity();
+    }
 }

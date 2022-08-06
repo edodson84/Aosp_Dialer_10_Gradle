@@ -17,9 +17,13 @@ package com.android.voicemail.impl.mail.internet;
 
 import android.util.Base64;
 import android.util.Base64OutputStream;
+
 import com.android.voicemail.impl.mail.Body;
 import com.android.voicemail.impl.mail.MessagingException;
 import com.android.voicemail.impl.mail.TempDirectory;
+
+import org.apache.commons.io.IOUtils;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -27,7 +31,6 @@ import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import org.apache.commons.io.IOUtils;
 
 /**
  * A Body that is backed by a temp file. The Body exposes a getOutputStream method that allows the
@@ -36,52 +39,52 @@ import org.apache.commons.io.IOUtils;
  * closed the file is deleted and the Body should be considered disposed of.
  */
 public class BinaryTempFileBody implements Body {
-  private File file;
+    private File file;
 
-  /**
-   * An alternate way to put data into a BinaryTempFileBody is to simply supply an already- created
-   * file. Note that this file will be deleted after it is read.
-   *
-   * @param filePath The file containing the data to be stored on disk temporarily
-   */
-  public void setFile(String filePath) {
-    file = new File(filePath);
-  }
-
-  public OutputStream getOutputStream() throws IOException {
-    file = File.createTempFile("body", null, TempDirectory.getTempDirectory());
-    file.deleteOnExit();
-    return new FileOutputStream(file);
-  }
-
-  @Override
-  public InputStream getInputStream() throws MessagingException {
-    try {
-      return new BinaryTempFileBodyInputStream(new FileInputStream(file));
-    } catch (IOException ioe) {
-      throw new MessagingException("Unable to open body", ioe);
+    /**
+     * An alternate way to put data into a BinaryTempFileBody is to simply supply an already- created
+     * file. Note that this file will be deleted after it is read.
+     *
+     * @param filePath The file containing the data to be stored on disk temporarily
+     */
+    public void setFile(String filePath) {
+        file = new File(filePath);
     }
-  }
 
-  @Override
-  public void writeTo(OutputStream out) throws IOException, MessagingException {
-    InputStream in = getInputStream();
-    Base64OutputStream base64Out = new Base64OutputStream(out, Base64.CRLF | Base64.NO_CLOSE);
-    IOUtils.copy(in, base64Out);
-    base64Out.close();
-    file.delete();
-    in.close();
-  }
-
-  class BinaryTempFileBodyInputStream extends FilterInputStream {
-    public BinaryTempFileBodyInputStream(InputStream in) {
-      super(in);
+    public OutputStream getOutputStream() throws IOException {
+        file = File.createTempFile("body", null, TempDirectory.getTempDirectory());
+        file.deleteOnExit();
+        return new FileOutputStream(file);
     }
 
     @Override
-    public void close() throws IOException {
-      super.close();
-      file.delete();
+    public InputStream getInputStream() throws MessagingException {
+        try {
+            return new BinaryTempFileBodyInputStream(new FileInputStream(file));
+        } catch (IOException ioe) {
+            throw new MessagingException("Unable to open body", ioe);
+        }
     }
-  }
+
+    @Override
+    public void writeTo(OutputStream out) throws IOException, MessagingException {
+        InputStream in = getInputStream();
+        Base64OutputStream base64Out = new Base64OutputStream(out, Base64.CRLF | Base64.NO_CLOSE);
+        IOUtils.copy(in, base64Out);
+        base64Out.close();
+        file.delete();
+        in.close();
+    }
+
+    class BinaryTempFileBodyInputStream extends FilterInputStream {
+        public BinaryTempFileBodyInputStream(InputStream in) {
+            super(in);
+        }
+
+        @Override
+        public void close() throws IOException {
+            super.close();
+            file.delete();
+        }
+    }
 }

@@ -1,11 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout android:orientation="vertical" android:id="@id/dialtacts_mainlayout" android:background="?android:colorBackground" android:focusable="true" android:focusableInTouchMode="true" android:clipChildren="false" android:clipToPadding="false" android:layout_width="fill_parent" android:layout_height="fill_parent"
-  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
-    <FrameLayout android:id="@id/dialtacts_container" android:clipChildren="false" android:layout_width="fill_parent" android:layout_height="fill_parent">
-        <FrameLayout android:id="@id/dialtacts_frame" android:clipChildren="false" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@id/dialtacts_mainlayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="?android:colorBackground"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@id/dialtacts_container"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:clipChildren="false">
+
+        <FrameLayout
+            android:id="@id/dialtacts_frame"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:clipChildren="false" />
     </FrameLayout>
-    <android.support.design.widget.FloatingActionButton android:layout_gravity="bottom|center" android:id="@id/floating_action_button" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="@dimen/floating_action_button_margin_bottom" android:src="@drawable/quantum_ic_dialpad_white_24" android:contentDescription="@string/action_menu_dialpad_button" app:backgroundTint="?android:colorAccent" app:elevation="@dimen/floating_action_button_translation_z" />
-    <FrameLayout android:id="@id/activity_overlay" android:layout_width="fill_parent" android:layout_height="fill_parent">
-        <ImageView android:id="@id/contact_tile_drag_shadow_overlay" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:importantForAccessibility="no" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@id/floating_action_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="@dimen/floating_action_button_margin_bottom"
+        android:contentDescription="@string/action_menu_dialpad_button"
+        android:src="@drawable/quantum_ic_dialpad_white_24"
+        app:backgroundTint="?android:colorAccent"
+        app:elevation="@dimen/floating_action_button_translation_z" />
+
+    <FrameLayout
+        android:id="@id/activity_overlay"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <ImageView
+            android:id="@id/contact_tile_drag_shadow_overlay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:importantForAccessibility="no"
+            android:visibility="gone" />
     </FrameLayout>
-</android.support.design.widget.CoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

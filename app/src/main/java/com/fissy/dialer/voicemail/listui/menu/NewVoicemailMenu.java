@@ -18,19 +18,24 @@ package com.fissy.dialer.voicemail.listui.menu;
 
 import android.content.Context;
 import android.view.View;
+
 import com.fissy.dialer.historyitemactions.HistoryItemActionBottomSheet;
 import com.fissy.dialer.voicemail.model.VoicemailEntry;
 
-/** Handles configuration of the bottom sheet menus for voicemail entries. */
+/**
+ * Handles configuration of the bottom sheet menus for voicemail entries.
+ */
 public final class NewVoicemailMenu {
 
-  /** Creates and returns the OnClickListener which opens the menu for the provided row. */
-  public static View.OnClickListener createOnClickListener(
-      Context context, VoicemailEntry voicemailEntry) {
-    return (view) ->
-        HistoryItemActionBottomSheet.show(
-            context,
-            BottomSheetHeader.fromVoicemailEntry(voicemailEntry),
-            Modules.fromVoicemailEntry(context, voicemailEntry));
-  }
+    /**
+     * Creates and returns the OnClickListener which opens the menu for the provided row.
+     */
+    public static View.OnClickListener createOnClickListener(
+            Context context, VoicemailEntry voicemailEntry) {
+        return (view) ->
+                HistoryItemActionBottomSheet.show(
+                        context,
+                        BottomSheetHeader.fromVoicemailEntry(voicemailEntry),
+                        Modules.fromVoicemailEntry(context, voicemailEntry));
+    }
 }

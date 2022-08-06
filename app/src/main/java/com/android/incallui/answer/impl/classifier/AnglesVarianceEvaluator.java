@@ -17,26 +17,26 @@
 package com.android.incallui.answer.impl.classifier;
 
 class AnglesVarianceEvaluator {
-  public static float evaluate(float value) {
-    float evaluation = 0.0f;
-    if (value > 0.05) {
-      evaluation++;
+    public static float evaluate(float value) {
+        float evaluation = 0.0f;
+        if (value > 0.05) {
+            evaluation++;
+        }
+        if (value > 0.10) {
+            evaluation++;
+        }
+        if (value > 0.20) {
+            evaluation++;
+        }
+        if (value > 0.40) {
+            evaluation++;
+        }
+        if (value > 0.80) {
+            evaluation++;
+        }
+        if (value > 1.50) {
+            evaluation++;
+        }
+        return evaluation;
     }
-    if (value > 0.10) {
-      evaluation++;
-    }
-    if (value > 0.20) {
-      evaluation++;
-    }
-    if (value > 0.40) {
-      evaluation++;
-    }
-    if (value > 0.80) {
-      evaluation++;
-    }
-    if (value > 1.50) {
-      evaluation++;
-    }
-    return evaluation;
-  }
 }

@@ -17,27 +17,33 @@
 package com.fissy.dialer.promotion;
 
 import android.content.Context;
+
 import com.fissy.dialer.inject.HasRootComponent;
 import com.fissy.dialer.inject.IncludeInDialerRoot;
 import com.google.common.collect.ImmutableList;
+
 import dagger.Subcomponent;
 
-/** Component for promotion. */
+/**
+ * Component for promotion.
+ */
 @Subcomponent
 public abstract class PromotionComponent {
 
-  public abstract PromotionManager promotionManager();
+    public static PromotionComponent get(Context context) {
+        return ((HasComponent) ((HasRootComponent) context.getApplicationContext()).component())
+                .promotionComponent();
+    }
 
-  public abstract ImmutableList<Promotion> priorityPromotionList();
+    public abstract PromotionManager promotionManager();
 
-  public static PromotionComponent get(Context context) {
-    return ((HasComponent) ((HasRootComponent) context.getApplicationContext()).component())
-        .promotionComponent();
-  }
+    public abstract ImmutableList<Promotion> priorityPromotionList();
 
-  /** Used to refer to the root application component. */
-  @IncludeInDialerRoot
-  public interface HasComponent {
-    PromotionComponent promotionComponent();
-  }
+    /**
+     * Used to refer to the root application component.
+     */
+    @IncludeInDialerRoot
+    public interface HasComponent {
+        PromotionComponent promotionComponent();
+    }
 }

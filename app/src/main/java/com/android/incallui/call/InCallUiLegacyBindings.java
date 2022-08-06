@@ -22,5 +22,5 @@ package com.android.incallui.call;
  */
 public interface InCallUiLegacyBindings {
 
-  void logCall(DialerCall call);
+    void logCall(DialerCall call);
 }

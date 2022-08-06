@@ -19,24 +19,26 @@ package com.android.incallui.multisim;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.MainThread;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.VisibleForTesting;
-import android.support.annotation.WorkerThread;
+import androidx.annotation.MainThread;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
+import androidx.annotation.WorkerThread;
 import android.telecom.PhoneAccount;
 import android.telecom.PhoneAccountHandle;
 import android.telecom.TelecomManager;
+
+import com.android.incallui.call.CallList;
+import com.android.incallui.call.DialerCall;
+import com.android.incallui.call.DialerCallListener;
+import com.android.incallui.incalluilock.InCallUiLock;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.common.concurrent.DialerExecutor.Worker;
 import com.fissy.dialer.common.concurrent.ThreadUtil;
 import com.fissy.dialer.preferredsim.suggestion.SimSuggestionComponent;
 import com.fissy.dialer.util.PermissionsUtil;
-import com.android.incallui.call.CallList;
-import com.android.incallui.call.DialerCall;
-import com.android.incallui.call.DialerCallListener;
-import com.android.incallui.incalluilock.InCallUiLock;
+
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -46,162 +48,178 @@ import java.util.concurrent.TimeUnit;
  */
 public class SwapSimWorker implements Worker<Void, Void>, DialerCallListener, CallList.Listener {
 
-  // Timeout waiting for the call to hangup or redial.
-  private static final int DEFAULT_TIMEOUT_MILLIS = 5_000;
+    // Timeout waiting for the call to hangup or redial.
+    private static final int DEFAULT_TIMEOUT_MILLIS = 5_000;
 
-  private final Context context;
-  private final DialerCall call;
-  private final CallList callList;
-  private final InCallUiLock inCallUiLock;
+    private final Context context;
+    private final DialerCall call;
+    private final CallList callList;
+    private final InCallUiLock inCallUiLock;
 
-  private final CountDownLatch disconnectLatch = new CountDownLatch(1);
-  private final CountDownLatch dialingLatch = new CountDownLatch(1);
+    private final CountDownLatch disconnectLatch = new CountDownLatch(1);
+    private final CountDownLatch dialingLatch = new CountDownLatch(1);
 
-  private final PhoneAccountHandle otherAccount;
-  private final String number;
+    private final PhoneAccountHandle otherAccount;
+    private final String number;
 
-  private final int timeoutMillis;
+    private final int timeoutMillis;
 
-  private CountDownLatch latchForTest;
+    private CountDownLatch latchForTest;
 
-  @MainThread
-  public SwapSimWorker(
-      Context context,
-      DialerCall call,
-      CallList callList,
-      PhoneAccountHandle otherAccount,
-      InCallUiLock lock) {
-    this(context, call, callList, otherAccount, lock, DEFAULT_TIMEOUT_MILLIS);
-  }
-
-  @VisibleForTesting
-  SwapSimWorker(
-      Context context,
-      DialerCall call,
-      CallList callList,
-      PhoneAccountHandle otherAccount,
-      InCallUiLock lock,
-      int timeoutMillis) {
-    Assert.isMainThread();
-    this.context = context;
-    this.call = call;
-    this.callList = callList;
-    this.otherAccount = otherAccount;
-    inCallUiLock = lock;
-    this.timeoutMillis = timeoutMillis;
-    number = call.getNumber();
-    call.addListener(this);
-    call.disconnect();
-  }
-
-  @WorkerThread
-  @Nullable
-  @Override
-  @SuppressWarnings("MissingPermission")
-  public Void doInBackground(Void unused) {
-    try {
-      SimSuggestionComponent.get(context)
-          .getSuggestionProvider()
-          .reportIncorrectSuggestion(context, number, otherAccount);
-
-      if (!PermissionsUtil.hasPhonePermissions(context)) {
-        LogUtil.e("SwapSimWorker.doInBackground", "missing phone permission");
-        return null;
-      }
-      if (!disconnectLatch.await(timeoutMillis, TimeUnit.MILLISECONDS)) {
-        LogUtil.e("SwapSimWorker.doInBackground", "timeout waiting for call to disconnect");
-        return null;
-      }
-      LogUtil.i("SwapSimWorker.doInBackground", "call disconnected, redialing");
-      TelecomManager telecomManager = context.getSystemService(TelecomManager.class);
-      Bundle extras = new Bundle();
-      extras.putParcelable(TelecomManager.EXTRA_PHONE_ACCOUNT_HANDLE, otherAccount);
-      callList.addListener(this);
-      telecomManager.placeCall(Uri.fromParts(PhoneAccount.SCHEME_TEL, number, null), extras);
-      if (latchForTest != null) {
-        latchForTest.countDown();
-      }
-      if (!dialingLatch.await(timeoutMillis, TimeUnit.MILLISECONDS)) {
-        LogUtil.e("SwapSimWorker.doInBackground", "timeout waiting for call to dial");
-      }
-      return null;
-    } catch (InterruptedException e) {
-      LogUtil.e("SwapSimWorker.doInBackground", "interrupted", e);
-      Thread.currentThread().interrupt();
-      return null;
-    } finally {
-      ThreadUtil.postOnUiThread(
-          () -> {
-            call.removeListener(this);
-            callList.removeListener(this);
-            inCallUiLock.release();
-          });
+    @MainThread
+    public SwapSimWorker(
+            Context context,
+            DialerCall call,
+            CallList callList,
+            PhoneAccountHandle otherAccount,
+            InCallUiLock lock) {
+        this(context, call, callList, otherAccount, lock, DEFAULT_TIMEOUT_MILLIS);
     }
-  }
 
-  @MainThread
-  @Override
-  public void onDialerCallDisconnect() {
-    disconnectLatch.countDown();
-  }
-
-  @Override
-  public void onCallListChange(CallList callList) {
-    if (callList.getOutgoingCall() != null) {
-      dialingLatch.countDown();
+    @VisibleForTesting
+    SwapSimWorker(
+            Context context,
+            DialerCall call,
+            CallList callList,
+            PhoneAccountHandle otherAccount,
+            InCallUiLock lock,
+            int timeoutMillis) {
+        Assert.isMainThread();
+        this.context = context;
+        this.call = call;
+        this.callList = callList;
+        this.otherAccount = otherAccount;
+        inCallUiLock = lock;
+        this.timeoutMillis = timeoutMillis;
+        number = call.getNumber();
+        call.addListener(this);
+        call.disconnect();
     }
-  }
 
-  @VisibleForTesting
-  void setLatchForTest(CountDownLatch latch) {
-    latchForTest = latch;
-  }
+    @WorkerThread
+    @Nullable
+    @Override
+    @SuppressWarnings("MissingPermission")
+    public Void doInBackground(Void unused) {
+        try {
+            SimSuggestionComponent.get(context)
+                    .getSuggestionProvider()
+                    .reportIncorrectSuggestion(context, number, otherAccount);
 
-  @Override
-  public void onDialerCallUpdate() {}
+            if (!PermissionsUtil.hasPhonePermissions(context)) {
+                LogUtil.e("SwapSimWorker.doInBackground", "missing phone permission");
+                return null;
+            }
+            if (!disconnectLatch.await(timeoutMillis, TimeUnit.MILLISECONDS)) {
+                LogUtil.e("SwapSimWorker.doInBackground", "timeout waiting for call to disconnect");
+                return null;
+            }
+            LogUtil.i("SwapSimWorker.doInBackground", "call disconnected, redialing");
+            TelecomManager telecomManager = context.getSystemService(TelecomManager.class);
+            Bundle extras = new Bundle();
+            extras.putParcelable(TelecomManager.EXTRA_PHONE_ACCOUNT_HANDLE, otherAccount);
+            callList.addListener(this);
+            telecomManager.placeCall(Uri.fromParts(PhoneAccount.SCHEME_TEL, number, null), extras);
+            if (latchForTest != null) {
+                latchForTest.countDown();
+            }
+            if (!dialingLatch.await(timeoutMillis, TimeUnit.MILLISECONDS)) {
+                LogUtil.e("SwapSimWorker.doInBackground", "timeout waiting for call to dial");
+            }
+            return null;
+        } catch (InterruptedException e) {
+            LogUtil.e("SwapSimWorker.doInBackground", "interrupted", e);
+            Thread.currentThread().interrupt();
+            return null;
+        } finally {
+            ThreadUtil.postOnUiThread(
+                    () -> {
+                        call.removeListener(this);
+                        callList.removeListener(this);
+                        inCallUiLock.release();
+                    });
+        }
+    }
 
-  @Override
-  public void onDialerCallChildNumberChange() {}
+    @MainThread
+    @Override
+    public void onDialerCallDisconnect() {
+        disconnectLatch.countDown();
+    }
 
-  @Override
-  public void onDialerCallLastForwardedNumberChange() {}
+    @Override
+    public void onCallListChange(CallList callList) {
+        if (callList.getOutgoingCall() != null) {
+            dialingLatch.countDown();
+        }
+    }
 
-  @Override
-  public void onDialerCallUpgradeToVideo() {}
+    @VisibleForTesting
+    void setLatchForTest(CountDownLatch latch) {
+        latchForTest = latch;
+    }
 
-  @Override
-  public void onDialerCallSessionModificationStateChange() {}
+    @Override
+    public void onDialerCallUpdate() {
+    }
 
-  @Override
-  public void onWiFiToLteHandover() {}
+    @Override
+    public void onDialerCallChildNumberChange() {
+    }
 
-  @Override
-  public void onHandoverToWifiFailure() {}
+    @Override
+    public void onDialerCallLastForwardedNumberChange() {
+    }
 
-  @Override
-  public void onInternationalCallOnWifi() {}
+    @Override
+    public void onDialerCallUpgradeToVideo() {
+    }
 
-  @Override
-  public void onEnrichedCallSessionUpdate() {}
+    @Override
+    public void onDialerCallSessionModificationStateChange() {
+    }
 
-  @Override
-  public void onIncomingCall(DialerCall call) {}
+    @Override
+    public void onWiFiToLteHandover() {
+    }
 
-  @Override
-  public void onUpgradeToVideo(DialerCall call) {}
+    @Override
+    public void onHandoverToWifiFailure() {
+    }
 
-  @Override
-  public void onSessionModificationStateChange(DialerCall call) {}
+    @Override
+    public void onInternationalCallOnWifi() {
+    }
 
-  @Override
-  public void onDisconnect(DialerCall call) {}
+    @Override
+    public void onEnrichedCallSessionUpdate() {
+    }
 
-  @Override
-  public void onWiFiToLteHandover(DialerCall call) {}
+    @Override
+    public void onIncomingCall(DialerCall call) {
+    }
 
-  @Override
-  public void onHandoverToWifiFailed(DialerCall call) {}
+    @Override
+    public void onUpgradeToVideo(DialerCall call) {
+    }
 
-  @Override
-  public void onInternationalCallOnWifi(@NonNull DialerCall call) {}
+    @Override
+    public void onSessionModificationStateChange(DialerCall call) {
+    }
+
+    @Override
+    public void onDisconnect(DialerCall call) {
+    }
+
+    @Override
+    public void onWiFiToLteHandover(DialerCall call) {
+    }
+
+    @Override
+    public void onHandoverToWifiFailed(DialerCall call) {
+    }
+
+    @Override
+    public void onInternationalCallOnWifi(@NonNull DialerCall call) {
+    }
 }

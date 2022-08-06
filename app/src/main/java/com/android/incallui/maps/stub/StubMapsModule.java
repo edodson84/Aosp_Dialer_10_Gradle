@@ -17,36 +17,42 @@
 package com.android.incallui.maps.stub;
 
 import android.location.Location;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import com.fissy.dialer.common.Assert;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
 import com.android.incallui.maps.Maps;
-import dagger.Binds;
-import dagger.Module;
+import com.fissy.dialer.common.Assert;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-/** Stub for the maps module for build variants that don't support Google Play Services. */
+import dagger.Binds;
+import dagger.Module;
+
+/**
+ * Stub for the maps module for build variants that don't support Google Play Services.
+ */
 @Module
 public abstract class StubMapsModule {
 
-  @Binds
-  @Singleton
-  public abstract Maps bindMaps(StubMaps maps);
+    @Binds
+    @Singleton
+    public abstract Maps bindMaps(StubMaps maps);
 
-  static final class StubMaps implements Maps {
-    @Inject
-    public StubMaps() {}
+    static final class StubMaps implements Maps {
+        @Inject
+        public StubMaps() {
+        }
 
-    @Override
-    public boolean isAvailable() {
-      return false;
+        @Override
+        public boolean isAvailable() {
+            return false;
+        }
+
+        @NonNull
+        @Override
+        public Fragment createStaticMapFragment(@NonNull Location location) {
+            throw Assert.createUnsupportedOperationFailException();
+        }
     }
-
-    @NonNull
-    @Override
-    public Fragment createStaticMapFragment(@NonNull Location location) {
-      throw Assert.createUnsupportedOperationFailException();
-    }
-  }
 }

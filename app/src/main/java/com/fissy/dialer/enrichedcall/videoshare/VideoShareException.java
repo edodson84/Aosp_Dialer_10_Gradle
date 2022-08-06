@@ -16,10 +16,12 @@
 
 package com.fissy.dialer.enrichedcall.videoshare;
 
-/** Exceptions occurring from using DreamVideo and video share configuration. */
+/**
+ * Exceptions occurring from using DreamVideo and video share configuration.
+ */
 public class VideoShareException extends Exception {
 
-  public VideoShareException(String message) {
-    super(message);
-  }
+    public VideoShareException(String message) {
+        super(message);
+    }
 }

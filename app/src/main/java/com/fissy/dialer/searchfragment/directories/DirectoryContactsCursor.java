@@ -20,14 +20,15 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.database.MergeCursor;
-import android.support.annotation.Nullable;
-import android.support.annotation.VisibleForTesting;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.cp2.DirectoryUtils;
 import com.fissy.dialer.searchfragment.common.SearchCursor;
 import com.fissy.dialer.searchfragment.directories.DirectoriesCursorLoader.Directory;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -44,112 +45,113 @@ import java.util.List;
 @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
 public final class DirectoryContactsCursor extends MergeCursor implements SearchCursor {
 
-  /**
-   * {@link SearchCursor#HEADER_PROJECTION} with {@link #COLUMN_DIRECTORY_ID} appended on the end.
-   *
-   * <p>This is needed to get the directoryId associated with each contact. directoryIds are needed
-   * to load the correct quick contact card.
-   */
-  private static final String[] PROJECTION = buildProjection();
+    private static final String COLUMN_DIRECTORY_ID = "directory_id";
+    /**
+     * {@link SearchCursor#HEADER_PROJECTION} with {@link #COLUMN_DIRECTORY_ID} appended on the end.
+     *
+     * <p>This is needed to get the directoryId associated with each contact. directoryIds are needed
+     * to load the correct quick contact card.
+     */
+    private static final String[] PROJECTION = buildProjection();
 
-  private static final String COLUMN_DIRECTORY_ID = "directory_id";
-
-  /**
-   * Returns a single cursor with headers inserted between each non-empty cursor. If all cursors are
-   * empty, null or closed, this method returns null.
-   */
-  @Nullable
-  @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
-  public static DirectoryContactsCursor newInstance(
-      Context context, Cursor[] cursors, List<Directory> directories) {
-    Assert.checkArgument(
-        cursors.length == directories.size(),
-        "Directories (%d) and cursors (%d) must be the same size.",
-        directories.size(),
-        cursors.length);
-    Cursor[] cursorsWithHeaders = insertHeaders(context, cursors, directories);
-    if (cursorsWithHeaders.length > 0) {
-      return new DirectoryContactsCursor(cursorsWithHeaders);
+    private DirectoryContactsCursor(Cursor[] cursors) {
+        super(cursors);
     }
-    return null;
-  }
 
-  private DirectoryContactsCursor(Cursor[] cursors) {
-    super(cursors);
-  }
-
-  private static Cursor[] insertHeaders(
-      Context context, Cursor[] cursors, List<Directory> directories) {
-    List<Cursor> cursorList = new ArrayList<>();
-    for (int i = 0; i < cursors.length; i++) {
-      Cursor cursor = cursors[i];
-
-      if (cursor == null || cursor.isClosed()) {
-        continue;
-      }
-
-      Directory directory = directories.get(i);
-      if (cursor.getCount() == 0) {
-        // Since the cursor isn't being merged in, we need to close it here.
-        cursor.close();
-        continue;
-      }
-
-      cursorList.add(createHeaderCursor(context, directory.getDisplayName(), directory.getId()));
-      cursorList.add(cursor);
+    /**
+     * Returns a single cursor with headers inserted between each non-empty cursor. If all cursors are
+     * empty, null or closed, this method returns null.
+     */
+    @Nullable
+    @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
+    public static DirectoryContactsCursor newInstance(
+            Context context, Cursor[] cursors, List<Directory> directories) {
+        Assert.checkArgument(
+                cursors.length == directories.size(),
+                "Directories (%d) and cursors (%d) must be the same size.",
+                directories.size(),
+                cursors.length);
+        Cursor[] cursorsWithHeaders = insertHeaders(context, cursors, directories);
+        if (cursorsWithHeaders.length > 0) {
+            return new DirectoryContactsCursor(cursorsWithHeaders);
+        }
+        return null;
     }
-    return cursorList.toArray(new Cursor[cursorList.size()]);
-  }
 
-  private static MatrixCursor createHeaderCursor(Context context, String name, long id) {
-    MatrixCursor headerCursor = new MatrixCursor(PROJECTION, 1);
-    if (DirectoryUtils.isLocalEnterpriseDirectoryId(id)) {
-      headerCursor.addRow(
-          new Object[] {context.getString(R.string.directory_search_label_work), id});
-    } else {
-      headerCursor.addRow(new Object[] {context.getString(R.string.directory, name), id});
+    private static Cursor[] insertHeaders(
+            Context context, Cursor[] cursors, List<Directory> directories) {
+        List<Cursor> cursorList = new ArrayList<>();
+        for (int i = 0; i < cursors.length; i++) {
+            Cursor cursor = cursors[i];
+
+            if (cursor == null || cursor.isClosed()) {
+                continue;
+            }
+
+            Directory directory = directories.get(i);
+            if (cursor.getCount() == 0) {
+                // Since the cursor isn't being merged in, we need to close it here.
+                cursor.close();
+                continue;
+            }
+
+            cursorList.add(createHeaderCursor(context, directory.getDisplayName(), directory.getId()));
+            cursorList.add(cursor);
+        }
+        return cursorList.toArray(new Cursor[cursorList.size()]);
     }
-    return headerCursor;
-  }
 
-  private static String[] buildProjection() {
-    String[] projection = Arrays.copyOf(HEADER_PROJECTION, HEADER_PROJECTION.length + 1);
-    projection[projection.length - 1] = COLUMN_DIRECTORY_ID;
-    return projection;
-  }
-
-  /** Returns true if the current position is a header row. */
-  @Override
-  public boolean isHeader() {
-    return !isClosed() && getColumnIndex(HEADER_PROJECTION[HEADER_TEXT_POSITION]) != -1;
-  }
-
-  @Override
-  public long getDirectoryId() {
-    int position = getPosition();
-    // proceed backwards until we reach the header row, which contains the directory ID.
-    while (moveToPrevious()) {
-      int columnIndex = getColumnIndex(COLUMN_DIRECTORY_ID);
-      if (columnIndex == -1) {
-        continue;
-      }
-
-      int id = getInt(columnIndex);
-      if (id == -1) {
-        continue;
-      }
-
-      // return the cursor to it's original position/state
-      moveToPosition(position);
-      return id;
+    private static MatrixCursor createHeaderCursor(Context context, String name, long id) {
+        MatrixCursor headerCursor = new MatrixCursor(PROJECTION, 1);
+        if (DirectoryUtils.isLocalEnterpriseDirectoryId(id)) {
+            headerCursor.addRow(
+                    new Object[]{context.getString(R.string.directory_search_label_work), id});
+        } else {
+            headerCursor.addRow(new Object[]{context.getString(R.string.directory, name), id});
+        }
+        return headerCursor;
     }
-    throw Assert.createIllegalStateFailException("No directory id for contact at: " + position);
-  }
 
-  @Override
-  public boolean updateQuery(@Nullable String query) {
-    // When the query changes, a new network request is made for nearby places. Meaning this cursor
-    // will be closed and another created, so return false.
-    return false;
-  }
+    private static String[] buildProjection() {
+        String[] projection = Arrays.copyOf(HEADER_PROJECTION, HEADER_PROJECTION.length + 1);
+        projection[projection.length - 1] = COLUMN_DIRECTORY_ID;
+        return projection;
+    }
+
+    /**
+     * Returns true if the current position is a header row.
+     */
+    @Override
+    public boolean isHeader() {
+        return !isClosed() && getColumnIndex(HEADER_PROJECTION[HEADER_TEXT_POSITION]) != -1;
+    }
+
+    @Override
+    public long getDirectoryId() {
+        int position = getPosition();
+        // proceed backwards until we reach the header row, which contains the directory ID.
+        while (moveToPrevious()) {
+            int columnIndex = getColumnIndex(COLUMN_DIRECTORY_ID);
+            if (columnIndex == -1) {
+                continue;
+            }
+
+            int id = getInt(columnIndex);
+            if (id == -1) {
+                continue;
+            }
+
+            // return the cursor to it's original position/state
+            moveToPosition(position);
+            return id;
+        }
+        throw Assert.createIllegalStateFailException("No directory id for contact at: " + position);
+    }
+
+    @Override
+    public boolean updateQuery(@Nullable String query) {
+        // When the query changes, a new network request is made for nearby places. Meaning this cursor
+        // will be closed and another created, so return false.
+        return false;
+    }
 }

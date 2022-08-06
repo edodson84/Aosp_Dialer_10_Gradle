@@ -30,15 +30,16 @@ import com.google.common.util.concurrent.MoreExecutors;
  */
 public final class DefaultFutureCallback<T> implements FutureCallback<T> {
 
-  @Override
-  public void onSuccess(T unused) {}
+    @Override
+    public void onSuccess(T unused) {
+    }
 
-  @Override
-  public void onFailure(Throwable throwable) {
-    ThreadUtil.getUiThreadHandler()
-        .post(
-            () -> {
-              throw new RuntimeException(throwable);
-            });
-  }
+    @Override
+    public void onFailure(Throwable throwable) {
+        ThreadUtil.getUiThreadHandler()
+                .post(
+                        () -> {
+                            throw new RuntimeException(throwable);
+                        });
+    }
 }

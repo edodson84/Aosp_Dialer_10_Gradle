@@ -23,144 +23,151 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.CallLog;
 import android.provider.VoicemailContract.Voicemails;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.text.TextUtils;
+
+import com.android.voicemail.VoicemailClient;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.common.concurrent.AsyncTaskExecutor;
 import com.fissy.dialer.common.concurrent.AsyncTaskExecutors;
 import com.fissy.dialer.util.PermissionsUtil;
-import com.android.voicemail.VoicemailClient;
 
-/** TODO(calderwoodra): documentation */
+/**
+ * TODO(calderwoodra): documentation
+ */
 public class CallLogAsyncTaskUtil {
 
-  private static final String TAG = "CallLogAsyncTaskUtil";
-  private static AsyncTaskExecutor asyncTaskExecutor;
+    private static final String TAG = "CallLogAsyncTaskUtil";
+    private static AsyncTaskExecutor asyncTaskExecutor;
 
-  private static void initTaskExecutor() {
-    asyncTaskExecutor = AsyncTaskExecutors.createThreadPoolExecutor();
-  }
-
-  public static void markVoicemailAsRead(
-      @NonNull final Context context, @NonNull final Uri voicemailUri) {
-    LogUtil.enterBlock("CallLogAsyncTaskUtil.markVoicemailAsRead, voicemailUri: " + voicemailUri);
-    if (asyncTaskExecutor == null) {
-      initTaskExecutor();
+    private static void initTaskExecutor() {
+        asyncTaskExecutor = AsyncTaskExecutors.createThreadPoolExecutor();
     }
 
-    asyncTaskExecutor.submit(
-        Tasks.MARK_VOICEMAIL_READ,
-        new AsyncTask<Void, Void, Void>() {
-          @Override
-          public Void doInBackground(Void... params) {
-            ContentValues values = new ContentValues();
-            values.put(Voicemails.IS_READ, true);
-            // "External" changes to the database will be automatically marked as dirty, but this
-            // voicemail might be from dialer so it need to be marked manually.
-            values.put(Voicemails.DIRTY, 1);
-            if (context
-                    .getContentResolver()
-                    .update(voicemailUri, values, Voicemails.IS_READ + " = 0", null)
-                > 0) {
-              uploadVoicemailLocalChangesToServer(context);
-              CallLogNotificationsService.markAllNewVoicemailsAsOld(context);
-            }
-            return null;
-          }
-        });
-  }
+    public static void markVoicemailAsRead(
+            @NonNull final Context context, @NonNull final Uri voicemailUri) {
+        LogUtil.enterBlock("CallLogAsyncTaskUtil.markVoicemailAsRead, voicemailUri: " + voicemailUri);
+        if (asyncTaskExecutor == null) {
+            initTaskExecutor();
+        }
 
-  public static void deleteVoicemail(
-      @NonNull final Context context,
-      final Uri voicemailUri,
-      @Nullable final CallLogAsyncTaskListener callLogAsyncTaskListener) {
-    if (asyncTaskExecutor == null) {
-      initTaskExecutor();
+        asyncTaskExecutor.submit(
+                Tasks.MARK_VOICEMAIL_READ,
+                new AsyncTask<Void, Void, Void>() {
+                    @Override
+                    public Void doInBackground(Void... params) {
+                        ContentValues values = new ContentValues();
+                        values.put(Voicemails.IS_READ, true);
+                        // "External" changes to the database will be automatically marked as dirty, but this
+                        // voicemail might be from dialer so it need to be marked manually.
+                        values.put(Voicemails.DIRTY, 1);
+                        if (context
+                                .getContentResolver()
+                                .update(voicemailUri, values, Voicemails.IS_READ + " = 0", null)
+                                > 0) {
+                            uploadVoicemailLocalChangesToServer(context);
+                            CallLogNotificationsService.markAllNewVoicemailsAsOld(context);
+                        }
+                        return null;
+                    }
+                });
     }
 
-    asyncTaskExecutor.submit(
-        Tasks.DELETE_VOICEMAIL,
-        new AsyncTask<Void, Void, Void>() {
-          @Override
-          public Void doInBackground(Void... params) {
-            deleteVoicemailSynchronous(context, voicemailUri);
-            return null;
-          }
+    public static void deleteVoicemail(
+            @NonNull final Context context,
+            final Uri voicemailUri,
+            @Nullable final CallLogAsyncTaskListener callLogAsyncTaskListener) {
+        if (asyncTaskExecutor == null) {
+            initTaskExecutor();
+        }
 
-          @Override
-          public void onPostExecute(Void result) {
-            if (callLogAsyncTaskListener != null) {
-              callLogAsyncTaskListener.onDeleteVoicemail();
-            }
-          }
-        });
-  }
+        asyncTaskExecutor.submit(
+                Tasks.DELETE_VOICEMAIL,
+                new AsyncTask<Void, Void, Void>() {
+                    @Override
+                    public Void doInBackground(Void... params) {
+                        deleteVoicemailSynchronous(context, voicemailUri);
+                        return null;
+                    }
 
-  public static void deleteVoicemailSynchronous(Context context, Uri voicemailUri) {
-    ContentValues values = new ContentValues();
-    values.put(Voicemails.DELETED, "1");
-    context.getContentResolver().update(voicemailUri, values, null, null);
-    // TODO(a bug): check which source package is changed. Don't need
-    // to upload changes on foreign voicemails, they will get a PROVIDER_CHANGED
-    uploadVoicemailLocalChangesToServer(context);
-  }
-
-  public static void markCallAsRead(@NonNull final Context context, @NonNull final long[] callIds) {
-    if (!PermissionsUtil.hasPhonePermissions(context)
-        || !PermissionsUtil.hasCallLogWritePermissions(context)) {
-      return;
-    }
-    if (asyncTaskExecutor == null) {
-      initTaskExecutor();
+                    @Override
+                    public void onPostExecute(Void result) {
+                        if (callLogAsyncTaskListener != null) {
+                            callLogAsyncTaskListener.onDeleteVoicemail();
+                        }
+                    }
+                });
     }
 
-    asyncTaskExecutor.submit(
-        Tasks.MARK_CALL_READ,
-        new AsyncTask<Void, Void, Void>() {
-          @Override
-          public Void doInBackground(Void... params) {
+    public static void deleteVoicemailSynchronous(Context context, Uri voicemailUri) {
+        ContentValues values = new ContentValues();
+        values.put(Voicemails.DELETED, "1");
+        context.getContentResolver().update(voicemailUri, values, null, null);
+        // TODO(a bug): check which source package is changed. Don't need
+        // to upload changes on foreign voicemails, they will get a PROVIDER_CHANGED
+        uploadVoicemailLocalChangesToServer(context);
+    }
 
-            StringBuilder where = new StringBuilder();
-            where.append(CallLog.Calls.TYPE).append(" = ").append(CallLog.Calls.MISSED_TYPE);
-            where.append(" AND ");
+    public static void markCallAsRead(@NonNull final Context context, @NonNull final long[] callIds) {
+        if (!PermissionsUtil.hasPhonePermissions(context)
+                || !PermissionsUtil.hasCallLogWritePermissions(context)) {
+            return;
+        }
+        if (asyncTaskExecutor == null) {
+            initTaskExecutor();
+        }
 
-            Long[] callIdLongs = new Long[callIds.length];
-            for (int i = 0; i < callIds.length; i++) {
-              callIdLongs[i] = callIds[i];
-            }
-            where
-                .append(CallLog.Calls._ID)
-                .append(" IN (" + TextUtils.join(",", callIdLongs) + ")");
+        asyncTaskExecutor.submit(
+                Tasks.MARK_CALL_READ,
+                new AsyncTask<Void, Void, Void>() {
+                    @Override
+                    public Void doInBackground(Void... params) {
 
-            ContentValues values = new ContentValues(1);
-            values.put(CallLog.Calls.IS_READ, "1");
-            context
-                .getContentResolver()
-                .update(CallLog.Calls.CONTENT_URI, values, where.toString(), null);
-            return null;
-          }
-        });
-  }
+                        StringBuilder where = new StringBuilder();
+                        where.append(CallLog.Calls.TYPE).append(" = ").append(CallLog.Calls.MISSED_TYPE);
+                        where.append(" AND ");
 
-  /** The enumeration of {@link AsyncTask} objects used in this class. */
-  public enum Tasks {
-    DELETE_VOICEMAIL,
-    DELETE_CALL,
-    MARK_VOICEMAIL_READ,
-    MARK_CALL_READ,
-    GET_CALL_DETAILS,
-    UPDATE_DURATION,
-  }
+                        Long[] callIdLongs = new Long[callIds.length];
+                        for (int i = 0; i < callIds.length; i++) {
+                            callIdLongs[i] = callIds[i];
+                        }
+                        where
+                                .append(CallLog.Calls._ID)
+                                .append(" IN (" + TextUtils.join(",", callIdLongs) + ")");
 
-  /** TODO(calderwoodra): documentation */
-  public interface CallLogAsyncTaskListener {
-    void onDeleteVoicemail();
-  }
+                        ContentValues values = new ContentValues(1);
+                        values.put(CallLog.Calls.IS_READ, "1");
+                        context
+                                .getContentResolver()
+                                .update(CallLog.Calls.CONTENT_URI, values, where.toString(), null);
+                        return null;
+                    }
+                });
+    }
 
-  private static void uploadVoicemailLocalChangesToServer(Context context) {
-    Intent intent = new Intent(VoicemailClient.ACTION_UPLOAD);
-    intent.setPackage(context.getPackageName());
-    context.sendBroadcast(intent);
-  }
+    private static void uploadVoicemailLocalChangesToServer(Context context) {
+        Intent intent = new Intent(VoicemailClient.ACTION_UPLOAD);
+        intent.setPackage(context.getPackageName());
+        context.sendBroadcast(intent);
+    }
+
+    /**
+     * The enumeration of {@link AsyncTask} objects used in this class.
+     */
+    public enum Tasks {
+        DELETE_VOICEMAIL,
+        DELETE_CALL,
+        MARK_VOICEMAIL_READ,
+        MARK_CALL_READ,
+        GET_CALL_DETAILS,
+        UPDATE_DURATION,
+    }
+
+    /**
+     * TODO(calderwoodra): documentation
+     */
+    public interface CallLogAsyncTaskListener {
+        void onDeleteVoicemail();
+    }
 }

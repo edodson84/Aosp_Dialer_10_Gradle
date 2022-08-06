@@ -1,16 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<set android:ordering="sequentially"
-  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:aapt="http://schemas.android.com/aapt">
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:ordering="sequentially">
     <set>
-        <objectAnimator android:interpolator="@anim/hd_scale_interpolator" android:duration="45" android:valueFrom="1" android:valueTo="0.9" android:propertyName="scaleX" />
-        <objectAnimator android:interpolator="@anim/hd_scale_interpolator" android:duration="45" android:valueFrom="1" android:valueTo="0.9" android:propertyName="scaleY" />
+        <objectAnimator
+            android:duration="45"
+            android:interpolator="@anim/hd_scale_interpolator"
+            android:propertyName="scaleX"
+            android:valueFrom="1"
+            android:valueTo="0.9" />
+        <objectAnimator
+            android:duration="45"
+            android:interpolator="@anim/hd_scale_interpolator"
+            android:propertyName="scaleY"
+            android:valueFrom="1"
+            android:valueTo="0.9" />
     </set>
     <set>
-        <objectAnimator android:interpolator="@anim/hd_scale_interpolator2" android:duration="120" android:valueFrom="0.9" android:valueTo="1.2" android:propertyName="scaleX" />
-        <objectAnimator android:interpolator="@anim/hd_scale_interpolator2" android:duration="120" android:valueFrom="0.9" android:valueTo="1.2" android:propertyName="scaleY" />
+        <objectAnimator
+            android:duration="120"
+            android:interpolator="@anim/hd_scale_interpolator2"
+            android:propertyName="scaleX"
+            android:valueFrom="0.9"
+            android:valueTo="1.2" />
+        <objectAnimator
+            android:duration="120"
+            android:interpolator="@anim/hd_scale_interpolator2"
+            android:propertyName="scaleY"
+            android:valueFrom="0.9"
+            android:valueTo="1.2" />
     </set>
     <set>
-        <objectAnimator android:interpolator="@anim/hd_scale_interpolator2" android:duration="120" android:valueFrom="1.2" android:valueTo="1" android:propertyName="scaleX" />
-        <objectAnimator android:interpolator="@anim/hd_scale_interpolator2" android:duration="120" android:valueFrom="1.2" android:valueTo="1" android:propertyName="scaleY" />
+        <objectAnimator
+            android:duration="120"
+            android:interpolator="@anim/hd_scale_interpolator2"
+            android:propertyName="scaleX"
+            android:valueFrom="1.2"
+            android:valueTo="1" />
+        <objectAnimator
+            android:duration="120"
+            android:interpolator="@anim/hd_scale_interpolator2"
+            android:propertyName="scaleY"
+            android:valueFrom="1.2"
+            android:valueTo="1" />
     </set>
 </set>

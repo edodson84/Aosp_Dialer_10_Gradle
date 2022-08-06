@@ -18,11 +18,12 @@ package com.fissy.dialer.simulator.impl;
 
 import android.content.Context;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.telecom.Connection;
 import android.telecom.VideoProfile;
 import android.view.Surface;
+
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.simulator.Simulator.Event;
@@ -33,97 +34,102 @@ import com.fissy.dialer.simulator.Simulator.Event;
  * done by {@link SimulatorPreviewCamera} and {@link SimulatorRemoteVideo} respectively.
  */
 final class SimulatorVideoProvider extends Connection.VideoProvider {
-  @NonNull private final Context context;
-  @NonNull private final SimulatorConnection connection;
-  @Nullable private String previewCameraId;
-    @Nullable private SimulatorPreviewCamera simulatorPreviewCamera;
-  @Nullable private SimulatorRemoteVideo simulatorRemoteVideo;
+    @NonNull
+    private final Context context;
+    @NonNull
+    private final SimulatorConnection connection;
+    @Nullable
+    private String previewCameraId;
+    @Nullable
+    private SimulatorPreviewCamera simulatorPreviewCamera;
+    @Nullable
+    private SimulatorRemoteVideo simulatorRemoteVideo;
 
-  SimulatorVideoProvider(@NonNull Context context, @NonNull SimulatorConnection connection) {
-    this.context = Assert.isNotNull(context);
-    this.connection = Assert.isNotNull(connection);
-  }
-
-  @Override
-  public void onSetCamera(String previewCameraId) {
-    LogUtil.i("SimulatorVideoProvider.onSetCamera", "previewCameraId: " + previewCameraId);
-    this.previewCameraId = previewCameraId;
-    if (simulatorPreviewCamera != null) {
-      simulatorPreviewCamera.stopCamera();
-      simulatorPreviewCamera = null;
+    SimulatorVideoProvider(@NonNull Context context, @NonNull SimulatorConnection connection) {
+        this.context = Assert.isNotNull(context);
+        this.connection = Assert.isNotNull(connection);
     }
-    if (previewCameraId == null && simulatorRemoteVideo != null) {
-      simulatorRemoteVideo.stopVideo();
-      simulatorRemoteVideo = null;
+
+    @Override
+    public void onSetCamera(String previewCameraId) {
+        LogUtil.i("SimulatorVideoProvider.onSetCamera", "previewCameraId: " + previewCameraId);
+        this.previewCameraId = previewCameraId;
+        if (simulatorPreviewCamera != null) {
+            simulatorPreviewCamera.stopCamera();
+            simulatorPreviewCamera = null;
+        }
+        if (previewCameraId == null && simulatorRemoteVideo != null) {
+            simulatorRemoteVideo.stopVideo();
+            simulatorRemoteVideo = null;
+        }
     }
-  }
 
-  @Override
-  public void onSetPreviewSurface(Surface surface) {
-    LogUtil.enterBlock("SimulatorVideoProvider.onSetPreviewSurface");
-    if (simulatorPreviewCamera != null) {
-      simulatorPreviewCamera.stopCamera();
-      simulatorPreviewCamera = null;
+    @Override
+    public void onSetPreviewSurface(Surface surface) {
+        LogUtil.enterBlock("SimulatorVideoProvider.onSetPreviewSurface");
+        if (simulatorPreviewCamera != null) {
+            simulatorPreviewCamera.stopCamera();
+            simulatorPreviewCamera = null;
+        }
+        if (surface != null && previewCameraId != null) {
+            simulatorPreviewCamera = new SimulatorPreviewCamera(context, previewCameraId, surface);
+            simulatorPreviewCamera.startCamera();
+        }
     }
-    if (surface != null && previewCameraId != null) {
-      simulatorPreviewCamera = new SimulatorPreviewCamera(context, previewCameraId, surface);
-      simulatorPreviewCamera.startCamera();
+
+    @Override
+    public void onSetDisplaySurface(Surface surface) {
+        LogUtil.enterBlock("SimulatorVideoProvider.onSetDisplaySurface");
+        if (simulatorRemoteVideo != null) {
+            simulatorRemoteVideo.stopVideo();
+            simulatorRemoteVideo = null;
+        }
+        if (surface != null) {
+            simulatorRemoteVideo = new SimulatorRemoteVideo(surface);
+            simulatorRemoteVideo.startVideo();
+        }
     }
-  }
 
-  @Override
-  public void onSetDisplaySurface(Surface surface) {
-    LogUtil.enterBlock("SimulatorVideoProvider.onSetDisplaySurface");
-    if (simulatorRemoteVideo != null) {
-      simulatorRemoteVideo.stopVideo();
-      simulatorRemoteVideo = null;
+    @Override
+    public void onSetDeviceOrientation(int rotation) {
+        LogUtil.i("SimulatorVideoProvider.onSetDeviceOrientation", "rotation: " + rotation);
     }
-    if (surface != null) {
-      simulatorRemoteVideo = new SimulatorRemoteVideo(surface);
-      simulatorRemoteVideo.startVideo();
+
+    @Override
+    public void onSetZoom(float value) {
+        LogUtil.i("SimulatorVideoProvider.onSetZoom", "zoom: " + value);
     }
-  }
 
-  @Override
-  public void onSetDeviceOrientation(int rotation) {
-    LogUtil.i("SimulatorVideoProvider.onSetDeviceOrientation", "rotation: " + rotation);
-  }
+    @Override
+    public void onSendSessionModifyRequest(VideoProfile fromProfile, VideoProfile toProfile) {
+        LogUtil.enterBlock("SimulatorVideoProvider.onSendSessionModifyRequest");
+        connection.onEvent(
+                new Event(
+                        Event.SESSION_MODIFY_REQUEST,
+                        Integer.toString(fromProfile.getVideoState()),
+                        Integer.toString(toProfile.getVideoState())));
+    }
 
-  @Override
-  public void onSetZoom(float value) {
-    LogUtil.i("SimulatorVideoProvider.onSetZoom", "zoom: " + value);
-  }
+    @Override
+    public void onSendSessionModifyResponse(VideoProfile responseProfile) {
+        LogUtil.enterBlock("SimulatorVideoProvider.onSendSessionModifyResponse");
+    }
 
-  @Override
-  public void onSendSessionModifyRequest(VideoProfile fromProfile, VideoProfile toProfile) {
-    LogUtil.enterBlock("SimulatorVideoProvider.onSendSessionModifyRequest");
-    connection.onEvent(
-        new Event(
-            Event.SESSION_MODIFY_REQUEST,
-            Integer.toString(fromProfile.getVideoState()),
-            Integer.toString(toProfile.getVideoState())));
-  }
+    @Override
+    public void onRequestCameraCapabilities() {
+        LogUtil.enterBlock("SimulatorVideoProvider.onRequestCameraCapabilities");
+        changeCameraCapabilities(
+                SimulatorPreviewCamera.getCameraCapabilities(context, previewCameraId));
+    }
 
-  @Override
-  public void onSendSessionModifyResponse(VideoProfile responseProfile) {
-    LogUtil.enterBlock("SimulatorVideoProvider.onSendSessionModifyResponse");
-  }
+    @Override
+    public void onRequestConnectionDataUsage() {
+        LogUtil.enterBlock("SimulatorVideoProvider.onRequestConnectionDataUsage");
+        setCallDataUsage(10 * 1024);
+    }
 
-  @Override
-  public void onRequestCameraCapabilities() {
-    LogUtil.enterBlock("SimulatorVideoProvider.onRequestCameraCapabilities");
-    changeCameraCapabilities(
-        SimulatorPreviewCamera.getCameraCapabilities(context, previewCameraId));
-  }
-
-  @Override
-  public void onRequestConnectionDataUsage() {
-    LogUtil.enterBlock("SimulatorVideoProvider.onRequestConnectionDataUsage");
-    setCallDataUsage(10 * 1024);
-  }
-
-  @Override
-  public void onSetPauseImage(Uri uri) {
-    LogUtil.enterBlock("SimulatorVideoProvider.onSetPauseImage");
-  }
+    @Override
+    public void onSetPauseImage(Uri uri) {
+        LogUtil.enterBlock("SimulatorVideoProvider.onSetPauseImage");
+    }
 }

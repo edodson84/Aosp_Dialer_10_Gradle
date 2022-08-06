@@ -16,9 +16,13 @@
 
 package com.fissy.dialer.function;
 
-/** Functional interface for consuming generic values. */
+/**
+ * Functional interface for consuming generic values.
+ */
 public interface Consumer<T> {
 
-  /** Consumes a value. */
-  void accept(T value);
+    /**
+     * Consumes a value.
+     */
+    void accept(T value);
 }

@@ -19,32 +19,36 @@ package com.fissy.dialer.main;
 import android.content.Intent;
 import android.os.Bundle;
 
-/** Interface for peers of MainActivity. */
+/**
+ * Interface for peers of MainActivity.
+ */
 public interface MainActivityPeer {
 
-  void onActivityCreate(Bundle saveInstanceState);
+    void onActivityCreate(Bundle saveInstanceState);
 
-  void onActivityResume();
+    void onActivityResume();
 
-  void onUserLeaveHint();
+    void onUserLeaveHint();
 
-  void onActivityPause();
+    void onActivityPause();
 
-  void onActivityStop();
+    void onActivityStop();
 
-  void onActivityDestroyed();
+    void onActivityDestroyed();
 
-  void onNewIntent(Intent intent);
+    void onNewIntent(Intent intent);
 
-  void onActivityResult(int requestCode, int resultCode, Intent data);
+    void onActivityResult(int requestCode, int resultCode, Intent data);
 
-  void onSaveInstanceState(Bundle bundle);
+    void onSaveInstanceState(Bundle bundle);
 
-  boolean onBackPressed();
+    boolean onBackPressed();
 
-  /** Supplies the MainActivityPeer */
-  interface PeerSupplier {
+    /**
+     * Supplies the MainActivityPeer
+     */
+    interface PeerSupplier {
 
-    MainActivityPeer getPeer();
-  }
+        MainActivityPeer getPeer();
+    }
 }

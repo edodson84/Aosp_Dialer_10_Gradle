@@ -20,12 +20,13 @@ package com.android.incallui;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.VisibleForTesting;
-import com.fissy.dialer.common.LogUtil;
+import androidx.annotation.VisibleForTesting;
+
 import com.android.incallui.InCallPresenter.InCallState;
 import com.android.incallui.InCallPresenter.InCallStateListener;
 import com.android.incallui.InCallPresenter.InCallUiListener;
 import com.android.incallui.call.CallList;
+import com.fissy.dialer.common.LogUtil;
 
 /**
  * Responsible for broadcasting the Intent INCOMING_CALL_VISIBILITY_CHANGED so other processes could
@@ -33,45 +34,46 @@ import com.android.incallui.call.CallList;
  */
 public class MotorolaInCallUiNotifier implements InCallUiListener, InCallStateListener {
 
-  @VisibleForTesting static final String EXTRA_VISIBLE_KEY = "visible";
+    @VisibleForTesting
+    static final String EXTRA_VISIBLE_KEY = "visible";
 
-  @VisibleForTesting
-  static final String ACTION_INCOMING_CALL_VISIBILITY_CHANGED =
-      "com.motorola.incallui.action.INCOMING_CALL_VISIBILITY_CHANGED";
+    @VisibleForTesting
+    static final String ACTION_INCOMING_CALL_VISIBILITY_CHANGED =
+            "com.motorola.incallui.action.INCOMING_CALL_VISIBILITY_CHANGED";
 
-  @VisibleForTesting
-  static final String PERMISSION_INCOMING_CALL_VISIBILITY_CHANGED =
-      "com.motorola.incallui.permission.INCOMING_CALL_VISIBILITY_CHANGED";
+    @VisibleForTesting
+    static final String PERMISSION_INCOMING_CALL_VISIBILITY_CHANGED =
+            "com.motorola.incallui.permission.INCOMING_CALL_VISIBILITY_CHANGED";
 
-  private final Context context;
+    private final Context context;
 
-  MotorolaInCallUiNotifier(Context context) {
-    this.context = context;
-  }
-
-  @Override
-  public void onUiShowing(boolean showing) {
-    if (showing && CallList.getInstance().getIncomingCall() != null) {
-      sendInCallUiBroadcast(true);
+    MotorolaInCallUiNotifier(Context context) {
+        this.context = context;
     }
-  }
 
-  @Override
-  public void onStateChange(InCallState oldState, InCallState newState, CallList callList) {
-    if (oldState != null
-        && oldState.isConnectingOrConnected()
-        && newState == InCallState.NO_CALLS) {
-      sendInCallUiBroadcast(false);
+    @Override
+    public void onUiShowing(boolean showing) {
+        if (showing && CallList.getInstance().getIncomingCall() != null) {
+            sendInCallUiBroadcast(true);
+        }
     }
-  }
 
-  private void sendInCallUiBroadcast(boolean visible) {
-    LogUtil.d(
-        "MotorolaInCallUiNotifier.sendInCallUiBroadcast",
-        "Send InCallUi Broadcast, visible: " + visible);
-    Intent intent = new Intent();
-    intent.putExtra(EXTRA_VISIBLE_KEY, visible);
-    intent.setAction(ACTION_INCOMING_CALL_VISIBILITY_CHANGED);
-    context.sendBroadcast(intent, PERMISSION_INCOMING_CALL_VISIBILITY_CHANGED);
-  }
+    @Override
+    public void onStateChange(InCallState oldState, InCallState newState, CallList callList) {
+        if (oldState != null
+                && oldState.isConnectingOrConnected()
+                && newState == InCallState.NO_CALLS) {
+            sendInCallUiBroadcast(false);
+        }
+    }
+
+    private void sendInCallUiBroadcast(boolean visible) {
+        LogUtil.d(
+                "MotorolaInCallUiNotifier.sendInCallUiBroadcast",
+                "Send InCallUi Broadcast, visible: " + visible);
+        Intent intent = new Intent();
+        intent.putExtra(EXTRA_VISIBLE_KEY, visible);
+        intent.setAction(ACTION_INCOMING_CALL_VISIBILITY_CHANGED);
+        context.sendBroadcast(intent, PERMISSION_INCOMING_CALL_VISIBILITY_CHANGED);
+    }
 }

@@ -17,6 +17,7 @@
 package com.android.contacts.common.model.dataitem;
 
 import android.content.ContentValues;
+import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Identity;
 
 /**
@@ -25,15 +26,15 @@ import android.provider.ContactsContract.CommonDataKinds.Identity;
  */
 public class IdentityDataItem extends DataItem {
 
-  /* package */ IdentityDataItem(ContentValues values) {
-    super(values);
-  }
+    /* package */ IdentityDataItem(ContentValues values) {
+        super(values);
+    }
 
-  public String getIdentity() {
-    return getContentValues().getAsString(Identity.IDENTITY);
-  }
+    public String getIdentity() {
+        return getContentValues().getAsString(Identity.IDENTITY);
+    }
 
-  public String getNamespace() {
-    return getContentValues().getAsString(Identity.NAMESPACE);
-  }
+    public String getNamespace() {
+        return getContentValues().getAsString(Identity.NAMESPACE);
+    }
 }

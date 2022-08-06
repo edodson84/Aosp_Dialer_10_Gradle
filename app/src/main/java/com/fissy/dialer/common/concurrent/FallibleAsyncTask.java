@@ -17,8 +17,9 @@
 package com.fissy.dialer.common.concurrent;
 
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.fissy.dialer.common.concurrent.FallibleAsyncTask.FallibleTaskResult;
 import com.google.auto.value.AutoValue;
 
@@ -27,70 +28,76 @@ import com.google.auto.value.AutoValue;
  * #doInBackground(Object[])} to {@link #onPostExecute(Object)} through a {@link
  * FallibleTaskResult}.
  *
- * @param <ParamsT> the type of the parameters sent to the task upon execution
+ * @param <ParamsT>   the type of the parameters sent to the task upon execution
  * @param <ProgressT> the type of the progress units published during the background computation
- * @param <ResultT> the type of the result of the background computation
+ * @param <ResultT>   the type of the result of the background computation
  * @deprecated Please use {@link DialerExecutors}.
  */
 @Deprecated
 public abstract class FallibleAsyncTask<ParamsT, ProgressT, ResultT>
-    extends AsyncTask<ParamsT, ProgressT, FallibleTaskResult<ResultT>> {
+        extends AsyncTask<ParamsT, ProgressT, FallibleTaskResult<ResultT>> {
 
-  @Override
-  protected final FallibleTaskResult<ResultT> doInBackground(ParamsT... params) {
-    try {
-      return FallibleTaskResult.createSuccessResult(doInBackgroundFallible(params));
-    } catch (Throwable t) {
-      return FallibleTaskResult.createFailureResult(t);
-    }
-  }
-
-  /** Performs background work that may result in a Throwable. */
-  @Nullable
-  protected abstract ResultT doInBackgroundFallible(ParamsT... params) throws Throwable;
-
-  /**
-   * Holds the result of processing from {@link #doInBackground(Object[])}.
-   *
-   * @param <ResultT> the type of the result of the background computation
-   */
-  @AutoValue
-  public abstract static class FallibleTaskResult<ResultT> {
-
-    /** Creates an instance of FallibleTaskResult for the given throwable. */
-    private static <ResultT> FallibleTaskResult<ResultT> createFailureResult(@NonNull Throwable t) {
-      return new AutoValue_FallibleAsyncTask_FallibleTaskResult<>(t, null);
-    }
-
-    /** Creates an instance of FallibleTaskResult for the given result. */
-    private static <ResultT> FallibleTaskResult<ResultT> createSuccessResult(
-        @Nullable ResultT result) {
-      return new AutoValue_FallibleAsyncTask_FallibleTaskResult<>(null, result);
+    @Override
+    protected final FallibleTaskResult<ResultT> doInBackground(ParamsT... params) {
+        try {
+            return FallibleTaskResult.createSuccessResult(doInBackgroundFallible(params));
+        } catch (Throwable t) {
+            return FallibleTaskResult.createFailureResult(t);
+        }
     }
 
     /**
-     * Returns the Throwable thrown in {@link #doInBackground(Object[])}, or {@code null} if
-     * background work completed without throwing.
+     * Performs background work that may result in a Throwable.
      */
     @Nullable
-    public abstract Throwable getThrowable();
+    protected abstract ResultT doInBackgroundFallible(ParamsT... params) throws Throwable;
 
     /**
-     * Returns the result of {@link #doInBackground(Object[])}, which may be {@code null}, or {@code
-     * null} if the background work threw a Throwable.
+     * Holds the result of processing from {@link #doInBackground(Object[])}.
      *
-     * <p>Use {@link #isFailure()} to determine if a {@code null} return is the result of a
-     * Throwable from the background work.
+     * @param <ResultT> the type of the result of the background computation
      */
-    @Nullable
-    public abstract ResultT getResult();
+    @AutoValue
+    public abstract static class FallibleTaskResult<ResultT> {
 
-    /**
-     * Returns {@code true} if this object is the result of background work that threw a Throwable.
-     */
-    public boolean isFailure() {
-      //noinspection ThrowableResultOfMethodCallIgnored
-      return getThrowable() != null;
+        /**
+         * Creates an instance of FallibleTaskResult for the given throwable.
+         */
+        private static <ResultT> FallibleTaskResult<ResultT> createFailureResult(@NonNull Throwable t) {
+            return new AutoValue_FallibleAsyncTask_FallibleTaskResult<>(t, null);
+        }
+
+        /**
+         * Creates an instance of FallibleTaskResult for the given result.
+         */
+        private static <ResultT> FallibleTaskResult<ResultT> createSuccessResult(
+                @Nullable ResultT result) {
+            return new AutoValue_FallibleAsyncTask_FallibleTaskResult<>(null, result);
+        }
+
+        /**
+         * Returns the Throwable thrown in {@link #doInBackground(Object[])}, or {@code null} if
+         * background work completed without throwing.
+         */
+        @Nullable
+        public abstract Throwable getThrowable();
+
+        /**
+         * Returns the result of {@link #doInBackground(Object[])}, which may be {@code null}, or {@code
+         * null} if the background work threw a Throwable.
+         *
+         * <p>Use {@link #isFailure()} to determine if a {@code null} return is the result of a
+         * Throwable from the background work.
+         */
+        @Nullable
+        public abstract ResultT getResult();
+
+        /**
+         * Returns {@code true} if this object is the result of background work that threw a Throwable.
+         */
+        public boolean isFailure() {
+            //noinspection ThrowableResultOfMethodCallIgnored
+            return getThrowable() != null;
+        }
     }
-  }
 }

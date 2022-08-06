@@ -4,13 +4,15 @@
 package com.fissy.dialer;
 
 public final class CallConfigurationOuterClass {
-  private CallConfigurationOuterClass() {}
-  public static void registerAllExtensions(
-      com.google.protobuf.ExtensionRegistryLite registry) {
-  }
+    static {
+    }
 
-  static {
-  }
+    private CallConfigurationOuterClass() {
+    }
 
-  // @@protoc_insertion_point(outer_class_scope)
+    public static void registerAllExtensions(
+            com.google.protobuf.ExtensionRegistryLite registry) {
+    }
+
+    // @@protoc_insertion_point(outer_class_scope)
 }

@@ -16,33 +16,37 @@
 
 package com.fissy.dialer.smartdial.map;
 
-import android.support.v4.util.SimpleArrayMap;
+import androidx.collection.SimpleArrayMap;
+
 import com.fissy.dialer.dialpadview.DialpadCharMappings;
 import com.google.common.base.Optional;
 
-/** A {@link SmartDialMap} for the Ukrainian alphabet. */
+/**
+ * A {@link SmartDialMap} for the Ukrainian alphabet.
+ */
 final class UkrainianSmartDialMap extends SmartDialMap {
 
-  private static UkrainianSmartDialMap instance;
+    private static UkrainianSmartDialMap instance;
 
-  static UkrainianSmartDialMap getInstance() {
-    if (instance == null) {
-      instance = new UkrainianSmartDialMap();
+    private UkrainianSmartDialMap() {
     }
 
-    return instance;
-  }
+    static UkrainianSmartDialMap getInstance() {
+        if (instance == null) {
+            instance = new UkrainianSmartDialMap();
+        }
 
-  private UkrainianSmartDialMap() {}
+        return instance;
+    }
 
-  @Override
-  Optional<Character> normalizeCharacter(char ch) {
-    ch = Character.toLowerCase(ch);
-    return isValidDialpadAlphabeticChar(ch) ? Optional.of(ch) : Optional.absent();
-  }
+    @Override
+    Optional<Character> normalizeCharacter(char ch) {
+        ch = Character.toLowerCase(ch);
+        return isValidDialpadAlphabeticChar(ch) ? Optional.of(ch) : Optional.absent();
+    }
 
-  @Override
-  SimpleArrayMap<Character, Character> getCharToKeyMap() {
-    return DialpadCharMappings.getCharToKeyMap("ukr");
-  }
+    @Override
+    SimpleArrayMap<Character, Character> getCharToKeyMap() {
+        return DialpadCharMappings.getCharToKeyMap("ukr");
+    }
 }

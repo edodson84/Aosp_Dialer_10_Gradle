@@ -1,21 +1,22 @@
 package com.fissy.dialer.metrics;
 
-import dagger.internal.Factory;
 import javax.annotation.Generated;
 
+import dagger.internal.Factory;
+
 @Generated(
-  value = "dagger.internal.codegen.ComponentProcessor",
-  comments = "https://google.github.io/dagger"
+        value = "dagger.internal.codegen.ComponentProcessor",
+        comments = "https://google.github.io/dagger"
 )
 public enum StubMetricsInitializer_Factory implements Factory<StubMetricsInitializer> {
-  INSTANCE;
+    INSTANCE;
 
-  @Override
-  public StubMetricsInitializer get() {
-    return new StubMetricsInitializer();
-  }
+    public static Factory<StubMetricsInitializer> create() {
+        return INSTANCE;
+    }
 
-  public static Factory<StubMetricsInitializer> create() {
-    return INSTANCE;
-  }
+    @Override
+    public StubMetricsInitializer get() {
+        return new StubMetricsInitializer();
+    }
 }

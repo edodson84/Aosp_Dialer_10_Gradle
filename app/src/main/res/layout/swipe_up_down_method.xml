@@ -1,15 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout android:clipChildren="false" android:clipToPadding="false" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginStart="@dimen/answer_swipe_dead_zone_sides" android:layout_marginEnd="@dimen/answer_swipe_dead_zone_sides"
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <LinearLayout android:layout_gravity="bottom|center" android:orientation="vertical" android:id="@id/incoming_swipe_to_answer_container" android:visibility="visible" android:clipChildren="false" android:clipToPadding="false" android:layout_width="fill_parent" android:layout_height="wrap_content" android:accessibilityLiveRegion="polite">
-        <TextView android:textSize="16.0sp" android:textColor="@color/blue_grey_100" android:gravity="center_horizontal" android:layout_gravity="center_horizontal" android:id="@id/incoming_will_disconnect_text" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="116.0dip" android:text="@string/call_incoming_will_disconnect" android:alpha="0.0" />
-        <Space android:id="@id/incoming_bouncer_space_holder" android:visibility="visible" android:layout_width="fill_parent" android:layout_height="50.0dip" />
-        <TextView android:textAppearance="@style/Dialer.Incall.TextAppearance.Hint" android:gravity="center_horizontal" android:layout_gravity="center_horizontal" android:id="@id/incoming_swipe_to_answer_text" android:focusable="false" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="18.0dip" android:text="@string/call_incoming_swipe_to_answer" android:textAlignment="center" />
-        <FrameLayout android:layout_gravity="center_horizontal" android:id="@id/incoming_call_puck_container" android:clipChildren="false" android:clipToPadding="false" android:layout_width="@dimen/answer_contact_puck_size_photo" android:layout_height="@dimen/answer_contact_puck_size_photo" android:layout_marginBottom="10.0dip" android:contentDescription="@string/a11y_incoming_call_swipe_to_answer">
-            <ImageView android:layout_gravity="center" android:id="@id/incoming_call_puck_bg" android:background="@drawable/circular_background" android:focusable="false" android:duplicateParentState="true" android:layout_width="@dimen/answer_contact_puck_size_no_photo" android:layout_height="@dimen/answer_contact_puck_size_no_photo" android:contentDescription="@null" android:elevation="8.0dip" android:stateListAnimator="@animator/activated_button_elevation" />
-            <ImageView android:layout_gravity="center" android:id="@id/incoming_call_puck_icon" android:focusable="false" android:duplicateParentState="true" android:layout_width="30.0dip" android:layout_height="30.0dip" android:src="@drawable/quantum_ic_call_white_24" android:tint="@color/dialer_call_green" android:contentDescription="@null" android:tintMode="src_atop" android:elevation="16.0dip" android:outlineProvider="none" />
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_marginStart="@dimen/answer_swipe_dead_zone_sides"
+    android:layout_marginEnd="@dimen/answer_swipe_dead_zone_sides"
+    android:clipChildren="false"
+    android:clipToPadding="false">
+
+    <LinearLayout
+        android:id="@id/incoming_swipe_to_answer_container"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:accessibilityLiveRegion="polite"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@id/incoming_will_disconnect_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="116.0dip"
+            android:alpha="0.0"
+            android:gravity="center_horizontal"
+            android:text="@string/call_incoming_will_disconnect"
+            android:textColor="@color/blue_grey_100"
+            android:textSize="16.0sp"
+            android:visibility="gone" />
+
+        <Space
+            android:id="@id/incoming_bouncer_space_holder"
+            android:layout_width="fill_parent"
+            android:layout_height="50.0dip"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@id/incoming_swipe_to_answer_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="18.0dip"
+            android:focusable="false"
+            android:gravity="center_horizontal"
+            android:text="@string/call_incoming_swipe_to_answer"
+            android:textAlignment="center"
+            android:textAppearance="@style/Dialer.Incall.TextAppearance.Hint" />
+
+        <FrameLayout
+            android:id="@id/incoming_call_puck_container"
+            android:layout_width="@dimen/answer_contact_puck_size_photo"
+            android:layout_height="@dimen/answer_contact_puck_size_photo"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10.0dip"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:contentDescription="@string/a11y_incoming_call_swipe_to_answer">
+
+            <ImageView
+                android:id="@id/incoming_call_puck_bg"
+                android:layout_width="@dimen/answer_contact_puck_size_no_photo"
+                android:layout_height="@dimen/answer_contact_puck_size_no_photo"
+                android:layout_gravity="center"
+                android:background="@drawable/circular_background"
+                android:contentDescription="@null"
+                android:duplicateParentState="true"
+                android:elevation="8.0dip"
+                android:focusable="false"
+                android:stateListAnimator="@animator/activated_button_elevation" />
+
+            <ImageView
+                android:id="@id/incoming_call_puck_icon"
+                android:layout_width="30.0dip"
+                android:layout_height="30.0dip"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                android:duplicateParentState="true"
+                android:elevation="16.0dip"
+                android:focusable="false"
+                android:outlineProvider="none"
+                android:src="@drawable/quantum_ic_call_white_24"
+                android:tint="@color/dialer_call_green"
+                android:tintMode="src_atop" />
         </FrameLayout>
-        <TextView android:textAppearance="@style/Dialer.Incall.TextAppearance.Hint" android:gravity="center_horizontal" android:layout_gravity="center_horizontal" android:id="@id/incoming_swipe_to_reject_text" android:focusable="false" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="20.0dip" android:text="@string/call_incoming_swipe_to_reject" android:alpha="0.0" />
+
+        <TextView
+            android:id="@id/incoming_swipe_to_reject_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="20.0dip"
+            android:alpha="0.0"
+            android:focusable="false"
+            android:gravity="center_horizontal"
+            android:text="@string/call_incoming_swipe_to_reject"
+            android:textAppearance="@style/Dialer.Incall.TextAppearance.Hint" />
     </LinearLayout>
-    <FrameLayout android:id="@id/hint_container" android:clipChildren="false" android:clipToPadding="false" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+
+    <FrameLayout
+        android:id="@id/hint_container"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false" />
 </FrameLayout>

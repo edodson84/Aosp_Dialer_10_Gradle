@@ -22,10 +22,10 @@ package com.android.voicemail;
  */
 public interface CarrierConfigKeys {
 
-  /**
-   * Carrier config key whose value will be 'true' for carriers that allow over the top voicemail
-   * transcription.
-   */
-  String VVM_CARRIER_ALLOWS_OTT_TRANSCRIPTION_STRING =
-      "vvm_carrier_allows_ott_transcription_string";
+    /**
+     * Carrier config key whose value will be 'true' for carriers that allow over the top voicemail
+     * transcription.
+     */
+    String VVM_CARRIER_ALLOWS_OTT_TRANSCRIPTION_STRING =
+            "vvm_carrier_allows_ott_transcription_string";
 }

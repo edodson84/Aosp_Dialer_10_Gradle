@@ -20,11 +20,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telecom.PhoneAccountHandle;
-import com.fissy.dialer.proguard.UsedByReflection;
+
 import com.android.voicemail.impl.VoicemailStatus;
 import com.android.voicemail.impl.VvmLog;
 import com.android.voicemail.impl.scheduling.BaseTask;
 import com.android.voicemail.impl.scheduling.PostponePolicy;
+import com.fissy.dialer.proguard.UsedByReflection;
 
 /**
  * Upload task triggered by database changes. Will wait until the database has been stable for
@@ -33,36 +34,36 @@ import com.android.voicemail.impl.scheduling.PostponePolicy;
 @UsedByReflection(value = "Tasks.java")
 public class UploadTask extends BaseTask {
 
-  private static final String TAG = "VvmUploadTask";
+    private static final String TAG = "VvmUploadTask";
 
-  private static final int POSTPONE_MILLIS = 5_000;
+    private static final int POSTPONE_MILLIS = 5_000;
 
-  public UploadTask() {
-    super(TASK_UPLOAD);
-    addPolicy(new PostponePolicy(POSTPONE_MILLIS));
-  }
-
-  public static void start(Context context, PhoneAccountHandle phoneAccountHandle) {
-    Intent intent = BaseTask.createIntent(context, UploadTask.class, phoneAccountHandle);
-    context.sendBroadcast(intent);
-  }
-
-  @Override
-  public void onCreate(Context context, Bundle extras) {
-    super.onCreate(context, extras);
-  }
-
-  @Override
-  public void onExecuteInBackgroundThread() {
-    OmtpVvmSyncService service = new OmtpVvmSyncService(getContext());
-
-    PhoneAccountHandle phoneAccountHandle = getPhoneAccountHandle();
-    if (phoneAccountHandle == null) {
-      // This should never happen
-      VvmLog.e(TAG, "null phone account for phoneAccountHandle " + getPhoneAccountHandle());
-      return;
+    public UploadTask() {
+        super(TASK_UPLOAD);
+        addPolicy(new PostponePolicy(POSTPONE_MILLIS));
     }
-    service.sync(
-        this, phoneAccountHandle, null, VoicemailStatus.edit(getContext(), phoneAccountHandle));
-  }
+
+    public static void start(Context context, PhoneAccountHandle phoneAccountHandle) {
+        Intent intent = BaseTask.createIntent(context, UploadTask.class, phoneAccountHandle);
+        context.sendBroadcast(intent);
+    }
+
+    @Override
+    public void onCreate(Context context, Bundle extras) {
+        super.onCreate(context, extras);
+    }
+
+    @Override
+    public void onExecuteInBackgroundThread() {
+        OmtpVvmSyncService service = new OmtpVvmSyncService(getContext());
+
+        PhoneAccountHandle phoneAccountHandle = getPhoneAccountHandle();
+        if (phoneAccountHandle == null) {
+            // This should never happen
+            VvmLog.e(TAG, "null phone account for phoneAccountHandle " + getPhoneAccountHandle());
+            return;
+        }
+        service.sync(
+                this, phoneAccountHandle, null, VoicemailStatus.edit(getContext(), phoneAccountHandle));
+    }
 }

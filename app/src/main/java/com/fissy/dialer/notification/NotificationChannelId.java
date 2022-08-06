@@ -16,26 +16,29 @@
 
 package com.fissy.dialer.notification;
 
-import android.support.annotation.StringDef;
+import androidx.annotation.StringDef;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-/** Centralized source of all notification channels used by Dialer. */
+/**
+ * Centralized source of all notification channels used by Dialer.
+ */
 @Retention(RetentionPolicy.SOURCE)
 @StringDef({
-  NotificationChannelId.INCOMING_CALL,
-  NotificationChannelId.ONGOING_CALL,
-  NotificationChannelId.MISSED_CALL,
-  NotificationChannelId.DEFAULT,
+        NotificationChannelId.INCOMING_CALL,
+        NotificationChannelId.ONGOING_CALL,
+        NotificationChannelId.MISSED_CALL,
+        NotificationChannelId.DEFAULT,
 })
 public @interface NotificationChannelId {
-  // This value is white listed in the system.
-  // See /vendor/google/nexus_overlay/common/frameworks/base/core/res/res/values/config.xml
-  String INCOMING_CALL = "phone_incoming_call";
+    // This value is white listed in the system.
+    // See /vendor/google/nexus_overlay/common/frameworks/base/core/res/res/values/config.xml
+    String INCOMING_CALL = "phone_incoming_call";
 
-  String ONGOING_CALL = "phone_ongoing_call";
+    String ONGOING_CALL = "phone_ongoing_call";
 
-  String MISSED_CALL = "phone_missed_call";
+    String MISSED_CALL = "phone_missed_call";
 
-  String DEFAULT = "phone_default";
+    String DEFAULT = "phone_default";
 }

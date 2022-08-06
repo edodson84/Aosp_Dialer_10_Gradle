@@ -17,6 +17,7 @@
 package com.android.contacts.common.model.dataitem;
 
 import android.content.ContentValues;
+import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Email;
 
 /**
@@ -25,23 +26,23 @@ import android.provider.ContactsContract.CommonDataKinds.Email;
  */
 public class EmailDataItem extends DataItem {
 
-  /* package */ EmailDataItem(ContentValues values) {
-    super(values);
-  }
+    /* package */ EmailDataItem(ContentValues values) {
+        super(values);
+    }
 
-  public String getAddress() {
-    return getContentValues().getAsString(Email.ADDRESS);
-  }
+    public String getAddress() {
+        return getContentValues().getAsString(Email.ADDRESS);
+    }
 
-  public String getDisplayName() {
-    return getContentValues().getAsString(Email.DISPLAY_NAME);
-  }
+    public String getDisplayName() {
+        return getContentValues().getAsString(Email.DISPLAY_NAME);
+    }
 
-  public String getData() {
-    return getContentValues().getAsString(Email.DATA);
-  }
+    public String getData() {
+        return getContentValues().getAsString(Email.DATA);
+    }
 
-  public String getLabel() {
-    return getContentValues().getAsString(Email.LABEL);
-  }
+    public String getLabel() {
+        return getContentValues().getAsString(Email.LABEL);
+    }
 }

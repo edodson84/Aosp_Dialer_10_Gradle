@@ -16,36 +16,44 @@
 
 package com.android.incallui.answer.impl.answermethod;
 
-import android.support.annotation.FloatRange;
+import androidx.annotation.FloatRange;
 
-/** Defines callbacks {@link AnswerMethod AnswerMethods} may use to update their parent. */
+/**
+ * Defines callbacks {@link AnswerMethod AnswerMethods} may use to update their parent.
+ */
 public interface AnswerMethodHolder {
 
-  /**
-   * Update animation based on method progress.
-   *
-   * @param answerProgress float representing progress. -1 is fully declined, 1 is fully answered,
-   *     and 0 is neutral.
-   */
-  void onAnswerProgressUpdate(@FloatRange(from = -1f, to = 1f) float answerProgress);
+    /**
+     * Update animation based on method progress.
+     *
+     * @param answerProgress float representing progress. -1 is fully declined, 1 is fully answered,
+     *                       and 0 is neutral.
+     */
+    void onAnswerProgressUpdate(@FloatRange(from = -1f, to = 1f) float answerProgress);
 
-  /** Answer the current call. */
-  void answerFromMethod();
+    /**
+     * Answer the current call.
+     */
+    void answerFromMethod();
 
-  /** Reject the current call. */
-  void rejectFromMethod();
+    /**
+     * Reject the current call.
+     */
+    void rejectFromMethod();
 
-  /** Set AnswerProgress to zero (not due to normal updates). */
-  void resetAnswerProgress();
+    /**
+     * Set AnswerProgress to zero (not due to normal updates).
+     */
+    void resetAnswerProgress();
 
-  /**
-   * Check whether the current call is a video call.
-   *
-   * @return true iff the current call is a video call.
-   */
-  boolean isVideoCall();
+    /**
+     * Check whether the current call is a video call.
+     *
+     * @return true iff the current call is a video call.
+     */
+    boolean isVideoCall();
 
-  boolean isVideoUpgradeRequest();
+    boolean isVideoUpgradeRequest();
 
-  boolean isRttCall();
+    boolean isRttCall();
 }

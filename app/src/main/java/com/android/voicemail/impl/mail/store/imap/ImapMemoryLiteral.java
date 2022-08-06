@@ -18,52 +18,54 @@ package com.android.voicemail.impl.mail.store.imap;
 
 import com.android.voicemail.impl.VvmLog;
 import com.android.voicemail.impl.mail.FixedLengthInputStream;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 
-/** Subclass of {@link ImapString} used for literals backed by an in-memory byte array. */
+/**
+ * Subclass of {@link ImapString} used for literals backed by an in-memory byte array.
+ */
 public class ImapMemoryLiteral extends ImapString {
-  private final String TAG = "ImapMemoryLiteral";
-  private byte[] data;
+    private final String TAG = "ImapMemoryLiteral";
+    private byte[] data;
 
-  /* package */ ImapMemoryLiteral(FixedLengthInputStream in) throws IOException {
-    // We could use ByteArrayOutputStream and IOUtils.copy, but it'd perform an unnecessary
-    // copy....
-    data = new byte[in.getLength()];
-    int pos = 0;
-    while (pos < data.length) {
-      int read = in.read(data, pos, data.length - pos);
-      if (read < 0) {
-        break;
-      }
-      pos += read;
+    /* package */ ImapMemoryLiteral(FixedLengthInputStream in) throws IOException {
+        // We could use ByteArrayOutputStream and IOUtils.copy, but it'd perform an unnecessary
+        // copy....
+        data = new byte[in.getLength()];
+        int pos = 0;
+        while (pos < data.length) {
+            int read = in.read(data, pos, data.length - pos);
+            if (read < 0) {
+                break;
+            }
+            pos += read;
+        }
+        if (pos != data.length) {
+            VvmLog.w(TAG, "length mismatch");
+        }
     }
-    if (pos != data.length) {
-      VvmLog.w(TAG, "length mismatch");
+
+    @Override
+    public void destroy() {
+        data = null;
+        super.destroy();
     }
-  }
 
-  @Override
-  public void destroy() {
-    data = null;
-    super.destroy();
-  }
+    @Override
+    public String getString() {
+        return new String(data, StandardCharsets.US_ASCII);
+    }
 
-  @Override
-  public String getString() {
-      return new String(data, StandardCharsets.US_ASCII);
-  }
+    @Override
+    public InputStream getAsStream() {
+        return new ByteArrayInputStream(data);
+    }
 
-  @Override
-  public InputStream getAsStream() {
-    return new ByteArrayInputStream(data);
-  }
-
-  @Override
-  public String toString() {
-    return String.format("{%d byte literal(memory)}", data.length);
-  }
+    @Override
+    public String toString() {
+        return String.format("{%d byte literal(memory)}", data.length);
+    }
 }

@@ -17,45 +17,56 @@
 package com.android.bubble.stub;
 
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
+
 import com.android.bubble.Bubble;
 import com.android.bubble.BubbleInfo;
+
 import java.util.List;
+
 import javax.inject.Inject;
 
 public class BubbleStub implements Bubble {
 
-  @Inject
-  public BubbleStub() {}
+    @Inject
+    public BubbleStub() {
+    }
 
-  @Override
-  public void show() {}
+    @Override
+    public void show() {
+    }
 
-  @Override
-  public void hide() {}
+    @Override
+    public void hide() {
+    }
 
-  @Override
-  public boolean isVisible() {
-    return false;
-  }
+    @Override
+    public boolean isVisible() {
+        return false;
+    }
 
-  @Override
-  public boolean isDismissed() {
-    return false;
-  }
+    @Override
+    public boolean isDismissed() {
+        return false;
+    }
 
-  @Override
-  public void setBubbleInfo(@NonNull BubbleInfo bubbleInfo) {}
+    @Override
+    public void setBubbleInfo(@NonNull BubbleInfo bubbleInfo) {
+    }
 
-  @Override
-  public void updateActions(@NonNull List<BubbleInfo.Action> actions) {}
+    @Override
+    public void updateActions(@NonNull List<BubbleInfo.Action> actions) {
+    }
 
-  @Override
-  public void updatePhotoAvatar(@NonNull Drawable avatar) {}
+    @Override
+    public void updatePhotoAvatar(@NonNull Drawable avatar) {
+    }
 
-  @Override
-  public void updateAvatar(@NonNull Drawable avatar) {}
+    @Override
+    public void updateAvatar(@NonNull Drawable avatar) {
+    }
 
-  @Override
-  public void showText(@NonNull CharSequence text) {}
+    @Override
+    public void showText(@NonNull CharSequence text) {
+    }
 }

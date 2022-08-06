@@ -19,12 +19,16 @@ package com.fissy.dialer.util;
 import android.content.Context;
 import android.content.res.Configuration;
 
-/** Static methods related to device orientation. */
+/**
+ * Static methods related to device orientation.
+ */
 public class OrientationUtil {
 
-  /** @return if the context is in landscape orientation. */
-  public static boolean isLandscape(Context context) {
-    return context.getResources().getConfiguration().orientation
-        == Configuration.ORIENTATION_LANDSCAPE;
-  }
+    /**
+     * @return if the context is in landscape orientation.
+     */
+    public static boolean isLandscape(Context context) {
+        return context.getResources().getConfiguration().orientation
+                == Configuration.ORIENTATION_LANDSCAPE;
+    }
 }

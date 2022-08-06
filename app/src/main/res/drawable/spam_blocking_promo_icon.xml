@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list
-  xmlns:android="http://schemas.android.com/apk/res/android">
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape android:shape="oval">
             <solid android:color="#ffa52714" />
-            <size android:height="@android:dimen/notification_large_icon_height" android:width="@android:dimen/notification_large_icon_width" />
+            <size
+                android:width="@android:dimen/notification_large_icon_width"
+                android:height="@android:dimen/notification_large_icon_height" />
         </shape>
     </item>
-    <item android:gravity="center" android:drawable="@drawable/quantum_ic_report_white_36" />
+    <item
+        android:drawable="@drawable/quantum_ic_report_white_36"
+        android:gravity="center" />
 </layer-list>

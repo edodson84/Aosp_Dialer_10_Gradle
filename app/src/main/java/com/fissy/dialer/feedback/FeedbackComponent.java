@@ -17,27 +17,33 @@
 package com.fissy.dialer.feedback;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import com.fissy.dialer.inject.HasRootComponent;
+import androidx.annotation.NonNull;
+
 import com.android.incallui.call.CallList;
+import com.fissy.dialer.inject.HasRootComponent;
+
 import dagger.Subcomponent;
 
-/** Subcomponent that can be used to access the feedback implementation. */
+/**
+ * Subcomponent that can be used to access the feedback implementation.
+ */
 @Subcomponent
 public abstract class FeedbackComponent {
-  @NonNull
-  public abstract CallList.Listener getCallFeedbackListener();
+    public static FeedbackComponent get(Context context) {
+        return ((HasComponent) ((HasRootComponent) context.getApplicationContext()).component())
+                .feedbackComponent();
+    }
 
-  @NonNull
-  public abstract FeedbackSender getCallFeedbackSender();
+    @NonNull
+    public abstract CallList.Listener getCallFeedbackListener();
 
-  public static FeedbackComponent get(Context context) {
-    return ((HasComponent) ((HasRootComponent) context.getApplicationContext()).component())
-        .feedbackComponent();
-  }
+    @NonNull
+    public abstract FeedbackSender getCallFeedbackSender();
 
-  /** Used to refer to the root application component. */
-  public interface HasComponent {
-    FeedbackComponent feedbackComponent();
-  }
+    /**
+     * Used to refer to the root application component.
+     */
+    public interface HasComponent {
+        FeedbackComponent feedbackComponent();
+    }
 }

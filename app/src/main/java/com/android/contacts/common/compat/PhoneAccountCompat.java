@@ -18,36 +18,38 @@ package com.android.contacts.common.compat;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.Icon;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.telecom.PhoneAccount;
 
-/** Compatiblity class for {@link android.telecom.PhoneAccount} */
+/**
+ * Compatiblity class for {@link android.telecom.PhoneAccount}
+ */
 public class PhoneAccountCompat {
 
-  /**
-   * Builds and returns an icon {@code Drawable} to represent this {@code PhoneAccount} in a user
-   * interface.
-   *
-   * @param phoneAccount the PhoneAccount from which to build the icon.
-   * @param context A {@code Context} to use for loading Drawables.
-   * @return An icon for this PhoneAccount, or null
-   */
-  @Nullable
-  public static Drawable createIconDrawable(
-      @Nullable PhoneAccount phoneAccount, @Nullable Context context) {
-    if (phoneAccount == null || context == null) {
-      return null;
+    /**
+     * Builds and returns an icon {@code Drawable} to represent this {@code PhoneAccount} in a user
+     * interface.
+     *
+     * @param phoneAccount the PhoneAccount from which to build the icon.
+     * @param context      A {@code Context} to use for loading Drawables.
+     * @return An icon for this PhoneAccount, or null
+     */
+    @Nullable
+    public static Drawable createIconDrawable(
+            @Nullable PhoneAccount phoneAccount, @Nullable Context context) {
+        if (phoneAccount == null || context == null) {
+            return null;
+        }
+        return createIconDrawableMarshmallow(phoneAccount, context);
     }
-    return createIconDrawableMarshmallow(phoneAccount, context);
-  }
 
-  @Nullable
-  private static Drawable createIconDrawableMarshmallow(
-      PhoneAccount phoneAccount, Context context) {
-    Icon accountIcon = phoneAccount.getIcon();
-    if (accountIcon == null) {
-      return null;
+    @Nullable
+    private static Drawable createIconDrawableMarshmallow(
+            PhoneAccount phoneAccount, Context context) {
+        Icon accountIcon = phoneAccount.getIcon();
+        if (accountIcon == null) {
+            return null;
+        }
+        return accountIcon.loadDrawable(context);
     }
-    return accountIcon.loadDrawable(context);
-  }
 }

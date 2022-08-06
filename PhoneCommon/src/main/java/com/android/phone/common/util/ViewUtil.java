@@ -32,12 +32,21 @@ import com.android.phone.common.R;
  * Provides static functions to work with views
  */
 public class ViewUtil {
-    private ViewUtil() {}
+    private static final ViewOutlineProvider OVAL_OUTLINE_PROVIDER = new ViewOutlineProvider() {
+        @Override
+        public void getOutline(View view, Outline outline) {
+            outline.setOval(0, 0, view.getWidth(), view.getHeight());
+        }
+    };
+
+    private ViewUtil() {
+    }
 
     /**
      * Returns the width as specified in the LayoutParams
+     *
      * @throws IllegalStateException Thrown if the view's width is unknown before a layout pass
-     * s
+     *                               s
      */
     public static int getConstantPreLayoutWidth(View view) {
         // We haven't been layed out yet, so get the size from the LayoutParams
@@ -59,17 +68,11 @@ public class ViewUtil {
         return view.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL;
     }
 
-    private static final ViewOutlineProvider OVAL_OUTLINE_PROVIDER = new ViewOutlineProvider() {
-        @Override
-        public void getOutline(View view, Outline outline) {
-            outline.setOval(0, 0, view.getWidth(), view.getHeight());
-        }
-    };
-
     /**
      * Configures the floating action button, clipping it to a circle and setting its translation z.
+     *
      * @param view The float action button's view.
-     * @param res The resources file.
+     * @param res  The resources file.
      */
     public static void setupFloatingActionButton(View view, Resources res) {
         view.setOutlineProvider(OVAL_OUTLINE_PROVIDER);
@@ -82,7 +85,7 @@ public class ViewUtil {
      * does not obscure any content.
      *
      * @param listView to add the padding to
-     * @param res valid resources object
+     * @param res      valid resources object
      */
     public static void addBottomPaddingToListViewForFab(ListView listView, Resources res) {
         final int fabPadding = res.getDimensionPixelSize(

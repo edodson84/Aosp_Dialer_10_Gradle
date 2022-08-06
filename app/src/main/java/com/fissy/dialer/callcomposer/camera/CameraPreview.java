@@ -22,8 +22,10 @@ import android.hardware.Camera;
 import android.view.View;
 import android.view.View.MeasureSpec;
 import android.view.View.OnTouchListener;
+
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.util.PermissionsUtil;
+
 import java.io.IOException;
 
 /**
@@ -32,146 +34,149 @@ import java.io.IOException;
  * helper class. Specifics for each implementation are in CameraPreviewHost
  */
 public class CameraPreview {
-  /** Implemented by the camera for rendering. */
-  public interface CameraPreviewHost {
-    View getView();
+    private final CameraPreviewHost host;
+    private int cameraWidth = -1;
+    private int cameraHeight = -1;
+    private boolean tabHasBeenShown = false;
+    private OnTouchListener listener;
 
-    boolean isValid();
-
-    void startPreview(final Camera camera) throws IOException;
-
-    void onCameraPermissionGranted();
-
-    void setShown();
-  }
-
-  private int cameraWidth = -1;
-  private int cameraHeight = -1;
-  private boolean tabHasBeenShown = false;
-  private OnTouchListener listener;
-
-  private final CameraPreviewHost host;
-
-  public CameraPreview(final CameraPreviewHost host) {
-    Assert.isNotNull(host);
-    Assert.isNotNull(host.getView());
-    this.host = host;
-  }
-
-  // This is set when the tab is actually selected.
-  public void setShown() {
-    tabHasBeenShown = true;
-    maybeOpenCamera();
-  }
-
-  // Opening camera is very expensive. Most of the ANR reports seem to be related to the camera.
-  // So we delay until the camera is actually needed.  See a bug
-  private void maybeOpenCamera() {
-    boolean visible = host.getView().getVisibility() == View.VISIBLE;
-    if (tabHasBeenShown && visible && PermissionsUtil.hasCameraPermissions(getContext())) {
-      CameraManager.get().openCamera();
+    public CameraPreview(final CameraPreviewHost host) {
+        Assert.isNotNull(host);
+        Assert.isNotNull(host.getView());
+        this.host = host;
     }
-  }
 
-  public void setSize(final Camera.Size size, final int orientation) {
-    switch (orientation) {
-      case 0:
-      case 180:
-        cameraWidth = size.width;
-        cameraHeight = size.height;
-        break;
-      case 90:
-      case 270:
-      default:
-        cameraWidth = size.height;
-        cameraHeight = size.width;
-    }
-    host.getView().requestLayout();
-  }
-
-  public int getWidthMeasureSpec(final int widthMeasureSpec, final int heightMeasureSpec) {
-    if (cameraHeight >= 0) {
-      final int width = View.MeasureSpec.getSize(widthMeasureSpec);
-      return MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY);
-    } else {
-      return widthMeasureSpec;
-    }
-  }
-
-  public int getHeightMeasureSpec(final int widthMeasureSpec, final int heightMeasureSpec) {
-    if (cameraHeight >= 0) {
-      final int orientation = getContext().getResources().getConfiguration().orientation;
-      final int width = View.MeasureSpec.getSize(widthMeasureSpec);
-      final float aspectRatio = (float) cameraWidth / (float) cameraHeight;
-      int height;
-      if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-        height = (int) (width * aspectRatio);
-      } else {
-        height = (int) (width / aspectRatio);
-      }
-      return View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.EXACTLY);
-    } else {
-      return heightMeasureSpec;
-    }
-  }
-
-  // onVisibilityChanged is set to Visible when the tab is _created_,
-  //   which may be when the user is viewing a different tab.
-  public void onVisibilityChanged(final int visibility) {
-    if (PermissionsUtil.hasCameraPermissions(getContext())) {
-      if (visibility == View.VISIBLE) {
+    // This is set when the tab is actually selected.
+    public void setShown() {
+        tabHasBeenShown = true;
         maybeOpenCamera();
-      } else {
-        CameraManager.get().closeCamera();
-      }
     }
-  }
 
-  public Context getContext() {
-    return host.getView().getContext();
-  }
+    // Opening camera is very expensive. Most of the ANR reports seem to be related to the camera.
+    // So we delay until the camera is actually needed.  See a bug
+    private void maybeOpenCamera() {
+        boolean visible = host.getView().getVisibility() == View.VISIBLE;
+        if (tabHasBeenShown && visible && PermissionsUtil.hasCameraPermissions(getContext())) {
+            CameraManager.get().openCamera();
+        }
+    }
 
-  public void setOnTouchListener(final View.OnTouchListener listener) {
-    this.listener = listener;
-    host.getView().setOnTouchListener(listener);
-  }
+    public void setSize(final Camera.Size size, final int orientation) {
+        switch (orientation) {
+            case 0:
+            case 180:
+                cameraWidth = size.width;
+                cameraHeight = size.height;
+                break;
+            case 90:
+            case 270:
+            default:
+                cameraWidth = size.height;
+                cameraHeight = size.width;
+        }
+        host.getView().requestLayout();
+    }
 
-  public void setFocusable(boolean focusable) {
-    host.getView().setOnTouchListener(focusable ? listener : null);
-  }
+    public int getWidthMeasureSpec(final int widthMeasureSpec, final int heightMeasureSpec) {
+        if (cameraHeight >= 0) {
+            final int width = View.MeasureSpec.getSize(widthMeasureSpec);
+            return MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY);
+        } else {
+            return widthMeasureSpec;
+        }
+    }
 
-  public int getHeight() {
-    return host.getView().getHeight();
-  }
+    public int getHeightMeasureSpec(final int widthMeasureSpec, final int heightMeasureSpec) {
+        if (cameraHeight >= 0) {
+            final int orientation = getContext().getResources().getConfiguration().orientation;
+            final int width = View.MeasureSpec.getSize(widthMeasureSpec);
+            final float aspectRatio = (float) cameraWidth / (float) cameraHeight;
+            int height;
+            if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                height = (int) (width * aspectRatio);
+            } else {
+                height = (int) (width / aspectRatio);
+            }
+            return View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.EXACTLY);
+        } else {
+            return heightMeasureSpec;
+        }
+    }
 
-  public void onAttachedToWindow() {
-    maybeOpenCamera();
-  }
+    // onVisibilityChanged is set to Visible when the tab is _created_,
+    //   which may be when the user is viewing a different tab.
+    public void onVisibilityChanged(final int visibility) {
+        if (PermissionsUtil.hasCameraPermissions(getContext())) {
+            if (visibility == View.VISIBLE) {
+                maybeOpenCamera();
+            } else {
+                CameraManager.get().closeCamera();
+            }
+        }
+    }
 
-  public void onDetachedFromWindow() {
-    CameraManager.get().closeCamera();
-  }
+    public Context getContext() {
+        return host.getView().getContext();
+    }
 
-  public void onRestoreInstanceState() {
-    maybeOpenCamera();
-  }
+    public void setOnTouchListener(final View.OnTouchListener listener) {
+        this.listener = listener;
+        host.getView().setOnTouchListener(listener);
+    }
 
-  public void onCameraPermissionGranted() {
-    maybeOpenCamera();
-  }
+    public void setFocusable(boolean focusable) {
+        host.getView().setOnTouchListener(focusable ? listener : null);
+    }
 
-  /** @return True if the view is valid and prepared for the camera to start showing the preview */
-  public boolean isValid() {
-    return host.isValid();
-  }
+    public int getHeight() {
+        return host.getView().getHeight();
+    }
 
-  /**
-   * Starts the camera preview on the current surface. Abstracts out the differences in API from the
-   * CameraManager
-   *
-   * @throws IOException Which is caught by the CameraManager to display an error
-   */
-  public void startPreview(final Camera camera) throws IOException {
-    host.startPreview(camera);
-  }
+    public void onAttachedToWindow() {
+        maybeOpenCamera();
+    }
+
+    public void onDetachedFromWindow() {
+        CameraManager.get().closeCamera();
+    }
+
+    public void onRestoreInstanceState() {
+        maybeOpenCamera();
+    }
+
+    public void onCameraPermissionGranted() {
+        maybeOpenCamera();
+    }
+
+    /**
+     * @return True if the view is valid and prepared for the camera to start showing the preview
+     */
+    public boolean isValid() {
+        return host.isValid();
+    }
+
+    /**
+     * Starts the camera preview on the current surface. Abstracts out the differences in API from the
+     * CameraManager
+     *
+     * @throws IOException Which is caught by the CameraManager to display an error
+     */
+    public void startPreview(final Camera camera) throws IOException {
+        host.startPreview(camera);
+    }
+
+    /**
+     * Implemented by the camera for rendering.
+     */
+    public interface CameraPreviewHost {
+        View getView();
+
+        boolean isValid();
+
+        void startPreview(final Camera camera) throws IOException;
+
+        void onCameraPermissionGranted();
+
+        void setShown();
+    }
 }

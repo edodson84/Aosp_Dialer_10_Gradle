@@ -16,16 +16,18 @@
 
 package com.android.incallui.rtt.protocol;
 
-/** Callbacks from the module out to the container. */
+/**
+ * Callbacks from the module out to the container.
+ */
 public interface RttCallScreenDelegate {
 
-  void initRttCallScreenDelegate(RttCallScreen rttCallScreen);
+    void initRttCallScreenDelegate(RttCallScreen rttCallScreen);
 
-  void onRttCallScreenUiReady();
+    void onRttCallScreenUiReady();
 
-  void onRttCallScreenUiUnready();
+    void onRttCallScreenUiUnready();
 
-  void onLocalMessage(String message);
+    void onLocalMessage(String message);
 
-  void onSaveRttTranscript();
+    void onSaveRttTranscript();
 }

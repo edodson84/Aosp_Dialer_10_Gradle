@@ -17,27 +17,33 @@
 package com.fissy.dialer.spam;
 
 import android.content.Context;
+
 import com.fissy.dialer.inject.HasRootComponent;
 import com.fissy.dialer.inject.IncludeInDialerRoot;
+
 import dagger.Subcomponent;
 
-/** Dagger component to get Spam. */
+/**
+ * Dagger component to get Spam.
+ */
 @Subcomponent
 public abstract class SpamComponent {
 
-  public abstract Spam spam();
+    public static SpamComponent get(Context context) {
+        return ((SpamComponent.HasComponent)
+                ((HasRootComponent) context.getApplicationContext()).component())
+                .spamComponent();
+    }
 
-  public abstract SpamSettings spamSettings();
+    public abstract Spam spam();
 
-  public static SpamComponent get(Context context) {
-    return ((SpamComponent.HasComponent)
-            ((HasRootComponent) context.getApplicationContext()).component())
-        .spamComponent();
-  }
+    public abstract SpamSettings spamSettings();
 
-  /** Used to refer to the root application component. */
-  @IncludeInDialerRoot
-  public interface HasComponent {
-    SpamComponent spamComponent();
-  }
+    /**
+     * Used to refer to the root application component.
+     */
+    @IncludeInDialerRoot
+    public interface HasComponent {
+        SpamComponent spamComponent();
+    }
 }

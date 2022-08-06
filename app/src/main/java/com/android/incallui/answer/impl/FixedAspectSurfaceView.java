@@ -35,54 +35,55 @@ import com.fissy.dialer.common.Assert;
  */
 public class FixedAspectSurfaceView extends SurfaceView {
 
-  /** Desired width/height ratio */
-  private float aspectRatio;
+    private final boolean scaleWidth;
+    private final boolean scaleHeight;
+    /**
+     * Desired width/height ratio
+     */
+    private float aspectRatio;
 
-  private final boolean scaleWidth;
-  private final boolean scaleHeight;
+    public FixedAspectSurfaceView(Context context, AttributeSet attrs) {
+        super(context, attrs);
 
-  public FixedAspectSurfaceView(Context context, AttributeSet attrs) {
-    super(context, attrs);
-
-    // Get initial aspect ratio from custom attributes
-    TypedArray a =
-        context.getTheme().obtainStyledAttributes(attrs, R.styleable.FixedAspectSurfaceView, 0, 0);
-    scaleHeight = a.getBoolean(R.styleable.FixedAspectSurfaceView_scaleHeight, false);
-    scaleWidth = a.getBoolean(R.styleable.FixedAspectSurfaceView_scaleWidth, false);
-    Assert.checkArgument(scaleHeight != scaleWidth, "Must either scale width or height");
-    setAspectRatio(a.getFloat(R.styleable.FixedAspectSurfaceView_aspectRatio, 1.f));
-    a.recycle();
-  }
-
-  /**
-   * Set the desired aspect ratio for this view.
-   *
-   * @param aspect the desired width/height ratio in the current UI orientation. Must be a positive
-   *     value.
-   */
-  public void setAspectRatio(float aspect) {
-    Assert.checkArgument(aspect >= 0, "Aspect ratio must be positive");
-    aspectRatio = aspect;
-    requestLayout();
-  }
-
-  @Override
-  protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-    int width = MeasureSpec.getSize(widthMeasureSpec);
-    int height = MeasureSpec.getSize(heightMeasureSpec);
-
-    // Do the scaling
-    if (scaleWidth) {
-      width = (int) (height * aspectRatio);
-    } else if (scaleHeight) {
-      height = (int) (width / aspectRatio);
+        // Get initial aspect ratio from custom attributes
+        TypedArray a =
+                context.getTheme().obtainStyledAttributes(attrs, R.styleable.FixedAspectSurfaceView, 0, 0);
+        scaleHeight = a.getBoolean(R.styleable.FixedAspectSurfaceView_scaleHeight, false);
+        scaleWidth = a.getBoolean(R.styleable.FixedAspectSurfaceView_scaleWidth, false);
+        Assert.checkArgument(scaleHeight != scaleWidth, "Must either scale width or height");
+        setAspectRatio(a.getFloat(R.styleable.FixedAspectSurfaceView_aspectRatio, 1.f));
+        a.recycle();
     }
 
-    // Override width/height if needed for EXACTLY and AT_MOST specs
-    width = View.resolveSizeAndState(width, widthMeasureSpec, 0);
-    height = View.resolveSizeAndState(height, heightMeasureSpec, 0);
+    /**
+     * Set the desired aspect ratio for this view.
+     *
+     * @param aspect the desired width/height ratio in the current UI orientation. Must be a positive
+     *               value.
+     */
+    public void setAspectRatio(float aspect) {
+        Assert.checkArgument(aspect >= 0, "Aspect ratio must be positive");
+        aspectRatio = aspect;
+        requestLayout();
+    }
 
-    // Finally set the calculated dimensions
-    setMeasuredDimension(width, height);
-  }
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int width = MeasureSpec.getSize(widthMeasureSpec);
+        int height = MeasureSpec.getSize(heightMeasureSpec);
+
+        // Do the scaling
+        if (scaleWidth) {
+            width = (int) (height * aspectRatio);
+        } else if (scaleHeight) {
+            height = (int) (width / aspectRatio);
+        }
+
+        // Override width/height if needed for EXACTLY and AT_MOST specs
+        width = View.resolveSizeAndState(width, widthMeasureSpec, 0);
+        height = View.resolveSizeAndState(height, heightMeasureSpec, 0);
+
+        // Finally set the calculated dimensions
+        setMeasuredDimension(width, height);
+    }
 }

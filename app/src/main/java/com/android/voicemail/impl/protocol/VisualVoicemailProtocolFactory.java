@@ -17,30 +17,31 @@
 package com.android.voicemail.impl.protocol;
 
 import android.content.res.Resources;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.telephony.TelephonyManager;
+
 import com.android.voicemail.VisualVoicemailTypeExtensions;
 import com.android.voicemail.impl.VvmLog;
 
 public class VisualVoicemailProtocolFactory {
 
-  private static final String TAG = "VvmProtocolFactory";
+    private static final String TAG = "VvmProtocolFactory";
 
-  @Nullable
-  public static VisualVoicemailProtocol create(Resources resources, String type) {
-    if (type == null) {
-      return null;
+    @Nullable
+    public static VisualVoicemailProtocol create(Resources resources, String type) {
+        if (type == null) {
+            return null;
+        }
+        switch (type) {
+            case TelephonyManager.VVM_TYPE_OMTP:
+                return new OmtpProtocol();
+            case TelephonyManager.VVM_TYPE_CVVM:
+                return new CvvmProtocol();
+            case VisualVoicemailTypeExtensions.VVM_TYPE_VVM3:
+                return new Vvm3Protocol();
+            default:
+                VvmLog.e(TAG, "Unexpected visual voicemail type: " + type);
+        }
+        return null;
     }
-    switch (type) {
-      case TelephonyManager.VVM_TYPE_OMTP:
-        return new OmtpProtocol();
-      case TelephonyManager.VVM_TYPE_CVVM:
-        return new CvvmProtocol();
-      case VisualVoicemailTypeExtensions.VVM_TYPE_VVM3:
-        return new Vvm3Protocol();
-      default:
-        VvmLog.e(TAG, "Unexpected visual voicemail type: " + type);
-    }
-    return null;
-  }
 }

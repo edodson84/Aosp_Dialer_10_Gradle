@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2013 The Android Open Source Project
+<?xml version="1.0" encoding="utf-8"?><!-- Copyright (C) 2013 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -15,9 +14,8 @@
 -->
 
 <!-- A layout representing a single key in the dialpad -->
-<com.android.phone.common.dialpad.DialpadKeyButton
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/DialpadKeyButtonStyle" >
+<com.android.phone.common.dialpad.DialpadKeyButton xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/DialpadKeyButtonStyle">
 
     <LinearLayout style="@style/DialpadKeyInternalLayoutStyle">
 

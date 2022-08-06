@@ -16,19 +16,24 @@
 
 package com.fissy.dialer.activecalls;
 
-import android.support.annotation.MainThread;
+import androidx.annotation.MainThread;
+
 import com.google.common.collect.ImmutableList;
 
-/** Exposes information about current active calls to the whole dialer. */
+/**
+ * Exposes information about current active calls to the whole dialer.
+ */
 public interface ActiveCalls {
 
-  /**
-   * Return a list of current active calls. Any call that is not disconnected is regarded as active.
-   * Ordering of elements are not guaranteed.
-   */
-  ImmutableList<ActiveCallInfo> getActiveCalls();
+    /**
+     * Return a list of current active calls. Any call that is not disconnected is regarded as active.
+     * Ordering of elements are not guaranteed.
+     */
+    ImmutableList<ActiveCallInfo> getActiveCalls();
 
-  /** Should only be called by in call UI. */
-  @MainThread
-  void setActiveCalls(ImmutableList<ActiveCallInfo> activeCalls);
+    /**
+     * Should only be called by in call UI.
+     */
+    @MainThread
+    void setActiveCalls(ImmutableList<ActiveCallInfo> activeCalls);
 }

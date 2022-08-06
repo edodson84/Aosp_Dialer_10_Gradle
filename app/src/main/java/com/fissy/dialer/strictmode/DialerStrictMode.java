@@ -17,12 +17,16 @@
 package com.fissy.dialer.strictmode;
 
 import android.app.Application;
-import android.support.annotation.MainThread;
+import androidx.annotation.MainThread;
 
-/** Interface for strict mode to handle strict mode violations. */
+/**
+ * Interface for strict mode to handle strict mode violations.
+ */
 public interface DialerStrictMode {
 
-  /** Initializes strict mode on application start. */
-  @MainThread
-  void onApplicationCreate(Application application);
+    /**
+     * Initializes strict mode on application start.
+     */
+    @MainThread
+    void onApplicationCreate(Application application);
 }

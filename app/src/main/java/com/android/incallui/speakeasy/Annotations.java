@@ -18,22 +18,36 @@ package com.android.incallui.speakeasy;
 
 import javax.inject.Qualifier;
 
-/** Annotations for Speakeasy providers. */
+/**
+ * Annotations for Speakeasy providers.
+ */
 public final class Annotations {
 
-  /** A Speakeasy settings fragment */
-  @Qualifier
-  public @interface SpeakEasySettingsActivity {}
+    /**
+     * A Speakeasy settings fragment
+     */
+    @Qualifier
+    public @interface SpeakEasySettingsActivity {
+    }
 
-  /** A Speakeasy settings object */
-  @Qualifier
-  public @interface SpeakEasySettingsObject {}
+    /**
+     * A Speakeasy settings object
+     */
+    @Qualifier
+    public @interface SpeakEasySettingsObject {
+    }
 
-  /** A Speakeasy chip */
-  @Qualifier
-  public @interface SpeakEasyChipResourceId {}
+    /**
+     * A Speakeasy chip
+     */
+    @Qualifier
+    public @interface SpeakEasyChipResourceId {
+    }
 
-  /** A Speakeasy text resource */
-  @Qualifier
-  public @interface SpeakEasyTextResourceId {}
+    /**
+     * A Speakeasy text resource
+     */
+    @Qualifier
+    public @interface SpeakEasyTextResourceId {
+    }
 }

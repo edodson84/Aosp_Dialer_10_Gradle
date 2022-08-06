@@ -17,27 +17,33 @@
 package com.fissy.dialer.configprovider;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
+
 import com.fissy.dialer.inject.HasRootComponent;
 import com.fissy.dialer.inject.IncludeInDialerRoot;
+
 import dagger.Subcomponent;
 
-/** Dagger component to provide a {@link ConfigProvider}. */
+/**
+ * Dagger component to provide a {@link ConfigProvider}.
+ */
 @Subcomponent
 public abstract class ConfigProviderComponent {
 
-  @NonNull
-  public abstract ConfigProvider getConfigProvider();
+    public static ConfigProviderComponent get(Context context) {
+        return ((ConfigProviderComponent.HasComponent)
+                ((HasRootComponent) context.getApplicationContext()).component())
+                .configProviderComponent();
+    }
 
-  public static ConfigProviderComponent get(Context context) {
-    return ((ConfigProviderComponent.HasComponent)
-            ((HasRootComponent) context.getApplicationContext()).component())
-        .configProviderComponent();
-  }
+    @NonNull
+    public abstract ConfigProvider getConfigProvider();
 
-  /** Used to refer to the root application component. */
-  @IncludeInDialerRoot
-  public interface HasComponent {
-    ConfigProviderComponent configProviderComponent();
-  }
+    /**
+     * Used to refer to the root application component.
+     */
+    @IncludeInDialerRoot
+    public interface HasComponent {
+        ConfigProviderComponent configProviderComponent();
+    }
 }

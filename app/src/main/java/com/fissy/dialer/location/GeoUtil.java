@@ -19,20 +19,22 @@ package com.fissy.dialer.location;
 import android.content.Context;
 import android.os.Trace;
 
-/** Static methods related to Geo. */
+/**
+ * Static methods related to Geo.
+ */
 public class GeoUtil {
 
-  /**
-   * Return the ISO 3166-1 two letters country code of the country the user is in.
-   *
-   * <p>WARNING: {@link CountryDetector} caches TelephonyManager and other system services in a
-   * static. {@link CountryDetector#instance} must be reset in tests.
-   */
-  public static String getCurrentCountryIso(Context context) {
-    // The {@link CountryDetector} should never return null so this is safe to return as-is.
-    Trace.beginSection("GeoUtil.getCurrentCountryIso");
-    String countryIso = CountryDetector.getInstance(context).getCurrentCountryIso();
-    Trace.endSection();
-    return countryIso;
-  }
+    /**
+     * Return the ISO 3166-1 two letters country code of the country the user is in.
+     *
+     * <p>WARNING: {@link CountryDetector} caches TelephonyManager and other system services in a
+     * static. {@link CountryDetector#instance} must be reset in tests.
+     */
+    public static String getCurrentCountryIso(Context context) {
+        // The {@link CountryDetector} should never return null so this is safe to return as-is.
+        Trace.beginSection("GeoUtil.getCurrentCountryIso");
+        String countryIso = CountryDetector.getInstance(context).getCurrentCountryIso();
+        Trace.endSection();
+        return countryIso;
+    }
 }

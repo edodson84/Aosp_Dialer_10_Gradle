@@ -19,30 +19,35 @@ package com.fissy.dialer.interactions;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
+
 import com.android.contacts.common.database.ContactUpdateUtils;
 
-/** Service for updating primary number on a contact. */
+/**
+ * Service for updating primary number on a contact.
+ */
 public class ContactUpdateService extends IntentService {
 
-  public static final String EXTRA_PHONE_NUMBER_DATA_ID = "phone_number_data_id";
+    public static final String EXTRA_PHONE_NUMBER_DATA_ID = "phone_number_data_id";
 
-  public ContactUpdateService() {
-    super(ContactUpdateService.class.getSimpleName());
-    setIntentRedelivery(true);
-  }
+    public ContactUpdateService() {
+        super(ContactUpdateService.class.getSimpleName());
+        setIntentRedelivery(true);
+    }
 
-  /** Creates an intent that sets the selected data item as super primary (default) */
-  public static Intent createSetSuperPrimaryIntent(Context context, long dataId) {
-    Intent serviceIntent = new Intent(context, ContactUpdateService.class);
-    serviceIntent.putExtra(EXTRA_PHONE_NUMBER_DATA_ID, dataId);
-    return serviceIntent;
-  }
+    /**
+     * Creates an intent that sets the selected data item as super primary (default)
+     */
+    public static Intent createSetSuperPrimaryIntent(Context context, long dataId) {
+        Intent serviceIntent = new Intent(context, ContactUpdateService.class);
+        serviceIntent.putExtra(EXTRA_PHONE_NUMBER_DATA_ID, dataId);
+        return serviceIntent;
+    }
 
-  @Override
-  protected void onHandleIntent(Intent intent) {
-    // Currently this service only handles one type of update.
-    long dataId = intent.getLongExtra(EXTRA_PHONE_NUMBER_DATA_ID, -1);
+    @Override
+    protected void onHandleIntent(Intent intent) {
+        // Currently this service only handles one type of update.
+        long dataId = intent.getLongExtra(EXTRA_PHONE_NUMBER_DATA_ID, -1);
 
-    ContactUpdateUtils.setSuperPrimary(this, dataId);
-  }
+        ContactUpdateUtils.setSuperPrimary(this, dataId);
+    }
 }

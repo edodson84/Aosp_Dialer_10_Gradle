@@ -16,40 +16,40 @@
 
 package com.android.voicemail.impl.mail.store.imap;
 
-import com.android.voicemail.impl.VvmLog;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 
-/** Subclass of {@link ImapString} used for non literals. */
+/**
+ * Subclass of {@link ImapString} used for non literals.
+ */
 public class ImapSimpleString extends ImapString {
-  private final String TAG = "ImapSimpleString";
-  private String string;
+    private final String TAG = "ImapSimpleString";
+    private String string;
 
-  /* package */ ImapSimpleString(String string) {
-    this.string = (string != null) ? string : "";
-  }
+    /* package */ ImapSimpleString(String string) {
+        this.string = (string != null) ? string : "";
+    }
 
-  @Override
-  public void destroy() {
-    string = null;
-    super.destroy();
-  }
+    @Override
+    public void destroy() {
+        string = null;
+        super.destroy();
+    }
 
-  @Override
-  public String getString() {
-    return string;
-  }
+    @Override
+    public String getString() {
+        return string;
+    }
 
-  @Override
-  public InputStream getAsStream() {
-      return new ByteArrayInputStream(string.getBytes(StandardCharsets.US_ASCII));
-  }
+    @Override
+    public InputStream getAsStream() {
+        return new ByteArrayInputStream(string.getBytes(StandardCharsets.US_ASCII));
+    }
 
-  @Override
-  public String toString() {
-    // Purposefully not return just mString, in order to prevent using it instead of getString.
-    return "\"" + string + "\"";
-  }
+    @Override
+    public String toString() {
+        // Purposefully not return just mString, in order to prevent using it instead of getString.
+        return "\"" + string + "\"";
+    }
 }

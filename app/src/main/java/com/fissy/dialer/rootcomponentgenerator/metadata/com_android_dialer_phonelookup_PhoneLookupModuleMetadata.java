@@ -4,8 +4,8 @@ import com.fissy.dialer.inject.RootComponentGeneratorMetadata;
 import com.fissy.dialer.phonelookup.PhoneLookupModule;
 
 @RootComponentGeneratorMetadata(
-    tag = "InstallIn",
-    annotatedClass = PhoneLookupModule.class
+        tag = "InstallIn",
+        annotatedClass = PhoneLookupModule.class
 )
 class com_android_dialer_phonelookup_PhoneLookupModuleMetadata {
 }

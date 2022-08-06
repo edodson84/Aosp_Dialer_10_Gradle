@@ -19,26 +19,28 @@ package com.android.incallui.answer.bindings;
 import com.android.incallui.answer.impl.AnswerFragment;
 import com.android.incallui.answer.protocol.AnswerScreen;
 
-/** Bindings for answer module. */
+/**
+ * Bindings for answer module.
+ */
 public class AnswerBindings {
 
-  public static AnswerScreen createAnswerScreen(
-      String callId,
-      boolean isRttCall,
-      boolean isVideoCall,
-      boolean isVideoUpgradeRequest,
-      boolean isSelfManagedCamera,
-      boolean allowAnswerAndRelease,
-      boolean hasCallOnHold,
-      boolean allowSpeakEasy) {
-    return AnswerFragment.newInstance(
-        callId,
-        isRttCall,
-        isVideoCall,
-        isVideoUpgradeRequest,
-        isSelfManagedCamera,
-        allowAnswerAndRelease,
-        hasCallOnHold,
-        allowSpeakEasy);
-  }
+    public static AnswerScreen createAnswerScreen(
+            String callId,
+            boolean isRttCall,
+            boolean isVideoCall,
+            boolean isVideoUpgradeRequest,
+            boolean isSelfManagedCamera,
+            boolean allowAnswerAndRelease,
+            boolean hasCallOnHold,
+            boolean allowSpeakEasy) {
+        return AnswerFragment.newInstance(
+                callId,
+                isRttCall,
+                isVideoCall,
+                isVideoUpgradeRequest,
+                isSelfManagedCamera,
+                allowAnswerAndRelease,
+                hasCallOnHold,
+                allowSpeakEasy);
+    }
 }

@@ -17,22 +17,22 @@
 package com.fissy.dialer.callcomposer.camera.exif;
 
 class JpegHeader {
-  static final short SOI = (short) 0xFFD8;
-  static final short APP1 = (short) 0xFFE1;
-  static final short EOI = (short) 0xFFD9;
+    static final short SOI = (short) 0xFFD8;
+    static final short APP1 = (short) 0xFFE1;
+    static final short EOI = (short) 0xFFD9;
 
-  /**
-   * SOF (start of frame). All value between SOF0 and SOF15 is SOF marker except for DHT, JPG, and
-   * DAC marker.
-   */
-  private static final short SOF0 = (short) 0xFFC0;
+    /**
+     * SOF (start of frame). All value between SOF0 and SOF15 is SOF marker except for DHT, JPG, and
+     * DAC marker.
+     */
+    private static final short SOF0 = (short) 0xFFC0;
 
-  private static final short SOF15 = (short) 0xFFCF;
-  private static final short DHT = (short) 0xFFC4;
-  private static final short JPG = (short) 0xFFC8;
-  private static final short DAC = (short) 0xFFCC;
+    private static final short SOF15 = (short) 0xFFCF;
+    private static final short DHT = (short) 0xFFC4;
+    private static final short JPG = (short) 0xFFC8;
+    private static final short DAC = (short) 0xFFCC;
 
-  static boolean isSofMarker(short marker) {
-    return marker >= SOF0 && marker <= SOF15 && marker != DHT && marker != JPG && marker != DAC;
-  }
+    static boolean isSofMarker(short marker) {
+        return marker >= SOF0 && marker <= SOF15 && marker != DHT && marker != JPG && marker != DAC;
+    }
 }

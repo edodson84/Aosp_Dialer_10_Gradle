@@ -1,24 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.fissy.dialer.dialpadview.DialpadView android:layout_gravity="bottom" android:orientation="vertical" android:id="@id/dialpad_view" android:background="?dialpad_background" android:clickable="true" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layoutDirection="ltr" android:elevation="?dialpad_elevation"
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <LinearLayout android:orientation="vertical" android:id="@id/rate_container" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="wrap_content">
-        <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:id="@id/ild_container" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/ild_margin_height" android:layout_marginBottom="@dimen/ild_margin_height">
-            <TextView android:id="@id/ild_country" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <TextView android:textStyle="bold" android:id="@id/ild_rate" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="4.0dip" />
+<com.fissy.dialer.dialpadview.DialpadView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/dialpad_view"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_gravity="bottom"
+    android:background="?dialpad_background"
+    android:clickable="true"
+    android:elevation="?dialpad_elevation"
+    android:layoutDirection="ltr"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@id/rate_container"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@id/ild_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/ild_margin_height"
+            android:layout_marginBottom="@dimen/ild_margin_height"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@id/ild_country"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@id/ild_rate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4.0dip"
+                android:textStyle="bold" />
         </LinearLayout>
-        <View android:background="#ffe3e3e3" android:layout_width="fill_parent" android:layout_height="1.0dip" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1.0dip"
+            android:background="#ffe3e3e3" />
     </LinearLayout>
-    <LinearLayout android:orientation="horizontal" android:id="@id/digits_container" android:layout_width="fill_parent" android:layout_height="?dialpad_digits_adjustable_height">
-        <ImageButton android:gravity="center" android:id="@id/dialpad_back" android:background="@drawable/btn_dialpad_key" android:paddingLeft="@dimen/dialpad_digits_menu_left_padding" android:paddingRight="@dimen/dialpad_digits_menu_right_padding" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="fill_parent" android:layout_margin="@dimen/dialpad_overflow_margin" android:src="@drawable/quantum_ic_close_white_24" android:tint="?colorIcon" android:contentDescription="@string/description_dialpad_back" android:tintMode="src_in" />
-        <ImageButton android:gravity="center" android:id="@id/dialpad_overflow" android:background="@drawable/btn_dialpad_key" android:paddingLeft="@dimen/dialpad_digits_menu_left_padding" android:paddingRight="@dimen/dialpad_digits_menu_right_padding" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="fill_parent" android:layout_margin="@dimen/dialpad_overflow_margin" android:src="@drawable/quantum_ic_more_vert_white_24" android:tint="?colorIcon" android:contentDescription="@string/description_dialpad_overflow" android:tintMode="src_in" />
-        <FrameLayout android:layout_width="0.0dip" android:layout_height="fill_parent" android:layout_weight="1.0">
-            <TextView android:textSize="14.0sp" android:textColor="?colorIcon" android:gravity="center" android:id="@id/digits_hint" android:focusable="false" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="fill_parent" />
-            <com.fissy.dialer.dialpadview.DigitsEditText android:textSize="?dialpad_digits_adjustable_text_size" android:textStyle="normal" android:textColor="?dialpad_text_color" android:gravity="center" android:id="@id/digits" android:background="@android:color/transparent" android:focusableInTouchMode="true" android:layout_width="fill_parent" android:layout_height="fill_parent" android:cursorVisible="false" android:maxLines="1" android:scrollHorizontally="true" android:singleLine="true" android:freezesText="true" android:textCursorDrawable="@null" android:fontFamily="sans-serif" android:importantForAutofill="no" ex:resizing_text_min_size="@dimen/dialpad_digits_text_min_size" xmlns:ex="http://schemas.android.com/apk/res-auto" />
+
+    <LinearLayout
+        android:id="@id/digits_container"
+        android:layout_width="fill_parent"
+        android:layout_height="?dialpad_digits_adjustable_height"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@id/dialpad_back"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_margin="@dimen/dialpad_overflow_margin"
+            android:background="@drawable/btn_dialpad_key"
+            android:contentDescription="@string/description_dialpad_back"
+            android:gravity="center"
+            android:paddingLeft="@dimen/dialpad_digits_menu_left_padding"
+            android:paddingRight="@dimen/dialpad_digits_menu_right_padding"
+            android:src="@drawable/quantum_ic_close_white_24"
+            android:tint="?colorIcon"
+            android:tintMode="src_in"
+            android:visibility="gone" />
+
+        <ImageButton
+            android:id="@id/dialpad_overflow"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_margin="@dimen/dialpad_overflow_margin"
+            android:background="@drawable/btn_dialpad_key"
+            android:contentDescription="@string/description_dialpad_overflow"
+            android:gravity="center"
+            android:paddingLeft="@dimen/dialpad_digits_menu_left_padding"
+            android:paddingRight="@dimen/dialpad_digits_menu_right_padding"
+            android:src="@drawable/quantum_ic_more_vert_white_24"
+            android:tint="?colorIcon"
+            android:tintMode="src_in"
+            android:visibility="gone" />
+
+        <FrameLayout
+            android:layout_width="0.0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0">
+
+            <TextView
+                android:id="@id/digits_hint"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:focusable="false"
+                android:gravity="center"
+                android:textColor="?colorIcon"
+                android:textSize="14.0sp"
+                android:visibility="gone" />
+
+            <com.fissy.dialer.dialpadview.DigitsEditText xmlns:ex="http://schemas.android.com/apk/res-auto"
+                android:id="@id/digits"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@android:color/transparent"
+                android:cursorVisible="false"
+                android:focusableInTouchMode="true"
+                android:fontFamily="sans-serif"
+                android:freezesText="true"
+                android:gravity="center"
+                android:importantForAutofill="no"
+                android:maxLines="1"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:textColor="?dialpad_text_color"
+                android:textCursorDrawable="@null"
+                android:textSize="?dialpad_digits_adjustable_text_size"
+                android:textStyle="normal"
+                ex:resizing_text_min_size="@dimen/dialpad_digits_text_min_size" />
         </FrameLayout>
-        <ImageButton android:state_enabled="false" android:id="@id/deleteButton" android:background="@drawable/btn_dialpad_key" android:paddingLeft="@dimen/dialpad_digits_padding" android:paddingRight="@dimen/dialpad_digits_padding" android:layout_width="wrap_content" android:layout_height="fill_parent" android:src="@drawable/quantum_ic_backspace_white_24" android:tint="?colorIcon" android:contentDescription="@string/description_delete_button" android:tintMode="src_in" />
+
+        <ImageButton
+            android:id="@id/deleteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:background="@drawable/btn_dialpad_key"
+            android:contentDescription="@string/description_delete_button"
+            android:paddingLeft="@dimen/dialpad_digits_padding"
+            android:paddingRight="@dimen/dialpad_digits_padding"
+            android:src="@drawable/quantum_ic_backspace_white_24"
+            android:state_enabled="false"
+            android:tint="?colorIcon"
+            android:tintMode="src_in" />
     </LinearLayout>
-    <View android:background="#ffe3e3e3" android:layout_width="fill_parent" android:layout_height="1.0dip" />
-    <Space android:layout_width="fill_parent" android:layout_height="@dimen/dialpad_space_above_keys" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1.0dip"
+        android:background="#ffe3e3e3" />
+
+    <Space
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/dialpad_space_above_keys" />
+
     <include layout="@layout/dialpad" />
-    <Space android:layout_width="fill_parent" android:layout_height="@dimen/dialpad_space_below_keys" />
+
+    <Space
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/dialpad_space_below_keys" />
 </com.fissy.dialer.dialpadview.DialpadView>

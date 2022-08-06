@@ -26,15 +26,15 @@ import android.provider.ContactsContract.CommonDataKinds.GroupMembership;
  */
 public class GroupMembershipDataItem extends DataItem {
 
-  /* package */ GroupMembershipDataItem(ContentValues values) {
-    super(values);
-  }
+    /* package */ GroupMembershipDataItem(ContentValues values) {
+        super(values);
+    }
 
-  public Long getGroupRowId() {
-    return getContentValues().getAsLong(GroupMembership.GROUP_ROW_ID);
-  }
+    public Long getGroupRowId() {
+        return getContentValues().getAsLong(GroupMembership.GROUP_ROW_ID);
+    }
 
-  public String getGroupSourceId() {
-    return getContentValues().getAsString(GroupMembership.GROUP_SOURCE_ID);
-  }
+    public String getGroupSourceId() {
+        return getContentValues().getAsString(GroupMembership.GROUP_SOURCE_ID);
+    }
 }

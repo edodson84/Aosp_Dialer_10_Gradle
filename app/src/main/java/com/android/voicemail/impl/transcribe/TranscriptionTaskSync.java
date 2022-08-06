@@ -18,52 +18,55 @@ package com.android.voicemail.impl.transcribe;
 import android.app.job.JobWorkItem;
 import android.content.Context;
 import android.util.Pair;
-import com.fissy.dialer.logging.DialerImpression;
+
 import com.android.voicemail.impl.VvmLog;
 import com.android.voicemail.impl.transcribe.TranscriptionService.JobCallback;
 import com.android.voicemail.impl.transcribe.grpc.TranscriptionClientFactory;
 import com.android.voicemail.impl.transcribe.grpc.TranscriptionResponseSync;
+import com.fissy.dialer.logging.DialerImpression;
 import com.google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailRequest;
 import com.google.internal.communications.voicemailtranscription.v1.TranscriptionStatus;
 
-/** Background task to get a voicemail transcription using the synchronous API */
+/**
+ * Background task to get a voicemail transcription using the synchronous API
+ */
 public class TranscriptionTaskSync extends TranscriptionTask {
-  private static final String TAG = "TranscriptionTaskSync";
+    private static final String TAG = "TranscriptionTaskSync";
 
-  public TranscriptionTaskSync(
-      Context context,
-      JobCallback callback,
-      JobWorkItem workItem,
-      TranscriptionClientFactory clientFactory,
-      TranscriptionConfigProvider configProvider) {
-    super(context, callback, workItem, clientFactory, configProvider);
-  }
-
-  @Override
-  protected Pair<String, TranscriptionStatus> getTranscription() {
-    VvmLog.i(TAG, "getTranscription");
-
-    TranscriptionResponseSync response =
-        (TranscriptionResponseSync)
-            sendRequest((client) -> client.sendSyncRequest(getSyncRequest()));
-    if (response == null) {
-      VvmLog.i(TAG, "getTranscription, failed to transcribe voicemail.");
-      return new Pair<>(null, TranscriptionStatus.FAILED_NO_RETRY);
-    } else {
-      VvmLog.i(TAG, "getTranscription, got transcription");
-      return new Pair<>(response.getTranscript(), TranscriptionStatus.SUCCESS);
+    public TranscriptionTaskSync(
+            Context context,
+            JobCallback callback,
+            JobWorkItem workItem,
+            TranscriptionClientFactory clientFactory,
+            TranscriptionConfigProvider configProvider) {
+        super(context, callback, workItem, clientFactory, configProvider);
     }
-  }
 
-  @Override
-  protected DialerImpression.Type getRequestSentImpression() {
-    return DialerImpression.Type.VVM_TRANSCRIPTION_REQUEST_SENT;
-  }
+    @Override
+    protected Pair<String, TranscriptionStatus> getTranscription() {
+        VvmLog.i(TAG, "getTranscription");
 
-  private TranscribeVoicemailRequest getSyncRequest() {
-    return TranscribeVoicemailRequest.newBuilder()
-        .setVoicemailData(audioData)
-        .setAudioFormat(encoding)
-        .build();
-  }
+        TranscriptionResponseSync response =
+                (TranscriptionResponseSync)
+                        sendRequest((client) -> client.sendSyncRequest(getSyncRequest()));
+        if (response == null) {
+            VvmLog.i(TAG, "getTranscription, failed to transcribe voicemail.");
+            return new Pair<>(null, TranscriptionStatus.FAILED_NO_RETRY);
+        } else {
+            VvmLog.i(TAG, "getTranscription, got transcription");
+            return new Pair<>(response.getTranscript(), TranscriptionStatus.SUCCESS);
+        }
+    }
+
+    @Override
+    protected DialerImpression.Type getRequestSentImpression() {
+        return DialerImpression.Type.VVM_TRANSCRIPTION_REQUEST_SENT;
+    }
+
+    private TranscribeVoicemailRequest getSyncRequest() {
+        return TranscribeVoicemailRequest.newBuilder()
+                .setVoicemailData(audioData)
+                .setAudioFormat(encoding)
+                .build();
+    }
 }

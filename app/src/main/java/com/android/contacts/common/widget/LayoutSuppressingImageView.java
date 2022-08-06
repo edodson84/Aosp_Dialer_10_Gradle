@@ -28,12 +28,12 @@ import android.widget.ImageView;
  */
 public class LayoutSuppressingImageView extends ImageView {
 
-  public LayoutSuppressingImageView(Context context, AttributeSet attrs) {
-    super(context, attrs);
-  }
+    public LayoutSuppressingImageView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
 
-  @Override
-  public void requestLayout() {
-    forceLayout();
-  }
+    @Override
+    public void requestLayout() {
+        forceLayout();
+    }
 }

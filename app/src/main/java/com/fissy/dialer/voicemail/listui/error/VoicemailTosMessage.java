@@ -16,10 +16,12 @@
 
 package com.fissy.dialer.voicemail.listui.error;
 
-/** Voicemail TOS message. */
+/**
+ * Voicemail TOS message.
+ */
 public class VoicemailTosMessage extends VoicemailErrorMessage {
 
-  public VoicemailTosMessage(CharSequence title, CharSequence description, Action... actions) {
-    super(title, description, actions);
-  }
+    public VoicemailTosMessage(CharSequence title, CharSequence description, Action... actions) {
+        super(title, description, actions);
+    }
 }

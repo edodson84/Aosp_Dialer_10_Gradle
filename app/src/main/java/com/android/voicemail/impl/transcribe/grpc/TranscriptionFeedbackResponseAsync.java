@@ -15,21 +15,25 @@
  */
 package com.android.voicemail.impl.transcribe.grpc;
 
-import android.support.annotation.VisibleForTesting;
+import androidx.annotation.VisibleForTesting;
+
 import com.fissy.dialer.common.Assert;
 import com.google.internal.communications.voicemailtranscription.v1.SendTranscriptionFeedbackResponse;
+
 import io.grpc.Status;
 
-/** Container for response and status objects for an asynchronous transcription feedback request */
+/**
+ * Container for response and status objects for an asynchronous transcription feedback request
+ */
 public class TranscriptionFeedbackResponseAsync extends TranscriptionResponse {
 
-  @VisibleForTesting
-  public TranscriptionFeedbackResponseAsync(SendTranscriptionFeedbackResponse response) {
-    Assert.checkArgument(response != null);
-  }
+    @VisibleForTesting
+    public TranscriptionFeedbackResponseAsync(SendTranscriptionFeedbackResponse response) {
+        Assert.checkArgument(response != null);
+    }
 
-  @VisibleForTesting
-  public TranscriptionFeedbackResponseAsync(Status status) {
-    super(status);
-  }
+    @VisibleForTesting
+    public TranscriptionFeedbackResponseAsync(Status status) {
+        super(status);
+    }
 }

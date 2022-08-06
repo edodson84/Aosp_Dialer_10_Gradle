@@ -22,9 +22,9 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.DimenRes;
-import android.support.annotation.NonNull;
-import android.support.v4.view.animation.FastOutSlowInInterpolator;
+import androidx.annotation.DimenRes;
+import androidx.annotation.NonNull;
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,197 +43,197 @@ import com.fissy.dialer.common.Assert;
  */
 public final class PawAnswerHint implements AnswerHint {
 
-  private static final long FADE_IN_DELAY_SCALE_MILLIS = 380;
-  private static final long FADE_IN_DURATION_SCALE_MILLIS = 200;
-  private static final long FADE_IN_DELAY_ALPHA_MILLIS = 340;
-  private static final long FADE_IN_DURATION_ALPHA_MILLIS = 50;
+    private static final long FADE_IN_DELAY_SCALE_MILLIS = 380;
+    private static final long FADE_IN_DURATION_SCALE_MILLIS = 200;
+    private static final long FADE_IN_DELAY_ALPHA_MILLIS = 340;
+    private static final long FADE_IN_DURATION_ALPHA_MILLIS = 50;
 
-  private static final long SWIPE_UP_DURATION_ALPHA_MILLIS = 500;
+    private static final long SWIPE_UP_DURATION_ALPHA_MILLIS = 500;
 
-  private static final long FADE_OUT_DELAY_SCALE_SMALL_MILLIS = 90;
-  private static final long FADE_OUT_DURATION_SCALE_MILLIS = 100;
-  private static final long FADE_OUT_DELAY_ALPHA_MILLIS = 130;
-  private static final long FADE_OUT_DURATION_ALPHA_MILLIS = 170;
+    private static final long FADE_OUT_DELAY_SCALE_SMALL_MILLIS = 90;
+    private static final long FADE_OUT_DURATION_SCALE_MILLIS = 100;
+    private static final long FADE_OUT_DELAY_ALPHA_MILLIS = 130;
+    private static final long FADE_OUT_DURATION_ALPHA_MILLIS = 170;
 
-  private static final float IMAGE_SCALE = 1.5f;
-  private static final float FADE_SCALE = 2.0f;
+    private static final float IMAGE_SCALE = 1.5f;
+    private static final float FADE_SCALE = 2.0f;
 
-  private final Context context;
-  private final Drawable payload;
-  private final long puckUpDurationMillis;
-  private final long puckUpDelayMillis;
+    private final Context context;
+    private final Drawable payload;
+    private final long puckUpDurationMillis;
+    private final long puckUpDelayMillis;
 
-  private View puck;
-  private View payloadView;
-  private View answerHintContainer;
-  private AnimatorSet answerGestureHintAnim;
+    private View puck;
+    private View payloadView;
+    private View answerHintContainer;
+    private AnimatorSet answerGestureHintAnim;
 
-  public PawAnswerHint(
-      @NonNull Context context,
-      @NonNull Drawable payload,
-      long puckUpDurationMillis,
-      long puckUpDelayMillis) {
-    this.context = Assert.isNotNull(context);
-    this.payload = Assert.isNotNull(payload);
-    this.puckUpDurationMillis = puckUpDurationMillis;
-    this.puckUpDelayMillis = puckUpDelayMillis;
-  }
-
-  @Override
-  public void onCreateView(
-      LayoutInflater inflater, ViewGroup container, View puck, TextView hintText) {
-    this.puck = puck;
-    View view = inflater.inflate(R.layout.paw_hint, container, true);
-    answerHintContainer = view.findViewById(R.id.answer_hint_container);
-    payloadView = view.findViewById(R.id.paw_image);
-    hintText.setTextSize(
-        TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimension(R.dimen.hint_text_size));
-    ((ImageView) payloadView).setImageDrawable(payload);
-  }
-
-  @Override
-  public void onBounceStart() {
-    if (answerGestureHintAnim == null) {
-      answerGestureHintAnim = new AnimatorSet();
-      int[] puckLocation = new int[2];
-      puck.getLocationInWindow(puckLocation);
-      answerHintContainer.setY(puckLocation[1] + getDimension(R.dimen.hint_initial_offset));
-
-      Animator fadeIn = createFadeIn();
-
-      Animator swipeUp =
-          ObjectAnimator.ofFloat(
-              answerHintContainer,
-              View.TRANSLATION_Y,
-              puckLocation[1] - getDimension(R.dimen.hint_offset));
-      swipeUp.setInterpolator(new FastOutSlowInInterpolator());
-      swipeUp.setDuration(SWIPE_UP_DURATION_ALPHA_MILLIS);
-
-      Animator fadeOut = createFadeOut();
-
-      answerGestureHintAnim.play(fadeIn).after(puckUpDelayMillis);
-      answerGestureHintAnim.play(swipeUp).after(fadeIn);
-      // The fade out should start fading the alpha just as the puck is dropping. Scaling will start
-      // a bit earlier.
-      answerGestureHintAnim
-          .play(fadeOut)
-          .after(puckUpDelayMillis + puckUpDurationMillis - FADE_OUT_DELAY_ALPHA_MILLIS);
-
-      fadeIn.addListener(
-          new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-              super.onAnimationStart(animation);
-              payloadView.setAlpha(0);
-              payloadView.setScaleX(1);
-              payloadView.setScaleY(1);
-              answerHintContainer.setY(puckLocation[1] + getDimension(R.dimen.hint_initial_offset));
-              answerHintContainer.setVisibility(View.VISIBLE);
-            }
-          });
+    public PawAnswerHint(
+            @NonNull Context context,
+            @NonNull Drawable payload,
+            long puckUpDurationMillis,
+            long puckUpDelayMillis) {
+        this.context = Assert.isNotNull(context);
+        this.payload = Assert.isNotNull(payload);
+        this.puckUpDurationMillis = puckUpDurationMillis;
+        this.puckUpDelayMillis = puckUpDelayMillis;
     }
 
-    answerGestureHintAnim.start();
-  }
-
-  private Animator createFadeIn() {
-    AnimatorSet set = new AnimatorSet();
-    set.play(createFadeInScaleAndAlpha(payloadView));
-    return set;
-  }
-
-  private static Animator createFadeInScaleAndAlpha(View target) {
-    Animator scale =
-        createUniformScaleAnimator(
-            target,
-            FADE_SCALE,
-            IMAGE_SCALE,
-            FADE_IN_DURATION_SCALE_MILLIS,
-            FADE_IN_DELAY_SCALE_MILLIS,
-            new LinearInterpolator());
-    Animator alpha =
-        createAlphaAnimator(
-            target,
-            0f,
-            1.0f,
-            FADE_IN_DURATION_ALPHA_MILLIS,
-            FADE_IN_DELAY_ALPHA_MILLIS,
-            new LinearInterpolator());
-    AnimatorSet set = new AnimatorSet();
-    set.play(scale).with(alpha);
-    return set;
-  }
-
-  private Animator createFadeOut() {
-    AnimatorSet set = new AnimatorSet();
-    set.play(createFadeOutScaleAndAlpha(payloadView, FADE_OUT_DELAY_SCALE_SMALL_MILLIS));
-    return set;
-  }
-
-  private static Animator createFadeOutScaleAndAlpha(View target, long scaleDelay) {
-    Animator scale =
-        createUniformScaleAnimator(
-            target,
-            IMAGE_SCALE,
-            FADE_SCALE,
-            FADE_OUT_DURATION_SCALE_MILLIS,
-            scaleDelay,
-            new LinearInterpolator());
-    Animator alpha =
-        createAlphaAnimator(
-            target,
-            1.0f,
-            0.0f,
-            FADE_OUT_DURATION_ALPHA_MILLIS,
-            FADE_OUT_DELAY_ALPHA_MILLIS,
-            new LinearInterpolator());
-    AnimatorSet set = new AnimatorSet();
-    set.play(scale).with(alpha);
-    return set;
-  }
-
-  @Override
-  public void onBounceEnd() {
-    if (answerGestureHintAnim != null) {
-      answerGestureHintAnim.end();
-      answerGestureHintAnim = null;
-      answerHintContainer.setVisibility(View.GONE);
+    private static Animator createFadeInScaleAndAlpha(View target) {
+        Animator scale =
+                createUniformScaleAnimator(
+                        target,
+                        FADE_SCALE,
+                        IMAGE_SCALE,
+                        FADE_IN_DURATION_SCALE_MILLIS,
+                        FADE_IN_DELAY_SCALE_MILLIS,
+                        new LinearInterpolator());
+        Animator alpha =
+                createAlphaAnimator(
+                        target,
+                        0f,
+                        1.0f,
+                        FADE_IN_DURATION_ALPHA_MILLIS,
+                        FADE_IN_DELAY_ALPHA_MILLIS,
+                        new LinearInterpolator());
+        AnimatorSet set = new AnimatorSet();
+        set.play(scale).with(alpha);
+        return set;
     }
-  }
 
-  @Override
-  public void onAnswered() {
-    // Do nothing
-  }
+    private static Animator createFadeOutScaleAndAlpha(View target, long scaleDelay) {
+        Animator scale =
+                createUniformScaleAnimator(
+                        target,
+                        IMAGE_SCALE,
+                        FADE_SCALE,
+                        FADE_OUT_DURATION_SCALE_MILLIS,
+                        scaleDelay,
+                        new LinearInterpolator());
+        Animator alpha =
+                createAlphaAnimator(
+                        target,
+                        1.0f,
+                        0.0f,
+                        FADE_OUT_DURATION_ALPHA_MILLIS,
+                        FADE_OUT_DELAY_ALPHA_MILLIS,
+                        new LinearInterpolator());
+        AnimatorSet set = new AnimatorSet();
+        set.play(scale).with(alpha);
+        return set;
+    }
 
-  private float getDimension(@DimenRes int id) {
-    return context.getResources().getDimension(id);
-  }
+    private static Animator createUniformScaleAnimator(
+            View target,
+            float scaleBegin,
+            float scaleEnd,
+            long duration,
+            long delay,
+            Interpolator interpolator) {
+        Animator scaleX = ObjectAnimator.ofFloat(target, View.SCALE_X, scaleBegin, scaleEnd);
+        Animator scaleY = ObjectAnimator.ofFloat(target, View.SCALE_Y, scaleBegin, scaleEnd);
+        scaleX.setDuration(duration);
+        scaleY.setDuration(duration);
+        scaleX.setInterpolator(interpolator);
+        scaleY.setInterpolator(interpolator);
+        AnimatorSet set = new AnimatorSet();
+        set.play(scaleX).with(scaleY).after(delay);
+        return set;
+    }
 
-  private static Animator createUniformScaleAnimator(
-      View target,
-      float scaleBegin,
-      float scaleEnd,
-      long duration,
-      long delay,
-      Interpolator interpolator) {
-    Animator scaleX = ObjectAnimator.ofFloat(target, View.SCALE_X, scaleBegin, scaleEnd);
-    Animator scaleY = ObjectAnimator.ofFloat(target, View.SCALE_Y, scaleBegin, scaleEnd);
-    scaleX.setDuration(duration);
-    scaleY.setDuration(duration);
-    scaleX.setInterpolator(interpolator);
-    scaleY.setInterpolator(interpolator);
-    AnimatorSet set = new AnimatorSet();
-    set.play(scaleX).with(scaleY).after(delay);
-    return set;
-  }
+    private static Animator createAlphaAnimator(
+            View target, float begin, float end, long duration, long delay, Interpolator interpolator) {
+        Animator alpha = ObjectAnimator.ofFloat(target, View.ALPHA, begin, end);
+        alpha.setDuration(duration);
+        alpha.setInterpolator(interpolator);
+        alpha.setStartDelay(delay);
+        return alpha;
+    }
 
-  private static Animator createAlphaAnimator(
-      View target, float begin, float end, long duration, long delay, Interpolator interpolator) {
-    Animator alpha = ObjectAnimator.ofFloat(target, View.ALPHA, begin, end);
-    alpha.setDuration(duration);
-    alpha.setInterpolator(interpolator);
-    alpha.setStartDelay(delay);
-    return alpha;
-  }
+    @Override
+    public void onCreateView(
+            LayoutInflater inflater, ViewGroup container, View puck, TextView hintText) {
+        this.puck = puck;
+        View view = inflater.inflate(R.layout.paw_hint, container, true);
+        answerHintContainer = view.findViewById(R.id.answer_hint_container);
+        payloadView = view.findViewById(R.id.paw_image);
+        hintText.setTextSize(
+                TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimension(R.dimen.hint_text_size));
+        ((ImageView) payloadView).setImageDrawable(payload);
+    }
+
+    @Override
+    public void onBounceStart() {
+        if (answerGestureHintAnim == null) {
+            answerGestureHintAnim = new AnimatorSet();
+            int[] puckLocation = new int[2];
+            puck.getLocationInWindow(puckLocation);
+            answerHintContainer.setY(puckLocation[1] + getDimension(R.dimen.hint_initial_offset));
+
+            Animator fadeIn = createFadeIn();
+
+            Animator swipeUp =
+                    ObjectAnimator.ofFloat(
+                            answerHintContainer,
+                            View.TRANSLATION_Y,
+                            puckLocation[1] - getDimension(R.dimen.hint_offset));
+            swipeUp.setInterpolator(new FastOutSlowInInterpolator());
+            swipeUp.setDuration(SWIPE_UP_DURATION_ALPHA_MILLIS);
+
+            Animator fadeOut = createFadeOut();
+
+            answerGestureHintAnim.play(fadeIn).after(puckUpDelayMillis);
+            answerGestureHintAnim.play(swipeUp).after(fadeIn);
+            // The fade out should start fading the alpha just as the puck is dropping. Scaling will start
+            // a bit earlier.
+            answerGestureHintAnim
+                    .play(fadeOut)
+                    .after(puckUpDelayMillis + puckUpDurationMillis - FADE_OUT_DELAY_ALPHA_MILLIS);
+
+            fadeIn.addListener(
+                    new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationStart(Animator animation) {
+                            super.onAnimationStart(animation);
+                            payloadView.setAlpha(0);
+                            payloadView.setScaleX(1);
+                            payloadView.setScaleY(1);
+                            answerHintContainer.setY(puckLocation[1] + getDimension(R.dimen.hint_initial_offset));
+                            answerHintContainer.setVisibility(View.VISIBLE);
+                        }
+                    });
+        }
+
+        answerGestureHintAnim.start();
+    }
+
+    private Animator createFadeIn() {
+        AnimatorSet set = new AnimatorSet();
+        set.play(createFadeInScaleAndAlpha(payloadView));
+        return set;
+    }
+
+    private Animator createFadeOut() {
+        AnimatorSet set = new AnimatorSet();
+        set.play(createFadeOutScaleAndAlpha(payloadView, FADE_OUT_DELAY_SCALE_SMALL_MILLIS));
+        return set;
+    }
+
+    @Override
+    public void onBounceEnd() {
+        if (answerGestureHintAnim != null) {
+            answerGestureHintAnim.end();
+            answerGestureHintAnim = null;
+            answerHintContainer.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onAnswered() {
+        // Do nothing
+    }
+
+    private float getDimension(@DimenRes int id) {
+        return context.getResources().getDimension(id);
+    }
 }

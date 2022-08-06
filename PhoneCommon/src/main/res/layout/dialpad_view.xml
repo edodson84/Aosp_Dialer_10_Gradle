@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2014 The Android Open Source Project
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,5 +18,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/Dialpad_Light">
+
     <include layout="@layout/dialpad_view_unthemed" />
 </FrameLayout>

@@ -17,6 +17,9 @@ package com.fissy.dialer.storage;
 
 import javax.inject.Qualifier;
 
-/** Annotation for retrieving unencrypted storage objects. */
+/**
+ * Annotation for retrieving unencrypted storage objects.
+ */
 @Qualifier
-public @interface Unencrypted {}
+public @interface Unencrypted {
+}

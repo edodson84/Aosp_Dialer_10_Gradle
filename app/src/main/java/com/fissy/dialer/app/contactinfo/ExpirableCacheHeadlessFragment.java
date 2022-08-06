@@ -17,10 +17,11 @@
 package com.fissy.dialer.app.contactinfo;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.fissy.dialer.phonenumbercache.ContactInfo;
 import com.fissy.dialer.util.ExpirableCache;
 
@@ -31,37 +32,37 @@ import com.fissy.dialer.util.ExpirableCache;
  */
 public class ExpirableCacheHeadlessFragment extends Fragment {
 
-  private static final String FRAGMENT_TAG = "ExpirableCacheHeadlessFragment";
-  private static final int CONTACT_INFO_CACHE_SIZE = 100;
+    private static final String FRAGMENT_TAG = "ExpirableCacheHeadlessFragment";
+    private static final int CONTACT_INFO_CACHE_SIZE = 100;
 
-  private ExpirableCache<NumberWithCountryIso, ContactInfo> retainedCache;
+    private ExpirableCache<NumberWithCountryIso, ContactInfo> retainedCache;
 
-  @NonNull
-  public static ExpirableCacheHeadlessFragment attach(@NonNull AppCompatActivity parentActivity) {
-    return attach(parentActivity.getSupportFragmentManager());
-  }
-
-  @NonNull
-  private static ExpirableCacheHeadlessFragment attach(FragmentManager fragmentManager) {
-    ExpirableCacheHeadlessFragment fragment =
-        (ExpirableCacheHeadlessFragment) fragmentManager.findFragmentByTag(FRAGMENT_TAG);
-    if (fragment == null) {
-      fragment = new ExpirableCacheHeadlessFragment();
-      // Allowing state loss since in rare cases this is called after activity's state is saved and
-      // it's fine if the cache is lost.
-      fragmentManager.beginTransaction().add(fragment, FRAGMENT_TAG).commitNowAllowingStateLoss();
+    @NonNull
+    public static ExpirableCacheHeadlessFragment attach(@NonNull AppCompatActivity parentActivity) {
+        return attach(parentActivity.getSupportFragmentManager());
     }
-    return fragment;
-  }
 
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    retainedCache = ExpirableCache.create(CONTACT_INFO_CACHE_SIZE);
-    setRetainInstance(true);
-  }
+    @NonNull
+    private static ExpirableCacheHeadlessFragment attach(FragmentManager fragmentManager) {
+        ExpirableCacheHeadlessFragment fragment =
+                (ExpirableCacheHeadlessFragment) fragmentManager.findFragmentByTag(FRAGMENT_TAG);
+        if (fragment == null) {
+            fragment = new ExpirableCacheHeadlessFragment();
+            // Allowing state loss since in rare cases this is called after activity's state is saved and
+            // it's fine if the cache is lost.
+            fragmentManager.beginTransaction().add(fragment, FRAGMENT_TAG).commitNowAllowingStateLoss();
+        }
+        return fragment;
+    }
 
-  public ExpirableCache<NumberWithCountryIso, ContactInfo> getRetainedCache() {
-    return retainedCache;
-  }
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        retainedCache = ExpirableCache.create(CONTACT_INFO_CACHE_SIZE);
+        setRetainInstance(true);
+    }
+
+    public ExpirableCache<NumberWithCountryIso, ContactInfo> getRetainedCache() {
+        return retainedCache;
+    }
 }

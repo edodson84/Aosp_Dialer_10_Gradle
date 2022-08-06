@@ -15,58 +15,62 @@
  */
 package com.android.voicemail.impl.transcribe.grpc;
 
-import android.support.annotation.WorkerThread;
+import androidx.annotation.WorkerThread;
+
 import com.google.internal.communications.voicemailtranscription.v1.GetTranscriptRequest;
 import com.google.internal.communications.voicemailtranscription.v1.SendTranscriptionFeedbackRequest;
 import com.google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest;
 import com.google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailRequest;
 import com.google.internal.communications.voicemailtranscription.v1.VoicemailTranscriptionServiceGrpc;
+
 import io.grpc.StatusRuntimeException;
 
-/** Wrapper around Grpc transcription server stub */
+/**
+ * Wrapper around Grpc transcription server stub
+ */
 public class TranscriptionClient {
 
-  private final VoicemailTranscriptionServiceGrpc.VoicemailTranscriptionServiceBlockingStub stub;
+    private final VoicemailTranscriptionServiceGrpc.VoicemailTranscriptionServiceBlockingStub stub;
 
-  TranscriptionClient(
-      VoicemailTranscriptionServiceGrpc.VoicemailTranscriptionServiceBlockingStub stub) {
-    this.stub = stub;
-  }
-
-  @WorkerThread
-  public TranscriptionResponseSync sendSyncRequest(TranscribeVoicemailRequest request) {
-    try {
-      return new TranscriptionResponseSync(stub.transcribeVoicemail(request));
-    } catch (StatusRuntimeException e) {
-      return new TranscriptionResponseSync(e.getStatus());
+    TranscriptionClient(
+            VoicemailTranscriptionServiceGrpc.VoicemailTranscriptionServiceBlockingStub stub) {
+        this.stub = stub;
     }
-  }
 
-  @WorkerThread
-  public TranscriptionResponseAsync sendUploadRequest(TranscribeVoicemailAsyncRequest request) {
-    try {
-      return new TranscriptionResponseAsync(stub.transcribeVoicemailAsync(request));
-    } catch (StatusRuntimeException e) {
-      return new TranscriptionResponseAsync(e.getStatus());
+    @WorkerThread
+    public TranscriptionResponseSync sendSyncRequest(TranscribeVoicemailRequest request) {
+        try {
+            return new TranscriptionResponseSync(stub.transcribeVoicemail(request));
+        } catch (StatusRuntimeException e) {
+            return new TranscriptionResponseSync(e.getStatus());
+        }
     }
-  }
 
-  @WorkerThread
-  public GetTranscriptResponseAsync sendGetTranscriptRequest(GetTranscriptRequest request) {
-    try {
-      return new GetTranscriptResponseAsync(stub.getTranscript(request));
-    } catch (StatusRuntimeException e) {
-      return new GetTranscriptResponseAsync(e.getStatus());
+    @WorkerThread
+    public TranscriptionResponseAsync sendUploadRequest(TranscribeVoicemailAsyncRequest request) {
+        try {
+            return new TranscriptionResponseAsync(stub.transcribeVoicemailAsync(request));
+        } catch (StatusRuntimeException e) {
+            return new TranscriptionResponseAsync(e.getStatus());
+        }
     }
-  }
 
-  @WorkerThread
-  public TranscriptionFeedbackResponseAsync sendTranscriptFeedbackRequest(
-      SendTranscriptionFeedbackRequest request) {
-    try {
-      return new TranscriptionFeedbackResponseAsync(stub.sendTranscriptionFeedback(request));
-    } catch (StatusRuntimeException e) {
-      return new TranscriptionFeedbackResponseAsync(e.getStatus());
+    @WorkerThread
+    public GetTranscriptResponseAsync sendGetTranscriptRequest(GetTranscriptRequest request) {
+        try {
+            return new GetTranscriptResponseAsync(stub.getTranscript(request));
+        } catch (StatusRuntimeException e) {
+            return new GetTranscriptResponseAsync(e.getStatus());
+        }
     }
-  }
+
+    @WorkerThread
+    public TranscriptionFeedbackResponseAsync sendTranscriptFeedbackRequest(
+            SendTranscriptionFeedbackRequest request) {
+        try {
+            return new TranscriptionFeedbackResponseAsync(stub.sendTranscriptionFeedback(request));
+        } catch (StatusRuntimeException e) {
+            return new TranscriptionFeedbackResponseAsync(e.getStatus());
+        }
+    }
 }

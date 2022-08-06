@@ -21,11 +21,12 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.VisibleForTesting;
-import android.support.annotation.WorkerThread;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
+import androidx.annotation.WorkerThread;
 import android.telecom.PhoneAccountHandle;
+
 import com.fissy.dialer.app.voicemail.LegacyVoicemailNotificationReceiver;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
@@ -51,158 +52,157 @@ import com.fissy.dialer.util.PermissionsUtil;
  */
 public class CallLogNotificationsService extends IntentService {
 
-  @VisibleForTesting
-  static final String ACTION_MARK_ALL_NEW_VOICEMAILS_AS_OLD =
-      "com.fissy.dialer.calllog.ACTION_MARK_ALL_NEW_VOICEMAILS_AS_OLD";
+    /**
+     * Action to call back a missed call.
+     */
+    public static final String ACTION_CALL_BACK_FROM_MISSED_CALL_NOTIFICATION =
+            "com.fissy.dialer.calllog.CALL_BACK_FROM_MISSED_CALL_NOTIFICATION";
+    /**
+     * Action mark legacy voicemail as dismissed.
+     */
+    public static final String ACTION_LEGACY_VOICEMAIL_DISMISSED =
+            "com.fissy.dialer.calllog.ACTION_LEGACY_VOICEMAIL_DISMISSED";
+    public static final int UNKNOWN_MISSED_CALL_COUNT = -1;
+    @VisibleForTesting
+    static final String ACTION_MARK_ALL_NEW_VOICEMAILS_AS_OLD =
+            "com.fissy.dialer.calllog.ACTION_MARK_ALL_NEW_VOICEMAILS_AS_OLD";
+    @VisibleForTesting
+    static final String ACTION_CANCEL_ALL_MISSED_CALLS =
+            "com.fissy.dialer.calllog.ACTION_CANCEL_ALL_MISSED_CALLS";
+    private static final String ACTION_MARK_SINGLE_NEW_VOICEMAIL_AS_OLD =
+            "com.fissy.dialer.calllog.ACTION_MARK_SINGLE_NEW_VOICEMAIL_AS_OLD ";
+    private static final String ACTION_CANCEL_SINGLE_MISSED_CALL =
+            "com.fissy.dialer.calllog.ACTION_CANCEL_SINGLE_MISSED_CALL";
+    private static final String EXTRA_PHONE_ACCOUNT_HANDLE = "PHONE_ACCOUNT_HANDLE";
 
-  private static final String ACTION_MARK_SINGLE_NEW_VOICEMAIL_AS_OLD =
-      "com.fissy.dialer.calllog.ACTION_MARK_SINGLE_NEW_VOICEMAIL_AS_OLD ";
-
-  @VisibleForTesting
-  static final String ACTION_CANCEL_ALL_MISSED_CALLS =
-      "com.fissy.dialer.calllog.ACTION_CANCEL_ALL_MISSED_CALLS";
-
-  private static final String ACTION_CANCEL_SINGLE_MISSED_CALL =
-      "com.fissy.dialer.calllog.ACTION_CANCEL_SINGLE_MISSED_CALL";
-
-  /** Action to call back a missed call. */
-  public static final String ACTION_CALL_BACK_FROM_MISSED_CALL_NOTIFICATION =
-      "com.fissy.dialer.calllog.CALL_BACK_FROM_MISSED_CALL_NOTIFICATION";
-
-  /** Action mark legacy voicemail as dismissed. */
-  public static final String ACTION_LEGACY_VOICEMAIL_DISMISSED =
-      "com.fissy.dialer.calllog.ACTION_LEGACY_VOICEMAIL_DISMISSED";
-
-  private static final String EXTRA_PHONE_ACCOUNT_HANDLE = "PHONE_ACCOUNT_HANDLE";
-
-  public static final int UNKNOWN_MISSED_CALL_COUNT = -1;
-
-  public CallLogNotificationsService() {
-    super("CallLogNotificationsService");
-  }
-
-  public static void markAllNewVoicemailsAsOld(Context context) {
-    LogUtil.enterBlock("CallLogNotificationsService.markAllNewVoicemailsAsOld");
-    Intent serviceIntent = new Intent(context, CallLogNotificationsService.class);
-    serviceIntent.setAction(CallLogNotificationsService.ACTION_MARK_ALL_NEW_VOICEMAILS_AS_OLD);
-    context.startService(serviceIntent);
-  }
-
-  public static void cancelAllMissedCalls(Context context) {
-    LogUtil.enterBlock("CallLogNotificationsService.cancelAllMissedCalls");
-    DialerExecutorComponent.get(context)
-        .dialerExecutorFactory()
-        .createNonUiTaskBuilder(new CancelAllMissedCallsWorker())
-        .build()
-        .executeSerial(context);
-  }
-
-  public static PendingIntent createMarkAllNewVoicemailsAsOldIntent(@NonNull Context context) {
-    Intent intent = new Intent(context, CallLogNotificationsService.class);
-    intent.setAction(CallLogNotificationsService.ACTION_MARK_ALL_NEW_VOICEMAILS_AS_OLD);
-    return PendingIntent.getService(context, 0, intent, 0);
-  }
-
-  public static PendingIntent createMarkSingleNewVoicemailAsOldIntent(
-      @NonNull Context context, @Nullable Uri voicemailUri) {
-    Intent intent = new Intent(context, CallLogNotificationsService.class);
-    intent.setAction(CallLogNotificationsService.ACTION_MARK_SINGLE_NEW_VOICEMAIL_AS_OLD);
-    intent.setData(voicemailUri);
-    return PendingIntent.getService(context, 0, intent, 0);
-  }
-
-  public static PendingIntent createCancelAllMissedCallsPendingIntent(@NonNull Context context) {
-    Intent intent = new Intent(context, CallLogNotificationsService.class);
-    intent.setAction(ACTION_CANCEL_ALL_MISSED_CALLS);
-    return PendingIntent.getService(context, 0, intent, 0);
-  }
-
-  public static PendingIntent createCancelSingleMissedCallPendingIntent(
-      @NonNull Context context, @Nullable Uri callUri) {
-    Intent intent = new Intent(context, CallLogNotificationsService.class);
-    intent.setAction(ACTION_CANCEL_SINGLE_MISSED_CALL);
-    intent.setData(callUri);
-    return PendingIntent.getService(context, 0, intent, 0);
-  }
-
-  public static PendingIntent createLegacyVoicemailDismissedPendingIntent(
-      @NonNull Context context, PhoneAccountHandle phoneAccountHandle) {
-    Intent intent = new Intent(context, CallLogNotificationsService.class);
-    intent.setAction(ACTION_LEGACY_VOICEMAIL_DISMISSED);
-    intent.putExtra(EXTRA_PHONE_ACCOUNT_HANDLE, phoneAccountHandle);
-    return PendingIntent.getService(context, 0, intent, 0);
-  }
-
-  @Override
-  protected void onHandleIntent(Intent intent) {
-    if (intent == null) {
-      LogUtil.e("CallLogNotificationsService.onHandleIntent", "could not handle null intent");
-      return;
+    public CallLogNotificationsService() {
+        super("CallLogNotificationsService");
     }
 
-    if (!PermissionsUtil.hasPermission(this, android.Manifest.permission.READ_CALL_LOG)
-        || !PermissionsUtil.hasPermission(this, android.Manifest.permission.WRITE_CALL_LOG)) {
-      LogUtil.e("CallLogNotificationsService.onHandleIntent", "no READ_CALL_LOG permission");
-      return;
+    public static void markAllNewVoicemailsAsOld(Context context) {
+        LogUtil.enterBlock("CallLogNotificationsService.markAllNewVoicemailsAsOld");
+        Intent serviceIntent = new Intent(context, CallLogNotificationsService.class);
+        serviceIntent.setAction(CallLogNotificationsService.ACTION_MARK_ALL_NEW_VOICEMAILS_AS_OLD);
+        context.startService(serviceIntent);
     }
 
-    String action = intent.getAction();
-    LogUtil.i("CallLogNotificationsService.onHandleIntent", "action: " + action);
-    switch (action) {
-      case ACTION_MARK_ALL_NEW_VOICEMAILS_AS_OLD:
-        VoicemailQueryHandler.markAllNewVoicemailsAsOld(this);
-        VisualVoicemailNotifier.cancelAllVoicemailNotifications(this);
-        break;
-      case ACTION_MARK_SINGLE_NEW_VOICEMAIL_AS_OLD:
-        Uri voicemailUri = intent.getData();
-        VoicemailQueryHandler.markSingleNewVoicemailAsOld(this, voicemailUri);
-        VisualVoicemailNotifier.cancelSingleVoicemailNotification(this, voicemailUri);
-        break;
-      case ACTION_LEGACY_VOICEMAIL_DISMISSED:
-        LegacyVoicemailNotificationReceiver.setDismissed(
-            this, intent.getParcelableExtra(EXTRA_PHONE_ACCOUNT_HANDLE), true);
-        break;
-      case ACTION_CANCEL_ALL_MISSED_CALLS:
-        cancelAllMissedCalls(this);
-        break;
-      case ACTION_CANCEL_SINGLE_MISSED_CALL:
-        Uri callUri = intent.getData();
-        CallLogNotificationsQueryHelper.markSingleMissedCallInCallLogAsRead(this, callUri);
-        MissedCallNotificationCanceller.cancelSingle(this, callUri);
-        TelecomUtil.cancelMissedCallsNotification(this);
-        break;
-      case ACTION_CALL_BACK_FROM_MISSED_CALL_NOTIFICATION:
-        MissedCallNotifier.getInstance(this)
-            .callBackFromMissedCall(
-                intent.getStringExtra(
-                    MissedCallNotificationReceiver.EXTRA_NOTIFICATION_PHONE_NUMBER),
-                intent.getData());
-        break;
-      default:
-        LogUtil.e("CallLogNotificationsService.onHandleIntent", "no handler for action: " + action);
-        break;
+    public static void cancelAllMissedCalls(Context context) {
+        LogUtil.enterBlock("CallLogNotificationsService.cancelAllMissedCalls");
+        DialerExecutorComponent.get(context)
+                .dialerExecutorFactory()
+                .createNonUiTaskBuilder(new CancelAllMissedCallsWorker())
+                .build()
+                .executeSerial(context);
     }
-  }
 
-  @WorkerThread
-  private static void cancelAllMissedCallsBackground(Context context) {
-    LogUtil.enterBlock("CallLogNotificationsService.cancelAllMissedCallsBackground");
-    Assert.isWorkerThread();
-    CallLogNotificationsQueryHelper.markAllMissedCallsInCallLogAsRead(context);
-    MissedCallNotificationCanceller.cancelAll(context);
-    TelecomUtil.cancelMissedCallsNotification(context);
-  }
+    public static PendingIntent createMarkAllNewVoicemailsAsOldIntent(@NonNull Context context) {
+        Intent intent = new Intent(context, CallLogNotificationsService.class);
+        intent.setAction(CallLogNotificationsService.ACTION_MARK_ALL_NEW_VOICEMAILS_AS_OLD);
+        return PendingIntent.getService(context, 0, intent, 0);
+    }
 
-  /** Worker that cancels all missed call notifications and updates call log entries. */
-  private static class CancelAllMissedCallsWorker implements Worker<Context, Void> {
+    public static PendingIntent createMarkSingleNewVoicemailAsOldIntent(
+            @NonNull Context context, @Nullable Uri voicemailUri) {
+        Intent intent = new Intent(context, CallLogNotificationsService.class);
+        intent.setAction(CallLogNotificationsService.ACTION_MARK_SINGLE_NEW_VOICEMAIL_AS_OLD);
+        intent.setData(voicemailUri);
+        return PendingIntent.getService(context, 0, intent, 0);
+    }
 
-    @Nullable
+    public static PendingIntent createCancelAllMissedCallsPendingIntent(@NonNull Context context) {
+        Intent intent = new Intent(context, CallLogNotificationsService.class);
+        intent.setAction(ACTION_CANCEL_ALL_MISSED_CALLS);
+        return PendingIntent.getService(context, 0, intent, 0);
+    }
+
+    public static PendingIntent createCancelSingleMissedCallPendingIntent(
+            @NonNull Context context, @Nullable Uri callUri) {
+        Intent intent = new Intent(context, CallLogNotificationsService.class);
+        intent.setAction(ACTION_CANCEL_SINGLE_MISSED_CALL);
+        intent.setData(callUri);
+        return PendingIntent.getService(context, 0, intent, 0);
+    }
+
+    public static PendingIntent createLegacyVoicemailDismissedPendingIntent(
+            @NonNull Context context, PhoneAccountHandle phoneAccountHandle) {
+        Intent intent = new Intent(context, CallLogNotificationsService.class);
+        intent.setAction(ACTION_LEGACY_VOICEMAIL_DISMISSED);
+        intent.putExtra(EXTRA_PHONE_ACCOUNT_HANDLE, phoneAccountHandle);
+        return PendingIntent.getService(context, 0, intent, 0);
+    }
+
+    @WorkerThread
+    private static void cancelAllMissedCallsBackground(Context context) {
+        LogUtil.enterBlock("CallLogNotificationsService.cancelAllMissedCallsBackground");
+        Assert.isWorkerThread();
+        CallLogNotificationsQueryHelper.markAllMissedCallsInCallLogAsRead(context);
+        MissedCallNotificationCanceller.cancelAll(context);
+        TelecomUtil.cancelMissedCallsNotification(context);
+    }
+
     @Override
-    public Void doInBackground(@Nullable Context context) throws Throwable {
-      if (context != null) {
-        cancelAllMissedCallsBackground(context);
-      }
-      return null;
+    protected void onHandleIntent(Intent intent) {
+        if (intent == null) {
+            LogUtil.e("CallLogNotificationsService.onHandleIntent", "could not handle null intent");
+            return;
+        }
+
+        if (!PermissionsUtil.hasPermission(this, android.Manifest.permission.READ_CALL_LOG)
+                || !PermissionsUtil.hasPermission(this, android.Manifest.permission.WRITE_CALL_LOG)) {
+            LogUtil.e("CallLogNotificationsService.onHandleIntent", "no READ_CALL_LOG permission");
+            return;
+        }
+
+        String action = intent.getAction();
+        LogUtil.i("CallLogNotificationsService.onHandleIntent", "action: " + action);
+        switch (action) {
+            case ACTION_MARK_ALL_NEW_VOICEMAILS_AS_OLD:
+                VoicemailQueryHandler.markAllNewVoicemailsAsOld(this);
+                VisualVoicemailNotifier.cancelAllVoicemailNotifications(this);
+                break;
+            case ACTION_MARK_SINGLE_NEW_VOICEMAIL_AS_OLD:
+                Uri voicemailUri = intent.getData();
+                VoicemailQueryHandler.markSingleNewVoicemailAsOld(this, voicemailUri);
+                VisualVoicemailNotifier.cancelSingleVoicemailNotification(this, voicemailUri);
+                break;
+            case ACTION_LEGACY_VOICEMAIL_DISMISSED:
+                LegacyVoicemailNotificationReceiver.setDismissed(
+                        this, intent.getParcelableExtra(EXTRA_PHONE_ACCOUNT_HANDLE), true);
+                break;
+            case ACTION_CANCEL_ALL_MISSED_CALLS:
+                cancelAllMissedCalls(this);
+                break;
+            case ACTION_CANCEL_SINGLE_MISSED_CALL:
+                Uri callUri = intent.getData();
+                CallLogNotificationsQueryHelper.markSingleMissedCallInCallLogAsRead(this, callUri);
+                MissedCallNotificationCanceller.cancelSingle(this, callUri);
+                TelecomUtil.cancelMissedCallsNotification(this);
+                break;
+            case ACTION_CALL_BACK_FROM_MISSED_CALL_NOTIFICATION:
+                MissedCallNotifier.getInstance(this)
+                        .callBackFromMissedCall(
+                                intent.getStringExtra(
+                                        MissedCallNotificationReceiver.EXTRA_NOTIFICATION_PHONE_NUMBER),
+                                intent.getData());
+                break;
+            default:
+                LogUtil.e("CallLogNotificationsService.onHandleIntent", "no handler for action: " + action);
+                break;
+        }
     }
-  }
+
+    /**
+     * Worker that cancels all missed call notifications and updates call log entries.
+     */
+    private static class CancelAllMissedCallsWorker implements Worker<Context, Void> {
+
+        @Nullable
+        @Override
+        public Void doInBackground(@Nullable Context context) throws Throwable {
+            if (context != null) {
+                cancelAllMissedCallsBackground(context);
+            }
+            return null;
+        }
+    }
 }

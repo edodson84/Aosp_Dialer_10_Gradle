@@ -16,24 +16,30 @@
 package com.fissy.dialer.calllog.config;
 
 import android.content.Context;
+
 import com.fissy.dialer.inject.HasRootComponent;
 import com.fissy.dialer.inject.IncludeInDialerRoot;
+
 import dagger.Subcomponent;
 
-/** Dagger component for the call log config. */
+/**
+ * Dagger component for the call log config.
+ */
 @Subcomponent
 public abstract class CallLogConfigComponent {
 
-  public abstract CallLogConfig callLogConfig();
+    public static CallLogConfigComponent get(Context context) {
+        return ((HasComponent) ((HasRootComponent) context.getApplicationContext()).component())
+                .callLogConfigComponent();
+    }
 
-  public static CallLogConfigComponent get(Context context) {
-    return ((HasComponent) ((HasRootComponent) context.getApplicationContext()).component())
-        .callLogConfigComponent();
-  }
+    public abstract CallLogConfig callLogConfig();
 
-  /** Used to refer to the root application component. */
-  @IncludeInDialerRoot
-  public interface HasComponent {
-    CallLogConfigComponent callLogConfigComponent();
-  }
+    /**
+     * Used to refer to the root application component.
+     */
+    @IncludeInDialerRoot
+    public interface HasComponent {
+        CallLogConfigComponent callLogConfigComponent();
+    }
 }

@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.telecom.PhoneAccount;
 import android.telephony.SubscriptionInfo;
 import android.telephony.TelephonyManager;
+
 import com.fissy.dialer.assisteddialing.AssistedDialingMediator;
 import com.fissy.dialer.assisteddialing.ConcreteCreator;
 import com.fissy.dialer.assisteddialing.TransformationInfo;
@@ -34,94 +35,98 @@ import com.fissy.dialer.precall.PreCallAction;
 import com.fissy.dialer.precall.PreCallCoordinator;
 import com.fissy.dialer.telecom.TelecomUtil;
 import com.fissy.dialer.util.CallUtil;
+
 import java.util.Optional;
 
-/** Rewrites the call URI with country code. */
+/**
+ * Rewrites the call URI with country code.
+ */
 public class AssistedDialAction implements PreCallAction {
 
-  @Override
-  public boolean requiresUi(Context context, CallIntentBuilder builder) {
-    return false;
-  }
-
-  @Override
-  public void runWithoutUi(Context context, CallIntentBuilder builder) {
-    if (!builder.isAssistedDialAllowed()) {
-      return;
+    @Override
+    public boolean requiresUi(Context context, CallIntentBuilder builder) {
+        return false;
     }
 
-    AssistedDialingMediator assistedDialingMediator =
-        ConcreteCreator.createNewAssistedDialingMediator(
-            getAssistedDialingTelephonyManager(context, builder), context);
+    @Override
+    public void runWithoutUi(Context context, CallIntentBuilder builder) {
+        if (!builder.isAssistedDialAllowed()) {
+            return;
+        }
 
-    // Checks the platform is N+ and meets other pre-flight checks.
-    if (!assistedDialingMediator.isPlatformEligible()) {
-      return;
-    }
-    String phoneNumber =
-        builder.getUri().getScheme().equals(PhoneAccount.SCHEME_TEL)
-            ? builder.getUri().getSchemeSpecificPart()
-            : "";
-    Optional<TransformationInfo> transformedNumber =
-        assistedDialingMediator.attemptAssistedDial(phoneNumber);
-    if (transformedNumber.isPresent()) {
-      builder
-          .getInCallUiIntentExtras()
-          .putBoolean(TelephonyManagerCompat.USE_ASSISTED_DIALING, true);
-      Bundle assistedDialingExtras = transformedNumber.get().toBundle();
-      builder
-          .getInCallUiIntentExtras()
-          .putBundle(TelephonyManagerCompat.ASSISTED_DIALING_EXTRAS, assistedDialingExtras);
-      builder.setUri(
-          CallUtil.getCallUri(Assert.isNotNull(transformedNumber.get().transformedNumber())));
-      LogUtil.i("AssistedDialAction.runWithoutUi", "assisted dialing was used.");
-    }
-  }
+        AssistedDialingMediator assistedDialingMediator =
+                ConcreteCreator.createNewAssistedDialingMediator(
+                        getAssistedDialingTelephonyManager(context, builder), context);
 
-  /**
-   * A convenience method to return the proper TelephonyManager in possible multi-sim environments.
-   */
-  private TelephonyManager getAssistedDialingTelephonyManager(
-      Context context, CallIntentBuilder builder) {
-
-    ConfigProvider configProvider = ConfigProviderComponent.get(context).getConfigProvider();
-    TelephonyManager telephonyManager = context.getSystemService(TelephonyManager.class);
-    // None of this will be required in the framework because the PhoneAccountHandle
-    // is already mapped to the request in the TelecomConnection.
-    if (builder.getPhoneAccountHandle() == null) {
-      return telephonyManager;
+        // Checks the platform is N+ and meets other pre-flight checks.
+        if (!assistedDialingMediator.isPlatformEligible()) {
+            return;
+        }
+        String phoneNumber =
+                builder.getUri().getScheme().equals(PhoneAccount.SCHEME_TEL)
+                        ? builder.getUri().getSchemeSpecificPart()
+                        : "";
+        Optional<TransformationInfo> transformedNumber =
+                assistedDialingMediator.attemptAssistedDial(phoneNumber);
+        if (transformedNumber.isPresent()) {
+            builder
+                    .getInCallUiIntentExtras()
+                    .putBoolean(TelephonyManagerCompat.USE_ASSISTED_DIALING, true);
+            Bundle assistedDialingExtras = transformedNumber.get().toBundle();
+            builder
+                    .getInCallUiIntentExtras()
+                    .putBundle(TelephonyManagerCompat.ASSISTED_DIALING_EXTRAS, assistedDialingExtras);
+            builder.setUri(
+                    CallUtil.getCallUri(Assert.isNotNull(transformedNumber.get().transformedNumber())));
+            LogUtil.i("AssistedDialAction.runWithoutUi", "assisted dialing was used.");
+        }
     }
 
-    if (!configProvider.getBoolean("assisted_dialing_dual_sim_enabled", false)) {
-      return telephonyManager;
+    /**
+     * A convenience method to return the proper TelephonyManager in possible multi-sim environments.
+     */
+    private TelephonyManager getAssistedDialingTelephonyManager(
+            Context context, CallIntentBuilder builder) {
+
+        ConfigProvider configProvider = ConfigProviderComponent.get(context).getConfigProvider();
+        TelephonyManager telephonyManager = context.getSystemService(TelephonyManager.class);
+        // None of this will be required in the framework because the PhoneAccountHandle
+        // is already mapped to the request in the TelecomConnection.
+        if (builder.getPhoneAccountHandle() == null) {
+            return telephonyManager;
+        }
+
+        if (!configProvider.getBoolean("assisted_dialing_dual_sim_enabled", false)) {
+            return telephonyManager;
+        }
+
+        com.google.common.base.Optional<SubscriptionInfo> subscriptionInfo =
+                TelecomUtil.getSubscriptionInfo(context, builder.getPhoneAccountHandle());
+        if (!subscriptionInfo.isPresent()) {
+            LogUtil.i(
+                    "AssistedDialAction.getAssistedDialingTelephonyManager", "subcriptionInfo was absent.");
+            return telephonyManager;
+        }
+        TelephonyManager pinnedtelephonyManager =
+                telephonyManager.createForSubscriptionId(subscriptionInfo.get().getSubscriptionId());
+        if (pinnedtelephonyManager == null) {
+            LogUtil.i(
+                    "AssistedDialAction.getAssistedDialingTelephonyManager",
+                    "createForSubscriptionId pinnedtelephonyManager was null.");
+            return telephonyManager;
+        }
+        LogUtil.i(
+                "AssistedDialAction.getAssistedDialingTelephonyManager",
+                "createForPhoneAccountHandle using pinnedtelephonyManager from subscription id.");
+        return pinnedtelephonyManager;
     }
 
-    com.google.common.base.Optional<SubscriptionInfo> subscriptionInfo =
-        TelecomUtil.getSubscriptionInfo(context, builder.getPhoneAccountHandle());
-    if (!subscriptionInfo.isPresent()) {
-      LogUtil.i(
-          "AssistedDialAction.getAssistedDialingTelephonyManager", "subcriptionInfo was absent.");
-      return telephonyManager;
+    @Override
+    public void runWithUi(PreCallCoordinator coordinator) {
+        runWithoutUi(coordinator.getActivity(), coordinator.getBuilder());
     }
-    TelephonyManager pinnedtelephonyManager =
-        telephonyManager.createForSubscriptionId(subscriptionInfo.get().getSubscriptionId());
-    if (pinnedtelephonyManager == null) {
-      LogUtil.i(
-          "AssistedDialAction.getAssistedDialingTelephonyManager",
-          "createForSubscriptionId pinnedtelephonyManager was null.");
-      return telephonyManager;
+
+    @Override
+    public void onDiscard() {
     }
-    LogUtil.i(
-        "AssistedDialAction.getAssistedDialingTelephonyManager",
-        "createForPhoneAccountHandle using pinnedtelephonyManager from subscription id.");
-    return pinnedtelephonyManager;
-  }
-
-  @Override
-  public void runWithUi(PreCallCoordinator coordinator) {
-    runWithoutUi(coordinator.getActivity(), coordinator.getBuilder());
-  }
-
-  @Override
-  public void onDiscard() {}
 }

@@ -18,18 +18,20 @@ package com.android.incallui.bindings;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
-/** This interface allows the container application to customize the in call UI. */
+/**
+ * This interface allows the container application to customize the in call UI.
+ */
 public interface InCallUiBindings {
 
-  @Nullable
-  PhoneNumberService newPhoneNumberService(Context context);
+    @Nullable
+    PhoneNumberService newPhoneNumberService(Context context);
 
-  /**
-   * @return An {@link Intent} to be broadcast when the call state button in the InCallUI is touched
-   *     while in a call.
-   */
-  @Nullable
-  Intent getCallStateButtonBroadcastIntent(Context context);
+    /**
+     * @return An {@link Intent} to be broadcast when the call state button in the InCallUI is touched
+     * while in a call.
+     */
+    @Nullable
+    Intent getCallStateButtonBroadcastIntent(Context context);
 }

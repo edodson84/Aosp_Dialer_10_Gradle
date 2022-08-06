@@ -29,28 +29,30 @@ import android.view.accessibility.AccessibilityEvent;
  */
 public class ContentChangedFilter extends AccessibilityDelegate {
 
-  // the view we don't want TYPE_WINDOW_CONTENT_CHANGED to fire.
-  private final View view;
+    // the view we don't want TYPE_WINDOW_CONTENT_CHANGED to fire.
+    private final View view;
 
-  private ContentChangedFilter(View view) {
-    super();
-    this.view = view;
-  }
-
-  /** Add this delegate to the parent of @param view to filter out TYPE_WINDOW_CONTENT_CHANGED */
-  public static void addToParent(View view) {
-    View parent = (View) view.getParent();
-    parent.setAccessibilityDelegate(new ContentChangedFilter(view));
-  }
-
-  @Override
-  public boolean onRequestSendAccessibilityEvent(
-      ViewGroup host, View child, AccessibilityEvent event) {
-    if (child == view) {
-      if (event.getEventType() == AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED) {
-        return false;
-      }
+    private ContentChangedFilter(View view) {
+        super();
+        this.view = view;
     }
-    return super.onRequestSendAccessibilityEvent(host, child, event);
-  }
+
+    /**
+     * Add this delegate to the parent of @param view to filter out TYPE_WINDOW_CONTENT_CHANGED
+     */
+    public static void addToParent(View view) {
+        View parent = (View) view.getParent();
+        parent.setAccessibilityDelegate(new ContentChangedFilter(view));
+    }
+
+    @Override
+    public boolean onRequestSendAccessibilityEvent(
+            ViewGroup host, View child, AccessibilityEvent event) {
+        if (child == view) {
+            if (event.getEventType() == AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED) {
+                return false;
+            }
+        }
+        return super.onRequestSendAccessibilityEvent(host, child, event);
+    }
 }

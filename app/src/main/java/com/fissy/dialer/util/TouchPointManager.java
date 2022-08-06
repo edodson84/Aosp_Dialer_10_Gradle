@@ -25,36 +25,39 @@ import android.graphics.Point;
  */
 public class TouchPointManager {
 
-  public static final String TOUCH_POINT = "touchPoint";
+    public static final String TOUCH_POINT = "touchPoint";
 
-  private static final TouchPointManager instance = new TouchPointManager();
+    private static final TouchPointManager instance = new TouchPointManager();
 
-  private final Point point = new Point();
+    private final Point point = new Point();
 
-  /** Private constructor. Instance should only be acquired through getRunningInstance(). */
-  private TouchPointManager() {}
+    /**
+     * Private constructor. Instance should only be acquired through getRunningInstance().
+     */
+    private TouchPointManager() {
+    }
 
-  public static TouchPointManager getInstance() {
-    return instance;
-  }
+    public static TouchPointManager getInstance() {
+        return instance;
+    }
 
-  public Point getPoint() {
-    return point;
-  }
+    public Point getPoint() {
+        return point;
+    }
 
-  public void setPoint(int x, int y) {
-    point.set(x, y);
-  }
+    public void setPoint(int x, int y) {
+        point.set(x, y);
+    }
 
-  /**
-   * When a point is initialized, its value is (0,0). Since it is highly unlikely a user will touch
-   * at that exact point, if the point in TouchPointManager is (0,0), it is safe to assume that the
-   * TouchPointManager has not yet collected a touch.
-   *
-   * @return True if there is a valid point saved. Define a valid point as any point that is not
-   *     (0,0).
-   */
-  public boolean hasValidPoint() {
-    return point.x != 0 || point.y != 0;
-  }
+    /**
+     * When a point is initialized, its value is (0,0). Since it is highly unlikely a user will touch
+     * at that exact point, if the point in TouchPointManager is (0,0), it is safe to assume that the
+     * TouchPointManager has not yet collected a touch.
+     *
+     * @return True if there is a valid point saved. Define a valid point as any point that is not
+     * (0,0).
+     */
+    public boolean hasValidPoint() {
+        return point.x != 0 || point.y != 0;
+    }
 }

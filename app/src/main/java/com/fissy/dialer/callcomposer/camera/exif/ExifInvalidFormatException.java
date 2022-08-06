@@ -16,9 +16,11 @@
 
 package com.fissy.dialer.callcomposer.camera.exif;
 
-/** Exception for invalid exif formats. */
+/**
+ * Exception for invalid exif formats.
+ */
 public class ExifInvalidFormatException extends Exception {
-  ExifInvalidFormatException(String meg) {
-    super(meg);
-  }
+    ExifInvalidFormatException(String meg) {
+        super(meg);
+    }
 }

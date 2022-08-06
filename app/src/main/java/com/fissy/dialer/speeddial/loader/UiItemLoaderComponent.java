@@ -17,23 +17,29 @@
 package com.fissy.dialer.speeddial.loader;
 
 import android.content.Context;
+
 import com.fissy.dialer.inject.HasRootComponent;
+
 import dagger.Subcomponent;
 
-/** Dagger component for the speeddial/loader package. */
+/**
+ * Dagger component for the speeddial/loader package.
+ */
 @Subcomponent
 public abstract class UiItemLoaderComponent {
 
-  public abstract SpeedDialUiItemMutator speedDialUiItemMutator();
+    public static UiItemLoaderComponent get(Context context) {
+        return ((UiItemLoaderComponent.HasComponent)
+                ((HasRootComponent) context.getApplicationContext()).component())
+                .uiItemLoaderComponent();
+    }
 
-  public static UiItemLoaderComponent get(Context context) {
-    return ((UiItemLoaderComponent.HasComponent)
-            ((HasRootComponent) context.getApplicationContext()).component())
-        .uiItemLoaderComponent();
-  }
+    public abstract SpeedDialUiItemMutator speedDialUiItemMutator();
 
-  /** Used to refer to the root application component. */
-  public interface HasComponent {
-    UiItemLoaderComponent uiItemLoaderComponent();
-  }
+    /**
+     * Used to refer to the root application component.
+     */
+    public interface HasComponent {
+        UiItemLoaderComponent uiItemLoaderComponent();
+    }
 }

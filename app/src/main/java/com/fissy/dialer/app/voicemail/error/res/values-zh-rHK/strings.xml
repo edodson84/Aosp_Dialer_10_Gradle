@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- 
+<?xml version="1.0" encoding="UTF-8"?><!--
   ~ Copyright (C) 2016 The Android Open Source Project
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,8 +14,7 @@
   ~ limitations under the License
    -->
 
-<resources xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="voicemail_error_activating_title" msgid="2428457130578359186">"正在啟用視像留言"</string>
     <string name="voicemail_error_activating_message" msgid="7157030596259443393">"視像留言完全啟用前，您可能無法接收留言通知。請致電留言信箱以取得新訊息，直至視像留言完全啟用。"</string>
     <string name="voicemail_error_not_activate_no_signal_title" msgid="742273366199085615">"無法啟用視像留言"</string>

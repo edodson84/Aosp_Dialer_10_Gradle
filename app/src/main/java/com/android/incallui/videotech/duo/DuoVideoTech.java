@@ -17,10 +17,15 @@
 package com.android.incallui.videotech.duo;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.telecom.Call;
 import android.telecom.PhoneAccountHandle;
+
+import com.android.incallui.video.protocol.VideoCallScreen;
+import com.android.incallui.video.protocol.VideoCallScreenDelegate;
+import com.android.incallui.videotech.VideoTech;
+import com.android.incallui.videotech.utils.SessionModificationState;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.common.concurrent.DefaultFutureCallback;
@@ -28,177 +33,176 @@ import com.fissy.dialer.configprovider.ConfigProviderComponent;
 import com.fissy.dialer.duo.Duo;
 import com.fissy.dialer.duo.DuoListener;
 import com.fissy.dialer.logging.DialerImpression;
-import com.android.incallui.video.protocol.VideoCallScreen;
-import com.android.incallui.video.protocol.VideoCallScreenDelegate;
-import com.android.incallui.videotech.VideoTech;
-import com.android.incallui.videotech.utils.SessionModificationState;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.MoreExecutors;
 
 public class DuoVideoTech implements VideoTech, DuoListener {
-  private final Duo duo;
-  private final VideoTechListener listener;
-  private final Call call;
-  private final String callingNumber;
-  private int callState = Call.STATE_NEW;
-  private boolean isRemoteUpgradeAvailabilityQueried;
+    private final Duo duo;
+    private final VideoTechListener listener;
+    private final Call call;
+    private final String callingNumber;
+    private int callState = Call.STATE_NEW;
+    private boolean isRemoteUpgradeAvailabilityQueried;
 
-  public DuoVideoTech(
-      @NonNull Duo duo,
-      @NonNull VideoTechListener listener,
-      @NonNull Call call,
-      @NonNull String callingNumber) {
-    this.duo = Assert.isNotNull(duo);
-    this.listener = Assert.isNotNull(listener);
-    this.call = Assert.isNotNull(call);
-    this.callingNumber = Assert.isNotNull(callingNumber);
+    public DuoVideoTech(
+            @NonNull Duo duo,
+            @NonNull VideoTechListener listener,
+            @NonNull Call call,
+            @NonNull String callingNumber) {
+        this.duo = Assert.isNotNull(duo);
+        this.listener = Assert.isNotNull(listener);
+        this.call = Assert.isNotNull(call);
+        this.callingNumber = Assert.isNotNull(callingNumber);
 
-    duo.registerListener(this);
-  }
-
-  @Override
-  public boolean isAvailable(Context context, PhoneAccountHandle phoneAccountHandle) {
-    if (!ConfigProviderComponent.get(context)
-        .getConfigProvider()
-        .getBoolean("enable_lightbringer_video_upgrade", true)) {
-      LogUtil.v("DuoVideoTech.isAvailable", "upgrade disabled by flag");
-      return false;
+        duo.registerListener(this);
     }
 
-    if (callState != Call.STATE_ACTIVE) {
-      LogUtil.v("DuoVideoTech.isAvailable", "upgrade unavailable, call must be active");
-      return false;
-    }
-    Optional<Boolean> localResult = duo.supportsUpgrade(context, callingNumber, phoneAccountHandle);
-    if (localResult.isPresent()) {
-      LogUtil.v(
-          "DuoVideoTech.isAvailable", "upgrade supported in local cache: " + localResult.get());
-      return localResult.get();
-    }
+    @Override
+    public boolean isAvailable(Context context, PhoneAccountHandle phoneAccountHandle) {
+        if (!ConfigProviderComponent.get(context)
+                .getConfigProvider()
+                .getBoolean("enable_lightbringer_video_upgrade", true)) {
+            LogUtil.v("DuoVideoTech.isAvailable", "upgrade disabled by flag");
+            return false;
+        }
 
-    if (!isRemoteUpgradeAvailabilityQueried) {
-      LogUtil.v("DuoVideoTech.isAvailable", "reachability unknown, starting remote query");
-      isRemoteUpgradeAvailabilityQueried = true;
-      Futures.addCallback(
-          duo.updateReachability(context, ImmutableList.of(callingNumber)),
-          new DefaultFutureCallback<>(),
-          MoreExecutors.directExecutor());
-    }
+        if (callState != Call.STATE_ACTIVE) {
+            LogUtil.v("DuoVideoTech.isAvailable", "upgrade unavailable, call must be active");
+            return false;
+        }
+        Optional<Boolean> localResult = duo.supportsUpgrade(context, callingNumber, phoneAccountHandle);
+        if (localResult.isPresent()) {
+            LogUtil.v(
+                    "DuoVideoTech.isAvailable", "upgrade supported in local cache: " + localResult.get());
+            return localResult.get();
+        }
 
-    return false;
-  }
+        if (!isRemoteUpgradeAvailabilityQueried) {
+            LogUtil.v("DuoVideoTech.isAvailable", "reachability unknown, starting remote query");
+            isRemoteUpgradeAvailabilityQueried = true;
+            Futures.addCallback(
+                    duo.updateReachability(context, ImmutableList.of(callingNumber)),
+                    new DefaultFutureCallback<>(),
+                    MoreExecutors.directExecutor());
+        }
 
-  @Override
-  public boolean isTransmittingOrReceiving() {
-    return false;
-  }
-
-  @Override
-  public boolean isSelfManagedCamera() {
-    return false;
-  }
-
-  @Override
-  public boolean shouldUseSurfaceView() {
-    return false;
-  }
-
-  @Override
-  public boolean isPaused() {
-    return false;
-  }
-
-  @Override
-  public VideoCallScreenDelegate createVideoCallScreenDelegate(
-      Context context, VideoCallScreen videoCallScreen) {
-    throw Assert.createUnsupportedOperationFailException();
-  }
-
-  @Override
-  public void onCallStateChanged(
-      Context context, int newState, PhoneAccountHandle phoneAccountHandle) {
-    if (newState == Call.STATE_DISCONNECTING) {
-      duo.unregisterListener(this);
+        return false;
     }
 
-    callState = newState;
-  }
+    @Override
+    public boolean isTransmittingOrReceiving() {
+        return false;
+    }
 
-  @Override
-  public void onRemovedFromCallList() {
-    duo.unregisterListener(this);
-  }
+    @Override
+    public boolean isSelfManagedCamera() {
+        return false;
+    }
 
-  @Override
-  public int getSessionModificationState() {
-    return SessionModificationState.NO_REQUEST;
-  }
+    @Override
+    public boolean shouldUseSurfaceView() {
+        return false;
+    }
 
-  @Override
-  public void upgradeToVideo(@NonNull Context context) {
-    listener.onImpressionLoggingNeeded(DialerImpression.Type.LIGHTBRINGER_UPGRADE_REQUESTED);
-    duo.requestUpgrade(context, call);
-  }
+    @Override
+    public boolean isPaused() {
+        return false;
+    }
 
-  @Override
-  public void acceptVideoRequest(@NonNull Context context) {
-    throw Assert.createUnsupportedOperationFailException();
-  }
+    @Override
+    public VideoCallScreenDelegate createVideoCallScreenDelegate(
+            Context context, VideoCallScreen videoCallScreen) {
+        throw Assert.createUnsupportedOperationFailException();
+    }
 
-  @Override
-  public void acceptVideoRequestAsAudio() {
-    throw Assert.createUnsupportedOperationFailException();
-  }
+    @Override
+    public void onCallStateChanged(
+            Context context, int newState, PhoneAccountHandle phoneAccountHandle) {
+        if (newState == Call.STATE_DISCONNECTING) {
+            duo.unregisterListener(this);
+        }
 
-  @Override
-  public void declineVideoRequest() {
-    throw Assert.createUnsupportedOperationFailException();
-  }
+        callState = newState;
+    }
 
-  @Override
-  public boolean isTransmitting() {
-    return false;
-  }
+    @Override
+    public void onRemovedFromCallList() {
+        duo.unregisterListener(this);
+    }
 
-  @Override
-  public void stopTransmission() {
-    throw Assert.createUnsupportedOperationFailException();
-  }
+    @Override
+    public int getSessionModificationState() {
+        return SessionModificationState.NO_REQUEST;
+    }
 
-  @Override
-  public void resumeTransmission(@NonNull Context context) {
-    throw Assert.createUnsupportedOperationFailException();
-  }
+    @Override
+    public void upgradeToVideo(@NonNull Context context) {
+        listener.onImpressionLoggingNeeded(DialerImpression.Type.LIGHTBRINGER_UPGRADE_REQUESTED);
+        duo.requestUpgrade(context, call);
+    }
 
-  @Override
-  public void pause() {}
+    @Override
+    public void acceptVideoRequest(@NonNull Context context) {
+        throw Assert.createUnsupportedOperationFailException();
+    }
 
-  @Override
-  public void unpause() {}
+    @Override
+    public void acceptVideoRequestAsAudio() {
+        throw Assert.createUnsupportedOperationFailException();
+    }
 
-  @Override
-  public void setCamera(@Nullable String cameraId) {
-    throw Assert.createUnsupportedOperationFailException();
-  }
+    @Override
+    public void declineVideoRequest() {
+        throw Assert.createUnsupportedOperationFailException();
+    }
 
-  @Override
-  public void becomePrimary() {
-    listener.onImpressionLoggingNeeded(
-        DialerImpression.Type.UPGRADE_TO_VIDEO_CALL_BUTTON_SHOWN_FOR_LIGHTBRINGER);
-  }
+    @Override
+    public boolean isTransmitting() {
+        return false;
+    }
 
-  @Override
-  public void setDeviceOrientation(int rotation) {}
+    @Override
+    public void stopTransmission() {
+        throw Assert.createUnsupportedOperationFailException();
+    }
 
-  @Override
-  public void onDuoStateChanged() {
-    listener.onVideoTechStateChanged();
-  }
+    @Override
+    public void resumeTransmission(@NonNull Context context) {
+        throw Assert.createUnsupportedOperationFailException();
+    }
 
-  @Override
-  public com.fissy.dialer.logging.VideoTech.Type getVideoTechType() {
-    return com.fissy.dialer.logging.VideoTech.Type.LIGHTBRINGER_VIDEO_TECH;
-  }
+    @Override
+    public void pause() {
+    }
+
+    @Override
+    public void unpause() {
+    }
+
+    @Override
+    public void setCamera(@Nullable String cameraId) {
+        throw Assert.createUnsupportedOperationFailException();
+    }
+
+    @Override
+    public void becomePrimary() {
+        listener.onImpressionLoggingNeeded(
+                DialerImpression.Type.UPGRADE_TO_VIDEO_CALL_BUTTON_SHOWN_FOR_LIGHTBRINGER);
+    }
+
+    @Override
+    public void setDeviceOrientation(int rotation) {
+    }
+
+    @Override
+    public void onDuoStateChanged() {
+        listener.onVideoTechStateChanged();
+    }
+
+    @Override
+    public com.fissy.dialer.logging.VideoTech.Type getVideoTechType() {
+        return com.fissy.dialer.logging.VideoTech.Type.LIGHTBRINGER_VIDEO_TECH;
+    }
 }

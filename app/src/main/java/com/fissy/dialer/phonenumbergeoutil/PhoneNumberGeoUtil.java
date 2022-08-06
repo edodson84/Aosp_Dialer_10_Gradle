@@ -18,8 +18,12 @@ package com.fissy.dialer.phonenumbergeoutil;
 
 import android.content.Context;
 
-/** Interface for getting geo information for phone number. */
+/**
+ * Interface for getting geo information for phone number.
+ */
 public interface PhoneNumberGeoUtil {
-  /** Returns geo location information for a phone number, e.g. California. */
-  String getGeoDescription(Context context, String number, String countryIso);
+    /**
+     * Returns geo location information for a phone number, e.g. California.
+     */
+    String getGeoDescription(Context context, String number, String countryIso);
 }

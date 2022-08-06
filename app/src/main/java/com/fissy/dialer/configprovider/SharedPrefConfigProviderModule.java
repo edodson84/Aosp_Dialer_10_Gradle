@@ -19,18 +19,23 @@ package com.fissy.dialer.configprovider;
 import com.fissy.dialer.inject.DialerVariant;
 import com.fissy.dialer.inject.InstallIn;
 import com.fissy.dialer.storage.StorageModule;
-import dagger.Binds;
-import dagger.Module;
+
 import javax.inject.Singleton;
 
-/** Dagger module providing {@link ConfigProvider} based on shared preferences. */
+import dagger.Binds;
+import dagger.Module;
+
+/**
+ * Dagger module providing {@link ConfigProvider} based on shared preferences.
+ */
 @InstallIn(variants = {DialerVariant.DIALER_TEST})
 @Module(includes = StorageModule.class)
 public abstract class SharedPrefConfigProviderModule {
 
-  private SharedPrefConfigProviderModule() {}
+    private SharedPrefConfigProviderModule() {
+    }
 
-  @Binds
-  @Singleton
-  abstract ConfigProvider to(SharedPrefConfigProvider impl);
+    @Binds
+    @Singleton
+    abstract ConfigProvider to(SharedPrefConfigProvider impl);
 }

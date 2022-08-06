@@ -20,6 +20,7 @@ import android.content.ComponentName;
 import android.net.Uri;
 import android.provider.ContactsContract.CommonDataKinds;
 import android.telecom.PhoneAccountHandle;
+
 import com.fissy.dialer.constants.Constants;
 
 /**
@@ -33,42 +34,44 @@ import com.fissy.dialer.constants.Constants;
  */
 public final class PreferredSimFallbackContract {
 
-  /**
-   * Check the meta-data "com.fissy.dialer.PREFERRED_SIM_FALLBACK_AUTHORITY" to get the authority
-   * of the default dialer if it support it.
-   */
-  public static final String AUTHORITY = Constants.get().getPreferredSimFallbackProviderAuthority();
+    /**
+     * Check the meta-data "com.fissy.dialer.PREFERRED_SIM_FALLBACK_AUTHORITY" to get the authority
+     * of the default dialer if it support it.
+     */
+    public static final String AUTHORITY = Constants.get().getPreferredSimFallbackProviderAuthority();
 
-  public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY);
-
-  /** Columns for preferred SIM. */
-  public static final class PreferredSim {
+    public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY);
 
     /**
-     * Unique key that should match {@link
-     * android.provider.ContactsContract.CommonDataKinds.Phone#_ID} of the data row it is associated
-     * with.
+     * Columns for preferred SIM.
      */
-    public static final String DATA_ID = "data_id";
+    public static final class PreferredSim {
 
-    /**
-     * The flattened {@link android.content.ComponentName} of a {@link PhoneAccountHandle} that is
-     * the preferred {@code PhoneAccountHandle} to call the contact with. Used by {@link
-     * CommonDataKinds.Phone}.
-     *
-     * @see PhoneAccountHandle#getComponentName()
-     * @see ComponentName#flattenToString()
-     */
-    public static final String PREFERRED_PHONE_ACCOUNT_COMPONENT_NAME =
-        "preferred_phone_account_component_name";
+        /**
+         * Unique key that should match {@link
+         * android.provider.ContactsContract.CommonDataKinds.Phone#_ID} of the data row it is associated
+         * with.
+         */
+        public static final String DATA_ID = "data_id";
 
-    /**
-     * The ID of a {@link PhoneAccountHandle} that is the preferred {@code PhoneAccountHandle} to
-     * call the contact with. Used by {@link CommonDataKinds.Phone}.
-     *
-     * @see PhoneAccountHandle#getId() ()
-     * @see ComponentName#flattenToString()
-     */
-    public static final String PREFERRED_PHONE_ACCOUNT_ID = "preferred_phone_account_id";
-  }
+        /**
+         * The flattened {@link android.content.ComponentName} of a {@link PhoneAccountHandle} that is
+         * the preferred {@code PhoneAccountHandle} to call the contact with. Used by {@link
+         * CommonDataKinds.Phone}.
+         *
+         * @see PhoneAccountHandle#getComponentName()
+         * @see ComponentName#flattenToString()
+         */
+        public static final String PREFERRED_PHONE_ACCOUNT_COMPONENT_NAME =
+                "preferred_phone_account_component_name";
+
+        /**
+         * The ID of a {@link PhoneAccountHandle} that is the preferred {@code PhoneAccountHandle} to
+         * call the contact with. Used by {@link CommonDataKinds.Phone}.
+         *
+         * @see PhoneAccountHandle#getId() ()
+         * @see ComponentName#flattenToString()
+         */
+        public static final String PREFERRED_PHONE_ACCOUNT_ID = "preferred_phone_account_id";
+    }
 }

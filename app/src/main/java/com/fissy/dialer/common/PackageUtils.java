@@ -19,34 +19,38 @@ package com.fissy.dialer.common;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
-/** Utility class for package management. */
+/**
+ * Utility class for package management.
+ */
 public class PackageUtils {
 
-  private static boolean isPackageInstalled(@NonNull String packageName, @NonNull Context context) {
-    Assert.isNotNull(packageName);
-    Assert.isNotNull(context);
-    try {
-      PackageInfo info = context.getPackageManager().getPackageInfo(packageName, 0);
-      if (info != null && info.packageName != null) {
-        LogUtil.d("PackageUtils.isPackageInstalled", packageName + " is found");
-        return true;
-      }
-    } catch (PackageManager.NameNotFoundException e) {
-      LogUtil.d("PackageUtils.isPackageInstalled", packageName + " is NOT found");
+    private static boolean isPackageInstalled(@NonNull String packageName, @NonNull Context context) {
+        Assert.isNotNull(packageName);
+        Assert.isNotNull(context);
+        try {
+            PackageInfo info = context.getPackageManager().getPackageInfo(packageName, 0);
+            if (info != null && info.packageName != null) {
+                LogUtil.d("PackageUtils.isPackageInstalled", packageName + " is found");
+                return true;
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            LogUtil.d("PackageUtils.isPackageInstalled", packageName + " is NOT found");
+        }
+        return false;
     }
-    return false;
-  }
 
-  /** Returns true if the pkg is installed and enabled/default */
-  public static boolean isPackageEnabled(@NonNull String packageName, @NonNull Context context) {
-    Assert.isNotNull(packageName);
-    Assert.isNotNull(context);
-    if (isPackageInstalled(packageName, context)) {
-        return context.getPackageManager().getApplicationEnabledSetting(packageName)
-                != PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
+    /**
+     * Returns true if the pkg is installed and enabled/default
+     */
+    public static boolean isPackageEnabled(@NonNull String packageName, @NonNull Context context) {
+        Assert.isNotNull(packageName);
+        Assert.isNotNull(context);
+        if (isPackageInstalled(packageName, context)) {
+            return context.getPackageManager().getApplicationEnabledSetting(packageName)
+                    != PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
+        }
+        return false;
     }
-    return false;
-  }
 }

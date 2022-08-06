@@ -17,41 +17,47 @@
 package com.android.incallui.calllocation.stub;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
+import com.android.incallui.calllocation.CallLocation;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.inject.DialerVariant;
 import com.fissy.dialer.inject.InstallIn;
-import com.android.incallui.calllocation.CallLocation;
-import dagger.Binds;
-import dagger.Module;
+
 import javax.inject.Inject;
 
-/** This module provides an instance of call location. */
+import dagger.Binds;
+import dagger.Module;
+
+/**
+ * This module provides an instance of call location.
+ */
 @InstallIn(variants = {DialerVariant.DIALER_TEST})
 @Module
 public abstract class StubCallLocationModule {
 
-  @Binds
-  public abstract CallLocation bindCallLocation(StubCallLocation callLocation);
+    @Binds
+    public abstract CallLocation bindCallLocation(StubCallLocation callLocation);
 
-  static class StubCallLocation implements CallLocation {
-    @Inject
-    StubCallLocation() {}
+    static class StubCallLocation implements CallLocation {
+        @Inject
+        StubCallLocation() {
+        }
 
-    @Override
-    public boolean canGetLocation(@NonNull Context context) {
-      return false;
+        @Override
+        public boolean canGetLocation(@NonNull Context context) {
+            return false;
+        }
+
+        @Override
+        @NonNull
+        public Fragment getLocationFragment(@NonNull Context context) {
+            throw Assert.createUnsupportedOperationFailException();
+        }
+
+        @Override
+        public void close() {
+        }
     }
-
-    @Override
-    @NonNull
-    public Fragment getLocationFragment(@NonNull Context context) {
-      throw Assert.createUnsupportedOperationFailException();
-    }
-
-    @Override
-    public void close() {
-    }
-  }
 }

@@ -18,12 +18,14 @@ package com.android.incallui.call;
 
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.telecom.Call;
 import android.util.ArraySet;
+
 import com.android.contacts.common.compat.CallCompat;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
+
 import java.util.Collections;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -35,102 +37,119 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class ExternalCallList {
 
-  private final Set<Call> externalCalls = new ArraySet<>();
-  private final Set<ExternalCallListener> externalCallListeners =
-      Collections.newSetFromMap(new ConcurrentHashMap<ExternalCallListener, Boolean>(8, 0.9f, 1));
-  /** Handles {@link android.telecom.Call.Callback} callbacks. */
-  private final Call.Callback telecomCallCallback =
-      new Call.Callback() {
-        @Override
-        public void onDetailsChanged(Call call, Call.Details details) {
-          notifyExternalCallUpdated(call);
+    private final Set<Call> externalCalls = new ArraySet<>();
+    private final Set<ExternalCallListener> externalCallListeners =
+            Collections.newSetFromMap(new ConcurrentHashMap<ExternalCallListener, Boolean>(8, 0.9f, 1));
+
+    /**
+     * Begins tracking an external call and notifies listeners of the new call.
+     */
+    public void onCallAdded(Call telecomCall) {
+        Assert.checkArgument(
+                telecomCall.getDetails().hasProperty(CallCompat.Details.PROPERTY_IS_EXTERNAL_CALL));
+        externalCalls.add(telecomCall);
+        telecomCall.registerCallback(telecomCallCallback, new Handler(Looper.getMainLooper()));
+        notifyExternalCallAdded(telecomCall);
+    }    /**
+     * Handles {@link android.telecom.Call.Callback} callbacks.
+     */
+    private final Call.Callback telecomCallCallback =
+            new Call.Callback() {
+                @Override
+                public void onDetailsChanged(Call call, Call.Details details) {
+                    notifyExternalCallUpdated(call);
+                }
+            };
+
+    /**
+     * Stops tracking an external call and notifies listeners of the removal of the call.
+     */
+    public void onCallRemoved(Call telecomCall) {
+        if (!externalCalls.contains(telecomCall)) {
+            // This can happen on M for external calls from blocked numbers
+            LogUtil.i("ExternalCallList.onCallRemoved", "attempted to remove unregistered call");
+            return;
         }
-      };
-
-  /** Begins tracking an external call and notifies listeners of the new call. */
-  public void onCallAdded(Call telecomCall) {
-    Assert.checkArgument(
-        telecomCall.getDetails().hasProperty(CallCompat.Details.PROPERTY_IS_EXTERNAL_CALL));
-    externalCalls.add(telecomCall);
-    telecomCall.registerCallback(telecomCallCallback, new Handler(Looper.getMainLooper()));
-    notifyExternalCallAdded(telecomCall);
-  }
-
-  /** Stops tracking an external call and notifies listeners of the removal of the call. */
-  public void onCallRemoved(Call telecomCall) {
-    if (!externalCalls.contains(telecomCall)) {
-      // This can happen on M for external calls from blocked numbers
-      LogUtil.i("ExternalCallList.onCallRemoved", "attempted to remove unregistered call");
-      return;
+        externalCalls.remove(telecomCall);
+        telecomCall.unregisterCallback(telecomCallCallback);
+        notifyExternalCallRemoved(telecomCall);
     }
-    externalCalls.remove(telecomCall);
-    telecomCall.unregisterCallback(telecomCallCallback);
-    notifyExternalCallRemoved(telecomCall);
-  }
 
-  /** Adds a new listener to external call events. */
-  public void addExternalCallListener(@NonNull ExternalCallListener listener) {
-    externalCallListeners.add(listener);
-  }
-
-  /** Removes a listener to external call events. */
-  public void removeExternalCallListener(@NonNull ExternalCallListener listener) {
-    if (!externalCallListeners.contains(listener)) {
-      LogUtil.i(
-          "ExternalCallList.removeExternalCallListener",
-          "attempt to remove unregistered listener.");
+    /**
+     * Adds a new listener to external call events.
+     */
+    public void addExternalCallListener(@NonNull ExternalCallListener listener) {
+        externalCallListeners.add(listener);
     }
-    externalCallListeners.remove(listener);
-  }
 
-  public boolean isCallTracked(@NonNull android.telecom.Call telecomCall) {
-    return externalCalls.contains(telecomCall);
-  }
-
-  /** Notifies listeners of the addition of a new external call. */
-  private void notifyExternalCallAdded(Call call) {
-    for (ExternalCallListener listener : externalCallListeners) {
-      listener.onExternalCallAdded(call);
+    /**
+     * Removes a listener to external call events.
+     */
+    public void removeExternalCallListener(@NonNull ExternalCallListener listener) {
+        if (!externalCallListeners.contains(listener)) {
+            LogUtil.i(
+                    "ExternalCallList.removeExternalCallListener",
+                    "attempt to remove unregistered listener.");
+        }
+        externalCallListeners.remove(listener);
     }
-  }
 
-  /** Notifies listeners of the removal of an external call. */
-  private void notifyExternalCallRemoved(Call call) {
-    for (ExternalCallListener listener : externalCallListeners) {
-      listener.onExternalCallRemoved(call);
+    public boolean isCallTracked(@NonNull android.telecom.Call telecomCall) {
+        return externalCalls.contains(telecomCall);
     }
-  }
 
-  /** Notifies listeners of changes to an external call. */
-  private void notifyExternalCallUpdated(Call call) {
-    if (!call.getDetails().hasProperty(CallCompat.Details.PROPERTY_IS_EXTERNAL_CALL)) {
-      // A previous external call has been pulled and is now a regular call, so we will remove
-      // it from the external call listener and ensure that the CallList is informed of the
-      // change.
-      onCallRemoved(call);
-
-      for (ExternalCallListener listener : externalCallListeners) {
-        listener.onExternalCallPulled(call);
-      }
-    } else {
-      for (ExternalCallListener listener : externalCallListeners) {
-        listener.onExternalCallUpdated(call);
-      }
+    /**
+     * Notifies listeners of the addition of a new external call.
+     */
+    private void notifyExternalCallAdded(Call call) {
+        for (ExternalCallListener listener : externalCallListeners) {
+            listener.onExternalCallAdded(call);
+        }
     }
-  }
 
-  /**
-   * Defines events which the {@link ExternalCallList} exposes to interested components (e.g. {@link
-   * com.android.incallui.ExternalCallNotifier ExternalCallNotifier}).
-   */
-  public interface ExternalCallListener {
+    /**
+     * Notifies listeners of the removal of an external call.
+     */
+    private void notifyExternalCallRemoved(Call call) {
+        for (ExternalCallListener listener : externalCallListeners) {
+            listener.onExternalCallRemoved(call);
+        }
+    }
 
-    void onExternalCallAdded(Call call);
+    /**
+     * Notifies listeners of changes to an external call.
+     */
+    private void notifyExternalCallUpdated(Call call) {
+        if (!call.getDetails().hasProperty(CallCompat.Details.PROPERTY_IS_EXTERNAL_CALL)) {
+            // A previous external call has been pulled and is now a regular call, so we will remove
+            // it from the external call listener and ensure that the CallList is informed of the
+            // change.
+            onCallRemoved(call);
 
-    void onExternalCallRemoved(Call call);
+            for (ExternalCallListener listener : externalCallListeners) {
+                listener.onExternalCallPulled(call);
+            }
+        } else {
+            for (ExternalCallListener listener : externalCallListeners) {
+                listener.onExternalCallUpdated(call);
+            }
+        }
+    }
 
-    void onExternalCallUpdated(Call call);
+    /**
+     * Defines events which the {@link ExternalCallList} exposes to interested components (e.g. {@link
+     * com.android.incallui.ExternalCallNotifier ExternalCallNotifier}).
+     */
+    public interface ExternalCallListener {
 
-    void onExternalCallPulled(Call call);
-  }
+        void onExternalCallAdded(Call call);
+
+        void onExternalCallRemoved(Call call);
+
+        void onExternalCallUpdated(Call call);
+
+        void onExternalCallPulled(Call call);
+    }
+
+
 }

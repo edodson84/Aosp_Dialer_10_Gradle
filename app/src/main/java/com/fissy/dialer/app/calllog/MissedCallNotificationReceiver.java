@@ -19,9 +19,11 @@ package com.fissy.dialer.app.calllog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.util.Pair;
+import androidx.core.util.Pair;
+
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.common.concurrent.DialerExecutorComponent;
+
 import me.leolin.shortcutbadger.ShortcutBadger;
 
 /**
@@ -30,59 +32,59 @@ import me.leolin.shortcutbadger.ShortcutBadger;
  */
 public class MissedCallNotificationReceiver extends BroadcastReceiver {
 
-  // TODO: Use compat class for these methods.
-  public static final String ACTION_SHOW_MISSED_CALLS_NOTIFICATION =
-      "android.telecom.action.SHOW_MISSED_CALLS_NOTIFICATION";
+    // TODO: Use compat class for these methods.
+    public static final String ACTION_SHOW_MISSED_CALLS_NOTIFICATION =
+            "android.telecom.action.SHOW_MISSED_CALLS_NOTIFICATION";
 
-  public static final String EXTRA_NOTIFICATION_COUNT = "android.telecom.extra.NOTIFICATION_COUNT";
+    public static final String EXTRA_NOTIFICATION_COUNT = "android.telecom.extra.NOTIFICATION_COUNT";
 
-  public static final String EXTRA_NOTIFICATION_PHONE_NUMBER =
-      "android.telecom.extra.NOTIFICATION_PHONE_NUMBER";
+    public static final String EXTRA_NOTIFICATION_PHONE_NUMBER =
+            "android.telecom.extra.NOTIFICATION_PHONE_NUMBER";
 
-  @Override
-  public void onReceive(Context context, Intent intent) {
-    String action = intent.getAction();
-    if (!ACTION_SHOW_MISSED_CALLS_NOTIFICATION.equals(action)) {
-      return;
+    private static void updateBadgeCount(Context context, int count) {
+        boolean success = ShortcutBadger.applyCount(context, count);
+        LogUtil.i(
+                "MissedCallNotificationReceiver.updateBadgeCount",
+                "update badge count: %d success: %b",
+                count,
+                success);
     }
 
-    LogUtil.enterBlock("MissedCallNotificationReceiver.onReceive");
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        String action = intent.getAction();
+        if (!ACTION_SHOW_MISSED_CALLS_NOTIFICATION.equals(action)) {
+            return;
+        }
 
-    int count =
-        intent.getIntExtra(
-            EXTRA_NOTIFICATION_COUNT, CallLogNotificationsService.UNKNOWN_MISSED_CALL_COUNT);
-    String phoneNumber = intent.getStringExtra(EXTRA_NOTIFICATION_PHONE_NUMBER);
+        LogUtil.enterBlock("MissedCallNotificationReceiver.onReceive");
 
-    PendingResult pendingResult = goAsync();
+        int count =
+                intent.getIntExtra(
+                        EXTRA_NOTIFICATION_COUNT, CallLogNotificationsService.UNKNOWN_MISSED_CALL_COUNT);
+        String phoneNumber = intent.getStringExtra(EXTRA_NOTIFICATION_PHONE_NUMBER);
 
-    DialerExecutorComponent.get(context)
-        .dialerExecutorFactory()
-        .createNonUiTaskBuilder(MissedCallNotifier.getInstance(context))
-        .onSuccess(
-            output -> {
-              LogUtil.i(
-                  "MissedCallNotificationReceiver.onReceive",
-                  "update missed call notifications successful");
-              updateBadgeCount(context, count);
-              pendingResult.finish();
-            })
-        .onFailure(
-            throwable -> {
-              LogUtil.i(
-                  "MissedCallNotificationReceiver.onReceive",
-                  "update missed call notifications failed");
-              pendingResult.finish();
-            })
-        .build()
-        .executeParallel(new Pair<>(count, phoneNumber));
-  }
+        PendingResult pendingResult = goAsync();
 
-  private static void updateBadgeCount(Context context, int count) {
-    boolean success = ShortcutBadger.applyCount(context, count);
-    LogUtil.i(
-        "MissedCallNotificationReceiver.updateBadgeCount",
-        "update badge count: %d success: %b",
-        count,
-        success);
-  }
+        DialerExecutorComponent.get(context)
+                .dialerExecutorFactory()
+                .createNonUiTaskBuilder(MissedCallNotifier.getInstance(context))
+                .onSuccess(
+                        output -> {
+                            LogUtil.i(
+                                    "MissedCallNotificationReceiver.onReceive",
+                                    "update missed call notifications successful");
+                            updateBadgeCount(context, count);
+                            pendingResult.finish();
+                        })
+                .onFailure(
+                        throwable -> {
+                            LogUtil.i(
+                                    "MissedCallNotificationReceiver.onReceive",
+                                    "update missed call notifications failed");
+                            pendingResult.finish();
+                        })
+                .build()
+                .executeParallel(new Pair<>(count, phoneNumber));
+    }
 }

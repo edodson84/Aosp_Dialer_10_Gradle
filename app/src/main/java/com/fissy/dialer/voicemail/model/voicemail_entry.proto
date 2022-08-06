@@ -7,8 +7,8 @@ option optimize_for = LITE_RUNTIME;
 
 package com.fissy.dialer.voicemail.model;
 
-import "java/com/android/dialer/calllog/database/contract/number_attributes.proto";
-import "java/com/android/dialer/phonenumberproto/dialer_phone_number.proto";
+import "java/com/fissy/dialer/calllog/database/contract/number_attributes.proto";
+import "java/com/fissy/dialer/phonenumberproto/dialer_phone_number.proto";
 
 // Contains contents of a voicemail entry from the AnnotatedCallLog.
 message VoicemailEntry {

@@ -15,11 +15,12 @@
  */
 package com.fissy.dialer.app.settings;
 
+import android.app.Activity;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
-import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.Toolbar;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,121 +31,121 @@ import android.view.ViewGroup;
  */
 public class AppCompatPreferenceActivity extends PreferenceActivity {
 
-  private AppCompatDelegate delegate;
+    private AppCompatDelegate delegate;
 
-  private boolean isSafeToCommitTransactions;
+    private boolean isSafeToCommitTransactions;
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    getDelegate().installViewFactory();
-    getDelegate().onCreate(savedInstanceState);
-    super.onCreate(savedInstanceState);
-    isSafeToCommitTransactions = true;
-  }
-
-  @Override
-  protected void onPostCreate(Bundle savedInstanceState) {
-    super.onPostCreate(savedInstanceState);
-    getDelegate().onPostCreate(savedInstanceState);
-  }
-
-  public void setSupportActionBar(Toolbar toolbar) {
-    getDelegate().setSupportActionBar(toolbar);
-  }
-
-  @Override
-  public MenuInflater getMenuInflater() {
-    return getDelegate().getMenuInflater();
-  }
-
-  @Override
-  public void setContentView(int layoutResID) {
-    getDelegate().setContentView(layoutResID);
-  }
-
-  @Override
-  public void setContentView(View view) {
-    getDelegate().setContentView(view);
-  }
-
-  @Override
-  public void setContentView(View view, ViewGroup.LayoutParams params) {
-    getDelegate().setContentView(view, params);
-  }
-
-  @Override
-  public void addContentView(View view, ViewGroup.LayoutParams params) {
-    getDelegate().addContentView(view, params);
-  }
-
-  @Override
-  protected void onPostResume() {
-    super.onPostResume();
-    getDelegate().onPostResume();
-  }
-
-  @Override
-  protected void onTitleChanged(CharSequence title, int color) {
-    super.onTitleChanged(title, color);
-    getDelegate().setTitle(title);
-  }
-
-  @Override
-  public void onConfigurationChanged(Configuration newConfig) {
-    super.onConfigurationChanged(newConfig);
-    getDelegate().onConfigurationChanged(newConfig);
-  }
-
-  @Override
-  protected void onStop() {
-    super.onStop();
-    getDelegate().onStop();
-  }
-
-  @Override
-  protected void onDestroy() {
-    super.onDestroy();
-    getDelegate().onDestroy();
-  }
-
-  @Override
-  public void invalidateOptionsMenu() {
-    getDelegate().invalidateOptionsMenu();
-  }
-
-  private AppCompatDelegate getDelegate() {
-    if (delegate == null) {
-      delegate = AppCompatDelegate.create(this, null);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        getDelegate().installViewFactory();
+        getDelegate().onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);
+        isSafeToCommitTransactions = true;
     }
-    return delegate;
-  }
 
-  @Override
-  protected void onStart() {
-    super.onStart();
-    isSafeToCommitTransactions = true;
-  }
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        getDelegate().onPostCreate(savedInstanceState);
+    }
 
-  @Override
-  protected void onResume() {
-    super.onResume();
-    isSafeToCommitTransactions = true;
-  }
+    public void setSupportActionBar(Toolbar toolbar) {
+        getDelegate().setSupportActionBar(toolbar);
+    }
 
-  @Override
-  protected void onSaveInstanceState(Bundle outState) {
-    super.onSaveInstanceState(outState);
-    isSafeToCommitTransactions = false;
-  }
+    @Override
+    public MenuInflater getMenuInflater() {
+        return getDelegate().getMenuInflater();
+    }
 
-  /**
-   * Returns true if it is safe to commit {@link FragmentTransaction}s at this time, based on
-   * whether {@link Activity#onSaveInstanceState} has been called or not.
-   *
-   * <p>Make sure that the current activity calls into {@link super.onSaveInstanceState(Bundle
-   * outState)} (if that method is overridden), so the flag is properly set.
-   */
-  public boolean isSafeToCommitTransactions() {
-    return isSafeToCommitTransactions;
-  }
+    @Override
+    public void setContentView(int layoutResID) {
+        getDelegate().setContentView(layoutResID);
+    }
+
+    @Override
+    public void setContentView(View view) {
+        getDelegate().setContentView(view);
+    }
+
+    @Override
+    public void setContentView(View view, ViewGroup.LayoutParams params) {
+        getDelegate().setContentView(view, params);
+    }
+
+    @Override
+    public void addContentView(View view, ViewGroup.LayoutParams params) {
+        getDelegate().addContentView(view, params);
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        getDelegate().onPostResume();
+    }
+
+    @Override
+    protected void onTitleChanged(CharSequence title, int color) {
+        super.onTitleChanged(title, color);
+        getDelegate().setTitle(title);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        getDelegate().onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        getDelegate().onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        getDelegate().onDestroy();
+    }
+
+    @Override
+    public void invalidateOptionsMenu() {
+        getDelegate().invalidateOptionsMenu();
+    }
+
+    private AppCompatDelegate getDelegate() {
+        if (delegate == null) {
+            delegate = AppCompatDelegate.create(this, null);
+        }
+        return delegate;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        isSafeToCommitTransactions = true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isSafeToCommitTransactions = true;
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        isSafeToCommitTransactions = false;
+    }
+
+    /**
+     * Returns true if it is safe to commit {@link FragmentTransaction}s at this time, based on
+     * whether {@link Activity#onSaveInstanceState} has been called or not.
+     *
+     * <p>Make sure that the current activity calls into {@link super.onSaveInstanceState(Bundle
+     * outState)} (if that method is overridden), so the flag is properly set.
+     */
+    public boolean isSafeToCommitTransactions() {
+        return isSafeToCommitTransactions;
+    }
 }

@@ -19,6 +19,7 @@ package com.fissy.dialer.calllog.ui.menu;
 import android.content.Context;
 import android.provider.CallLog.Calls;
 import android.view.View;
+
 import com.fissy.dialer.calllog.CallLogComponent;
 import com.fissy.dialer.calllog.model.CoalescedRow;
 import com.fissy.dialer.common.concurrent.DefaultFutureCallback;
@@ -26,25 +27,29 @@ import com.fissy.dialer.historyitemactions.HistoryItemActionBottomSheet;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.MoreExecutors;
 
-/** Handles configuration of the bottom sheet menus for call log entries. */
+/**
+ * Handles configuration of the bottom sheet menus for call log entries.
+ */
 public final class NewCallLogMenu {
 
-  /** Creates and returns the OnClickListener which opens the menu for the provided row. */
-  public static View.OnClickListener createOnClickListener(Context context, CoalescedRow row) {
-    return view -> {
-      HistoryItemActionBottomSheet.show(
-          context, BottomSheetHeader.fromRow(context, row), Modules.fromRow(context, row));
+    /**
+     * Creates and returns the OnClickListener which opens the menu for the provided row.
+     */
+    public static View.OnClickListener createOnClickListener(Context context, CoalescedRow row) {
+        return view -> {
+            HistoryItemActionBottomSheet.show(
+                    context, BottomSheetHeader.fromRow(context, row), Modules.fromRow(context, row));
 
-      // If the user opens the bottom sheet for an unread call, clear the notifications and make the
-      // row not bold immediately. To do this, mark all of the calls in group as read.
-      if (!row.getIsRead() && row.getCallType() == Calls.MISSED_TYPE) {
-        Futures.addCallback(
-            CallLogComponent.get(context)
-                .getClearMissedCalls()
-                .clearBySystemCallLogId(row.getCoalescedIds().getCoalescedIdList()),
-            new DefaultFutureCallback<>(),
-            MoreExecutors.directExecutor());
-      }
-    };
-  }
+            // If the user opens the bottom sheet for an unread call, clear the notifications and make the
+            // row not bold immediately. To do this, mark all of the calls in group as read.
+            if (!row.getIsRead() && row.getCallType() == Calls.MISSED_TYPE) {
+                Futures.addCallback(
+                        CallLogComponent.get(context)
+                                .getClearMissedCalls()
+                                .clearBySystemCallLogId(row.getCoalescedIds().getCoalescedIdList()),
+                        new DefaultFutureCallback<>(),
+                        MoreExecutors.directExecutor());
+            }
+        };
+    }
 }

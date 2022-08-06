@@ -20,7 +20,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.support.v4.app.FragmentManager;
+import androidx.fragment.app.FragmentManager;
 import android.widget.Toast;
 
 import com.fissy.dialer.R;
@@ -52,227 +52,231 @@ import com.google.common.util.concurrent.Futures;
  */
 public final class ShowBlockReportSpamDialogReceiver extends BroadcastReceiver {
 
-  static final String ACTION_SHOW_DIALOG_TO_BLOCK_NUMBER = "show_dialog_to_block_number";
-  static final String ACTION_SHOW_DIALOG_TO_BLOCK_NUMBER_AND_OPTIONALLY_REPORT_SPAM =
-      "show_dialog_to_block_number_and_optionally_report_spam";
-  static final String ACTION_SHOW_DIALOG_TO_REPORT_NOT_SPAM = "show_dialog_to_report_not_spam";
-  static final String ACTION_SHOW_DIALOG_TO_UNBLOCK_NUMBER = "show_dialog_to_unblock_number";
-  static final String EXTRA_DIALOG_INFO = "dialog_info";
+    static final String ACTION_SHOW_DIALOG_TO_BLOCK_NUMBER = "show_dialog_to_block_number";
+    static final String ACTION_SHOW_DIALOG_TO_BLOCK_NUMBER_AND_OPTIONALLY_REPORT_SPAM =
+            "show_dialog_to_block_number_and_optionally_report_spam";
+    static final String ACTION_SHOW_DIALOG_TO_REPORT_NOT_SPAM = "show_dialog_to_report_not_spam";
+    static final String ACTION_SHOW_DIALOG_TO_UNBLOCK_NUMBER = "show_dialog_to_unblock_number";
+    static final String EXTRA_DIALOG_INFO = "dialog_info";
 
-  /** {@link FragmentManager} needed to show a {@link android.app.DialogFragment}. */
-  private final FragmentManager fragmentManager;
+    /**
+     * {@link FragmentManager} needed to show a {@link android.app.DialogFragment}.
+     */
+    private final FragmentManager fragmentManager;
 
-  /** Returns an {@link IntentFilter} containing all actions accepted by this broadcast receiver. */
-  public static IntentFilter getIntentFilter() {
-    IntentFilter intentFilter = new IntentFilter();
-    intentFilter.addAction(ACTION_SHOW_DIALOG_TO_BLOCK_NUMBER_AND_OPTIONALLY_REPORT_SPAM);
-    intentFilter.addAction(ACTION_SHOW_DIALOG_TO_BLOCK_NUMBER);
-    intentFilter.addAction(ACTION_SHOW_DIALOG_TO_REPORT_NOT_SPAM);
-    intentFilter.addAction(ACTION_SHOW_DIALOG_TO_UNBLOCK_NUMBER);
-    return intentFilter;
-  }
-
-  public ShowBlockReportSpamDialogReceiver(FragmentManager fragmentManager) {
-    this.fragmentManager = fragmentManager;
-  }
-
-  @Override
-  public void onReceive(Context context, Intent intent) {
-    LogUtil.enterBlock("ShowBlockReportSpamDialogReceiver.onReceive");
-
-    String action = intent.getAction();
-
-    switch (Assert.isNotNull(action)) {
-      case ACTION_SHOW_DIALOG_TO_BLOCK_NUMBER:
-        showDialogToBlockNumber(context, intent);
-        break;
-      case ACTION_SHOW_DIALOG_TO_BLOCK_NUMBER_AND_OPTIONALLY_REPORT_SPAM:
-        showDialogToBlockNumberAndOptionallyReportSpam(context, intent);
-        break;
-      case ACTION_SHOW_DIALOG_TO_REPORT_NOT_SPAM:
-        showDialogToReportNotSpam(context, intent);
-        break;
-      case ACTION_SHOW_DIALOG_TO_UNBLOCK_NUMBER:
-        showDialogToUnblockNumber(context, intent);
-        break;
-      default:
-        throw new IllegalStateException("Unsupported action: " + action);
+    public ShowBlockReportSpamDialogReceiver(FragmentManager fragmentManager) {
+        this.fragmentManager = fragmentManager;
     }
-  }
 
-  private void showDialogToBlockNumberAndOptionallyReportSpam(Context context, Intent intent) {
-    LogUtil.enterBlock(
-        "ShowBlockReportSpamDialogReceiver.showDialogToBlockNumberAndOptionallyReportSpam");
+    /**
+     * Returns an {@link IntentFilter} containing all actions accepted by this broadcast receiver.
+     */
+    public static IntentFilter getIntentFilter() {
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ACTION_SHOW_DIALOG_TO_BLOCK_NUMBER_AND_OPTIONALLY_REPORT_SPAM);
+        intentFilter.addAction(ACTION_SHOW_DIALOG_TO_BLOCK_NUMBER);
+        intentFilter.addAction(ACTION_SHOW_DIALOG_TO_REPORT_NOT_SPAM);
+        intentFilter.addAction(ACTION_SHOW_DIALOG_TO_UNBLOCK_NUMBER);
+        return intentFilter;
+    }
 
-    Assert.checkArgument(intent.hasExtra(EXTRA_DIALOG_INFO));
-    BlockReportSpamDialogInfo dialogInfo =
-        ProtoParsers.getTrusted(
-            intent, EXTRA_DIALOG_INFO, BlockReportSpamDialogInfo.getDefaultInstance());
+    private static void blockNumber(Context context, BlockReportSpamDialogInfo dialogInfo) {
+        Logger.get(context).logImpression(Type.USER_ACTION_BLOCKED_NUMBER);
+        Futures.addCallback(
+                Blocking.block(
+                        context,
+                        ImmutableList.of(dialogInfo.getNormalizedNumber()),
+                        dialogInfo.getCountryIso()),
+                new FutureCallback<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        // Do nothing
+                    }
 
-    Spam spam = SpamComponent.get(context).spam();
-    SpamSettings spamSettings = SpamComponent.get(context).spamSettings();
+                    @Override
+                    public void onFailure(Throwable throwable) {
+                        if (throwable instanceof BlockingFailedException) {
+                            Logger.get(context).logImpression(Type.USER_ACTION_BLOCK_NUMBER_FAILED);
+                            Toast.makeText(context, R.string.block_number_failed_toast, Toast.LENGTH_LONG).show();
+                        } else {
+                            throw new RuntimeException(throwable);
+                        }
+                    }
+                },
+                DialerExecutorComponent.get(context).uiExecutor());
+    }
 
-    // Set up the positive listener for the dialog.
-    OnSpamDialogClickListener onSpamDialogClickListener =
-        reportSpam -> {
-          LogUtil.i(
-              "ShowBlockReportSpamDialogReceiver.showDialogToBlockNumberAndOptionallyReportSpam",
-              "confirmed");
+    private static void unblockNumber(Context context, BlockReportSpamDialogInfo dialogInfo) {
+        Logger.get(context).logImpression(Type.USER_ACTION_UNBLOCKED_NUMBER);
+        Futures.addCallback(
+                Blocking.unblock(
+                        context,
+                        ImmutableList.of(dialogInfo.getNormalizedNumber()),
+                        dialogInfo.getCountryIso()),
+                new FutureCallback<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        // Do nothing
+                    }
 
-          if (reportSpam && spamSettings.isSpamEnabled()) {
-            LogUtil.i(
-                "ShowBlockReportSpamDialogReceiver.showDialogToBlockNumberAndOptionallyReportSpam",
-                "report spam");
-            Logger.get(context)
-                .logImpression(
-                    DialerImpression.Type
-                        .REPORT_CALL_AS_SPAM_VIA_CALL_LOG_BLOCK_REPORT_SPAM_SENT_VIA_BLOCK_NUMBER_DIALOG);
-            spam.reportSpamFromCallHistory(
-                dialogInfo.getNormalizedNumber(),
-                dialogInfo.getCountryIso(),
-                dialogInfo.getCallType(),
-                dialogInfo.getReportingLocation(),
-                dialogInfo.getContactSource());
-          }
+                    @Override
+                    public void onFailure(Throwable throwable) {
+                        if (throwable instanceof BlockingFailedException) {
+                            Logger.get(context).logImpression(Type.USER_ACTION_UNBLOCK_NUMBER_FAILED);
+                            Toast.makeText(context, R.string.unblock_number_failed_toast, Toast.LENGTH_LONG)
+                                    .show();
+                        } else {
+                            throw new RuntimeException(throwable);
+                        }
+                    }
+                },
+                DialerExecutorComponent.get(context).uiExecutor());
+    }
 
-          blockNumber(context, dialogInfo);
-        };
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        LogUtil.enterBlock("ShowBlockReportSpamDialogReceiver.onReceive");
 
-    // Create and show the dialog.
-    DialogFragmentForBlockingNumberAndOptionallyReportingAsSpam.newInstance(
-            dialogInfo.getNormalizedNumber(),
-            spamSettings.isDialogReportSpamCheckedByDefault(),
-            onSpamDialogClickListener,
-            /* dismissListener = */ null)
-        .show(fragmentManager, BlockReportSpamDialogs.BLOCK_REPORT_SPAM_DIALOG_TAG);
-  }
+        String action = intent.getAction();
 
-  private void showDialogToBlockNumber(Context context, Intent intent) {
-    LogUtil.enterBlock("ShowBlockReportSpamDialogReceiver.showDialogToBlockNumber");
+        switch (Assert.isNotNull(action)) {
+            case ACTION_SHOW_DIALOG_TO_BLOCK_NUMBER:
+                showDialogToBlockNumber(context, intent);
+                break;
+            case ACTION_SHOW_DIALOG_TO_BLOCK_NUMBER_AND_OPTIONALLY_REPORT_SPAM:
+                showDialogToBlockNumberAndOptionallyReportSpam(context, intent);
+                break;
+            case ACTION_SHOW_DIALOG_TO_REPORT_NOT_SPAM:
+                showDialogToReportNotSpam(context, intent);
+                break;
+            case ACTION_SHOW_DIALOG_TO_UNBLOCK_NUMBER:
+                showDialogToUnblockNumber(context, intent);
+                break;
+            default:
+                throw new IllegalStateException("Unsupported action: " + action);
+        }
+    }
 
-    Assert.checkArgument(intent.hasExtra(EXTRA_DIALOG_INFO));
-    BlockReportSpamDialogInfo dialogInfo =
-        ProtoParsers.getTrusted(
-            intent, EXTRA_DIALOG_INFO, BlockReportSpamDialogInfo.getDefaultInstance());
+    private void showDialogToBlockNumberAndOptionallyReportSpam(Context context, Intent intent) {
+        LogUtil.enterBlock(
+                "ShowBlockReportSpamDialogReceiver.showDialogToBlockNumberAndOptionallyReportSpam");
 
-    // Set up the positive listener for the dialog.
-    OnConfirmListener onConfirmListener =
-        () -> {
-          LogUtil.i("ShowBlockReportSpamDialogReceiver.showDialogToBlockNumber", "block number");
-          blockNumber(context, dialogInfo);
-        };
+        Assert.checkArgument(intent.hasExtra(EXTRA_DIALOG_INFO));
+        BlockReportSpamDialogInfo dialogInfo =
+                ProtoParsers.getTrusted(
+                        intent, EXTRA_DIALOG_INFO, BlockReportSpamDialogInfo.getDefaultInstance());
 
-    // Create and show the dialog.
-    DialogFragmentForBlockingNumber.newInstance(
-            dialogInfo.getNormalizedNumber(), onConfirmListener, /* dismissListener = */ null)
-        .show(fragmentManager, BlockReportSpamDialogs.BLOCK_DIALOG_TAG);
-  }
+        Spam spam = SpamComponent.get(context).spam();
+        SpamSettings spamSettings = SpamComponent.get(context).spamSettings();
 
-  private void showDialogToReportNotSpam(Context context, Intent intent) {
-    LogUtil.enterBlock("ShowBlockReportSpamDialogReceiver.showDialogToReportNotSpam");
+        // Set up the positive listener for the dialog.
+        OnSpamDialogClickListener onSpamDialogClickListener =
+                reportSpam -> {
+                    LogUtil.i(
+                            "ShowBlockReportSpamDialogReceiver.showDialogToBlockNumberAndOptionallyReportSpam",
+                            "confirmed");
 
-    Assert.checkArgument(intent.hasExtra(EXTRA_DIALOG_INFO));
-    BlockReportSpamDialogInfo dialogInfo =
-        ProtoParsers.getTrusted(
-            intent, EXTRA_DIALOG_INFO, BlockReportSpamDialogInfo.getDefaultInstance());
+                    if (reportSpam && spamSettings.isSpamEnabled()) {
+                        LogUtil.i(
+                                "ShowBlockReportSpamDialogReceiver.showDialogToBlockNumberAndOptionallyReportSpam",
+                                "report spam");
+                        Logger.get(context)
+                                .logImpression(
+                                        DialerImpression.Type
+                                                .REPORT_CALL_AS_SPAM_VIA_CALL_LOG_BLOCK_REPORT_SPAM_SENT_VIA_BLOCK_NUMBER_DIALOG);
+                        spam.reportSpamFromCallHistory(
+                                dialogInfo.getNormalizedNumber(),
+                                dialogInfo.getCountryIso(),
+                                dialogInfo.getCallType(),
+                                dialogInfo.getReportingLocation(),
+                                dialogInfo.getContactSource());
+                    }
 
-    // Set up the positive listener for the dialog.
-    OnConfirmListener onConfirmListener =
-        () -> {
-          LogUtil.i("ShowBlockReportSpamDialogReceiver.showDialogToReportNotSpam", "confirmed");
+                    blockNumber(context, dialogInfo);
+                };
 
-          if (SpamComponent.get(context).spamSettings().isSpamEnabled()) {
-            Logger.get(context)
-                .logImpression(DialerImpression.Type.DIALOG_ACTION_CONFIRM_NUMBER_NOT_SPAM);
-            SpamComponent.get(context)
-                .spam()
-                .reportNotSpamFromCallHistory(
-                    dialogInfo.getNormalizedNumber(),
-                    dialogInfo.getCountryIso(),
-                    dialogInfo.getCallType(),
-                    dialogInfo.getReportingLocation(),
-                    dialogInfo.getContactSource());
-          }
-        };
+        // Create and show the dialog.
+        DialogFragmentForBlockingNumberAndOptionallyReportingAsSpam.newInstance(
+                        dialogInfo.getNormalizedNumber(),
+                        spamSettings.isDialogReportSpamCheckedByDefault(),
+                        onSpamDialogClickListener,
+                        /* dismissListener = */ null)
+                .show(fragmentManager, BlockReportSpamDialogs.BLOCK_REPORT_SPAM_DIALOG_TAG);
+    }
 
-    // Create & show the dialog.
-    DialogFragmentForReportingNotSpam.newInstance(
-            dialogInfo.getNormalizedNumber(), onConfirmListener, /* dismissListener = */ null)
-        .show(fragmentManager, BlockReportSpamDialogs.NOT_SPAM_DIALOG_TAG);
-  }
+    private void showDialogToBlockNumber(Context context, Intent intent) {
+        LogUtil.enterBlock("ShowBlockReportSpamDialogReceiver.showDialogToBlockNumber");
 
-  private void showDialogToUnblockNumber(Context context, Intent intent) {
-    LogUtil.enterBlock("ShowBlockReportSpamDialogReceiver.showDialogToUnblockNumber");
+        Assert.checkArgument(intent.hasExtra(EXTRA_DIALOG_INFO));
+        BlockReportSpamDialogInfo dialogInfo =
+                ProtoParsers.getTrusted(
+                        intent, EXTRA_DIALOG_INFO, BlockReportSpamDialogInfo.getDefaultInstance());
 
-    Assert.checkArgument(intent.hasExtra(EXTRA_DIALOG_INFO));
-    BlockReportSpamDialogInfo dialogInfo =
-        ProtoParsers.getTrusted(
-            intent, EXTRA_DIALOG_INFO, BlockReportSpamDialogInfo.getDefaultInstance());
+        // Set up the positive listener for the dialog.
+        OnConfirmListener onConfirmListener =
+                () -> {
+                    LogUtil.i("ShowBlockReportSpamDialogReceiver.showDialogToBlockNumber", "block number");
+                    blockNumber(context, dialogInfo);
+                };
 
-    // Set up the positive listener for the dialog.
-    OnConfirmListener onConfirmListener =
-        () -> {
-          LogUtil.i("ShowBlockReportSpamDialogReceiver.showDialogToUnblockNumber", "confirmed");
+        // Create and show the dialog.
+        DialogFragmentForBlockingNumber.newInstance(
+                        dialogInfo.getNormalizedNumber(), onConfirmListener, /* dismissListener = */ null)
+                .show(fragmentManager, BlockReportSpamDialogs.BLOCK_DIALOG_TAG);
+    }
 
-          unblockNumber(context, dialogInfo);
-        };
+    private void showDialogToReportNotSpam(Context context, Intent intent) {
+        LogUtil.enterBlock("ShowBlockReportSpamDialogReceiver.showDialogToReportNotSpam");
 
-    // Create & show the dialog.
-    DialogFragmentForUnblockingNumber.newInstance(
-            dialogInfo.getNormalizedNumber(), onConfirmListener, /* dismissListener = */ null)
-        .show(fragmentManager, BlockReportSpamDialogs.UNBLOCK_DIALOG_TAG);
-  }
+        Assert.checkArgument(intent.hasExtra(EXTRA_DIALOG_INFO));
+        BlockReportSpamDialogInfo dialogInfo =
+                ProtoParsers.getTrusted(
+                        intent, EXTRA_DIALOG_INFO, BlockReportSpamDialogInfo.getDefaultInstance());
 
-  private static void blockNumber(Context context, BlockReportSpamDialogInfo dialogInfo) {
-    Logger.get(context).logImpression(Type.USER_ACTION_BLOCKED_NUMBER);
-    Futures.addCallback(
-        Blocking.block(
-            context,
-            ImmutableList.of(dialogInfo.getNormalizedNumber()),
-            dialogInfo.getCountryIso()),
-        new FutureCallback<Void>() {
-          @Override
-          public void onSuccess(Void unused) {
-            // Do nothing
-          }
+        // Set up the positive listener for the dialog.
+        OnConfirmListener onConfirmListener =
+                () -> {
+                    LogUtil.i("ShowBlockReportSpamDialogReceiver.showDialogToReportNotSpam", "confirmed");
 
-          @Override
-          public void onFailure(Throwable throwable) {
-            if (throwable instanceof BlockingFailedException) {
-              Logger.get(context).logImpression(Type.USER_ACTION_BLOCK_NUMBER_FAILED);
-              Toast.makeText(context, R.string.block_number_failed_toast, Toast.LENGTH_LONG).show();
-            } else {
-              throw new RuntimeException(throwable);
-            }
-          }
-        },
-        DialerExecutorComponent.get(context).uiExecutor());
-  }
+                    if (SpamComponent.get(context).spamSettings().isSpamEnabled()) {
+                        Logger.get(context)
+                                .logImpression(DialerImpression.Type.DIALOG_ACTION_CONFIRM_NUMBER_NOT_SPAM);
+                        SpamComponent.get(context)
+                                .spam()
+                                .reportNotSpamFromCallHistory(
+                                        dialogInfo.getNormalizedNumber(),
+                                        dialogInfo.getCountryIso(),
+                                        dialogInfo.getCallType(),
+                                        dialogInfo.getReportingLocation(),
+                                        dialogInfo.getContactSource());
+                    }
+                };
 
-  private static void unblockNumber(Context context, BlockReportSpamDialogInfo dialogInfo) {
-    Logger.get(context).logImpression(Type.USER_ACTION_UNBLOCKED_NUMBER);
-    Futures.addCallback(
-        Blocking.unblock(
-            context,
-            ImmutableList.of(dialogInfo.getNormalizedNumber()),
-            dialogInfo.getCountryIso()),
-        new FutureCallback<Void>() {
-          @Override
-          public void onSuccess(Void unused) {
-            // Do nothing
-          }
+        // Create & show the dialog.
+        DialogFragmentForReportingNotSpam.newInstance(
+                        dialogInfo.getNormalizedNumber(), onConfirmListener, /* dismissListener = */ null)
+                .show(fragmentManager, BlockReportSpamDialogs.NOT_SPAM_DIALOG_TAG);
+    }
 
-          @Override
-          public void onFailure(Throwable throwable) {
-            if (throwable instanceof BlockingFailedException) {
-              Logger.get(context).logImpression(Type.USER_ACTION_UNBLOCK_NUMBER_FAILED);
-              Toast.makeText(context, R.string.unblock_number_failed_toast, Toast.LENGTH_LONG)
-                  .show();
-            } else {
-              throw new RuntimeException(throwable);
-            }
-          }
-        },
-        DialerExecutorComponent.get(context).uiExecutor());
-  }
+    private void showDialogToUnblockNumber(Context context, Intent intent) {
+        LogUtil.enterBlock("ShowBlockReportSpamDialogReceiver.showDialogToUnblockNumber");
+
+        Assert.checkArgument(intent.hasExtra(EXTRA_DIALOG_INFO));
+        BlockReportSpamDialogInfo dialogInfo =
+                ProtoParsers.getTrusted(
+                        intent, EXTRA_DIALOG_INFO, BlockReportSpamDialogInfo.getDefaultInstance());
+
+        // Set up the positive listener for the dialog.
+        OnConfirmListener onConfirmListener =
+                () -> {
+                    LogUtil.i("ShowBlockReportSpamDialogReceiver.showDialogToUnblockNumber", "confirmed");
+
+                    unblockNumber(context, dialogInfo);
+                };
+
+        // Create & show the dialog.
+        DialogFragmentForUnblockingNumber.newInstance(
+                        dialogInfo.getNormalizedNumber(), onConfirmListener, /* dismissListener = */ null)
+                .show(fragmentManager, BlockReportSpamDialogs.UNBLOCK_DIALOG_TAG);
+    }
 }

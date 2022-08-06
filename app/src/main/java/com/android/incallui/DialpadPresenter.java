@@ -17,6 +17,7 @@
 package com.android.incallui;
 
 import android.telephony.PhoneNumberUtils;
+
 import com.android.incallui.DialpadPresenter.DialpadUi;
 import com.android.incallui.baseui.Presenter;
 import com.android.incallui.baseui.Ui;
@@ -24,66 +25,70 @@ import com.android.incallui.call.CallList;
 import com.android.incallui.call.DialerCall;
 import com.android.incallui.call.TelecomAdapter;
 
-/** Logic for call buttons. */
+/**
+ * Logic for call buttons.
+ */
 public class DialpadPresenter extends Presenter<DialpadUi>
-    implements InCallPresenter.InCallStateListener {
+        implements InCallPresenter.InCallStateListener {
 
-  private DialerCall call;
+    private DialerCall call;
 
-  @Override
-  public void onUiReady(DialpadUi ui) {
-    super.onUiReady(ui);
-    InCallPresenter.getInstance().addListener(this);
-    call = CallList.getInstance().getOutgoingOrActive();
-  }
-
-  @Override
-  public void onUiUnready(DialpadUi ui) {
-    super.onUiUnready(ui);
-    InCallPresenter.getInstance().removeListener(this);
-  }
-
-  @Override
-  public void onStateChange(
-      InCallPresenter.InCallState oldState,
-      InCallPresenter.InCallState newState,
-      CallList callList) {
-    call = callList.getOutgoingOrActive();
-    Log.d(this, "DialpadPresenter mCall = " + call);
-  }
-
-  /**
-   * Processes the specified digit as a DTMF key, by playing the appropriate DTMF tone, and
-   * appending the digit to the EditText field that displays the DTMF digits sent so far.
-   */
-  public final void processDtmf(char c) {
-    Log.d(this, "Processing dtmf key " + c);
-    // if it is a valid key, then update the display and send the dtmf tone.
-    if (PhoneNumberUtils.is12Key(c) && call != null) {
-      Log.d(this, "updating display and sending dtmf tone for '" + c + "'");
-
-      // Append this key to the "digits" widget.
-      DialpadUi dialpadUi = getUi();
-      if (dialpadUi != null) {
-        dialpadUi.appendDigitsToField(c);
-      }
-      // Plays the tone through Telecom.
-      TelecomAdapter.getInstance().playDtmfTone(call.getId(), c);
-    } else {
-      Log.d(this, "ignoring dtmf request for '" + c + "'");
+    @Override
+    public void onUiReady(DialpadUi ui) {
+        super.onUiReady(ui);
+        InCallPresenter.getInstance().addListener(this);
+        call = CallList.getInstance().getOutgoingOrActive();
     }
-  }
 
-  /** Stops the local tone based on the phone type. */
-  public void stopDtmf() {
-    if (call != null) {
-      Log.d(this, "stopping remote tone");
-      TelecomAdapter.getInstance().stopDtmfTone(call.getId());
+    @Override
+    public void onUiUnready(DialpadUi ui) {
+        super.onUiUnready(ui);
+        InCallPresenter.getInstance().removeListener(this);
     }
-  }
 
-  public interface DialpadUi extends Ui {
+    @Override
+    public void onStateChange(
+            InCallPresenter.InCallState oldState,
+            InCallPresenter.InCallState newState,
+            CallList callList) {
+        call = callList.getOutgoingOrActive();
+        Log.d(this, "DialpadPresenter mCall = " + call);
+    }
 
-    void appendDigitsToField(char digit);
-  }
+    /**
+     * Processes the specified digit as a DTMF key, by playing the appropriate DTMF tone, and
+     * appending the digit to the EditText field that displays the DTMF digits sent so far.
+     */
+    public final void processDtmf(char c) {
+        Log.d(this, "Processing dtmf key " + c);
+        // if it is a valid key, then update the display and send the dtmf tone.
+        if (PhoneNumberUtils.is12Key(c) && call != null) {
+            Log.d(this, "updating display and sending dtmf tone for '" + c + "'");
+
+            // Append this key to the "digits" widget.
+            DialpadUi dialpadUi = getUi();
+            if (dialpadUi != null) {
+                dialpadUi.appendDigitsToField(c);
+            }
+            // Plays the tone through Telecom.
+            TelecomAdapter.getInstance().playDtmfTone(call.getId(), c);
+        } else {
+            Log.d(this, "ignoring dtmf request for '" + c + "'");
+        }
+    }
+
+    /**
+     * Stops the local tone based on the phone type.
+     */
+    public void stopDtmf() {
+        if (call != null) {
+            Log.d(this, "stopping remote tone");
+            TelecomAdapter.getInstance().stopDtmfTone(call.getId());
+        }
+    }
+
+    public interface DialpadUi extends Ui {
+
+        void appendDigitsToField(char digit);
+    }
 }

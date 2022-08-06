@@ -17,11 +17,13 @@
 package com.fissy.dialer.feedback.stub;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import com.fissy.dialer.common.Assert;
-import com.fissy.dialer.inject.ApplicationContext;
+import androidx.annotation.NonNull;
+
 import com.android.incallui.call.CallList;
 import com.android.incallui.call.DialerCall;
+import com.fissy.dialer.common.Assert;
+import com.fissy.dialer.inject.ApplicationContext;
+
 import javax.inject.Inject;
 
 /**
@@ -29,34 +31,43 @@ import javax.inject.Inject;
  */
 public class CallFeedbackListenerStub implements CallList.Listener {
 
-  @NonNull private final Context context;
+    @NonNull
+    private final Context context;
 
-  @Inject
-  public CallFeedbackListenerStub(@ApplicationContext @NonNull Context context) {
-    this.context = Assert.isNotNull(context);
-  }
+    @Inject
+    public CallFeedbackListenerStub(@ApplicationContext @NonNull Context context) {
+        this.context = Assert.isNotNull(context);
+    }
 
-  @Override
-  public void onIncomingCall(DialerCall call) {}
+    @Override
+    public void onIncomingCall(DialerCall call) {
+    }
 
-  @Override
-  public void onUpgradeToVideo(DialerCall call) {}
+    @Override
+    public void onUpgradeToVideo(DialerCall call) {
+    }
 
-  @Override
-  public void onSessionModificationStateChange(DialerCall call) {}
+    @Override
+    public void onSessionModificationStateChange(DialerCall call) {
+    }
 
-  @Override
-  public void onCallListChange(CallList callList) {}
+    @Override
+    public void onCallListChange(CallList callList) {
+    }
 
-  @Override
-  public void onDisconnect(DialerCall call) {}
+    @Override
+    public void onDisconnect(DialerCall call) {
+    }
 
-  @Override
-  public void onWiFiToLteHandover(DialerCall call) {}
+    @Override
+    public void onWiFiToLteHandover(DialerCall call) {
+    }
 
-  @Override
-  public void onHandoverToWifiFailed(DialerCall call) {}
+    @Override
+    public void onHandoverToWifiFailed(DialerCall call) {
+    }
 
-  @Override
-  public void onInternationalCallOnWifi(@NonNull DialerCall call) {}
+    @Override
+    public void onInternationalCallOnWifi(@NonNull DialerCall call) {
+    }
 }

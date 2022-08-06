@@ -21,7 +21,8 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
+
 import com.fissy.dialer.common.LogUtil;
 
 /**
@@ -30,56 +31,58 @@ import com.fissy.dialer.common.LogUtil;
  */
 public class PseudoProximityWakeLock implements AnswerProximityWakeLock, SensorEventListener {
 
-  private final Context context;
-  private final PseudoScreenState pseudoScreenState;
-  private final Sensor proximitySensor;
+    private final Context context;
+    private final PseudoScreenState pseudoScreenState;
+    private final Sensor proximitySensor;
 
-  @Nullable private ScreenOnListener listener;
-  private boolean isHeld;
+    @Nullable
+    private ScreenOnListener listener;
+    private boolean isHeld;
 
-  public PseudoProximityWakeLock(Context context, PseudoScreenState pseudoScreenState) {
-    this.context = context;
-    this.pseudoScreenState = pseudoScreenState;
-    pseudoScreenState.setOn(true);
-    proximitySensor =
-        context.getSystemService(SensorManager.class).getDefaultSensor(Sensor.TYPE_PROXIMITY);
-  }
-
-  @Override
-  public void acquire() {
-    isHeld = true;
-    context
-        .getSystemService(SensorManager.class)
-        .registerListener(this, proximitySensor, SensorManager.SENSOR_DELAY_NORMAL);
-  }
-
-  @Override
-  public void release() {
-    isHeld = false;
-    context.getSystemService(SensorManager.class).unregisterListener(this);
-    pseudoScreenState.setOn(true);
-  }
-
-  @Override
-  public boolean isHeld() {
-    return isHeld;
-  }
-
-  @Override
-  public void setScreenOnListener(ScreenOnListener listener) {
-    this.listener = listener;
-  }
-
-  @Override
-  public void onSensorChanged(SensorEvent sensorEvent) {
-    boolean near = sensorEvent.values[0] < sensorEvent.sensor.getMaximumRange();
-    LogUtil.i("AnswerProximitySensor.PseudoProximityWakeLock.onSensorChanged", "near: " + near);
-    pseudoScreenState.setOn(!near);
-    if (!near && listener != null) {
-      listener.onScreenOn();
+    public PseudoProximityWakeLock(Context context, PseudoScreenState pseudoScreenState) {
+        this.context = context;
+        this.pseudoScreenState = pseudoScreenState;
+        pseudoScreenState.setOn(true);
+        proximitySensor =
+                context.getSystemService(SensorManager.class).getDefaultSensor(Sensor.TYPE_PROXIMITY);
     }
-  }
 
-  @Override
-  public void onAccuracyChanged(Sensor sensor, int i) {}
+    @Override
+    public void acquire() {
+        isHeld = true;
+        context
+                .getSystemService(SensorManager.class)
+                .registerListener(this, proximitySensor, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    @Override
+    public void release() {
+        isHeld = false;
+        context.getSystemService(SensorManager.class).unregisterListener(this);
+        pseudoScreenState.setOn(true);
+    }
+
+    @Override
+    public boolean isHeld() {
+        return isHeld;
+    }
+
+    @Override
+    public void setScreenOnListener(ScreenOnListener listener) {
+        this.listener = listener;
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+        boolean near = sensorEvent.values[0] < sensorEvent.sensor.getMaximumRange();
+        LogUtil.i("AnswerProximitySensor.PseudoProximityWakeLock.onSensorChanged", "near: " + near);
+        pseudoScreenState.setOn(!near);
+        if (!near && listener != null) {
+            listener.onScreenOn();
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+    }
 }

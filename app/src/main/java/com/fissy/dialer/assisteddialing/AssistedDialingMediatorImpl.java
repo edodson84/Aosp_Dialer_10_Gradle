@@ -16,8 +16,10 @@
 
 package com.fissy.dialer.assisteddialing;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
+
 import com.fissy.dialer.common.LogUtil;
+
 import java.util.Optional;
 
 /**
@@ -29,51 +31,53 @@ import java.util.Optional;
  */
 final class AssistedDialingMediatorImpl implements AssistedDialingMediator {
 
-  private final LocationDetector locationDetector;
-  private final NumberTransformer numberTransformer;
+    private final LocationDetector locationDetector;
+    private final NumberTransformer numberTransformer;
 
-  AssistedDialingMediatorImpl(
-      @NonNull LocationDetector locationDetector, @NonNull NumberTransformer numberTransformer) {
-    if (locationDetector == null) {
-      throw new NullPointerException("locationDetector was null");
+    AssistedDialingMediatorImpl(
+            @NonNull LocationDetector locationDetector, @NonNull NumberTransformer numberTransformer) {
+        if (locationDetector == null) {
+            throw new NullPointerException("locationDetector was null");
+        }
+
+        if (numberTransformer == null) {
+            throw new NullPointerException("numberTransformer was null");
+        }
+        this.locationDetector = locationDetector;
+        this.numberTransformer = numberTransformer;
     }
 
-    if (numberTransformer == null) {
-      throw new NullPointerException("numberTransformer was null");
-    }
-    this.locationDetector = locationDetector;
-    this.numberTransformer = numberTransformer;
-  }
-
-  @Override
-  public boolean isPlatformEligible() {
-    // This impl is only instantiated if it passes platform checks in ConcreteCreator,
-    // so we return true here.
-    return true;
-  }
-
-  /** Returns the country code in which the library thinks the user typically resides. */
-  @Override
-  public Optional<String> userHomeCountryCode() {
-    return locationDetector.getUpperCaseUserHomeCountry();
-  }
-
-  /**
-   * Returns an Optional of type String containing the transformed number that was provided. The
-   * transformed number should be capable of dialing out of the User's current country and
-   * successfully connecting with a contact in the User's home country.
-   */
-  @Override
-  public Optional<TransformationInfo> attemptAssistedDial(@NonNull String numberToTransform) {
-    Optional<String> userHomeCountryCode = locationDetector.getUpperCaseUserHomeCountry();
-    Optional<String> userRoamingCountryCode = locationDetector.getUpperCaseUserRoamingCountry();
-
-    if (!userHomeCountryCode.isPresent() || !userRoamingCountryCode.isPresent()) {
-      LogUtil.i("AssistedDialingMediator.attemptAssistedDial", "Unable to determine country codes");
-      return Optional.empty();
+    @Override
+    public boolean isPlatformEligible() {
+        // This impl is only instantiated if it passes platform checks in ConcreteCreator,
+        // so we return true here.
+        return true;
     }
 
-    return numberTransformer.doAssistedDialingTransformation(
-        numberToTransform, userHomeCountryCode.get(), userRoamingCountryCode.get());
-  }
+    /**
+     * Returns the country code in which the library thinks the user typically resides.
+     */
+    @Override
+    public Optional<String> userHomeCountryCode() {
+        return locationDetector.getUpperCaseUserHomeCountry();
+    }
+
+    /**
+     * Returns an Optional of type String containing the transformed number that was provided. The
+     * transformed number should be capable of dialing out of the User's current country and
+     * successfully connecting with a contact in the User's home country.
+     */
+    @Override
+    public Optional<TransformationInfo> attemptAssistedDial(@NonNull String numberToTransform) {
+        Optional<String> userHomeCountryCode = locationDetector.getUpperCaseUserHomeCountry();
+        Optional<String> userRoamingCountryCode = locationDetector.getUpperCaseUserRoamingCountry();
+
+        if (!userHomeCountryCode.isPresent() || !userRoamingCountryCode.isPresent()) {
+            LogUtil.i("AssistedDialingMediator.attemptAssistedDial", "Unable to determine country codes");
+            return Optional.empty();
+        }
+
+        return numberTransformer.doAssistedDialingTransformation(
+                numberToTransform, userHomeCountryCode.get(), userRoamingCountryCode.get());
+    }
 }

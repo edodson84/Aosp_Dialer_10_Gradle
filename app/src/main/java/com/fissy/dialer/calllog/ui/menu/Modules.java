@@ -30,6 +30,7 @@ import com.fissy.dialer.historyitemactions.HistoryItemActionModuleInfo;
 import com.fissy.dialer.historyitemactions.HistoryItemActionModulesBuilder;
 import com.fissy.dialer.historyitemactions.IntentModule;
 import com.fissy.dialer.phonenumberutil.PhoneNumberHelper;
+
 import java.util.List;
 
 /**
@@ -38,87 +39,87 @@ import java.util.List;
  */
 final class Modules {
 
-  /**
-   * Returns a list of {@link HistoryItemActionModule HistoryItemActionModules}, which are items in
-   * the bottom sheet.
-   */
-  static List<HistoryItemActionModule> fromRow(Context context, CoalescedRow row) {
-    HistoryItemActionModulesBuilder modulesBuilder =
-        new HistoryItemActionModulesBuilder(context, buildModuleInfo(row));
+    /**
+     * Returns a list of {@link HistoryItemActionModule HistoryItemActionModules}, which are items in
+     * the bottom sheet.
+     */
+    static List<HistoryItemActionModule> fromRow(Context context, CoalescedRow row) {
+        HistoryItemActionModulesBuilder modulesBuilder =
+                new HistoryItemActionModulesBuilder(context, buildModuleInfo(row));
 
 
-    // TODO(zachh): Module for CallComposer.
+        // TODO(zachh): Module for CallComposer.
 
-    if (PhoneNumberHelper.canPlaceCallsTo(
-        row.getNumber().getNormalizedNumber(), row.getNumberPresentation())) {
-      modulesBuilder
-          .addModuleForVoiceCall()
-          .addModuleForVideoCall()
-          .addModuleForSendingTextMessage()
-          .addModuleForDivider()
-          .addModuleForAddingToContacts()
-          .addModuleForBlockedOrSpamNumber()
-          .addModuleForCopyingNumber();
+        if (PhoneNumberHelper.canPlaceCallsTo(
+                row.getNumber().getNormalizedNumber(), row.getNumberPresentation())) {
+            modulesBuilder
+                    .addModuleForVoiceCall()
+                    .addModuleForVideoCall()
+                    .addModuleForSendingTextMessage()
+                    .addModuleForDivider()
+                    .addModuleForAddingToContacts()
+                    .addModuleForBlockedOrSpamNumber()
+                    .addModuleForCopyingNumber();
+        }
+
+        List<HistoryItemActionModule> modules = modulesBuilder.build();
+
+        // Add modules only available in the call log.
+        modules.add(createModuleForAccessingCallDetails(context, row));
+        modules.add(new DeleteCallLogItemModule(context, row.getCoalescedIds()));
+        return modules;
     }
 
-    List<HistoryItemActionModule> modules = modulesBuilder.build();
+    private static HistoryItemActionModule createModuleForAccessingCallDetails(
+            Context context, CoalescedRow row) {
+        boolean canReportAsInvalidNumber =
+                !row.getIsVoicemailCall() && row.getNumberAttributes().getCanReportAsInvalidNumber();
 
-    // Add modules only available in the call log.
-    modules.add(createModuleForAccessingCallDetails(context, row));
-    modules.add(new DeleteCallLogItemModule(context, row.getCoalescedIds()));
-    return modules;
-  }
+        return new IntentModule(
+                context,
+                CallDetailsActivity.newInstance(
+                        context,
+                        row.getCoalescedIds(),
+                        createCallDetailsHeaderInfoFromRow(context, row),
+                        canReportAsInvalidNumber,
+                        canSupportAssistedDialing(row)),
+                R.string.call_details_menu_label,
+                R.drawable.quantum_ic_info_outline_vd_theme_24);
+    }
 
-  private static HistoryItemActionModule createModuleForAccessingCallDetails(
-      Context context, CoalescedRow row) {
-    boolean canReportAsInvalidNumber =
-        !row.getIsVoicemailCall() && row.getNumberAttributes().getCanReportAsInvalidNumber();
+    private static CallDetailsHeaderInfo createCallDetailsHeaderInfoFromRow(
+            Context context, CoalescedRow row) {
+        return CallDetailsHeaderInfo.newBuilder()
+                .setDialerPhoneNumber(row.getNumber())
+                .setPhotoInfo(PhotoInfoBuilder.fromCoalescedRow(context, row))
+                .setPrimaryText(CallLogEntryText.buildPrimaryText(context, row).toString())
+                .setSecondaryText(
+                        CallLogEntryText.buildSecondaryTextForBottomSheet(context, row).toString())
+                .build();
+    }
 
-    return new IntentModule(
-        context,
-        CallDetailsActivity.newInstance(
-            context,
-            row.getCoalescedIds(),
-            createCallDetailsHeaderInfoFromRow(context, row),
-            canReportAsInvalidNumber,
-            canSupportAssistedDialing(row)),
-        R.string.call_details_menu_label,
-        R.drawable.quantum_ic_info_outline_vd_theme_24);
-  }
+    private static boolean canSupportAssistedDialing(CoalescedRow row) {
+        return !TextUtils.isEmpty(row.getNumberAttributes().getLookupUri());
+    }
 
-  private static CallDetailsHeaderInfo createCallDetailsHeaderInfoFromRow(
-      Context context, CoalescedRow row) {
-    return CallDetailsHeaderInfo.newBuilder()
-        .setDialerPhoneNumber(row.getNumber())
-        .setPhotoInfo(PhotoInfoBuilder.fromCoalescedRow(context, row))
-        .setPrimaryText(CallLogEntryText.buildPrimaryText(context, row).toString())
-        .setSecondaryText(
-            CallLogEntryText.buildSecondaryTextForBottomSheet(context, row).toString())
-        .build();
-  }
-
-  private static boolean canSupportAssistedDialing(CoalescedRow row) {
-    return !TextUtils.isEmpty(row.getNumberAttributes().getLookupUri());
-  }
-
-  private static HistoryItemActionModuleInfo buildModuleInfo(CoalescedRow row) {
-    return HistoryItemActionModuleInfo.newBuilder()
-        .setNormalizedNumber(row.getNumber().getNormalizedNumber())
-        .setCountryIso(row.getNumber().getCountryIso())
-        .setName(row.getNumberAttributes().getName())
-        .setCallType(row.getCallType())
-        .setFeatures(row.getFeatures())
-        .setLookupUri(row.getNumberAttributes().getLookupUri())
-        .setPhoneAccountComponentName(row.getPhoneAccountComponentName())
-        .setCanReportAsInvalidNumber(row.getNumberAttributes().getCanReportAsInvalidNumber())
-        .setCanSupportAssistedDialing(canSupportAssistedDialing(row))
-        .setCanSupportCarrierVideoCall(row.getNumberAttributes().getCanSupportCarrierVideoCall())
-        .setIsBlocked(row.getNumberAttributes().getIsBlocked())
-        .setIsEmergencyNumber(row.getNumberAttributes().getIsEmergencyNumber())
-        .setIsSpam(row.getNumberAttributes().getIsSpam())
-        .setIsVoicemailCall(row.getIsVoicemailCall())
-        .setContactSource(row.getNumberAttributes().getContactSource())
-        .setHost(HistoryItemActionModuleInfo.Host.CALL_LOG)
-        .build();
-  }
+    private static HistoryItemActionModuleInfo buildModuleInfo(CoalescedRow row) {
+        return HistoryItemActionModuleInfo.newBuilder()
+                .setNormalizedNumber(row.getNumber().getNormalizedNumber())
+                .setCountryIso(row.getNumber().getCountryIso())
+                .setName(row.getNumberAttributes().getName())
+                .setCallType(row.getCallType())
+                .setFeatures(row.getFeatures())
+                .setLookupUri(row.getNumberAttributes().getLookupUri())
+                .setPhoneAccountComponentName(row.getPhoneAccountComponentName())
+                .setCanReportAsInvalidNumber(row.getNumberAttributes().getCanReportAsInvalidNumber())
+                .setCanSupportAssistedDialing(canSupportAssistedDialing(row))
+                .setCanSupportCarrierVideoCall(row.getNumberAttributes().getCanSupportCarrierVideoCall())
+                .setIsBlocked(row.getNumberAttributes().getIsBlocked())
+                .setIsEmergencyNumber(row.getNumberAttributes().getIsEmergencyNumber())
+                .setIsSpam(row.getNumberAttributes().getIsSpam())
+                .setIsVoicemailCall(row.getIsVoicemailCall())
+                .setContactSource(row.getNumberAttributes().getContactSource())
+                .setHost(HistoryItemActionModuleInfo.Host.CALL_LOG)
+                .build();
+    }
 }

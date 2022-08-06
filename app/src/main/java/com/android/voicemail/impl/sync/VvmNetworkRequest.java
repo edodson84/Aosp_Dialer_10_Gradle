@@ -19,11 +19,13 @@ package com.android.voicemail.impl.sync;
 import android.annotation.TargetApi;
 import android.net.Network;
 import android.os.Build.VERSION_CODES;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.telecom.PhoneAccountHandle;
+
 import com.android.voicemail.impl.OmtpVvmCarrierConfigHelper;
 import com.android.voicemail.impl.VoicemailStatus;
 import com.android.voicemail.impl.VvmLog;
+
 import java.io.Closeable;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -36,84 +38,84 @@ import java.util.concurrent.Future;
 @TargetApi(VERSION_CODES.O)
 public class VvmNetworkRequest {
 
-  private static final String TAG = "VvmNetworkRequest";
+    private static final String TAG = "VvmNetworkRequest";
 
-  /**
-   * A wrapper around a Network returned by a {@link VvmNetworkRequestCallback}, which should be
-   * closed once not needed anymore.
-   */
-  public static class NetworkWrapper implements Closeable {
-
-    private final Network network;
-    private final VvmNetworkRequestCallback callback;
-
-    private NetworkWrapper(Network network, VvmNetworkRequestCallback callback) {
-      this.network = network;
-      this.callback = callback;
+    @NonNull
+    public static NetworkWrapper getNetwork(
+            OmtpVvmCarrierConfigHelper config, PhoneAccountHandle handle, VoicemailStatus.Editor status)
+            throws RequestFailedException {
+        FutureNetworkRequestCallback callback =
+                new FutureNetworkRequestCallback(config, handle, status);
+        callback.requestNetwork();
+        try {
+            return callback.getFuture().get();
+        } catch (InterruptedException | ExecutionException e) {
+            callback.releaseNetwork();
+            VvmLog.e(TAG, "can't get future network", e);
+            throw new RequestFailedException(e);
+        }
     }
-
-    public Network get() {
-      return network;
-    }
-
-    @Override
-    public void close() {
-      callback.releaseNetwork();
-    }
-  }
-
-  public static class RequestFailedException extends Exception {
-
-    private RequestFailedException(Throwable cause) {
-      super(cause);
-    }
-  }
-
-  @NonNull
-  public static NetworkWrapper getNetwork(
-      OmtpVvmCarrierConfigHelper config, PhoneAccountHandle handle, VoicemailStatus.Editor status)
-      throws RequestFailedException {
-    FutureNetworkRequestCallback callback =
-        new FutureNetworkRequestCallback(config, handle, status);
-    callback.requestNetwork();
-    try {
-      return callback.getFuture().get();
-    } catch (InterruptedException | ExecutionException e) {
-      callback.releaseNetwork();
-      VvmLog.e(TAG, "can't get future network", e);
-      throw new RequestFailedException(e);
-    }
-  }
-
-  private static class FutureNetworkRequestCallback extends VvmNetworkRequestCallback {
 
     /**
-     * {@link CompletableFuture#get()} will block until {@link CompletableFuture# complete(Object) }
-     * has been called on the other thread.
+     * A wrapper around a Network returned by a {@link VvmNetworkRequestCallback}, which should be
+     * closed once not needed anymore.
      */
-    private final CompletableFuture<NetworkWrapper> future = new CompletableFuture<>();
+    public static class NetworkWrapper implements Closeable {
 
-    public FutureNetworkRequestCallback(
-        OmtpVvmCarrierConfigHelper config,
-        PhoneAccountHandle phoneAccount,
-        VoicemailStatus.Editor status) {
-      super(config, phoneAccount, status);
+        private final Network network;
+        private final VvmNetworkRequestCallback callback;
+
+        private NetworkWrapper(Network network, VvmNetworkRequestCallback callback) {
+            this.network = network;
+            this.callback = callback;
+        }
+
+        public Network get() {
+            return network;
+        }
+
+        @Override
+        public void close() {
+            callback.releaseNetwork();
+        }
     }
 
-    public Future<NetworkWrapper> getFuture() {
-      return future;
+    public static class RequestFailedException extends Exception {
+
+        private RequestFailedException(Throwable cause) {
+            super(cause);
+        }
     }
 
-    @Override
-    public void onAvailable(Network network) {
-      super.onAvailable(network);
-      future.complete(new NetworkWrapper(network, this));
-    }
+    private static class FutureNetworkRequestCallback extends VvmNetworkRequestCallback {
 
-    @Override
-    public void onFailed(String reason) {
-      super.onFailed(reason);
-      future.complete(null);
+        /**
+         * {@link CompletableFuture#get()} will block until {@link CompletableFuture# complete(Object) }
+         * has been called on the other thread.
+         */
+        private final CompletableFuture<NetworkWrapper> future = new CompletableFuture<>();
+
+        public FutureNetworkRequestCallback(
+                OmtpVvmCarrierConfigHelper config,
+                PhoneAccountHandle phoneAccount,
+                VoicemailStatus.Editor status) {
+            super(config, phoneAccount, status);
+        }
+
+        public Future<NetworkWrapper> getFuture() {
+            return future;
+        }
+
+        @Override
+        public void onAvailable(Network network) {
+            super.onAvailable(network);
+            future.complete(new NetworkWrapper(network, this));
+        }
+
+        @Override
+        public void onFailed(String reason) {
+            super.onFailed(reason);
+            future.complete(null);
+        }
     }
-  }
 }

@@ -18,6 +18,7 @@ package com.fissy.dialer.precall.impl;
 
 import android.content.Context;
 import android.content.Intent;
+
 import com.fissy.dialer.callintent.CallIntentBuilder;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.common.concurrent.Annotations.Ui;
@@ -32,6 +33,7 @@ import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListeningExecutorService;
+
 import javax.inject.Inject;
 
 /**
@@ -40,58 +42,60 @@ import javax.inject.Inject;
  */
 public class DuoAction implements PreCallAction {
 
-  private final ListeningExecutorService uiExecutor;
+    private final ListeningExecutorService uiExecutor;
 
-  @Inject
-  DuoAction(@Ui ListeningExecutorService uiExecutor) {
-    this.uiExecutor = uiExecutor;
-  }
-
-  @Override
-  public boolean requiresUi(Context context, CallIntentBuilder builder) {
-    // Duo call must be started with startActivityForResult() which needs a activity.
-    return builder.isDuoCall();
-  }
-
-  @Override
-  public void runWithoutUi(Context context, CallIntentBuilder builder) {}
-
-  @Override
-  public void runWithUi(PreCallCoordinator coordinator) {
-    if (!requiresUi(coordinator.getActivity(), coordinator.getBuilder())) {
-      return;
+    @Inject
+    DuoAction(@Ui ListeningExecutorService uiExecutor) {
+        this.uiExecutor = uiExecutor;
     }
-    String number = coordinator.getBuilder().getUri().getSchemeSpecificPart();
-    ListenableFuture<ImmutableMap<String, ReachabilityData>> reachabilities =
-        DuoComponent.get(coordinator.getActivity())
-            .getDuo()
-            .updateReachability(coordinator.getActivity(), ImmutableList.of(number));
-    PendingAction pendingAction = coordinator.startPendingAction();
 
-    Futures.addCallback(
-        reachabilities,
-        new FutureCallback<ImmutableMap<String, ReachabilityData>>() {
-          @Override
-          public void onSuccess(ImmutableMap<String, ReachabilityData> result) {
-            if (!result.containsKey(number) || !result.get(number).videoCallable()) {
-              LogUtil.w(
-                  "DuoAction.runWithUi",
-                  number + " number no longer duo reachable, falling back to carrier video call");
-              coordinator.getBuilder().setIsDuoCall(false);
-            }
-            pendingAction.finish();
-          }
+    @Override
+    public boolean requiresUi(Context context, CallIntentBuilder builder) {
+        // Duo call must be started with startActivityForResult() which needs a activity.
+        return builder.isDuoCall();
+    }
 
-          @Override
-          public void onFailure(Throwable throwable) {
-            LogUtil.e("DuoAction.runWithUi", "reachability query failed", throwable);
-            coordinator.getBuilder().setIsDuoCall(false);
-            pendingAction.finish();
-          }
-        },
-        uiExecutor);
-  }
+    @Override
+    public void runWithoutUi(Context context, CallIntentBuilder builder) {
+    }
 
-  @Override
-  public void onDiscard() {}
+    @Override
+    public void runWithUi(PreCallCoordinator coordinator) {
+        if (!requiresUi(coordinator.getActivity(), coordinator.getBuilder())) {
+            return;
+        }
+        String number = coordinator.getBuilder().getUri().getSchemeSpecificPart();
+        ListenableFuture<ImmutableMap<String, ReachabilityData>> reachabilities =
+                DuoComponent.get(coordinator.getActivity())
+                        .getDuo()
+                        .updateReachability(coordinator.getActivity(), ImmutableList.of(number));
+        PendingAction pendingAction = coordinator.startPendingAction();
+
+        Futures.addCallback(
+                reachabilities,
+                new FutureCallback<ImmutableMap<String, ReachabilityData>>() {
+                    @Override
+                    public void onSuccess(ImmutableMap<String, ReachabilityData> result) {
+                        if (!result.containsKey(number) || !result.get(number).videoCallable()) {
+                            LogUtil.w(
+                                    "DuoAction.runWithUi",
+                                    number + " number no longer duo reachable, falling back to carrier video call");
+                            coordinator.getBuilder().setIsDuoCall(false);
+                        }
+                        pendingAction.finish();
+                    }
+
+                    @Override
+                    public void onFailure(Throwable throwable) {
+                        LogUtil.e("DuoAction.runWithUi", "reachability query failed", throwable);
+                        coordinator.getBuilder().setIsDuoCall(false);
+                        pendingAction.finish();
+                    }
+                },
+                uiExecutor);
+    }
+
+    @Override
+    public void onDiscard() {
+    }
 }

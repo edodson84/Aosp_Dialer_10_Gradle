@@ -17,6 +17,8 @@
 package com.fissy.dialer.feedback.stub;
 
 import android.content.Context;
+
+import com.android.incallui.call.CallList;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.feedback.FeedbackSender;
 import com.fissy.dialer.inject.ApplicationContext;
@@ -25,29 +27,31 @@ import com.fissy.dialer.inject.InstallIn;
 import com.fissy.dialer.logging.LoggingBindings;
 import com.fissy.dialer.logging.LoggingBindingsFactory;
 import com.fissy.dialer.logging.LoggingBindingsStub;
-import com.android.incallui.call.CallList;
+
 import dagger.Module;
 import dagger.Provides;
 
-/** Module which bind {@link com.fissy.dialer.feedback.stub.CallFeedbackListenerStub}. */
+/**
+ * Module which bind {@link com.fissy.dialer.feedback.stub.CallFeedbackListenerStub}.
+ */
 @InstallIn(variants = {DialerVariant.DIALER_TEST})
 @Module
 public class StubFeedbackModule {
 
-  @Provides
-  static LoggingBindings provideLoggingBindings(LoggingBindingsFactory factory) {
-    return new LoggingBindingsStub();
-  }
+    @Provides
+    static LoggingBindings provideLoggingBindings(LoggingBindingsFactory factory) {
+        return new LoggingBindingsStub();
+    }
 
-  @Provides
-  static FeedbackSender provideCallFeedbackSender() {
-    LogUtil.i("StubFeedbackModule.provideCallFeedbackSender", "return stub");
-    return new FeedbackSenderStub();
-  }
+    @Provides
+    static FeedbackSender provideCallFeedbackSender() {
+        LogUtil.i("StubFeedbackModule.provideCallFeedbackSender", "return stub");
+        return new FeedbackSenderStub();
+    }
 
-  @Provides
-  static CallList.Listener provideCallFeedbackListener(@ApplicationContext Context context) {
-    LogUtil.i("StubFeedbackModule.provideCallFeedbackListener", "returning stub");
-    return new CallFeedbackListenerStub(context);
-  }
+    @Provides
+    static CallList.Listener provideCallFeedbackListener(@ApplicationContext Context context) {
+        LogUtil.i("StubFeedbackModule.provideCallFeedbackListener", "returning stub");
+        return new CallFeedbackListenerStub(context);
+    }
 }

@@ -17,24 +17,30 @@
 package com.fissy.dialer.theme.base;
 
 import android.content.Context;
+
 import com.fissy.dialer.inject.HasRootComponent;
 import com.fissy.dialer.inject.IncludeInDialerRoot;
+
 import dagger.Subcomponent;
 
-/** Component for Theme. */
+/**
+ * Component for Theme.
+ */
 @Subcomponent
 public abstract class ThemeComponent {
 
-  public abstract Theme theme();
+    public static ThemeComponent get(Context context) {
+        return ((HasComponent) ((HasRootComponent) context.getApplicationContext()).component())
+                .themeComponent();
+    }
 
-  public static ThemeComponent get(Context context) {
-    return ((HasComponent) ((HasRootComponent) context.getApplicationContext()).component())
-        .themeComponent();
-  }
+    public abstract Theme theme();
 
-  /** Used to refer to the root application component. */
-  @IncludeInDialerRoot
-  public interface HasComponent {
-    ThemeComponent themeComponent();
-  }
+    /**
+     * Used to refer to the root application component.
+     */
+    @IncludeInDialerRoot
+    public interface HasComponent {
+        ThemeComponent themeComponent();
+    }
 }

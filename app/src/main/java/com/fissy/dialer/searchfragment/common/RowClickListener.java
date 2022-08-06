@@ -18,26 +18,32 @@ package com.fissy.dialer.searchfragment.common;
 
 import com.fissy.dialer.dialercontact.DialerContact;
 
-/** Interface of possible actions that can be performed by search elements. */
+/**
+ * Interface of possible actions that can be performed by search elements.
+ */
 public interface RowClickListener {
 
-  /**
-   * Places a traditional voice call.
-   *
-   * @param ranking position in the list relative to the other elements
-   */
-  void placeVoiceCall(String phoneNumber, int ranking);
+    /**
+     * Places a traditional voice call.
+     *
+     * @param ranking position in the list relative to the other elements
+     */
+    void placeVoiceCall(String phoneNumber, int ranking);
 
-  /**
-   * Places an IMS video call.
-   *
-   * @param ranking position in the list relative to the other elements
-   */
-  void placeVideoCall(String phoneNumber, int ranking);
+    /**
+     * Places an IMS video call.
+     *
+     * @param ranking position in the list relative to the other elements
+     */
+    void placeVideoCall(String phoneNumber, int ranking);
 
-  /** Places a Duo video call. */
-  void placeDuoCall(String phoneNumber);
+    /**
+     * Places a Duo video call.
+     */
+    void placeDuoCall(String phoneNumber);
 
-  /** Opens the enriched calling/call composer interface. */
-  void openCallAndShare(DialerContact dialerContact);
+    /**
+     * Opens the enriched calling/call composer interface.
+     */
+    void openCallAndShare(DialerContact dialerContact);
 }

@@ -18,18 +18,24 @@ package com.fissy.dialer.common.cp2;
 
 import android.provider.ContactsContract.Directory;
 
-/** Utilities for {@link Directory}. */
+/**
+ * Utilities for {@link Directory}.
+ */
 public class DirectoryUtils {
 
-  /** Returns true if the given ID belongs to an invisible directory. */
-  public static boolean isInvisibleDirectoryId(long directoryId) {
-    return directoryId == Directory.LOCAL_INVISIBLE
-        || directoryId == Directory.ENTERPRISE_LOCAL_INVISIBLE;
-  }
+    /**
+     * Returns true if the given ID belongs to an invisible directory.
+     */
+    public static boolean isInvisibleDirectoryId(long directoryId) {
+        return directoryId == Directory.LOCAL_INVISIBLE
+                || directoryId == Directory.ENTERPRISE_LOCAL_INVISIBLE;
+    }
 
-  /** Returns true if the given ID belongs to a local enterprise directory. */
-  public static boolean isLocalEnterpriseDirectoryId(long directoryId) {
-    return Directory.isEnterpriseDirectoryId(directoryId)
-        && !Directory.isRemoteDirectoryId(directoryId);
-  }
+    /**
+     * Returns true if the given ID belongs to a local enterprise directory.
+     */
+    public static boolean isLocalEnterpriseDirectoryId(long directoryId) {
+        return Directory.isEnterpriseDirectoryId(directoryId)
+                && !Directory.isRemoteDirectoryId(directoryId);
+    }
 }

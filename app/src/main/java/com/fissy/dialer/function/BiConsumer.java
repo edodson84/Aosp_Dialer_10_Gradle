@@ -16,9 +16,13 @@
 
 package com.fissy.dialer.function;
 
-/** Functional interface for consuming two generic values. */
+/**
+ * Functional interface for consuming two generic values.
+ */
 public interface BiConsumer<T, U> {
 
-  /** Consumes a value. */
-  void accept(T t, U u);
+    /**
+     * Consumes a value.
+     */
+    void accept(T t, U u);
 }

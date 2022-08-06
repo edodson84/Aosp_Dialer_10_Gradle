@@ -20,6 +20,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.telecom.Call;
 import android.text.TextUtils;
+
 import com.fissy.dialer.DialerPhoneNumber;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
@@ -36,130 +37,133 @@ import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.protobuf.InvalidProtocolBufferException;
+
 import javax.inject.Inject;
 
-/** PhoneLookup implementation for CNAP info. */
+/**
+ * PhoneLookup implementation for CNAP info.
+ */
 public final class CnapPhoneLookup implements PhoneLookup<CnapInfo> {
 
-  private final Context appContext;
-  private final ListeningExecutorService backgroundExecutorService;
+    private final Context appContext;
+    private final ListeningExecutorService backgroundExecutorService;
 
-  @Inject
-  CnapPhoneLookup(
-      @ApplicationContext Context appContext,
-      @BackgroundExecutor ListeningExecutorService backgroundExecutorService) {
-    this.appContext = appContext;
-    this.backgroundExecutorService = backgroundExecutorService;
-  }
+    @Inject
+    CnapPhoneLookup(
+            @ApplicationContext Context appContext,
+            @BackgroundExecutor ListeningExecutorService backgroundExecutorService) {
+        this.appContext = appContext;
+        this.backgroundExecutorService = backgroundExecutorService;
+    }
 
-  /**
-   * Override the default implementation in {@link PhoneLookup#lookup(Context, Call)} as CNAP info
-   * is in the provided {@link Call}.
-   */
-  @Override
-  public ListenableFuture<CnapInfo> lookup(Context appContext, Call call) {
-    String callerDisplayName = call.getDetails().getCallerDisplayName();
-    return Futures.immediateFuture(
-        TextUtils.isEmpty(callerDisplayName)
-            ? CnapInfo.getDefaultInstance()
-            : CnapInfo.newBuilder().setName(callerDisplayName).build());
-  }
+    /**
+     * Override the default implementation in {@link PhoneLookup#lookup(Context, Call)} as CNAP info
+     * is in the provided {@link Call}.
+     */
+    @Override
+    public ListenableFuture<CnapInfo> lookup(Context appContext, Call call) {
+        String callerDisplayName = call.getDetails().getCallerDisplayName();
+        return Futures.immediateFuture(
+                TextUtils.isEmpty(callerDisplayName)
+                        ? CnapInfo.getDefaultInstance()
+                        : CnapInfo.newBuilder().setName(callerDisplayName).build());
+    }
 
-  /**
-   * CNAP info cannot be retrieved when all we have is a number. The best we can do is returning the
-   * existing info in {@link PhoneLookupHistory}.
-   */
-  @Override
-  public ListenableFuture<CnapInfo> lookup(DialerPhoneNumber dialerPhoneNumber) {
-    return backgroundExecutorService.submit(
-        () -> {
-          Selection selection =
-              Selection.builder()
-                  .and(
-                      Selection.column(PhoneLookupHistory.NORMALIZED_NUMBER)
-                          .is("=", dialerPhoneNumber.getNormalizedNumber()))
-                  .build();
+    /**
+     * CNAP info cannot be retrieved when all we have is a number. The best we can do is returning the
+     * existing info in {@link PhoneLookupHistory}.
+     */
+    @Override
+    public ListenableFuture<CnapInfo> lookup(DialerPhoneNumber dialerPhoneNumber) {
+        return backgroundExecutorService.submit(
+                () -> {
+                    Selection selection =
+                            Selection.builder()
+                                    .and(
+                                            Selection.column(PhoneLookupHistory.NORMALIZED_NUMBER)
+                                                    .is("=", dialerPhoneNumber.getNormalizedNumber()))
+                                    .build();
 
-          try (Cursor cursor =
-              appContext
-                  .getContentResolver()
-                  .query(
-                      PhoneLookupHistory.CONTENT_URI,
-                      new String[] {PhoneLookupHistory.PHONE_LOOKUP_INFO},
-                      selection.getSelection(),
-                      selection.getSelectionArgs(),
-                      /* sortOrder = */ null)) {
-            if (cursor == null) {
-              LogUtil.e("CnapPhoneLookup.lookup", "null cursor");
-              return CnapInfo.getDefaultInstance();
-            }
+                    try (Cursor cursor =
+                                 appContext
+                                         .getContentResolver()
+                                         .query(
+                                                 PhoneLookupHistory.CONTENT_URI,
+                                                 new String[]{PhoneLookupHistory.PHONE_LOOKUP_INFO},
+                                                 selection.getSelection(),
+                                                 selection.getSelectionArgs(),
+                                                 /* sortOrder = */ null)) {
+                        if (cursor == null) {
+                            LogUtil.e("CnapPhoneLookup.lookup", "null cursor");
+                            return CnapInfo.getDefaultInstance();
+                        }
 
-            if (!cursor.moveToFirst()) {
-              LogUtil.i("CnapPhoneLookup.lookup", "empty cursor");
-              return CnapInfo.getDefaultInstance();
-            }
+                        if (!cursor.moveToFirst()) {
+                            LogUtil.i("CnapPhoneLookup.lookup", "empty cursor");
+                            return CnapInfo.getDefaultInstance();
+                        }
 
-            // At ths point, we expect only one row in the cursor as
-            // PhoneLookupHistory.NORMALIZED_NUMBER is the primary key of table PhoneLookupHistory.
-            Assert.checkState(cursor.getCount() == 1);
+                        // At ths point, we expect only one row in the cursor as
+                        // PhoneLookupHistory.NORMALIZED_NUMBER is the primary key of table PhoneLookupHistory.
+                        Assert.checkState(cursor.getCount() == 1);
 
-            int phoneLookupInfoColumn =
-                cursor.getColumnIndexOrThrow(PhoneLookupHistory.PHONE_LOOKUP_INFO);
-            PhoneLookupInfo phoneLookupInfo;
-            try {
-              phoneLookupInfo = PhoneLookupInfo.parseFrom(cursor.getBlob(phoneLookupInfoColumn));
-            } catch (InvalidProtocolBufferException e) {
-              throw new IllegalStateException(e);
-            }
+                        int phoneLookupInfoColumn =
+                                cursor.getColumnIndexOrThrow(PhoneLookupHistory.PHONE_LOOKUP_INFO);
+                        PhoneLookupInfo phoneLookupInfo;
+                        try {
+                            phoneLookupInfo = PhoneLookupInfo.parseFrom(cursor.getBlob(phoneLookupInfoColumn));
+                        } catch (InvalidProtocolBufferException e) {
+                            throw new IllegalStateException(e);
+                        }
 
-            return phoneLookupInfo.getCnapInfo();
-          }
-        });
-  }
+                        return phoneLookupInfo.getCnapInfo();
+                    }
+                });
+    }
 
-  @Override
-  public ListenableFuture<Boolean> isDirty(ImmutableSet<DialerPhoneNumber> phoneNumbers) {
-    return Futures.immediateFuture(false);
-  }
+    @Override
+    public ListenableFuture<Boolean> isDirty(ImmutableSet<DialerPhoneNumber> phoneNumbers) {
+        return Futures.immediateFuture(false);
+    }
 
-  @Override
-  public ListenableFuture<ImmutableMap<DialerPhoneNumber, CnapInfo>> getMostRecentInfo(
-      ImmutableMap<DialerPhoneNumber, CnapInfo> existingInfoMap) {
-    return Futures.immediateFuture(existingInfoMap);
-  }
+    @Override
+    public ListenableFuture<ImmutableMap<DialerPhoneNumber, CnapInfo>> getMostRecentInfo(
+            ImmutableMap<DialerPhoneNumber, CnapInfo> existingInfoMap) {
+        return Futures.immediateFuture(existingInfoMap);
+    }
 
-  @Override
-  public void setSubMessage(PhoneLookupInfo.Builder destination, CnapInfo subMessage) {
-    destination.setCnapInfo(subMessage);
-  }
+    @Override
+    public void setSubMessage(PhoneLookupInfo.Builder destination, CnapInfo subMessage) {
+        destination.setCnapInfo(subMessage);
+    }
 
-  @Override
-  public CnapInfo getSubMessage(PhoneLookupInfo phoneLookupInfo) {
-    return phoneLookupInfo.getCnapInfo();
-  }
+    @Override
+    public CnapInfo getSubMessage(PhoneLookupInfo phoneLookupInfo) {
+        return phoneLookupInfo.getCnapInfo();
+    }
 
-  @Override
-  public ListenableFuture<Void> onSuccessfulBulkUpdate() {
-    return Futures.immediateFuture(null);
-  }
+    @Override
+    public ListenableFuture<Void> onSuccessfulBulkUpdate() {
+        return Futures.immediateFuture(null);
+    }
 
-  @Override
-  public void registerContentObservers() {
-    // No content observers for CNAP info.
-  }
+    @Override
+    public void registerContentObservers() {
+        // No content observers for CNAP info.
+    }
 
-  @Override
-  public void unregisterContentObservers() {
-    // No content observers for CNAP info.
-  }
+    @Override
+    public void unregisterContentObservers() {
+        // No content observers for CNAP info.
+    }
 
-  @Override
-  public ListenableFuture<Void> clearData() {
-    return Futures.immediateFuture(null);
-  }
+    @Override
+    public ListenableFuture<Void> clearData() {
+        return Futures.immediateFuture(null);
+    }
 
-  @Override
-  public String getLoggingName() {
-    return "CnapPhoneLookup";
-  }
+    @Override
+    public String getLoggingName() {
+        return "CnapPhoneLookup";
+    }
 }

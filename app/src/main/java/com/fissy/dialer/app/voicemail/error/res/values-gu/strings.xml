@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- 
+<?xml version="1.0" encoding="UTF-8"?><!--
   ~ Copyright (C) 2016 The Android Open Source Project
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,8 +14,7 @@
   ~ limitations under the License
    -->
 
-<resources xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="voicemail_error_activating_title" msgid="2428457130578359186">"વિઝ્યુઅલ વૉઇસમેઇલ સક્રિય કરી રહ્યાં છે"</string>
     <string name="voicemail_error_activating_message" msgid="7157030596259443393">"જ્યાં સુધી વિઝ્યુઅલ વૉઇસમેઇલ સંપૂર્ણપણે સક્રિય ન થાય ત્યાં સુધી તમે વૉઇસમેઇલની સૂચનાઓ પ્રાપ્ત કરી શકશો નહીં. વૉઇસમેઇલ સંપૂર્ણપણે સક્રિય ન થાય ત્યાં સુધી નવા સંદેશા પુનઃપ્રાપ્ત કરવા માટે વૉઇસમેઇલને કૉલ કરો."</string>
     <string name="voicemail_error_not_activate_no_signal_title" msgid="742273366199085615">"વિઝ્યુઅલ વૉઇસમેઇલ સક્રિય કરી શકતાં નથી"</string>

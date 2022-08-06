@@ -16,43 +16,50 @@
 
 package com.fissy.dialer.spam.status;
 
-import android.support.annotation.IntDef;
+import androidx.annotation.IntDef;
+
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Optional;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-/** A value class representing a number's spam status in the user spam list. */
+/**
+ * A value class representing a number's spam status in the user spam list.
+ */
 @AutoValue
 @SuppressWarnings("Guava")
 public abstract class UserSpamListStatus {
 
-  /** Integers representing the spam status in the user spam list. */
-  @Retention(RetentionPolicy.SOURCE)
-  @IntDef({Status.NOT_ON_LIST, Status.WHITELISTED, Status.BLACKLISTED})
-  public @interface Status {
-    int NOT_ON_LIST = 1;
-    int WHITELISTED = 2;
-    int BLACKLISTED = 3;
-  }
+    public static UserSpamListStatus notOnList() {
+        return new AutoValue_UserSpamListStatus(Status.NOT_ON_LIST, Optional.absent());
+    }
 
-  public abstract @Status int getStatus();
+    public static UserSpamListStatus whitelisted(long timestampMillis) {
+        return new AutoValue_UserSpamListStatus(Status.WHITELISTED, Optional.of(timestampMillis));
+    }
 
-  /**
-   * Returns the timestamp (in milliseconds) representing when a number's spam status was put on the
-   * list, or {@code Optional.absent()} if the number is not on the list.
-   */
-  public abstract Optional<Long> getTimestampMillis();
+    public static UserSpamListStatus blacklisted(long timestampMillis) {
+        return new AutoValue_UserSpamListStatus(Status.BLACKLISTED, Optional.of(timestampMillis));
+    }
 
-  public static UserSpamListStatus notOnList() {
-    return new AutoValue_UserSpamListStatus(Status.NOT_ON_LIST, Optional.absent());
-  }
+    public abstract @Status
+    int getStatus();
 
-  public static UserSpamListStatus whitelisted(long timestampMillis) {
-    return new AutoValue_UserSpamListStatus(Status.WHITELISTED, Optional.of(timestampMillis));
-  }
+    /**
+     * Returns the timestamp (in milliseconds) representing when a number's spam status was put on the
+     * list, or {@code Optional.absent()} if the number is not on the list.
+     */
+    public abstract Optional<Long> getTimestampMillis();
 
-  public static UserSpamListStatus blacklisted(long timestampMillis) {
-    return new AutoValue_UserSpamListStatus(Status.BLACKLISTED, Optional.of(timestampMillis));
-  }
+    /**
+     * Integers representing the spam status in the user spam list.
+     */
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({Status.NOT_ON_LIST, Status.WHITELISTED, Status.BLACKLISTED})
+    public @interface Status {
+        int NOT_ON_LIST = 1;
+        int WHITELISTED = 2;
+        int BLACKLISTED = 3;
+    }
 }

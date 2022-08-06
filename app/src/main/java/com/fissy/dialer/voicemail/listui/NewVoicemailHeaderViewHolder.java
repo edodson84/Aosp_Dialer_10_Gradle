@@ -16,30 +16,32 @@
 
 package com.fissy.dialer.voicemail.listui;
 
-import android.support.annotation.StringRes;
-import android.support.annotation.VisibleForTesting;
-import android.support.v7.widget.RecyclerView.ViewHolder;
+import androidx.annotation.StringRes;
+import androidx.annotation.VisibleForTesting;
+import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import android.view.View;
 import android.widget.TextView;
 
 import com.fissy.dialer.R;
 
-/** ViewHolder for {@link NewVoicemailAdapter} to display "Today" or "Older" divider row. */
+/**
+ * ViewHolder for {@link NewVoicemailAdapter} to display "Today" or "Older" divider row.
+ */
 final class NewVoicemailHeaderViewHolder extends ViewHolder {
 
-  private final TextView headerTextView;
+    private final TextView headerTextView;
 
-  NewVoicemailHeaderViewHolder(View view) {
-    super(view);
-    headerTextView = view.findViewById(R.id.new_voicemail_header_text);
-  }
+    NewVoicemailHeaderViewHolder(View view) {
+        super(view);
+        headerTextView = view.findViewById(R.id.new_voicemail_header_text);
+    }
 
-  void setHeader(@StringRes int header) {
-    headerTextView.setText(header);
-  }
+    void setHeader(@StringRes int header) {
+        headerTextView.setText(header);
+    }
 
-  @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-  String getHeaderText() {
-    return headerTextView.getText().toString();
-  }
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    String getHeaderText() {
+        return headerTextView.getText().toString();
+    }
 }

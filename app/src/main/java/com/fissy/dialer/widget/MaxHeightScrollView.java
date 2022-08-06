@@ -18,49 +18,51 @@ package com.fissy.dialer.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.ScrollView;
 
 import com.fissy.dialer.R;
 
-/** {@link ScrollView} with a max height attribute. */
+/**
+ * {@link ScrollView} with a max height attribute.
+ */
 public class MaxHeightScrollView extends ScrollView {
 
-  private final int maxHeight;
+    private final int maxHeight;
 
-  public MaxHeightScrollView(Context context, @Nullable AttributeSet attrs) {
-    this(context, attrs, 0);
-  }
-
-  public MaxHeightScrollView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-    this(context, attrs, defStyleAttr, 0);
-  }
-
-  public MaxHeightScrollView(
-      Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-    super(context, attrs, defStyleAttr, defStyleRes);
-    if (isInEditMode()) {
-      maxHeight = -1;
-      return;
+    public MaxHeightScrollView(Context context, @Nullable AttributeSet attrs) {
+        this(context, attrs, 0);
     }
 
-    TypedArray array =
-        context.getTheme().obtainStyledAttributes(attrs, R.styleable.MaxHeightScrollView, 0, 0);
-    try {
-      maxHeight = array.getDimensionPixelSize(R.styleable.MaxHeightScrollView_maxHeight, -1);
-    } finally {
-      array.recycle();
+    public MaxHeightScrollView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+        this(context, attrs, defStyleAttr, 0);
     }
-  }
 
-  @Override
-  protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-    if (maxHeight < 0) {
-      super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-    } else {
-      super.onMeasure(
-          widthMeasureSpec, MeasureSpec.makeMeasureSpec(maxHeight, MeasureSpec.AT_MOST));
+    public MaxHeightScrollView(
+            Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        if (isInEditMode()) {
+            maxHeight = -1;
+            return;
+        }
+
+        TypedArray array =
+                context.getTheme().obtainStyledAttributes(attrs, R.styleable.MaxHeightScrollView, 0, 0);
+        try {
+            maxHeight = array.getDimensionPixelSize(R.styleable.MaxHeightScrollView_maxHeight, -1);
+        } finally {
+            array.recycle();
+        }
     }
-  }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        if (maxHeight < 0) {
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        } else {
+            super.onMeasure(
+                    widthMeasureSpec, MeasureSpec.makeMeasureSpec(maxHeight, MeasureSpec.AT_MOST));
+        }
+    }
 }

@@ -16,10 +16,11 @@
 
 package com.fissy.dialer.common.concurrent;
 
-import android.support.annotation.MainThread;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.WorkerThread;
+import androidx.annotation.MainThread;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.WorkerThread;
+
 import java.util.concurrent.ExecutorService;
 
 /**
@@ -107,7 +108,7 @@ import java.util.concurrent.ExecutorService;
  *   private void userDidSomething() { myExecutor.executeParallel(input); }
  * }
  * </code></pre>
- *
+ * <p>
  * Note that non-UI tasks are intended to be relatively quick; for example reading/writing shared
  * preferences or doing simple database work. If you submit long running non-UI tasks you may
  * saturate the shared application threads and block other tasks. Also, this class does not create
@@ -117,82 +118,92 @@ import java.util.concurrent.ExecutorService;
  */
 public interface DialerExecutor<InputT> {
 
-  /** Functional interface for doing work in the background. */
-  interface Worker<InputT, OutputT> {
-    @WorkerThread
-    @Nullable
-    OutputT doInBackground(@Nullable InputT input) throws Throwable;
-  }
-
-  /** Functional interface for handling the result of background work. */
-  interface SuccessListener<OutputT> {
+    /**
+     * Executes the task such that repeated executions for this executor are serialized.
+     */
     @MainThread
-    void onSuccess(@Nullable OutputT output);
-  }
+    void executeSerial(@Nullable InputT input);
 
-  /** Functional interface for handling an error produced while performing background work. */
-  interface FailureListener {
+    /**
+     * Executes the task after waiting {@code waitMillis}. If called while the previous invocation is
+     * still waiting to be started, the original invocation is cancelled.
+     *
+     * <p>This is useful for tasks which might get scheduled many times in very quick succession, but
+     * it is only the last one that actually needs to be executed.
+     */
     @MainThread
-    void onFailure(@NonNull Throwable throwable);
-  }
-
-  /** Builder for {@link DialerExecutor}. */
-  interface Builder<InputT, OutputT> {
+    void executeSerialWithWait(@Nullable InputT input, long waitMillis);
 
     /**
-     * Optional. Default is no-op.
-     *
-     * @param successListener a function executed on the main thread upon task success. There are no
-     *     restraints on this as it is executed on the main thread, so lambdas, anonymous, or inner
-     *     classes of your activity or fragment are all fine.
+     * Executes the task on a thread pool shared across the application. Multiple calls using this
+     * method may result in tasks being executed in parallel.
      */
-    @NonNull
-    Builder<InputT, OutputT> onSuccess(@NonNull SuccessListener<OutputT> successListener);
+    @MainThread
+    void executeParallel(@Nullable InputT input);
 
     /**
-     * Optional. If this is not set and your worker throws an exception, the application will crash.
-     *
-     * @param failureListener a function executed on the main thread upon task failure. There are no
-     *     restraints on this as it is executed on the main thread, so lambdas, anonymous, or inner
-     *     classes of your activity or fragment are all fine.
+     * Executes the task on a custom executor service. This should rarely be used; instead prefer
+     * {@link #executeSerial(Object)} or {@link #executeParallel(Object)}.
      */
-    @NonNull
-    Builder<InputT, OutputT> onFailure(@NonNull FailureListener failureListener);
+    @MainThread
+    void executeOnCustomExecutorService(
+            @NonNull ExecutorService executorService, @Nullable InputT input);
 
     /**
-     * Builds the {@link DialerExecutor} which can be used to execute your task (repeatedly with
-     * differing inputs if desired).
+     * Functional interface for doing work in the background.
      */
-    @NonNull
-    DialerExecutor<InputT> build();
-  }
+    interface Worker<InputT, OutputT> {
+        @WorkerThread
+        @Nullable
+        OutputT doInBackground(@Nullable InputT input) throws Throwable;
+    }
 
-  /** Executes the task such that repeated executions for this executor are serialized. */
-  @MainThread
-  void executeSerial(@Nullable InputT input);
+    /**
+     * Functional interface for handling the result of background work.
+     */
+    interface SuccessListener<OutputT> {
+        @MainThread
+        void onSuccess(@Nullable OutputT output);
+    }
 
-  /**
-   * Executes the task after waiting {@code waitMillis}. If called while the previous invocation is
-   * still waiting to be started, the original invocation is cancelled.
-   *
-   * <p>This is useful for tasks which might get scheduled many times in very quick succession, but
-   * it is only the last one that actually needs to be executed.
-   */
-  @MainThread
-  void executeSerialWithWait(@Nullable InputT input, long waitMillis);
+    /**
+     * Functional interface for handling an error produced while performing background work.
+     */
+    interface FailureListener {
+        @MainThread
+        void onFailure(@NonNull Throwable throwable);
+    }
 
-  /**
-   * Executes the task on a thread pool shared across the application. Multiple calls using this
-   * method may result in tasks being executed in parallel.
-   */
-  @MainThread
-  void executeParallel(@Nullable InputT input);
+    /**
+     * Builder for {@link DialerExecutor}.
+     */
+    interface Builder<InputT, OutputT> {
 
-  /**
-   * Executes the task on a custom executor service. This should rarely be used; instead prefer
-   * {@link #executeSerial(Object)} or {@link #executeParallel(Object)}.
-   */
-  @MainThread
-  void executeOnCustomExecutorService(
-      @NonNull ExecutorService executorService, @Nullable InputT input);
+        /**
+         * Optional. Default is no-op.
+         *
+         * @param successListener a function executed on the main thread upon task success. There are no
+         *                        restraints on this as it is executed on the main thread, so lambdas, anonymous, or inner
+         *                        classes of your activity or fragment are all fine.
+         */
+        @NonNull
+        Builder<InputT, OutputT> onSuccess(@NonNull SuccessListener<OutputT> successListener);
+
+        /**
+         * Optional. If this is not set and your worker throws an exception, the application will crash.
+         *
+         * @param failureListener a function executed on the main thread upon task failure. There are no
+         *                        restraints on this as it is executed on the main thread, so lambdas, anonymous, or inner
+         *                        classes of your activity or fragment are all fine.
+         */
+        @NonNull
+        Builder<InputT, OutputT> onFailure(@NonNull FailureListener failureListener);
+
+        /**
+         * Builds the {@link DialerExecutor} which can be used to execute your task (repeatedly with
+         * differing inputs if desired).
+         */
+        @NonNull
+        DialerExecutor<InputT> build();
+    }
 }

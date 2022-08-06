@@ -16,34 +16,36 @@
 
 package com.fissy.dialer.speeddial;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-/** ViewHolder for headers in {@link SpeedDialFragment}. */
+/**
+ * ViewHolder for headers in {@link SpeedDialFragment}.
+ */
 public class RemoveViewHolder extends RecyclerView.ViewHolder implements OnClickListener {
 
-  private final View removeViewContent;
+    private final View removeViewContent;
 
-  RemoveViewHolder(View view) {
-    super(view);
-    removeViewContent = view;
-  }
+    RemoveViewHolder(View view) {
+        super(view);
+        removeViewContent = view;
+    }
 
-  void show() {
-    removeViewContent.setVisibility(View.VISIBLE);
-    removeViewContent.setAlpha(0);
-    removeViewContent.animate().alpha(1).start();
-  }
+    void show() {
+        removeViewContent.setVisibility(View.VISIBLE);
+        removeViewContent.setAlpha(0);
+        removeViewContent.animate().alpha(1).start();
+    }
 
-  void hide() {
-    removeViewContent.setVisibility(View.INVISIBLE);
-    removeViewContent.setAlpha(1);
-    removeViewContent.animate().alpha(0).start();
-  }
+    void hide() {
+        removeViewContent.setVisibility(View.INVISIBLE);
+        removeViewContent.setAlpha(1);
+        removeViewContent.animate().alpha(0).start();
+    }
 
-  @Override
-  public void onClick(View v) {
-    // Not clickable
-  }
+    @Override
+    public void onClick(View v) {
+        // Not clickable
+    }
 }

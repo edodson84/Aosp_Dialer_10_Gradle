@@ -17,10 +17,12 @@
 package com.fissy.dialer.shortcuts;
 
 import android.content.Context;
-import android.support.annotation.MainThread;
-import android.support.annotation.NonNull;
+import androidx.annotation.MainThread;
+import androidx.annotation.NonNull;
+
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
+import com.fissy.dialer.configprovider.ConfigProvider;
 
 /**
  * Schedules dialer shortcut jobs.
@@ -30,19 +32,19 @@ import com.fissy.dialer.common.LogUtil;
  */
 public class ShortcutsJobScheduler {
 
-  @MainThread
-  public static void scheduleAllJobs(@NonNull Context context) {
-    LogUtil.enterBlock("ShortcutsJobScheduler.scheduleAllJobs");
-    Assert.isMainThread();
+    @MainThread
+    public static void scheduleAllJobs(@NonNull Context context) {
+        LogUtil.enterBlock("ShortcutsJobScheduler.scheduleAllJobs");
+        Assert.isMainThread();
 
-    if (Shortcuts.areDynamicShortcutsEnabled(context)) {
-      LogUtil.i("ShortcutsJobScheduler.scheduleAllJobs", "enabling shortcuts");
+        if (Shortcuts.areDynamicShortcutsEnabled(context)) {
+            LogUtil.i("ShortcutsJobScheduler.scheduleAllJobs", "enabling shortcuts");
 
-      PeriodicJobService.schedulePeriodicJob(context);
-    } else {
-      LogUtil.i("ShortcutsJobScheduler.scheduleAllJobs", "disabling shortcuts");
+            PeriodicJobService.schedulePeriodicJob(context);
+        } else {
+            LogUtil.i("ShortcutsJobScheduler.scheduleAllJobs", "disabling shortcuts");
 
-      PeriodicJobService.cancelJob(context);
+            PeriodicJobService.cancelJob(context);
+        }
     }
-  }
 }

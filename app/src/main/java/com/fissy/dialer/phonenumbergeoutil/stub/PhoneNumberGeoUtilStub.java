@@ -17,16 +17,21 @@
 package com.fissy.dialer.phonenumbergeoutil.stub;
 
 import android.content.Context;
+
 import com.fissy.dialer.phonenumbergeoutil.PhoneNumberGeoUtil;
+
 import javax.inject.Inject;
 
-/** Stub implementation of {@link PhoneNumberGeoUtil}. */
+/**
+ * Stub implementation of {@link PhoneNumberGeoUtil}.
+ */
 public final class PhoneNumberGeoUtilStub implements PhoneNumberGeoUtil {
-  @Inject
-  public PhoneNumberGeoUtilStub() {}
+    @Inject
+    public PhoneNumberGeoUtilStub() {
+    }
 
-  @Override
-  public String getGeoDescription(Context context, String number, String countryIso) {
-    return null;
-  }
+    @Override
+    public String getGeoDescription(Context context, String number, String countryIso) {
+        return null;
+    }
 }

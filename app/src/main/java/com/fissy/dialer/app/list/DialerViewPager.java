@@ -17,39 +17,41 @@
 package com.fissy.dialer.app.list;
 
 import android.content.Context;
-import android.support.v4.view.ViewPager;
+import androidx.viewpager.widget.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
-/** Class that handles enabling/disabling swiping between @{ViewPagerTabs}. */
+/**
+ * Class that handles enabling/disabling swiping between @{ViewPagerTabs}.
+ */
 public class DialerViewPager extends ViewPager {
 
-  private boolean enableSwipingPages;
+    private boolean enableSwipingPages;
 
-  public DialerViewPager(Context context, AttributeSet attributeSet) {
-    super(context, attributeSet);
-    enableSwipingPages = true;
-  }
-
-  @Override
-  public boolean onInterceptTouchEvent(MotionEvent event) {
-    if (enableSwipingPages) {
-      return super.onInterceptTouchEvent(event);
+    public DialerViewPager(Context context, AttributeSet attributeSet) {
+        super(context, attributeSet);
+        enableSwipingPages = true;
     }
 
-    return false;
-  }
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent event) {
+        if (enableSwipingPages) {
+            return super.onInterceptTouchEvent(event);
+        }
 
-  @Override
-  public boolean onTouchEvent(MotionEvent event) {
-    if (enableSwipingPages) {
-      return super.onTouchEvent(event);
+        return false;
     }
 
-    return false;
-  }
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (enableSwipingPages) {
+            return super.onTouchEvent(event);
+        }
 
-  public void setEnableSwipingPages(boolean enabled) {
-    enableSwipingPages = enabled;
-  }
+        return false;
+    }
+
+    public void setEnableSwipingPages(boolean enabled) {
+        enableSwipingPages = enabled;
+    }
 }

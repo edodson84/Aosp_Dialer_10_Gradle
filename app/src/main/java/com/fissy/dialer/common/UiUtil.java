@@ -21,28 +21,36 @@ import android.content.Context;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
-/** Utility class for commons functions used with Android UI. */
+/**
+ * Utility class for commons functions used with Android UI.
+ */
 public class UiUtil {
 
-  /** Hides the android keyboard. */
-  public static void hideKeyboardFrom(Context context, View view) {
-    InputMethodManager imm =
-        (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
-    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-  }
+    /**
+     * Hides the android keyboard.
+     */
+    public static void hideKeyboardFrom(Context context, View view) {
+        InputMethodManager imm =
+                (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
 
-  /** Opens the android keyboard. */
-  public static void showKeyboardFrom(Context context, View view) {
-    InputMethodManager inputMethodManager =
-        (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-    inputMethodManager.showSoftInput(view, 0);
-  }
+    /**
+     * Opens the android keyboard.
+     */
+    public static void showKeyboardFrom(Context context, View view) {
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.showSoftInput(view, 0);
+    }
 
-  /** Force open the android keyboard. */
-  public static void forceOpenKeyboardFrom(Context context, View view) {
-    InputMethodManager inputMethodManager =
-        (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-    inputMethodManager.toggleSoftInputFromWindow(
-        view.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
-  }
+    /**
+     * Force open the android keyboard.
+     */
+    public static void forceOpenKeyboardFrom(Context context, View view) {
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.toggleSoftInputFromWindow(
+                view.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
+    }
 }

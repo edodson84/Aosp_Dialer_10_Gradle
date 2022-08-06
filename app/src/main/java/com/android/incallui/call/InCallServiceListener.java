@@ -24,17 +24,17 @@ import android.telecom.InCallService;
  */
 public interface InCallServiceListener {
 
-  /**
-   * Called once at {@code InCallService} startup time with a valid instance. At that time, there
-   * will be no existing {@code DialerCall}s.
-   *
-   * @param inCallService The {@code InCallService} object.
-   */
-  void setInCallService(InCallService inCallService);
+    /**
+     * Called once at {@code InCallService} startup time with a valid instance. At that time, there
+     * will be no existing {@code DialerCall}s.
+     *
+     * @param inCallService The {@code InCallService} object.
+     */
+    void setInCallService(InCallService inCallService);
 
-  /**
-   * Called once at {@code InCallService} shutdown time. At that time, any {@code DialerCall}s will
-   * have transitioned through the disconnected state and will no longer exist.
-   */
-  void clearInCallService();
+    /**
+     * Called once at {@code InCallService} shutdown time. At that time, any {@code DialerCall}s will
+     * have transitioned through the disconnected state and will no longer exist.
+     */
+    void clearInCallService();
 }

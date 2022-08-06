@@ -17,8 +17,10 @@
 package com.fissy.dialer.common.concurrent;
 
 import android.os.AsyncTask;
-import android.support.annotation.MainThread;
+import androidx.annotation.MainThread;
+
 import com.fissy.dialer.common.Assert;
+
 import java.util.concurrent.Executor;
 
 /**
@@ -31,62 +33,64 @@ import java.util.concurrent.Executor;
  */
 public final class AsyncTaskExecutors {
 
-  /**
-   * A single instance of the {@link AsyncTaskExecutorFactory}, to which we delegate if it is
-   * non-null, for injecting when testing.
-   */
-  private static AsyncTaskExecutorFactory injectedAsyncTaskExecutorFactory = null;
+    /**
+     * A single instance of the {@link AsyncTaskExecutorFactory}, to which we delegate if it is
+     * non-null, for injecting when testing.
+     */
+    private static AsyncTaskExecutorFactory injectedAsyncTaskExecutorFactory = null;
 
-  /**
-   * Creates an AsyncTaskExecutor that submits tasks to run with {@link AsyncTask#SERIAL_EXECUTOR}.
-   */
-  public static AsyncTaskExecutor createAsyncTaskExecutor() {
-    synchronized (AsyncTaskExecutors.class) {
-      if (injectedAsyncTaskExecutorFactory != null) {
-        return injectedAsyncTaskExecutorFactory.createAsyncTaskExeuctor();
-      }
-      return new SimpleAsyncTaskExecutor(AsyncTask.SERIAL_EXECUTOR);
-    }
-  }
-
-  /**
-   * Creates an AsyncTaskExecutor that submits tasks to run with {@link
-   * AsyncTask#THREAD_POOL_EXECUTOR}.
-   */
-  public static AsyncTaskExecutor createThreadPoolExecutor() {
-    synchronized (AsyncTaskExecutors.class) {
-      if (injectedAsyncTaskExecutorFactory != null) {
-        return injectedAsyncTaskExecutorFactory.createAsyncTaskExeuctor();
-      }
-      return new SimpleAsyncTaskExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-    }
-  }
-
-  public static void setFactoryForTest(AsyncTaskExecutorFactory factory) {
-    synchronized (AsyncTaskExecutors.class) {
-      injectedAsyncTaskExecutorFactory = factory;
-    }
-  }
-
-  /** Interface for creating AsyncTaskExecutor objects. */
-  public interface AsyncTaskExecutorFactory {
-
-    AsyncTaskExecutor createAsyncTaskExeuctor();
-  }
-
-  static class SimpleAsyncTaskExecutor implements AsyncTaskExecutor {
-
-    private final Executor executor;
-
-    public SimpleAsyncTaskExecutor(Executor executor) {
-      this.executor = executor;
+    /**
+     * Creates an AsyncTaskExecutor that submits tasks to run with {@link AsyncTask#SERIAL_EXECUTOR}.
+     */
+    public static AsyncTaskExecutor createAsyncTaskExecutor() {
+        synchronized (AsyncTaskExecutors.class) {
+            if (injectedAsyncTaskExecutorFactory != null) {
+                return injectedAsyncTaskExecutorFactory.createAsyncTaskExeuctor();
+            }
+            return new SimpleAsyncTaskExecutor(AsyncTask.SERIAL_EXECUTOR);
+        }
     }
 
-    @Override
-    @MainThread
-    public <T> AsyncTask<T, ?, ?> submit(Object identifer, AsyncTask<T, ?, ?> task, T... params) {
-      Assert.isMainThread();
-      return task.executeOnExecutor(executor, params);
+    /**
+     * Creates an AsyncTaskExecutor that submits tasks to run with {@link
+     * AsyncTask#THREAD_POOL_EXECUTOR}.
+     */
+    public static AsyncTaskExecutor createThreadPoolExecutor() {
+        synchronized (AsyncTaskExecutors.class) {
+            if (injectedAsyncTaskExecutorFactory != null) {
+                return injectedAsyncTaskExecutorFactory.createAsyncTaskExeuctor();
+            }
+            return new SimpleAsyncTaskExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
     }
-  }
+
+    public static void setFactoryForTest(AsyncTaskExecutorFactory factory) {
+        synchronized (AsyncTaskExecutors.class) {
+            injectedAsyncTaskExecutorFactory = factory;
+        }
+    }
+
+    /**
+     * Interface for creating AsyncTaskExecutor objects.
+     */
+    public interface AsyncTaskExecutorFactory {
+
+        AsyncTaskExecutor createAsyncTaskExeuctor();
+    }
+
+    static class SimpleAsyncTaskExecutor implements AsyncTaskExecutor {
+
+        private final Executor executor;
+
+        public SimpleAsyncTaskExecutor(Executor executor) {
+            this.executor = executor;
+        }
+
+        @Override
+        @MainThread
+        public <T> AsyncTask<T, ?, ?> submit(Object identifer, AsyncTask<T, ?, ?> task, T... params) {
+            Assert.isMainThread();
+            return task.executeOnExecutor(executor, params);
+        }
+    }
 }

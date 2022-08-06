@@ -22,28 +22,30 @@ import android.content.Context;
 import android.provider.ContactsContract;
 import android.util.Log;
 
-/** Static methods to update contact information. */
+/**
+ * Static methods to update contact information.
+ */
 public class ContactUpdateUtils {
 
-  private static final String TAG = ContactUpdateUtils.class.getSimpleName();
+    private static final String TAG = ContactUpdateUtils.class.getSimpleName();
 
-  public static void setSuperPrimary(Context context, long dataId) {
-    if (dataId == -1) {
-      Log.e(TAG, "Invalid arguments for setSuperPrimary request");
-      return;
+    public static void setSuperPrimary(Context context, long dataId) {
+        if (dataId == -1) {
+            Log.e(TAG, "Invalid arguments for setSuperPrimary request");
+            return;
+        }
+
+        // Update the primary values in the data record.
+        ContentValues values = new ContentValues(2);
+        values.put(ContactsContract.Data.IS_SUPER_PRIMARY, 1);
+        values.put(ContactsContract.Data.IS_PRIMARY, 1);
+
+        context
+                .getContentResolver()
+                .update(
+                        ContentUris.withAppendedId(ContactsContract.Data.CONTENT_URI, dataId),
+                        values,
+                        null,
+                        null);
     }
-
-    // Update the primary values in the data record.
-    ContentValues values = new ContentValues(2);
-    values.put(ContactsContract.Data.IS_SUPER_PRIMARY, 1);
-    values.put(ContactsContract.Data.IS_PRIMARY, 1);
-
-    context
-        .getContentResolver()
-        .update(
-            ContentUris.withAppendedId(ContactsContract.Data.CONTENT_URI, dataId),
-            values,
-            null,
-            null);
-  }
 }

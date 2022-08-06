@@ -17,24 +17,27 @@
 package com.fissy.dialer.widget;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.TextView;
+
 import com.fissy.dialer.i18n.DialerBidiFormatter;
 
-/** A {@link TextView} that applies bidirectional formatting to its text. */
+/**
+ * A {@link TextView} that applies bidirectional formatting to its text.
+ */
 public final class BidiTextView extends TextView {
 
-  public BidiTextView(Context context) {
-    super(context);
-  }
+    public BidiTextView(Context context) {
+        super(context);
+    }
 
-  public BidiTextView(Context context, @Nullable AttributeSet attrs) {
-    super(context, attrs);
-  }
+    public BidiTextView(Context context, @Nullable AttributeSet attrs) {
+        super(context, attrs);
+    }
 
-  @Override
-  public void setText(CharSequence text, BufferType type) {
-    super.setText(DialerBidiFormatter.format(text), type);
-  }
+    @Override
+    public void setText(CharSequence text, BufferType type) {
+        super.setText(DialerBidiFormatter.format(text), type);
+    }
 }

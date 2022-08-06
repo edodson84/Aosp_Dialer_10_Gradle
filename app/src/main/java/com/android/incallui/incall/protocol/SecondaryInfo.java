@@ -18,111 +18,117 @@ package com.android.incallui.incall.protocol;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
+
 import com.fissy.dialer.common.LogUtil;
 import com.google.auto.value.AutoValue;
+
 import java.util.Locale;
 
-/** Information about the secondary call. */
+/**
+ * Information about the secondary call.
+ */
 @AutoValue
 public abstract class SecondaryInfo implements Parcelable {
-  public abstract boolean shouldShow();
+    public static final Creator<SecondaryInfo> CREATOR =
+            new Creator<SecondaryInfo>() {
+                @Override
+                public SecondaryInfo createFromParcel(Parcel in) {
+                    return builder()
+                            .setShouldShow(in.readByte() != 0)
+                            .setName(in.readString())
+                            .setNameIsNumber(in.readByte() != 0)
+                            .setLabel(in.readString())
+                            .setProviderLabel(in.readString())
+                            .setIsConference(in.readByte() != 0)
+                            .setIsVideoCall(in.readByte() != 0)
+                            .setIsFullscreen(in.readByte() != 0)
+                            .build();
+                }
 
-  @Nullable
-  public abstract String name();
+                @Override
+                public SecondaryInfo[] newArray(int size) {
+                    return new SecondaryInfo[size];
+                }
+            };
 
-  public abstract boolean nameIsNumber();
+    public static Builder builder() {
+        return new AutoValue_SecondaryInfo.Builder()
+                .setShouldShow(false)
+                .setNameIsNumber(false)
+                .setIsConference(false)
+                .setIsVideoCall(false)
+                .setIsFullscreen(false);
+    }
 
-  @Nullable
-  public abstract String label();
+    public abstract boolean shouldShow();
 
-  @Nullable
-  public abstract String providerLabel();
+    @Nullable
+    public abstract String name();
 
-  public abstract boolean isConference();
+    public abstract boolean nameIsNumber();
 
-  public abstract boolean isVideoCall();
+    @Nullable
+    public abstract String label();
 
-  public abstract boolean isFullscreen();
+    @Nullable
+    public abstract String providerLabel();
 
-  public static Builder builder() {
-    return new AutoValue_SecondaryInfo.Builder()
-        .setShouldShow(false)
-        .setNameIsNumber(false)
-        .setIsConference(false)
-        .setIsVideoCall(false)
-        .setIsFullscreen(false);
-  }
+    public abstract boolean isConference();
 
-  /** Builder class for secondary info. */
-  @AutoValue.Builder
-  public abstract static class Builder {
-    public abstract Builder setShouldShow(boolean shouldShow);
+    public abstract boolean isVideoCall();
 
-    public abstract Builder setName(String name);
+    public abstract boolean isFullscreen();
 
-    public abstract Builder setNameIsNumber(boolean nameIsNumber);
+    @Override
+    public String toString() {
+        return String.format(
+                Locale.US,
+                "SecondaryInfo, show: %b, name: %s, label: %s, " + "providerLabel: %s",
+                shouldShow(),
+                LogUtil.sanitizePii(name()),
+                label(),
+                providerLabel());
+    }
 
-    public abstract Builder setLabel(String label);
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
-    public abstract Builder setProviderLabel(String providerLabel);
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeByte((byte) (shouldShow() ? 1 : 0));
+        dest.writeString(name());
+        dest.writeByte((byte) (nameIsNumber() ? 1 : 0));
+        dest.writeString(label());
+        dest.writeString(providerLabel());
+        dest.writeByte((byte) (isConference() ? 1 : 0));
+        dest.writeByte((byte) (isVideoCall() ? 1 : 0));
+        dest.writeByte((byte) (isFullscreen() ? 1 : 0));
+    }
 
-    public abstract Builder setIsConference(boolean isConference);
+    /**
+     * Builder class for secondary info.
+     */
+    @AutoValue.Builder
+    public abstract static class Builder {
+        public abstract Builder setShouldShow(boolean shouldShow);
 
-    public abstract Builder setIsVideoCall(boolean isVideoCall);
+        public abstract Builder setName(String name);
 
-    public abstract Builder setIsFullscreen(boolean isFullscreen);
+        public abstract Builder setNameIsNumber(boolean nameIsNumber);
 
-    public abstract SecondaryInfo build();
-  }
+        public abstract Builder setLabel(String label);
 
-  @Override
-  public String toString() {
-    return String.format(
-        Locale.US,
-        "SecondaryInfo, show: %b, name: %s, label: %s, " + "providerLabel: %s",
-        shouldShow(),
-        LogUtil.sanitizePii(name()),
-        label(),
-        providerLabel());
-  }
+        public abstract Builder setProviderLabel(String providerLabel);
 
-  public static final Creator<SecondaryInfo> CREATOR =
-      new Creator<SecondaryInfo>() {
-        @Override
-        public SecondaryInfo createFromParcel(Parcel in) {
-          return builder()
-              .setShouldShow(in.readByte() != 0)
-              .setName(in.readString())
-              .setNameIsNumber(in.readByte() != 0)
-              .setLabel(in.readString())
-              .setProviderLabel(in.readString())
-              .setIsConference(in.readByte() != 0)
-              .setIsVideoCall(in.readByte() != 0)
-              .setIsFullscreen(in.readByte() != 0)
-              .build();
-        }
+        public abstract Builder setIsConference(boolean isConference);
 
-        @Override
-        public SecondaryInfo[] newArray(int size) {
-          return new SecondaryInfo[size];
-        }
-      };
+        public abstract Builder setIsVideoCall(boolean isVideoCall);
 
-  @Override
-  public int describeContents() {
-    return 0;
-  }
+        public abstract Builder setIsFullscreen(boolean isFullscreen);
 
-  @Override
-  public void writeToParcel(Parcel dest, int flags) {
-    dest.writeByte((byte) (shouldShow() ? 1 : 0));
-    dest.writeString(name());
-    dest.writeByte((byte) (nameIsNumber() ? 1 : 0));
-    dest.writeString(label());
-    dest.writeString(providerLabel());
-    dest.writeByte((byte) (isConference() ? 1 : 0));
-    dest.writeByte((byte) (isVideoCall() ? 1 : 0));
-    dest.writeByte((byte) (isFullscreen() ? 1 : 0));
-  }
+        public abstract SecondaryInfo build();
+    }
 }

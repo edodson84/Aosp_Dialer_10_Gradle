@@ -19,8 +19,9 @@ package com.fissy.dialer.precall.impl;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.fissy.dialer.callintent.CallIntentBuilder;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
@@ -46,153 +47,154 @@ import com.google.common.util.concurrent.MoreExecutors;
  */
 public class PreCallCoordinatorImpl implements PreCallCoordinator {
 
-  private static final String SAVED_STATE_CURRENT_ACTION = "current_action";
+    private static final String SAVED_STATE_CURRENT_ACTION = "current_action";
 
-  @NonNull private final Activity activity;
+    @NonNull
+    private final Activity activity;
 
-  private CallIntentBuilder builder;
-  private ImmutableList<PreCallAction> actions;
-  private int currentActionIndex = 0;
-  private PreCallAction currentAction;
-  private PendingAction pendingAction;
-  private boolean aborted = false;
+    private CallIntentBuilder builder;
+    private ImmutableList<PreCallAction> actions;
+    private int currentActionIndex = 0;
+    private PreCallAction currentAction;
+    private PendingAction pendingAction;
+    private boolean aborted = false;
 
-  private UiListener<Object> uiListener;
+    private UiListener<Object> uiListener;
 
-  PreCallCoordinatorImpl(@NonNull Activity activity) {
-    this.activity = Assert.isNotNull(activity);
-  }
-
-  void onCreate(Intent intent, @Nullable Bundle savedInstanceState) {
-    LogUtil.enterBlock("PreCallCoordinatorImpl.onCreate");
-    if (savedInstanceState != null) {
-      currentActionIndex = savedInstanceState.getInt(SAVED_STATE_CURRENT_ACTION);
-      builder = Assert.isNotNull(savedInstanceState.getParcelable(EXTRA_CALL_INTENT_BUILDER));
-    } else {
-      builder = Assert.isNotNull(intent.getParcelableExtra(EXTRA_CALL_INTENT_BUILDER));
+    PreCallCoordinatorImpl(@NonNull Activity activity) {
+        this.activity = Assert.isNotNull(activity);
     }
-    uiListener =
-        DialerExecutorComponent.get(activity)
-            .createUiListener(activity.getFragmentManager(), "PreCallCoordinatorImpl.uiListener");
-  }
 
-  void onRestoreInstanceState(Bundle savedInstanceState) {
-    currentActionIndex = savedInstanceState.getInt(SAVED_STATE_CURRENT_ACTION);
-    builder = savedInstanceState.getParcelable(EXTRA_CALL_INTENT_BUILDER);
-  }
-
-  void onResume() {
-    actions = PreCallComponent.get(activity).createActions();
-    runNextAction();
-  }
-
-  void onPause() {
-    if (currentAction != null) {
-      currentAction.onDiscard();
+    void onCreate(Intent intent, @Nullable Bundle savedInstanceState) {
+        LogUtil.enterBlock("PreCallCoordinatorImpl.onCreate");
+        if (savedInstanceState != null) {
+            currentActionIndex = savedInstanceState.getInt(SAVED_STATE_CURRENT_ACTION);
+            builder = Assert.isNotNull(savedInstanceState.getParcelable(EXTRA_CALL_INTENT_BUILDER));
+        } else {
+            builder = Assert.isNotNull(intent.getParcelableExtra(EXTRA_CALL_INTENT_BUILDER));
+        }
+        uiListener =
+                DialerExecutorComponent.get(activity)
+                        .createUiListener(activity.getFragmentManager(), "PreCallCoordinatorImpl.uiListener");
     }
-    currentAction = null;
-    pendingAction = null;
-  }
 
-  void onSaveInstanceState(Bundle outState) {
-    outState.putInt(SAVED_STATE_CURRENT_ACTION, currentActionIndex);
-    outState.putParcelable(EXTRA_CALL_INTENT_BUILDER, builder);
-  }
-
-  private void runNextAction() {
-    LogUtil.enterBlock("PreCallCoordinatorImpl.runNextAction");
-    Assert.checkArgument(currentAction == null);
-    if (currentActionIndex >= actions.size()) {
-      placeCall();
-      activity.finish();
-      return;
+    void onRestoreInstanceState(Bundle savedInstanceState) {
+        currentActionIndex = savedInstanceState.getInt(SAVED_STATE_CURRENT_ACTION);
+        builder = savedInstanceState.getParcelable(EXTRA_CALL_INTENT_BUILDER);
     }
-    LogUtil.i("PreCallCoordinatorImpl.runNextAction", "running " + actions.get(currentActionIndex));
-    currentAction = actions.get(currentActionIndex);
-    actions.get(currentActionIndex).runWithUi(this);
-    if (pendingAction == null) {
-      onActionFinished();
+
+    void onResume() {
+        actions = PreCallComponent.get(activity).createActions();
+        runNextAction();
     }
-  }
 
-  private void onActionFinished() {
-    LogUtil.enterBlock("PreCallCoordinatorImpl.onActionFinished");
-    Assert.isNotNull(currentAction);
-    currentAction = null;
-    currentActionIndex++;
-    if (!aborted) {
-      runNextAction();
-    } else {
-      activity.finish();
+    void onPause() {
+        if (currentAction != null) {
+            currentAction.onDiscard();
+        }
+        currentAction = null;
+        pendingAction = null;
     }
-  }
 
-  @Override
-  public void abortCall() {
-    Assert.checkState(currentAction != null);
-    aborted = true;
-    Logger.get(getActivity()).logImpression(Type.PRECALL_CANCELED);
-  }
+    void onSaveInstanceState(Bundle outState) {
+        outState.putInt(SAVED_STATE_CURRENT_ACTION, currentActionIndex);
+        outState.putParcelable(EXTRA_CALL_INTENT_BUILDER, builder);
+    }
 
-  @NonNull
-  @Override
-  public CallIntentBuilder getBuilder() {
-    return builder;
-  }
+    private void runNextAction() {
+        LogUtil.enterBlock("PreCallCoordinatorImpl.runNextAction");
+        Assert.checkArgument(currentAction == null);
+        if (currentActionIndex >= actions.size()) {
+            placeCall();
+            activity.finish();
+            return;
+        }
+        LogUtil.i("PreCallCoordinatorImpl.runNextAction", "running " + actions.get(currentActionIndex));
+        currentAction = actions.get(currentActionIndex);
+        actions.get(currentActionIndex).runWithUi(this);
+        if (pendingAction == null) {
+            onActionFinished();
+        }
+    }
 
-  @NonNull
-  @Override
-  public Activity getActivity() {
-    return activity;
-  }
-
-  @Override
-  @NonNull
-  public PendingAction startPendingAction() {
-    Assert.isMainThread();
-    Assert.isNotNull(currentAction);
-    Assert.checkArgument(pendingAction == null);
-    pendingAction = new PendingActionImpl();
-    return pendingAction;
-  }
-
-  private class PendingActionImpl implements PendingAction {
+    private void onActionFinished() {
+        LogUtil.enterBlock("PreCallCoordinatorImpl.onActionFinished");
+        Assert.isNotNull(currentAction);
+        currentAction = null;
+        currentActionIndex++;
+        if (!aborted) {
+            runNextAction();
+        } else {
+            activity.finish();
+        }
+    }
 
     @Override
-    public void finish() {
-      Assert.checkArgument(pendingAction == this);
-      pendingAction = null;
-      onActionFinished();
+    public void abortCall() {
+        Assert.checkState(currentAction != null);
+        aborted = true;
+        Logger.get(getActivity()).logImpression(Type.PRECALL_CANCELED);
     }
-  }
 
-  @SuppressWarnings("unchecked")
-  @Override
-  public <OutputT> void listen(
-      ListenableFuture<OutputT> future,
-      Consumer<OutputT> successListener,
-      Consumer<Throwable> failureListener) {
-
-    uiListener.listen(
-        activity,
-        Futures.transform(future, (output) -> (Object) output, MoreExecutors.directExecutor()),
-        output -> successListener.accept((OutputT) output),
-        failureListener::accept);
-  }
-
-  private void placeCall() {
-    if (builder.isDuoCall()) {
-      Optional<Intent> intent =
-          DuoComponent.get(activity)
-              .getDuo()
-              .getCallIntent(builder.getUri().getSchemeSpecificPart());
-      if (intent.isPresent()) {
-        activity.startActivityForResult(intent.get(), 0);
-        return;
-      } else {
-        LogUtil.e("PreCallCoordinatorImpl.placeCall", "duo.getCallIntent() returned absent");
-      }
+    @NonNull
+    @Override
+    public CallIntentBuilder getBuilder() {
+        return builder;
     }
-    TelecomUtil.placeCall(activity, builder.build());
-  }
+
+    @NonNull
+    @Override
+    public Activity getActivity() {
+        return activity;
+    }
+
+    @Override
+    @NonNull
+    public PendingAction startPendingAction() {
+        Assert.isMainThread();
+        Assert.isNotNull(currentAction);
+        Assert.checkArgument(pendingAction == null);
+        pendingAction = new PendingActionImpl();
+        return pendingAction;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public <OutputT> void listen(
+            ListenableFuture<OutputT> future,
+            Consumer<OutputT> successListener,
+            Consumer<Throwable> failureListener) {
+
+        uiListener.listen(
+                activity,
+                Futures.transform(future, (output) -> (Object) output, MoreExecutors.directExecutor()),
+                output -> successListener.accept((OutputT) output),
+                failureListener::accept);
+    }
+
+    private void placeCall() {
+        if (builder.isDuoCall()) {
+            Optional<Intent> intent =
+                    DuoComponent.get(activity)
+                            .getDuo()
+                            .getCallIntent(builder.getUri().getSchemeSpecificPart());
+            if (intent.isPresent()) {
+                activity.startActivityForResult(intent.get(), 0);
+                return;
+            } else {
+                LogUtil.e("PreCallCoordinatorImpl.placeCall", "duo.getCallIntent() returned absent");
+            }
+        }
+        TelecomUtil.placeCall(activity, builder.build());
+    }
+
+    private class PendingActionImpl implements PendingAction {
+
+        @Override
+        public void finish() {
+            Assert.checkArgument(pendingAction == this);
+            pendingAction = null;
+            onActionFinished();
+        }
+    }
 }

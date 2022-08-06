@@ -17,6 +17,7 @@
 package com.android.contacts.common.model.dataitem;
 
 import android.content.ContentValues;
+import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Website;
 
 /**
@@ -25,15 +26,15 @@ import android.provider.ContactsContract.CommonDataKinds.Website;
  */
 public class WebsiteDataItem extends DataItem {
 
-  /* package */ WebsiteDataItem(ContentValues values) {
-    super(values);
-  }
+    /* package */ WebsiteDataItem(ContentValues values) {
+        super(values);
+    }
 
-  public String getUrl() {
-    return getContentValues().getAsString(Website.URL);
-  }
+    public String getUrl() {
+        return getContentValues().getAsString(Website.URL);
+    }
 
-  public String getLabel() {
-    return getContentValues().getAsString(Website.LABEL);
-  }
+    public String getLabel() {
+        return getContentValues().getAsString(Website.LABEL);
+    }
 }

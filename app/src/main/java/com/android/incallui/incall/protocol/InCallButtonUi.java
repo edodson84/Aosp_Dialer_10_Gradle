@@ -16,36 +16,38 @@
 
 package com.android.incallui.incall.protocol;
 
-import android.support.annotation.ColorInt;
-import android.support.v4.app.Fragment;
+import androidx.annotation.ColorInt;
+import androidx.fragment.app.Fragment;
 import android.telecom.CallAudioState;
 
-/** Interface for the call button UI. */
+/**
+ * Interface for the call button UI.
+ */
 public interface InCallButtonUi {
 
-  void showButton(@InCallButtonIds int buttonId, boolean show);
+    void showButton(@InCallButtonIds int buttonId, boolean show);
 
-  void enableButton(@InCallButtonIds int buttonId, boolean enable);
+    void enableButton(@InCallButtonIds int buttonId, boolean enable);
 
-  void setEnabled(boolean on);
+    void setEnabled(boolean on);
 
-  void setHold(boolean on);
+    void setHold(boolean on);
 
-  void setCameraSwitched(boolean isBackFacingCamera);
+    void setCameraSwitched(boolean isBackFacingCamera);
 
-  void setVideoPaused(boolean isPaused);
+    void setVideoPaused(boolean isPaused);
 
-  void setAudioState(CallAudioState audioState);
+    void setAudioState(CallAudioState audioState);
 
-  /**
-   * Once showButton() has been called on each of the individual buttons in the UI, call this to
-   * configure the overflow menu appropriately.
-   */
-  void updateButtonStates();
+    /**
+     * Once showButton() has been called on each of the individual buttons in the UI, call this to
+     * configure the overflow menu appropriately.
+     */
+    void updateButtonStates();
 
-  void updateInCallButtonUiColors(@ColorInt int color);
+    void updateInCallButtonUiColors(@ColorInt int color);
 
-  Fragment getInCallButtonUiFragment();
+    Fragment getInCallButtonUiFragment();
 
-  void showAudioRouteSelector();
+    void showAudioRouteSelector();
 }

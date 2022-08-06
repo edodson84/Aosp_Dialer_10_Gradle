@@ -16,7 +16,8 @@
 
 package com.android.incallui.videotech.utils;
 
-import android.support.annotation.IntDef;
+import androidx.annotation.IntDef;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
@@ -26,22 +27,22 @@ import java.lang.annotation.RetentionPolicy;
  */
 @Retention(RetentionPolicy.SOURCE)
 @IntDef({
-  SessionModificationState.NO_REQUEST,
-  SessionModificationState.WAITING_FOR_UPGRADE_TO_VIDEO_RESPONSE,
-  SessionModificationState.REQUEST_FAILED,
-  SessionModificationState.RECEIVED_UPGRADE_TO_VIDEO_REQUEST,
-  SessionModificationState.UPGRADE_TO_VIDEO_REQUEST_TIMED_OUT,
-  SessionModificationState.UPGRADE_TO_VIDEO_REQUEST_FAILED,
-  SessionModificationState.REQUEST_REJECTED,
-  SessionModificationState.WAITING_FOR_RESPONSE
+        SessionModificationState.NO_REQUEST,
+        SessionModificationState.WAITING_FOR_UPGRADE_TO_VIDEO_RESPONSE,
+        SessionModificationState.REQUEST_FAILED,
+        SessionModificationState.RECEIVED_UPGRADE_TO_VIDEO_REQUEST,
+        SessionModificationState.UPGRADE_TO_VIDEO_REQUEST_TIMED_OUT,
+        SessionModificationState.UPGRADE_TO_VIDEO_REQUEST_FAILED,
+        SessionModificationState.REQUEST_REJECTED,
+        SessionModificationState.WAITING_FOR_RESPONSE
 })
 public @interface SessionModificationState {
-  int NO_REQUEST = 0;
-  int WAITING_FOR_UPGRADE_TO_VIDEO_RESPONSE = 1;
-  int REQUEST_FAILED = 2;
-  int RECEIVED_UPGRADE_TO_VIDEO_REQUEST = 3;
-  int UPGRADE_TO_VIDEO_REQUEST_TIMED_OUT = 4;
-  int UPGRADE_TO_VIDEO_REQUEST_FAILED = 5;
-  int REQUEST_REJECTED = 6;
-  int WAITING_FOR_RESPONSE = 7;
+    int NO_REQUEST = 0;
+    int WAITING_FOR_UPGRADE_TO_VIDEO_RESPONSE = 1;
+    int REQUEST_FAILED = 2;
+    int RECEIVED_UPGRADE_TO_VIDEO_REQUEST = 3;
+    int UPGRADE_TO_VIDEO_REQUEST_TIMED_OUT = 4;
+    int UPGRADE_TO_VIDEO_REQUEST_FAILED = 5;
+    int REQUEST_REJECTED = 6;
+    int WAITING_FOR_RESPONSE = 7;
 }

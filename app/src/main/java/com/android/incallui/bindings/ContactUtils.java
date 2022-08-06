@@ -18,16 +18,19 @@ package com.android.incallui.bindings;
 
 import android.location.Address;
 import android.util.Pair;
+
 import java.util.Calendar;
 import java.util.List;
 
-/** Utility functions to help manipulate contact data. */
+/**
+ * Utility functions to help manipulate contact data.
+ */
 public interface ContactUtils {
 
-  boolean retrieveContactInteractionsFromLookupKey(String lookupKey, Listener listener);
+    boolean retrieveContactInteractionsFromLookupKey(String lookupKey, Listener listener);
 
-  interface Listener {
+    interface Listener {
 
-    void onContactInteractionsFound(Address address, List<Pair<Calendar, Calendar>> openingHours);
-  }
+        void onContactInteractionsFound(Address address, List<Pair<Calendar, Calendar>> openingHours);
+    }
 }

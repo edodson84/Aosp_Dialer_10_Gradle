@@ -17,17 +17,22 @@ package com.fissy.dialer.i18n;
 
 import android.content.Context;
 import android.os.LocaleList;
+
 import java.util.Locale;
 
-/** Utilities for locale. */
+/**
+ * Utilities for locale.
+ */
 public final class LocaleUtils {
 
-  /** Returns the default locale of the device. */
-  public static Locale getLocale(Context context) {
-    LocaleList localList = context.getResources().getConfiguration().getLocales();
-    if (!localList.isEmpty()) {
-      return localList.get(0);
+    /**
+     * Returns the default locale of the device.
+     */
+    public static Locale getLocale(Context context) {
+        LocaleList localList = context.getResources().getConfiguration().getLocales();
+        if (!localList.isEmpty()) {
+            return localList.get(0);
+        }
+        return Locale.getDefault();
     }
-    return Locale.getDefault();
-  }
 }

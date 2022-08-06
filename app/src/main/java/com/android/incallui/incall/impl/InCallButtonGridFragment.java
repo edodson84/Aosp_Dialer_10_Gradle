@@ -17,130 +17,136 @@
 package com.android.incallui.incall.impl;
 
 import android.os.Bundle;
-import android.support.annotation.ColorInt;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import androidx.annotation.ColorInt;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import android.util.ArraySet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.incallui.incall.protocol.InCallButtonIds;
 import com.fissy.dialer.R;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.FragmentUtils;
-import com.android.incallui.incall.protocol.InCallButtonIds;
+
 import java.util.List;
 import java.util.Set;
 
-/** Fragment for the in call buttons (mute, speaker, ect.). */
+/**
+ * Fragment for the in call buttons (mute, speaker, ect.).
+ */
 public class InCallButtonGridFragment extends Fragment {
 
-  private static final int BUTTON_COUNT = 6;
-  private static final int BUTTONS_PER_ROW = 3;
+    private static final int BUTTON_COUNT = 6;
+    private static final int BUTTONS_PER_ROW = 3;
 
-  private final CheckableLabeledButton[] buttons = new CheckableLabeledButton[BUTTON_COUNT];
-  private OnButtonGridCreatedListener buttonGridListener;
+    private final CheckableLabeledButton[] buttons = new CheckableLabeledButton[BUTTON_COUNT];
+    private OnButtonGridCreatedListener buttonGridListener;
 
-  public static Fragment newInstance() {
-    return new InCallButtonGridFragment();
-  }
-
-  @Override
-  public void onCreate(@Nullable Bundle bundle) {
-    super.onCreate(bundle);
-    buttonGridListener = FragmentUtils.getParent(this, OnButtonGridCreatedListener.class);
-    Assert.isNotNull(buttonGridListener);
-  }
-
-  @Nullable
-  @Override
-  public View onCreateView(
-      LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle bundle) {
-    View view = inflater.inflate(R.layout.incall_button_grid, parent, false);
-
-    buttons[0] = ((CheckableLabeledButton) view.findViewById(R.id.incall_first_button));
-    buttons[1] = ((CheckableLabeledButton) view.findViewById(R.id.incall_second_button));
-    buttons[2] = ((CheckableLabeledButton) view.findViewById(R.id.incall_third_button));
-    buttons[3] = ((CheckableLabeledButton) view.findViewById(R.id.incall_fourth_button));
-    buttons[4] = ((CheckableLabeledButton) view.findViewById(R.id.incall_fifth_button));
-    buttons[5] = ((CheckableLabeledButton) view.findViewById(R.id.incall_sixth_button));
-
-    return view;
-  }
-
-  @Override
-  public void onViewCreated(View view, @Nullable Bundle bundle) {
-    super.onViewCreated(view, bundle);
-    buttonGridListener.onButtonGridCreated(this);
-  }
-
-  @Override
-  public void onDestroyView() {
-    super.onDestroyView();
-    buttonGridListener.onButtonGridDestroyed();
-  }
-
-  public void onInCallScreenDialpadVisibilityChange(boolean isShowing) {
-    for (CheckableLabeledButton button : buttons) {
-      button.setImportantForAccessibility(
-          isShowing
-              ? View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS
-              : View.IMPORTANT_FOR_ACCESSIBILITY_AUTO);
+    public static Fragment newInstance() {
+        return new InCallButtonGridFragment();
     }
-  }
 
-  public int updateButtonStates(
-      List<ButtonController> buttonControllers,
-      @Nullable ButtonChooser buttonChooser,
-      int voiceNetworkType,
-      int phoneType) {
-    Set<Integer> allowedButtons = new ArraySet<>();
-    Set<Integer> disabledButtons = new ArraySet<>();
-    for (ButtonController controller : buttonControllers) {
-      if (controller.isAllowed()) {
-        allowedButtons.add(controller.getInCallButtonId());
-        if (!controller.isEnabled()) {
-          disabledButtons.add(controller.getInCallButtonId());
+    @Override
+    public void onCreate(@Nullable Bundle bundle) {
+        super.onCreate(bundle);
+        buttonGridListener = FragmentUtils.getParent(this, OnButtonGridCreatedListener.class);
+        Assert.isNotNull(buttonGridListener);
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(
+            LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle bundle) {
+        View view = inflater.inflate(R.layout.incall_button_grid, parent, false);
+
+        buttons[0] = ((CheckableLabeledButton) view.findViewById(R.id.incall_first_button));
+        buttons[1] = ((CheckableLabeledButton) view.findViewById(R.id.incall_second_button));
+        buttons[2] = ((CheckableLabeledButton) view.findViewById(R.id.incall_third_button));
+        buttons[3] = ((CheckableLabeledButton) view.findViewById(R.id.incall_fourth_button));
+        buttons[4] = ((CheckableLabeledButton) view.findViewById(R.id.incall_fifth_button));
+        buttons[5] = ((CheckableLabeledButton) view.findViewById(R.id.incall_sixth_button));
+
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle bundle) {
+        super.onViewCreated(view, bundle);
+        buttonGridListener.onButtonGridCreated(this);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        buttonGridListener.onButtonGridDestroyed();
+    }
+
+    public void onInCallScreenDialpadVisibilityChange(boolean isShowing) {
+        for (CheckableLabeledButton button : buttons) {
+            button.setImportantForAccessibility(
+                    isShowing
+                            ? View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS
+                            : View.IMPORTANT_FOR_ACCESSIBILITY_AUTO);
         }
-      }
     }
 
-    for (ButtonController controller : buttonControllers) {
-      controller.setButton(null);
+    public int updateButtonStates(
+            List<ButtonController> buttonControllers,
+            @Nullable ButtonChooser buttonChooser,
+            int voiceNetworkType,
+            int phoneType) {
+        Set<Integer> allowedButtons = new ArraySet<>();
+        Set<Integer> disabledButtons = new ArraySet<>();
+        for (ButtonController controller : buttonControllers) {
+            if (controller.isAllowed()) {
+                allowedButtons.add(controller.getInCallButtonId());
+                if (!controller.isEnabled()) {
+                    disabledButtons.add(controller.getInCallButtonId());
+                }
+            }
+        }
+
+        for (ButtonController controller : buttonControllers) {
+            controller.setButton(null);
+        }
+
+        if (buttonChooser == null) {
+            buttonChooser =
+                    ButtonChooserFactory.newButtonChooser(voiceNetworkType, false /* isWiFi */, phoneType);
+        }
+
+        int numVisibleButtons = getResources().getInteger(R.integer.incall_num_rows) * BUTTONS_PER_ROW;
+        List<Integer> buttonsToPlace =
+                buttonChooser.getButtonPlacement(numVisibleButtons, allowedButtons, disabledButtons);
+
+        for (int i = 0; i < BUTTON_COUNT; ++i) {
+            if (i >= buttonsToPlace.size()) {
+                buttons[i].setVisibility(View.INVISIBLE);
+                continue;
+            }
+            @InCallButtonIds int button = buttonsToPlace.get(i);
+            buttonGridListener.getButtonController(button).setButton(buttons[i]);
+        }
+
+        return numVisibleButtons;
     }
 
-    if (buttonChooser == null) {
-      buttonChooser =
-          ButtonChooserFactory.newButtonChooser(voiceNetworkType, false /* isWiFi */, phoneType);
+    public void updateButtonColor(@ColorInt int color) {
+        for (CheckableLabeledButton button : buttons) {
+            button.setCheckedColor(color);
+        }
     }
 
-    int numVisibleButtons = getResources().getInteger(R.integer.incall_num_rows) * BUTTONS_PER_ROW;
-    List<Integer> buttonsToPlace =
-        buttonChooser.getButtonPlacement(numVisibleButtons, allowedButtons, disabledButtons);
+    /**
+     * Interface to let the listener know the status of the button grid.
+     */
+    public interface OnButtonGridCreatedListener {
+        void onButtonGridCreated(InCallButtonGridFragment inCallButtonGridFragment);
 
-    for (int i = 0; i < BUTTON_COUNT; ++i) {
-      if (i >= buttonsToPlace.size()) {
-        buttons[i].setVisibility(View.INVISIBLE);
-        continue;
-      }
-      @InCallButtonIds int button = buttonsToPlace.get(i);
-      buttonGridListener.getButtonController(button).setButton(buttons[i]);
+        void onButtonGridDestroyed();
+
+        ButtonController getButtonController(@InCallButtonIds int id);
     }
-
-    return numVisibleButtons;
-  }
-
-  public void updateButtonColor(@ColorInt int color) {
-    for (CheckableLabeledButton button : buttons) {
-      button.setCheckedColor(color);
-    }
-  }
-
-  /** Interface to let the listener know the status of the button grid. */
-  public interface OnButtonGridCreatedListener {
-    void onButtonGridCreated(InCallButtonGridFragment inCallButtonGridFragment);
-    void onButtonGridDestroyed();
-
-    ButtonController getButtonController(@InCallButtonIds int id);
-  }
 }

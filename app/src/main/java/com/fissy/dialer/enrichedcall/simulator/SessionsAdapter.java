@@ -16,38 +16,43 @@
 
 package com.fissy.dialer.enrichedcall.simulator;
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.common.Assert;
+
 import java.util.List;
 
-/** Adapter for the RecyclerView in {@link EnrichedCallSimulatorActivity}. */
+/**
+ * Adapter for the RecyclerView in {@link EnrichedCallSimulatorActivity}.
+ */
 class SessionsAdapter extends RecyclerView.Adapter<SessionViewHolder> {
 
-  /** List of the string representation of all in-memory sessions */
-  private List<String> sessionStrings;
+    /**
+     * List of the string representation of all in-memory sessions
+     */
+    private List<String> sessionStrings;
 
-  void setSessionStrings(@NonNull List<String> sessionStrings) {
-    this.sessionStrings = Assert.isNotNull(sessionStrings);
-  }
+    void setSessionStrings(@NonNull List<String> sessionStrings) {
+        this.sessionStrings = Assert.isNotNull(sessionStrings);
+    }
 
-  @Override
-  public SessionViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-    LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-    return new SessionViewHolder(inflater.inflate(R.layout.session_view_holder, viewGroup, false));
-  }
+    @Override
+    public SessionViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
+        return new SessionViewHolder(inflater.inflate(R.layout.session_view_holder, viewGroup, false));
+    }
 
-  @Override
-  public void onBindViewHolder(SessionViewHolder viewHolder, int i) {
-    viewHolder.updateSession(sessionStrings.get(i));
-  }
+    @Override
+    public void onBindViewHolder(SessionViewHolder viewHolder, int i) {
+        viewHolder.updateSession(sessionStrings.get(i));
+    }
 
-  @Override
-  public int getItemCount() {
-    return sessionStrings.size();
-  }
+    @Override
+    public int getItemCount() {
+        return sessionStrings.size();
+    }
 }

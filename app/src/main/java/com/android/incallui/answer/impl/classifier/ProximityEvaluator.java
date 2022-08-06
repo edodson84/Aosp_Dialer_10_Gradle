@@ -17,12 +17,12 @@
 package com.android.incallui.answer.impl.classifier;
 
 class ProximityEvaluator {
-  public static float evaluate(float value) {
-    float evaluation = 0.0f;
-    float threshold = 0.1f;
-    if (value >= threshold) {
-      evaluation += 2.0f;
+    public static float evaluate(float value) {
+        float evaluation = 0.0f;
+        float threshold = 0.1f;
+        if (value >= threshold) {
+            evaluation += 2.0f;
+        }
+        return evaluation;
     }
-    return evaluation;
-  }
 }

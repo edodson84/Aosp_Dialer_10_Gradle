@@ -18,29 +18,30 @@ package com.android.incallui.videotech.utils;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+
 import com.fissy.dialer.util.PermissionsUtil;
 
 public class VideoUtils {
 
-  public static boolean hasSentVideoUpgradeRequest(@SessionModificationState int state) {
-    return state == SessionModificationState.WAITING_FOR_UPGRADE_TO_VIDEO_RESPONSE
-        || state == SessionModificationState.UPGRADE_TO_VIDEO_REQUEST_FAILED
-        || state == SessionModificationState.REQUEST_REJECTED
-        || state == SessionModificationState.UPGRADE_TO_VIDEO_REQUEST_TIMED_OUT;
-  }
+    public static boolean hasSentVideoUpgradeRequest(@SessionModificationState int state) {
+        return state == SessionModificationState.WAITING_FOR_UPGRADE_TO_VIDEO_RESPONSE
+                || state == SessionModificationState.UPGRADE_TO_VIDEO_REQUEST_FAILED
+                || state == SessionModificationState.REQUEST_REJECTED
+                || state == SessionModificationState.UPGRADE_TO_VIDEO_REQUEST_TIMED_OUT;
+    }
 
-  public static boolean hasReceivedVideoUpgradeRequest(@SessionModificationState int state) {
-    return state == SessionModificationState.RECEIVED_UPGRADE_TO_VIDEO_REQUEST;
-  }
+    public static boolean hasReceivedVideoUpgradeRequest(@SessionModificationState int state) {
+        return state == SessionModificationState.RECEIVED_UPGRADE_TO_VIDEO_REQUEST;
+    }
 
-  public static boolean hasCameraPermissionAndShownPrivacyToast(@NonNull Context context) {
-    return PermissionsUtil.hasCameraPrivacyToastShown(context) && hasCameraPermission(context);
-  }
+    public static boolean hasCameraPermissionAndShownPrivacyToast(@NonNull Context context) {
+        return PermissionsUtil.hasCameraPrivacyToastShown(context) && hasCameraPermission(context);
+    }
 
-  public static boolean hasCameraPermission(@NonNull Context context) {
-    return ContextCompat.checkSelfPermission(context, android.Manifest.permission.CAMERA)
-        == PackageManager.PERMISSION_GRANTED;
-  }
+    public static boolean hasCameraPermission(@NonNull Context context) {
+        return ContextCompat.checkSelfPermission(context, android.Manifest.permission.CAMERA)
+                == PackageManager.PERMISSION_GRANTED;
+    }
 }

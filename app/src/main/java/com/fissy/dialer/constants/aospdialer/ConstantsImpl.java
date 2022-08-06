@@ -17,53 +17,54 @@
 package com.fissy.dialer.constants;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
-import com.fissy.dialer.constants.Constants;
 import com.fissy.dialer.proguard.UsedByReflection;
 
-/** Provider config values for AOSP Dialer. */
+/**
+ * Provider config values for AOSP Dialer.
+ */
 @UsedByReflection(value = "Constants.java")
 public class ConstantsImpl extends Constants {
 
-  @Override
-  @NonNull
-  public String getFilteredNumberProviderAuthority() {
-    return "com.fissy.dialer.blocking.filterednumberprovider";
-  }
+    @Override
+    @NonNull
+    public String getFilteredNumberProviderAuthority() {
+        return "com.fissy.dialer.blocking.filterednumberprovider";
+    }
 
-  @Override
-  @NonNull
-  public String getFileProviderAuthority() {
-    return "com.fissy.dialer.files";
-  }
+    @Override
+    @NonNull
+    public String getFileProviderAuthority() {
+        return "com.fissy.dialer.files";
+    }
 
-  @NonNull
-  @Override
-  public String getAnnotatedCallLogProviderAuthority() {
-    return "com.fissy.dialer.annotatedcalllog";
-  }
+    @NonNull
+    @Override
+    public String getAnnotatedCallLogProviderAuthority() {
+        return "com.fissy.dialer.annotatedcalllog";
+    }
 
-  @NonNull
-  @Override
-  public String getPhoneLookupHistoryProviderAuthority() {
-    return "com.fissy.dialer.phonelookuphistory";
-  }
+    @NonNull
+    @Override
+    public String getPhoneLookupHistoryProviderAuthority() {
+        return "com.fissy.dialer.phonelookuphistory";
+    }
 
-  @NonNull
-  @Override
-  public String getPreferredSimFallbackProviderAuthority() {
-    return "com.fissy.dialer.preferredsimfallback";
-  }
+    @NonNull
+    @Override
+    public String getPreferredSimFallbackProviderAuthority() {
+        return "com.fissy.dialer.preferredsimfallback";
+    }
 
-  @Override
-  public String getUserAgent(Context context) {
-    return null;
-  }
+    @Override
+    public String getUserAgent(Context context) {
+        return null;
+    }
 
-  @NonNull
-  @Override
-  public String getSettingsActivity() {
-    return "com.fissy.dialer.app.settings.DialerSettingsActivity";
-  }
+    @NonNull
+    @Override
+    public String getSettingsActivity() {
+        return "com.fissy.dialer.app.settings.DialerSettingsActivity";
+    }
 }

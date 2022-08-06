@@ -17,22 +17,28 @@
 package com.android.incallui.maps;
 
 import android.content.Context;
+
 import com.fissy.dialer.inject.HasRootComponent;
+
 import dagger.Subcomponent;
 
-/** Subcomponent that can be used to access the maps implementation. */
+/**
+ * Subcomponent that can be used to access the maps implementation.
+ */
 @Subcomponent
 public abstract class MapsComponent {
 
-  public abstract Maps getMaps();
+    public static MapsComponent get(Context context) {
+        return ((HasComponent) ((HasRootComponent) context.getApplicationContext()).component())
+                .mapsComponent();
+    }
 
-  public static MapsComponent get(Context context) {
-    return ((HasComponent) ((HasRootComponent) context.getApplicationContext()).component())
-        .mapsComponent();
-  }
+    public abstract Maps getMaps();
 
-  /** Used to refer to the root application component. */
-  public interface HasComponent {
-    MapsComponent mapsComponent();
-  }
+    /**
+     * Used to refer to the root application component.
+     */
+    public interface HasComponent {
+        MapsComponent mapsComponent();
+    }
 }

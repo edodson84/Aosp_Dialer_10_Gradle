@@ -21,6 +21,7 @@ import android.content.Context;
 import android.os.Build.VERSION_CODES;
 import android.telecom.PhoneAccountHandle;
 import android.telecom.TelecomManager;
+
 import com.android.voicemail.impl.settings.VisualVoicemailSettingsUtil;
 
 /**
@@ -36,29 +37,29 @@ import com.android.voicemail.impl.settings.VisualVoicemailSettingsUtil;
 @TargetApi(VERSION_CODES.O)
 public final class VvmPackageInstallHandler {
 
-  /**
-   * Iterates through all phone account and disable VVM on a account if {@code packageName} is
-   * listed as a carrier VVM package.
-   */
-  public static void handlePackageInstalled(Context context) {
-    // This get called every time an app is installed and will be noisy. Don't log until the app
-    // is identified as a carrier VVM app.
-    for (PhoneAccountHandle phoneAccount :
-        context.getSystemService(TelecomManager.class).getCallCapablePhoneAccounts()) {
-      OmtpVvmCarrierConfigHelper carrierConfigHelper =
-          new OmtpVvmCarrierConfigHelper(context, phoneAccount);
-      if (!carrierConfigHelper.isValid()) {
-        continue;
-      }
-      if (!carrierConfigHelper.isCarrierAppInstalled()) {
-        continue;
-      }
+    /**
+     * Iterates through all phone account and disable VVM on a account if {@code packageName} is
+     * listed as a carrier VVM package.
+     */
+    public static void handlePackageInstalled(Context context) {
+        // This get called every time an app is installed and will be noisy. Don't log until the app
+        // is identified as a carrier VVM app.
+        for (PhoneAccountHandle phoneAccount :
+                context.getSystemService(TelecomManager.class).getCallCapablePhoneAccounts()) {
+            OmtpVvmCarrierConfigHelper carrierConfigHelper =
+                    new OmtpVvmCarrierConfigHelper(context, phoneAccount);
+            if (!carrierConfigHelper.isValid()) {
+                continue;
+            }
+            if (!carrierConfigHelper.isCarrierAppInstalled()) {
+                continue;
+            }
 
-      // Force deactivate the client.
-      VvmLog.i(
-          "VvmPackageInstallHandler.handlePackageInstalled",
-          "Carrier VVM package installed, disabling system VVM client");
-      VisualVoicemailSettingsUtil.setEnabled(context, phoneAccount, false);
+            // Force deactivate the client.
+            VvmLog.i(
+                    "VvmPackageInstallHandler.handlePackageInstalled",
+                    "Carrier VVM package installed, disabling system VVM client");
+            VisualVoicemailSettingsUtil.setEnabled(context, phoneAccount, false);
+        }
     }
-  }
 }

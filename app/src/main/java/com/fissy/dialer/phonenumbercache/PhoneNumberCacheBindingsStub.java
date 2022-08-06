@@ -16,14 +16,16 @@
 
 package com.fissy.dialer.phonenumbercache;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
-/** Default implementation of PhoneNumberCacheBindings. */
+/**
+ * Default implementation of PhoneNumberCacheBindings.
+ */
 public class PhoneNumberCacheBindingsStub implements PhoneNumberCacheBindings {
 
-  @Override
-  @Nullable
-  public CachedNumberLookupService getCachedNumberLookupService() {
-    return null;
-  }
+    @Override
+    @Nullable
+    public CachedNumberLookupService getCachedNumberLookupService() {
+        return null;
+    }
 }

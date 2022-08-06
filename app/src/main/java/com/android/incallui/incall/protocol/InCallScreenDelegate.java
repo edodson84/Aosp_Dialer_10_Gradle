@@ -16,26 +16,28 @@
 
 package com.android.incallui.incall.protocol;
 
-/** Callbacks from the module out to the container. */
+/**
+ * Callbacks from the module out to the container.
+ */
 public interface InCallScreenDelegate {
 
-  void onInCallScreenDelegateInit(InCallScreen inCallScreen);
+    void onInCallScreenDelegateInit(InCallScreen inCallScreen);
 
-  void onInCallScreenReady();
+    void onInCallScreenReady();
 
-  void onInCallScreenUnready();
+    void onInCallScreenUnready();
 
-  void onEndCallClicked();
+    void onEndCallClicked();
 
-  void onSecondaryInfoClicked();
+    void onSecondaryInfoClicked();
 
-  void onCallStateButtonClicked();
+    void onCallStateButtonClicked();
 
-  void onManageConferenceClicked();
+    void onManageConferenceClicked();
 
-  void onShrinkAnimationComplete();
+    void onShrinkAnimationComplete();
 
-  void onInCallScreenResumed();
+    void onInCallScreenResumed();
 
-  void onInCallScreenPaused();
+    void onInCallScreenPaused();
 }

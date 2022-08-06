@@ -22,39 +22,41 @@ import android.content.Intent;
 import android.provider.VoicemailContract;
 import android.telecom.PhoneAccountHandle;
 import android.telecom.TelecomManager;
+
 import com.android.voicemail.VoicemailComponent;
 import com.android.voicemail.impl.ActivationTask;
 import com.android.voicemail.impl.VvmLog;
 import com.android.voicemail.impl.settings.VisualVoicemailSettingsUtil;
+
 import java.util.List;
 
 public class OmtpVvmSyncReceiver extends BroadcastReceiver {
 
-  private static final String TAG = "OmtpVvmSyncReceiver";
+    private static final String TAG = "OmtpVvmSyncReceiver";
 
-  @Override
-  public void onReceive(final Context context, Intent intent) {
-    if (!VoicemailComponent.get(context).getVoicemailClient().isVoicemailModuleEnabled()) {
-      // ACTION_SYNC_VOICEMAIL is available pre-O, ignore if received.
-      return;
-    }
-
-    if (VoicemailContract.ACTION_SYNC_VOICEMAIL.equals(intent.getAction())) {
-      VvmLog.v(TAG, "Sync intent received");
-
-      List<PhoneAccountHandle> accounts =
-          context.getSystemService(TelecomManager.class).getCallCapablePhoneAccounts();
-      for (PhoneAccountHandle phoneAccount : accounts) {
-        if (!VisualVoicemailSettingsUtil.isEnabled(context, phoneAccount)) {
-          continue;
+    @Override
+    public void onReceive(final Context context, Intent intent) {
+        if (!VoicemailComponent.get(context).getVoicemailClient().isVoicemailModuleEnabled()) {
+            // ACTION_SYNC_VOICEMAIL is available pre-O, ignore if received.
+            return;
         }
-        if (!VvmAccountManager.isAccountActivated(context, phoneAccount)) {
-          VvmLog.i(TAG, "Unactivated account " + phoneAccount + " found, activating");
-          ActivationTask.start(context, phoneAccount, null);
-        } else {
-          SyncTask.start(context, phoneAccount);
+
+        if (VoicemailContract.ACTION_SYNC_VOICEMAIL.equals(intent.getAction())) {
+            VvmLog.v(TAG, "Sync intent received");
+
+            List<PhoneAccountHandle> accounts =
+                    context.getSystemService(TelecomManager.class).getCallCapablePhoneAccounts();
+            for (PhoneAccountHandle phoneAccount : accounts) {
+                if (!VisualVoicemailSettingsUtil.isEnabled(context, phoneAccount)) {
+                    continue;
+                }
+                if (!VvmAccountManager.isAccountActivated(context, phoneAccount)) {
+                    VvmLog.i(TAG, "Unactivated account " + phoneAccount + " found, activating");
+                    ActivationTask.start(context, phoneAccount, null);
+                } else {
+                    SyncTask.start(context, phoneAccount);
+                }
+            }
         }
-      }
     }
-  }
 }

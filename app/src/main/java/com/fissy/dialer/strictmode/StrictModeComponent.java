@@ -17,23 +17,29 @@
 package com.fissy.dialer.strictmode;
 
 import android.content.Context;
+
 import com.fissy.dialer.inject.HasRootComponent;
+
 import dagger.Subcomponent;
 
-/** Dagger component for DialerStrictMode. */
+/**
+ * Dagger component for DialerStrictMode.
+ */
 @Subcomponent
 public abstract class StrictModeComponent {
 
-  public abstract DialerStrictMode getDialerStrictMode();
+    public static StrictModeComponent get(Context context) {
+        return ((StrictModeComponent.HasComponent)
+                ((HasRootComponent) context.getApplicationContext()).component())
+                .strictModeComponent();
+    }
 
-  public static StrictModeComponent get(Context context) {
-    return ((StrictModeComponent.HasComponent)
-            ((HasRootComponent) context.getApplicationContext()).component())
-        .strictModeComponent();
-  }
+    public abstract DialerStrictMode getDialerStrictMode();
 
-  /** Used to refer to the root application component. */
-  public interface HasComponent {
-    StrictModeComponent strictModeComponent();
-  }
+    /**
+     * Used to refer to the root application component.
+     */
+    public interface HasComponent {
+        StrictModeComponent strictModeComponent();
+    }
 }

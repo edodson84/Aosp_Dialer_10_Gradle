@@ -26,31 +26,31 @@ import java.util.concurrent.Executor;
  */
 public interface PausableExecutor extends Executor {
 
-  /**
-   * Method called from asynchronous production code to inform this executor that it has reached a
-   * point that puts the system into a state worth testing. TestableExecutors intended for use in a
-   * testing environment should cause the calling thread to block. In the production environment
-   * this should be a no-op.
-   */
-  void milestone();
+    /**
+     * Method called from asynchronous production code to inform this executor that it has reached a
+     * point that puts the system into a state worth testing. TestableExecutors intended for use in a
+     * testing environment should cause the calling thread to block. In the production environment
+     * this should be a no-op.
+     */
+    void milestone();
 
-  /**
-   * Method called from the test code to inform this executor that the state of the production
-   * system at the current milestone has been sufficiently tested. Every milestone must be
-   * acknowledged.
-   */
-  void ackMilestoneForTesting();
+    /**
+     * Method called from the test code to inform this executor that the state of the production
+     * system at the current milestone has been sufficiently tested. Every milestone must be
+     * acknowledged.
+     */
+    void ackMilestoneForTesting();
 
-  /**
-   * Method called from the test code to inform this executor that the tests are finished with all
-   * milestones. Future calls to {@link #milestone()} or {@link #awaitMilestoneForTesting()} should
-   * return immediately.
-   */
-  void ackAllMilestonesForTesting();
+    /**
+     * Method called from the test code to inform this executor that the tests are finished with all
+     * milestones. Future calls to {@link #milestone()} or {@link #awaitMilestoneForTesting()} should
+     * return immediately.
+     */
+    void ackAllMilestonesForTesting();
 
-  /**
-   * Method called from the test code to block until a milestone has been reached in the production
-   * code.
-   */
-  void awaitMilestoneForTesting() throws InterruptedException;
+    /**
+     * Method called from the test code to block until a milestone has been reached in the production
+     * code.
+     */
+    void awaitMilestoneForTesting() throws InterruptedException;
 }

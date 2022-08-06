@@ -17,73 +17,75 @@
 package com.fissy.dialer.about;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.fissy.dialer.R;
 
-/** Simple Activity that renders locally stored open source legal info in a text view. */
+/**
+ * Simple Activity that renders locally stored open source legal info in a text view.
+ */
 public final class LicenseActivity extends AppCompatActivity {
-  private static final String TAG = "LicenseActivity";
-  private static final String STATE_SCROLL_POS = "scroll_pos";
+    private static final String TAG = "LicenseActivity";
+    private static final String STATE_SCROLL_POS = "scroll_pos";
 
-  @Override
-  public void onCreate(Bundle bundle) {
-    super.onCreate(bundle);
-    setContentView(R.layout.license_scrollview);
+    @Override
+    public void onCreate(Bundle bundle) {
+        super.onCreate(bundle);
+        setContentView(R.layout.license_scrollview);
 
-    License license = getIntent().getParcelableExtra(LicenseMenuActivity.ARGS_LICENSE);
-    getSupportActionBar().setTitle(license.getLibraryName());
+        License license = getIntent().getParcelableExtra(LicenseMenuActivity.ARGS_LICENSE);
+        getSupportActionBar().setTitle(license.getLibraryName());
 
-    // Show 'up' button with no logo.
-    getSupportActionBar().setDisplayShowHomeEnabled(true);
-    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    getSupportActionBar().setLogo(null);
+        // Show 'up' button with no logo.
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setLogo(null);
 
-    TextView textView = (TextView) findViewById(R.id.license_activity_textview);
-    String licenseText = Licenses.getLicenseText(this, license);
-    if (licenseText == null) {
-      finish();
-      return;
+        TextView textView = (TextView) findViewById(R.id.license_activity_textview);
+        String licenseText = Licenses.getLicenseText(this, license);
+        if (licenseText == null) {
+            finish();
+            return;
+        }
+        textView.setText(licenseText);
     }
-    textView.setText(licenseText);
-  }
 
-  @Override
-  public void onSaveInstanceState(Bundle outState) {
-    super.onSaveInstanceState(outState);
-    ScrollView scrollView = (ScrollView) findViewById(R.id.license_activity_scrollview);
-    TextView textView = (TextView) findViewById(R.id.license_activity_textview);
-    int firstVisibleLine = textView.getLayout().getLineForVertical(scrollView.getScrollY());
-    int firstVisibleChar = textView.getLayout().getLineStart(firstVisibleLine);
-    outState.putInt(STATE_SCROLL_POS, firstVisibleChar);
-  }
-
-  @Override
-  public void onRestoreInstanceState(Bundle savedInstanceState) {
-    super.onRestoreInstanceState(savedInstanceState);
-    final ScrollView scrollView = (ScrollView) findViewById(R.id.license_activity_scrollview);
-    final int firstVisibleChar = savedInstanceState.getInt(STATE_SCROLL_POS);
-    scrollView.post(
-        new Runnable() {
-          @Override
-          public void run() {
-            TextView textView = (TextView) findViewById(R.id.license_activity_textview);
-            int firstVisibleLine = textView.getLayout().getLineForOffset(firstVisibleChar);
-            int offset = textView.getLayout().getLineTop(firstVisibleLine);
-            scrollView.scrollTo(0, offset);
-          }
-        });
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(final MenuItem item) {
-    if (item.getItemId() == android.R.id.home) {
-      finish();
-      return true;
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        ScrollView scrollView = (ScrollView) findViewById(R.id.license_activity_scrollview);
+        TextView textView = (TextView) findViewById(R.id.license_activity_textview);
+        int firstVisibleLine = textView.getLayout().getLineForVertical(scrollView.getScrollY());
+        int firstVisibleChar = textView.getLayout().getLineStart(firstVisibleLine);
+        outState.putInt(STATE_SCROLL_POS, firstVisibleChar);
     }
-    return super.onOptionsItemSelected(item);
-  }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        final ScrollView scrollView = (ScrollView) findViewById(R.id.license_activity_scrollview);
+        final int firstVisibleChar = savedInstanceState.getInt(STATE_SCROLL_POS);
+        scrollView.post(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        TextView textView = (TextView) findViewById(R.id.license_activity_textview);
+                        int firstVisibleLine = textView.getLayout().getLineForOffset(firstVisibleChar);
+                        int offset = textView.getLayout().getLineTop(firstVisibleLine);
+                        scrollView.scrollTo(0, offset);
+                    }
+                });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(final MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

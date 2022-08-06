@@ -17,6 +17,10 @@
 package com.fissy.dialer.binary.basecomponent;
 
 import com.android.bubble.BubbleComponent;
+import com.android.incallui.calllocation.CallLocationComponent;
+import com.android.incallui.maps.MapsComponent;
+import com.android.incallui.speakeasy.SpeakEasyComponent;
+import com.android.voicemail.VoicemailComponent;
 import com.fissy.dialer.activecalls.ActiveCallsComponent;
 import com.fissy.dialer.calllog.CallLogComponent;
 import com.fissy.dialer.calllog.config.CallLogConfigComponent;
@@ -44,17 +48,13 @@ import com.fissy.dialer.speeddial.loader.UiItemLoaderComponent;
 import com.fissy.dialer.storage.StorageComponent;
 import com.fissy.dialer.strictmode.StrictModeComponent;
 import com.fissy.dialer.theme.base.ThemeComponent;
-import com.android.incallui.calllocation.CallLocationComponent;
-import com.android.incallui.maps.MapsComponent;
-import com.android.incallui.speakeasy.SpeakEasyComponent;
-import com.android.voicemail.VoicemailComponent;
 
 /**
  * Base class for the core application-wide component. All variants of the Dialer app should extend
  * from this component.
  */
 public interface BaseDialerRootComponent
-    extends ActiveCallsComponent.HasComponent,
+        extends ActiveCallsComponent.HasComponent,
         BubbleComponent.HasComponent,
         CallLocationComponent.HasComponent,
         CallLogComponent.HasComponent,
@@ -85,4 +85,5 @@ public interface BaseDialerRootComponent
         StorageComponent.HasComponent,
         StrictModeComponent.HasComponent,
         ThemeComponent.HasComponent,
-        VoicemailComponent.HasComponent {}
+        VoicemailComponent.HasComponent {
+}

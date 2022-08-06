@@ -16,7 +16,7 @@
 
 package com.fissy.dialer.calllog.ui;
 
-import android.support.v7.widget.RecyclerView.ViewHolder;
+import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.Button;
@@ -26,40 +26,43 @@ import android.widget.TextView;
 import com.fissy.dialer.R;
 import com.fissy.dialer.promotion.Promotion;
 
-/** ViewHolder for {@link NewCallLogAdapter} to display the Duo disclosure card. */
+/**
+ * ViewHolder for {@link NewCallLogAdapter} to display the Duo disclosure card.
+ */
 public class PromotionCardViewHolder extends ViewHolder {
 
-  /** Listener to be called when promotion card is dismissed. */
-  interface DismissListener {
-    void onDismiss();
-  }
+    private final Button okButton;
+    private final Promotion promotion;
+    PromotionCardViewHolder(View itemView, Promotion promotion) {
+        super(itemView);
+        this.promotion = promotion;
 
-  private final Button okButton;
-  private final Promotion promotion;
+        ImageView iconView = itemView.findViewById(R.id.new_call_log_promotion_card_icon);
+        iconView.setImageResource(promotion.getIconRes());
 
-  PromotionCardViewHolder(View itemView, Promotion promotion) {
-    super(itemView);
-    this.promotion = promotion;
+        TextView cardTitleView = itemView.findViewById(R.id.new_call_log_promotion_card_title);
+        cardTitleView.setText(promotion.getTitle());
 
-    ImageView iconView = itemView.findViewById(R.id.new_call_log_promotion_card_icon);
-    iconView.setImageResource(promotion.getIconRes());
+        TextView cardDetailsView = itemView.findViewById(R.id.new_call_log_promotion_card_details);
+        cardDetailsView.setText(promotion.getDetails());
+        cardDetailsView.setMovementMethod(LinkMovementMethod.getInstance()); // make the link clickable
 
-    TextView cardTitleView = itemView.findViewById(R.id.new_call_log_promotion_card_title);
-    cardTitleView.setText(promotion.getTitle());
+        // Obtain a reference to the "OK, got it" button.
+        okButton = itemView.findViewById(R.id.new_call_log_promotion_card_ok);
+    }
 
-    TextView cardDetailsView = itemView.findViewById(R.id.new_call_log_promotion_card_details);
-    cardDetailsView.setText(promotion.getDetails());
-    cardDetailsView.setMovementMethod(LinkMovementMethod.getInstance()); // make the link clickable
+    void setDismissListener(DismissListener listener) {
+        okButton.setOnClickListener(
+                v -> {
+                    promotion.dismiss();
+                    listener.onDismiss();
+                });
+    }
 
-    // Obtain a reference to the "OK, got it" button.
-    okButton = itemView.findViewById(R.id.new_call_log_promotion_card_ok);
-  }
-
-  void setDismissListener(DismissListener listener) {
-    okButton.setOnClickListener(
-        v -> {
-          promotion.dismiss();
-          listener.onDismiss();
-        });
-  }
+    /**
+     * Listener to be called when promotion card is dismissed.
+     */
+    interface DismissListener {
+        void onDismiss();
+    }
 }

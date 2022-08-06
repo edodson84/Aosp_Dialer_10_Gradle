@@ -18,28 +18,31 @@ package com.fissy.dialer.precall;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.MainThread;
-import android.support.annotation.NonNull;
+import androidx.annotation.MainThread;
+import androidx.annotation.NonNull;
+
 import com.fissy.dialer.callintent.CallIntentBuilder;
 import com.fissy.dialer.util.DialerUtils;
 
-/** Interface to prepare a {@link CallIntentBuilder} before placing the call with telecom. */
+/**
+ * Interface to prepare a {@link CallIntentBuilder} before placing the call with telecom.
+ */
 public interface PreCall {
 
-  /**
-   * @return a intent when started as activity, will perform the pre-call actions and then place a
-   *     call. TODO(twyen): if all actions do not require an UI, return a intent that will place the
-   *     call directly instead.
-   */
-  @NonNull
-  @MainThread
-  Intent buildIntent(Context context, CallIntentBuilder builder);
+    static Intent getIntent(Context context, CallIntentBuilder builder) {
+        return PreCallComponent.get(context).getPreCall().buildIntent(context, builder);
+    }
 
-  static Intent getIntent(Context context, CallIntentBuilder builder) {
-    return PreCallComponent.get(context).getPreCall().buildIntent(context, builder);
-  }
+    static void start(Context context, CallIntentBuilder builder) {
+        DialerUtils.startActivityWithErrorToast(context, getIntent(context, builder));
+    }
 
-  static void start(Context context, CallIntentBuilder builder) {
-    DialerUtils.startActivityWithErrorToast(context, getIntent(context, builder));
-  }
+    /**
+     * @return a intent when started as activity, will perform the pre-call actions and then place a
+     * call. TODO(twyen): if all actions do not require an UI, return a intent that will place the
+     * call directly instead.
+     */
+    @NonNull
+    @MainThread
+    Intent buildIntent(Context context, CallIntentBuilder builder);
 }

@@ -4,6 +4,6 @@
 package com.google.internal.communications.voicemailtranscription.v1;
 
 public interface SendTranscriptionFeedbackResponseOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:google.internal.communications.voicemailtranscription.v1.SendTranscriptionFeedbackResponse)
-    com.google.protobuf.MessageLiteOrBuilder {
+        // @@protoc_insertion_point(interface_extends:google.internal.communications.voicemailtranscription.v1.SendTranscriptionFeedbackResponse)
+        com.google.protobuf.MessageLiteOrBuilder {
 }

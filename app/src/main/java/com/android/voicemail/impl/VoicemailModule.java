@@ -17,40 +17,46 @@
 package com.android.voicemail.impl;
 
 import android.content.Context;
-import android.support.v4.os.BuildCompat;
-import com.fissy.dialer.inject.ApplicationContext;
-import com.fissy.dialer.inject.DialerVariant;
-import com.fissy.dialer.inject.InstallIn;
+import androidx.core.os.BuildCompat;
+
 import com.android.voicemail.VoicemailClient;
 import com.android.voicemail.VoicemailPermissionHelper;
 import com.android.voicemail.stub.StubVoicemailClient;
-import dagger.Module;
-import dagger.Provides;
+import com.fissy.dialer.inject.ApplicationContext;
+import com.fissy.dialer.inject.DialerVariant;
+import com.fissy.dialer.inject.InstallIn;
+
 import javax.inject.Singleton;
 
-/** This module provides an instance of the voicemail client. */
+import dagger.Module;
+import dagger.Provides;
+
+/**
+ * This module provides an instance of the voicemail client.
+ */
 @InstallIn(variants = {DialerVariant.DIALER_TEST})
 @Module
 public final class VoicemailModule {
 
-  @Provides
-  @Singleton
-  static VoicemailClient provideVoicemailClient(@ApplicationContext Context context) {
-    if (!BuildCompat.isAtLeastO()) {
-      VvmLog.i("VoicemailModule.provideVoicemailClient", "SDK below O");
-      return new StubVoicemailClient();
+    private VoicemailModule() {
     }
 
-    if (!VoicemailPermissionHelper.hasPermissions(context)) {
-      VvmLog.i(
-          "VoicemailModule.provideVoicemailClient",
-          "missing permissions " + VoicemailPermissionHelper.getMissingPermissions(context));
-      return new StubVoicemailClient();
+    @Provides
+    @Singleton
+    static VoicemailClient provideVoicemailClient(@ApplicationContext Context context) {
+        if (!BuildCompat.isAtLeastO()) {
+            VvmLog.i("VoicemailModule.provideVoicemailClient", "SDK below O");
+            return new StubVoicemailClient();
+        }
+
+        if (!VoicemailPermissionHelper.hasPermissions(context)) {
+            VvmLog.i(
+                    "VoicemailModule.provideVoicemailClient",
+                    "missing permissions " + VoicemailPermissionHelper.getMissingPermissions(context));
+            return new StubVoicemailClient();
+        }
+
+        VvmLog.i("VoicemailModule.provideVoicemailClient", "providing VoicemailClientImpl");
+        return new VoicemailClientImpl();
     }
-
-    VvmLog.i("VoicemailModule.provideVoicemailClient", "providing VoicemailClientImpl");
-    return new VoicemailClientImpl();
-  }
-
-  private VoicemailModule() {}
 }

@@ -16,25 +16,31 @@
 package com.fissy.dialer.calllog.database;
 
 import android.content.Context;
+
 import com.fissy.dialer.inject.HasRootComponent;
+
 import dagger.Subcomponent;
 
-/** Dagger component for database package. */
+/**
+ * Dagger component for database package.
+ */
 @Subcomponent
 public abstract class CallLogDatabaseComponent {
 
-  public abstract Coalescer coalescer();
+    public static CallLogDatabaseComponent get(Context context) {
+        return ((CallLogDatabaseComponent.HasComponent)
+                ((HasRootComponent) context.getApplicationContext()).component())
+                .callLogDatabaseComponent();
+    }
 
-  public abstract AnnotatedCallLogDatabaseHelper annotatedCallLogDatabaseHelper();
+    public abstract Coalescer coalescer();
 
-  public static CallLogDatabaseComponent get(Context context) {
-    return ((CallLogDatabaseComponent.HasComponent)
-            ((HasRootComponent) context.getApplicationContext()).component())
-        .callLogDatabaseComponent();
-  }
+    public abstract AnnotatedCallLogDatabaseHelper annotatedCallLogDatabaseHelper();
 
-  /** Used to refer to the root application component. */
-  public interface HasComponent {
-    CallLogDatabaseComponent callLogDatabaseComponent();
-  }
+    /**
+     * Used to refer to the root application component.
+     */
+    public interface HasComponent {
+        CallLogDatabaseComponent callLogDatabaseComponent();
+    }
 }

@@ -27,10 +27,10 @@ import android.content.Intent;
  */
 public class CarrierVvmPackageInstalledReceiver extends BroadcastReceiver {
 
-  @Override
-  public void onReceive(Context context, Intent intent) {
-    String packageName = intent.getStringExtra(Intent.EXTRA_PACKAGE_NAME);
-    VvmLog.i("CarrierVvmPackageInstalledReceiver.onReceive", "package installed: " + packageName);
-    VvmPackageInstallHandler.handlePackageInstalled(context);
-  }
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        String packageName = intent.getStringExtra(Intent.EXTRA_PACKAGE_NAME);
+        VvmLog.i("CarrierVvmPackageInstalledReceiver.onReceive", "package installed: " + packageName);
+        VvmPackageInstallHandler.handlePackageInstalled(context);
+    }
 }

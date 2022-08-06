@@ -30,77 +30,77 @@ import com.fissy.dialer.R;
 
 public class RemoveView extends FrameLayout {
 
-  DragDropController dragDropController;
-  TextView removeText;
-  ImageView removeIcon;
-  int unhighlightedColor;
-  int highlightedColor;
-  Drawable removeDrawable;
+    DragDropController dragDropController;
+    TextView removeText;
+    ImageView removeIcon;
+    int unhighlightedColor;
+    int highlightedColor;
+    Drawable removeDrawable;
 
-  public RemoveView(Context context) {
-    super(context);
-  }
-
-  public RemoveView(Context context, AttributeSet attrs) {
-    this(context, attrs, 0);
-  }
-
-  public RemoveView(Context context, AttributeSet attrs, int defStyle) {
-    super(context, attrs, defStyle);
-  }
-
-  @Override
-  protected void onFinishInflate() {
-    removeText = (TextView) findViewById(R.id.remove_view_text);
-    removeIcon = (ImageView) findViewById(R.id.remove_view_icon);
-    final Resources r = getResources();
-    unhighlightedColor = r.getColor(android.R.color.white);
-    highlightedColor = r.getColor(R.color.remove_highlighted_text_color);
-    removeDrawable = r.getDrawable(R.drawable.ic_remove);
-  }
-
-  public void setDragDropController(DragDropController controller) {
-    dragDropController = controller;
-  }
-
-  @Override
-  public boolean onDragEvent(DragEvent event) {
-    final int action = event.getAction();
-    switch (action) {
-      case DragEvent.ACTION_DRAG_ENTERED:
-        // TODO: This is temporary solution and should be removed once accessibility for
-        // drag and drop is supported by framework(a bug).
-        sendAccessibilityEvent(AccessibilityEvent.TYPE_ANNOUNCEMENT);
-        setAppearanceHighlighted();
-        break;
-      case DragEvent.ACTION_DRAG_EXITED:
-        setAppearanceNormal();
-        break;
-      case DragEvent.ACTION_DRAG_LOCATION:
-        if (dragDropController != null) {
-          dragDropController.handleDragHovered(this, (int) event.getX(), (int) event.getY());
-        }
-        break;
-      case DragEvent.ACTION_DROP:
-        sendAccessibilityEvent(AccessibilityEvent.TYPE_ANNOUNCEMENT);
-        if (dragDropController != null) {
-          dragDropController.handleDragFinished((int) event.getX(), (int) event.getY(), true);
-        }
-        setAppearanceNormal();
-        break;
+    public RemoveView(Context context) {
+        super(context);
     }
-    return true;
-  }
 
-  private void setAppearanceNormal() {
-    removeText.setTextColor(unhighlightedColor);
-    removeIcon.setColorFilter(unhighlightedColor);
-    invalidate();
-  }
+    public RemoveView(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
 
-  private void setAppearanceHighlighted() {
-    removeText.setTextColor(highlightedColor);
-    removeIcon.setColorFilter(highlightedColor);
-    invalidate();
-  }
+    public RemoveView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+    }
+
+    @Override
+    protected void onFinishInflate() {
+        removeText = (TextView) findViewById(R.id.remove_view_text);
+        removeIcon = (ImageView) findViewById(R.id.remove_view_icon);
+        final Resources r = getResources();
+        unhighlightedColor = r.getColor(android.R.color.white);
+        highlightedColor = r.getColor(R.color.remove_highlighted_text_color);
+        removeDrawable = r.getDrawable(R.drawable.ic_remove);
+    }
+
+    public void setDragDropController(DragDropController controller) {
+        dragDropController = controller;
+    }
+
+    @Override
+    public boolean onDragEvent(DragEvent event) {
+        final int action = event.getAction();
+        switch (action) {
+            case DragEvent.ACTION_DRAG_ENTERED:
+                // TODO: This is temporary solution and should be removed once accessibility for
+                // drag and drop is supported by framework(a bug).
+                sendAccessibilityEvent(AccessibilityEvent.TYPE_ANNOUNCEMENT);
+                setAppearanceHighlighted();
+                break;
+            case DragEvent.ACTION_DRAG_EXITED:
+                setAppearanceNormal();
+                break;
+            case DragEvent.ACTION_DRAG_LOCATION:
+                if (dragDropController != null) {
+                    dragDropController.handleDragHovered(this, (int) event.getX(), (int) event.getY());
+                }
+                break;
+            case DragEvent.ACTION_DROP:
+                sendAccessibilityEvent(AccessibilityEvent.TYPE_ANNOUNCEMENT);
+                if (dragDropController != null) {
+                    dragDropController.handleDragFinished((int) event.getX(), (int) event.getY(), true);
+                }
+                setAppearanceNormal();
+                break;
+        }
+        return true;
+    }
+
+    private void setAppearanceNormal() {
+        removeText.setTextColor(unhighlightedColor);
+        removeIcon.setColorFilter(unhighlightedColor);
+        invalidate();
+    }
+
+    private void setAppearanceHighlighted() {
+        removeText.setTextColor(highlightedColor);
+        removeIcon.setColorFilter(highlightedColor);
+        invalidate();
+    }
 }

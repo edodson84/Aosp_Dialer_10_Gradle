@@ -18,31 +18,36 @@ package com.fissy.dialer.storage;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
+
 import com.fissy.dialer.inject.ApplicationContext;
 import com.fissy.dialer.inject.DialerVariant;
 import com.fissy.dialer.inject.InstallIn;
-import dagger.Module;
-import dagger.Provides;
+
 import javax.inject.Singleton;
 
-/** Module for the storage component. */
+import dagger.Module;
+import dagger.Provides;
+
+/**
+ * Module for the storage component.
+ */
 @InstallIn(variants = {DialerVariant.DIALER_TEST})
 @Module
 public class StorageModule {
 
-  @Provides
-  @Singleton
-  @Unencrypted
-  static SharedPreferences provideUnencryptedSharedPrefs(@ApplicationContext Context appContext) {
-    // #createDeviceProtectedStorageContext returns a new context each time, so we cache the shared
-    // preferences object in order to avoid accessing disk for every operation.
-    Context deviceProtectedContext = ContextCompat.createDeviceProtectedStorageContext(appContext);
+    @Provides
+    @Singleton
+    @Unencrypted
+    static SharedPreferences provideUnencryptedSharedPrefs(@ApplicationContext Context appContext) {
+        // #createDeviceProtectedStorageContext returns a new context each time, so we cache the shared
+        // preferences object in order to avoid accessing disk for every operation.
+        Context deviceProtectedContext = ContextCompat.createDeviceProtectedStorageContext(appContext);
 
-    // ContextCompat.createDeviceProtectedStorageContext(context) returns null on pre-N, thus fall
-    // back to regular default shared preference for pre-N devices since devices protected context
-    // is not available.
-    return PreferenceManager.getDefaultSharedPreferences(
-        deviceProtectedContext != null ? deviceProtectedContext : appContext);
-  }
+        // ContextCompat.createDeviceProtectedStorageContext(context) returns null on pre-N, thus fall
+        // back to regular default shared preference for pre-N devices since devices protected context
+        // is not available.
+        return PreferenceManager.getDefaultSharedPreferences(
+                deviceProtectedContext != null ? deviceProtectedContext : appContext);
+    }
 }

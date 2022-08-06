@@ -17,6 +17,9 @@ package com.fissy.dialer.calllog.database;
 
 import javax.inject.Qualifier;
 
-/** Annotation for the max number of rows in the AnnotatedCallLog. */
+/**
+ * Annotation for the max number of rows in the AnnotatedCallLog.
+ */
 @Qualifier
-public @interface AnnotatedCallLogMaxRows {}
+public @interface AnnotatedCallLogMaxRows {
+}

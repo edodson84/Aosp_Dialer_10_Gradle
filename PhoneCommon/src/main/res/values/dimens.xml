@@ -22,10 +22,13 @@
     <dimen name="dialpad_key_pound_size">23sp</dimen>
     <dimen name="dialpad_key_star_size">36sp</dimen>
     <dimen name="dialpad_key_height">64dp</dimen>
-    <dimen name="dialpad_key_number_margin_bottom">@dimen/dialpad_key_number_default_margin_bottom</dimen>
+    <dimen name="dialpad_key_number_margin_bottom">@dimen/dialpad_key_number_default_margin_bottom
+    </dimen>
     <dimen name="dialpad_key_number_default_margin_bottom">3dp</dimen>
     <!-- Zero key should have less space between self and text because "+" is smaller -->
-    <dimen name="dialpad_zero_key_number_margin_bottom">@dimen/dialpad_zero_key_number_default_margin_bottom</dimen>
+    <dimen name="dialpad_zero_key_number_margin_bottom">
+        @dimen/dialpad_zero_key_number_default_margin_bottom
+    </dimen>
     <dimen name="dialpad_zero_key_number_default_margin_bottom">1dp</dimen>
     <dimen name="dialpad_symbol_margin_bottom">13dp</dimen>
     <dimen name="dialpad_digits_text_size">34sp</dimen>
@@ -63,7 +66,6 @@
 
     <!-- Top/Bottom padding around the ILD rate display box. -->
     <dimen name="ild_margin_height">10dp</dimen>
-
 
 
     <dimen name="dialpad_key_margin_right">5dp</dimen>

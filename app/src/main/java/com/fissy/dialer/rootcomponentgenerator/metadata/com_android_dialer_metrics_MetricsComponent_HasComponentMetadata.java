@@ -4,8 +4,8 @@ import com.fissy.dialer.inject.RootComponentGeneratorMetadata;
 import com.fissy.dialer.metrics.MetricsComponent;
 
 @RootComponentGeneratorMetadata(
-    tag = "IncludeInDialerRoot",
-    annotatedClass = MetricsComponent.HasComponent.class
+        tag = "IncludeInDialerRoot",
+        annotatedClass = MetricsComponent.HasComponent.class
 )
 class com_android_dialer_metrics_MetricsComponent_HasComponentMetadata {
 }

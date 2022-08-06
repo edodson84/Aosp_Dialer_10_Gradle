@@ -17,24 +17,30 @@
 package com.fissy.dialer.activecalls;
 
 import android.content.Context;
+
 import com.fissy.dialer.inject.HasRootComponent;
 import com.fissy.dialer.inject.IncludeInDialerRoot;
+
 import dagger.Subcomponent;
 
-/** Component for {@link ActiveCalls} */
+/**
+ * Component for {@link ActiveCalls}
+ */
 @Subcomponent
 public abstract class ActiveCallsComponent {
 
-  public abstract ActiveCalls activeCalls();
+    public static ActiveCallsComponent get(Context context) {
+        return ((HasComponent) ((HasRootComponent) context.getApplicationContext()).component())
+                .activeCallsComponent();
+    }
 
-  public static ActiveCallsComponent get(Context context) {
-    return ((HasComponent) ((HasRootComponent) context.getApplicationContext()).component())
-        .activeCallsComponent();
-  }
+    public abstract ActiveCalls activeCalls();
 
-  /** Used to refer to the root application component. */
-  @IncludeInDialerRoot
-  public interface HasComponent {
-    ActiveCallsComponent activeCallsComponent();
-  }
+    /**
+     * Used to refer to the root application component.
+     */
+    @IncludeInDialerRoot
+    public interface HasComponent {
+        ActiveCallsComponent activeCallsComponent();
+    }
 }

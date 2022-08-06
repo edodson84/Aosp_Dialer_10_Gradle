@@ -21,5 +21,5 @@ package com.android.dialer.inject;
  * cycle.
  */
 public interface HasRootComponent {
-  Object component();
+    Object component();
 }

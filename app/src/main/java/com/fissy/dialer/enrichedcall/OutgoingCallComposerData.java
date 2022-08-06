@@ -17,8 +17,9 @@
 package com.fissy.dialer.enrichedcall;
 
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.fissy.dialer.common.Assert;
 import com.google.auto.value.AutoValue;
 
@@ -44,51 +45,53 @@ import com.google.auto.value.AutoValue;
 @AutoValue
 public abstract class OutgoingCallComposerData {
 
-  public static Builder builder() {
-    return new AutoValue_OutgoingCallComposerData.Builder();
-  }
-
-  public boolean hasImageData() {
-    return getImageUri() != null && getImageContentType() != null;
-  }
-
-  @Nullable
-  public abstract String getSubject();
-
-  @Nullable
-  public abstract Uri getImageUri();
-
-  @Nullable
-  public abstract String getImageContentType();
-
-  /** Builds instances of {@link OutgoingCallComposerData}. */
-  @AutoValue.Builder
-  public abstract static class Builder {
-    public abstract Builder setSubject(String subject);
-
-    public Builder setImageData(@NonNull Uri imageUri, @NonNull String imageContentType) {
-      setImageUri(Assert.isNotNull(imageUri));
-      setImageContentType(Assert.isNotNull(imageContentType));
-      return this;
+    public static Builder builder() {
+        return new AutoValue_OutgoingCallComposerData.Builder();
     }
 
-    abstract Builder setImageUri(Uri imageUri);
+    public boolean hasImageData() {
+        return getImageUri() != null && getImageContentType() != null;
+    }
 
-    abstract Builder setImageContentType(String imageContentType);
+    @Nullable
+    public abstract String getSubject();
 
-    abstract OutgoingCallComposerData autoBuild();
+    @Nullable
+    public abstract Uri getImageUri();
+
+    @Nullable
+    public abstract String getImageContentType();
 
     /**
-     * Returns the OutgoingCallComposerData from this builder.
-     *
-     * @return the OutgoingCallComposerData.
-     * @throws IllegalStateException if neither {@link #setSubject(String)} nor {@link
-     *     #setImageData(Uri, String)} were called.
+     * Builds instances of {@link OutgoingCallComposerData}.
      */
-    public OutgoingCallComposerData build() {
-      OutgoingCallComposerData data = autoBuild();
-      Assert.checkState(data.getSubject() != null || data.hasImageData());
-      return data;
+    @AutoValue.Builder
+    public abstract static class Builder {
+        public abstract Builder setSubject(String subject);
+
+        public Builder setImageData(@NonNull Uri imageUri, @NonNull String imageContentType) {
+            setImageUri(Assert.isNotNull(imageUri));
+            setImageContentType(Assert.isNotNull(imageContentType));
+            return this;
+        }
+
+        abstract Builder setImageUri(Uri imageUri);
+
+        abstract Builder setImageContentType(String imageContentType);
+
+        abstract OutgoingCallComposerData autoBuild();
+
+        /**
+         * Returns the OutgoingCallComposerData from this builder.
+         *
+         * @return the OutgoingCallComposerData.
+         * @throws IllegalStateException if neither {@link #setSubject(String)} nor {@link
+         *                               #setImageData(Uri, String)} were called.
+         */
+        public OutgoingCallComposerData build() {
+            OutgoingCallComposerData data = autoBuild();
+            Assert.checkState(data.getSubject() != null || data.hasImageData());
+            return data;
+        }
     }
-  }
 }

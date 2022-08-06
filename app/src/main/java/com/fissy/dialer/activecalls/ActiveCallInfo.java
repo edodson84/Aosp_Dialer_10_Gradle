@@ -16,33 +16,40 @@
 
 package com.fissy.dialer.activecalls;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.telecom.PhoneAccountHandle;
+
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Optional;
 
-/** Info of an active call */
+/**
+ * Info of an active call
+ */
 @AutoValue
 @SuppressWarnings("Guava")
 public abstract class ActiveCallInfo {
 
-  /** The {@link PhoneAccountHandle} the call is made with */
-  public abstract Optional<PhoneAccountHandle> phoneAccountHandle();
-
-  public static Builder builder() {
-    return new AutoValue_ActiveCallInfo.Builder();
-  }
-
-  /** Builder for {@link ActiveCallInfo}. Only In Call UI should create ActiveCallInfo */
-  @AutoValue.Builder
-  public abstract static class Builder {
-
-    public Builder setPhoneAccountHandle(@Nullable PhoneAccountHandle phoneAccountHandle) {
-      return setPhoneAccountHandle(Optional.fromNullable(phoneAccountHandle));
+    public static Builder builder() {
+        return new AutoValue_ActiveCallInfo.Builder();
     }
 
-    public abstract Builder setPhoneAccountHandle(Optional<PhoneAccountHandle> phoneAccountHandle);
+    /**
+     * The {@link PhoneAccountHandle} the call is made with
+     */
+    public abstract Optional<PhoneAccountHandle> phoneAccountHandle();
 
-    public abstract ActiveCallInfo build();
-  }
+    /**
+     * Builder for {@link ActiveCallInfo}. Only In Call UI should create ActiveCallInfo
+     */
+    @AutoValue.Builder
+    public abstract static class Builder {
+
+        public Builder setPhoneAccountHandle(@Nullable PhoneAccountHandle phoneAccountHandle) {
+            return setPhoneAccountHandle(Optional.fromNullable(phoneAccountHandle));
+        }
+
+        public abstract Builder setPhoneAccountHandle(Optional<PhoneAccountHandle> phoneAccountHandle);
+
+        public abstract ActiveCallInfo build();
+    }
 }

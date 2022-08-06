@@ -1,21 +1,22 @@
 package com.fissy.dialer.preferredsim.suggestion.stub;
 
-import dagger.internal.Factory;
 import javax.annotation.Generated;
 
+import dagger.internal.Factory;
+
 @Generated(
-  value = "dagger.internal.codegen.ComponentProcessor",
-  comments = "https://google.github.io/dagger"
+        value = "dagger.internal.codegen.ComponentProcessor",
+        comments = "https://google.github.io/dagger"
 )
 public enum StubSuggestionProvider_Factory implements Factory<StubSuggestionProvider> {
-  INSTANCE;
+    INSTANCE;
 
-  @Override
-  public StubSuggestionProvider get() {
-    return new StubSuggestionProvider();
-  }
+    public static Factory<StubSuggestionProvider> create() {
+        return INSTANCE;
+    }
 
-  public static Factory<StubSuggestionProvider> create() {
-    return INSTANCE;
-  }
+    @Override
+    public StubSuggestionProvider get() {
+        return new StubSuggestionProvider();
+    }
 }

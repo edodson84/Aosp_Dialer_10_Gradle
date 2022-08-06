@@ -24,10 +24,11 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
-import android.support.annotation.VisibleForTesting;
+import androidx.annotation.VisibleForTesting;
 import android.telecom.PhoneAccount;
 import android.telecom.PhoneAccountHandle;
 import android.telecom.TelecomManager;
+
 import java.util.List;
 
 /**
@@ -36,91 +37,93 @@ import java.util.List;
  */
 public class PhoneAccountSelectionFragment extends PreferenceFragment {
 
-  /** The {@link PreferenceFragment} to launch after the account is selected. */
-  public static final String PARAM_TARGET_FRAGMENT = "target_fragment";
+    /**
+     * The {@link PreferenceFragment} to launch after the account is selected.
+     */
+    public static final String PARAM_TARGET_FRAGMENT = "target_fragment";
 
-  /**
-   * The arguments bundle to pass to the {@link #PARAM_TARGET_FRAGMENT}
-   *
-   * @see Fragment#getArguments()
-   */
-  public static final String PARAM_ARGUMENTS = "arguments";
+    /**
+     * The arguments bundle to pass to the {@link #PARAM_TARGET_FRAGMENT}
+     *
+     * @see Fragment#getArguments()
+     */
+    public static final String PARAM_ARGUMENTS = "arguments";
 
-  /**
-   * The key to insert the selected {@link PhoneAccountHandle} to bundle in {@link #PARAM_ARGUMENTS}
-   */
-  public static final String PARAM_PHONE_ACCOUNT_HANDLE_KEY = "phone_account_handle_key";
+    /**
+     * The key to insert the selected {@link PhoneAccountHandle} to bundle in {@link #PARAM_ARGUMENTS}
+     */
+    public static final String PARAM_PHONE_ACCOUNT_HANDLE_KEY = "phone_account_handle_key";
 
-  /**
-   * The title of the {@link #PARAM_TARGET_FRAGMENT} once it is launched with {@link
-   * PreferenceActivity#startWithFragment(String, Bundle, Fragment, int)}, as a string resource ID.
-   */
-  public static final String PARAM_TARGET_TITLE_RES = "target_title_res";
+    /**
+     * The title of the {@link #PARAM_TARGET_FRAGMENT} once it is launched with {@link
+     * PreferenceActivity#startWithFragment(String, Bundle, Fragment, int)}, as a string resource ID.
+     */
+    public static final String PARAM_TARGET_TITLE_RES = "target_title_res";
 
-  private String targetFragment;
-  private Bundle arguments;
-  private String phoneAccountHandleKey;
-  private int titleRes;
+    private String targetFragment;
+    private Bundle arguments;
+    private String phoneAccountHandleKey;
+    private int titleRes;
 
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    targetFragment = getArguments().getString(PARAM_TARGET_FRAGMENT);
-    arguments = new Bundle();
-    arguments.putAll(getArguments().getBundle(PARAM_ARGUMENTS));
-    phoneAccountHandleKey = getArguments().getString(PARAM_PHONE_ACCOUNT_HANDLE_KEY);
-    titleRes = getArguments().getInt(PARAM_TARGET_TITLE_RES, 0);
-  }
-
-  final class AccountPreference extends Preference {
-    private final PhoneAccountHandle phoneAccountHandle;
-
-    public AccountPreference(
-        Context context, PhoneAccountHandle phoneAccountHandle, PhoneAccount phoneAccount) {
-      super(context);
-      this.phoneAccountHandle = phoneAccountHandle;
-      setTitle(phoneAccount.getLabel());
-      setSummary(phoneAccount.getShortDescription());
-      Icon icon = phoneAccount.getIcon();
-      if (icon != null) {
-        setIcon(icon.loadDrawable(context));
-      }
-    }
-
-    @VisibleForTesting
-    void click() {
-      onClick();
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        targetFragment = getArguments().getString(PARAM_TARGET_FRAGMENT);
+        arguments = new Bundle();
+        arguments.putAll(getArguments().getBundle(PARAM_ARGUMENTS));
+        phoneAccountHandleKey = getArguments().getString(PARAM_PHONE_ACCOUNT_HANDLE_KEY);
+        titleRes = getArguments().getInt(PARAM_TARGET_TITLE_RES, 0);
     }
 
     @Override
-    protected void onClick() {
-      super.onClick();
-      PreferenceActivity preferenceActivity = (PreferenceActivity) getActivity();
-      arguments.putParcelable(phoneAccountHandleKey, phoneAccountHandle);
-      preferenceActivity.startWithFragment(targetFragment, arguments, null, 0, titleRes, 0);
-    }
-  }
+    public void onResume() {
+        super.onResume();
+        setPreferenceScreen(getPreferenceManager().createPreferenceScreen(getContext()));
+        PreferenceScreen screen = getPreferenceScreen();
 
-  @Override
-  public void onResume() {
-    super.onResume();
-    setPreferenceScreen(getPreferenceManager().createPreferenceScreen(getContext()));
-    PreferenceScreen screen = getPreferenceScreen();
+        TelecomManager telecomManager = getContext().getSystemService(TelecomManager.class);
 
-    TelecomManager telecomManager = getContext().getSystemService(TelecomManager.class);
+        List<PhoneAccountHandle> accountHandles = telecomManager.getCallCapablePhoneAccounts();
 
-    List<PhoneAccountHandle> accountHandles = telecomManager.getCallCapablePhoneAccounts();
-
-    Context context = getActivity();
-    for (PhoneAccountHandle handle : accountHandles) {
-      PhoneAccount account = telecomManager.getPhoneAccount(handle);
-      if (account != null) {
-        final boolean isSimAccount =
-            0 != (account.getCapabilities() & PhoneAccount.CAPABILITY_SIM_SUBSCRIPTION);
-        if (isSimAccount) {
-          screen.addPreference(new AccountPreference(context, handle, account));
+        Context context = getActivity();
+        for (PhoneAccountHandle handle : accountHandles) {
+            PhoneAccount account = telecomManager.getPhoneAccount(handle);
+            if (account != null) {
+                final boolean isSimAccount =
+                        0 != (account.getCapabilities() & PhoneAccount.CAPABILITY_SIM_SUBSCRIPTION);
+                if (isSimAccount) {
+                    screen.addPreference(new AccountPreference(context, handle, account));
+                }
+            }
         }
-      }
     }
-  }
+
+    final class AccountPreference extends Preference {
+        private final PhoneAccountHandle phoneAccountHandle;
+
+        public AccountPreference(
+                Context context, PhoneAccountHandle phoneAccountHandle, PhoneAccount phoneAccount) {
+            super(context);
+            this.phoneAccountHandle = phoneAccountHandle;
+            setTitle(phoneAccount.getLabel());
+            setSummary(phoneAccount.getShortDescription());
+            Icon icon = phoneAccount.getIcon();
+            if (icon != null) {
+                setIcon(icon.loadDrawable(context));
+            }
+        }
+
+        @VisibleForTesting
+        void click() {
+            onClick();
+        }
+
+        @Override
+        protected void onClick() {
+            super.onClick();
+            PreferenceActivity preferenceActivity = (PreferenceActivity) getActivity();
+            arguments.putParcelable(phoneAccountHandleKey, phoneAccountHandle);
+            preferenceActivity.startWithFragment(targetFragment, arguments, null, 0, titleRes, 0);
+        }
+    }
 }

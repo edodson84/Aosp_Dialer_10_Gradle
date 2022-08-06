@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- 
+<?xml version="1.0" encoding="UTF-8"?><!--
   ~ Copyright (C) 2016 The Android Open Source Project
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,8 +14,7 @@
   ~ limitations under the License
    -->
 
-<resources xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="voicemail_error_activating_title" msgid="2428457130578359186">"ធ្វើ​ឲ្យ​សកម្ម​សារ​ជា​សំឡេង​ដែល​មើល​ឃើញ"</string>
     <string name="voicemail_error_activating_message" msgid="7157030596259443393">"អ្នក​ប្រហែលជា​​មិន​ទទួល​បាន​ការ​ជូនដំណឹង​ជា​សារ​សំឡេង​រហូត​​ទាល់តែ​ធ្វើ​ឲ្យ​សកម្ម​សារ​ជា​សំឡេង​ដែល​មើល​ឃើញ​ពេញលេញ​​។ ហៅ​ជា​សារ​សំឡេង​ដើម្បី​​ទទួល​បាន​សារ​ថ្មី​រហូត​សារ​ជា​សំឡេង​ត្រូវ​បាន​ធ្វើ​ឲ្យ​សកម្ម​ពេញលេញ។"</string>
     <string name="voicemail_error_not_activate_no_signal_title" msgid="742273366199085615">"មិន​អាច​ធ្វើ​ឲ្យ​សកម្ម​សារ​ជា​សំឡេង​ដែល​មើល​ឃើញ​បាន​ទេ"</string>

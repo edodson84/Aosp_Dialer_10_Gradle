@@ -17,51 +17,55 @@
 package com.fissy.dialer.commandline.impl;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
+
 import com.fissy.dialer.activecalls.ActiveCallsComponent;
 import com.fissy.dialer.commandline.Arguments;
 import com.fissy.dialer.commandline.Command;
 import com.fissy.dialer.inject.ApplicationContext;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
+
 import javax.inject.Inject;
 
-/** Manipulates {@link com.fissy.dialer.activecalls.ActiveCalls} */
+/**
+ * Manipulates {@link com.fissy.dialer.activecalls.ActiveCalls}
+ */
 public class ActiveCallsCommand implements Command {
 
-  private final Context appContext;
+    private final Context appContext;
 
-  @Inject
-  ActiveCallsCommand(@ApplicationContext Context appContext) {
-    this.appContext = appContext;
-  }
-
-  @NonNull
-  @Override
-  public String getShortDescription() {
-    return "manipulate active calls";
-  }
-
-  @NonNull
-  @Override
-  public String getUsage() {
-    return "activecalls list";
-  }
-
-  @Override
-  public ListenableFuture<String> run(Arguments args) throws IllegalCommandLineArgumentException {
-    if (args.getPositionals().isEmpty()) {
-      return Futures.immediateFuture(getUsage());
+    @Inject
+    ActiveCallsCommand(@ApplicationContext Context appContext) {
+        this.appContext = appContext;
     }
 
-    String command = args.getPositionals().get(0);
-
-    switch (command) {
-      case "list":
-        return Futures.immediateFuture(
-            ActiveCallsComponent.get(appContext).activeCalls().getActiveCalls().toString());
-      default:
-        throw new IllegalCommandLineArgumentException("unknown command " + command);
+    @NonNull
+    @Override
+    public String getShortDescription() {
+        return "manipulate active calls";
     }
-  }
+
+    @NonNull
+    @Override
+    public String getUsage() {
+        return "activecalls list";
+    }
+
+    @Override
+    public ListenableFuture<String> run(Arguments args) throws IllegalCommandLineArgumentException {
+        if (args.getPositionals().isEmpty()) {
+            return Futures.immediateFuture(getUsage());
+        }
+
+        String command = args.getPositionals().get(0);
+
+        switch (command) {
+            case "list":
+                return Futures.immediateFuture(
+                        ActiveCallsComponent.get(appContext).activeCalls().getActiveCalls().toString());
+            default:
+                throw new IllegalCommandLineArgumentException("unknown command " + command);
+        }
+    }
 }

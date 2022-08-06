@@ -26,55 +26,61 @@ import com.fissy.dialer.function.Supplier;
 import com.fissy.dialer.inject.DialerVariant;
 import com.fissy.dialer.inject.InstallIn;
 import com.google.common.collect.ImmutableMap;
-import dagger.Module;
-import dagger.Provides;
+
 import javax.inject.Inject;
 
-/** Provides {@link Command} */
+import dagger.Module;
+import dagger.Provides;
+
+/**
+ * Provides {@link Command}
+ */
 @InstallIn(variants = {DialerVariant.DIALER_TEST})
 @Module
 public abstract class CommandLineModule {
 
-  @Provides
-  static Supplier<ImmutableMap<String, Command>> provideCommandSupplier(
-      AospCommandInjector aospCommandInjector) {
+    @Provides
+    static Supplier<ImmutableMap<String, Command>> provideCommandSupplier(
+            AospCommandInjector aospCommandInjector) {
 
-    return aospCommandInjector.inject(CommandSupplier.builder()).build();
-  }
-
-  /** Injects standard commands to the builder */
-  public static class AospCommandInjector {
-    private final Help help;
-    private final Version version;
-    private final Echo echo;
-    private final BlockingCommand blockingCommand;
-    private final CallCommand callCommand;
-    private final ActiveCallsCommand activeCallsCommand;
-
-    @Inject
-    AospCommandInjector(
-        Help help,
-        Version version,
-        Echo echo,
-        BlockingCommand blockingCommand,
-        CallCommand callCommand,
-        ActiveCallsCommand activeCallsCommand) {
-      this.help = help;
-      this.version = version;
-      this.echo = echo;
-      this.blockingCommand = blockingCommand;
-      this.callCommand = callCommand;
-      this.activeCallsCommand = activeCallsCommand;
+        return aospCommandInjector.inject(CommandSupplier.builder()).build();
     }
 
-    public CommandSupplier.Builder inject(CommandSupplier.Builder builder) {
-      builder.addCommand("help", help);
-      builder.addCommand("version", version);
-      builder.addCommand("echo", echo);
-      builder.addCommand("blocking", blockingCommand);
-      builder.addCommand("call", callCommand);
-      builder.addCommand("activecalls", activeCallsCommand);
-      return builder;
+    /**
+     * Injects standard commands to the builder
+     */
+    public static class AospCommandInjector {
+        private final Help help;
+        private final Version version;
+        private final Echo echo;
+        private final BlockingCommand blockingCommand;
+        private final CallCommand callCommand;
+        private final ActiveCallsCommand activeCallsCommand;
+
+        @Inject
+        AospCommandInjector(
+                Help help,
+                Version version,
+                Echo echo,
+                BlockingCommand blockingCommand,
+                CallCommand callCommand,
+                ActiveCallsCommand activeCallsCommand) {
+            this.help = help;
+            this.version = version;
+            this.echo = echo;
+            this.blockingCommand = blockingCommand;
+            this.callCommand = callCommand;
+            this.activeCallsCommand = activeCallsCommand;
+        }
+
+        public CommandSupplier.Builder inject(CommandSupplier.Builder builder) {
+            builder.addCommand("help", help);
+            builder.addCommand("version", version);
+            builder.addCommand("echo", echo);
+            builder.addCommand("blocking", blockingCommand);
+            builder.addCommand("call", callCommand);
+            builder.addCommand("activecalls", activeCallsCommand);
+            return builder;
+        }
     }
-  }
 }

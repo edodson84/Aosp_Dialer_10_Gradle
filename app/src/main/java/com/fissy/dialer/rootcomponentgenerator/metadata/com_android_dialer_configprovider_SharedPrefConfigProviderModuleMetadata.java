@@ -4,8 +4,8 @@ import com.fissy.dialer.configprovider.SharedPrefConfigProviderModule;
 import com.fissy.dialer.inject.RootComponentGeneratorMetadata;
 
 @RootComponentGeneratorMetadata(
-    tag = "InstallIn",
-    annotatedClass = SharedPrefConfigProviderModule.class
+        tag = "InstallIn",
+        annotatedClass = SharedPrefConfigProviderModule.class
 )
 class com_android_dialer_configprovider_SharedPrefConfigProviderModuleMetadata {
 }

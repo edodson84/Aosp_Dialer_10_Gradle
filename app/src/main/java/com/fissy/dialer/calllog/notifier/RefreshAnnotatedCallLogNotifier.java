@@ -19,12 +19,14 @@ package com.fissy.dialer.calllog.notifier;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v4.content.LocalBroadcastManager;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import com.fissy.dialer.calllog.constants.IntentNames;
 import com.fissy.dialer.calllog.constants.SharedPrefKeys;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.inject.ApplicationContext;
 import com.fissy.dialer.storage.Unencrypted;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -40,60 +42,60 @@ import javax.inject.Singleton;
 @Singleton
 public class RefreshAnnotatedCallLogNotifier {
 
-  private final Context appContext;
-  private final SharedPreferences sharedPreferences;
+    private final Context appContext;
+    private final SharedPreferences sharedPreferences;
 
-  @Inject
-  RefreshAnnotatedCallLogNotifier(
-      @ApplicationContext Context appContext, @Unencrypted SharedPreferences sharedPreferences) {
-    this.appContext = appContext;
-    this.sharedPreferences = sharedPreferences;
-  }
+    @Inject
+    RefreshAnnotatedCallLogNotifier(
+            @ApplicationContext Context appContext, @Unencrypted SharedPreferences sharedPreferences) {
+        this.appContext = appContext;
+        this.sharedPreferences = sharedPreferences;
+    }
 
-  /**
-   * Mark the annotated call log as "dirty" and notify that it needs to be refreshed.
-   *
-   * <p>This will force a rebuild by skip checking whether the annotated call log is "dirty".
-   */
-  public void markDirtyAndNotify() {
-    LogUtil.enterBlock("RefreshAnnotatedCallLogNotifier.markDirtyAndNotify");
+    /**
+     * Mark the annotated call log as "dirty" and notify that it needs to be refreshed.
+     *
+     * <p>This will force a rebuild by skip checking whether the annotated call log is "dirty".
+     */
+    public void markDirtyAndNotify() {
+        LogUtil.enterBlock("RefreshAnnotatedCallLogNotifier.markDirtyAndNotify");
 
-    sharedPreferences.edit().putBoolean(SharedPrefKeys.FORCE_REBUILD, true).apply();
-    notify(/* checkDirty = */ false);
-  }
+        sharedPreferences.edit().putBoolean(SharedPrefKeys.FORCE_REBUILD, true).apply();
+        notify(/* checkDirty = */ false);
+    }
 
-  /**
-   * Notifies that the annotated call log needs to be refreshed.
-   *
-   * <p>Note that the notification is sent as a broadcast, which means the annotated call log might
-   * not be refreshed if there is no corresponding receiver registered.
-   *
-   * @param checkDirty Whether to check if the annotated call log is "dirty" before proceeding to
-   *     rebuild it.
-   */
-  public void notify(boolean checkDirty) {
-    LogUtil.i("RefreshAnnotatedCallLogNotifier.notify", "checkDirty = %s", checkDirty);
+    /**
+     * Notifies that the annotated call log needs to be refreshed.
+     *
+     * <p>Note that the notification is sent as a broadcast, which means the annotated call log might
+     * not be refreshed if there is no corresponding receiver registered.
+     *
+     * @param checkDirty Whether to check if the annotated call log is "dirty" before proceeding to
+     *                   rebuild it.
+     */
+    public void notify(boolean checkDirty) {
+        LogUtil.i("RefreshAnnotatedCallLogNotifier.notify", "checkDirty = %s", checkDirty);
 
-    Intent intent = new Intent();
-    intent.setAction(IntentNames.ACTION_REFRESH_ANNOTATED_CALL_LOG);
-    intent.putExtra(IntentNames.EXTRA_CHECK_DIRTY, checkDirty);
+        Intent intent = new Intent();
+        intent.setAction(IntentNames.ACTION_REFRESH_ANNOTATED_CALL_LOG);
+        intent.putExtra(IntentNames.EXTRA_CHECK_DIRTY, checkDirty);
 
-    LocalBroadcastManager.getInstance(appContext).sendBroadcast(intent);
-  }
+        LocalBroadcastManager.getInstance(appContext).sendBroadcast(intent);
+    }
 
-  /**
-   * Notifies to cancel refreshing the annotated call log.
-   *
-   * <p>Note that this method does not guarantee the job to be cancelled. As the notification is
-   * sent as a broadcast, please see the corresponding receiver for details about cancelling the
-   * job.
-   */
-  public void cancel() {
-    LogUtil.enterBlock("RefreshAnnotatedCallLogNotifier.cancel");
+    /**
+     * Notifies to cancel refreshing the annotated call log.
+     *
+     * <p>Note that this method does not guarantee the job to be cancelled. As the notification is
+     * sent as a broadcast, please see the corresponding receiver for details about cancelling the
+     * job.
+     */
+    public void cancel() {
+        LogUtil.enterBlock("RefreshAnnotatedCallLogNotifier.cancel");
 
-    Intent intent = new Intent();
-    intent.setAction(IntentNames.ACTION_CANCEL_REFRESHING_ANNOTATED_CALL_LOG);
+        Intent intent = new Intent();
+        intent.setAction(IntentNames.ACTION_CANCEL_REFRESHING_ANNOTATED_CALL_LOG);
 
-    LocalBroadcastManager.getInstance(appContext).sendBroadcast(intent);
-  }
+        LocalBroadcastManager.getInstance(appContext).sendBroadcast(intent);
+    }
 }

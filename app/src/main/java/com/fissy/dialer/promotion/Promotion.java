@@ -16,52 +16,74 @@
 
 package com.fissy.dialer.promotion;
 
-import android.support.annotation.DrawableRes;
-import android.support.annotation.IntDef;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.IntDef;
+
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-/** Interface for promotion bottom sheet. */
+/**
+ * Interface for promotion bottom sheet.
+ */
 public interface Promotion {
 
-  /**
-   * Type of promotion, which means promotion should be shown as a card in {@link
-   * android.support.v7.widget.RecyclerView} or {@link
-   * android.support.design.bottomsheet.BottomSheetBehavior}.
-   */
-  @Retention(RetentionPolicy.SOURCE)
-  @IntDef({PromotionType.CARD, PromotionType.BOTTOM_SHEET})
-  @interface PromotionType {
-    /** Shown as card in call log or voicemail tab. */
-    int CARD = 1;
+    /**
+     * Returns {@link PromotionType} for this promotion.
+     */
+    @PromotionType
+    int getType();
 
-    /** Shown as bottom sheet. */
-    int BOTTOM_SHEET = 2;
-  }
+    /**
+     * Returns if this promotion should be shown. This usually means the promotion is enabled and not
+     * dismissed yet.
+     */
+    boolean isEligibleToBeShown();
 
-  /** Returns {@link PromotionType} for this promotion. */
-  @PromotionType
-  int getType();
+    /**
+     * Called when this promotion is first time viewed by user.
+     */
+    default void onViewed() {
+    }
 
-  /**
-   * Returns if this promotion should be shown. This usually means the promotion is enabled and not
-   * dismissed yet.
-   */
-  boolean isEligibleToBeShown();
+    /**
+     * Dismisses this promotion. This is called when user acknowledged the promotion.
+     */
+    void dismiss();
 
-  /** Called when this promotion is first time viewed by user. */
-  default void onViewed() {}
+    /**
+     * Returns title text of the promotion.
+     */
+    CharSequence getTitle();
 
-  /** Dismisses this promotion. This is called when user acknowledged the promotion. */
-  void dismiss();
+    /**
+     * Returns details text of the promotion.
+     */
+    CharSequence getDetails();
 
-  /** Returns title text of the promotion. */
-  CharSequence getTitle();
+    /**
+     * Returns resource id of the icon for the promotion.
+     */
+    @DrawableRes
+    int getIconRes();
 
-  /** Returns details text of the promotion. */
-  CharSequence getDetails();
+    /**
+     * Type of promotion, which means promotion should be shown as a card in {@link
+     * RecyclerView} or {@link
+     * android.support.design.bottomsheet.BottomSheetBehavior}.
+     */
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({PromotionType.CARD, PromotionType.BOTTOM_SHEET})
+    @interface PromotionType {
+        /**
+         * Shown as card in call log or voicemail tab.
+         */
+        int CARD = 1;
 
-  /** Returns resource id of the icon for the promotion. */
-  @DrawableRes
-  int getIconRes();
+        /**
+         * Shown as bottom sheet.
+         */
+        int BOTTOM_SHEET = 2;
+    }
 }

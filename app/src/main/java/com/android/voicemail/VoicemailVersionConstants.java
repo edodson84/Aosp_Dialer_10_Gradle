@@ -21,18 +21,18 @@ package com.android.voicemail;
  * Note: these can be carrier dependent.
  */
 public interface VoicemailVersionConstants {
-  // Preference key to check which version of the Verizon ToS that the user has accepted.
-  String PREF_VVM3_TOS_VERSION_ACCEPTED_KEY = "vvm3_tos_version_accepted";
+    // Preference key to check which version of the Verizon ToS that the user has accepted.
+    String PREF_VVM3_TOS_VERSION_ACCEPTED_KEY = "vvm3_tos_version_accepted";
 
-  // Preference key to check which version of the Google Dialer ToS that the user has accepted.
-  String PREF_DIALER_TOS_VERSION_ACCEPTED_KEY = "dialer_tos_version_accepted";
+    // Preference key to check which version of the Google Dialer ToS that the user has accepted.
+    String PREF_DIALER_TOS_VERSION_ACCEPTED_KEY = "dialer_tos_version_accepted";
 
-  // Preference key to check which feature version the user has acknowledged
-  String PREF_DIALER_FEATURE_VERSION_ACKNOWLEDGED_KEY = "dialer_feature_version_acknowledged";
+    // Preference key to check which feature version the user has acknowledged
+    String PREF_DIALER_FEATURE_VERSION_ACKNOWLEDGED_KEY = "dialer_feature_version_acknowledged";
 
-  int CURRENT_VVM3_TOS_VERSION = 2;
-  int CURRENT_DIALER_TOS_VERSION = 1;
-  int LEGACY_VOICEMAIL_FEATURE_VERSION = 1; // original visual voicemail
-  int TRANSCRIPTION_VOICEMAIL_FEATURE_VERSION = 2;
-  int CURRENT_VOICEMAIL_FEATURE_VERSION = TRANSCRIPTION_VOICEMAIL_FEATURE_VERSION;
+    int CURRENT_VVM3_TOS_VERSION = 2;
+    int CURRENT_DIALER_TOS_VERSION = 1;
+    int LEGACY_VOICEMAIL_FEATURE_VERSION = 1; // original visual voicemail
+    int TRANSCRIPTION_VOICEMAIL_FEATURE_VERSION = 2;
+    int CURRENT_VOICEMAIL_FEATURE_VERSION = TRANSCRIPTION_VOICEMAIL_FEATURE_VERSION;
 }

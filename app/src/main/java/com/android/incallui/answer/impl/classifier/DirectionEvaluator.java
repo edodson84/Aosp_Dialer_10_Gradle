@@ -17,7 +17,7 @@
 package com.android.incallui.answer.impl.classifier;
 
 class DirectionEvaluator {
-  public static float evaluate(float xDiff, float yDiff) {
-    return Math.abs(yDiff) < Math.abs(xDiff) ? 5.5f : 0.0f;
-  }
+    public static float evaluate(float xDiff, float yDiff) {
+        return Math.abs(yDiff) < Math.abs(xDiff) ? 5.5f : 0.0f;
+    }
 }

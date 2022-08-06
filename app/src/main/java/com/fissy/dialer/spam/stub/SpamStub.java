@@ -16,7 +16,8 @@
 
 package com.fissy.dialer.spam.stub;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
+
 import com.fissy.dialer.DialerPhoneNumber;
 import com.fissy.dialer.common.concurrent.Annotations.BackgroundExecutor;
 import com.fissy.dialer.logging.ContactLookupResult;
@@ -30,88 +31,95 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListeningExecutorService;
+
 import javax.inject.Inject;
 
-/** Default implementation of Spam. */
+/**
+ * Default implementation of Spam.
+ */
 public class SpamStub implements Spam {
 
-  private final ListeningExecutorService backgroundExecutorService;
+    private final ListeningExecutorService backgroundExecutorService;
 
-  @Inject
-  public SpamStub(@BackgroundExecutor ListeningExecutorService backgroundExecutorService) {
-    this.backgroundExecutorService = backgroundExecutorService;
-  }
+    @Inject
+    public SpamStub(@BackgroundExecutor ListeningExecutorService backgroundExecutorService) {
+        this.backgroundExecutorService = backgroundExecutorService;
+    }
 
-  @Override
-  public ListenableFuture<ImmutableMap<DialerPhoneNumber, SpamStatus>> batchCheckSpamStatus(
-      ImmutableSet<DialerPhoneNumber> dialerPhoneNumbers) {
-    return backgroundExecutorService.submit(
-        () -> {
-          ImmutableMap.Builder<DialerPhoneNumber, SpamStatus> resultBuilder =
-              new ImmutableMap.Builder<>();
-          for (DialerPhoneNumber dialerPhoneNumber : dialerPhoneNumbers) {
-            resultBuilder.put(dialerPhoneNumber, SimpleSpamStatus.notSpam());
-          }
-          return resultBuilder.build();
-        });
-  }
+    @Override
+    public ListenableFuture<ImmutableMap<DialerPhoneNumber, SpamStatus>> batchCheckSpamStatus(
+            ImmutableSet<DialerPhoneNumber> dialerPhoneNumbers) {
+        return backgroundExecutorService.submit(
+                () -> {
+                    ImmutableMap.Builder<DialerPhoneNumber, SpamStatus> resultBuilder =
+                            new ImmutableMap.Builder<>();
+                    for (DialerPhoneNumber dialerPhoneNumber : dialerPhoneNumbers) {
+                        resultBuilder.put(dialerPhoneNumber, SimpleSpamStatus.notSpam());
+                    }
+                    return resultBuilder.build();
+                });
+    }
 
-  @Override
-  public ListenableFuture<SpamStatus> checkSpamStatus(DialerPhoneNumber dialerPhoneNumber) {
-    return Futures.immediateFuture(SimpleSpamStatus.notSpam());
-  }
+    @Override
+    public ListenableFuture<SpamStatus> checkSpamStatus(DialerPhoneNumber dialerPhoneNumber) {
+        return Futures.immediateFuture(SimpleSpamStatus.notSpam());
+    }
 
-  @Override
-  public ListenableFuture<SpamStatus> checkSpamStatus(
-      String number, @Nullable String defaultCountryIso) {
-    return Futures.immediateFuture(SimpleSpamStatus.notSpam());
-  }
+    @Override
+    public ListenableFuture<SpamStatus> checkSpamStatus(
+            String number, @Nullable String defaultCountryIso) {
+        return Futures.immediateFuture(SimpleSpamStatus.notSpam());
+    }
 
-  @Override
-  public ListenableFuture<Void> updateSpamListDownload(boolean isEnabledByUser) {
-    // no-op
-    return Futures.immediateFuture(null);
-  }
+    @Override
+    public ListenableFuture<Void> updateSpamListDownload(boolean isEnabledByUser) {
+        // no-op
+        return Futures.immediateFuture(null);
+    }
 
-  @Override
-  public boolean checkSpamStatusSynchronous(String number, String countryIso) {
-    return false;
-  }
+    @Override
+    public boolean checkSpamStatusSynchronous(String number, String countryIso) {
+        return false;
+    }
 
-  @Override
-  public ListenableFuture<Boolean> dataUpdatedSince(long timestampMillis) {
-    return Futures.immediateFuture(false);
-  }
+    @Override
+    public ListenableFuture<Boolean> dataUpdatedSince(long timestampMillis) {
+        return Futures.immediateFuture(false);
+    }
 
-  @Override
-  public void reportSpamFromAfterCallNotification(
-      String number,
-      String countryIso,
-      int callType,
-      ReportingLocation.Type from,
-      ContactLookupResult.Type contactLookupResultType) {}
+    @Override
+    public void reportSpamFromAfterCallNotification(
+            String number,
+            String countryIso,
+            int callType,
+            ReportingLocation.Type from,
+            ContactLookupResult.Type contactLookupResultType) {
+    }
 
-  @Override
-  public void reportSpamFromCallHistory(
-      String number,
-      String countryIso,
-      int callType,
-      ReportingLocation.Type from,
-      ContactSource.Type contactSourceType) {}
+    @Override
+    public void reportSpamFromCallHistory(
+            String number,
+            String countryIso,
+            int callType,
+            ReportingLocation.Type from,
+            ContactSource.Type contactSourceType) {
+    }
 
-  @Override
-  public void reportNotSpamFromAfterCallNotification(
-      String number,
-      String countryIso,
-      int callType,
-      ReportingLocation.Type from,
-      ContactLookupResult.Type contactLookupResultType) {}
+    @Override
+    public void reportNotSpamFromAfterCallNotification(
+            String number,
+            String countryIso,
+            int callType,
+            ReportingLocation.Type from,
+            ContactLookupResult.Type contactLookupResultType) {
+    }
 
-  @Override
-  public void reportNotSpamFromCallHistory(
-      String number,
-      String countryIso,
-      int callType,
-      ReportingLocation.Type from,
-      ContactSource.Type contactSourceType) {}
+    @Override
+    public void reportNotSpamFromCallHistory(
+            String number,
+            String countryIso,
+            int callType,
+            ReportingLocation.Type from,
+            ContactSource.Type contactSourceType) {
+    }
 }

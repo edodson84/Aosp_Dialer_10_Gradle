@@ -17,17 +17,22 @@
 package com.android.voicemail.impl.utils;
 
 import android.content.Context;
-import android.support.annotation.AnyThread;
+import androidx.annotation.AnyThread;
+
 import com.fissy.dialer.common.concurrent.ThreadUtil;
 import com.fissy.dialer.logging.DialerImpression;
 import com.fissy.dialer.logging.Logger;
 
-/** Common utility method when using {@link Logger} */
+/**
+ * Common utility method when using {@link Logger}
+ */
 public class LoggerUtils {
 
-  /** Posts the impression logging to the main thread so it will be thread safe. */
-  @AnyThread
-  public static void logImpressionOnMainThread(Context context, DialerImpression.Type impression) {
-    ThreadUtil.postOnUiThread(() -> Logger.get(context).logImpression(impression));
-  }
+    /**
+     * Posts the impression logging to the main thread so it will be thread safe.
+     */
+    @AnyThread
+    public static void logImpressionOnMainThread(Context context, DialerImpression.Type impression) {
+        ThreadUtil.postOnUiThread(() -> Logger.get(context).logImpression(impression));
+    }
 }

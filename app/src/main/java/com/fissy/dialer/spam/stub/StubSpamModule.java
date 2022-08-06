@@ -20,17 +20,20 @@ import com.fissy.dialer.inject.DialerVariant;
 import com.fissy.dialer.inject.InstallIn;
 import com.fissy.dialer.spam.Spam;
 import com.fissy.dialer.spam.SpamSettings;
+
 import dagger.Binds;
 import dagger.Module;
 
-/** Module which binds {@link SpamStub}. */
+/**
+ * Module which binds {@link SpamStub}.
+ */
 @InstallIn(variants = {DialerVariant.DIALER_TEST})
 @Module
 public abstract class StubSpamModule {
 
-  @Binds
-  public abstract Spam bindSpam(SpamStub stub);
+    @Binds
+    public abstract Spam bindSpam(SpamStub stub);
 
-  @Binds
-  public abstract SpamSettings bindSpamSettings(SpamSettingsStub stub);
+    @Binds
+    public abstract SpamSettings bindSpamSettings(SpamSettingsStub stub);
 }

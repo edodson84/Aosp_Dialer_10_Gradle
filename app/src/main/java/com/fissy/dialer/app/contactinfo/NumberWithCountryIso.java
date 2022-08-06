@@ -27,31 +27,31 @@ import android.text.TextUtils;
  */
 public final class NumberWithCountryIso {
 
-  public final String number;
-  public final String countryIso;
+    public final String number;
+    public final String countryIso;
 
-  public NumberWithCountryIso(String number, String countryIso) {
-    this.number = number;
-    this.countryIso = countryIso;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (o == null) {
-      return false;
+    public NumberWithCountryIso(String number, String countryIso) {
+        this.number = number;
+        this.countryIso = countryIso;
     }
-    if (!(o instanceof NumberWithCountryIso)) {
-      return false;
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        }
+        if (!(o instanceof NumberWithCountryIso)) {
+            return false;
+        }
+        NumberWithCountryIso other = (NumberWithCountryIso) o;
+        return TextUtils.equals(number, other.number) && TextUtils.equals(countryIso, other.countryIso);
     }
-    NumberWithCountryIso other = (NumberWithCountryIso) o;
-    return TextUtils.equals(number, other.number) && TextUtils.equals(countryIso, other.countryIso);
-  }
 
-  @Override
-  public int hashCode() {
-    int numberHashCode = number == null ? 0 : number.hashCode();
-    int countryHashCode = countryIso == null ? 0 : countryIso.hashCode();
+    @Override
+    public int hashCode() {
+        int numberHashCode = number == null ? 0 : number.hashCode();
+        int countryHashCode = countryIso == null ? 0 : countryIso.hashCode();
 
-    return numberHashCode ^ countryHashCode;
-  }
+        return numberHashCode ^ countryHashCode;
+    }
 }

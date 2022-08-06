@@ -18,64 +18,66 @@ package com.fissy.dialer.common.concurrent;
 import com.google.common.util.concurrent.AbstractListeningExecutorService;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.SettableFuture;
+
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
+
 import javax.inject.Inject;
 
 /**
  * An ExecutorService that delegates to the UI thread. Rejects attempts to shut down, and all
  * shutdown related APIs are unimplemented.
- *
  */
 public class UiThreadExecutor extends AbstractListeningExecutorService {
 
-  @Inject
-  public UiThreadExecutor() {}
+    @Inject
+    public UiThreadExecutor() {
+    }
 
-  @Override
-  public void shutdown() {
-    throw new UnsupportedOperationException();
-  }
+    @Override
+    public void shutdown() {
+        throw new UnsupportedOperationException();
+    }
 
-  @Override
-  public List<Runnable> shutdownNow() {
-    throw new UnsupportedOperationException();
-  }
+    @Override
+    public List<Runnable> shutdownNow() {
+        throw new UnsupportedOperationException();
+    }
 
-  @Override
-  public boolean isShutdown() {
-    return false;
-  }
+    @Override
+    public boolean isShutdown() {
+        return false;
+    }
 
-  @Override
-  public boolean isTerminated() {
-    return false;
-  }
+    @Override
+    public boolean isTerminated() {
+        return false;
+    }
 
-  @Override
-  public boolean awaitTermination(long l, TimeUnit timeUnit) throws InterruptedException {
-    throw new UnsupportedOperationException();
-  }
+    @Override
+    public boolean awaitTermination(long l, TimeUnit timeUnit) throws InterruptedException {
+        throw new UnsupportedOperationException();
+    }
 
-  @Override
-  public <V> ListenableFuture<V> submit(final Callable<V> task) {
-    final SettableFuture<V> resultFuture = SettableFuture.create();
-    ThreadUtil.postOnUiThread(
-        () -> {
-          try {
-            resultFuture.set(task.call());
-          } catch (Exception e) {
-            // uncaught exceptions on the UI thread should crash the app
-            resultFuture.setException(e);
-            throw new RuntimeException(e);
-          }
-        });
-    return resultFuture;
-  }
+    @Override
+    public <V> ListenableFuture<V> submit(final Callable<V> task) {
+        final SettableFuture<V> resultFuture = SettableFuture.create();
+        ThreadUtil.postOnUiThread(
+                () -> {
+                    try {
+                        resultFuture.set(task.call());
+                    } catch (Exception e) {
+                        // uncaught exceptions on the UI thread should crash the app
+                        resultFuture.setException(e);
+                        throw new RuntimeException(e);
+                    }
+                });
+        return resultFuture;
+    }
 
-  @Override
-  public void execute(final Runnable runnable) {
-    ThreadUtil.postOnUiThread(runnable);
-  }
+    @Override
+    public void execute(final Runnable runnable) {
+        ThreadUtil.postOnUiThread(runnable);
+    }
 }

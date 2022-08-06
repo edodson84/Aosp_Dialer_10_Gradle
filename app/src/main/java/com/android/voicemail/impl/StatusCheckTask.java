@@ -21,13 +21,15 @@ import android.os.Bundle;
 import android.telecom.PhoneAccountHandle;
 import android.telephony.ServiceState;
 import android.telephony.TelephonyManager;
-import com.fissy.dialer.logging.DialerImpression;
-import com.fissy.dialer.proguard.UsedByReflection;
+
 import com.android.voicemail.impl.scheduling.BaseTask;
 import com.android.voicemail.impl.sms.StatusMessage;
 import com.android.voicemail.impl.sms.StatusSmsFetcher;
 import com.android.voicemail.impl.sync.VvmAccountManager;
 import com.android.voicemail.impl.utils.LoggerUtils;
+import com.fissy.dialer.logging.DialerImpression;
+import com.fissy.dialer.proguard.UsedByReflection;
+
 import java.io.IOException;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
@@ -45,84 +47,84 @@ import java.util.concurrent.TimeoutException;
 @UsedByReflection(value = "Tasks.java")
 public class StatusCheckTask extends BaseTask {
 
-  public StatusCheckTask() {
-    super(TASK_STATUS_CHECK);
-  }
-
-  public static void start(Context context, PhoneAccountHandle phoneAccountHandle) {
-    Intent intent = BaseTask.createIntent(context, StatusCheckTask.class, phoneAccountHandle);
-    context.sendBroadcast(intent);
-  }
-
-  @Override
-  public void onExecuteInBackgroundThread() {
-    TelephonyManager telephonyManager =
-        getContext()
-            .getSystemService(TelephonyManager.class)
-            .createForPhoneAccountHandle(getPhoneAccountHandle());
-
-    if (telephonyManager == null) {
-      VvmLog.w(
-          "StatusCheckTask.onExecuteInBackgroundThread",
-          getPhoneAccountHandle() + " no longer valid");
-      return;
-    }
-    if (telephonyManager.getServiceState().getState() != ServiceState.STATE_IN_SERVICE) {
-      VvmLog.i(
-          "StatusCheckTask.onExecuteInBackgroundThread",
-          getPhoneAccountHandle() + " not in service");
-      return;
-    }
-    OmtpVvmCarrierConfigHelper config =
-        new OmtpVvmCarrierConfigHelper(getContext(), getPhoneAccountHandle());
-    if (!config.isValid()) {
-      VvmLog.e(
-          "StatusCheckTask.onExecuteInBackgroundThread",
-          "config no longer valid for " + getPhoneAccountHandle());
-      VvmAccountManager.removeAccount(getContext(), getPhoneAccountHandle());
-      return;
+    public StatusCheckTask() {
+        super(TASK_STATUS_CHECK);
     }
 
-    Bundle data;
-    try (StatusSmsFetcher fetcher = new StatusSmsFetcher(getContext(), getPhoneAccountHandle())) {
-      config.getProtocol().requestStatus(config, fetcher.getSentIntent());
-      // Both the fetcher and OmtpMessageReceiver will be triggered, but
-      // OmtpMessageReceiver will just route the SMS back to ActivationTask, which will be
-      // rejected because the task is still running.
-      data = fetcher.get();
-    } catch (TimeoutException e) {
-      VvmLog.e("StatusCheckTask.onExecuteInBackgroundThread", "timeout requesting status");
-      return;
-    } catch (CancellationException e) {
-      VvmLog.e("StatusCheckTask.onExecuteInBackgroundThread", "Unable to send status request SMS");
-      return;
-    } catch (InterruptedException | ExecutionException | IOException e) {
-      VvmLog.e("StatusCheckTask.onExecuteInBackgroundThread", "can't get future STATUS SMS", e);
-      return;
+    public static void start(Context context, PhoneAccountHandle phoneAccountHandle) {
+        Intent intent = BaseTask.createIntent(context, StatusCheckTask.class, phoneAccountHandle);
+        context.sendBroadcast(intent);
     }
 
-    StatusMessage message = new StatusMessage(data);
-    VvmLog.i(
-        "StatusCheckTask.onExecuteInBackgroundThread",
-        "STATUS SMS received: st="
-            + message.getProvisioningStatus()
-            + ", rc="
-            + message.getReturnCode());
-    if (message.getProvisioningStatus().equals(OmtpConstants.SUBSCRIBER_READY)) {
-      VvmLog.i(
-          "StatusCheckTask.onExecuteInBackgroundThread",
-          "subscriber ready, no activation required");
-      LoggerUtils.logImpressionOnMainThread(
-          getContext(), DialerImpression.Type.VVM_STATUS_CHECK_READY);
-      VvmAccountManager.addAccount(getContext(), getPhoneAccountHandle(), message);
-    } else {
-      VvmLog.i(
-          "StatusCheckTask.onExecuteInBackgroundThread",
-          "subscriber not ready, attempting reactivation");
-      VvmAccountManager.removeAccount(getContext(), getPhoneAccountHandle());
-      LoggerUtils.logImpressionOnMainThread(
-          getContext(), DialerImpression.Type.VVM_STATUS_CHECK_REACTIVATION);
-      ActivationTask.start(getContext(), getPhoneAccountHandle(), data);
+    @Override
+    public void onExecuteInBackgroundThread() {
+        TelephonyManager telephonyManager =
+                getContext()
+                        .getSystemService(TelephonyManager.class)
+                        .createForPhoneAccountHandle(getPhoneAccountHandle());
+
+        if (telephonyManager == null) {
+            VvmLog.w(
+                    "StatusCheckTask.onExecuteInBackgroundThread",
+                    getPhoneAccountHandle() + " no longer valid");
+            return;
+        }
+        if (telephonyManager.getServiceState().getState() != ServiceState.STATE_IN_SERVICE) {
+            VvmLog.i(
+                    "StatusCheckTask.onExecuteInBackgroundThread",
+                    getPhoneAccountHandle() + " not in service");
+            return;
+        }
+        OmtpVvmCarrierConfigHelper config =
+                new OmtpVvmCarrierConfigHelper(getContext(), getPhoneAccountHandle());
+        if (!config.isValid()) {
+            VvmLog.e(
+                    "StatusCheckTask.onExecuteInBackgroundThread",
+                    "config no longer valid for " + getPhoneAccountHandle());
+            VvmAccountManager.removeAccount(getContext(), getPhoneAccountHandle());
+            return;
+        }
+
+        Bundle data;
+        try (StatusSmsFetcher fetcher = new StatusSmsFetcher(getContext(), getPhoneAccountHandle())) {
+            config.getProtocol().requestStatus(config, fetcher.getSentIntent());
+            // Both the fetcher and OmtpMessageReceiver will be triggered, but
+            // OmtpMessageReceiver will just route the SMS back to ActivationTask, which will be
+            // rejected because the task is still running.
+            data = fetcher.get();
+        } catch (TimeoutException e) {
+            VvmLog.e("StatusCheckTask.onExecuteInBackgroundThread", "timeout requesting status");
+            return;
+        } catch (CancellationException e) {
+            VvmLog.e("StatusCheckTask.onExecuteInBackgroundThread", "Unable to send status request SMS");
+            return;
+        } catch (InterruptedException | ExecutionException | IOException e) {
+            VvmLog.e("StatusCheckTask.onExecuteInBackgroundThread", "can't get future STATUS SMS", e);
+            return;
+        }
+
+        StatusMessage message = new StatusMessage(data);
+        VvmLog.i(
+                "StatusCheckTask.onExecuteInBackgroundThread",
+                "STATUS SMS received: st="
+                        + message.getProvisioningStatus()
+                        + ", rc="
+                        + message.getReturnCode());
+        if (message.getProvisioningStatus().equals(OmtpConstants.SUBSCRIBER_READY)) {
+            VvmLog.i(
+                    "StatusCheckTask.onExecuteInBackgroundThread",
+                    "subscriber ready, no activation required");
+            LoggerUtils.logImpressionOnMainThread(
+                    getContext(), DialerImpression.Type.VVM_STATUS_CHECK_READY);
+            VvmAccountManager.addAccount(getContext(), getPhoneAccountHandle(), message);
+        } else {
+            VvmLog.i(
+                    "StatusCheckTask.onExecuteInBackgroundThread",
+                    "subscriber not ready, attempting reactivation");
+            VvmAccountManager.removeAccount(getContext(), getPhoneAccountHandle());
+            LoggerUtils.logImpressionOnMainThread(
+                    getContext(), DialerImpression.Type.VVM_STATUS_CHECK_REACTIVATION);
+            ActivationTask.start(getContext(), getPhoneAccountHandle(), data);
+        }
     }
-  }
 }

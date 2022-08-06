@@ -1,18 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:id="@id/root_layout" android:layout_width="fill_parent" android:layout_height="fill_parent"
-  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
-    <include android:id="@id/toolbar" layout="@layout/toolbar_layout" />
-    <android.support.design.widget.CoordinatorLayout android:id="@id/coordinator_layout" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_above="@id/bottom_nav_bar" android:layout_below="@id/toolbar"
-      xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
-        <FrameLayout android:id="@id/fragment_container" android:layout_width="fill_parent" android:layout_height="fill_parent" />
-        <FrameLayout android:id="@id/search_fragment_container" android:layout_width="fill_parent" android:layout_height="fill_parent" />
-        <ImageView android:id="@id/toolbar_shadow" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="2.0dip" android:src="@drawable/search_shadow" android:scaleType="fitXY" />
-        <com.fissy.dialer.widget.DialerFloatingActionButton android:layout_gravity="end|bottom|center" android:id="@id/fab" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="16.0dip" android:src="@drawable/quantum_ic_dialpad_white_24" android:contentDescription="@string/dialpad_button_content_description" app:backgroundTint="?android:colorAccent" />
-        <include android:id="@id/promotion_bottom_sheet" layout="@layout/promotion_bottom_sheet" />
-    </android.support.design.widget.CoordinatorLayout>
-    <include android:id="@id/bottom_nav_bar" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_alignParentBottom="true" layout="@layout/bottom_nav_bar_layout" />
-    <FrameLayout android:id="@id/dialpad_fragment_container" android:layout_width="fill_parent" android:layout_height="fill_parent" android:elevation="10.0dip" />
-    <FrameLayout android:id="@id/activity_overlay" android:layout_width="fill_parent" android:layout_height="fill_parent">
-        <ImageView android:id="@id/contact_tile_drag_shadow_overlay" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:importantForAccessibility="no" />
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@id/root_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <include
+        android:id="@id/toolbar"
+        layout="@layout/toolbar_layout" />
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@id/coordinator_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@id/bottom_nav_bar"
+        android:layout_below="@id/toolbar">
+
+        <FrameLayout
+            android:id="@id/fragment_container"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+
+        <FrameLayout
+            android:id="@id/search_fragment_container"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+
+        <ImageView
+            android:id="@id/toolbar_shadow"
+            android:layout_width="fill_parent"
+            android:layout_height="2.0dip"
+            android:scaleType="fitXY"
+            android:src="@drawable/search_shadow"
+            android:visibility="gone" />
+
+        <com.fissy.dialer.widget.DialerFloatingActionButton
+            android:id="@id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom|center"
+            android:layout_margin="16.0dip"
+            android:contentDescription="@string/dialpad_button_content_description"
+            android:src="@drawable/quantum_ic_dialpad_white_24"
+            app:backgroundTint="?android:colorAccent" />
+
+        <include
+            android:id="@id/promotion_bottom_sheet"
+            layout="@layout/promotion_bottom_sheet" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <include
+        android:id="@id/bottom_nav_bar"
+        layout="@layout/bottom_nav_bar_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
+
+    <FrameLayout
+        android:id="@id/dialpad_fragment_container"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:elevation="10.0dip" />
+
+    <FrameLayout
+        android:id="@id/activity_overlay"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <ImageView
+            android:id="@id/contact_tile_drag_shadow_overlay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:importantForAccessibility="no"
+            android:visibility="gone" />
     </FrameLayout>
 </RelativeLayout>

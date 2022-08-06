@@ -21,15 +21,16 @@ package com.android.incallui.answer.impl.classifier;
  * points.
  */
 class DurationCountClassifier extends StrokeClassifier {
-  public DurationCountClassifier(ClassifierData classifierData) {}
+    public DurationCountClassifier(ClassifierData classifierData) {
+    }
 
-  @Override
-  public String getTag() {
-    return "DUR";
-  }
+    @Override
+    public String getTag() {
+        return "DUR";
+    }
 
-  @Override
-  public float getFalseTouchEvaluation(Stroke stroke) {
-    return DurationCountEvaluator.evaluate(stroke.getDurationSeconds() / stroke.getCount());
-  }
+    @Override
+    public float getFalseTouchEvaluation(Stroke stroke) {
+        return DurationCountEvaluator.evaluate(stroke.getDurationSeconds() / stroke.getCount());
+    }
 }

@@ -18,7 +18,7 @@ package com.fissy.dialer.contactsfragment;
 
 import android.content.Context;
 import android.net.Uri;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -32,67 +32,69 @@ import com.fissy.dialer.logging.InteractionEvent;
 import com.fissy.dialer.logging.Logger;
 import com.fissy.dialer.widget.BidiTextView;
 
-/** View holder for a contact. */
+/**
+ * View holder for a contact.
+ */
 final class ContactViewHolder extends RecyclerView.ViewHolder implements OnClickListener {
 
-  private final TextView header;
-  private final BidiTextView name;
-  private final QuickContactBadge photo;
-  private final Context context;
-  private final OnContactSelectedListener onContactSelectedListener;
+    private final TextView header;
+    private final BidiTextView name;
+    private final QuickContactBadge photo;
+    private final Context context;
+    private final OnContactSelectedListener onContactSelectedListener;
 
-  private String headerText;
-  private Uri contactUri;
-  private long contactId;
+    private String headerText;
+    private Uri contactUri;
+    private long contactId;
 
-  ContactViewHolder(View itemView, OnContactSelectedListener onContactSelectedListener) {
-    super(itemView);
-    this.onContactSelectedListener = Assert.isNotNull(onContactSelectedListener);
-    context = itemView.getContext();
-    itemView.findViewById(R.id.click_target).setOnClickListener(this);
-    header = itemView.findViewById(R.id.header);
-    name = itemView.findViewById(R.id.contact_name);
-    photo = itemView.findViewById(R.id.photo);
-  }
+    ContactViewHolder(View itemView, OnContactSelectedListener onContactSelectedListener) {
+        super(itemView);
+        this.onContactSelectedListener = Assert.isNotNull(onContactSelectedListener);
+        context = itemView.getContext();
+        itemView.findViewById(R.id.click_target).setOnClickListener(this);
+        header = itemView.findViewById(R.id.header);
+        name = itemView.findViewById(R.id.contact_name);
+        photo = itemView.findViewById(R.id.photo);
+    }
 
-  /**
-   * Binds the ViewHolder with relevant data.
-   *
-   * @param headerText populates the header view.
-   * @param displayName populates the name view.
-   * @param contactUri to be shown by the contact card on photo click.
-   * @param showHeader if header view should be shown {@code True}, {@code False} otherwise.
-   */
-  public void bind(
-      String headerText, String displayName, Uri contactUri, long contactId, boolean showHeader) {
-    Assert.checkArgument(!TextUtils.isEmpty(displayName));
-    this.contactUri = contactUri;
-    this.contactId = contactId;
-    this.headerText = headerText;
+    /**
+     * Binds the ViewHolder with relevant data.
+     *
+     * @param headerText  populates the header view.
+     * @param displayName populates the name view.
+     * @param contactUri  to be shown by the contact card on photo click.
+     * @param showHeader  if header view should be shown {@code True}, {@code False} otherwise.
+     */
+    public void bind(
+            String headerText, String displayName, Uri contactUri, long contactId, boolean showHeader) {
+        Assert.checkArgument(!TextUtils.isEmpty(displayName));
+        this.contactUri = contactUri;
+        this.contactId = contactId;
+        this.headerText = headerText;
 
-    name.setText(displayName);
-    header.setText(headerText);
-    header.setVisibility(showHeader ? View.VISIBLE : View.INVISIBLE);
+        name.setText(displayName);
+        header.setText(headerText);
+        header.setVisibility(showHeader ? View.VISIBLE : View.INVISIBLE);
 
-    Logger.get(context)
-        .logQuickContactOnTouch(
-            photo, InteractionEvent.Type.OPEN_QUICK_CONTACT_FROM_CONTACTS_FRAGMENT_BADGE, true);
-  }
+        Logger.get(context)
+                .logQuickContactOnTouch(
+                        photo, InteractionEvent.Type.OPEN_QUICK_CONTACT_FROM_CONTACTS_FRAGMENT_BADGE, true);
+    }
 
-  public QuickContactBadge getPhoto() {
-    return photo;
-  }
+    public QuickContactBadge getPhoto() {
+        return photo;
+    }
 
-  public String getHeader() {
-    return headerText;
-  }
+    public String getHeader() {
+        return headerText;
+    }
 
-  public TextView getHeaderView() {
-    return header;
-  }
+    public TextView getHeaderView() {
+        return header;
+    }
 
-  @Override
-  public void onClick(View v) {
-    onContactSelectedListener.onContactSelected(photo, contactUri, contactId);
-  }
+    @Override
+    public void onClick(View v) {
+        onContactSelectedListener.onContactSelected(photo, contactUri, contactId);
+    }
 }

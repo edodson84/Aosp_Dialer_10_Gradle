@@ -15,8 +15,10 @@
  */
 package com.android.voicemail.impl.transcribe.grpc;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
+
 import com.fissy.dialer.common.Assert;
+
 import io.grpc.Status;
 import io.grpc.Status.Code;
 
@@ -25,43 +27,44 @@ import io.grpc.Status.Code;
  * status response, subclasses will handle request specific responses.
  */
 public abstract class TranscriptionResponse {
-  @Nullable public final Status status;
+    @Nullable
+    public final Status status;
 
-  TranscriptionResponse() {
-    this.status = null;
-  }
-
-  TranscriptionResponse(Status status) {
-    Assert.checkArgument(status != null);
-    this.status = status;
-  }
-
-  public boolean hasRecoverableError() {
-    if (status != null) {
-      return status.getCode() == Status.Code.UNAVAILABLE;
+    TranscriptionResponse() {
+        this.status = null;
     }
 
-    return false;
-  }
-
-  public boolean isStatusAlreadyExists() {
-    if (status != null) {
-      return status.getCode() == Code.ALREADY_EXISTS;
+    TranscriptionResponse(Status status) {
+        Assert.checkArgument(status != null);
+        this.status = status;
     }
 
-    return false;
-  }
+    public boolean hasRecoverableError() {
+        if (status != null) {
+            return status.getCode() == Status.Code.UNAVAILABLE;
+        }
 
-  public boolean hasFatalError() {
-    if (status != null) {
-      return status.getCode() != Status.Code.OK && status.getCode() != Status.Code.UNAVAILABLE;
+        return false;
     }
 
-    return false;
-  }
+    public boolean isStatusAlreadyExists() {
+        if (status != null) {
+            return status.getCode() == Code.ALREADY_EXISTS;
+        }
 
-  @Override
-  public String toString() {
-    return "status: " + status;
-  }
+        return false;
+    }
+
+    public boolean hasFatalError() {
+        if (status != null) {
+            return status.getCode() != Status.Code.OK && status.getCode() != Status.Code.UNAVAILABLE;
+        }
+
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return "status: " + status;
+    }
 }

@@ -21,32 +21,34 @@ import android.net.Uri;
 import android.provider.MediaStore.Files;
 import android.provider.MediaStore.Files.FileColumns;
 import android.provider.MediaStore.Images.Media;
-import android.support.v4.content.CursorLoader;
+import androidx.loader.content.CursorLoader;
 
-/** A BoundCursorLoader that reads local media on the device. */
+/**
+ * A BoundCursorLoader that reads local media on the device.
+ */
 public class GalleryCursorLoader extends CursorLoader {
-  public static final String MEDIA_SCANNER_VOLUME_EXTERNAL = "external";
-  public static final String[] ACCEPTABLE_IMAGE_TYPES =
-      new String[] {"image/jpeg", "image/jpg", "image/png", "image/webp"};
+    public static final String MEDIA_SCANNER_VOLUME_EXTERNAL = "external";
+    public static final String[] ACCEPTABLE_IMAGE_TYPES =
+            new String[]{"image/jpeg", "image/jpg", "image/png", "image/webp"};
 
-  private static final Uri STORAGE_URI = Files.getContentUri(MEDIA_SCANNER_VOLUME_EXTERNAL);
-  private static final String SORT_ORDER = Media.DATE_MODIFIED + " DESC";
-  private static final String IMAGE_SELECTION = createSelection();
+    private static final Uri STORAGE_URI = Files.getContentUri(MEDIA_SCANNER_VOLUME_EXTERNAL);
+    private static final String SORT_ORDER = Media.DATE_MODIFIED + " DESC";
+    private static final String IMAGE_SELECTION = createSelection();
 
-  public GalleryCursorLoader(Context context) {
-    super(
-        context,
-        STORAGE_URI,
-        GalleryGridItemData.IMAGE_PROJECTION,
-        IMAGE_SELECTION,
-        null,
-        SORT_ORDER);
-  }
+    public GalleryCursorLoader(Context context) {
+        super(
+                context,
+                STORAGE_URI,
+                GalleryGridItemData.IMAGE_PROJECTION,
+                IMAGE_SELECTION,
+                null,
+                SORT_ORDER);
+    }
 
-  private static String createSelection() {
-    return "mime_type IN ('image/jpeg', 'image/jpg', 'image/png', 'image/webp')"
-        + " AND media_type in ("
-        + FileColumns.MEDIA_TYPE_IMAGE
-        + ")";
-  }
+    private static String createSelection() {
+        return "mime_type IN ('image/jpeg', 'image/jpg', 'image/png', 'image/webp')"
+                + " AND media_type in ("
+                + FileColumns.MEDIA_TYPE_IMAGE
+                + ")";
+    }
 }

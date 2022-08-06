@@ -23,8 +23,10 @@ import android.content.Context;
 import android.os.Build.VERSION_CODES;
 import android.telecom.PhoneAccountHandle;
 import android.telecom.TelecomManager;
-import com.fissy.dialer.constants.ScheduledJobIds;
+
 import com.android.voicemail.impl.sync.VvmAccountManager;
+import com.fissy.dialer.constants.ScheduledJobIds;
+
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -36,36 +38,36 @@ import java.util.concurrent.TimeUnit;
 @TargetApi(VERSION_CODES.O)
 public class StatusCheckJobService extends JobService {
 
-  public static void schedule(Context context) {
-    JobScheduler jobScheduler = context.getSystemService(JobScheduler.class);
-    if (jobScheduler.getPendingJob(ScheduledJobIds.VVM_STATUS_CHECK_JOB) != null) {
-      VvmLog.i("StatusCheckJobService.schedule", "job already scheduled");
-      return;
+    public static void schedule(Context context) {
+        JobScheduler jobScheduler = context.getSystemService(JobScheduler.class);
+        if (jobScheduler.getPendingJob(ScheduledJobIds.VVM_STATUS_CHECK_JOB) != null) {
+            VvmLog.i("StatusCheckJobService.schedule", "job already scheduled");
+            return;
+        }
+
+        jobScheduler.schedule(
+                new JobInfo.Builder(
+                        ScheduledJobIds.VVM_STATUS_CHECK_JOB,
+                        new ComponentName(context, StatusCheckJobService.class))
+                        .setPeriodic(TimeUnit.DAYS.toMillis(1))
+                        .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+                        .setRequiresCharging(true)
+                        .build());
     }
 
-    jobScheduler.schedule(
-        new JobInfo.Builder(
-                ScheduledJobIds.VVM_STATUS_CHECK_JOB,
-                new ComponentName(context, StatusCheckJobService.class))
-            .setPeriodic(TimeUnit.DAYS.toMillis(1))
-            .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
-            .setRequiresCharging(true)
-            .build());
-  }
-
-  @Override
-  public boolean onStartJob(JobParameters params) {
-    for (PhoneAccountHandle phoneAccountHandle :
-        getSystemService(TelecomManager.class).getCallCapablePhoneAccounts()) {
-      if (VvmAccountManager.isAccountActivated(this, phoneAccountHandle)) {
-        StatusCheckTask.start(this, phoneAccountHandle);
-      }
+    @Override
+    public boolean onStartJob(JobParameters params) {
+        for (PhoneAccountHandle phoneAccountHandle :
+                getSystemService(TelecomManager.class).getCallCapablePhoneAccounts()) {
+            if (VvmAccountManager.isAccountActivated(this, phoneAccountHandle)) {
+                StatusCheckTask.start(this, phoneAccountHandle);
+            }
+        }
+        return false; // not running in background
     }
-    return false; // not running in background
-  }
 
-  @Override
-  public boolean onStopJob(JobParameters params) {
-    return false; // don't retry
-  }
+    @Override
+    public boolean onStopJob(JobParameters params) {
+        return false; // don't retry
+    }
 }

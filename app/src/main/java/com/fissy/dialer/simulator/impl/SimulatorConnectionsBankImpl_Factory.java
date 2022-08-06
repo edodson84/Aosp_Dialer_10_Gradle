@@ -1,21 +1,22 @@
 package com.fissy.dialer.simulator.impl;
 
-import dagger.internal.Factory;
 import javax.annotation.Generated;
 
+import dagger.internal.Factory;
+
 @Generated(
-  value = "dagger.internal.codegen.ComponentProcessor",
-  comments = "https://google.github.io/dagger"
+        value = "dagger.internal.codegen.ComponentProcessor",
+        comments = "https://google.github.io/dagger"
 )
 public enum SimulatorConnectionsBankImpl_Factory implements Factory<SimulatorConnectionsBankImpl> {
-  INSTANCE;
+    INSTANCE;
 
-  @Override
-  public SimulatorConnectionsBankImpl get() {
-    return new SimulatorConnectionsBankImpl();
-  }
+    public static Factory<SimulatorConnectionsBankImpl> create() {
+        return INSTANCE;
+    }
 
-  public static Factory<SimulatorConnectionsBankImpl> create() {
-    return INSTANCE;
-  }
+    @Override
+    public SimulatorConnectionsBankImpl get() {
+        return new SimulatorConnectionsBankImpl();
+    }
 }

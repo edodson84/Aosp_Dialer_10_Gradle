@@ -4,8 +4,8 @@ import com.fissy.dialer.commandline.CommandLineComponent;
 import com.fissy.dialer.inject.RootComponentGeneratorMetadata;
 
 @RootComponentGeneratorMetadata(
-    tag = "IncludeInDialerRoot",
-    annotatedClass = CommandLineComponent.HasComponent.class
+        tag = "IncludeInDialerRoot",
+        annotatedClass = CommandLineComponent.HasComponent.class
 )
 class com_android_dialer_commandline_CommandLineComponent_HasComponentMetadata {
 }

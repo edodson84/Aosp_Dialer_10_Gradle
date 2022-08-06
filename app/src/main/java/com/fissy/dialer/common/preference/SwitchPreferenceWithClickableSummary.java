@@ -16,7 +16,7 @@
 
 package com.fissy.dialer.common.preference;
 
-import static android.support.v4.content.ContextCompat.startActivity;
+import static androidx.core.content.ContextCompat.startActivity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -47,60 +47,60 @@ import com.fissy.dialer.common.Assert;
  * </pre>
  */
 public class SwitchPreferenceWithClickableSummary extends SwitchPreference {
-  private final String urlToOpen;
+    private final String urlToOpen;
 
-  public SwitchPreferenceWithClickableSummary(
-      Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-    super(context, attrs, defStyleAttr, defStyleRes);
-    TypedArray typedArray =
-        context.obtainStyledAttributes(attrs, R.styleable.SwitchPreferenceWithClickableSummary);
-    urlToOpen =
-        String.valueOf(
-            typedArray.getText(R.styleable.SwitchPreferenceWithClickableSummary_urlToOpen));
-  }
+    public SwitchPreferenceWithClickableSummary(
+            Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        TypedArray typedArray =
+                context.obtainStyledAttributes(attrs, R.styleable.SwitchPreferenceWithClickableSummary);
+        urlToOpen =
+                String.valueOf(
+                        typedArray.getText(R.styleable.SwitchPreferenceWithClickableSummary_urlToOpen));
+    }
 
-  public SwitchPreferenceWithClickableSummary(
-      Context context, AttributeSet attrs, int defStyleAttr) {
-    super(context, attrs, defStyleAttr, defStyleAttr);
-    TypedArray typedArray =
-        context.obtainStyledAttributes(attrs, R.styleable.SwitchPreferenceWithClickableSummary);
-    urlToOpen =
-        String.valueOf(
-            typedArray.getText(R.styleable.SwitchPreferenceWithClickableSummary_urlToOpen));
-  }
+    public SwitchPreferenceWithClickableSummary(
+            Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr, defStyleAttr);
+        TypedArray typedArray =
+                context.obtainStyledAttributes(attrs, R.styleable.SwitchPreferenceWithClickableSummary);
+        urlToOpen =
+                String.valueOf(
+                        typedArray.getText(R.styleable.SwitchPreferenceWithClickableSummary_urlToOpen));
+    }
 
-  public SwitchPreferenceWithClickableSummary(Context context, AttributeSet attrs) {
-    super(context, attrs);
-    TypedArray typedArray =
-        context.obtainStyledAttributes(attrs, R.styleable.SwitchPreferenceWithClickableSummary);
-    urlToOpen =
-        String.valueOf(
-            typedArray.getText(R.styleable.SwitchPreferenceWithClickableSummary_urlToOpen));
-  }
+    public SwitchPreferenceWithClickableSummary(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        TypedArray typedArray =
+                context.obtainStyledAttributes(attrs, R.styleable.SwitchPreferenceWithClickableSummary);
+        urlToOpen =
+                String.valueOf(
+                        typedArray.getText(R.styleable.SwitchPreferenceWithClickableSummary_urlToOpen));
+    }
 
-  public SwitchPreferenceWithClickableSummary(Context context) {
-    this(context, null);
-  }
+    public SwitchPreferenceWithClickableSummary(Context context) {
+        this(context, null);
+    }
 
-  @Override
-  protected View onCreateView(ViewGroup parent) {
-    return super.onCreateView(parent);
-  }
+    @Override
+    protected View onCreateView(ViewGroup parent) {
+        return super.onCreateView(parent);
+    }
 
-  @Override
-  protected void onBindView(View view) {
-    super.onBindView(view);
-    Assert.checkArgument(
-        urlToOpen != null,
-        "must have a urlToOpen attribute when using SwitchPreferenceWithClickableSummary");
-    view.findViewById(android.R.id.summary)
-        .setOnClickListener(
-            new OnClickListener() {
-              @Override
-              public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlToOpen));
-                startActivity(view.getContext(), intent, null);
-              }
-            });
-  }
+    @Override
+    protected void onBindView(View view) {
+        super.onBindView(view);
+        Assert.checkArgument(
+                urlToOpen != null,
+                "must have a urlToOpen attribute when using SwitchPreferenceWithClickableSummary");
+        view.findViewById(android.R.id.summary)
+                .setOnClickListener(
+                        new OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlToOpen));
+                                startActivity(view.getContext(), intent, null);
+                            }
+                        });
+    }
 }

@@ -17,7 +17,7 @@ package com.fissy.dialer.util;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * A common superclass that keeps track of whether an {@link Activity} has saved its state yet or
@@ -25,40 +25,40 @@ import android.support.v7.app.AppCompatActivity;
  */
 public abstract class TransactionSafeActivity extends AppCompatActivity {
 
-  private boolean isSafeToCommitTransactions;
+    private boolean isSafeToCommitTransactions;
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    isSafeToCommitTransactions = true;
-  }
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        isSafeToCommitTransactions = true;
+    }
 
-  @Override
-  protected void onStart() {
-    super.onStart();
-    isSafeToCommitTransactions = true;
-  }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        isSafeToCommitTransactions = true;
+    }
 
-  @Override
-  protected void onResume() {
-    super.onResume();
-    isSafeToCommitTransactions = true;
-  }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isSafeToCommitTransactions = true;
+    }
 
-  @Override
-  protected void onSaveInstanceState(Bundle outState) {
-    super.onSaveInstanceState(outState);
-    isSafeToCommitTransactions = false;
-  }
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        isSafeToCommitTransactions = false;
+    }
 
-  /**
-   * Returns true if it is safe to commit {@link FragmentTransaction}s at this time, based on
-   * whether {@link Activity#onSaveInstanceState} has been called or not.
-   *
-   * <p>Make sure that the current activity calls into {@link super.onSaveInstanceState(Bundle
-   * outState)} (if that method is overridden), so the flag is properly set.
-   */
-  public boolean isSafeToCommitTransactions() {
-    return isSafeToCommitTransactions;
-  }
+    /**
+     * Returns true if it is safe to commit {@link FragmentTransaction}s at this time, based on
+     * whether {@link Activity#onSaveInstanceState} has been called or not.
+     *
+     * <p>Make sure that the current activity calls into {@link super.onSaveInstanceState(Bundle
+     * outState)} (if that method is overridden), so the flag is properly set.
+     */
+    public boolean isSafeToCommitTransactions() {
+        return isSafeToCommitTransactions;
+    }
 }

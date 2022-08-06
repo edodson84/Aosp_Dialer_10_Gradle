@@ -17,7 +17,7 @@
 package com.fissy.dialer.contactsfragment;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView.ViewHolder;
+import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import android.view.View;
 import android.view.View.OnClickListener;
 
@@ -25,20 +25,22 @@ import com.fissy.dialer.R;
 import com.fissy.dialer.util.DialerUtils;
 import com.fissy.dialer.util.IntentUtil;
 
-/** ViewHolder for {@link ContactsFragment} to display add contact row. */
+/**
+ * ViewHolder for {@link ContactsFragment} to display add contact row.
+ */
 final class AddContactViewHolder extends ViewHolder implements OnClickListener {
 
-  private final Context context;
+    private final Context context;
 
-  AddContactViewHolder(View view) {
-    super(view);
-    view.setOnClickListener(this);
-    context = view.getContext();
-  }
+    AddContactViewHolder(View view) {
+        super(view);
+        view.setOnClickListener(this);
+        context = view.getContext();
+    }
 
-  @Override
-  public void onClick(View v) {
-    DialerUtils.startActivityWithErrorToast(
-        context, IntentUtil.getNewContactIntent(), R.string.add_contact_not_available);
-  }
+    @Override
+    public void onClick(View v) {
+        DialerUtils.startActivityWithErrorToast(
+                context, IntentUtil.getNewContactIntent(), R.string.add_contact_not_available);
+    }
 }

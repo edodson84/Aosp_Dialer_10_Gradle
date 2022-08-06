@@ -17,8 +17,9 @@
 package com.fissy.dialer.app.legacybindings;
 
 import android.app.Activity;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.view.ViewGroup;
+
 import com.fissy.dialer.app.calllog.CallLogAdapter;
 import com.fissy.dialer.app.calllog.calllogcache.CallLogCache;
 import com.fissy.dialer.app.contactinfo.ContactInfoCache;
@@ -31,19 +32,19 @@ import com.fissy.dialer.blocking.FilteredNumberAsyncQueryHandler;
  */
 public interface DialerLegacyBindings {
 
-  /**
-   * activityType must be one of following constants: CallLogAdapter.ACTIVITY_TYPE_CALL_LOG, or
-   * CallLogAdapter.ACTIVITY_TYPE_DIALTACTS.
-   */
-  CallLogAdapter newCallLogAdapter(
-      Activity activity,
-      ViewGroup alertContainer,
-      CallLogAdapter.CallFetcher callFetcher,
-      CallLogAdapter.MultiSelectRemoveView multiSelectRemoveView,
-      CallLogAdapter.OnActionModeStateChangedListener actionModeStateChangedListener,
-      CallLogCache callLogCache,
-      ContactInfoCache contactInfoCache,
-      VoicemailPlaybackPresenter voicemailPlaybackPresenter,
-      @NonNull FilteredNumberAsyncQueryHandler filteredNumberAsyncQueryHandler,
-      int activityType);
+    /**
+     * activityType must be one of following constants: CallLogAdapter.ACTIVITY_TYPE_CALL_LOG, or
+     * CallLogAdapter.ACTIVITY_TYPE_DIALTACTS.
+     */
+    CallLogAdapter newCallLogAdapter(
+            Activity activity,
+            ViewGroup alertContainer,
+            CallLogAdapter.CallFetcher callFetcher,
+            CallLogAdapter.MultiSelectRemoveView multiSelectRemoveView,
+            CallLogAdapter.OnActionModeStateChangedListener actionModeStateChangedListener,
+            CallLogCache callLogCache,
+            ContactInfoCache contactInfoCache,
+            VoicemailPlaybackPresenter voicemailPlaybackPresenter,
+            @NonNull FilteredNumberAsyncQueryHandler filteredNumberAsyncQueryHandler,
+            int activityType);
 }

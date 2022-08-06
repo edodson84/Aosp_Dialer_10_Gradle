@@ -17,29 +17,33 @@
 package com.fissy.dialer.searchfragment.common;
 
 import android.database.Cursor;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
-/** Base cursor interface needed for all cursors used in search. */
+/**
+ * Base cursor interface needed for all cursors used in search.
+ */
 public interface SearchCursor extends Cursor {
 
-  String[] HEADER_PROJECTION = {"header_text"};
+    String[] HEADER_PROJECTION = {"header_text"};
 
-  int HEADER_TEXT_POSITION = 0;
+    int HEADER_TEXT_POSITION = 0;
 
-  /** Returns true if the current cursor position is a header */
-  boolean isHeader();
+    /**
+     * Returns true if the current cursor position is a header
+     */
+    boolean isHeader();
 
-  /**
-   * Notifies the cursor that the query has updated.
-   *
-   * @return true if the data set has changed.
-   */
-  boolean updateQuery(@NonNull String query);
+    /**
+     * Notifies the cursor that the query has updated.
+     *
+     * @return true if the data set has changed.
+     */
+    boolean updateQuery(@NonNull String query);
 
-  /**
-   * Returns an ID unique to the directory this cursor reads from. Generally this value will be
-   * related to {@link android.provider.ContactsContract.Directory} but could differ depending on
-   * the implementation.
-   */
-  long getDirectoryId();
+    /**
+     * Returns an ID unique to the directory this cursor reads from. Generally this value will be
+     * related to {@link android.provider.ContactsContract.Directory} but could differ depending on
+     * the implementation.
+     */
+    long getDirectoryId();
 }

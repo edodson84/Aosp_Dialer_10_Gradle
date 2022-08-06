@@ -18,12 +18,14 @@ package com.fissy.dialer.calllog.observer;
 
 import android.database.ContentObserver;
 import android.net.Uri;
-import android.support.annotation.MainThread;
-import android.support.annotation.VisibleForTesting;
+import androidx.annotation.MainThread;
+import androidx.annotation.VisibleForTesting;
+
 import com.fissy.dialer.calllog.notifier.RefreshAnnotatedCallLogNotifier;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.common.concurrent.ThreadUtil;
+
 import javax.inject.Inject;
 
 /**
@@ -32,22 +34,22 @@ import javax.inject.Inject;
  */
 public final class MarkDirtyObserver extends ContentObserver {
 
-  private final RefreshAnnotatedCallLogNotifier refreshAnnotatedCallLogNotifier;
+    private final RefreshAnnotatedCallLogNotifier refreshAnnotatedCallLogNotifier;
 
-  @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
-  @Inject
-  public MarkDirtyObserver(RefreshAnnotatedCallLogNotifier refreshAnnotatedCallLogNotifier) {
-    super(ThreadUtil.getUiThreadHandler());
-    this.refreshAnnotatedCallLogNotifier = refreshAnnotatedCallLogNotifier;
-  }
+    @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
+    @Inject
+    public MarkDirtyObserver(RefreshAnnotatedCallLogNotifier refreshAnnotatedCallLogNotifier) {
+        super(ThreadUtil.getUiThreadHandler());
+        this.refreshAnnotatedCallLogNotifier = refreshAnnotatedCallLogNotifier;
+    }
 
-  @MainThread
-  @Override
-  public void onChange(boolean selfChange, Uri uri) {
-    Assert.isMainThread();
-    LogUtil.i(
-        "MarkDirtyObserver.onChange", "Uri:%s, SelfChange:%b", String.valueOf(uri), selfChange);
+    @MainThread
+    @Override
+    public void onChange(boolean selfChange, Uri uri) {
+        Assert.isMainThread();
+        LogUtil.i(
+                "MarkDirtyObserver.onChange", "Uri:%s, SelfChange:%b", String.valueOf(uri), selfChange);
 
-    refreshAnnotatedCallLogNotifier.markDirtyAndNotify();
-  }
+        refreshAnnotatedCallLogNotifier.markDirtyAndNotify();
+    }
 }

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2014 The Android Open Source Project
+<?xml version="1.0" encoding="utf-8"?><!-- Copyright (C) 2014 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -13,21 +12,23 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<com.android.phone.common.dialpad.DialpadKeyButton
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.android.phone.common.dialpad.DialpadKeyButton xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/pound"
     style="@style/DialpadKeyButtonStyle">
+
     <LinearLayout
-        android:orientation="horizontal"
+        style="@style/DialpadKeyInternalLayoutStyle"
         android:layout_gravity="center_vertical|right"
-        style="@style/DialpadKeyInternalLayoutStyle" >
+        android:orientation="horizontal">
+
         <com.android.phone.common.dialpad.DialpadTextView
             android:id="@id/dialpad_key_number"
+            style="@style/DialpadKeyPoundStyle"
             android:layout_width="@dimen/dialpad_key_number_width"
-            android:layout_marginRight="@dimen/dialpad_key_margin_right"
-            style="@style/DialpadKeyPoundStyle" />
+            android:layout_marginRight="@dimen/dialpad_key_margin_right" />
+
         <View
-            android:layout_width="@dimen/dialpad_key_text_width"
-            style="@style/DialpadKeyLettersStyle" />
+            style="@style/DialpadKeyLettersStyle"
+            android:layout_width="@dimen/dialpad_key_text_width" />
     </LinearLayout>
 </com.android.phone.common.dialpad.DialpadKeyButton>

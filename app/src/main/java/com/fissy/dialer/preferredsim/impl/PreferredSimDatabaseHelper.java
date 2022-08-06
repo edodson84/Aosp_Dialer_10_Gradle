@@ -19,38 +19,42 @@ package com.fissy.dialer.preferredsim.impl;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.preferredsim.PreferredSimFallbackContract.PreferredSim;
 
-/** Database helper class for preferred SIM. */
+/**
+ * Database helper class for preferred SIM.
+ */
 public class PreferredSimDatabaseHelper extends SQLiteOpenHelper {
 
-  static final String TABLE = "preferred_sim";
+    static final String TABLE = "preferred_sim";
 
-  private static final String CREATE_TABLE_SQL =
-      "create table if not exists "
-          + TABLE
-          + " ("
-          + (PreferredSim.DATA_ID + " integer primary key, ")
-          + (PreferredSim.PREFERRED_PHONE_ACCOUNT_COMPONENT_NAME + " text, ")
-          + (PreferredSim.PREFERRED_PHONE_ACCOUNT_ID + " text")
-          + ");";
+    private static final String CREATE_TABLE_SQL =
+            "create table if not exists "
+                    + TABLE
+                    + " ("
+                    + (PreferredSim.DATA_ID + " integer primary key, ")
+                    + (PreferredSim.PREFERRED_PHONE_ACCOUNT_COMPONENT_NAME + " text, ")
+                    + (PreferredSim.PREFERRED_PHONE_ACCOUNT_ID + " text")
+                    + ");";
 
-  PreferredSimDatabaseHelper(Context appContext) {
-    super(appContext, "preferred_sim.db", null, 1);
-  }
+    PreferredSimDatabaseHelper(Context appContext) {
+        super(appContext, "preferred_sim.db", null, 1);
+    }
 
-  @Override
-  public void onCreate(SQLiteDatabase db) {
-    LogUtil.enterBlock("PreferredSimDatabaseHelper.onCreate");
-    long startTime = System.currentTimeMillis();
-    db.execSQL(CREATE_TABLE_SQL);
-    LogUtil.i(
-        "PreferredSimDatabaseHelper.onCreate",
-        "took: %dms",
-        System.currentTimeMillis() - startTime);
-  }
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        LogUtil.enterBlock("PreferredSimDatabaseHelper.onCreate");
+        long startTime = System.currentTimeMillis();
+        db.execSQL(CREATE_TABLE_SQL);
+        LogUtil.i(
+                "PreferredSimDatabaseHelper.onCreate",
+                "took: %dms",
+                System.currentTimeMillis() - startTime);
+    }
 
-  @Override
-  public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {}
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    }
 }

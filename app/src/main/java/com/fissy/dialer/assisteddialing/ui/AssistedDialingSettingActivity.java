@@ -17,28 +17,30 @@
 package com.fissy.dialer.assisteddialing.ui;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.MenuItem;
 
-/** The Settings Activity for Assisted Dialing. */
+/**
+ * The Settings Activity for Assisted Dialing.
+ */
 public class AssistedDialingSettingActivity extends AppCompatActivity {
 
-  @Override
-  protected void onCreate(Bundle bundle) {
-    super.onCreate(bundle);
+    @Override
+    protected void onCreate(Bundle bundle) {
+        super.onCreate(bundle);
 
-    getFragmentManager()
-        .beginTransaction()
-        .replace(android.R.id.content, new AssistedDialingSettingFragment())
-        .commit();
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    if (item.getItemId() == android.R.id.home) {
-      onBackPressed();
-      return true;
+        getFragmentManager()
+                .beginTransaction()
+                .replace(android.R.id.content, new AssistedDialingSettingFragment())
+                .commit();
     }
-    return super.onOptionsItemSelected(item);
-  }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

@@ -24,6 +24,6 @@ package com.android.voicemail;
  */
 public class VisualVoicemailTypeExtensions {
 
-  // Protocol used by Verizon wireless
-  public static final String VVM_TYPE_VVM3 = "vvm_type_vvm3";
+    // Protocol used by Verizon wireless
+    public static final String VVM_TYPE_VVM3 = "vvm_type_vvm3";
 }

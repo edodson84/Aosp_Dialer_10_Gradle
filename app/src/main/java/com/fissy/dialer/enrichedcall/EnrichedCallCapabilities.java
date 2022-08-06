@@ -18,57 +18,61 @@ package com.fissy.dialer.enrichedcall;
 
 import com.google.auto.value.AutoValue;
 
-/** Value type holding enriched call capabilities. */
+/**
+ * Value type holding enriched call capabilities.
+ */
 @AutoValue
 public abstract class EnrichedCallCapabilities {
 
-  public static final EnrichedCallCapabilities NO_CAPABILITIES = builder().build();
+    public static final EnrichedCallCapabilities NO_CAPABILITIES = builder().build();
 
-  public static final EnrichedCallCapabilities ALL_CAPABILITIES =
-      builder()
-          .setCallComposerCapable(true)
-          .setPostCallCapable(true)
-          .setVideoShareCapable(true)
-          .build();
+    public static final EnrichedCallCapabilities ALL_CAPABILITIES =
+            builder()
+                    .setCallComposerCapable(true)
+                    .setPostCallCapable(true)
+                    .setVideoShareCapable(true)
+                    .build();
 
-  public abstract boolean isCallComposerCapable();
+    /**
+     * Creates an instance of {@link Builder}.
+     *
+     * <p>Unless otherwise set, all fields will default to false.
+     */
+    public static Builder builder() {
+        return new AutoValue_EnrichedCallCapabilities.Builder()
+                .setCallComposerCapable(false)
+                .setPostCallCapable(false)
+                .setVideoShareCapable(false)
+                .setTemporarilyUnavailable(false);
+    }
 
-  public abstract boolean isPostCallCapable();
+    public abstract boolean isCallComposerCapable();
 
-  public abstract boolean isVideoShareCapable();
+    public abstract boolean isPostCallCapable();
 
-  public abstract Builder toBuilder();
+    public abstract boolean isVideoShareCapable();
 
-  /**
-   * Returns {@code true} if these capabilities represent those of a user that is temporarily
-   * unavailable. This is an indication that capabilities should be refreshed.
-   */
-  public abstract boolean isTemporarilyUnavailable();
+    public abstract Builder toBuilder();
 
-  /**
-   * Creates an instance of {@link Builder}.
-   *
-   * <p>Unless otherwise set, all fields will default to false.
-   */
-  public static Builder builder() {
-    return new AutoValue_EnrichedCallCapabilities.Builder()
-        .setCallComposerCapable(false)
-        .setPostCallCapable(false)
-        .setVideoShareCapable(false)
-        .setTemporarilyUnavailable(false);
-  }
+    /**
+     * Returns {@code true} if these capabilities represent those of a user that is temporarily
+     * unavailable. This is an indication that capabilities should be refreshed.
+     */
+    public abstract boolean isTemporarilyUnavailable();
 
-  /** Creates instances of {@link EnrichedCallCapabilities}. */
-  @AutoValue.Builder
-  public abstract static class Builder {
-    public abstract Builder setCallComposerCapable(boolean isCapable);
+    /**
+     * Creates instances of {@link EnrichedCallCapabilities}.
+     */
+    @AutoValue.Builder
+    public abstract static class Builder {
+        public abstract Builder setCallComposerCapable(boolean isCapable);
 
-    public abstract Builder setPostCallCapable(boolean isCapable);
+        public abstract Builder setPostCallCapable(boolean isCapable);
 
-    public abstract Builder setVideoShareCapable(boolean isCapable);
+        public abstract Builder setVideoShareCapable(boolean isCapable);
 
-    public abstract Builder setTemporarilyUnavailable(boolean temporarilyUnavailable);
+        public abstract Builder setTemporarilyUnavailable(boolean temporarilyUnavailable);
 
-    public abstract EnrichedCallCapabilities build();
-  }
+        public abstract EnrichedCallCapabilities build();
+    }
 }

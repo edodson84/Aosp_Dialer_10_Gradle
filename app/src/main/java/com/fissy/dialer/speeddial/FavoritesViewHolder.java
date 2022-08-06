@@ -18,8 +18,8 @@ package com.fissy.dialer.speeddial;
 
 import android.content.Context;
 import android.provider.ContactsContract.Contacts;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
@@ -37,116 +37,130 @@ import com.fissy.dialer.speeddial.draghelper.SpeedDialFavoritesViewHolderOnTouch
 import com.fissy.dialer.speeddial.draghelper.SpeedDialFavoritesViewHolderOnTouchListener.OnTouchFinishCallback;
 import com.fissy.dialer.speeddial.loader.SpeedDialUiItem;
 
-/** ViewHolder for starred/favorite contacts in {@link SpeedDialFragment}. */
+/**
+ * ViewHolder for starred/favorite contacts in {@link SpeedDialFragment}.
+ */
 public class FavoritesViewHolder extends RecyclerView.ViewHolder
-    implements OnClickListener, OnLongClickListener, OnTouchFinishCallback {
+        implements OnClickListener, OnLongClickListener, OnTouchFinishCallback {
 
-  private final FavoriteContactsListener listener;
+    private final FavoriteContactsListener listener;
 
-  private final QuickContactBadge photoView;
-  private final TextView nameView;
-  private final TextView phoneType;
-  private final FrameLayout videoCallIcon;
+    private final QuickContactBadge photoView;
+    private final TextView nameView;
+    private final TextView phoneType;
+    private final FrameLayout videoCallIcon;
 
-  private final FrameLayout avatarContainer;
+    private final FrameLayout avatarContainer;
 
-  private SpeedDialUiItem speedDialUiItem;
+    private SpeedDialUiItem speedDialUiItem;
 
-  public FavoritesViewHolder(View view, ItemTouchHelper helper, FavoriteContactsListener listener) {
-    super(view);
-    photoView = view.findViewById(R.id.avatar);
-    nameView = view.findViewById(R.id.name);
-    phoneType = view.findViewById(R.id.phone_type);
-    videoCallIcon = view.findViewById(R.id.video_call_container);
-    avatarContainer = view.findViewById(R.id.avatar_container);
-    view.setOnClickListener(this);
-    view.setOnLongClickListener(this);
-    view.setOnTouchListener(
-        new SpeedDialFavoritesViewHolderOnTouchListener(
-            ViewConfiguration.get(view.getContext()), helper, this, this));
-    photoView.setClickable(false);
-    this.listener = listener;
-  }
-
-  public void bind(Context context, SpeedDialUiItem speedDialUiItem) {
-    this.speedDialUiItem = Assert.isNotNull(speedDialUiItem);
-    Assert.checkArgument(speedDialUiItem.isStarred());
-
-    nameView.setText(speedDialUiItem.name());
-
-    Channel channel = speedDialUiItem.defaultChannel();
-    if (channel == null) {
-      channel = speedDialUiItem.getDefaultVoiceChannel();
+    public FavoritesViewHolder(View view, ItemTouchHelper helper, FavoriteContactsListener listener) {
+        super(view);
+        photoView = view.findViewById(R.id.avatar);
+        nameView = view.findViewById(R.id.name);
+        phoneType = view.findViewById(R.id.phone_type);
+        videoCallIcon = view.findViewById(R.id.video_call_container);
+        avatarContainer = view.findViewById(R.id.avatar_container);
+        view.setOnClickListener(this);
+        view.setOnLongClickListener(this);
+        view.setOnTouchListener(
+                new SpeedDialFavoritesViewHolderOnTouchListener(
+                        ViewConfiguration.get(view.getContext()), helper, this, this));
+        photoView.setClickable(false);
+        this.listener = listener;
     }
 
-    if (channel != null) {
-      phoneType.setText(channel.label());
-      videoCallIcon.setVisibility(channel.isVideoTechnology() ? View.VISIBLE : View.GONE);
-    } else {
-      phoneType.setText("");
-      videoCallIcon.setVisibility(View.GONE);
+    public void bind(Context context, SpeedDialUiItem speedDialUiItem) {
+        this.speedDialUiItem = Assert.isNotNull(speedDialUiItem);
+        Assert.checkArgument(speedDialUiItem.isStarred());
+
+        nameView.setText(speedDialUiItem.name());
+
+        Channel channel = speedDialUiItem.defaultChannel();
+        if (channel == null) {
+            channel = speedDialUiItem.getDefaultVoiceChannel();
+        }
+
+        if (channel != null) {
+            phoneType.setText(channel.label());
+            videoCallIcon.setVisibility(channel.isVideoTechnology() ? View.VISIBLE : View.GONE);
+        } else {
+            phoneType.setText("");
+            videoCallIcon.setVisibility(View.GONE);
+        }
+
+        GlidePhotoManagerComponent.get(context)
+                .glidePhotoManager()
+                .loadQuickContactBadge(
+                        photoView,
+                        PhotoInfo.newBuilder()
+                                .setPhotoId(speedDialUiItem.photoId())
+                                .setPhotoUri(speedDialUiItem.photoUri())
+                                .setName(speedDialUiItem.name())
+                                .setLookupUri(
+                                        Contacts.getLookupUri(speedDialUiItem.contactId(), speedDialUiItem.lookupKey())
+                                                .toString())
+                                .build());
     }
 
-    GlidePhotoManagerComponent.get(context)
-        .glidePhotoManager()
-        .loadQuickContactBadge(
-            photoView,
-            PhotoInfo.newBuilder()
-                .setPhotoId(speedDialUiItem.photoId())
-                .setPhotoUri(speedDialUiItem.photoUri())
-                .setName(speedDialUiItem.name())
-                .setLookupUri(
-                    Contacts.getLookupUri(speedDialUiItem.contactId(), speedDialUiItem.lookupKey())
-                        .toString())
-                .build());
-  }
-
-  @Override
-  public void onClick(View v) {
-    if (speedDialUiItem.defaultChannel() != null) {
-      listener.onClick(speedDialUiItem.defaultChannel());
-    } else {
-      listener.onAmbiguousContactClicked(speedDialUiItem);
+    @Override
+    public void onClick(View v) {
+        if (speedDialUiItem.defaultChannel() != null) {
+            listener.onClick(speedDialUiItem.defaultChannel());
+        } else {
+            listener.onAmbiguousContactClicked(speedDialUiItem);
+        }
     }
-  }
 
-  @Override
-  public boolean onLongClick(View view) {
-    // TODO(calderwoodra): add bounce/sin wave scale animation
-    listener.showContextMenu(photoView, speedDialUiItem);
-    return true;
-  }
+    @Override
+    public boolean onLongClick(View view) {
+        // TODO(calderwoodra): add bounce/sin wave scale animation
+        listener.showContextMenu(photoView, speedDialUiItem);
+        return true;
+    }
 
-  @Override
-  public void onTouchFinished(boolean closeContextMenu) {
-    listener.onTouchFinished(closeContextMenu);
-  }
+    @Override
+    public void onTouchFinished(boolean closeContextMenu) {
+        listener.onTouchFinished(closeContextMenu);
+    }
 
-  FrameLayout getAvatarContainer() {
-    return avatarContainer;
-  }
+    FrameLayout getAvatarContainer() {
+        return avatarContainer;
+    }
 
-  void onSelectedChanged(boolean selected) {
-    nameView.setVisibility(selected ? View.GONE : View.VISIBLE);
-    phoneType.setVisibility(selected ? View.GONE : View.VISIBLE);
-  }
+    void onSelectedChanged(boolean selected) {
+        nameView.setVisibility(selected ? View.GONE : View.VISIBLE);
+        phoneType.setVisibility(selected ? View.GONE : View.VISIBLE);
+    }
 
-  /** Listener/callback for {@link FavoritesViewHolder} actions. */
-  public interface FavoriteContactsListener {
+    /**
+     * Listener/callback for {@link FavoritesViewHolder} actions.
+     */
+    public interface FavoriteContactsListener {
 
-    /** Called when the user clicks on a favorite contact that doesn't have a default number. */
-    void onAmbiguousContactClicked(SpeedDialUiItem speedDialUiItem);
+        /**
+         * Called when the user clicks on a favorite contact that doesn't have a default number.
+         */
+        void onAmbiguousContactClicked(SpeedDialUiItem speedDialUiItem);
 
-    /** Called when the user clicks on a favorite contact. */
-    void onClick(Channel channel);
+        /**
+         * Called when the user clicks on a favorite contact.
+         */
+        void onClick(Channel channel);
 
-    /** Called when the user long clicks on a favorite contact. */
-    void showContextMenu(View view, SpeedDialUiItem speedDialUiItem);
+        /**
+         * Called when the user long clicks on a favorite contact.
+         */
+        void showContextMenu(View view, SpeedDialUiItem speedDialUiItem);
 
-    /** Called when the user is no longer touching the favorite contact. */
-    void onTouchFinished(boolean closeContextMenu);
+        /**
+         * Called when the user is no longer touching the favorite contact.
+         */
+        void onTouchFinished(boolean closeContextMenu);
 
-    /** Called when the user drag the favorite to remove. */
-    void onRequestRemove(SpeedDialUiItem speedDialUiItem);
-  }
+        /**
+         * Called when the user drag the favorite to remove.
+         */
+        void onRequestRemove(SpeedDialUiItem speedDialUiItem);
+    }
 }

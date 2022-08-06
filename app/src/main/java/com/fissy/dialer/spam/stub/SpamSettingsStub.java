@@ -18,72 +18,77 @@ package com.fissy.dialer.spam.stub;
 
 import android.content.Context;
 import android.content.Intent;
+
 import com.fissy.dialer.spam.SpamSettings;
+
 import javax.inject.Inject;
 
-/** Default implementation of SpamSettings. */
+/**
+ * Default implementation of SpamSettings.
+ */
 public class SpamSettingsStub implements SpamSettings {
 
-  @Inject
-  public SpamSettingsStub() {}
+    @Inject
+    public SpamSettingsStub() {
+    }
 
-  @Override
-  public boolean isSpamEnabled() {
-    return false;
-  }
+    @Override
+    public boolean isSpamEnabled() {
+        return false;
+    }
 
-  @Override
-  public boolean isSpamNotificationEnabled() {
-    return false;
-  }
+    @Override
+    public boolean isSpamNotificationEnabled() {
+        return false;
+    }
 
-  @Override
-  public boolean isSpamBlockingEnabledByFlag() {
-    return false;
-  }
+    @Override
+    public boolean isSpamBlockingEnabledByFlag() {
+        return false;
+    }
 
-  @Override
-  public boolean isSpamBlockingControlledByCarrier() {
-    return false;
-  }
+    @Override
+    public boolean isSpamBlockingControlledByCarrier() {
+        return false;
+    }
 
-  @Override
-  public boolean isSpamBlockingEnabled() {
-    return false;
-  }
+    @Override
+    public boolean isSpamBlockingEnabled() {
+        return false;
+    }
 
-  @Override
-  public boolean isSpamBlockingEnabledByUser() {
-    return false;
-  }
+    @Override
+    public boolean isSpamBlockingEnabledByUser() {
+        return false;
+    }
 
-  @Override
-  public boolean isDialogEnabledForSpamNotification() {
-    return false;
-  }
+    @Override
+    public boolean isDialogEnabledForSpamNotification() {
+        return false;
+    }
 
-  @Override
-  public boolean isDialogReportSpamCheckedByDefault() {
-    return false;
-  }
+    @Override
+    public boolean isDialogReportSpamCheckedByDefault() {
+        return false;
+    }
 
-  @Override
-  public int percentOfSpamNotificationsToShow() {
-    return 0;
-  }
+    @Override
+    public int percentOfSpamNotificationsToShow() {
+        return 0;
+    }
 
-  @Override
-  public int percentOfNonSpamNotificationsToShow() {
-    return 0;
-  }
+    @Override
+    public int percentOfNonSpamNotificationsToShow() {
+        return 0;
+    }
 
-  @Override
-  public void modifySpamBlockingSetting(boolean enabled, ModifySettingListener listener) {
-    listener.onComplete(false);
-  }
+    @Override
+    public void modifySpamBlockingSetting(boolean enabled, ModifySettingListener listener) {
+        listener.onComplete(false);
+    }
 
-  @Override
-  public Intent getSpamBlockingSettingIntent(Context context) {
-    return new Intent();
-  }
+    @Override
+    public Intent getSpamBlockingSettingIntent(Context context) {
+        return new Intent();
+    }
 }

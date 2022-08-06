@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- 
+<?xml version="1.0" encoding="UTF-8"?><!--
   ~ Copyright (C) 2016 The Android Open Source Project
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,8 +14,7 @@
   ~ limitations under the License
    -->
 
-<resources xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="voicemail_error_activating_title" msgid="2428457130578359186">"விஷூவல் குரலஞ்சலைச் செயல்படுத்துகிறது"</string>
     <string name="voicemail_error_activating_message" msgid="7157030596259443393">"விஷுவல் குரலஞ்சலை முழுவதுமாக இயக்கும் வரை, உங்களால் குரலஞ்சல் அறிவிப்புகளைப் பெற முடியாமல் போகலாம். குரலஞ்சலை முழுவதுமாக இயக்கும் வரை புதிய செய்திகளைப் பெற, குரலஞ்சலை அழைக்கவும்."</string>
     <string name="voicemail_error_not_activate_no_signal_title" msgid="742273366199085615">"விஷூவல் குரலஞ்சலைச் செயல்படுத்த முடியவில்லை"</string>

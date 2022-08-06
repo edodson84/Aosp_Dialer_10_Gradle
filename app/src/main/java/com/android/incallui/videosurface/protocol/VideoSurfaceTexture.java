@@ -17,41 +17,47 @@
 package com.android.incallui.videosurface.protocol;
 
 import android.graphics.Point;
-import android.support.annotation.IntDef;
+import androidx.annotation.IntDef;
 import android.view.Surface;
 import android.view.TextureView;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-/** Represents a surface texture for a video feed. */
+/**
+ * Represents a surface texture for a video feed.
+ */
 public interface VideoSurfaceTexture {
 
-  /** Whether this represents the preview or remote display. */
-  @Retention(RetentionPolicy.SOURCE)
-  @IntDef({
-    SURFACE_TYPE_LOCAL,
-    SURFACE_TYPE_REMOTE,
-  })
-  @interface SurfaceType {}
+    int SURFACE_TYPE_LOCAL = 1;
+    int SURFACE_TYPE_REMOTE = 2;
 
-  int SURFACE_TYPE_LOCAL = 1;
-  int SURFACE_TYPE_REMOTE = 2;
+    void setDelegate(VideoSurfaceDelegate delegate);
 
-  void setDelegate(VideoSurfaceDelegate delegate);
+    int getSurfaceType();
 
-  int getSurfaceType();
+    Surface getSavedSurface();
 
-  Surface getSavedSurface();
+    Point getSurfaceDimensions();
 
-  void setSurfaceDimensions(Point surfaceDimensions);
+    void setSurfaceDimensions(Point surfaceDimensions);
 
-  Point getSurfaceDimensions();
+    Point getSourceVideoDimensions();
 
-  void setSourceVideoDimensions(Point sourceVideoDimensions);
+    void setSourceVideoDimensions(Point sourceVideoDimensions);
 
-  Point getSourceVideoDimensions();
+    void attachToTextureView(TextureView textureView);
 
-  void attachToTextureView(TextureView textureView);
+    void setDoneWithSurface();
 
-  void setDoneWithSurface();
+    /**
+     * Whether this represents the preview or remote display.
+     */
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({
+            SURFACE_TYPE_LOCAL,
+            SURFACE_TYPE_REMOTE,
+    })
+    @interface SurfaceType {
+    }
 }

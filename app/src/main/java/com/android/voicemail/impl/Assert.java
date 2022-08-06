@@ -18,40 +18,44 @@ package com.android.voicemail.impl;
 
 import android.os.Looper;
 
-/** Assertions which will result in program termination. */
+/**
+ * Assertions which will result in program termination.
+ */
 public class Assert {
 
-  private static Boolean isMainThreadForTest;
+    private static Boolean isMainThreadForTest;
 
-  public static void isTrue(boolean condition) {
-    if (!condition) {
-      throw new AssertionError("Expected condition to be true");
+    public static void isTrue(boolean condition) {
+        if (!condition) {
+            throw new AssertionError("Expected condition to be true");
+        }
     }
-  }
 
-  public static void isMainThread() {
-    if (isMainThreadForTest != null) {
-      isTrue(isMainThreadForTest);
-      return;
+    public static void isMainThread() {
+        if (isMainThreadForTest != null) {
+            isTrue(isMainThreadForTest);
+            return;
+        }
+        isTrue(Looper.getMainLooper().equals(Looper.myLooper()));
     }
-    isTrue(Looper.getMainLooper().equals(Looper.myLooper()));
-  }
 
-  public static void isNotMainThread() {
-    if (isMainThreadForTest != null) {
-      isTrue(!isMainThreadForTest);
-      return;
+    public static void isNotMainThread() {
+        if (isMainThreadForTest != null) {
+            isTrue(!isMainThreadForTest);
+            return;
+        }
+        isTrue(!Looper.getMainLooper().equals(Looper.myLooper()));
     }
-    isTrue(!Looper.getMainLooper().equals(Looper.myLooper()));
-  }
 
-  public static void fail() {
-    throw new AssertionError("Fail");
-  }
+    public static void fail() {
+        throw new AssertionError("Fail");
+    }
 
-  /** Override the main thread status for tests. Set to null to revert to normal behavior */
-  @NeededForTesting
-  public static void setIsMainThreadForTesting(Boolean isMainThread) {
-    isMainThreadForTest = isMainThread;
-  }
+    /**
+     * Override the main thread status for tests. Set to null to revert to normal behavior
+     */
+    @NeededForTesting
+    public static void setIsMainThreadForTesting(Boolean isMainThread) {
+        isMainThreadForTest = isMainThread;
+    }
 }

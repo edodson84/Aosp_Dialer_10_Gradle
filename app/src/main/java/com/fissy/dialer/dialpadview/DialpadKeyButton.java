@@ -46,136 +46,144 @@ import android.widget.FrameLayout;
  */
 public class DialpadKeyButton extends FrameLayout {
 
-  /** Accessibility manager instance used to check touch exploration state. */
-  private AccessibilityManager accessibilityManager;
+    /**
+     * Bounds used to filter HOVER_EXIT events.
+     */
+    private final RectF hoverBounds = new RectF();
+    /**
+     * Accessibility manager instance used to check touch exploration state.
+     */
+    private AccessibilityManager accessibilityManager;
+    /**
+     * Alternate content description for long-hover state.
+     */
+    private CharSequence longHoverContentDesc;
 
-  /** Bounds used to filter HOVER_EXIT events. */
-  private final RectF hoverBounds = new RectF();
+    /**
+     * Backup of clickable property. Used for accessibility.
+     */
+    private boolean wasClickable;
 
-  /** Alternate content description for long-hover state. */
-  private CharSequence longHoverContentDesc;
+    /**
+     * Backup of long-clickable property. Used for accessibility.
+     */
+    private boolean wasLongClickable;
 
-  /** Backup of clickable property. Used for accessibility. */
-  private boolean wasClickable;
+    private OnPressedListener onPressedListener;
 
-  /** Backup of long-clickable property. Used for accessibility. */
-  private boolean wasLongClickable;
-
-  private OnPressedListener onPressedListener;
-
-  public DialpadKeyButton(Context context, AttributeSet attrs) {
-    super(context, attrs);
-    initForAccessibility(context);
-  }
-
-  public DialpadKeyButton(Context context, AttributeSet attrs, int defStyle) {
-    super(context, attrs, defStyle);
-    initForAccessibility(context);
-  }
-
-  public void setOnPressedListener(OnPressedListener onPressedListener) {
-    this.onPressedListener = onPressedListener;
-  }
-
-  private void initForAccessibility(Context context) {
-    accessibilityManager =
-        (AccessibilityManager) context.getSystemService(Context.ACCESSIBILITY_SERVICE);
-  }
-
-  public void setLongHoverContentDescription(CharSequence contentDescription) {
-    longHoverContentDesc = contentDescription;
-  }
-
-  @Override
-  public void setPressed(boolean pressed) {
-    super.setPressed(pressed);
-    if (onPressedListener != null) {
-      onPressedListener.onPressed(this, pressed);
-    }
-  }
-
-  @Override
-  public void onSizeChanged(int w, int h, int oldw, int oldh) {
-    super.onSizeChanged(w, h, oldw, oldh);
-
-    hoverBounds.left = getPaddingLeft();
-    hoverBounds.right = w - getPaddingRight();
-    hoverBounds.top = getPaddingTop();
-    hoverBounds.bottom = h - getPaddingBottom();
-  }
-
-  @Override
-  public boolean performAccessibilityAction(int action, Bundle arguments) {
-    if (action == AccessibilityNodeInfo.ACTION_CLICK) {
-      simulateClickForAccessibility();
-      return true;
+    public DialpadKeyButton(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        initForAccessibility(context);
     }
 
-    return super.performAccessibilityAction(action, arguments);
-  }
-
-  @Override
-  public void onInitializeAccessibilityNodeInfo(AccessibilityNodeInfo info) {
-    super.onInitializeAccessibilityNodeInfo(info);
-    // If the button has a long hover description, ask talkback to announce the action follow by
-    // the description (for example "double tap and hold to call voicemail").
-    if (!TextUtils.isEmpty(longHoverContentDesc)) {
-      AccessibilityAction longClickAction =
-          new AccessibilityAction(AccessibilityNodeInfo.ACTION_LONG_CLICK, longHoverContentDesc);
-      info.addAction(longClickAction);
+    public DialpadKeyButton(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        initForAccessibility(context);
     }
-  }
 
-  @Override
-  public boolean onHoverEvent(MotionEvent event) {
-    // When touch exploration is turned on, lifting a finger while inside
-    // the button's hover target bounds should perform a click action.
-    if (accessibilityManager.isEnabled() && accessibilityManager.isTouchExplorationEnabled()) {
-      switch (event.getActionMasked()) {
-        case MotionEvent.ACTION_HOVER_ENTER:
-          // Lift-to-type temporarily disables double-tap activation.
-          wasClickable = isClickable();
-          wasLongClickable = isLongClickable();
-          setClickable(false);
-          setLongClickable(false);
-          break;
-        case MotionEvent.ACTION_HOVER_EXIT:
-          if (hoverBounds.contains(event.getX(), event.getY())) {
+    public void setOnPressedListener(OnPressedListener onPressedListener) {
+        this.onPressedListener = onPressedListener;
+    }
+
+    private void initForAccessibility(Context context) {
+        accessibilityManager =
+                (AccessibilityManager) context.getSystemService(Context.ACCESSIBILITY_SERVICE);
+    }
+
+    public void setLongHoverContentDescription(CharSequence contentDescription) {
+        longHoverContentDesc = contentDescription;
+    }
+
+    @Override
+    public void setPressed(boolean pressed) {
+        super.setPressed(pressed);
+        if (onPressedListener != null) {
+            onPressedListener.onPressed(this, pressed);
+        }
+    }
+
+    @Override
+    public void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+
+        hoverBounds.left = getPaddingLeft();
+        hoverBounds.right = w - getPaddingRight();
+        hoverBounds.top = getPaddingTop();
+        hoverBounds.bottom = h - getPaddingBottom();
+    }
+
+    @Override
+    public boolean performAccessibilityAction(int action, Bundle arguments) {
+        if (action == AccessibilityNodeInfo.ACTION_CLICK) {
             simulateClickForAccessibility();
-          }
+            return true;
+        }
 
-          setClickable(wasClickable);
-          setLongClickable(wasLongClickable);
-          break;
-        default: // No-op
-          break;
-      }
+        return super.performAccessibilityAction(action, arguments);
     }
 
-    return super.onHoverEvent(event);
-  }
-
-  /**
-   * When accessibility is on, simulate press and release to preserve the semantic meaning of
-   * performClick(). Required for Braille support.
-   */
-  private void simulateClickForAccessibility() {
-    // Checking the press state prevents double activation.
-    if (isPressed()) {
-      return;
+    @Override
+    public void onInitializeAccessibilityNodeInfo(AccessibilityNodeInfo info) {
+        super.onInitializeAccessibilityNodeInfo(info);
+        // If the button has a long hover description, ask talkback to announce the action follow by
+        // the description (for example "double tap and hold to call voicemail").
+        if (!TextUtils.isEmpty(longHoverContentDesc)) {
+            AccessibilityAction longClickAction =
+                    new AccessibilityAction(AccessibilityNodeInfo.ACTION_LONG_CLICK, longHoverContentDesc);
+            info.addAction(longClickAction);
+        }
     }
 
-    setPressed(true);
+    @Override
+    public boolean onHoverEvent(MotionEvent event) {
+        // When touch exploration is turned on, lifting a finger while inside
+        // the button's hover target bounds should perform a click action.
+        if (accessibilityManager.isEnabled() && accessibilityManager.isTouchExplorationEnabled()) {
+            switch (event.getActionMasked()) {
+                case MotionEvent.ACTION_HOVER_ENTER:
+                    // Lift-to-type temporarily disables double-tap activation.
+                    wasClickable = isClickable();
+                    wasLongClickable = isLongClickable();
+                    setClickable(false);
+                    setLongClickable(false);
+                    break;
+                case MotionEvent.ACTION_HOVER_EXIT:
+                    if (hoverBounds.contains(event.getX(), event.getY())) {
+                        simulateClickForAccessibility();
+                    }
 
-    // Stay consistent with performClick() by sending the event after
-    // setting the pressed state but before performing the action.
-    sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_CLICKED);
+                    setClickable(wasClickable);
+                    setLongClickable(wasLongClickable);
+                    break;
+                default: // No-op
+                    break;
+            }
+        }
 
-    setPressed(false);
-  }
+        return super.onHoverEvent(event);
+    }
 
-  public interface OnPressedListener {
+    /**
+     * When accessibility is on, simulate press and release to preserve the semantic meaning of
+     * performClick(). Required for Braille support.
+     */
+    private void simulateClickForAccessibility() {
+        // Checking the press state prevents double activation.
+        if (isPressed()) {
+            return;
+        }
 
-    void onPressed(View view, boolean pressed);
-  }
+        setPressed(true);
+
+        // Stay consistent with performClick() by sending the event after
+        // setting the pressed state but before performing the action.
+        sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_CLICKED);
+
+        setPressed(false);
+    }
+
+    public interface OnPressedListener {
+
+        void onPressed(View view, boolean pressed);
+    }
 }

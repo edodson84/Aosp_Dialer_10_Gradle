@@ -18,13 +18,17 @@ package com.fissy.dialer.app.alert;
 
 import android.view.View;
 
-/** Manages "alerts" to gain the user's attention. */
+/**
+ * Manages "alerts" to gain the user's attention.
+ */
 public interface AlertManager {
 
-  /** Inflates <code>layoutId</code> into a view that is ready to be inserted as an alert. */
-  View inflate(int layoutId);
+    /**
+     * Inflates <code>layoutId</code> into a view that is ready to be inserted as an alert.
+     */
+    View inflate(int layoutId);
 
-  void add(View view);
+    void add(View view);
 
-  void clear();
+    void clear();
 }

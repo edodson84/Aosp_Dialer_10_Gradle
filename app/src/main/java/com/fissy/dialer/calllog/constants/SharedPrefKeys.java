@@ -16,10 +16,13 @@
 
 package com.fissy.dialer.calllog.constants;
 
-/** Keys for shared preferences in the call log package. */
+/**
+ * Keys for shared preferences in the call log package.
+ */
 public final class SharedPrefKeys {
 
-  public static final String FORCE_REBUILD = "force_rebuild";
+    public static final String FORCE_REBUILD = "force_rebuild";
 
-  private SharedPrefKeys() {}
+    private SharedPrefKeys() {
+    }
 }

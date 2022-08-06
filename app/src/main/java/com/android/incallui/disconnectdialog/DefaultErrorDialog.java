@@ -19,32 +19,35 @@ package com.android.incallui.disconnectdialog;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.telecom.DisconnectCause;
 import android.text.TextUtils;
 import android.util.Pair;
+
 import com.android.incallui.call.DialerCall;
 
-/** Default error dialog shown to user after disconnect. */
+/**
+ * Default error dialog shown to user after disconnect.
+ */
 public class DefaultErrorDialog implements DisconnectDialog {
 
-  @Override
-  public boolean shouldShow(DisconnectCause disconnectCause) {
-    return !TextUtils.isEmpty(disconnectCause.getDescription())
-        && (disconnectCause.getCode() == DisconnectCause.ERROR
-            || disconnectCause.getCode() == DisconnectCause.RESTRICTED);
-  }
+    @Override
+    public boolean shouldShow(DisconnectCause disconnectCause) {
+        return !TextUtils.isEmpty(disconnectCause.getDescription())
+                && (disconnectCause.getCode() == DisconnectCause.ERROR
+                || disconnectCause.getCode() == DisconnectCause.RESTRICTED);
+    }
 
-  @Override
-  public Pair<Dialog, CharSequence> createDialog(@NonNull Context context, DialerCall call) {
-    DisconnectCause disconnectCause = call.getDisconnectCause();
-    CharSequence message = disconnectCause.getDescription();
+    @Override
+    public Pair<Dialog, CharSequence> createDialog(@NonNull Context context, DialerCall call) {
+        DisconnectCause disconnectCause = call.getDisconnectCause();
+        CharSequence message = disconnectCause.getDescription();
 
-    Dialog dialog =
-        new AlertDialog.Builder(context)
-            .setMessage(message)
-            .setPositiveButton(android.R.string.cancel, null)
-            .create();
-    return new Pair<>(dialog, message);
-  }
+        Dialog dialog =
+                new AlertDialog.Builder(context)
+                        .setMessage(message)
+                        .setPositiveButton(android.R.string.cancel, null)
+                        .create();
+        return new Pair<>(dialog, message);
+    }
 }

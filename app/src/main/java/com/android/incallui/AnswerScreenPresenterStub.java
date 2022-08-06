@@ -16,7 +16,8 @@
 
 package com.android.incallui;
 
-import android.support.annotation.FloatRange;
+import androidx.annotation.FloatRange;
+
 import com.android.incallui.answer.protocol.AnswerScreenDelegate;
 import com.android.incallui.incalluilock.InCallUiLock;
 
@@ -25,40 +26,49 @@ import com.android.incallui.incalluilock.InCallUiLock;
  * no call exists.
  */
 public class AnswerScreenPresenterStub implements AnswerScreenDelegate {
-  @Override
-  public void onAnswerScreenUnready() {}
+    @Override
+    public void onAnswerScreenUnready() {
+    }
 
-  @Override
-  public void onRejectCallWithMessage(String message) {}
+    @Override
+    public void onRejectCallWithMessage(String message) {
+    }
 
-  @Override
-  public void onAnswer(boolean answerVideoAsAudio) {}
+    @Override
+    public void onAnswer(boolean answerVideoAsAudio) {
+    }
 
-  @Override
-  public void onReject() {}
+    @Override
+    public void onReject() {
+    }
 
-  @Override
-  public void onSpeakEasyCall() {}
+    @Override
+    public void onSpeakEasyCall() {
+    }
 
-  @Override
-  public void onAnswerAndReleaseCall() {}
+    @Override
+    public void onAnswerAndReleaseCall() {
+    }
 
-  @Override
-  public void onAnswerAndReleaseButtonEnabled() {}
+    @Override
+    public void onAnswerAndReleaseButtonEnabled() {
+    }
 
-  @Override
-  public void onAnswerAndReleaseButtonDisabled() {}
+    @Override
+    public void onAnswerAndReleaseButtonDisabled() {
+    }
 
-  @Override
-  public void updateWindowBackgroundColor(@FloatRange(from = -1f, to = 1.0f) float progress) {}
+    @Override
+    public void updateWindowBackgroundColor(@FloatRange(from = -1f, to = 1.0f) float progress) {
+    }
 
-  @Override
-  public boolean isActionTimeout() {
-    return false;
-  }
+    @Override
+    public boolean isActionTimeout() {
+        return false;
+    }
 
-  @Override
-  public InCallUiLock acquireInCallUiLock(String tag) {
-    return InCallPresenter.getInstance().acquireInCallUiLock(tag);
-  }
+    @Override
+    public InCallUiLock acquireInCallUiLock(String tag) {
+        return InCallPresenter.getInstance().acquireInCallUiLock(tag);
+    }
 }

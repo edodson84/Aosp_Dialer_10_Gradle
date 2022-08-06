@@ -19,23 +19,27 @@ package com.fissy.dialer.notification;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.service.notification.StatusBarNotification;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.text.TextUtils;
+
 import com.fissy.dialer.common.Assert;
 
-/** Utilities to manage notifications. */
+/**
+ * Utilities to manage notifications.
+ */
 public final class NotificationManagerUtils {
-  public static void cancelAllInGroup(@NonNull Context context, @NonNull String groupKey) {
-    Assert.isNotNull(context);
-    Assert.checkArgument(!TextUtils.isEmpty(groupKey));
-
-    NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
-    for (StatusBarNotification notification : notificationManager.getActiveNotifications()) {
-      if (TextUtils.equals(groupKey, notification.getNotification().getGroup())) {
-        notificationManager.cancel(notification.getTag(), notification.getId());
-      }
+    private NotificationManagerUtils() {
     }
-  }
 
-  private NotificationManagerUtils() {}
+    public static void cancelAllInGroup(@NonNull Context context, @NonNull String groupKey) {
+        Assert.isNotNull(context);
+        Assert.checkArgument(!TextUtils.isEmpty(groupKey));
+
+        NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
+        for (StatusBarNotification notification : notificationManager.getActiveNotifications()) {
+            if (TextUtils.equals(groupKey, notification.getNotification().getGroup())) {
+                notificationManager.cancel(notification.getTag(), notification.getId());
+            }
+        }
+    }
 }

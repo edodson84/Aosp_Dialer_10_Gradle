@@ -17,7 +17,7 @@
 package com.android.incallui.answer.impl.classifier;
 
 class PointerCountEvaluator {
-  public static float evaluate(int value) {
-    return (value - 1) * (value - 1);
-  }
+    public static float evaluate(int value) {
+        return (value - 1) * (value - 1);
+    }
 }

@@ -18,8 +18,10 @@ package com.fissy.dialer.database;
 
 import android.content.Context;
 
-/** This interface allows the container application to customize the database module. */
+/**
+ * This interface allows the container application to customize the database module.
+ */
 public interface DatabaseBindings {
 
-  DialerDatabaseHelper getDatabaseHelper(Context context);
+    DialerDatabaseHelper getDatabaseHelper(Context context);
 }

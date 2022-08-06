@@ -20,20 +20,24 @@ import com.fissy.dialer.inject.DialerVariant;
 import com.fissy.dialer.inject.InstallIn;
 import com.fissy.dialer.simulator.Simulator;
 import com.fissy.dialer.simulator.SimulatorConnectionsBank;
-import dagger.Binds;
-import dagger.Module;
+
 import javax.inject.Singleton;
 
-/** This module provides an instance of the simulator. */
+import dagger.Binds;
+import dagger.Module;
+
+/**
+ * This module provides an instance of the simulator.
+ */
 @InstallIn(variants = {DialerVariant.DIALER_TEST})
 @Module
 public abstract class SimulatorModule {
-  @Binds
-  @Singleton
-  public abstract Simulator bindsSimulator(SimulatorImpl simulator);
+    @Binds
+    @Singleton
+    public abstract Simulator bindsSimulator(SimulatorImpl simulator);
 
-  @Binds
-  @Singleton
-  public abstract SimulatorConnectionsBank bindsSimulatorConnectionsBank(
-      SimulatorConnectionsBankImpl simulatorConnectionsBank);
+    @Binds
+    @Singleton
+    public abstract SimulatorConnectionsBank bindsSimulatorConnectionsBank(
+            SimulatorConnectionsBankImpl simulatorConnectionsBank);
 }

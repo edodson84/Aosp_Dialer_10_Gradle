@@ -17,26 +17,26 @@
 package com.android.incallui.answer.impl.classifier;
 
 class EndPointLengthEvaluator {
-  public static float evaluate(float value) {
-    float evaluation = 0.0f;
-    if (value < 0.05) {
-      evaluation += 2.0f;
+    public static float evaluate(float value) {
+        float evaluation = 0.0f;
+        if (value < 0.05) {
+            evaluation += 2.0f;
+        }
+        if (value < 0.1) {
+            evaluation += 2.0f;
+        }
+        if (value < 0.2) {
+            evaluation += 2.0f;
+        }
+        if (value < 0.3) {
+            evaluation += 2.0f;
+        }
+        if (value < 0.4) {
+            evaluation += 2.0f;
+        }
+        if (value < 0.5) {
+            evaluation += 2.0f;
+        }
+        return evaluation;
     }
-    if (value < 0.1) {
-      evaluation += 2.0f;
-    }
-    if (value < 0.2) {
-      evaluation += 2.0f;
-    }
-    if (value < 0.3) {
-      evaluation += 2.0f;
-    }
-    if (value < 0.4) {
-      evaluation += 2.0f;
-    }
-    if (value < 0.5) {
-      evaluation += 2.0f;
-    }
-    return evaluation;
-  }
 }

@@ -19,14 +19,16 @@ package com.fissy.dialer.persistentlog;
 import android.content.Context;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.support.annotation.AnyThread;
-import android.support.annotation.NonNull;
-import android.support.annotation.VisibleForTesting;
-import android.support.annotation.WorkerThread;
-import android.support.v4.os.UserManagerCompat;
+import androidx.annotation.AnyThread;
+import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
+import androidx.annotation.WorkerThread;
+import androidx.core.os.UserManagerCompat;
+
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.strictmode.StrictModeUtils;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -49,137 +51,138 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public final class PersistentLogger {
 
-  private static final int FLUSH_DELAY_MILLIS = 200;
-  private static final String LOG_FOLDER = "plain_text";
-  private static final int MESSAGE_FLUSH = 1;
+    @VisibleForTesting
+    static final int LOG_FILE_SIZE_LIMIT = 64 * 1024;
+    @VisibleForTesting
+    static final int LOG_FILE_COUNT_LIMIT = 8;
+    private static final int FLUSH_DELAY_MILLIS = 200;
+    private static final String LOG_FOLDER = "plain_text";
+    private static final int MESSAGE_FLUSH = 1;
+    private static final LinkedBlockingQueue<byte[]> messageQueue = new LinkedBlockingQueue<>();
+    private static PersistentLogFileHandler fileHandler;
+    private static HandlerThread loggerThread;
+    private static Handler loggerThreadHandler;
 
-  @VisibleForTesting static final int LOG_FILE_SIZE_LIMIT = 64 * 1024;
-  @VisibleForTesting static final int LOG_FILE_COUNT_LIMIT = 8;
-
-  private static PersistentLogFileHandler fileHandler;
-
-  private static HandlerThread loggerThread;
-  private static Handler loggerThreadHandler;
-
-  private static final LinkedBlockingQueue<byte[]> messageQueue = new LinkedBlockingQueue<>();
-
-  private PersistentLogger() {}
-
-  public static void initialize(Context context) {
-    fileHandler =
-        new PersistentLogFileHandler(LOG_FOLDER, LOG_FILE_SIZE_LIMIT, LOG_FILE_COUNT_LIMIT);
-    loggerThread = new HandlerThread("PersistentLogger");
-    loggerThread.start();
-    loggerThreadHandler =
-        new Handler(
-            loggerThread.getLooper(),
-            (message) -> {
-              if (message.what == MESSAGE_FLUSH) {
-                if (messageQueue.isEmpty()) {
-                  return true;
-                }
-                loggerThreadHandler.removeMessages(MESSAGE_FLUSH);
-                List<byte[]> messages = new ArrayList<>();
-                messageQueue.drainTo(messages);
-                if (!UserManagerCompat.isUserUnlocked(context)) {
-                  return true;
-                }
-                try {
-                  fileHandler.writeLogs(messages);
-                } catch (IOException e) {
-                  LogUtil.e("PersistentLogger.MESSAGE_FLUSH", "error writing message", e);
-                }
-              }
-              return true;
-            });
-    loggerThreadHandler.post(() -> fileHandler.initialize(context));
-  }
-
-  static HandlerThread getLoggerThread() {
-    return loggerThread;
-  }
-
-  @AnyThread
-  public static void logText(String tag, String string) {
-    log(buildTextLog(tag, string));
-  }
-
-  @VisibleForTesting
-  @AnyThread
-  static void log(byte[] data) {
-    messageQueue.add(data);
-    loggerThreadHandler.sendEmptyMessageDelayed(MESSAGE_FLUSH, FLUSH_DELAY_MILLIS);
-  }
-
-  @VisibleForTesting
-  /** write raw bytes directly to the log file, likely corrupting it. */
-  static void rawLogForTest(byte[] data) {
-    try {
-      fileHandler.writeRawLogsForTest(data);
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-  }
-
-  /** Dump the log as human readable string. Blocks until the dump is finished. */
-  @NonNull
-  @WorkerThread
-  public static String dumpLogToString() {
-    Assert.isWorkerThread();
-    DumpStringRunnable dumpStringRunnable = new DumpStringRunnable();
-    loggerThreadHandler.post(dumpStringRunnable);
-    try {
-      return dumpStringRunnable.get();
-    } catch (InterruptedException e) {
-      Thread.currentThread().interrupt();
-      return "Cannot dump logText: " + e;
-    }
-  }
-
-  private static class DumpStringRunnable implements Runnable {
-    private String result;
-    private final CountDownLatch latch = new CountDownLatch(1);
-
-    @Override
-    public void run() {
-      result = dumpLogToStringInternal();
-      latch.countDown();
+    private PersistentLogger() {
     }
 
-    public String get() throws InterruptedException {
-      latch.await();
-      return result;
+    public static void initialize(Context context) {
+        fileHandler =
+                new PersistentLogFileHandler(LOG_FOLDER, LOG_FILE_SIZE_LIMIT, LOG_FILE_COUNT_LIMIT);
+        loggerThread = new HandlerThread("PersistentLogger");
+        loggerThread.start();
+        loggerThreadHandler =
+                new Handler(
+                        loggerThread.getLooper(),
+                        (message) -> {
+                            if (message.what == MESSAGE_FLUSH) {
+                                if (messageQueue.isEmpty()) {
+                                    return true;
+                                }
+                                loggerThreadHandler.removeMessages(MESSAGE_FLUSH);
+                                List<byte[]> messages = new ArrayList<>();
+                                messageQueue.drainTo(messages);
+                                if (!UserManagerCompat.isUserUnlocked(context)) {
+                                    return true;
+                                }
+                                try {
+                                    fileHandler.writeLogs(messages);
+                                } catch (IOException e) {
+                                    LogUtil.e("PersistentLogger.MESSAGE_FLUSH", "error writing message", e);
+                                }
+                            }
+                            return true;
+                        });
+        loggerThreadHandler.post(() -> fileHandler.initialize(context));
     }
-  }
 
-  @NonNull
-  @WorkerThread
-  private static String dumpLogToStringInternal() {
-    StringBuilder result = new StringBuilder();
-    List<byte[]> logs;
-    try {
-      logs = readLogs();
-    } catch (IOException e) {
-      return "Cannot dump logText: " + e;
+    static HandlerThread getLoggerThread() {
+        return loggerThread;
     }
 
-    for (byte[] log : logs) {
-      result.append(new String(log, StandardCharsets.UTF_8)).append("\n");
+    @AnyThread
+    public static void logText(String tag, String string) {
+        log(buildTextLog(tag, string));
     }
-    return result.toString();
-  }
 
-  @NonNull
-  @WorkerThread
-  @VisibleForTesting
-  static List<byte[]> readLogs() throws IOException {
-    Assert.isWorkerThread();
-    return fileHandler.getLogs();
-  }
+    @VisibleForTesting
+    @AnyThread
+    static void log(byte[] data) {
+        messageQueue.add(data);
+        loggerThreadHandler.sendEmptyMessageDelayed(MESSAGE_FLUSH, FLUSH_DELAY_MILLIS);
+    }
 
-  private static byte[] buildTextLog(String tag, String string) {
-    Calendar c = StrictModeUtils.bypass(() -> Calendar.getInstance());
-    return String.format("%tm-%td %tH:%tM:%tS.%tL - %s - %s", c, c, c, c, c, c, tag, string)
-        .getBytes(StandardCharsets.UTF_8);
-  }
+    @VisibleForTesting
+    /** write raw bytes directly to the log file, likely corrupting it. */
+    static void rawLogForTest(byte[] data) {
+        try {
+            fileHandler.writeRawLogsForTest(data);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Dump the log as human readable string. Blocks until the dump is finished.
+     */
+    @NonNull
+    @WorkerThread
+    public static String dumpLogToString() {
+        Assert.isWorkerThread();
+        DumpStringRunnable dumpStringRunnable = new DumpStringRunnable();
+        loggerThreadHandler.post(dumpStringRunnable);
+        try {
+            return dumpStringRunnable.get();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            return "Cannot dump logText: " + e;
+        }
+    }
+
+    @NonNull
+    @WorkerThread
+    private static String dumpLogToStringInternal() {
+        StringBuilder result = new StringBuilder();
+        List<byte[]> logs;
+        try {
+            logs = readLogs();
+        } catch (IOException e) {
+            return "Cannot dump logText: " + e;
+        }
+
+        for (byte[] log : logs) {
+            result.append(new String(log, StandardCharsets.UTF_8)).append("\n");
+        }
+        return result.toString();
+    }
+
+    @NonNull
+    @WorkerThread
+    @VisibleForTesting
+    static List<byte[]> readLogs() throws IOException {
+        Assert.isWorkerThread();
+        return fileHandler.getLogs();
+    }
+
+    private static byte[] buildTextLog(String tag, String string) {
+        Calendar c = StrictModeUtils.bypass(() -> Calendar.getInstance());
+        return String.format("%tm-%td %tH:%tM:%tS.%tL - %s - %s", c, c, c, c, c, c, tag, string)
+                .getBytes(StandardCharsets.UTF_8);
+    }
+
+    private static class DumpStringRunnable implements Runnable {
+        private final CountDownLatch latch = new CountDownLatch(1);
+        private String result;
+
+        @Override
+        public void run() {
+            result = dumpLogToStringInternal();
+            latch.countDown();
+        }
+
+        public String get() throws InterruptedException {
+            latch.await();
+            return result;
+        }
+    }
 }

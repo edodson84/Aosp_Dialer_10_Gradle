@@ -27,27 +27,27 @@ import android.content.ContentProviderOperation.Builder;
  */
 public class BuilderWrapper {
 
-  private Builder mBuilder;
-  private int mType;
+    private Builder mBuilder;
+    private int mType;
 
-  public BuilderWrapper(Builder builder, int type) {
-    mBuilder = builder;
-    mType = type;
-  }
+    public BuilderWrapper(Builder builder, int type) {
+        mBuilder = builder;
+        mType = type;
+    }
 
-  public int getType() {
-    return mType;
-  }
+    public int getType() {
+        return mType;
+    }
 
-  public void setType(int mType) {
-    this.mType = mType;
-  }
+    public void setType(int mType) {
+        this.mType = mType;
+    }
 
-  public Builder getBuilder() {
-    return mBuilder;
-  }
+    public Builder getBuilder() {
+        return mBuilder;
+    }
 
-  public void setBuilder(Builder mBuilder) {
-    this.mBuilder = mBuilder;
-  }
+    public void setBuilder(Builder mBuilder) {
+        this.mBuilder = mBuilder;
+    }
 }

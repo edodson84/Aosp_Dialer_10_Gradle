@@ -4,8 +4,8 @@ import com.fissy.dialer.inject.RootComponentGeneratorMetadata;
 import com.fissy.dialer.spam.stub.StubSpamModule;
 
 @RootComponentGeneratorMetadata(
-    tag = "InstallIn",
-    annotatedClass = StubSpamModule.class
+        tag = "InstallIn",
+        annotatedClass = StubSpamModule.class
 )
 class com_android_dialer_spam_stub_StubSpamModuleMetadata {
 }

@@ -17,28 +17,29 @@
 package com.android.voicemail.impl.protocol;
 
 import android.text.TextUtils;
+
 import com.android.voicemail.impl.OmtpVvmCarrierConfigHelper;
 import com.android.voicemail.impl.VvmLog;
 import com.android.voicemail.impl.sms.OmtpMessageSender;
 
 public class ProtocolHelper {
 
-  private static final String TAG = "ProtocolHelper";
+    private static final String TAG = "ProtocolHelper";
 
-  public static OmtpMessageSender getMessageSender(
-      VisualVoicemailProtocol protocol, OmtpVvmCarrierConfigHelper config) {
+    public static OmtpMessageSender getMessageSender(
+            VisualVoicemailProtocol protocol, OmtpVvmCarrierConfigHelper config) {
 
-    int applicationPort = config.getApplicationPort();
-    String destinationNumber = config.getDestinationNumber();
-    if (TextUtils.isEmpty(destinationNumber)) {
-      VvmLog.w(TAG, "No destination number for this carrier.");
-      return null;
+        int applicationPort = config.getApplicationPort();
+        String destinationNumber = config.getDestinationNumber();
+        if (TextUtils.isEmpty(destinationNumber)) {
+            VvmLog.w(TAG, "No destination number for this carrier.");
+            return null;
+        }
+
+        return protocol.createMessageSender(
+                config.getContext(),
+                config.getPhoneAccountHandle(),
+                (short) applicationPort,
+                destinationNumber);
     }
-
-    return protocol.createMessageSender(
-        config.getContext(),
-        config.getPhoneAccountHandle(),
-        (short) applicationPort,
-        destinationNumber);
-  }
 }

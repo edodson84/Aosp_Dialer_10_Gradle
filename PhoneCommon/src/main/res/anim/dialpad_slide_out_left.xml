@@ -17,6 +17,6 @@
   -->
 
 <translate xmlns:android="http://schemas.android.com/apk/res/android"
-           android:fromXDelta="0"
-           android:toXDelta="-100%"
-           android:duration="@integer/dialpad_slide_out_duration"/>
+    android:duration="@integer/dialpad_slide_out_duration"
+    android:fromXDelta="0"
+    android:toXDelta="-100%" />

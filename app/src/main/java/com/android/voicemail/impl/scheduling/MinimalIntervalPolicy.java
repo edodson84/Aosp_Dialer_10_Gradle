@@ -18,6 +18,7 @@ package com.android.voicemail.impl.scheduling;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import com.android.voicemail.impl.scheduling.Task.TaskId;
 
 /**
@@ -27,37 +28,40 @@ import com.android.voicemail.impl.scheduling.Task.TaskId;
  */
 public class MinimalIntervalPolicy implements Policy {
 
-  BaseTask task;
-  TaskId id;
-  int blockForMillis;
+    BaseTask task;
+    TaskId id;
+    int blockForMillis;
 
-  public MinimalIntervalPolicy(int blockForMillis) {
-    this.blockForMillis = blockForMillis;
-  }
-
-  @Override
-  public void onCreate(BaseTask task, Bundle extras) {
-    this.task = task;
-    id = this.task.getId();
-  }
-
-  @Override
-  public void onBeforeExecute() {}
-
-  @Override
-  public void onCompleted() {
-    if (!task.hasFailed()) {
-      Intent intent =
-          BaseTask.createIntent(task.getContext(), BlockerTask.class, id.phoneAccountHandle);
-      intent.putExtra(BlockerTask.EXTRA_TASK_ID, id.id);
-      intent.putExtra(BlockerTask.EXTRA_BLOCK_FOR_MILLIS, blockForMillis);
-      task.getContext().sendBroadcast(intent);
+    public MinimalIntervalPolicy(int blockForMillis) {
+        this.blockForMillis = blockForMillis;
     }
-  }
 
-  @Override
-  public void onFail() {}
+    @Override
+    public void onCreate(BaseTask task, Bundle extras) {
+        this.task = task;
+        id = this.task.getId();
+    }
 
-  @Override
-  public void onDuplicatedTaskAdded() {}
+    @Override
+    public void onBeforeExecute() {
+    }
+
+    @Override
+    public void onCompleted() {
+        if (!task.hasFailed()) {
+            Intent intent =
+                    BaseTask.createIntent(task.getContext(), BlockerTask.class, id.phoneAccountHandle);
+            intent.putExtra(BlockerTask.EXTRA_TASK_ID, id.id);
+            intent.putExtra(BlockerTask.EXTRA_BLOCK_FOR_MILLIS, blockForMillis);
+            task.getContext().sendBroadcast(intent);
+        }
+    }
+
+    @Override
+    public void onFail() {
+    }
+
+    @Override
+    public void onDuplicatedTaskAdded() {
+    }
 }

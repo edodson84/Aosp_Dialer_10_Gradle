@@ -18,7 +18,8 @@ package com.fissy.dialer.precall.impl;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
+
 import com.fissy.dialer.callintent.CallIntentBuilder;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.logging.DialerImpression;
@@ -27,42 +28,45 @@ import com.fissy.dialer.precall.PreCall;
 import com.fissy.dialer.precall.PreCallAction;
 import com.fissy.dialer.precall.PreCallCoordinator;
 import com.google.common.collect.ImmutableList;
+
 import javax.inject.Inject;
 
-/** Implementation of {@link PreCall} */
+/**
+ * Implementation of {@link PreCall}
+ */
 public class PreCallImpl implements PreCall {
 
-  private final ImmutableList<PreCallAction> actions;
+    private final ImmutableList<PreCallAction> actions;
 
-  @Inject
-  PreCallImpl(ImmutableList<PreCallAction> actions) {
-    this.actions = actions;
-  }
-
-  @NonNull
-  @Override
-  public Intent buildIntent(Context context, CallIntentBuilder builder) {
-    Logger.get(context).logImpression(DialerImpression.Type.PRECALL_INITIATED);
-    if (!requiresUi(context, builder)) {
-      LogUtil.i("PreCallImpl.buildIntent", "No UI requested, running pre-call directly");
-      for (PreCallAction action : actions) {
-        action.runWithoutUi(context, builder);
-      }
-      return builder.build();
+    @Inject
+    PreCallImpl(ImmutableList<PreCallAction> actions) {
+        this.actions = actions;
     }
-    LogUtil.i("PreCallImpl.buildIntent", "building intent to start activity");
-    Intent intent = new Intent(context, PreCallActivity.class);
-    intent.putExtra(PreCallCoordinator.EXTRA_CALL_INTENT_BUILDER, builder);
-    return intent;
-  }
 
-  private boolean requiresUi(Context context, CallIntentBuilder builder) {
-    for (PreCallAction action : actions) {
-      if (action.requiresUi(context, builder)) {
-        LogUtil.i("PreCallImpl.requiresUi", action + " requested UI");
-        return true;
-      }
+    @NonNull
+    @Override
+    public Intent buildIntent(Context context, CallIntentBuilder builder) {
+        Logger.get(context).logImpression(DialerImpression.Type.PRECALL_INITIATED);
+        if (!requiresUi(context, builder)) {
+            LogUtil.i("PreCallImpl.buildIntent", "No UI requested, running pre-call directly");
+            for (PreCallAction action : actions) {
+                action.runWithoutUi(context, builder);
+            }
+            return builder.build();
+        }
+        LogUtil.i("PreCallImpl.buildIntent", "building intent to start activity");
+        Intent intent = new Intent(context, PreCallActivity.class);
+        intent.putExtra(PreCallCoordinator.EXTRA_CALL_INTENT_BUILDER, builder);
+        return intent;
     }
-    return false;
-  }
+
+    private boolean requiresUi(Context context, CallIntentBuilder builder) {
+        for (PreCallAction action : actions) {
+            if (action.requiresUi(context, builder)) {
+                LogUtil.i("PreCallImpl.requiresUi", action + " requested UI");
+                return true;
+            }
+        }
+        return false;
+    }
 }

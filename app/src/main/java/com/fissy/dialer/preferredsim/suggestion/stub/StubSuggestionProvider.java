@@ -17,33 +17,40 @@
 package com.fissy.dialer.preferredsim.suggestion.stub;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.WorkerThread;
+import androidx.annotation.NonNull;
+import androidx.annotation.WorkerThread;
 import android.telecom.PhoneAccountHandle;
+
 import com.fissy.dialer.preferredsim.suggestion.SuggestionProvider;
 import com.google.common.base.Optional;
+
 import javax.inject.Inject;
 
-/** {@link SuggestionProvider} that does nothing. */
+/**
+ * {@link SuggestionProvider} that does nothing.
+ */
 public class StubSuggestionProvider implements SuggestionProvider {
 
-  @Inject
-  public StubSuggestionProvider() {}
+    @Inject
+    public StubSuggestionProvider() {
+    }
 
-  @WorkerThread
-  @Override
-  public Optional<Suggestion> getSuggestion(Context context, String number) {
-    return Optional.absent();
-  }
+    @WorkerThread
+    @Override
+    public Optional<Suggestion> getSuggestion(Context context, String number) {
+        return Optional.absent();
+    }
 
-  @Override
-  public void reportUserSelection(
-      @NonNull Context context,
-      @NonNull String number,
-      @NonNull PhoneAccountHandle phoneAccountHandle,
-      boolean rememberSelection) {}
+    @Override
+    public void reportUserSelection(
+            @NonNull Context context,
+            @NonNull String number,
+            @NonNull PhoneAccountHandle phoneAccountHandle,
+            boolean rememberSelection) {
+    }
 
-  @Override
-  public void reportIncorrectSuggestion(
-      @NonNull Context context, @NonNull String number, PhoneAccountHandle newAccount) {}
+    @Override
+    public void reportIncorrectSuggestion(
+            @NonNull Context context, @NonNull String number, PhoneAccountHandle newAccount) {
+    }
 }

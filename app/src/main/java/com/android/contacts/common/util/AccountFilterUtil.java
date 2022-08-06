@@ -19,65 +19,68 @@ package com.android.contacts.common.util;
 import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
+
 import com.android.contacts.common.list.ContactListFilter;
 import com.fissy.dialer.R;
 
-/** Utility class for account filter manipulation. */
+/**
+ * Utility class for account filter manipulation.
+ */
 public class AccountFilterUtil {
 
-  /**
-   * Similar to {@link #updateAccountFilterTitleForPeople(View, ContactListFilter, boolean,
-   * boolean)}, but for Phone UI.
-   */
-  public static boolean updateAccountFilterTitleForPhone(
-      View filterContainer, ContactListFilter filter, boolean showTitleForAllAccounts) {
-    return updateAccountFilterTitle(filterContainer, filter, showTitleForAllAccounts, true);
-  }
-
-  private static boolean updateAccountFilterTitle(
-      View filterContainer,
-      ContactListFilter filter,
-      boolean showTitleForAllAccounts,
-      boolean forPhone) {
-    final Context context = filterContainer.getContext();
-    final TextView headerTextView =
-        (TextView) filterContainer.findViewById(R.id.account_filter_header);
-
-    boolean textWasSet = false;
-    if (filter != null) {
-      if (forPhone) {
-        if (filter.filterType == ContactListFilter.FILTER_TYPE_ALL_ACCOUNTS) {
-          if (showTitleForAllAccounts) {
-            headerTextView.setText(R.string.list_filter_phones);
-            textWasSet = true;
-          }
-        } else if (filter.filterType == ContactListFilter.FILTER_TYPE_ACCOUNT) {
-          headerTextView.setText(
-              context.getString(R.string.listAllContactsInAccount, filter.accountName));
-          textWasSet = true;
-        } else if (filter.filterType == ContactListFilter.FILTER_TYPE_CUSTOM) {
-          headerTextView.setText(R.string.listCustomView);
-          textWasSet = true;
-        }
-      } else {
-        if (filter.filterType == ContactListFilter.FILTER_TYPE_ALL_ACCOUNTS) {
-          if (showTitleForAllAccounts) {
-            headerTextView.setText(R.string.list_filter_all_accounts);
-            textWasSet = true;
-          }
-        } else if (filter.filterType == ContactListFilter.FILTER_TYPE_ACCOUNT) {
-          headerTextView.setText(
-              context.getString(R.string.listAllContactsInAccount, filter.accountName));
-          textWasSet = true;
-        } else if (filter.filterType == ContactListFilter.FILTER_TYPE_CUSTOM) {
-          headerTextView.setText(R.string.listCustomView);
-          textWasSet = true;
-        } else if (filter.filterType == ContactListFilter.FILTER_TYPE_SINGLE_CONTACT) {
-          headerTextView.setText(R.string.listSingleContact);
-          textWasSet = true;
-        }
-      }
+    /**
+     * Similar to {@link #updateAccountFilterTitleForPeople(View, ContactListFilter, boolean,
+     * boolean)}, but for Phone UI.
+     */
+    public static boolean updateAccountFilterTitleForPhone(
+            View filterContainer, ContactListFilter filter, boolean showTitleForAllAccounts) {
+        return updateAccountFilterTitle(filterContainer, filter, showTitleForAllAccounts, true);
     }
-    return textWasSet;
-  }
+
+    private static boolean updateAccountFilterTitle(
+            View filterContainer,
+            ContactListFilter filter,
+            boolean showTitleForAllAccounts,
+            boolean forPhone) {
+        final Context context = filterContainer.getContext();
+        final TextView headerTextView =
+                (TextView) filterContainer.findViewById(R.id.account_filter_header);
+
+        boolean textWasSet = false;
+        if (filter != null) {
+            if (forPhone) {
+                if (filter.filterType == ContactListFilter.FILTER_TYPE_ALL_ACCOUNTS) {
+                    if (showTitleForAllAccounts) {
+                        headerTextView.setText(R.string.list_filter_phones);
+                        textWasSet = true;
+                    }
+                } else if (filter.filterType == ContactListFilter.FILTER_TYPE_ACCOUNT) {
+                    headerTextView.setText(
+                            context.getString(R.string.listAllContactsInAccount, filter.accountName));
+                    textWasSet = true;
+                } else if (filter.filterType == ContactListFilter.FILTER_TYPE_CUSTOM) {
+                    headerTextView.setText(R.string.listCustomView);
+                    textWasSet = true;
+                }
+            } else {
+                if (filter.filterType == ContactListFilter.FILTER_TYPE_ALL_ACCOUNTS) {
+                    if (showTitleForAllAccounts) {
+                        headerTextView.setText(R.string.list_filter_all_accounts);
+                        textWasSet = true;
+                    }
+                } else if (filter.filterType == ContactListFilter.FILTER_TYPE_ACCOUNT) {
+                    headerTextView.setText(
+                            context.getString(R.string.listAllContactsInAccount, filter.accountName));
+                    textWasSet = true;
+                } else if (filter.filterType == ContactListFilter.FILTER_TYPE_CUSTOM) {
+                    headerTextView.setText(R.string.listCustomView);
+                    textWasSet = true;
+                } else if (filter.filterType == ContactListFilter.FILTER_TYPE_SINGLE_CONTACT) {
+                    headerTextView.setText(R.string.listSingleContact);
+                    textWasSet = true;
+                }
+            }
+        }
+        return textWasSet;
+    }
 }

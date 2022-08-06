@@ -17,6 +17,9 @@ package com.fissy.dialer.inject;
 
 import javax.inject.Qualifier;
 
-/** Annotation for retrieving the application context. */
+/**
+ * Annotation for retrieving the application context.
+ */
 @Qualifier
-public @interface ApplicationContext {}
+public @interface ApplicationContext {
+}

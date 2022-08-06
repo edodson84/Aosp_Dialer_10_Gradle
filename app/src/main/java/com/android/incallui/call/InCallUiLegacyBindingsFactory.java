@@ -22,5 +22,5 @@ package com.android.incallui.call;
  */
 public interface InCallUiLegacyBindingsFactory {
 
-  InCallUiLegacyBindings newInCallUiLegacyBindings();
+    InCallUiLegacyBindings newInCallUiLegacyBindings();
 }

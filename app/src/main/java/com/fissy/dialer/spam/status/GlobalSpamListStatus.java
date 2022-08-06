@@ -16,37 +16,44 @@
 
 package com.fissy.dialer.spam.status;
 
-import android.support.annotation.IntDef;
+import androidx.annotation.IntDef;
+
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Optional;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-/** A value class representing a number's spam status in the global spam list. */
+/**
+ * A value class representing a number's spam status in the global spam list.
+ */
 @AutoValue
 public abstract class GlobalSpamListStatus {
 
-  /** Integers representing the spam status in the global spam list. */
-  @Retention(RetentionPolicy.SOURCE)
-  @IntDef({Status.NOT_ON_LIST, Status.ON_LIST})
-  public @interface Status {
-    int NOT_ON_LIST = 1;
-    int ON_LIST = 2;
-  }
+    public static GlobalSpamListStatus notOnList() {
+        return new AutoValue_GlobalSpamListStatus(Status.NOT_ON_LIST, Optional.absent());
+    }
 
-  public abstract @Status int getStatus();
+    public static GlobalSpamListStatus onList(long timestampMillis) {
+        return new AutoValue_GlobalSpamListStatus(Status.ON_LIST, Optional.of(timestampMillis));
+    }
 
-  /**
-   * Returns the timestamp (in milliseconds) representing when a number's spam status was put on the
-   * list, or {@code Optional.absent()} if the number is not on the list.
-   */
-  public abstract Optional<Long> getTimestampMillis();
+    public abstract @Status
+    int getStatus();
 
-  public static GlobalSpamListStatus notOnList() {
-    return new AutoValue_GlobalSpamListStatus(Status.NOT_ON_LIST, Optional.absent());
-  }
+    /**
+     * Returns the timestamp (in milliseconds) representing when a number's spam status was put on the
+     * list, or {@code Optional.absent()} if the number is not on the list.
+     */
+    public abstract Optional<Long> getTimestampMillis();
 
-  public static GlobalSpamListStatus onList(long timestampMillis) {
-    return new AutoValue_GlobalSpamListStatus(Status.ON_LIST, Optional.of(timestampMillis));
-  }
+    /**
+     * Integers representing the spam status in the global spam list.
+     */
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({Status.NOT_ON_LIST, Status.ON_LIST})
+    public @interface Status {
+        int NOT_ON_LIST = 1;
+        int ON_LIST = 2;
+    }
 }

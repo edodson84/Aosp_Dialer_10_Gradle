@@ -21,15 +21,15 @@ import android.view.accessibility.AccessibilityManager;
 
 public class AccessibilityUtil {
 
-  public static boolean isAccessibilityEnabled(Context context) {
-    AccessibilityManager accessibilityManager =
-        context.getSystemService(AccessibilityManager.class);
-    return accessibilityManager.isEnabled();
-  }
+    public static boolean isAccessibilityEnabled(Context context) {
+        AccessibilityManager accessibilityManager =
+                context.getSystemService(AccessibilityManager.class);
+        return accessibilityManager.isEnabled();
+    }
 
-  public static boolean isTouchExplorationEnabled(Context context) {
-    AccessibilityManager accessibilityManager =
-        context.getSystemService(AccessibilityManager.class);
-    return accessibilityManager.isTouchExplorationEnabled();
-  }
+    public static boolean isTouchExplorationEnabled(Context context) {
+        AccessibilityManager accessibilityManager =
+                context.getSystemService(AccessibilityManager.class);
+        return accessibilityManager.isTouchExplorationEnabled();
+    }
 }

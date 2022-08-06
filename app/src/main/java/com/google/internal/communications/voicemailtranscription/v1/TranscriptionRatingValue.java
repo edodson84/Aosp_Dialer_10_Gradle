@@ -7,102 +7,104 @@ package com.google.internal.communications.voicemailtranscription.v1;
  * <pre>
  * Enum that specifies the user's rating for a voicemail transcription.
  * </pre>
- *
+ * <p>
  * Protobuf enum {@code google.internal.communications.voicemailtranscription.v1.TranscriptionRatingValue}
  */
 public enum TranscriptionRatingValue
-    implements com.google.protobuf.Internal.EnumLite {
-  /**
-   * <pre>
-   * Default but invalid value.
-   * </pre>
-   *
-   * <code>TRANSCRIPTION_RATING_VALUE_UNSPECIFIED = 0;</code>
-   */
-  TRANSCRIPTION_RATING_VALUE_UNSPECIFIED(0),
-  /**
-   * <pre>
-   * User indicated that the transcription was good.
-   * </pre>
-   *
-   * <code>GOOD_TRANSCRIPTION = 1;</code>
-   */
-  GOOD_TRANSCRIPTION(1),
-  /**
-   * <pre>
-   * User indicated that the transcription was bad.
-   * </pre>
-   *
-   * <code>BAD_TRANSCRIPTION = 2;</code>
-   */
-  BAD_TRANSCRIPTION(2),
-  ;
+        implements com.google.protobuf.Internal.EnumLite {
+    /**
+     * <pre>
+     * Default but invalid value.
+     * </pre>
+     *
+     * <code>TRANSCRIPTION_RATING_VALUE_UNSPECIFIED = 0;</code>
+     */
+    TRANSCRIPTION_RATING_VALUE_UNSPECIFIED(0),
+    /**
+     * <pre>
+     * User indicated that the transcription was good.
+     * </pre>
+     *
+     * <code>GOOD_TRANSCRIPTION = 1;</code>
+     */
+    GOOD_TRANSCRIPTION(1),
+    /**
+     * <pre>
+     * User indicated that the transcription was bad.
+     * </pre>
+     *
+     * <code>BAD_TRANSCRIPTION = 2;</code>
+     */
+    BAD_TRANSCRIPTION(2),
+    ;
 
-  /**
-   * <pre>
-   * Default but invalid value.
-   * </pre>
-   *
-   * <code>TRANSCRIPTION_RATING_VALUE_UNSPECIFIED = 0;</code>
-   */
-  public static final int TRANSCRIPTION_RATING_VALUE_UNSPECIFIED_VALUE = 0;
-  /**
-   * <pre>
-   * User indicated that the transcription was good.
-   * </pre>
-   *
-   * <code>GOOD_TRANSCRIPTION = 1;</code>
-   */
-  public static final int GOOD_TRANSCRIPTION_VALUE = 1;
-  /**
-   * <pre>
-   * User indicated that the transcription was bad.
-   * </pre>
-   *
-   * <code>BAD_TRANSCRIPTION = 2;</code>
-   */
-  public static final int BAD_TRANSCRIPTION_VALUE = 2;
+    /**
+     * <pre>
+     * Default but invalid value.
+     * </pre>
+     *
+     * <code>TRANSCRIPTION_RATING_VALUE_UNSPECIFIED = 0;</code>
+     */
+    public static final int TRANSCRIPTION_RATING_VALUE_UNSPECIFIED_VALUE = 0;
+    /**
+     * <pre>
+     * User indicated that the transcription was good.
+     * </pre>
+     *
+     * <code>GOOD_TRANSCRIPTION = 1;</code>
+     */
+    public static final int GOOD_TRANSCRIPTION_VALUE = 1;
+    /**
+     * <pre>
+     * User indicated that the transcription was bad.
+     * </pre>
+     *
+     * <code>BAD_TRANSCRIPTION = 2;</code>
+     */
+    public static final int BAD_TRANSCRIPTION_VALUE = 2;
+    private static final com.google.protobuf.Internal.EnumLiteMap<
+            TranscriptionRatingValue> internalValueMap =
+            new com.google.protobuf.Internal.EnumLiteMap<TranscriptionRatingValue>() {
+                public TranscriptionRatingValue findValueByNumber(int number) {
+                    return TranscriptionRatingValue.forNumber(number);
+                }
+            };
+    private final int value;
 
-
-  public final int getNumber() {
-    return value;
-  }
-
-  /**
-   * @deprecated Use {@link #forNumber(int)} instead.
-   */
-  @java.lang.Deprecated
-  public static TranscriptionRatingValue valueOf(int value) {
-    return forNumber(value);
-  }
-
-  public static TranscriptionRatingValue forNumber(int value) {
-    switch (value) {
-      case 0: return TRANSCRIPTION_RATING_VALUE_UNSPECIFIED;
-      case 1: return GOOD_TRANSCRIPTION;
-      case 2: return BAD_TRANSCRIPTION;
-      default: return null;
+    TranscriptionRatingValue(int value) {
+        this.value = value;
     }
-  }
 
-  public static com.google.protobuf.Internal.EnumLiteMap<TranscriptionRatingValue>
-      internalGetValueMap() {
-    return internalValueMap;
-  }
-  private static final com.google.protobuf.Internal.EnumLiteMap<
-      TranscriptionRatingValue> internalValueMap =
-        new com.google.protobuf.Internal.EnumLiteMap<TranscriptionRatingValue>() {
-          public TranscriptionRatingValue findValueByNumber(int number) {
-            return TranscriptionRatingValue.forNumber(number);
-          }
-        };
+    /**
+     * @deprecated Use {@link #forNumber(int)} instead.
+     */
+    @java.lang.Deprecated
+    public static TranscriptionRatingValue valueOf(int value) {
+        return forNumber(value);
+    }
 
-  private final int value;
+    public static TranscriptionRatingValue forNumber(int value) {
+        switch (value) {
+            case 0:
+                return TRANSCRIPTION_RATING_VALUE_UNSPECIFIED;
+            case 1:
+                return GOOD_TRANSCRIPTION;
+            case 2:
+                return BAD_TRANSCRIPTION;
+            default:
+                return null;
+        }
+    }
 
-  TranscriptionRatingValue(int value) {
-    this.value = value;
-  }
+    public static com.google.protobuf.Internal.EnumLiteMap<TranscriptionRatingValue>
+    internalGetValueMap() {
+        return internalValueMap;
+    }
 
-  // @@protoc_insertion_point(enum_scope:google.internal.communications.voicemailtranscription.v1.TranscriptionRatingValue)
+    public final int getNumber() {
+        return value;
+    }
+
+    // @@protoc_insertion_point(enum_scope:google.internal.communications.voicemailtranscription.v1.TranscriptionRatingValue)
 }
 

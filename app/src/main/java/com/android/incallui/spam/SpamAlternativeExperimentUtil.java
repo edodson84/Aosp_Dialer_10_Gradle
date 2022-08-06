@@ -17,38 +17,41 @@
 package com.android.incallui.spam;
 
 import android.content.Context;
+
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.configprovider.ConfigProviderComponent;
 
-/** Returns resource id based on experiment number. */
+/**
+ * Returns resource id based on experiment number.
+ */
 public final class SpamAlternativeExperimentUtil {
 
-  /**
-   * Returns the resource id using a resource name for an experiment where we want to use
-   * alternative words for the keyword spam.
-   */
-  public static int getResourceIdByName(String resourceName, Context context) {
-    long experiment =
-        ConfigProviderComponent.get(context)
-            .getConfigProvider()
-            .getLong("experiment_for_alternative_spam_word", 230150);
-    LogUtil.i(
-        "SpamAlternativeExperimentUtil.getResourceIdByName", "using experiment %d", experiment);
-    String modifiedResourceName = resourceName;
-    if (experiment != 230150) {
-      modifiedResourceName = resourceName + "_" + experiment;
+    /**
+     * Returns the resource id using a resource name for an experiment where we want to use
+     * alternative words for the keyword spam.
+     */
+    public static int getResourceIdByName(String resourceName, Context context) {
+        long experiment =
+                ConfigProviderComponent.get(context)
+                        .getConfigProvider()
+                        .getLong("experiment_for_alternative_spam_word", 230150);
+        LogUtil.i(
+                "SpamAlternativeExperimentUtil.getResourceIdByName", "using experiment %d", experiment);
+        String modifiedResourceName = resourceName;
+        if (experiment != 230150) {
+            modifiedResourceName = resourceName + "_" + experiment;
+        }
+        int resourceId =
+                context
+                        .getResources()
+                        .getIdentifier(modifiedResourceName, "string", context.getPackageName());
+        if (resourceId == 0) {
+            LogUtil.i(
+                    "SpamAlternativeExperimentUtil.getResourceIdByName",
+                    "not found experiment %d",
+                    experiment);
+            return context.getResources().getIdentifier(resourceName, "string", context.getPackageName());
+        }
+        return resourceId;
     }
-    int resourceId =
-        context
-            .getResources()
-            .getIdentifier(modifiedResourceName, "string", context.getPackageName());
-    if (resourceId == 0) {
-      LogUtil.i(
-          "SpamAlternativeExperimentUtil.getResourceIdByName",
-          "not found experiment %d",
-          experiment);
-      return context.getResources().getIdentifier(resourceName, "string", context.getPackageName());
-    }
-    return resourceId;
-  }
 }

@@ -7,8 +7,8 @@ option optimize_for = LITE_RUNTIME;
 
 package com.fissy.dialer.historyitemactions;
 
-import "java/com/android/dialer/glidephotomanager/photo_info.proto";
-import "java/com/android/dialer/phonenumberproto/dialer_phone_number.proto";
+import "java/com/fissy/dialer/glidephotomanager/photo_info.proto";
+import "java/com/fissy/dialer/phonenumberproto/dialer_phone_number.proto";
 
 // Contains information necessary to construct the header for a history item's
 // bottom sheet.

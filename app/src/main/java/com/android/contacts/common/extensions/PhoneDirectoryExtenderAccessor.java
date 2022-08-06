@@ -15,37 +15,41 @@
 package com.android.contacts.common.extensions;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.VisibleForTesting;
+import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
+
 import com.fissy.dialer.common.Assert;
 
-/** Accessor for the phone directory extender singleton. */
+/**
+ * Accessor for the phone directory extender singleton.
+ */
 public final class PhoneDirectoryExtenderAccessor {
 
-  private static PhoneDirectoryExtender instance;
+    private static PhoneDirectoryExtender instance;
 
-  private PhoneDirectoryExtenderAccessor() {}
-
-  @VisibleForTesting
-  public static void setForTesting(PhoneDirectoryExtender extender) {
-    instance = extender;
-  }
-
-  @NonNull
-  public static PhoneDirectoryExtender get(@NonNull Context context) {
-    Assert.isNotNull(context);
-    if (instance != null) {
-      return instance;
+    private PhoneDirectoryExtenderAccessor() {
     }
 
-    Context application = context.getApplicationContext();
-    if (application instanceof PhoneDirectoryExtenderFactory) {
-      instance = ((PhoneDirectoryExtenderFactory) application).newPhoneDirectoryExtender();
+    @VisibleForTesting
+    public static void setForTesting(PhoneDirectoryExtender extender) {
+        instance = extender;
     }
 
-    if (instance == null) {
-      instance = new PhoneDirectoryExtenderStub();
+    @NonNull
+    public static PhoneDirectoryExtender get(@NonNull Context context) {
+        Assert.isNotNull(context);
+        if (instance != null) {
+            return instance;
+        }
+
+        Context application = context.getApplicationContext();
+        if (application instanceof PhoneDirectoryExtenderFactory) {
+            instance = ((PhoneDirectoryExtenderFactory) application).newPhoneDirectoryExtender();
+        }
+
+        if (instance == null) {
+            instance = new PhoneDirectoryExtenderStub();
+        }
+        return instance;
     }
-    return instance;
-  }
 }

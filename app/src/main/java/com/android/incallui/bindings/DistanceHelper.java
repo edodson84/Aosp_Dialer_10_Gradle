@@ -18,19 +18,21 @@ package com.android.incallui.bindings;
 
 import android.location.Address;
 
-/** Superclass for a helper class to get the current location and distance to other locations. */
+/**
+ * Superclass for a helper class to get the current location and distance to other locations.
+ */
 public interface DistanceHelper {
 
-  float DISTANCE_NOT_FOUND = -1;
-  float MILES_PER_METER = (float) 0.000621371192;
-  float KILOMETERS_PER_METER = (float) 0.001;
+    float DISTANCE_NOT_FOUND = -1;
+    float MILES_PER_METER = (float) 0.000621371192;
+    float KILOMETERS_PER_METER = (float) 0.001;
 
-  void cleanUp();
+    void cleanUp();
 
-  float calculateDistance(Address address);
+    float calculateDistance(Address address);
 
-  interface Listener {
+    interface Listener {
 
-    void onLocationReady();
-  }
+        void onLocationReady();
+    }
 }

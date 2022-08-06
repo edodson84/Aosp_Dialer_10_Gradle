@@ -16,28 +16,30 @@
 
 package com.fissy.dialer.glidephotomanager;
 
-import android.support.annotation.MainThread;
+import androidx.annotation.MainThread;
 import android.widget.ImageView;
 import android.widget.QuickContactBadge;
 
-/** Class to load photo for call/contacts */
+/**
+ * Class to load photo for call/contacts
+ */
 public interface GlidePhotoManager {
 
-  /**
-   * Load {@code photoInfo} into the {@code badge}. The loading is performed in the background and a
-   * placeholder will be used appropriately. {@code badge} must be already attached to an
-   * activity/fragment, and the load will be automatically canceled if the lifecycle of the activity
-   * ends.
-   */
-  @MainThread
-  void loadQuickContactBadge(QuickContactBadge badge, PhotoInfo photoInfo);
+    /**
+     * Load {@code photoInfo} into the {@code badge}. The loading is performed in the background and a
+     * placeholder will be used appropriately. {@code badge} must be already attached to an
+     * activity/fragment, and the load will be automatically canceled if the lifecycle of the activity
+     * ends.
+     */
+    @MainThread
+    void loadQuickContactBadge(QuickContactBadge badge, PhotoInfo photoInfo);
 
-  /**
-   * Load {@code photoInfo} into the {@code imageView}. The loading is performed in the background
-   * and a placeholder will be used appropriately. {@code imageView} must be already attached to an
-   * activity/fragment, and the load will be automatically canceled if the lifecycle of the activity
-   * ends.
-   */
-  @MainThread
-  void loadContactPhoto(ImageView imageView, PhotoInfo photoInfo);
+    /**
+     * Load {@code photoInfo} into the {@code imageView}. The loading is performed in the background
+     * and a placeholder will be used appropriately. {@code imageView} must be already attached to an
+     * activity/fragment, and the load will be automatically canceled if the lifecycle of the activity
+     * ends.
+     */
+    @MainThread
+    void loadContactPhoto(ImageView imageView, PhotoInfo photoInfo);
 }

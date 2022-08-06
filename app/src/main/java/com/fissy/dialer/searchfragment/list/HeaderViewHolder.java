@@ -16,23 +16,25 @@
 
 package com.fissy.dialer.searchfragment.list;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
 import com.fissy.dialer.R;
 
-/** ViewHolder for header rows in {@link NewSearchFragment}. */
+/**
+ * ViewHolder for header rows in {@link NewSearchFragment}.
+ */
 final class HeaderViewHolder extends RecyclerView.ViewHolder {
 
-  private final TextView header;
+    private final TextView header;
 
-  HeaderViewHolder(View view) {
-    super(view);
-    header = view.findViewById(R.id.header);
-  }
+    HeaderViewHolder(View view) {
+        super(view);
+        header = view.findViewById(R.id.header);
+    }
 
-  public void setHeader(String header) {
-    this.header.setText(header);
-  }
+    public void setHeader(String header) {
+        this.header.setText(header);
+    }
 }

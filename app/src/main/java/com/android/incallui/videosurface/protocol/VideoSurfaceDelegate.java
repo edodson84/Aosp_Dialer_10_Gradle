@@ -16,14 +16,16 @@
 
 package com.android.incallui.videosurface.protocol;
 
-/** Callbacks from the video surface. */
+/**
+ * Callbacks from the video surface.
+ */
 public interface VideoSurfaceDelegate {
 
-  void onSurfaceCreated(VideoSurfaceTexture videoCallSurface);
+    void onSurfaceCreated(VideoSurfaceTexture videoCallSurface);
 
-  void onSurfaceReleased(VideoSurfaceTexture videoCallSurface);
+    void onSurfaceReleased(VideoSurfaceTexture videoCallSurface);
 
-  void onSurfaceDestroyed(VideoSurfaceTexture videoCallSurface);
+    void onSurfaceDestroyed(VideoSurfaceTexture videoCallSurface);
 
-  void onSurfaceClick(VideoSurfaceTexture videoCallSurface);
+    void onSurfaceClick(VideoSurfaceTexture videoCallSurface);
 }

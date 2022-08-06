@@ -19,9 +19,11 @@ package com.fissy.dialer.calllog.config;
 import dagger.Binds;
 import dagger.Module;
 
-/** Binds {@link CallLogConfigImpl}. */
+/**
+ * Binds {@link CallLogConfigImpl}.
+ */
 @Module
 public abstract class CallLogConfigModule {
-  @Binds
-  abstract CallLogConfig to(CallLogConfigImpl impl);
+    @Binds
+    abstract CallLogConfig to(CallLogConfigImpl impl);
 }

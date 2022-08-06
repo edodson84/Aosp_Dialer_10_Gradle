@@ -16,8 +16,8 @@
 
 package com.fissy.dialer.historyitemactions;
 
-import android.support.annotation.DrawableRes;
-import android.support.annotation.StringRes;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.StringRes;
 
 /**
  * Modules used to build {@link HistoryItemActionBottomSheet}.
@@ -26,17 +26,21 @@ import android.support.annotation.StringRes;
  */
 public interface HistoryItemActionModule {
 
-  @StringRes
-  int getStringId();
+    @StringRes
+    int getStringId();
 
-  @DrawableRes
-  int getDrawableId();
+    @DrawableRes
+    int getDrawableId();
 
-  /** Returns true if tint can be applied to the drawable. */
-  default boolean tintDrawable() {
-    return true;
-  }
+    /**
+     * Returns true if tint can be applied to the drawable.
+     */
+    default boolean tintDrawable() {
+        return true;
+    }
 
-  /** @return true if the bottom sheet should close, false otherwise */
-  boolean onClick();
+    /**
+     * @return true if the bottom sheet should close, false otherwise
+     */
+    boolean onClick();
 }

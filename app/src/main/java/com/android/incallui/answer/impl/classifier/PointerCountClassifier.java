@@ -18,34 +18,36 @@ package com.android.incallui.answer.impl.classifier;
 
 import android.view.MotionEvent;
 
-/** A classifier which looks at the total number of traces in the whole gesture. */
+/**
+ * A classifier which looks at the total number of traces in the whole gesture.
+ */
 class PointerCountClassifier extends GestureClassifier {
-  private int count;
+    private int count;
 
-  public PointerCountClassifier(ClassifierData classifierData) {
-    count = 0;
-  }
-
-  @Override
-  public String getTag() {
-    return "PTR_CNT";
-  }
-
-  @Override
-  public void onTouchEvent(MotionEvent event) {
-    int action = event.getActionMasked();
-
-    if (action == MotionEvent.ACTION_DOWN) {
-      count = 1;
+    public PointerCountClassifier(ClassifierData classifierData) {
+        count = 0;
     }
 
-    if (action == MotionEvent.ACTION_POINTER_DOWN) {
-      ++count;
+    @Override
+    public String getTag() {
+        return "PTR_CNT";
     }
-  }
 
-  @Override
-  public float getFalseTouchEvaluation() {
-    return PointerCountEvaluator.evaluate(count);
-  }
+    @Override
+    public void onTouchEvent(MotionEvent event) {
+        int action = event.getActionMasked();
+
+        if (action == MotionEvent.ACTION_DOWN) {
+            count = 1;
+        }
+
+        if (action == MotionEvent.ACTION_POINTER_DOWN) {
+            ++count;
+        }
+    }
+
+    @Override
+    public float getFalseTouchEvaluation() {
+        return PointerCountEvaluator.evaluate(count);
+    }
 }

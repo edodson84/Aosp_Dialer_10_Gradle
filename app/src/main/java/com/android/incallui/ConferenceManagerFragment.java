@@ -22,87 +22,90 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.fissy.dialer.R;
-import com.fissy.dialer.contactphoto.ContactPhotoManager;
-import com.fissy.dialer.logging.Logger;
-import com.fissy.dialer.logging.ScreenEvent;
 import com.android.incallui.ConferenceManagerPresenter.ConferenceManagerUi;
 import com.android.incallui.baseui.BaseFragment;
 import com.android.incallui.call.CallList;
 import com.android.incallui.call.DialerCall;
+import com.fissy.dialer.R;
+import com.fissy.dialer.contactphoto.ContactPhotoManager;
+import com.fissy.dialer.logging.Logger;
+import com.fissy.dialer.logging.ScreenEvent;
+
 import java.util.List;
 
-/** Fragment that allows the user to manage a conference call. */
+/**
+ * Fragment that allows the user to manage a conference call.
+ */
 public class ConferenceManagerFragment
-    extends BaseFragment<ConferenceManagerPresenter, ConferenceManagerUi>
-    implements ConferenceManagerPresenter.ConferenceManagerUi {
+        extends BaseFragment<ConferenceManagerPresenter, ConferenceManagerUi>
+        implements ConferenceManagerPresenter.ConferenceManagerUi {
 
-  private ListView conferenceParticipantList;
-  private ContactPhotoManager contactPhotoManager;
-  private ConferenceParticipantListAdapter conferenceParticipantListAdapter;
+    private ListView conferenceParticipantList;
+    private ContactPhotoManager contactPhotoManager;
+    private ConferenceParticipantListAdapter conferenceParticipantListAdapter;
 
-  @Override
-  public ConferenceManagerPresenter createPresenter() {
-    return new ConferenceManagerPresenter();
-  }
-
-  @Override
-  public ConferenceManagerPresenter.ConferenceManagerUi getUi() {
-    return this;
-  }
-
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    if (savedInstanceState != null) {
-      Logger.get(getContext()).logScreenView(ScreenEvent.Type.CONFERENCE_MANAGEMENT, getActivity());
+    @Override
+    public ConferenceManagerPresenter createPresenter() {
+        return new ConferenceManagerPresenter();
     }
-  }
 
-  @Override
-  public View onCreateView(
-      LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    final View parent = inflater.inflate(R.layout.conference_manager_fragment, container, false);
-
-    conferenceParticipantList = (ListView) parent.findViewById(R.id.participantList);
-    contactPhotoManager = ContactPhotoManager.getInstance(getActivity().getApplicationContext());
-
-    return parent;
-  }
-
-  @Override
-  public void onResume() {
-    super.onResume();
-    final CallList calls = CallList.getInstance();
-    getPresenter().init(calls);
-    // Request focus on the list of participants for accessibility purposes.  This ensures
-    // that once the list of participants is shown, the first participant is announced.
-    conferenceParticipantList.requestFocus();
-  }
-
-  @Override
-  public void onSaveInstanceState(Bundle outState) {
-    super.onSaveInstanceState(outState);
-  }
-
-  @Override
-  public boolean isFragmentVisible() {
-    return isVisible();
-  }
-
-  @Override
-  public void update(List<DialerCall> participants, boolean parentCanSeparate) {
-    if (conferenceParticipantListAdapter == null) {
-      conferenceParticipantListAdapter =
-          new ConferenceParticipantListAdapter(conferenceParticipantList, contactPhotoManager);
-
-      conferenceParticipantList.setAdapter(conferenceParticipantListAdapter);
+    @Override
+    public ConferenceManagerPresenter.ConferenceManagerUi getUi() {
+        return this;
     }
-    conferenceParticipantListAdapter.updateParticipants(participants, parentCanSeparate);
-  }
 
-  @Override
-  public void refreshCall(DialerCall call) {
-    conferenceParticipantListAdapter.refreshCall(call);
-  }
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            Logger.get(getContext()).logScreenView(ScreenEvent.Type.CONFERENCE_MANAGEMENT, getActivity());
+        }
+    }
+
+    @Override
+    public View onCreateView(
+            LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        final View parent = inflater.inflate(R.layout.conference_manager_fragment, container, false);
+
+        conferenceParticipantList = (ListView) parent.findViewById(R.id.participantList);
+        contactPhotoManager = ContactPhotoManager.getInstance(getActivity().getApplicationContext());
+
+        return parent;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        final CallList calls = CallList.getInstance();
+        getPresenter().init(calls);
+        // Request focus on the list of participants for accessibility purposes.  This ensures
+        // that once the list of participants is shown, the first participant is announced.
+        conferenceParticipantList.requestFocus();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public boolean isFragmentVisible() {
+        return isVisible();
+    }
+
+    @Override
+    public void update(List<DialerCall> participants, boolean parentCanSeparate) {
+        if (conferenceParticipantListAdapter == null) {
+            conferenceParticipantListAdapter =
+                    new ConferenceParticipantListAdapter(conferenceParticipantList, contactPhotoManager);
+
+            conferenceParticipantList.setAdapter(conferenceParticipantListAdapter);
+        }
+        conferenceParticipantListAdapter.updateParticipants(participants, parentCanSeparate);
+    }
+
+    @Override
+    public void refreshCall(DialerCall call) {
+        conferenceParticipantListAdapter.refreshCall(call);
+    }
 }

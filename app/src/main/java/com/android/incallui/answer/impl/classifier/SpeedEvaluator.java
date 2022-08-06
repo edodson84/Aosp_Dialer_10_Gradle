@@ -17,20 +17,20 @@
 package com.android.incallui.answer.impl.classifier;
 
 class SpeedEvaluator {
-  public static float evaluate(float value) {
-    float evaluation = 0.0f;
-    if (value < 4.0) {
-      evaluation++;
+    public static float evaluate(float value) {
+        float evaluation = 0.0f;
+        if (value < 4.0) {
+            evaluation++;
+        }
+        if (value < 2.2) {
+            evaluation++;
+        }
+        if (value > 35.0) {
+            evaluation++;
+        }
+        if (value > 50.0) {
+            evaluation++;
+        }
+        return evaluation;
     }
-    if (value < 2.2) {
-      evaluation++;
-    }
-    if (value > 35.0) {
-      evaluation++;
-    }
-    if (value > 50.0) {
-      evaluation++;
-    }
-    return evaluation;
-  }
 }

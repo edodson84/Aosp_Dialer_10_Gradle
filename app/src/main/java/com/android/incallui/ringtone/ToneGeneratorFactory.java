@@ -18,17 +18,19 @@ package com.android.incallui.ringtone;
 
 import android.media.ToneGenerator;
 
-/** Factory used to create {@link ToneGenerator}s. */
+/**
+ * Factory used to create {@link ToneGenerator}s.
+ */
 public class ToneGeneratorFactory {
 
-  /**
-   * Creates a new {@link ToneGenerator} to use while in a call.
-   *
-   * @param stream the stream through which to play tones.
-   * @param volume the volume at which to play tones.
-   * @return a new ToneGenerator.
-   */
-  public ToneGenerator newInCallToneGenerator(int stream, int volume) {
-    return new ToneGenerator(stream, volume);
-  }
+    /**
+     * Creates a new {@link ToneGenerator} to use while in a call.
+     *
+     * @param stream the stream through which to play tones.
+     * @param volume the volume at which to play tones.
+     * @return a new ToneGenerator.
+     */
+    public ToneGenerator newInCallToneGenerator(int stream, int volume) {
+        return new ToneGenerator(stream, volume);
+    }
 }

@@ -24,49 +24,49 @@ import java.util.ArrayList;
  */
 class Stroke {
 
-  private static final float NANOS_TO_SECONDS = 1e9f;
+    private static final float NANOS_TO_SECONDS = 1e9f;
 
-  private final ArrayList<Point> points = new ArrayList<>();
-  private final long startTimeNano;
-  private long endTimeNano;
-  private float length;
-  private final float dpi;
+    private final ArrayList<Point> points = new ArrayList<>();
+    private final long startTimeNano;
+    private final float dpi;
+    private long endTimeNano;
+    private float length;
 
-  public Stroke(long eventTimeNano, float dpi) {
-    this.dpi = dpi;
-    startTimeNano = endTimeNano = eventTimeNano;
-  }
-
-  public void addPoint(float x, float y, long eventTimeNano) {
-    endTimeNano = eventTimeNano;
-    Point point = new Point(x / dpi, y / dpi, eventTimeNano - startTimeNano);
-    if (!points.isEmpty()) {
-      length += points.get(points.size() - 1).dist(point);
+    public Stroke(long eventTimeNano, float dpi) {
+        this.dpi = dpi;
+        startTimeNano = endTimeNano = eventTimeNano;
     }
-    points.add(point);
-  }
 
-  public int getCount() {
-    return points.size();
-  }
+    public void addPoint(float x, float y, long eventTimeNano) {
+        endTimeNano = eventTimeNano;
+        Point point = new Point(x / dpi, y / dpi, eventTimeNano - startTimeNano);
+        if (!points.isEmpty()) {
+            length += points.get(points.size() - 1).dist(point);
+        }
+        points.add(point);
+    }
 
-  public float getTotalLength() {
-    return length;
-  }
+    public int getCount() {
+        return points.size();
+    }
 
-  public float getEndPointLength() {
-    return points.get(0).dist(points.get(points.size() - 1));
-  }
+    public float getTotalLength() {
+        return length;
+    }
 
-  public long getDurationNanos() {
-    return endTimeNano - startTimeNano;
-  }
+    public float getEndPointLength() {
+        return points.get(0).dist(points.get(points.size() - 1));
+    }
 
-  public float getDurationSeconds() {
-    return (float) getDurationNanos() / NANOS_TO_SECONDS;
-  }
+    public long getDurationNanos() {
+        return endTimeNano - startTimeNano;
+    }
 
-  public ArrayList<Point> getPoints() {
-    return points;
-  }
+    public float getDurationSeconds() {
+        return (float) getDurationNanos() / NANOS_TO_SECONDS;
+    }
+
+    public ArrayList<Point> getPoints() {
+        return points;
+    }
 }

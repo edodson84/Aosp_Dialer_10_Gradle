@@ -1,11 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:orientation="vertical" android:id="@id/call_log_fragment_root" android:layout_width="fill_parent" android:layout_height="fill_parent"
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <LinearLayout android:layout_gravity="start" android:orientation="horizontal" android:id="@id/multi_select_select_all_view_content" android:background="?android:colorPrimary" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="@dimen/tab_height">
-        <ImageView android:gravity="center_vertical" android:id="@id/select_all_view_icon" android:paddingLeft="@dimen/select_all_icon_padding" android:paddingRight="@dimen/select_all_icon_padding" android:layout_width="wrap_content" android:layout_height="fill_parent" android:src="@drawable/ic_empty_check_mark_white_24dp" android:contentDescription="@string/select_all" />
-        <TextView android:textSize="@dimen/select_all_text_size" android:textColor="?android:textColorPrimaryInverse" android:gravity="center_vertical" android:id="@id/select_all_view_text" android:paddingLeft="@dimen/select_all_text_left_padding" android:layout_width="wrap_content" android:layout_height="fill_parent" android:text="@string/select_all" android:textAllCaps="true" />
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/call_log_fragment_root"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@id/multi_select_select_all_view_content"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/tab_height"
+        android:layout_gravity="start"
+        android:background="?android:colorPrimary"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@id/select_all_view_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:contentDescription="@string/select_all"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/select_all_icon_padding"
+            android:paddingRight="@dimen/select_all_icon_padding"
+            android:src="@drawable/ic_empty_check_mark_white_24dp" />
+
+        <TextView
+            android:id="@id/select_all_view_text"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/select_all_text_left_padding"
+            android:text="@string/select_all"
+            android:textAllCaps="true"
+            android:textColor="?android:textColorPrimaryInverse"
+            android:textSize="@dimen/select_all_text_size" />
     </LinearLayout>
-    <FrameLayout android:id="@id/modal_message_container" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="fill_parent" />
-    <android.support.v7.widget.RecyclerView android:id="@id/recycler_view" android:paddingBottom="@dimen/floating_action_button_list_bottom_padding" android:clipToPadding="false" android:layout_width="fill_parent" android:layout_height="wrap_content" android:paddingStart="@dimen/call_log_horizontal_margin" android:paddingEnd="@dimen/call_log_horizontal_margin" />
-    <com.fissy.dialer.widget.EmptyContentView android:gravity="center_vertical" android:layout_gravity="center" android:id="@id/empty_list_view" android:layout_width="fill_parent" android:layout_height="0.0dip" android:layout_weight="1.0" />
+
+    <FrameLayout
+        android:id="@id/modal_message_container"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:visibility="gone" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@id/recycler_view"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:paddingStart="@dimen/call_log_horizontal_margin"
+        android:paddingEnd="@dimen/call_log_horizontal_margin"
+        android:paddingBottom="@dimen/floating_action_button_list_bottom_padding" />
+
+    <com.fissy.dialer.widget.EmptyContentView
+        android:id="@id/empty_list_view"
+        android:layout_width="fill_parent"
+        android:layout_height="0.0dip"
+        android:layout_gravity="center"
+        android:layout_weight="1.0"
+        android:gravity="center_vertical" />
 </LinearLayout>

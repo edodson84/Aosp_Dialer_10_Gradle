@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- 
+<?xml version="1.0" encoding="UTF-8"?><!--
   ~ Copyright (C) 2016 The Android Open Source Project
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,8 +14,7 @@
   ~ limitations under the License
    -->
 
-<resources xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="voicemail_error_activating_title" msgid="2428457130578359186">"Activando el buzón de voz visual"</string>
     <string name="voicemail_error_activating_message" msgid="7157030596259443393">"Es posible que no recibas notificaciones de los mensajes de voz hasta que el buzón de voz visual se encuentre completamente activado. Hasta ese momento, puedes llamar al buzón de voz para recuperar los mensajes nuevos."</string>
     <string name="voicemail_error_not_activate_no_signal_title" msgid="742273366199085615">"No se puede activar el buzón de voz visual"</string>

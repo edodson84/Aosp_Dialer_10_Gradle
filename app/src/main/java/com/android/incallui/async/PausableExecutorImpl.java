@@ -18,23 +18,29 @@ package com.android.incallui.async;
 
 import java.util.concurrent.Executors;
 
-/** {@link PausableExecutor} intended for use in production environments. */
+/**
+ * {@link PausableExecutor} intended for use in production environments.
+ */
 public class PausableExecutorImpl implements PausableExecutor {
 
-  @Override
-  public void milestone() {}
+    @Override
+    public void milestone() {
+    }
 
-  @Override
-  public void ackMilestoneForTesting() {}
+    @Override
+    public void ackMilestoneForTesting() {
+    }
 
-  @Override
-  public void ackAllMilestonesForTesting() {}
+    @Override
+    public void ackAllMilestonesForTesting() {
+    }
 
-  @Override
-  public void awaitMilestoneForTesting() {}
+    @Override
+    public void awaitMilestoneForTesting() {
+    }
 
-  @Override
-  public void execute(Runnable command) {
-    Executors.newSingleThreadExecutor().execute(command);
-  }
+    @Override
+    public void execute(Runnable command) {
+        Executors.newSingleThreadExecutor().execute(command);
+    }
 }

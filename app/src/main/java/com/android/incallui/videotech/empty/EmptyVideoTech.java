@@ -17,101 +17,117 @@
 package com.android.incallui.videotech.empty;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.telecom.PhoneAccountHandle;
-import com.fissy.dialer.common.Assert;
+
 import com.android.incallui.video.protocol.VideoCallScreen;
 import com.android.incallui.video.protocol.VideoCallScreenDelegate;
 import com.android.incallui.videotech.VideoTech;
 import com.android.incallui.videotech.utils.SessionModificationState;
+import com.fissy.dialer.common.Assert;
 
-/** Default video tech that is always available but doesn't do anything. */
+/**
+ * Default video tech that is always available but doesn't do anything.
+ */
 public class EmptyVideoTech implements VideoTech {
 
-  @Override
-  public boolean isAvailable(Context context, PhoneAccountHandle phoneAccountHandle) {
-    return false;
-  }
+    @Override
+    public boolean isAvailable(Context context, PhoneAccountHandle phoneAccountHandle) {
+        return false;
+    }
 
-  @Override
-  public boolean isTransmittingOrReceiving() {
-    return false;
-  }
+    @Override
+    public boolean isTransmittingOrReceiving() {
+        return false;
+    }
 
-  @Override
-  public boolean isSelfManagedCamera() {
-    return false;
-  }
+    @Override
+    public boolean isSelfManagedCamera() {
+        return false;
+    }
 
-  @Override
-  public boolean shouldUseSurfaceView() {
-    return false;
-  }
+    @Override
+    public boolean shouldUseSurfaceView() {
+        return false;
+    }
 
-  @Override
-  public boolean isPaused() {
-    return false;
-  }
+    @Override
+    public boolean isPaused() {
+        return false;
+    }
 
-  @Override
-  public VideoCallScreenDelegate createVideoCallScreenDelegate(
-      Context context, VideoCallScreen videoCallScreen) {
-    throw Assert.createUnsupportedOperationFailException();
-  }
+    @Override
+    public VideoCallScreenDelegate createVideoCallScreenDelegate(
+            Context context, VideoCallScreen videoCallScreen) {
+        throw Assert.createUnsupportedOperationFailException();
+    }
 
-  @Override
-  public void onCallStateChanged(
-      Context context, int newState, PhoneAccountHandle phoneAccountHandle) {}
+    @Override
+    public void onCallStateChanged(
+            Context context, int newState, PhoneAccountHandle phoneAccountHandle) {
+    }
 
-  @Override
-  public void onRemovedFromCallList() {}
+    @Override
+    public void onRemovedFromCallList() {
+    }
 
-  @Override
-  public int getSessionModificationState() {
-    return SessionModificationState.NO_REQUEST;
-  }
+    @Override
+    public int getSessionModificationState() {
+        return SessionModificationState.NO_REQUEST;
+    }
 
-  @Override
-  public void upgradeToVideo(@NonNull Context context) {}
+    @Override
+    public void upgradeToVideo(@NonNull Context context) {
+    }
 
-  @Override
-  public void acceptVideoRequest(@NonNull Context context) {}
+    @Override
+    public void acceptVideoRequest(@NonNull Context context) {
+    }
 
-  @Override
-  public void acceptVideoRequestAsAudio() {}
+    @Override
+    public void acceptVideoRequestAsAudio() {
+    }
 
-  @Override
-  public void declineVideoRequest() {}
+    @Override
+    public void declineVideoRequest() {
+    }
 
-  @Override
-  public boolean isTransmitting() {
-    return false;
-  }
+    @Override
+    public boolean isTransmitting() {
+        return false;
+    }
 
-  @Override
-  public void stopTransmission() {}
+    @Override
+    public void stopTransmission() {
+    }
 
-  @Override
-  public void resumeTransmission(@NonNull Context context) {}
+    @Override
+    public void resumeTransmission(@NonNull Context context) {
+    }
 
-  @Override
-  public void pause() {}
+    @Override
+    public void pause() {
+    }
 
-  @Override
-  public void unpause() {}
+    @Override
+    public void unpause() {
+    }
 
-  @Override
-  public void setCamera(@Nullable String cameraId) {}
+    @Override
+    public void setCamera(@Nullable String cameraId) {
+    }
 
-  @Override
-  public void setDeviceOrientation(int rotation) {}
+    @Override
+    public void setDeviceOrientation(int rotation) {
+    }
 
-  @Override
-  public void becomePrimary() {}
+    @Override
+    public void becomePrimary() {
+    }
 
-  @Override
-  public com.fissy.dialer.logging.VideoTech.Type getVideoTechType() {
-    return com.fissy.dialer.logging.VideoTech.Type.NONE;
-  }
+    @Override
+    public com.fissy.dialer.logging.VideoTech.Type getVideoTechType() {
+        return com.fissy.dialer.logging.VideoTech.Type.NONE;
+    }
 }

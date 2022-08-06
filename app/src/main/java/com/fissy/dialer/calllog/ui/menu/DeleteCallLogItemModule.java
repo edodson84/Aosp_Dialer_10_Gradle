@@ -20,8 +20,9 @@ import android.Manifest.permission;
 import android.content.Context;
 import android.provider.CallLog;
 import android.provider.CallLog.Calls;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresPermission;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresPermission;
+
 import com.fissy.dialer.CoalescedIds;
 import com.fissy.dialer.R;
 import com.fissy.dialer.common.Assert;
@@ -32,97 +33,100 @@ import com.fissy.dialer.common.database.Selection;
 import com.fissy.dialer.historyitemactions.HistoryItemActionModule;
 import com.fissy.dialer.logging.DialerImpression;
 import com.fissy.dialer.logging.Logger;
+
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-/** {@link HistoryItemActionModule} for deleting a call log item in the new call log. */
+/**
+ * {@link HistoryItemActionModule} for deleting a call log item in the new call log.
+ */
 final class DeleteCallLogItemModule implements HistoryItemActionModule {
-  private static final String TAG = DeleteCallLogItemModule.class.getName();
+    private static final String TAG = DeleteCallLogItemModule.class.getName();
 
-  private final Context context;
-  private final CoalescedIds coalescedIds;
+    private final Context context;
+    private final CoalescedIds coalescedIds;
 
-  DeleteCallLogItemModule(Context context, CoalescedIds coalescedIds) {
-    this.context = context;
-    this.coalescedIds = coalescedIds;
-  }
-
-  @Override
-  public int getStringId() {
-    return R.string.delete;
-  }
-
-  @Override
-  public int getDrawableId() {
-    return R.drawable.quantum_ic_delete_vd_theme_24;
-  }
-
-  @Override
-  public boolean onClick() {
-    DialerExecutorComponent.get(context)
-        .dialerExecutorFactory()
-        .createNonUiTaskBuilder(new CallLogItemDeletionWorker(context))
-        .build()
-        .executeSerial(coalescedIds);
-
-    Logger.get(context).logImpression(DialerImpression.Type.USER_DELETED_CALL_LOG_ITEM);
-    return true;
-  }
-
-  /**
-   * A {@link Worker} that deletes a call log item.
-   *
-   * <p>It takes as input the IDs of all call log records that are coalesced into the item to be
-   * deleted.
-   */
-  private static class CallLogItemDeletionWorker implements Worker<CoalescedIds, Void> {
-    private final WeakReference<Context> contextWeakReference;
-
-    CallLogItemDeletionWorker(Context context) {
-      contextWeakReference = new WeakReference<>(context);
+    DeleteCallLogItemModule(Context context, CoalescedIds coalescedIds) {
+        this.context = context;
+        this.coalescedIds = coalescedIds;
     }
 
-    @Nullable
     @Override
-    @RequiresPermission(value = permission.WRITE_CALL_LOG)
-    public Void doInBackground(CoalescedIds coalescedIds) throws Throwable {
-      Context context = contextWeakReference.get();
-      if (context == null) {
-        LogUtil.e(TAG, "Unable to delete an call log item due to null context.");
-        return null;
-      }
-
-      Selection selection =
-          Selection.builder()
-              .and(Selection.column(CallLog.Calls._ID).in(getCallLogIdsAsStrings(coalescedIds)))
-              .build();
-      int numRowsDeleted =
-          context
-              .getContentResolver()
-              .delete(Calls.CONTENT_URI, selection.getSelection(), selection.getSelectionArgs());
-
-      if (numRowsDeleted != coalescedIds.getCoalescedIdCount()) {
-        LogUtil.e(
-            TAG,
-            "Deleting call log item is unsuccessful. %d of %d rows are deleted.",
-            numRowsDeleted,
-            coalescedIds.getCoalescedIdCount());
-      }
-
-      return null;
+    public int getStringId() {
+        return R.string.delete;
     }
 
-    private static List<String> getCallLogIdsAsStrings(CoalescedIds coalescedIds) {
-      Assert.checkArgument(coalescedIds.getCoalescedIdCount() > 0);
-
-      List<String> idStrings = new ArrayList<>(coalescedIds.getCoalescedIdCount());
-
-      for (long callLogId : coalescedIds.getCoalescedIdList()) {
-        idStrings.add(String.valueOf(callLogId));
-      }
-
-      return idStrings;
+    @Override
+    public int getDrawableId() {
+        return R.drawable.quantum_ic_delete_vd_theme_24;
     }
-  }
+
+    @Override
+    public boolean onClick() {
+        DialerExecutorComponent.get(context)
+                .dialerExecutorFactory()
+                .createNonUiTaskBuilder(new CallLogItemDeletionWorker(context))
+                .build()
+                .executeSerial(coalescedIds);
+
+        Logger.get(context).logImpression(DialerImpression.Type.USER_DELETED_CALL_LOG_ITEM);
+        return true;
+    }
+
+    /**
+     * A {@link Worker} that deletes a call log item.
+     *
+     * <p>It takes as input the IDs of all call log records that are coalesced into the item to be
+     * deleted.
+     */
+    private static class CallLogItemDeletionWorker implements Worker<CoalescedIds, Void> {
+        private final WeakReference<Context> contextWeakReference;
+
+        CallLogItemDeletionWorker(Context context) {
+            contextWeakReference = new WeakReference<>(context);
+        }
+
+        private static List<String> getCallLogIdsAsStrings(CoalescedIds coalescedIds) {
+            Assert.checkArgument(coalescedIds.getCoalescedIdCount() > 0);
+
+            List<String> idStrings = new ArrayList<>(coalescedIds.getCoalescedIdCount());
+
+            for (long callLogId : coalescedIds.getCoalescedIdList()) {
+                idStrings.add(String.valueOf(callLogId));
+            }
+
+            return idStrings;
+        }
+
+        @Nullable
+        @Override
+        @RequiresPermission(value = permission.WRITE_CALL_LOG)
+        public Void doInBackground(CoalescedIds coalescedIds) throws Throwable {
+            Context context = contextWeakReference.get();
+            if (context == null) {
+                LogUtil.e(TAG, "Unable to delete an call log item due to null context.");
+                return null;
+            }
+
+            Selection selection =
+                    Selection.builder()
+                            .and(Selection.column(CallLog.Calls._ID).in(getCallLogIdsAsStrings(coalescedIds)))
+                            .build();
+            int numRowsDeleted =
+                    context
+                            .getContentResolver()
+                            .delete(Calls.CONTENT_URI, selection.getSelection(), selection.getSelectionArgs());
+
+            if (numRowsDeleted != coalescedIds.getCoalescedIdCount()) {
+                LogUtil.e(
+                        TAG,
+                        "Deleting call log item is unsuccessful. %d of %d rows are deleted.",
+                        numRowsDeleted,
+                        coalescedIds.getCoalescedIdCount());
+            }
+
+            return null;
+        }
+    }
 }

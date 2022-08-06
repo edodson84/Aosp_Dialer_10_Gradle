@@ -16,41 +16,44 @@
 package com.android.voicemail.impl.mail.internet;
 
 import android.util.Base64;
+
 import com.android.voicemail.impl.mail.Body;
 import com.android.voicemail.impl.mail.MessagingException;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 
 public class TextBody implements Body {
-  String body;
+    String body;
 
-  public TextBody(String body) {
-    this.body = body;
-  }
+    public TextBody(String body) {
+        this.body = body;
+    }
 
-  @Override
-  public void writeTo(OutputStream out) throws IOException, MessagingException {
-    byte[] bytes = body.getBytes(StandardCharsets.UTF_8);
-    out.write(Base64.encode(bytes, Base64.CRLF));
-  }
+    @Override
+    public void writeTo(OutputStream out) throws IOException, MessagingException {
+        byte[] bytes = body.getBytes(StandardCharsets.UTF_8);
+        out.write(Base64.encode(bytes, Base64.CRLF));
+    }
 
-  /**
-   * Get the text of the body in it's unencoded format.
-   *
-   * @return
-   */
-  public String getText() {
-    return body;
-  }
+    /**
+     * Get the text of the body in it's unencoded format.
+     *
+     * @return
+     */
+    public String getText() {
+        return body;
+    }
 
-  /** Returns an InputStream that reads this body's text in UTF-8 format. */
-  @Override
-  public InputStream getInputStream() throws MessagingException {
-      byte[] b = body.getBytes(StandardCharsets.UTF_8);
-      return new ByteArrayInputStream(b);
-  }
+    /**
+     * Returns an InputStream that reads this body's text in UTF-8 format.
+     */
+    @Override
+    public InputStream getInputStream() throws MessagingException {
+        byte[] b = body.getBytes(StandardCharsets.UTF_8);
+        return new ByteArrayInputStream(b);
+    }
 }

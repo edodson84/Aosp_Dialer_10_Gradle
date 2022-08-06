@@ -16,8 +16,10 @@
     <color name="blue_grey_100">#ffcfd8dc</color>
     <color name="bright_foreground_disabled_material_dark">#80ffffff</color>
     <color name="bright_foreground_disabled_material_light">#80000000</color>
-    <color name="bright_foreground_inverse_material_dark">@color/bright_foreground_material_light</color>
-    <color name="bright_foreground_inverse_material_light">@color/bright_foreground_material_dark</color>
+    <color name="bright_foreground_inverse_material_dark">@color/bright_foreground_material_light
+    </color>
+    <color name="bright_foreground_inverse_material_light">@color/bright_foreground_material_dark
+    </color>
     <color name="bright_foreground_material_dark">@android:color/white</color>
     <color name="bright_foreground_material_light">@android:color/black</color>
     <color name="button_material_dark">#ff5a595b</color>
@@ -123,7 +125,8 @@
     <color name="mtrl_textinput_hovered_box_stroke_color">#de000000</color>
     <color name="notification_action_accept">#ff097138</color>
     <color name="notification_action_answer_video">#ff097138</color>
-    <color name="notification_action_color_filter">@color/secondary_text_default_material_light</color>
+    <color name="notification_action_color_filter">@color/secondary_text_default_material_light
+    </color>
     <color name="notification_action_dismiss">#ffa52714</color>
     <color name="notification_icon_bg_color">#ff9e9e9e</color>
     <color name="notification_material_background_media_default_color">#ff424242</color>

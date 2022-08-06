@@ -16,15 +16,18 @@
 
 package com.fissy.dialer.calllog.constants;
 
-/** A class containing names for call log intents. */
+/**
+ * A class containing names for call log intents.
+ */
 public final class IntentNames {
 
-  public static final String ACTION_REFRESH_ANNOTATED_CALL_LOG = "refresh_annotated_call_log";
+    public static final String ACTION_REFRESH_ANNOTATED_CALL_LOG = "refresh_annotated_call_log";
 
-  public static final String ACTION_CANCEL_REFRESHING_ANNOTATED_CALL_LOG =
-      "cancel_refreshing_annotated_call_log";
+    public static final String ACTION_CANCEL_REFRESHING_ANNOTATED_CALL_LOG =
+            "cancel_refreshing_annotated_call_log";
 
-  public static final String EXTRA_CHECK_DIRTY = "check_dirty";
+    public static final String EXTRA_CHECK_DIRTY = "check_dirty";
 
-  private IntentNames() {}
+    private IntentNames() {
+    }
 }

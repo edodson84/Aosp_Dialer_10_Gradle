@@ -21,5 +21,5 @@ package com.fissy.dialer.voicemail.listui.error;
  * VoicemailErrorMessageCreator} to inform the source that the status should be updated
  */
 public interface VoicemailStatusReader {
-  void refresh();
+    void refresh();
 }

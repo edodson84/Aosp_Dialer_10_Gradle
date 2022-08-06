@@ -17,9 +17,10 @@
 package com.android.incallui;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.android.incallui.call.CallList;
 import com.android.incallui.call.DialerCall;
 
@@ -29,72 +30,80 @@ import com.android.incallui.call.DialerCall;
  */
 public class PostCharDialogActivity extends AppCompatActivity implements CallList.Listener {
 
-  public static final String EXTRA_CALL_ID = "extra_call_id";
-  public static final String EXTRA_POST_DIAL_STRING = "extra_post_dial_string";
-  private static final String TAG_INTERNATIONAL_CALL_ON_WIFI = "tag_international_call_on_wifi";
+    public static final String EXTRA_CALL_ID = "extra_call_id";
+    public static final String EXTRA_POST_DIAL_STRING = "extra_post_dial_string";
+    private static final String TAG_INTERNATIONAL_CALL_ON_WIFI = "tag_international_call_on_wifi";
 
-  private String callId;
+    private String callId;
 
-  @Override
-  protected void onCreate(@Nullable Bundle bundle) {
-    super.onCreate(bundle);
+    @Override
+    protected void onCreate(@Nullable Bundle bundle) {
+        super.onCreate(bundle);
 
-    callId = getIntent().getStringExtra(EXTRA_CALL_ID);
-    String postDialString = getIntent().getStringExtra(EXTRA_POST_DIAL_STRING);
-    if (callId == null || postDialString == null) {
-      finish();
-      return;
+        callId = getIntent().getStringExtra(EXTRA_CALL_ID);
+        String postDialString = getIntent().getStringExtra(EXTRA_POST_DIAL_STRING);
+        if (callId == null || postDialString == null) {
+            finish();
+            return;
+        }
+
+        PostCharDialogFragment fragment = new PostCharDialogFragment(callId, postDialString);
+        fragment.show(getSupportFragmentManager(), TAG_INTERNATIONAL_CALL_ON_WIFI);
+
+        CallList.getInstance().addListener(this);
     }
 
-    PostCharDialogFragment fragment = new PostCharDialogFragment(callId, postDialString);
-    fragment.show(getSupportFragmentManager(), TAG_INTERNATIONAL_CALL_ON_WIFI);
-
-    CallList.getInstance().addListener(this);
-  }
-
-  @Override
-  protected void onDestroy() {
-    super.onDestroy();
-    CallList.getInstance().removeListener(this);
-  }
-
-  @Override
-  protected void onPause() {
-    super.onPause();
-    // We don't expect the activity to resume, except for orientation change.
-    if (!isChangingConfigurations()) {
-      finish();
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        CallList.getInstance().removeListener(this);
     }
-  }
 
-  @Override
-  public void onDisconnect(DialerCall call) {
-    if (callId.equals(call.getId())) {
-      finish();
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // We don't expect the activity to resume, except for orientation change.
+        if (!isChangingConfigurations()) {
+            finish();
+        }
     }
-  }
 
-  @Override
-  public void onIncomingCall(DialerCall call) {}
+    @Override
+    public void onDisconnect(DialerCall call) {
+        if (callId.equals(call.getId())) {
+            finish();
+        }
+    }
 
-  @Override
-  public void onUpgradeToVideo(DialerCall call) {}
+    @Override
+    public void onIncomingCall(DialerCall call) {
+    }
 
-  @Override
-  public void onUpgradeToRtt(DialerCall call, int rttRequestId) {}
+    @Override
+    public void onUpgradeToVideo(DialerCall call) {
+    }
 
-  @Override
-  public void onSessionModificationStateChange(DialerCall call) {}
+    @Override
+    public void onUpgradeToRtt(DialerCall call, int rttRequestId) {
+    }
 
-  @Override
-  public void onCallListChange(CallList callList) {}
+    @Override
+    public void onSessionModificationStateChange(DialerCall call) {
+    }
 
-  @Override
-  public void onWiFiToLteHandover(DialerCall call) {}
+    @Override
+    public void onCallListChange(CallList callList) {
+    }
 
-  @Override
-  public void onHandoverToWifiFailed(DialerCall call) {}
+    @Override
+    public void onWiFiToLteHandover(DialerCall call) {
+    }
 
-  @Override
-  public void onInternationalCallOnWifi(@NonNull DialerCall call) {}
+    @Override
+    public void onHandoverToWifiFailed(DialerCall call) {
+    }
+
+    @Override
+    public void onInternationalCallOnWifi(@NonNull DialerCall call) {
+    }
 }

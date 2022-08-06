@@ -16,26 +16,33 @@
 
 package com.fissy.dialer.assisteddialing;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
+
 import java.util.Optional;
 
-/** A stub assisted dialing implementation. */
+/**
+ * A stub assisted dialing implementation.
+ */
 public final class AssistedDialingMediatorStub implements AssistedDialingMediator {
 
-  /** Always returns an empty Optional. */
-  @Override
-  public Optional<TransformationInfo> attemptAssistedDial(@NonNull String numberToTransform) {
-    return Optional.empty();
-  }
+    /**
+     * Always returns an empty Optional.
+     */
+    @Override
+    public Optional<TransformationInfo> attemptAssistedDial(@NonNull String numberToTransform) {
+        return Optional.empty();
+    }
 
-  /** Always returns an empty Optional. */
-  @Override
-  public Optional<String> userHomeCountryCode() {
-    return Optional.empty();
-  }
+    /**
+     * Always returns an empty Optional.
+     */
+    @Override
+    public Optional<String> userHomeCountryCode() {
+        return Optional.empty();
+    }
 
-  @Override
-  public boolean isPlatformEligible() {
-    return false;
-  }
+    @Override
+    public boolean isPlatformEligible() {
+        return false;
+    }
 }

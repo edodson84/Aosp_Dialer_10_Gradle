@@ -25,7 +25,7 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.TYPE)
 public @interface RootComponentGeneratorMetadata {
-  String tag();
+    String tag();
 
-  Class<?> annotatedClass();
+    Class<?> annotatedClass();
 }

@@ -16,5 +16,8 @@
 
 package com.android.incallui.baseui;
 
-/** Base class for all presenter ui. */
-public interface Ui {}
+/**
+ * Base class for all presenter ui.
+ */
+public interface Ui {
+}

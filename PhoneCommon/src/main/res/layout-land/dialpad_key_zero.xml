@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2014 The Android Open Source Project
+<?xml version="1.0" encoding="utf-8"?><!-- Copyright (C) 2014 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -16,28 +15,28 @@
 
 <!-- A layout representing the zero key in the dialpad, with the plus sign shifted up because it is
      smaller than a regular letter -->
-<com.android.phone.common.dialpad.DialpadKeyButton
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.android.phone.common.dialpad.DialpadKeyButton xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/zero"
-    style="@style/DialpadKeyButtonStyle" >
+    style="@style/DialpadKeyButtonStyle">
 
-    <LinearLayout style="@style/DialpadKeyInternalLayoutStyle"
-        android:orientation="horizontal"
+    <LinearLayout
+        style="@style/DialpadKeyInternalLayoutStyle"
+        android:layout_gravity="right|center_vertical"
         android:baselineAligned="false"
-        android:layout_gravity="right|center_vertical">
+        android:orientation="horizontal">
 
         <!-- Note in the referenced styles that we assign hard widths to these components
              because we want them to line up vertically when we arrange them in an MxN grid -->
 
         <com.android.phone.common.dialpad.DialpadTextView
             android:id="@+id/dialpad_key_number"
+            style="@style/DialpadBottomKeyNumberStyle"
             android:layout_marginRight="@dimen/dialpad_key_margin_right"
-            android:layout_marginBottom="0dp"
-            style="@style/DialpadBottomKeyNumberStyle" />
+            android:layout_marginBottom="0dp" />
 
         <TextView
             android:id="@+id/dialpad_key_letters"
-            android:layout_width="@dimen/dialpad_key_text_width"
-            style="@style/DialpadKeyLettersStyle" />
+            style="@style/DialpadKeyLettersStyle"
+            android:layout_width="@dimen/dialpad_key_text_width" />
     </LinearLayout>
 </com.android.phone.common.dialpad.DialpadKeyButton>

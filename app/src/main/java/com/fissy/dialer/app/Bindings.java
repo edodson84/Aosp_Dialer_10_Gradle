@@ -17,33 +17,38 @@
 package com.fissy.dialer.app;
 
 import android.content.Context;
+
 import com.fissy.dialer.app.legacybindings.DialerLegacyBindings;
 import com.fissy.dialer.app.legacybindings.DialerLegacyBindingsFactory;
 import com.fissy.dialer.app.legacybindings.DialerLegacyBindingsStub;
+
 import java.util.Objects;
 
-/** Accessor for the in call UI bindings. */
+/**
+ * Accessor for the in call UI bindings.
+ */
 public class Bindings {
 
-  private static DialerLegacyBindings legacyInstance;
+    private static DialerLegacyBindings legacyInstance;
 
-  private Bindings() {}
-
-  public static DialerLegacyBindings getLegacy(Context context) {
-    Objects.requireNonNull(context);
-    if (legacyInstance != null) {
-      return legacyInstance;
+    private Bindings() {
     }
 
-    Context application = context.getApplicationContext();
-    if (application instanceof DialerLegacyBindingsFactory) {
-      legacyInstance = ((DialerLegacyBindingsFactory) application).newDialerLegacyBindings();
-    }
+    public static DialerLegacyBindings getLegacy(Context context) {
+        Objects.requireNonNull(context);
+        if (legacyInstance != null) {
+            return legacyInstance;
+        }
 
-    if (legacyInstance == null) {
-      legacyInstance = new DialerLegacyBindingsStub();
+        Context application = context.getApplicationContext();
+        if (application instanceof DialerLegacyBindingsFactory) {
+            legacyInstance = ((DialerLegacyBindingsFactory) application).newDialerLegacyBindings();
+        }
+
+        if (legacyInstance == null) {
+            legacyInstance = new DialerLegacyBindingsStub();
+        }
+        return legacyInstance;
     }
-    return legacyInstance;
-  }
 
 }

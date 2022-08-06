@@ -16,29 +16,35 @@
 package com.fissy.dialer.calllog;
 
 import android.content.Context;
+
 import com.fissy.dialer.calllog.notifier.RefreshAnnotatedCallLogNotifier;
 import com.fissy.dialer.inject.HasRootComponent;
+
 import dagger.Subcomponent;
 
-/** Dagger component for the call log package. */
+/**
+ * Dagger component for the call log package.
+ */
 @Subcomponent
 public abstract class CallLogComponent {
 
-  public abstract CallLogFramework callLogFramework();
+    public static CallLogComponent get(Context context) {
+        return ((HasComponent) ((HasRootComponent) context.getApplicationContext()).component())
+                .callLogComponent();
+    }
 
-  public abstract RefreshAnnotatedCallLogNotifier getRefreshAnnotatedCallLogNotifier();
+    public abstract CallLogFramework callLogFramework();
 
-  public abstract RefreshAnnotatedCallLogWorker getRefreshAnnotatedCallLogWorker();
+    public abstract RefreshAnnotatedCallLogNotifier getRefreshAnnotatedCallLogNotifier();
 
-  public abstract ClearMissedCalls getClearMissedCalls();
+    public abstract RefreshAnnotatedCallLogWorker getRefreshAnnotatedCallLogWorker();
 
-  public static CallLogComponent get(Context context) {
-    return ((HasComponent) ((HasRootComponent) context.getApplicationContext()).component())
-        .callLogComponent();
-  }
+    public abstract ClearMissedCalls getClearMissedCalls();
 
-  /** Used to refer to the root application component. */
-  public interface HasComponent {
-    CallLogComponent callLogComponent();
-  }
+    /**
+     * Used to refer to the root application component.
+     */
+    public interface HasComponent {
+        CallLogComponent callLogComponent();
+    }
 }

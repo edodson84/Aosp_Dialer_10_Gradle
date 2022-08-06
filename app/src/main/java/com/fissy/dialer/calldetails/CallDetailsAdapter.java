@@ -18,8 +18,9 @@ package com.fissy.dialer.calldetails;
 
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
+
 import com.fissy.dialer.calldetails.CallDetailsEntryViewHolder.CallDetailsEntryListener;
 import com.fissy.dialer.calldetails.CallDetailsFooterViewHolder.DeleteCallDetailsListener;
 import com.fissy.dialer.calldetails.CallDetailsHeaderViewHolder.CallDetailsHeaderListener;
@@ -33,57 +34,59 @@ import com.fissy.dialer.glidephotomanager.PhotoInfo;
  */
 final class CallDetailsAdapter extends CallDetailsAdapterCommon {
 
-  /** Info to be shown in the header. */
-  private final CallDetailsHeaderInfo headerInfo;
+    /**
+     * Info to be shown in the header.
+     */
+    private final CallDetailsHeaderInfo headerInfo;
 
-  CallDetailsAdapter(
-      Context context,
-      CallDetailsHeaderInfo calldetailsHeaderInfo,
-      CallDetailsEntries callDetailsEntries,
-      CallDetailsEntryListener callDetailsEntryListener,
-      CallDetailsHeaderListener callDetailsHeaderListener,
-      CallDetailsFooterViewHolder.ReportCallIdListener reportCallIdListener,
-      DeleteCallDetailsListener deleteCallDetailsListener) {
-    super(
-        context,
-        callDetailsEntries,
-        callDetailsEntryListener,
-        callDetailsHeaderListener,
-        reportCallIdListener,
-        deleteCallDetailsListener);
-    this.headerInfo = calldetailsHeaderInfo;
-  }
+    CallDetailsAdapter(
+            Context context,
+            CallDetailsHeaderInfo calldetailsHeaderInfo,
+            CallDetailsEntries callDetailsEntries,
+            CallDetailsEntryListener callDetailsEntryListener,
+            CallDetailsHeaderListener callDetailsHeaderListener,
+            CallDetailsFooterViewHolder.ReportCallIdListener reportCallIdListener,
+            DeleteCallDetailsListener deleteCallDetailsListener) {
+        super(
+                context,
+                callDetailsEntries,
+                callDetailsEntryListener,
+                callDetailsHeaderListener,
+                reportCallIdListener,
+                deleteCallDetailsListener);
+        this.headerInfo = calldetailsHeaderInfo;
+    }
 
-  @Override
-  protected CallDetailsHeaderViewHolder createCallDetailsHeaderViewHolder(
-      View container, CallDetailsHeaderListener callDetailsHeaderListener) {
-    return new CallDetailsHeaderViewHolder(
-        container,
-        headerInfo.getDialerPhoneNumber().getNormalizedNumber(),
-        headerInfo.getDialerPhoneNumber().getPostDialPortion(),
-        callDetailsHeaderListener);
-  }
+    @Override
+    protected CallDetailsHeaderViewHolder createCallDetailsHeaderViewHolder(
+            View container, CallDetailsHeaderListener callDetailsHeaderListener) {
+        return new CallDetailsHeaderViewHolder(
+                container,
+                headerInfo.getDialerPhoneNumber().getNormalizedNumber(),
+                headerInfo.getDialerPhoneNumber().getPostDialPortion(),
+                callDetailsHeaderListener);
+    }
 
-  @Override
-  protected void bindCallDetailsHeaderViewHolder(
-      CallDetailsHeaderViewHolder callDetailsHeaderViewHolder, int position) {
-    callDetailsHeaderViewHolder.updateContactInfo(headerInfo, getCallbackAction());
-    callDetailsHeaderViewHolder.updateAssistedDialingInfo(
-        getCallDetailsEntries().getEntries(position));
-  }
+    @Override
+    protected void bindCallDetailsHeaderViewHolder(
+            CallDetailsHeaderViewHolder callDetailsHeaderViewHolder, int position) {
+        callDetailsHeaderViewHolder.updateContactInfo(headerInfo, getCallbackAction());
+        callDetailsHeaderViewHolder.updateAssistedDialingInfo(
+                getCallDetailsEntries().getEntries(position));
+    }
 
-  @Override
-  protected String getNumber() {
-    return headerInfo.getDialerPhoneNumber().getNormalizedNumber();
-  }
+    @Override
+    protected String getNumber() {
+        return headerInfo.getDialerPhoneNumber().getNormalizedNumber();
+    }
 
-  @Override
-  protected String getPrimaryText() {
-    return headerInfo.getPrimaryText();
-  }
+    @Override
+    protected String getPrimaryText() {
+        return headerInfo.getPrimaryText();
+    }
 
-  @Override
-  protected PhotoInfo getPhotoInfo() {
-    return headerInfo.getPhotoInfo();
-  }
+    @Override
+    protected PhotoInfo getPhotoInfo() {
+        return headerInfo.getPhotoInfo();
+    }
 }

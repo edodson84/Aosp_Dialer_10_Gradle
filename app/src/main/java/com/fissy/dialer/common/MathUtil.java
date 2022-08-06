@@ -16,42 +16,44 @@
 
 package com.fissy.dialer.common;
 
-/** Utility class for common math operations */
+/**
+ * Utility class for common math operations
+ */
 public class MathUtil {
 
-  /**
-   * Interpolates between two integer values based on percentage.
-   *
-   * @param begin Begin value
-   * @param end End value
-   * @param percent Percentage value, between 0 and 1
-   * @return Interpolated result
-   */
-  public static int lerp(int begin, int end, float percent) {
-    return (int) (begin * (1 - percent) + end * percent);
-  }
+    /**
+     * Interpolates between two integer values based on percentage.
+     *
+     * @param begin   Begin value
+     * @param end     End value
+     * @param percent Percentage value, between 0 and 1
+     * @return Interpolated result
+     */
+    public static int lerp(int begin, int end, float percent) {
+        return (int) (begin * (1 - percent) + end * percent);
+    }
 
-  /**
-   * Interpolates between two float values based on percentage.
-   *
-   * @param begin Begin value
-   * @param end End value
-   * @param percent Percentage value, between 0 and 1
-   * @return Interpolated result
-   */
-  public static float lerp(float begin, float end, float percent) {
-    return begin * (1 - percent) + end * percent;
-  }
+    /**
+     * Interpolates between two float values based on percentage.
+     *
+     * @param begin   Begin value
+     * @param end     End value
+     * @param percent Percentage value, between 0 and 1
+     * @return Interpolated result
+     */
+    public static float lerp(float begin, float end, float percent) {
+        return begin * (1 - percent) + end * percent;
+    }
 
-  /**
-   * Clamps a value between two bounds inclusively.
-   *
-   * @param value Value to be clamped
-   * @param min Lower bound
-   * @param max Upper bound
-   * @return Clamped value
-   */
-  public static float clamp(float value, float min, float max) {
-    return Math.max(min, Math.min(value, max));
-  }
+    /**
+     * Clamps a value between two bounds inclusively.
+     *
+     * @param value Value to be clamped
+     * @param min   Lower bound
+     * @param max   Upper bound
+     * @return Clamped value
+     */
+    public static float clamp(float value, float min, float max) {
+        return Math.max(min, Math.min(value, max));
+    }
 }

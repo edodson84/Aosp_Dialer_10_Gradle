@@ -17,39 +17,42 @@ package com.android.voicemail.impl.sms;
 
 import android.app.PendingIntent;
 import android.content.Context;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.telecom.PhoneAccountHandle;
+
 import com.android.voicemail.impl.OmtpConstants;
 
-/** An implementation of the OmtpMessageSender for T-Mobile. */
+/**
+ * An implementation of the OmtpMessageSender for T-Mobile.
+ */
 public class OmtpCvvmMessageSender extends OmtpMessageSender {
-  public OmtpCvvmMessageSender(
-      Context context,
-      PhoneAccountHandle phoneAccountHandle,
-      short applicationPort,
-      String destinationNumber) {
-    super(context, phoneAccountHandle, applicationPort, destinationNumber);
-  }
+    public OmtpCvvmMessageSender(
+            Context context,
+            PhoneAccountHandle phoneAccountHandle,
+            short applicationPort,
+            String destinationNumber) {
+        super(context, phoneAccountHandle, applicationPort, destinationNumber);
+    }
 
-  @Override
-  public void requestVvmActivation(@Nullable PendingIntent sentIntent) {
-    sendCvvmMessage(OmtpConstants.ACTIVATE_REQUEST, sentIntent);
-  }
+    @Override
+    public void requestVvmActivation(@Nullable PendingIntent sentIntent) {
+        sendCvvmMessage(OmtpConstants.ACTIVATE_REQUEST, sentIntent);
+    }
 
-  @Override
-  public void requestVvmDeactivation(@Nullable PendingIntent sentIntent) {
-    sendCvvmMessage(OmtpConstants.DEACTIVATE_REQUEST, sentIntent);
-  }
+    @Override
+    public void requestVvmDeactivation(@Nullable PendingIntent sentIntent) {
+        sendCvvmMessage(OmtpConstants.DEACTIVATE_REQUEST, sentIntent);
+    }
 
-  @Override
-  public void requestVvmStatus(@Nullable PendingIntent sentIntent) {
-    sendCvvmMessage(OmtpConstants.STATUS_REQUEST, sentIntent);
-  }
+    @Override
+    public void requestVvmStatus(@Nullable PendingIntent sentIntent) {
+        sendCvvmMessage(OmtpConstants.STATUS_REQUEST, sentIntent);
+    }
 
-  private void sendCvvmMessage(String request, PendingIntent sentIntent) {
-    StringBuilder sb = new StringBuilder().append(request);
-    sb.append(OmtpConstants.SMS_PREFIX_SEPARATOR);
-    appendField(sb, "dt" /* device type */, "6" /* no VTT (transcription) support*/);
-    sendSms(sb.toString(), sentIntent);
-  }
+    private void sendCvvmMessage(String request, PendingIntent sentIntent) {
+        StringBuilder sb = new StringBuilder().append(request);
+        sb.append(OmtpConstants.SMS_PREFIX_SEPARATOR);
+        appendField(sb, "dt" /* device type */, "6" /* no VTT (transcription) support*/);
+        sendSms(sb.toString(), sentIntent);
+    }
 }

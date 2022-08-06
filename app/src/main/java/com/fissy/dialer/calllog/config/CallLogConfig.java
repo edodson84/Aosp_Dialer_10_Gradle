@@ -18,23 +18,27 @@ package com.fissy.dialer.calllog.config;
 
 import com.google.common.util.concurrent.ListenableFuture;
 
-/** Determines if new call log components are enabled. */
+/**
+ * Determines if new call log components are enabled.
+ */
 public interface CallLogConfig {
 
-  /**
-   * Updates the config values. This may kick off a lot of work so should be done infrequently, for
-   * example by a scheduled job or broadcast receiver which rarely fires.
-   */
-  ListenableFuture<Void> update();
+    /**
+     * Updates the config values. This may kick off a lot of work so should be done infrequently, for
+     * example by a scheduled job or broadcast receiver which rarely fires.
+     */
+    ListenableFuture<Void> update();
 
-  boolean isNewCallLogFragmentEnabled();
+    boolean isNewCallLogFragmentEnabled();
 
-  boolean isNewVoicemailFragmentEnabled();
+    boolean isNewVoicemailFragmentEnabled();
 
-  boolean isNewPeerEnabled();
+    boolean isNewPeerEnabled();
 
-  boolean isCallLogFrameworkEnabled();
+    boolean isCallLogFrameworkEnabled();
 
-  /** Schedules a job to periodically update the config. */
-  void schedulePollingJob();
+    /**
+     * Schedules a job to periodically update the config.
+     */
+    void schedulePollingJob();
 }

@@ -17,13 +17,13 @@
 package com.android.voicemail.impl.mail;
 
 public class CertificateValidationException extends MessagingException {
-  public static final long serialVersionUID = -1;
+    public static final long serialVersionUID = -1;
 
-  public CertificateValidationException(String message) {
-    super(CERTIFICATE_VALIDATION_ERROR, message);
-  }
+    public CertificateValidationException(String message) {
+        super(CERTIFICATE_VALIDATION_ERROR, message);
+    }
 
-  public CertificateValidationException(String message, Throwable throwable) {
-    super(CERTIFICATE_VALIDATION_ERROR, message, throwable);
-  }
+    public CertificateValidationException(String message, Throwable throwable) {
+        super(CERTIFICATE_VALIDATION_ERROR, message, throwable);
+    }
 }

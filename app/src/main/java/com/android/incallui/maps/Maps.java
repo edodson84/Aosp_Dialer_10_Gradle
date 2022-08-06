@@ -17,17 +17,19 @@
 package com.android.incallui.maps;
 
 import android.location.Location;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
-/** Used to create a fragment that can display a static map at the given location. */
+/**
+ * Used to create a fragment that can display a static map at the given location.
+ */
 public interface Maps {
-  /**
-   * Used to check if maps is available. This will return false if Dialer was compiled without
-   * support for Google Play Services.
-   */
-  boolean isAvailable();
+    /**
+     * Used to check if maps is available. This will return false if Dialer was compiled without
+     * support for Google Play Services.
+     */
+    boolean isAvailable();
 
-  @NonNull
-  Fragment createStaticMapFragment(@NonNull Location location);
+    @NonNull
+    Fragment createStaticMapFragment(@NonNull Location location);
 }

@@ -17,36 +17,41 @@
 package com.android.incallui;
 
 import android.content.Context;
+
 import com.android.incallui.bindings.InCallUiBindings;
 import com.android.incallui.bindings.InCallUiBindingsFactory;
 import com.android.incallui.bindings.InCallUiBindingsStub;
+
 import java.util.Objects;
 
-/** Accessor for the in call UI bindings. */
+/**
+ * Accessor for the in call UI bindings.
+ */
 public class Bindings {
 
-  private static InCallUiBindings instance;
+    private static InCallUiBindings instance;
 
-  private Bindings() {}
-
-  public static InCallUiBindings get(Context context) {
-    Objects.requireNonNull(context);
-    if (instance != null) {
-      return instance;
+    private Bindings() {
     }
 
-    Context application = context.getApplicationContext();
-    if (application instanceof InCallUiBindingsFactory) {
-      instance = ((InCallUiBindingsFactory) application).newInCallUiBindings();
+    public static InCallUiBindings get(Context context) {
+        Objects.requireNonNull(context);
+        if (instance != null) {
+            return instance;
+        }
+
+        Context application = context.getApplicationContext();
+        if (application instanceof InCallUiBindingsFactory) {
+            instance = ((InCallUiBindingsFactory) application).newInCallUiBindings();
+        }
+
+        if (instance == null) {
+            instance = new InCallUiBindingsStub();
+        }
+        return instance;
     }
 
-    if (instance == null) {
-      instance = new InCallUiBindingsStub();
+    public static void setForTesting(InCallUiBindings testInstance) {
+        instance = testInstance;
     }
-    return instance;
-  }
-
-  public static void setForTesting(InCallUiBindings testInstance) {
-    instance = testInstance;
-  }
 }

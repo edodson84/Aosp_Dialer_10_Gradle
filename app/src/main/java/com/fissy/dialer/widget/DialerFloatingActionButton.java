@@ -17,9 +17,10 @@
 package com.fissy.dialer.widget;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
+import androidx.annotation.Nullable;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import android.util.AttributeSet;
+
 import com.fissy.dialer.common.Assert;
 
 /**
@@ -32,7 +33,7 @@ import com.fissy.dialer.common.Assert;
  *   <li>Being able to trigger click events twice.
  *   <li>Banning setVisibility since 9 times out of 10, it just causes bad state.
  * </ul>
- *
+ * <p>
  * Planned fixes:
  *
  * <ul>
@@ -43,37 +44,37 @@ import com.fissy.dialer.common.Assert;
  */
 public class DialerFloatingActionButton extends FloatingActionButton {
 
-  public DialerFloatingActionButton(Context context, AttributeSet attributeSet) {
-    super(context, attributeSet);
-  }
+    public DialerFloatingActionButton(Context context, AttributeSet attributeSet) {
+        super(context, attributeSet);
+    }
 
-  @Override
-  public void show() {
-    super.show();
-    setClickable(true);
-  }
+    @Override
+    public void show() {
+        super.show();
+        setClickable(true);
+    }
 
-  @Override
-  public void show(@Nullable OnVisibilityChangedListener onVisibilityChangedListener) {
-    super.show(onVisibilityChangedListener);
-    setClickable(true);
-  }
+    @Override
+    public void show(@Nullable OnVisibilityChangedListener onVisibilityChangedListener) {
+        super.show(onVisibilityChangedListener);
+        setClickable(true);
+    }
 
-  @Override
-  public void hide() {
-    super.hide();
-    setClickable(false);
-  }
+    @Override
+    public void hide() {
+        super.hide();
+        setClickable(false);
+    }
 
-  @Override
-  public void hide(@Nullable OnVisibilityChangedListener onVisibilityChangedListener) {
-    super.hide(onVisibilityChangedListener);
-    setClickable(false);
-  }
+    @Override
+    public void hide(@Nullable OnVisibilityChangedListener onVisibilityChangedListener) {
+        super.hide(onVisibilityChangedListener);
+        setClickable(false);
+    }
 
-  @Override
-  public void setVisibility(int i) {
-    throw Assert.createUnsupportedOperationFailException(
-        "Do not call setVisibility, call show/hide instead");
-  }
+    @Override
+    public void setVisibility(int i) {
+        throw Assert.createUnsupportedOperationFailException(
+                "Do not call setVisibility, call show/hide instead");
+    }
 }

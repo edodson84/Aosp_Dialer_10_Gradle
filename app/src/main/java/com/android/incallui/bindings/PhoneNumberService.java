@@ -18,45 +18,47 @@ package com.android.incallui.bindings;
 
 import com.fissy.dialer.logging.ContactLookupResult;
 
-/** Provides phone number lookup services. */
+/**
+ * Provides phone number lookup services.
+ */
 public interface PhoneNumberService {
 
-  /**
-   * Get a phone number number asynchronously.
-   *
-   * @param phoneNumber The phone number to lookup.
-   * @param listener The listener to notify when the phone number lookup is complete.
-   */
-  void getPhoneNumberInfo(String phoneNumber, NumberLookupListener listener);
-
-  interface NumberLookupListener {
-
     /**
-     * Callback when a phone number has been looked up.
+     * Get a phone number number asynchronously.
      *
-     * @param info The looked up information. Or (@literal null} if there are no results.
+     * @param phoneNumber The phone number to lookup.
+     * @param listener    The listener to notify when the phone number lookup is complete.
      */
-    void onPhoneNumberInfoComplete(PhoneNumberInfo info);
-  }
+    void getPhoneNumberInfo(String phoneNumber, NumberLookupListener listener);
 
-  interface PhoneNumberInfo {
+    interface NumberLookupListener {
 
-    String getDisplayName();
+        /**
+         * Callback when a phone number has been looked up.
+         *
+         * @param info The looked up information. Or (@literal null} if there are no results.
+         */
+        void onPhoneNumberInfoComplete(PhoneNumberInfo info);
+    }
 
-    String getNumber();
+    interface PhoneNumberInfo {
 
-    int getPhoneType();
+        String getDisplayName();
 
-    String getPhoneLabel();
+        String getNumber();
 
-    String getNormalizedNumber();
+        int getPhoneType();
 
-    String getImageUrl();
+        String getPhoneLabel();
 
-    String getLookupKey();
+        String getNormalizedNumber();
 
-    boolean isBusiness();
+        String getImageUrl();
 
-    ContactLookupResult.Type getLookupSource();
-  }
+        String getLookupKey();
+
+        boolean isBusiness();
+
+        ContactLookupResult.Type getLookupSource();
+    }
 }

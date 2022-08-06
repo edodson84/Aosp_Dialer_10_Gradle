@@ -19,33 +19,33 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 public interface Part extends Fetchable {
-  void addHeader(String name, String value) throws MessagingException;
+    void addHeader(String name, String value) throws MessagingException;
 
-  void removeHeader(String name) throws MessagingException;
+    void removeHeader(String name) throws MessagingException;
 
-  void setHeader(String name, String value) throws MessagingException;
+    void setHeader(String name, String value) throws MessagingException;
 
-  Body getBody() throws MessagingException;
+    Body getBody() throws MessagingException;
 
-  String getContentType() throws MessagingException;
+    void setBody(Body body) throws MessagingException;
 
-  String getDisposition() throws MessagingException;
+    String getContentType() throws MessagingException;
 
-  String getContentId() throws MessagingException;
+    String getDisposition() throws MessagingException;
 
-  String[] getHeader(String name) throws MessagingException;
+    String getContentId() throws MessagingException;
 
-  void setExtendedHeader(String name, String value) throws MessagingException;
+    String[] getHeader(String name) throws MessagingException;
 
-  String getExtendedHeader(String name) throws MessagingException;
+    void setExtendedHeader(String name, String value) throws MessagingException;
 
-  int getSize() throws MessagingException;
+    String getExtendedHeader(String name) throws MessagingException;
 
-  boolean isMimeType(String mimeType) throws MessagingException;
+    int getSize() throws MessagingException;
 
-  String getMimeType() throws MessagingException;
+    boolean isMimeType(String mimeType) throws MessagingException;
 
-  void setBody(Body body) throws MessagingException;
+    String getMimeType() throws MessagingException;
 
-  void writeTo(OutputStream out) throws IOException, MessagingException;
+    void writeTo(OutputStream out) throws IOException, MessagingException;
 }

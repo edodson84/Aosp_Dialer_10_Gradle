@@ -19,15 +19,19 @@ package com.fissy.dialer.glidephotomanager;
 import com.fissy.dialer.glidephotomanager.impl.GlidePhotoManagerImpl;
 import com.fissy.dialer.inject.DialerVariant;
 import com.fissy.dialer.inject.InstallIn;
-import dagger.Binds;
-import dagger.Module;
+
 import javax.inject.Singleton;
 
-/** Module for {@link GlidePhotoManagerComponent} */
+import dagger.Binds;
+import dagger.Module;
+
+/**
+ * Module for {@link GlidePhotoManagerComponent}
+ */
 @InstallIn(variants = {DialerVariant.DIALER_TEST})
 @Module
 public abstract class GlidePhotoManagerModule {
-  @Binds
-  @Singleton
-  public abstract GlidePhotoManager bindGlidePhotoManager(GlidePhotoManagerImpl glidePhotoManager);
+    @Binds
+    @Singleton
+    public abstract GlidePhotoManager bindGlidePhotoManager(GlidePhotoManagerImpl glidePhotoManager);
 }

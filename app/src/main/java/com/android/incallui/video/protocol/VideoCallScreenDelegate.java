@@ -18,34 +18,37 @@ package com.android.incallui.video.protocol;
 
 import android.content.Context;
 import android.view.SurfaceView;
+
 import com.android.incallui.videosurface.protocol.VideoSurfaceTexture;
 
-/** Callbacks from the module out to the container. */
+/**
+ * Callbacks from the module out to the container.
+ */
 public interface VideoCallScreenDelegate {
 
-  void initVideoCallScreenDelegate(Context context, VideoCallScreen videoCallScreen);
+    void initVideoCallScreenDelegate(Context context, VideoCallScreen videoCallScreen);
 
-  void onVideoCallScreenUiReady();
+    void onVideoCallScreenUiReady();
 
-  void onVideoCallScreenUiUnready();
+    void onVideoCallScreenUiUnready();
 
-  void cancelAutoFullScreen();
+    void cancelAutoFullScreen();
 
-  void resetAutoFullscreenTimer();
+    void resetAutoFullscreenTimer();
 
-  void onSystemUiVisibilityChange(boolean visible);
+    void onSystemUiVisibilityChange(boolean visible);
 
-  void onCameraPermissionGranted();
+    void onCameraPermissionGranted();
 
-  boolean shouldShowCameraPermissionToast();
+    boolean shouldShowCameraPermissionToast();
 
-  void onCameraPermissionDialogShown();
+    void onCameraPermissionDialogShown();
 
-  VideoSurfaceTexture getLocalVideoSurfaceTexture();
+    VideoSurfaceTexture getLocalVideoSurfaceTexture();
 
-  VideoSurfaceTexture getRemoteVideoSurfaceTexture();
+    VideoSurfaceTexture getRemoteVideoSurfaceTexture();
 
-  void setSurfaceViews(SurfaceView preview, SurfaceView remote);
+    void setSurfaceViews(SurfaceView preview, SurfaceView remote);
 
-  int getDeviceOrientation();
+    int getDeviceOrientation();
 }

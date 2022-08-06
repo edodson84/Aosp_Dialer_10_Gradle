@@ -17,23 +17,29 @@
 package com.fissy.dialer.phonenumbergeoutil;
 
 import android.content.Context;
+
 import com.fissy.dialer.inject.HasRootComponent;
+
 import dagger.Subcomponent;
 
-/** Dagger component for phone number geo util. */
+/**
+ * Dagger component for phone number geo util.
+ */
 @Subcomponent
 public abstract class PhoneNumberGeoUtilComponent {
 
-  public abstract PhoneNumberGeoUtil getPhoneNumberGeoUtil();
+    public static PhoneNumberGeoUtilComponent get(Context context) {
+        return ((PhoneNumberGeoUtilComponent.HasComponent)
+                ((HasRootComponent) context.getApplicationContext()).component())
+                .phoneNumberGeoUtilComponent();
+    }
 
-  public static PhoneNumberGeoUtilComponent get(Context context) {
-    return ((PhoneNumberGeoUtilComponent.HasComponent)
-            ((HasRootComponent) context.getApplicationContext()).component())
-        .phoneNumberGeoUtilComponent();
-  }
+    public abstract PhoneNumberGeoUtil getPhoneNumberGeoUtil();
 
-  /** Used to refer to the root application component. */
-  public interface HasComponent {
-    PhoneNumberGeoUtilComponent phoneNumberGeoUtilComponent();
-  }
+    /**
+     * Used to refer to the root application component.
+     */
+    public interface HasComponent {
+        PhoneNumberGeoUtilComponent phoneNumberGeoUtilComponent();
+    }
 }

@@ -36,5 +36,5 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.TYPE)
 public @interface InstallIn {
-  DialerVariant[] variants();
+    DialerVariant[] variants();
 }

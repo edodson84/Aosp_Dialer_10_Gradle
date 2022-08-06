@@ -16,8 +16,12 @@
 
 package com.fissy.dialer.time;
 
-/** Functional interface for providing time since epoch. */
+/**
+ * Functional interface for providing time since epoch.
+ */
 public interface Clock {
-  /** Returns milliseconds since epoch. */
-  long currentTimeMillis();
+    /**
+     * Returns milliseconds since epoch.
+     */
+    long currentTimeMillis();
 }

@@ -7,9 +7,9 @@ option optimize_for = LITE_RUNTIME;
 
 package com.fissy.dialer.calllog.model;
 
-import "java/com/android/dialer/calllog/database/contract/coalesced_ids.proto";
-import "java/com/android/dialer/calllog/database/contract/number_attributes.proto";
-import "java/com/android/dialer/phonenumberproto/dialer_phone_number.proto";
+import "java/com/fissy/dialer/calllog/database/contract/coalesced_ids.proto";
+import "java/com/fissy/dialer/calllog/database/contract/number_attributes.proto";
+import "java/com/fissy/dialer/phonenumberproto/dialer_phone_number.proto";
 
 // Contains the contents of a row from the CoalescedAnnotatedCallLog.
 // Next ID: 17

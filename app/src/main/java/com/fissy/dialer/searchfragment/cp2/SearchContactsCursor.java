@@ -21,7 +21,7 @@ import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.database.MergeCursor;
 import android.provider.ContactsContract.Directory;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.searchfragment.common.SearchCursor;
@@ -33,42 +33,42 @@ import com.fissy.dialer.searchfragment.common.SearchCursor;
  */
 final class SearchContactsCursor extends MergeCursor implements SearchCursor {
 
-  private final ContactFilterCursor contactFilterCursor;
-  private final Context context;
+    private final ContactFilterCursor contactFilterCursor;
+    private final Context context;
 
-  static SearchContactsCursor newInstance(
-      Context context, ContactFilterCursor contactFilterCursor) {
-    MatrixCursor headerCursor = new MatrixCursor(HEADER_PROJECTION);
-    headerCursor.addRow(new String[] {context.getString(R.string.all_contacts)});
-    return new SearchContactsCursor(new Cursor[] {headerCursor, contactFilterCursor}, context);
-  }
+    private SearchContactsCursor(Cursor[] cursors, Context context) {
+        super(cursors);
+        this.contactFilterCursor = (ContactFilterCursor) cursors[1];
+        this.context = context;
+    }
 
-  private SearchContactsCursor(Cursor[] cursors, Context context) {
-    super(cursors);
-    this.contactFilterCursor = (ContactFilterCursor) cursors[1];
-    this.context = context;
-  }
+    static SearchContactsCursor newInstance(
+            Context context, ContactFilterCursor contactFilterCursor) {
+        MatrixCursor headerCursor = new MatrixCursor(HEADER_PROJECTION);
+        headerCursor.addRow(new String[]{context.getString(R.string.all_contacts)});
+        return new SearchContactsCursor(new Cursor[]{headerCursor, contactFilterCursor}, context);
+    }
 
-  @Override
-  public boolean isHeader() {
-    return isFirst();
-  }
+    @Override
+    public boolean isHeader() {
+        return isFirst();
+    }
 
-  @Override
-  public boolean updateQuery(@Nullable String query) {
-    contactFilterCursor.filter(query, context);
-    return true;
-  }
+    @Override
+    public boolean updateQuery(@Nullable String query) {
+        contactFilterCursor.filter(query, context);
+        return true;
+    }
 
-  @Override
-  public long getDirectoryId() {
-    return Directory.DEFAULT;
-  }
+    @Override
+    public long getDirectoryId() {
+        return Directory.DEFAULT;
+    }
 
-  @Override
-  public int getCount() {
-    // If we don't have any contents, we don't want to show the header
-    int count = contactFilterCursor.getCount();
-    return count == 0 ? 0 : count + 1;
-  }
+    @Override
+    public int getCount() {
+        // If we don't have any contents, we don't want to show the header
+        int count = contactFilterCursor.getCount();
+        return count == 0 ? 0 : count + 1;
+    }
 }

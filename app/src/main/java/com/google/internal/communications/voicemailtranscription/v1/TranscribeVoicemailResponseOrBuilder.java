@@ -4,32 +4,34 @@
 package com.google.internal.communications.voicemailtranscription.v1;
 
 public interface TranscribeVoicemailResponseOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailResponse)
-    com.google.protobuf.MessageLiteOrBuilder {
+        // @@protoc_insertion_point(interface_extends:google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailResponse)
+        com.google.protobuf.MessageLiteOrBuilder {
 
-  /**
-   * <pre>
-   * The transcribed text of the voicemail.
-   * </pre>
-   *
-   * <code>optional string transcript = 1;</code>
-   */
-  boolean hasTranscript();
-  /**
-   * <pre>
-   * The transcribed text of the voicemail.
-   * </pre>
-   *
-   * <code>optional string transcript = 1;</code>
-   */
-  java.lang.String getTranscript();
-  /**
-   * <pre>
-   * The transcribed text of the voicemail.
-   * </pre>
-   *
-   * <code>optional string transcript = 1;</code>
-   */
-  com.google.protobuf.ByteString
-      getTranscriptBytes();
+    /**
+     * <pre>
+     * The transcribed text of the voicemail.
+     * </pre>
+     *
+     * <code>optional string transcript = 1;</code>
+     */
+    boolean hasTranscript();
+
+    /**
+     * <pre>
+     * The transcribed text of the voicemail.
+     * </pre>
+     *
+     * <code>optional string transcript = 1;</code>
+     */
+    java.lang.String getTranscript();
+
+    /**
+     * <pre>
+     * The transcribed text of the voicemail.
+     * </pre>
+     *
+     * <code>optional string transcript = 1;</code>
+     */
+    com.google.protobuf.ByteString
+    getTranscriptBytes();
 }

@@ -17,23 +17,23 @@
 package com.android.incallui.answer.impl.classifier;
 
 class DurationCountEvaluator {
-  public static float evaluate(float value) {
-    float evaluation = 0.0f;
-    if (value < 0.0105) {
-      evaluation++;
+    public static float evaluate(float value) {
+        float evaluation = 0.0f;
+        if (value < 0.0105) {
+            evaluation++;
+        }
+        if (value < 0.00909) {
+            evaluation++;
+        }
+        if (value < 0.00667) {
+            evaluation++;
+        }
+        if (value > 0.0333) {
+            evaluation++;
+        }
+        if (value > 0.0500) {
+            evaluation++;
+        }
+        return evaluation;
     }
-    if (value < 0.00909) {
-      evaluation++;
-    }
-    if (value < 0.00667) {
-      evaluation++;
-    }
-    if (value > 0.0333) {
-      evaluation++;
-    }
-    if (value > 0.0500) {
-      evaluation++;
-    }
-    return evaluation;
-  }
 }

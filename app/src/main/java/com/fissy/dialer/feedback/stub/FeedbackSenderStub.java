@@ -17,19 +17,24 @@
 package com.fissy.dialer.feedback.stub;
 
 import com.fissy.dialer.feedback.FeedbackSender;
+
 import javax.inject.Inject;
 
-/** Stub module that is returned if the Feedback module is not enabled. */
+/**
+ * Stub module that is returned if the Feedback module is not enabled.
+ */
 public class FeedbackSenderStub implements FeedbackSender {
 
-  @Inject
-  public FeedbackSenderStub() {}
+    @Inject
+    public FeedbackSenderStub() {
+    }
 
-  @Override
-  public void sendFeedback(Object feedbackOptions) {}
+    @Override
+    public void sendFeedback(Object feedbackOptions) {
+    }
 
-  @Override
-  public Object getFeedbackOptionsBuilder() {
-    return null;
-  }
+    @Override
+    public Object getFeedbackOptionsBuilder() {
+        return null;
+    }
 }

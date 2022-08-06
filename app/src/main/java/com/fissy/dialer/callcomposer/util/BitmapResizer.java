@@ -18,55 +18,59 @@ package com.fissy.dialer.callcomposer.util;
 
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
-import android.support.annotation.VisibleForTesting;
+import androidx.annotation.VisibleForTesting;
+
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
 
-/** Utility class for resizing images before sending them as enriched call attachments. */
+/**
+ * Utility class for resizing images before sending them as enriched call attachments.
+ */
 public final class BitmapResizer {
-  @VisibleForTesting static final int MAX_OUTPUT_RESOLUTION = 640;
+    @VisibleForTesting
+    static final int MAX_OUTPUT_RESOLUTION = 640;
 
-  /**
-   * Returns a bitmap that is a resized version of the parameter image. The image will only be
-   * resized down and sized to be appropriate for an enriched call.
-   *
-   * @param image to be resized
-   * @param rotation degrees to rotate the image clockwise
-   * @return resized image
-   */
-  public static Bitmap resizeForEnrichedCalling(Bitmap image, int rotation) {
-    Assert.isWorkerThread();
+    /**
+     * Returns a bitmap that is a resized version of the parameter image. The image will only be
+     * resized down and sized to be appropriate for an enriched call.
+     *
+     * @param image    to be resized
+     * @param rotation degrees to rotate the image clockwise
+     * @return resized image
+     */
+    public static Bitmap resizeForEnrichedCalling(Bitmap image, int rotation) {
+        Assert.isWorkerThread();
 
-    int width = image.getWidth();
-    int height = image.getHeight();
+        int width = image.getWidth();
+        int height = image.getHeight();
 
-    Matrix matrix = new Matrix();
-    matrix.postRotate(rotation);
+        Matrix matrix = new Matrix();
+        matrix.postRotate(rotation);
 
-    LogUtil.i(
-        "BitmapResizer.resizeForEnrichedCalling", "starting height: %d, width: %d", height, width);
+        LogUtil.i(
+                "BitmapResizer.resizeForEnrichedCalling", "starting height: %d, width: %d", height, width);
 
-    if (width <= MAX_OUTPUT_RESOLUTION && height <= MAX_OUTPUT_RESOLUTION) {
-      LogUtil.i("BitmapResizer.resizeForEnrichedCalling", "no resizing needed");
-      return Bitmap.createBitmap(image, 0, 0, width, height, matrix, true);
+        if (width <= MAX_OUTPUT_RESOLUTION && height <= MAX_OUTPUT_RESOLUTION) {
+            LogUtil.i("BitmapResizer.resizeForEnrichedCalling", "no resizing needed");
+            return Bitmap.createBitmap(image, 0, 0, width, height, matrix, true);
+        }
+
+        float ratio = 1;
+        if (width > height) {
+            // landscape
+            ratio = MAX_OUTPUT_RESOLUTION / (float) width;
+        } else {
+            // portrait & square
+            ratio = MAX_OUTPUT_RESOLUTION / (float) height;
+        }
+
+        LogUtil.i(
+                "BitmapResizer.resizeForEnrichedCalling",
+                "ending height: %f, width: %f",
+                height * ratio,
+                width * ratio);
+
+        matrix.postScale(ratio, ratio);
+        return Bitmap.createBitmap(image, 0, 0, width, height, matrix, true);
     }
-
-    float ratio = 1;
-    if (width > height) {
-      // landscape
-      ratio = MAX_OUTPUT_RESOLUTION / (float) width;
-    } else {
-      // portrait & square
-      ratio = MAX_OUTPUT_RESOLUTION / (float) height;
-    }
-
-    LogUtil.i(
-        "BitmapResizer.resizeForEnrichedCalling",
-        "ending height: %f, width: %f",
-        height * ratio,
-        width * ratio);
-
-    matrix.postScale(ratio, ratio);
-    return Bitmap.createBitmap(image, 0, 0, width, height, matrix, true);
-  }
 }

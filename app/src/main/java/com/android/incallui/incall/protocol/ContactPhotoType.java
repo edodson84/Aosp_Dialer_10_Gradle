@@ -16,20 +16,23 @@
 
 package com.android.incallui.incall.protocol;
 
-import android.support.annotation.IntDef;
+import androidx.annotation.IntDef;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-/** Types of contact photos we can have. */
+/**
+ * Types of contact photos we can have.
+ */
 @Retention(RetentionPolicy.SOURCE)
 @IntDef({
-  ContactPhotoType.DEFAULT_PLACEHOLDER,
-  ContactPhotoType.BUSINESS,
-  ContactPhotoType.CONTACT,
+        ContactPhotoType.DEFAULT_PLACEHOLDER,
+        ContactPhotoType.BUSINESS,
+        ContactPhotoType.CONTACT,
 })
 public @interface ContactPhotoType {
 
-  int DEFAULT_PLACEHOLDER = 0;
-  int BUSINESS = 1;
-  int CONTACT = 2;
+    int DEFAULT_PLACEHOLDER = 0;
+    int BUSINESS = 1;
+    int CONTACT = 2;
 }

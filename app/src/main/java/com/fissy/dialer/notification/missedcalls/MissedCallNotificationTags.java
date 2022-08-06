@@ -17,13 +17,17 @@
 package com.fissy.dialer.notification.missedcalls;
 
 import android.net.Uri;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
-/** Static methods related to missed call notification tags. */
+/**
+ * Static methods related to missed call notification tags.
+ */
 public final class MissedCallNotificationTags {
 
-  /** Gets the notification tag for a single call. */
-  public static String getNotificationTagForCallUri(@NonNull Uri callUri) {
-    return MissedCallConstants.NOTIFICATION_TAG_PREFIX + callUri;
-  }
+    /**
+     * Gets the notification tag for a single call.
+     */
+    public static String getNotificationTagForCallUri(@NonNull Uri callUri) {
+        return MissedCallConstants.NOTIFICATION_TAG_PREFIX + callUri;
+    }
 }

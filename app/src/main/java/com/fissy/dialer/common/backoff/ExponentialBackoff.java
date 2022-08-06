@@ -38,59 +38,61 @@ import com.fissy.dialer.common.Assert;
  * <p>Note: the base multiplier can be calculated using {@code ExponentialBaseCalculator}
  */
 public final class ExponentialBackoff {
-  public final long initialDelayMillis;
-  public final double baseMultiplier;
-  public final int maximumBackoffs;
-  private double nextBackoff;
-  private int backoffCount;
+    public final long initialDelayMillis;
+    public final double baseMultiplier;
+    public final int maximumBackoffs;
+    private double nextBackoff;
+    private int backoffCount;
 
-  /**
-   * Setup an exponential backoff with an initial delay, a base multiplier and a maximum number of
-   * backoff steps.
-   *
-   * @throws IllegalArgumentException for negative argument values
-   */
-  public ExponentialBackoff(long initialDelayMillis, double baseMultiplier, int maximumBackoffs) {
-    Assert.checkArgument(initialDelayMillis > 0);
-    Assert.checkArgument(baseMultiplier > 0);
-    Assert.checkArgument(maximumBackoffs > 0);
-    this.initialDelayMillis = initialDelayMillis;
-    this.baseMultiplier = baseMultiplier;
-    this.maximumBackoffs = maximumBackoffs;
-    reset();
-  }
+    /**
+     * Setup an exponential backoff with an initial delay, a base multiplier and a maximum number of
+     * backoff steps.
+     *
+     * @throws IllegalArgumentException for negative argument values
+     */
+    public ExponentialBackoff(long initialDelayMillis, double baseMultiplier, int maximumBackoffs) {
+        Assert.checkArgument(initialDelayMillis > 0);
+        Assert.checkArgument(baseMultiplier > 0);
+        Assert.checkArgument(maximumBackoffs > 0);
+        this.initialDelayMillis = initialDelayMillis;
+        this.baseMultiplier = baseMultiplier;
+        this.maximumBackoffs = maximumBackoffs;
+        reset();
+    }
 
-  /**
-   * @return the next backoff time in the exponential sequence. Specifically, if D is the initial
-   *     delay, B is the base multiplier and N is the total number of backoffs, then the return
-   *     values will be: D, D*B, D*B^2, ... D*B^(N-1), ...
-   */
-  public long getNextBackoff() {
-    long backoff = Math.round(nextBackoff);
-    backoffCount++;
-    nextBackoff *= baseMultiplier;
-    return backoff;
-  }
+    /**
+     * @return the next backoff time in the exponential sequence. Specifically, if D is the initial
+     * delay, B is the base multiplier and N is the total number of backoffs, then the return
+     * values will be: D, D*B, D*B^2, ... D*B^(N-1), ...
+     */
+    public long getNextBackoff() {
+        long backoff = Math.round(nextBackoff);
+        backoffCount++;
+        nextBackoff *= baseMultiplier;
+        return backoff;
+    }
 
-  /** @return the number of times getNextBackoff() has been called */
-  public int getBackoffCount() {
-    return backoffCount;
-  }
+    /**
+     * @return the number of times getNextBackoff() has been called
+     */
+    public int getBackoffCount() {
+        return backoffCount;
+    }
 
-  /**
-   * @return {@code true} if getNextBackoff() has been called less than the maximumBackoffs value
-   *     specified in the constructor.
-   */
-  public boolean isInRange() {
-    return backoffCount < maximumBackoffs;
-  }
+    /**
+     * @return {@code true} if getNextBackoff() has been called less than the maximumBackoffs value
+     * specified in the constructor.
+     */
+    public boolean isInRange() {
+        return backoffCount < maximumBackoffs;
+    }
 
-  /**
-   * Reset the sequence of backoff values so the next call to getNextBackoff() will return the
-   * initial delay and getBackoffCount() will return 0
-   */
-  public void reset() {
-    nextBackoff = initialDelayMillis;
-    backoffCount = 0;
-  }
+    /**
+     * Reset the sequence of backoff values so the next call to getNextBackoff() will return the
+     * initial delay and getBackoffCount() will return 0
+     */
+    public void reset() {
+        nextBackoff = initialDelayMillis;
+        backoffCount = 0;
+    }
 }

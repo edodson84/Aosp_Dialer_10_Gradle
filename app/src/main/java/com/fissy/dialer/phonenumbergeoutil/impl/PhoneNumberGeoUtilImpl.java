@@ -18,6 +18,7 @@ package com.fissy.dialer.phonenumbergeoutil.impl;
 
 import android.content.Context;
 import android.text.TextUtils;
+
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.i18n.LocaleUtils;
 import com.fissy.dialer.phonenumbergeoutil.PhoneNumberGeoUtil;
@@ -25,51 +26,56 @@ import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
 import com.google.i18n.phonenumbers.geocoding.PhoneNumberOfflineGeocoder;
+
 import java.util.Locale;
+
 import javax.inject.Inject;
 
-/** Implementation of {@link PhoneNumberGeoUtil}. */
+/**
+ * Implementation of {@link PhoneNumberGeoUtil}.
+ */
 public class PhoneNumberGeoUtilImpl implements PhoneNumberGeoUtil {
 
-  @Inject
-  public PhoneNumberGeoUtilImpl() {}
-
-  @Override
-  public String getGeoDescription(Context context, String number, String countryIso) {
-    LogUtil.v("PhoneNumberGeoUtilImpl.getGeoDescription", "" + LogUtil.sanitizePii(number));
-
-    if (TextUtils.isEmpty(number)) {
-      return null;
+    @Inject
+    public PhoneNumberGeoUtilImpl() {
     }
 
-    PhoneNumberUtil util = PhoneNumberUtil.getInstance();
-    PhoneNumberOfflineGeocoder geocoder = PhoneNumberOfflineGeocoder.getInstance();
+    @Override
+    public String getGeoDescription(Context context, String number, String countryIso) {
+        LogUtil.v("PhoneNumberGeoUtilImpl.getGeoDescription", "" + LogUtil.sanitizePii(number));
 
-    Locale locale = LocaleUtils.getLocale(context);
-    Phonenumber.PhoneNumber pn = null;
-    try {
-      LogUtil.v(
-          "PhoneNumberGeoUtilImpl.getGeoDescription",
-          "parsing '" + LogUtil.sanitizePii(number) + "' for countryIso '" + countryIso + "'...");
-      pn = util.parse(number, countryIso);
-      LogUtil.v(
-          "PhoneNumberGeoUtilImpl.getGeoDescription",
-          "- parsed number: " + LogUtil.sanitizePii(pn));
-    } catch (NumberParseException e) {
-      LogUtil.e(
-          "PhoneNumberGeoUtilImpl.getGeoDescription",
-          "getGeoDescription: NumberParseException for incoming number '"
-              + LogUtil.sanitizePii(number)
-              + "'");
+        if (TextUtils.isEmpty(number)) {
+            return null;
+        }
+
+        PhoneNumberUtil util = PhoneNumberUtil.getInstance();
+        PhoneNumberOfflineGeocoder geocoder = PhoneNumberOfflineGeocoder.getInstance();
+
+        Locale locale = LocaleUtils.getLocale(context);
+        Phonenumber.PhoneNumber pn = null;
+        try {
+            LogUtil.v(
+                    "PhoneNumberGeoUtilImpl.getGeoDescription",
+                    "parsing '" + LogUtil.sanitizePii(number) + "' for countryIso '" + countryIso + "'...");
+            pn = util.parse(number, countryIso);
+            LogUtil.v(
+                    "PhoneNumberGeoUtilImpl.getGeoDescription",
+                    "- parsed number: " + LogUtil.sanitizePii(pn));
+        } catch (NumberParseException e) {
+            LogUtil.e(
+                    "PhoneNumberGeoUtilImpl.getGeoDescription",
+                    "getGeoDescription: NumberParseException for incoming number '"
+                            + LogUtil.sanitizePii(number)
+                            + "'");
+        }
+
+        if (pn != null) {
+            String description = geocoder.getDescriptionForNumber(pn, locale);
+            LogUtil.v(
+                    "PhoneNumberGeoUtilImpl.getGeoDescription", "- got description: '" + description + "'");
+            return description;
+        }
+
+        return null;
     }
-
-    if (pn != null) {
-      String description = geocoder.getDescriptionForNumber(pn, locale);
-      LogUtil.v(
-          "PhoneNumberGeoUtilImpl.getGeoDescription", "- got description: '" + description + "'");
-      return description;
-    }
-
-    return null;
-  }
 }

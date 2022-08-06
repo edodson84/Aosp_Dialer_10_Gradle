@@ -19,25 +19,33 @@ package com.fissy.dialer.common.concurrent;
 import android.os.Handler;
 import android.os.Looper;
 
-/** Application-wide utility methods for working with threads. */
+/**
+ * Application-wide utility methods for working with threads.
+ */
 public class ThreadUtil {
-  private static volatile Handler mainThreadHandler;
+    private static volatile Handler mainThreadHandler;
 
-  /** Posts a runnable to the UI thread. */
-  public static void postOnUiThread(Runnable runnable) {
-    getUiThreadHandler().post(runnable);
-  }
-
-  /** Posts a runnable to the UI thread, to be run after the specified amount of time elapses. */
-  public static void postDelayedOnUiThread(Runnable runnable, long delayMillis) {
-    getUiThreadHandler().postDelayed(runnable, delayMillis);
-  }
-
-  /** Gets a handler which uses the main looper. */
-  public static Handler getUiThreadHandler() {
-    if (mainThreadHandler == null) {
-      mainThreadHandler = new Handler(Looper.getMainLooper());
+    /**
+     * Posts a runnable to the UI thread.
+     */
+    public static void postOnUiThread(Runnable runnable) {
+        getUiThreadHandler().post(runnable);
     }
-    return mainThreadHandler;
-  }
+
+    /**
+     * Posts a runnable to the UI thread, to be run after the specified amount of time elapses.
+     */
+    public static void postDelayedOnUiThread(Runnable runnable, long delayMillis) {
+        getUiThreadHandler().postDelayed(runnable, delayMillis);
+    }
+
+    /**
+     * Gets a handler which uses the main looper.
+     */
+    public static Handler getUiThreadHandler() {
+        if (mainThreadHandler == null) {
+            mainThreadHandler = new Handler(Looper.getMainLooper());
+        }
+        return mainThreadHandler;
+    }
 }

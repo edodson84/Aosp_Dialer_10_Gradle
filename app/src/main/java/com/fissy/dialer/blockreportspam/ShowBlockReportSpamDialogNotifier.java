@@ -18,7 +18,8 @@ package com.fissy.dialer.blockreportspam;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.content.LocalBroadcastManager;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.protos.ProtoParsers;
 
@@ -27,62 +28,69 @@ import com.fissy.dialer.protos.ProtoParsers;
  */
 public final class ShowBlockReportSpamDialogNotifier {
 
-  private ShowBlockReportSpamDialogNotifier() {}
+    private ShowBlockReportSpamDialogNotifier() {
+    }
 
-  /**
-   * Notifies that a dialog for blocking a number and optionally report it as spam should be shown.
-   */
-  public static void notifyShowDialogToBlockNumberAndOptionallyReportSpam(
-      Context context, BlockReportSpamDialogInfo blockReportSpamDialogInfo) {
-    LogUtil.enterBlock(
-        "ShowBlockReportSpamDialogNotifier.notifyShowDialogToBlockNumberAndOptionallyReportSpam");
+    /**
+     * Notifies that a dialog for blocking a number and optionally report it as spam should be shown.
+     */
+    public static void notifyShowDialogToBlockNumberAndOptionallyReportSpam(
+            Context context, BlockReportSpamDialogInfo blockReportSpamDialogInfo) {
+        LogUtil.enterBlock(
+                "ShowBlockReportSpamDialogNotifier.notifyShowDialogToBlockNumberAndOptionallyReportSpam");
 
-    Intent intent = new Intent();
-    intent.setAction(
-        ShowBlockReportSpamDialogReceiver
-            .ACTION_SHOW_DIALOG_TO_BLOCK_NUMBER_AND_OPTIONALLY_REPORT_SPAM);
-    ProtoParsers.put(
-        intent, ShowBlockReportSpamDialogReceiver.EXTRA_DIALOG_INFO, blockReportSpamDialogInfo);
+        Intent intent = new Intent();
+        intent.setAction(
+                ShowBlockReportSpamDialogReceiver
+                        .ACTION_SHOW_DIALOG_TO_BLOCK_NUMBER_AND_OPTIONALLY_REPORT_SPAM);
+        ProtoParsers.put(
+                intent, ShowBlockReportSpamDialogReceiver.EXTRA_DIALOG_INFO, blockReportSpamDialogInfo);
 
-    LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-  }
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+    }
 
-  /** Notifies that a dialog for blocking a number should be shown. */
-  public static void notifyShowDialogToBlockNumber(
-      Context context, BlockReportSpamDialogInfo blockReportSpamDialogInfo) {
-    LogUtil.enterBlock("ShowBlockReportSpamDialogNotifier.notifyShowDialogToBlockNumber");
+    /**
+     * Notifies that a dialog for blocking a number should be shown.
+     */
+    public static void notifyShowDialogToBlockNumber(
+            Context context, BlockReportSpamDialogInfo blockReportSpamDialogInfo) {
+        LogUtil.enterBlock("ShowBlockReportSpamDialogNotifier.notifyShowDialogToBlockNumber");
 
-    Intent intent = new Intent();
-    intent.setAction(ShowBlockReportSpamDialogReceiver.ACTION_SHOW_DIALOG_TO_BLOCK_NUMBER);
-    ProtoParsers.put(
-        intent, ShowBlockReportSpamDialogReceiver.EXTRA_DIALOG_INFO, blockReportSpamDialogInfo);
+        Intent intent = new Intent();
+        intent.setAction(ShowBlockReportSpamDialogReceiver.ACTION_SHOW_DIALOG_TO_BLOCK_NUMBER);
+        ProtoParsers.put(
+                intent, ShowBlockReportSpamDialogReceiver.EXTRA_DIALOG_INFO, blockReportSpamDialogInfo);
 
-    LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-  }
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+    }
 
-  /** Notifies that a dialog for reporting a number as not spam should be shown. */
-  public static void notifyShowDialogToReportNotSpam(
-      Context context, BlockReportSpamDialogInfo blockReportSpamDialogInfo) {
-    LogUtil.enterBlock("ShowBlockReportSpamDialogNotifier.notifyShowDialogToReportNotSpam");
+    /**
+     * Notifies that a dialog for reporting a number as not spam should be shown.
+     */
+    public static void notifyShowDialogToReportNotSpam(
+            Context context, BlockReportSpamDialogInfo blockReportSpamDialogInfo) {
+        LogUtil.enterBlock("ShowBlockReportSpamDialogNotifier.notifyShowDialogToReportNotSpam");
 
-    Intent intent = new Intent();
-    intent.setAction(ShowBlockReportSpamDialogReceiver.ACTION_SHOW_DIALOG_TO_REPORT_NOT_SPAM);
-    ProtoParsers.put(
-        intent, ShowBlockReportSpamDialogReceiver.EXTRA_DIALOG_INFO, blockReportSpamDialogInfo);
+        Intent intent = new Intent();
+        intent.setAction(ShowBlockReportSpamDialogReceiver.ACTION_SHOW_DIALOG_TO_REPORT_NOT_SPAM);
+        ProtoParsers.put(
+                intent, ShowBlockReportSpamDialogReceiver.EXTRA_DIALOG_INFO, blockReportSpamDialogInfo);
 
-    LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-  }
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+    }
 
-  /** Notifies that a dialog for unblocking a number should be shown. */
-  public static void notifyShowDialogToUnblockNumber(
-      Context context, BlockReportSpamDialogInfo blockReportSpamDialogInfo) {
-    LogUtil.enterBlock("ShowBlockReportSpamDialogNotifier.notifyShowDialogToUnblockNumber");
+    /**
+     * Notifies that a dialog for unblocking a number should be shown.
+     */
+    public static void notifyShowDialogToUnblockNumber(
+            Context context, BlockReportSpamDialogInfo blockReportSpamDialogInfo) {
+        LogUtil.enterBlock("ShowBlockReportSpamDialogNotifier.notifyShowDialogToUnblockNumber");
 
-    Intent intent = new Intent();
-    intent.setAction(ShowBlockReportSpamDialogReceiver.ACTION_SHOW_DIALOG_TO_UNBLOCK_NUMBER);
-    ProtoParsers.put(
-        intent, ShowBlockReportSpamDialogReceiver.EXTRA_DIALOG_INFO, blockReportSpamDialogInfo);
+        Intent intent = new Intent();
+        intent.setAction(ShowBlockReportSpamDialogReceiver.ACTION_SHOW_DIALOG_TO_UNBLOCK_NUMBER);
+        ProtoParsers.put(
+                intent, ShowBlockReportSpamDialogReceiver.EXTRA_DIALOG_INFO, blockReportSpamDialogInfo);
 
-    LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-  }
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+    }
 }

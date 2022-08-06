@@ -16,11 +16,13 @@
 
 package com.fissy.dialer.phonenumbercache;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
-/** Allows the container application provide a number look up service. */
+/**
+ * Allows the container application provide a number look up service.
+ */
 public interface PhoneNumberCacheBindings {
 
-  @Nullable
-  CachedNumberLookupService getCachedNumberLookupService();
+    @Nullable
+    CachedNumberLookupService getCachedNumberLookupService();
 }

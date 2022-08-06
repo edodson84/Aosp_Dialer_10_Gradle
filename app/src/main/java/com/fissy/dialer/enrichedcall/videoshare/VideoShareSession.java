@@ -16,24 +16,26 @@
 
 package com.fissy.dialer.enrichedcall.videoshare;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.view.SurfaceView;
 
-/** Holds state information and data about video share sessions. */
+/**
+ * Holds state information and data about video share sessions.
+ */
 public interface VideoShareSession {
-  void setSessionId(long sessionId);
+    long getSessionId();
 
-  long getSessionId();
+    void setSessionId(long sessionId);
 
-  int getState();
+    int getState();
 
-  void pause();
+    void pause();
 
-  void unpause();
+    void unpause();
 
-  void dispose();
+    void dispose();
 
-  void setSurfaceView(@NonNull SurfaceView surfaceView);
+    void setSurfaceView(@NonNull SurfaceView surfaceView);
 
-  void setCamera(String cameraId);
+    void setCamera(String cameraId);
 }

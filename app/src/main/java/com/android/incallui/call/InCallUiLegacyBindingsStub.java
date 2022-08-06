@@ -16,9 +16,12 @@
 
 package com.android.incallui.call;
 
-/** Default implementation for in call UI legacy bindings. */
+/**
+ * Default implementation for in call UI legacy bindings.
+ */
 public class InCallUiLegacyBindingsStub implements InCallUiLegacyBindings {
 
-  @Override
-  public void logCall(DialerCall call) {}
+    @Override
+    public void logCall(DialerCall call) {
+    }
 }

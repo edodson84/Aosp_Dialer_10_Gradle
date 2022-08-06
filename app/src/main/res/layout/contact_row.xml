@@ -1,9 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="@dimen/row_height"
-  xmlns:android="http://schemas.android.com/apk/res/android">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="@dimen/row_height"
+    android:orientation="horizontal">
+
     <include layout="@layout/header" />
-    <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:id="@id/click_target" android:background="?android:selectableItemBackground" android:paddingTop="@dimen/row_top_bottom_padding" android:paddingBottom="@dimen/row_top_bottom_padding" android:layout_width="fill_parent" android:layout_height="fill_parent" android:paddingStart="@dimen/row_start_padding" android:layout_marginStart="@dimen/header_width" android:layout_marginEnd="@dimen/row_end_margin">
-        <QuickContactBadge android:id="@id/photo" android:clickable="false" android:layout_width="@dimen/photo_size" android:layout_height="@dimen/photo_size" />
-        <com.fissy.dialer.widget.BidiTextView android:textSize="@dimen/text_size" android:textColor="?android:textColorPrimary" android:ellipsize="end" android:gravity="center_vertical" android:id="@id/contact_name" android:layout_width="wrap_content" android:layout_height="fill_parent" android:maxLines="1" android:fontFamily="sans-serif" android:paddingStart="@dimen/text_padding_start" android:paddingEnd="@dimen/text_padding_end" />
+
+    <LinearLayout
+        android:id="@id/click_target"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginStart="@dimen/header_width"
+        android:layout_marginEnd="@dimen/row_end_margin"
+        android:background="?android:selectableItemBackground"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/row_start_padding"
+        android:paddingTop="@dimen/row_top_bottom_padding"
+        android:paddingBottom="@dimen/row_top_bottom_padding">
+
+        <QuickContactBadge
+            android:id="@id/photo"
+            android:layout_width="@dimen/photo_size"
+            android:layout_height="@dimen/photo_size"
+            android:clickable="false" />
+
+        <com.fissy.dialer.widget.BidiTextView
+            android:id="@id/contact_name"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:paddingStart="@dimen/text_padding_start"
+            android:paddingEnd="@dimen/text_padding_end"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="@dimen/text_size" />
     </LinearLayout>
 </FrameLayout>

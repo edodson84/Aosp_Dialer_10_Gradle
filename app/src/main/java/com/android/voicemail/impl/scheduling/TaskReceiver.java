@@ -22,8 +22,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
+
 import com.android.voicemail.impl.VvmLog;
 import com.android.voicemail.impl.scheduling.Tasks.TaskCreationException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,50 +39,50 @@ import java.util.List;
 @TargetApi(VERSION_CODES.O)
 public class TaskReceiver extends BroadcastReceiver {
 
-  private static final String TAG = "VvmTaskReceiver";
+    private static final String TAG = "VvmTaskReceiver";
 
-  private static final List<Intent> deferredBroadcasts = new ArrayList<>();
+    private static final List<Intent> deferredBroadcasts = new ArrayList<>();
 
-  /**
-   * When {@link TaskExecutor#isTerminating()} is {@code true}, newly added tasks will be deferred
-   * to allow the TaskExecutor to terminate properly. After termination is completed this should be
-   * called to add the tasks again.
-   */
-  public static void resendDeferredBroadcasts(Context context) {
-    for (Intent intent : deferredBroadcasts) {
-      context.sendBroadcast(intent);
+    /**
+     * When {@link TaskExecutor#isTerminating()} is {@code true}, newly added tasks will be deferred
+     * to allow the TaskExecutor to terminate properly. After termination is completed this should be
+     * called to add the tasks again.
+     */
+    public static void resendDeferredBroadcasts(Context context) {
+        for (Intent intent : deferredBroadcasts) {
+            context.sendBroadcast(intent);
+        }
+        deferredBroadcasts.clear();
     }
-    deferredBroadcasts.clear();
-  }
 
-  @Override
-  public void onReceive(Context context, Intent intent) {
-    if (intent == null) {
-      VvmLog.w(TAG, "null intent received");
-      return;
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        if (intent == null) {
+            VvmLog.w(TAG, "null intent received");
+            return;
+        }
+        VvmLog.i(TAG, "task received");
+        TaskExecutor taskExecutor = TaskExecutor.getRunningInstance();
+        if (taskExecutor != null) {
+            VvmLog.i(TAG, "TaskExecutor already running");
+            if (taskExecutor.isTerminating()) {
+                // The current taskExecutor and cannot do anything and a new job cannot be scheduled. Defer
+                // the task until a new job can be scheduled.
+                VvmLog.w(TAG, "TaskExecutor is terminating, bouncing task");
+                deferredBroadcasts.add(intent);
+                return;
+            }
+            try {
+                Task task = Tasks.createTask(context.getApplicationContext(), intent.getExtras());
+                taskExecutor.addTask(task);
+            } catch (TaskCreationException e) {
+                VvmLog.e(TAG, "cannot create task", e);
+            }
+        } else {
+            VvmLog.i(TAG, "scheduling new job");
+            List<Bundle> taskList = new ArrayList<>();
+            taskList.add(intent.getExtras());
+            TaskSchedulerJobService.scheduleJob(context.getApplicationContext(), taskList, 0, true);
+        }
     }
-    VvmLog.i(TAG, "task received");
-    TaskExecutor taskExecutor = TaskExecutor.getRunningInstance();
-    if (taskExecutor != null) {
-      VvmLog.i(TAG, "TaskExecutor already running");
-      if (taskExecutor.isTerminating()) {
-        // The current taskExecutor and cannot do anything and a new job cannot be scheduled. Defer
-        // the task until a new job can be scheduled.
-        VvmLog.w(TAG, "TaskExecutor is terminating, bouncing task");
-        deferredBroadcasts.add(intent);
-        return;
-      }
-      try {
-        Task task = Tasks.createTask(context.getApplicationContext(), intent.getExtras());
-        taskExecutor.addTask(task);
-      } catch (TaskCreationException e) {
-        VvmLog.e(TAG, "cannot create task", e);
-      }
-    } else {
-      VvmLog.i(TAG, "scheduling new job");
-      List<Bundle> taskList = new ArrayList<>();
-      taskList.add(intent.getExtras());
-      TaskSchedulerJobService.scheduleJob(context.getApplicationContext(), taskList, 0, true);
-    }
-  }
 }

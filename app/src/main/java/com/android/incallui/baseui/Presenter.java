@@ -18,37 +18,44 @@ package com.android.incallui.baseui;
 
 import android.os.Bundle;
 
-/** Base class for Presenters. */
+/**
+ * Base class for Presenters.
+ */
 public abstract class Presenter<U extends Ui> {
 
-  private U ui;
+    private U ui;
 
-  /**
-   * Called after the UI view has been created. That is when fragment.onViewCreated() is called.
-   *
-   * @param ui The Ui implementation that is now ready to be used.
-   */
-  public void onUiReady(U ui) {
-    this.ui = ui;
-  }
+    /**
+     * Called after the UI view has been created. That is when fragment.onViewCreated() is called.
+     *
+     * @param ui The Ui implementation that is now ready to be used.
+     */
+    public void onUiReady(U ui) {
+        this.ui = ui;
+    }
 
-  /** Called when the UI view is destroyed in Fragment.onDestroyView(). */
-  public final void onUiDestroy(U ui) {
-    onUiUnready(ui);
-    this.ui = null;
-  }
+    /**
+     * Called when the UI view is destroyed in Fragment.onDestroyView().
+     */
+    public final void onUiDestroy(U ui) {
+        onUiUnready(ui);
+        this.ui = null;
+    }
 
-  /**
-   * To be overriden by Presenter implementations. Called when the fragment is being destroyed but
-   * before ui is set to null.
-   */
-  public void onUiUnready(U ui) {}
+    /**
+     * To be overriden by Presenter implementations. Called when the fragment is being destroyed but
+     * before ui is set to null.
+     */
+    public void onUiUnready(U ui) {
+    }
 
-  public void onSaveInstanceState(Bundle outState) {}
+    public void onSaveInstanceState(Bundle outState) {
+    }
 
-  public void onRestoreInstanceState(Bundle savedInstanceState) {}
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+    }
 
-  public U getUi() {
-    return ui;
-  }
+    public U getUi() {
+        return ui;
+    }
 }

@@ -21,19 +21,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-/** Does nothing. Used to avoid null checks on AnswerHint. */
+/**
+ * Does nothing. Used to avoid null checks on AnswerHint.
+ */
 public class EmptyAnswerHint implements AnswerHint {
 
-  @Override
-  public void onCreateView(
-      LayoutInflater inflater, ViewGroup container, View puck, TextView hintText) {}
+    @Override
+    public void onCreateView(
+            LayoutInflater inflater, ViewGroup container, View puck, TextView hintText) {
+    }
 
-  @Override
-  public void onBounceStart() {}
+    @Override
+    public void onBounceStart() {
+    }
 
-  @Override
-  public void onBounceEnd() {}
+    @Override
+    public void onBounceEnd() {
+    }
 
-  @Override
-  public void onAnswered() {}
+    @Override
+    public void onAnswered() {
+    }
 }

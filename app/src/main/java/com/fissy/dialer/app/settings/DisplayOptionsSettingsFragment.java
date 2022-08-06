@@ -23,9 +23,9 @@ import com.fissy.dialer.R;
 
 public class DisplayOptionsSettingsFragment extends PreferenceFragment {
 
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    addPreferencesFromResource(R.xml.display_options_settings);
-  }
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        addPreferencesFromResource(R.xml.display_options_settings);
+    }
 }

@@ -4,13 +4,15 @@
 package com.google.internal.communications.voicemailtranscription.v1;
 
 public final class VoicemailTranscription {
-  private VoicemailTranscription() {}
-  public static void registerAllExtensions(
-      com.google.protobuf.ExtensionRegistryLite registry) {
-  }
+    static {
+    }
 
-  static {
-  }
+    private VoicemailTranscription() {
+    }
 
-  // @@protoc_insertion_point(outer_class_scope)
+    public static void registerAllExtensions(
+            com.google.protobuf.ExtensionRegistryLite registry) {
+    }
+
+    // @@protoc_insertion_point(outer_class_scope)
 }

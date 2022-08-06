@@ -18,10 +18,11 @@ package com.fissy.dialer.commandline.impl;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.telecom.PhoneAccount;
 import android.telecom.PhoneAccountHandle;
 import android.telecom.TelecomManager;
+
 import com.fissy.dialer.buildtype.BuildType;
 import com.fissy.dialer.buildtype.BuildType.Type;
 import com.fissy.dialer.callintent.CallInitiationType;
@@ -32,60 +33,63 @@ import com.fissy.dialer.inject.ApplicationContext;
 import com.fissy.dialer.precall.PreCall;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
+
 import javax.inject.Inject;
 
-/** Make calls. Requires bugfood build. */
+/**
+ * Make calls. Requires bugfood build.
+ */
 public class CallCommand implements Command {
 
-  private final Context appContext;
+    private final Context appContext;
 
-  @Inject
-  CallCommand(@ApplicationContext Context appContext) {
-    this.appContext = appContext;
-  }
-
-  @NonNull
-  @Override
-  public String getShortDescription() {
-    return "make a call";
-  }
-
-  @NonNull
-  @Override
-  public String getUsage() {
-    return "call [flags --] number\n"
-        + "\nuse 'voicemail' to call voicemail"
-        + "\n\nflags:"
-        + "\n--direct send intent to telecom instead of pre call";
-  }
-
-  @Override
-  @SuppressWarnings("missingPermission")
-  public ListenableFuture<String> run(Arguments args) throws IllegalCommandLineArgumentException {
-    if (BuildType.get() != Type.BUGFOOD) {
-      throw new SecurityException("Bugfood only command");
+    @Inject
+    CallCommand(@ApplicationContext Context appContext) {
+        this.appContext = appContext;
     }
-    String number = args.expectPositional(0, "number");
-    TelecomManager telecomManager = appContext.getSystemService(TelecomManager.class);
-    PhoneAccountHandle phoneAccountHandle =
-        telecomManager.getDefaultOutgoingPhoneAccount(PhoneAccount.SCHEME_TEL);
-    CallIntentBuilder callIntentBuilder;
-    if ("voicemail".equals(number)) {
-      callIntentBuilder =
-          CallIntentBuilder.forVoicemail(phoneAccountHandle, CallInitiationType.Type.DIALPAD);
-    } else {
-      callIntentBuilder = new CallIntentBuilder(number, CallInitiationType.Type.DIALPAD);
+
+    @NonNull
+    @Override
+    public String getShortDescription() {
+        return "make a call";
     }
-    if (args.getBoolean("direct", false)) {
-      Intent intent = callIntentBuilder.build();
-      appContext
-          .getSystemService(TelecomManager.class)
-          .placeCall(intent.getData(), intent.getExtras());
-    } else {
-      Intent intent = PreCall.getIntent(appContext, callIntentBuilder);
-      intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-      appContext.startActivity(intent);
+
+    @NonNull
+    @Override
+    public String getUsage() {
+        return "call [flags --] number\n"
+                + "\nuse 'voicemail' to call voicemail"
+                + "\n\nflags:"
+                + "\n--direct send intent to telecom instead of pre call";
     }
-    return Futures.immediateFuture("Calling " + number);
-  }
+
+    @Override
+    @SuppressWarnings("missingPermission")
+    public ListenableFuture<String> run(Arguments args) throws IllegalCommandLineArgumentException {
+        if (BuildType.get() != Type.BUGFOOD) {
+            throw new SecurityException("Bugfood only command");
+        }
+        String number = args.expectPositional(0, "number");
+        TelecomManager telecomManager = appContext.getSystemService(TelecomManager.class);
+        PhoneAccountHandle phoneAccountHandle =
+                telecomManager.getDefaultOutgoingPhoneAccount(PhoneAccount.SCHEME_TEL);
+        CallIntentBuilder callIntentBuilder;
+        if ("voicemail".equals(number)) {
+            callIntentBuilder =
+                    CallIntentBuilder.forVoicemail(phoneAccountHandle, CallInitiationType.Type.DIALPAD);
+        } else {
+            callIntentBuilder = new CallIntentBuilder(number, CallInitiationType.Type.DIALPAD);
+        }
+        if (args.getBoolean("direct", false)) {
+            Intent intent = callIntentBuilder.build();
+            appContext
+                    .getSystemService(TelecomManager.class)
+                    .placeCall(intent.getData(), intent.getExtras());
+        } else {
+            Intent intent = PreCall.getIntent(appContext, callIntentBuilder);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            appContext.startActivity(intent);
+        }
+        return Futures.immediateFuture("Calling " + number);
+    }
 }

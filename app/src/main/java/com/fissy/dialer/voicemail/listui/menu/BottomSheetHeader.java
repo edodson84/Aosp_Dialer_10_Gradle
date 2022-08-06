@@ -17,38 +17,41 @@
 package com.fissy.dialer.voicemail.listui.menu;
 
 import android.text.TextUtils;
+
 import com.fissy.dialer.calllogutils.PhotoInfoBuilder;
 import com.fissy.dialer.historyitemactions.HistoryItemBottomSheetHeaderInfo;
 import com.fissy.dialer.voicemail.model.VoicemailEntry;
 
-/** Configures the top row in the bottom sheet for the Voicemail Tab */
+/**
+ * Configures the top row in the bottom sheet for the Voicemail Tab
+ */
 final class BottomSheetHeader {
 
-  static HistoryItemBottomSheetHeaderInfo fromVoicemailEntry(VoicemailEntry voicemailEntry) {
-    return HistoryItemBottomSheetHeaderInfo.newBuilder()
-        .setNumber(voicemailEntry.getNumber())
-        .setPhotoInfo(PhotoInfoBuilder.fromVoicemailEntry(voicemailEntry))
-        .setPrimaryText(buildPrimaryVoicemailText(voicemailEntry))
-        .setSecondaryText(buildSecondaryVoicemailText(voicemailEntry))
-        .build();
-  }
-
-  private static String buildSecondaryVoicemailText(VoicemailEntry voicemailEntry) {
-    return voicemailEntry.getGeocodedLocation();
-  }
-
-  private static String buildPrimaryVoicemailText(VoicemailEntry data) {
-    StringBuilder primaryText = new StringBuilder();
-    if (!TextUtils.isEmpty(data.getNumberAttributes().getName())) {
-      primaryText.append(data.getNumberAttributes().getName());
-    } else if (!TextUtils.isEmpty(data.getFormattedNumber())) {
-      primaryText.append(data.getFormattedNumber());
-    } else {
-      // TODO(uabdullah): Handle CallLog.Calls.PRESENTATION_*, including Verizon restricted numbers.
-      // primaryText.append(context.getText(R.string.voicemail_unknown));
-      // TODO(uabdullah): Figure out why http://gpaste/5980163120562176 error when using string
-      primaryText.append("Unknown");
+    static HistoryItemBottomSheetHeaderInfo fromVoicemailEntry(VoicemailEntry voicemailEntry) {
+        return HistoryItemBottomSheetHeaderInfo.newBuilder()
+                .setNumber(voicemailEntry.getNumber())
+                .setPhotoInfo(PhotoInfoBuilder.fromVoicemailEntry(voicemailEntry))
+                .setPrimaryText(buildPrimaryVoicemailText(voicemailEntry))
+                .setSecondaryText(buildSecondaryVoicemailText(voicemailEntry))
+                .build();
     }
-    return primaryText.toString();
-  }
+
+    private static String buildSecondaryVoicemailText(VoicemailEntry voicemailEntry) {
+        return voicemailEntry.getGeocodedLocation();
+    }
+
+    private static String buildPrimaryVoicemailText(VoicemailEntry data) {
+        StringBuilder primaryText = new StringBuilder();
+        if (!TextUtils.isEmpty(data.getNumberAttributes().getName())) {
+            primaryText.append(data.getNumberAttributes().getName());
+        } else if (!TextUtils.isEmpty(data.getFormattedNumber())) {
+            primaryText.append(data.getFormattedNumber());
+        } else {
+            // TODO(uabdullah): Handle CallLog.Calls.PRESENTATION_*, including Verizon restricted numbers.
+            // primaryText.append(context.getText(R.string.voicemail_unknown));
+            // TODO(uabdullah): Figure out why http://gpaste/5980163120562176 error when using string
+            primaryText.append("Unknown");
+        }
+        return primaryText.toString();
+    }
 }

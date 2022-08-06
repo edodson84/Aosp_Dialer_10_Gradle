@@ -24,13 +24,13 @@ import android.os.Bundle;
  */
 public interface Policy {
 
-  void onCreate(BaseTask task, Bundle extras);
+    void onCreate(BaseTask task, Bundle extras);
 
-  void onBeforeExecute();
+    void onBeforeExecute();
 
-  void onCompleted();
+    void onCompleted();
 
-  void onFail();
+    void onFail();
 
-  void onDuplicatedTaskAdded();
+    void onDuplicatedTaskAdded();
 }

@@ -24,22 +24,24 @@ import com.fissy.dialer.R;
 import com.fissy.dialer.util.OrientationUtil;
 import com.fissy.dialer.widget.EmptyContentView;
 
-/** Empty content view to be shown when dialpad is visible. */
+/**
+ * Empty content view to be shown when dialpad is visible.
+ */
 public class DialpadSearchEmptyContentView extends EmptyContentView {
 
-  public DialpadSearchEmptyContentView(Context context) {
-    super(context);
-  }
+    public DialpadSearchEmptyContentView(Context context) {
+        super(context);
+    }
 
-  @Override
-  protected void inflateLayout() {
-    int orientation =
-        OrientationUtil.isLandscape(getContext()) ? LinearLayout.HORIZONTAL : LinearLayout.VERTICAL;
+    @Override
+    protected void inflateLayout() {
+        int orientation =
+                OrientationUtil.isLandscape(getContext()) ? LinearLayout.HORIZONTAL : LinearLayout.VERTICAL;
 
-    setOrientation(orientation);
+        setOrientation(orientation);
 
-    final LayoutInflater inflater =
-        (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    inflater.inflate(R.layout.empty_content_view_dialpad_search, this);
-  }
+        final LayoutInflater inflater =
+                (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater.inflate(R.layout.empty_content_view_dialpad_search, this);
+    }
 }

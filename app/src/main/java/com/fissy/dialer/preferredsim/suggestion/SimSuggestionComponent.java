@@ -17,25 +17,31 @@
 package com.fissy.dialer.preferredsim.suggestion;
 
 import android.content.Context;
-import android.support.annotation.WorkerThread;
+import androidx.annotation.WorkerThread;
+
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.inject.HasRootComponent;
+
 import dagger.Subcomponent;
 
-/** Dagger component for {@link SuggestionProvider} */
+/**
+ * Dagger component for {@link SuggestionProvider}
+ */
 @Subcomponent
 public abstract class SimSuggestionComponent {
-  public abstract SuggestionProvider getSuggestionProvider();
+    @WorkerThread
+    public static SimSuggestionComponent get(Context context) {
+        Assert.isWorkerThread();
+        return ((HasComponent) ((HasRootComponent) context.getApplicationContext()).component())
+                .simSuggestionComponent();
+    }
 
-  @WorkerThread
-  public static SimSuggestionComponent get(Context context) {
-    Assert.isWorkerThread();
-    return ((HasComponent) ((HasRootComponent) context.getApplicationContext()).component())
-        .simSuggestionComponent();
-  }
+    public abstract SuggestionProvider getSuggestionProvider();
 
-  /** Used to refer to the root application component. */
-  public interface HasComponent {
-    SimSuggestionComponent simSuggestionComponent();
-  }
+    /**
+     * Used to refer to the root application component.
+     */
+    public interface HasComponent {
+        SimSuggestionComponent simSuggestionComponent();
+    }
 }

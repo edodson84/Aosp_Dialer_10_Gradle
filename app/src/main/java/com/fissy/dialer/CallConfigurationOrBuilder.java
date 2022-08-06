@@ -4,15 +4,16 @@
 package com.fissy.dialer;
 
 public interface CallConfigurationOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:com.fissy.dialer.CallConfiguration)
-    com.google.protobuf.MessageLiteOrBuilder {
+        // @@protoc_insertion_point(interface_extends:com.fissy.dialer.CallConfiguration)
+        com.google.protobuf.MessageLiteOrBuilder {
 
-  /**
-   * <code>optional .com.fissy.dialer.Mode call_mode = 1;</code>
-   */
-  boolean hasCallMode();
-  /**
-   * <code>optional .com.fissy.dialer.Mode call_mode = 1;</code>
-   */
-  com.fissy.dialer.Mode getCallMode();
+    /**
+     * <code>optional .com.fissy.dialer.Mode call_mode = 1;</code>
+     */
+    boolean hasCallMode();
+
+    /**
+     * <code>optional .com.fissy.dialer.Mode call_mode = 1;</code>
+     */
+    com.fissy.dialer.Mode getCallMode();
 }

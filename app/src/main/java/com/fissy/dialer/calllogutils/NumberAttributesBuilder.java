@@ -17,34 +17,39 @@
 package com.fissy.dialer.calllogutils;
 
 import android.text.TextUtils;
+
 import com.fissy.dialer.NumberAttributes;
 import com.fissy.dialer.phonelookup.PhoneLookupInfo;
 import com.fissy.dialer.phonelookup.consolidator.PhoneLookupInfoConsolidator;
 
-/** Builds {@link NumberAttributes} from other data types. */
+/**
+ * Builds {@link NumberAttributes} from other data types.
+ */
 public final class NumberAttributesBuilder {
 
-  /** Returns a {@link NumberAttributes.Builder} with info from {@link PhoneLookupInfo}. */
-  public static NumberAttributes.Builder fromPhoneLookupInfo(PhoneLookupInfo phoneLookupInfo) {
-    PhoneLookupInfoConsolidator phoneLookupInfoConsolidator =
-        new PhoneLookupInfoConsolidator(phoneLookupInfo);
-    return NumberAttributes.newBuilder()
-        .setName(phoneLookupInfoConsolidator.getName())
-        .setPhotoUri(
-            !TextUtils.isEmpty(phoneLookupInfoConsolidator.getPhotoThumbnailUri())
-                ? phoneLookupInfoConsolidator.getPhotoThumbnailUri()
-                : phoneLookupInfoConsolidator.getPhotoUri())
-        .setPhotoId(phoneLookupInfoConsolidator.getPhotoId())
-        .setLookupUri(phoneLookupInfoConsolidator.getLookupUri())
-        .setNumberTypeLabel(phoneLookupInfoConsolidator.getNumberLabel())
-        .setIsBusiness(phoneLookupInfoConsolidator.isBusiness())
-        .setIsBlocked(phoneLookupInfoConsolidator.isBlocked())
-        .setIsSpam(phoneLookupInfoConsolidator.isSpam())
-        .setCanReportAsInvalidNumber(phoneLookupInfoConsolidator.canReportAsInvalidNumber())
-        .setIsCp2InfoIncomplete(phoneLookupInfoConsolidator.isDefaultCp2InfoIncomplete())
-        .setContactSource(phoneLookupInfoConsolidator.getContactSource())
-        .setCanSupportCarrierVideoCall(phoneLookupInfoConsolidator.canSupportCarrierVideoCall())
-        .setGeolocation(phoneLookupInfoConsolidator.getGeolocation())
-        .setIsEmergencyNumber(phoneLookupInfoConsolidator.isEmergencyNumber());
-  }
+    /**
+     * Returns a {@link NumberAttributes.Builder} with info from {@link PhoneLookupInfo}.
+     */
+    public static NumberAttributes.Builder fromPhoneLookupInfo(PhoneLookupInfo phoneLookupInfo) {
+        PhoneLookupInfoConsolidator phoneLookupInfoConsolidator =
+                new PhoneLookupInfoConsolidator(phoneLookupInfo);
+        return NumberAttributes.newBuilder()
+                .setName(phoneLookupInfoConsolidator.getName())
+                .setPhotoUri(
+                        !TextUtils.isEmpty(phoneLookupInfoConsolidator.getPhotoThumbnailUri())
+                                ? phoneLookupInfoConsolidator.getPhotoThumbnailUri()
+                                : phoneLookupInfoConsolidator.getPhotoUri())
+                .setPhotoId(phoneLookupInfoConsolidator.getPhotoId())
+                .setLookupUri(phoneLookupInfoConsolidator.getLookupUri())
+                .setNumberTypeLabel(phoneLookupInfoConsolidator.getNumberLabel())
+                .setIsBusiness(phoneLookupInfoConsolidator.isBusiness())
+                .setIsBlocked(phoneLookupInfoConsolidator.isBlocked())
+                .setIsSpam(phoneLookupInfoConsolidator.isSpam())
+                .setCanReportAsInvalidNumber(phoneLookupInfoConsolidator.canReportAsInvalidNumber())
+                .setIsCp2InfoIncomplete(phoneLookupInfoConsolidator.isDefaultCp2InfoIncomplete())
+                .setContactSource(phoneLookupInfoConsolidator.getContactSource())
+                .setCanSupportCarrierVideoCall(phoneLookupInfoConsolidator.canSupportCarrierVideoCall())
+                .setGeolocation(phoneLookupInfoConsolidator.getGeolocation())
+                .setIsEmergencyNumber(phoneLookupInfoConsolidator.isEmergencyNumber());
+    }
 }

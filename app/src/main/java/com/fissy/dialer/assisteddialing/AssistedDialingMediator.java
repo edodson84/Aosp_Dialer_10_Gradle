@@ -16,17 +16,24 @@
 
 package com.fissy.dialer.assisteddialing;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
+
 import java.util.Optional;
 
-/** The core interface for the AssistedDialingMediator. */
+/**
+ * The core interface for the AssistedDialingMediator.
+ */
 public interface AssistedDialingMediator {
 
-  /** Returns {@code true} if the current client platform supports Assisted Dialing. */
-  boolean isPlatformEligible();
+    /**
+     * Returns {@code true} if the current client platform supports Assisted Dialing.
+     */
+    boolean isPlatformEligible();
 
-  /** Returns the country code in which the library thinks the user typically resides. */
-  Optional<String> userHomeCountryCode();
+    /**
+     * Returns the country code in which the library thinks the user typically resides.
+     */
+    Optional<String> userHomeCountryCode();
 
-  Optional<TransformationInfo> attemptAssistedDial(@NonNull String numberToTransform);
+    Optional<TransformationInfo> attemptAssistedDial(@NonNull String numberToTransform);
 }

@@ -4,13 +4,15 @@
 package com.android.contacts.common.widget;
 
 public final class SelectPhoneAccountDialogOptionsOuterClass {
-  private SelectPhoneAccountDialogOptionsOuterClass() {}
-  public static void registerAllExtensions(
-      com.google.protobuf.ExtensionRegistryLite registry) {
-  }
+    static {
+    }
 
-  static {
-  }
+    private SelectPhoneAccountDialogOptionsOuterClass() {
+    }
 
-  // @@protoc_insertion_point(outer_class_scope)
+    public static void registerAllExtensions(
+            com.google.protobuf.ExtensionRegistryLite registry) {
+    }
+
+    // @@protoc_insertion_point(outer_class_scope)
 }

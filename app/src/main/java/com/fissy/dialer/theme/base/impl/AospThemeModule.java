@@ -17,20 +17,24 @@
 package com.fissy.dialer.theme.base.impl;
 
 import android.content.Context;
+
 import com.fissy.dialer.inject.ApplicationContext;
 import com.fissy.dialer.inject.DialerVariant;
 import com.fissy.dialer.inject.InstallIn;
 import com.fissy.dialer.theme.base.Theme;
+
 import dagger.Module;
 import dagger.Provides;
 
-/** Module which binds {@link AospThemeImpl}. */
+/**
+ * Module which binds {@link AospThemeImpl}.
+ */
 @InstallIn(variants = {DialerVariant.DIALER_TEST})
 @Module
 public class AospThemeModule {
 
-  @Provides
-  static Theme provideThemeModule(@ApplicationContext Context context) {
-    return new AospThemeImpl(context);
-  }
+    @Provides
+    static Theme provideThemeModule(@ApplicationContext Context context) {
+        return new AospThemeImpl(context);
+    }
 }

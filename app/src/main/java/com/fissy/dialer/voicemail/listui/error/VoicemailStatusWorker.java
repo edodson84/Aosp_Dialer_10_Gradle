@@ -19,11 +19,13 @@ package com.fissy.dialer.voicemail.listui.error;
 import android.content.Context;
 import android.database.Cursor;
 import android.provider.VoicemailContract.Status;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
+
+import com.android.voicemail.VoicemailComponent;
 import com.fissy.dialer.common.concurrent.DialerExecutor.Worker;
 import com.fissy.dialer.telecom.TelecomUtil;
 import com.fissy.dialer.voicemailstatus.VoicemailStatusQuery;
-import com.android.voicemail.VoicemailComponent;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,38 +34,38 @@ import java.util.List;
  */
 public class VoicemailStatusWorker implements Worker<Context, List<VoicemailStatus>> {
 
-  @Nullable
-  @Override
-  public List<VoicemailStatus> doInBackground(@Nullable Context context) throws Throwable {
-    List<VoicemailStatus> statuses = new ArrayList<>();
-    if (!TelecomUtil.hasReadWriteVoicemailPermissions(context)) {
-      return statuses;
-    }
-    StringBuilder where = new StringBuilder();
-    java.util.List<String> selectionArgs = new ArrayList<>();
+    @Nullable
+    @Override
+    public List<VoicemailStatus> doInBackground(@Nullable Context context) throws Throwable {
+        List<VoicemailStatus> statuses = new ArrayList<>();
+        if (!TelecomUtil.hasReadWriteVoicemailPermissions(context)) {
+            return statuses;
+        }
+        StringBuilder where = new StringBuilder();
+        java.util.List<String> selectionArgs = new ArrayList<>();
 
-    VoicemailComponent.get(context)
-        .getVoicemailClient()
-        .appendOmtpVoicemailStatusSelectionClause(context, where, selectionArgs);
+        VoicemailComponent.get(context)
+                .getVoicemailClient()
+                .appendOmtpVoicemailStatusSelectionClause(context, where, selectionArgs);
 
-    try (Cursor cursor =
-        context
-            .getContentResolver()
-            .query(
-                Status.CONTENT_URI,
-                VoicemailStatusQuery.getProjection(),
-                where.toString(),
-                selectionArgs.toArray(new String[selectionArgs.size()]),
-                null)) {
-      if (cursor == null) {
+        try (Cursor cursor =
+                     context
+                             .getContentResolver()
+                             .query(
+                                     Status.CONTENT_URI,
+                                     VoicemailStatusQuery.getProjection(),
+                                     where.toString(),
+                                     selectionArgs.toArray(new String[selectionArgs.size()]),
+                                     null)) {
+            if (cursor == null) {
+                return statuses;
+            }
+
+            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                statuses.add(new VoicemailStatus(context, cursor));
+            }
+        }
+
         return statuses;
-      }
-
-      for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-        statuses.add(new VoicemailStatus(context, cursor));
-      }
     }
-
-    return statuses;
-  }
 }

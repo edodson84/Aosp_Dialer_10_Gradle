@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- 
+<?xml version="1.0" encoding="UTF-8"?><!--
   ~ Copyright (C) 2016 The Android Open Source Project
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,8 +14,7 @@
   ~ limitations under the License
    -->
 
-<resources xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="voicemail_error_activating_title" msgid="2428457130578359186">"啟用視覺化語音信箱"</string>
     <string name="voicemail_error_activating_message" msgid="7157030596259443393">"您必須完整啟用視覺化語音信箱，才會收到語音留言通知。在未完整啟用這項功能之前，如要擷取新訊息，請撥打語音信箱號碼。"</string>
     <string name="voicemail_error_not_activate_no_signal_title" msgid="742273366199085615">"無法啟用視覺化語音信箱"</string>

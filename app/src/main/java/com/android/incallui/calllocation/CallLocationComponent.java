@@ -17,22 +17,28 @@
 package com.android.incallui.calllocation;
 
 import android.content.Context;
+
 import com.fissy.dialer.inject.HasRootComponent;
+
 import dagger.Subcomponent;
 
-/** Subcomponent that can be used to access the call location implementation. */
+/**
+ * Subcomponent that can be used to access the call location implementation.
+ */
 @Subcomponent
 public abstract class CallLocationComponent {
 
-  public abstract CallLocation getCallLocation();
+    public static CallLocationComponent get(Context context) {
+        return ((HasComponent) ((HasRootComponent) context.getApplicationContext()).component())
+                .callLocationComponent();
+    }
 
-  public static CallLocationComponent get(Context context) {
-    return ((HasComponent) ((HasRootComponent) context.getApplicationContext()).component())
-        .callLocationComponent();
-  }
+    public abstract CallLocation getCallLocation();
 
-  /** Used to refer to the root application component. */
-  public interface HasComponent {
-    CallLocationComponent callLocationComponent();
-  }
+    /**
+     * Used to refer to the root application component.
+     */
+    public interface HasComponent {
+        CallLocationComponent callLocationComponent();
+    }
 }

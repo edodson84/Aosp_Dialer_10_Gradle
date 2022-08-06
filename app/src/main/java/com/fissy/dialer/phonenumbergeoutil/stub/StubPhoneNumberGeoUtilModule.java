@@ -17,14 +17,18 @@
 package com.fissy.dialer.phonenumbergeoutil.stub;
 
 import com.fissy.dialer.phonenumbergeoutil.PhoneNumberGeoUtil;
-import dagger.Binds;
-import dagger.Module;
+
 import javax.inject.Singleton;
 
-/** Module which binds {@link PhoneNumberGeoUtilStub}. */
+import dagger.Binds;
+import dagger.Module;
+
+/**
+ * Module which binds {@link PhoneNumberGeoUtilStub}.
+ */
 @Module
 public abstract class StubPhoneNumberGeoUtilModule {
-  @Binds
-  @Singleton
-  public abstract PhoneNumberGeoUtil bindPhoneNumberGeoUtil(PhoneNumberGeoUtilStub stub);
+    @Binds
+    @Singleton
+    public abstract PhoneNumberGeoUtil bindPhoneNumberGeoUtil(PhoneNumberGeoUtilStub stub);
 }

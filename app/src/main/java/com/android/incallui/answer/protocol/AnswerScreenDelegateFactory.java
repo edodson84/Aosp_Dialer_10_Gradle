@@ -16,8 +16,10 @@
 
 package com.android.incallui.answer.protocol;
 
-/** Used to create an instance of the delegate, should be implemented by the container activity. */
+/**
+ * Used to create an instance of the delegate, should be implemented by the container activity.
+ */
 public interface AnswerScreenDelegateFactory {
 
-  AnswerScreenDelegate newAnswerScreenDelegate(AnswerScreen answerScreen);
+    AnswerScreenDelegate newAnswerScreenDelegate(AnswerScreen answerScreen);
 }

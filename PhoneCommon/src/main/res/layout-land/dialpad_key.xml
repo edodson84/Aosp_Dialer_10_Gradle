@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2013 The Android Open Source Project
+<?xml version="1.0" encoding="utf-8"?><!-- Copyright (C) 2013 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -15,14 +14,14 @@
 -->
 
 <!-- A layout representing a single key in the dialpad -->
-<com.android.phone.common.dialpad.DialpadKeyButton
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/DialpadKeyButtonStyle" >
+<com.android.phone.common.dialpad.DialpadKeyButton xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/DialpadKeyButtonStyle">
 
-    <LinearLayout style="@style/DialpadKeyInternalLayoutStyle"
-        android:orientation="horizontal"
+    <LinearLayout
+        style="@style/DialpadKeyInternalLayoutStyle"
+        android:layout_gravity="right|center_vertical"
         android:baselineAligned="false"
-        android:layout_gravity="right|center_vertical" >
+        android:orientation="horizontal">
 
         <!-- Note in the referenced styles that we assign hard widths to these components
              because we want them to line up vertically when we arrange them in an MxN grid -->
@@ -31,8 +30,8 @@
             android:id="@+id/dialpad_key_number"
             style="@style/DialpadKeyNumberStyle"
             android:layout_gravity="right"
-            android:layout_marginBottom="0dp"
-            android:layout_marginRight="@dimen/dialpad_key_margin_right" />
+            android:layout_marginRight="@dimen/dialpad_key_margin_right"
+            android:layout_marginBottom="0dp" />
 
         <TextView
             android:id="@+id/dialpad_key_letters"

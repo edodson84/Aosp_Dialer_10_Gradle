@@ -44,81 +44,83 @@ package com.android.voicemail.impl.mail.store.imap;
  * </pre>
  */
 public abstract class ImapElement {
-  /**
-   * An element that is returned by {@link ImapList#getElementOrNone} to indicate an index is out of
-   * range.
-   */
-  public static final ImapElement NONE =
-      new ImapElement() {
-        @Override
-        public void destroy() {
-          // Don't call super.destroy().
-          // It's a shared object.  We don't want the mDestroyed to be set on this.
-        }
+    /**
+     * An element that is returned by {@link ImapList#getElementOrNone} to indicate an index is out of
+     * range.
+     */
+    public static final ImapElement NONE =
+            new ImapElement() {
+                @Override
+                public void destroy() {
+                    // Don't call super.destroy().
+                    // It's a shared object.  We don't want the mDestroyed to be set on this.
+                }
 
-        @Override
-        public boolean isList() {
-          return false;
-        }
+                @Override
+                public boolean isList() {
+                    return false;
+                }
 
-        @Override
-        public boolean isString() {
-          return false;
-        }
+                @Override
+                public boolean isString() {
+                    return false;
+                }
 
-        @Override
-        public String toString() {
-          return "[NO ELEMENT]";
-        }
+                @Override
+                public String toString() {
+                    return "[NO ELEMENT]";
+                }
 
-        @Override
-        public boolean equalsForTest(ImapElement that) {
-          return super.equalsForTest(that);
-        }
-      };
+                @Override
+                public boolean equalsForTest(ImapElement that) {
+                    return super.equalsForTest(that);
+                }
+            };
 
-  private boolean destroyed = false;
+    private boolean destroyed = false;
 
-  public abstract boolean isList();
+    public abstract boolean isList();
 
-  public abstract boolean isString();
+    public abstract boolean isString();
 
-  protected boolean isDestroyed() {
-    return destroyed;
-  }
-
-  /**
-   * Clean up the resources used by the instance. It's for removing a temp file used by {@link
-   * ImapTempFileLiteral}.
-   */
-  public void destroy() {
-    destroyed = true;
-  }
-
-  /** Throws {@link RuntimeException} if it's already destroyed. */
-  protected final void checkNotDestroyed() {
-    if (destroyed) {
-      throw new RuntimeException("Already destroyed");
+    protected boolean isDestroyed() {
+        return destroyed;
     }
-  }
 
-  /**
-   * Return a string that represents this object; it's purely for the debug purpose. Don't mistake
-   * it for {@link ImapString#getString}.
-   *
-   * <p>Abstract to force subclasses to implement it.
-   */
-  @Override
-  public abstract String toString();
-
-  /**
-   * The equals implementation that is intended to be used only for unit testing. (Because it may be
-   * heavy and has a special sense of "equal" for testing.)
-   */
-  public boolean equalsForTest(ImapElement that) {
-    if (that == null) {
-      return false;
+    /**
+     * Clean up the resources used by the instance. It's for removing a temp file used by {@link
+     * ImapTempFileLiteral}.
+     */
+    public void destroy() {
+        destroyed = true;
     }
-    return this.getClass() == that.getClass(); // Has to be the same class.
-  }
+
+    /**
+     * Throws {@link RuntimeException} if it's already destroyed.
+     */
+    protected final void checkNotDestroyed() {
+        if (destroyed) {
+            throw new RuntimeException("Already destroyed");
+        }
+    }
+
+    /**
+     * Return a string that represents this object; it's purely for the debug purpose. Don't mistake
+     * it for {@link ImapString#getString}.
+     *
+     * <p>Abstract to force subclasses to implement it.
+     */
+    @Override
+    public abstract String toString();
+
+    /**
+     * The equals implementation that is intended to be used only for unit testing. (Because it may be
+     * heavy and has a special sense of "equal" for testing.)
+     */
+    public boolean equalsForTest(ImapElement that) {
+        if (that == null) {
+            return false;
+        }
+        return this.getClass() == that.getClass(); // Has to be the same class.
+    }
 }

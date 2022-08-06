@@ -20,7 +20,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.database.MergeCursor;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,103 +30,109 @@ import android.widget.CursorAdapter;
 import com.fissy.dialer.R;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 
-/** Bridges between the image cursor loaded by GalleryBoundCursorLoader and the GalleryGridView. */
+/**
+ * Bridges between the image cursor loaded by GalleryBoundCursorLoader and the GalleryGridView.
+ */
 public class GalleryGridAdapter extends CursorAdapter {
 
-  @NonNull private final OnClickListener onClickListener;
-  @NonNull private final List<GalleryGridItemView> views = new ArrayList<>();
-  @NonNull private final Context context;
+    @NonNull
+    private final OnClickListener onClickListener;
+    @NonNull
+    private final List<GalleryGridItemView> views = new ArrayList<>();
+    @NonNull
+    private final Context context;
 
-  private GalleryGridItemData selectedData;
+    private GalleryGridItemData selectedData;
 
-  public GalleryGridAdapter(
-      @NonNull Context context, Cursor cursor, @NonNull OnClickListener onClickListener) {
-    super(context, cursor, 0);
-    this.onClickListener = Assert.isNotNull(onClickListener);
-    this.context = Assert.isNotNull(context);
-  }
-
-  @Override
-  public int getCount() {
-    // Add one for the header.
-    return super.getCount() + 1;
-  }
-
-  @Override
-  public View getView(int position, View convertView, ViewGroup parent) {
-    // At position 0, we want to insert a header. If position == 0, we don't need the cursor.
-    // If position != 0, then we need to move the cursor to position - 1 to account for the offset
-    // of the header.
-    if (position != 0 && !getCursor().moveToPosition(position - 1)) {
-      Assert.fail("couldn't move cursor to position " + (position - 1));
+    public GalleryGridAdapter(
+            @NonNull Context context, Cursor cursor, @NonNull OnClickListener onClickListener) {
+        super(context, cursor, 0);
+        this.onClickListener = Assert.isNotNull(onClickListener);
+        this.context = Assert.isNotNull(context);
     }
-    View view;
-    if (convertView == null) {
-      view = newView(context, getCursor(), parent);
-    } else {
-      view = convertView;
+
+    @Override
+    public int getCount() {
+        // Add one for the header.
+        return super.getCount() + 1;
     }
-    bindView(view, context, getCursor(), position);
-    return view;
-  }
 
-  private void bindView(View view, Context context, Cursor cursor, int position) {
-    if (position == 0) {
-      GalleryGridItemView gridView = (GalleryGridItemView) view;
-      gridView.showGallery(true);
-    } else {
-      bindView(view, context, cursor);
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        // At position 0, we want to insert a header. If position == 0, we don't need the cursor.
+        // If position != 0, then we need to move the cursor to position - 1 to account for the offset
+        // of the header.
+        if (position != 0 && !getCursor().moveToPosition(position - 1)) {
+            Assert.fail("couldn't move cursor to position " + (position - 1));
+        }
+        View view;
+        if (convertView == null) {
+            view = newView(context, getCursor(), parent);
+        } else {
+            view = convertView;
+        }
+        bindView(view, context, getCursor(), position);
+        return view;
     }
-  }
 
-  @Override
-  public void bindView(View view, Context context, Cursor cursor) {
-    GalleryGridItemView gridView = (GalleryGridItemView) view;
-    gridView.bind(cursor);
-    gridView.setSelected(gridView.getData().equals(selectedData));
-  }
-
-  @Override
-  public View newView(Context context, Cursor cursor, ViewGroup parent) {
-    GalleryGridItemView view =
-        (GalleryGridItemView)
-            LayoutInflater.from(context).inflate(R.layout.gallery_grid_item_view, parent, false);
-    view.setOnClickListener(onClickListener);
-    views.add(view);
-    return view;
-  }
-
-  public void setSelected(GalleryGridItemData selectedData) {
-    this.selectedData = selectedData;
-    for (GalleryGridItemView view : views) {
-      view.setSelected(view.getData().equals(selectedData));
+    private void bindView(View view, Context context, Cursor cursor, int position) {
+        if (position == 0) {
+            GalleryGridItemView gridView = (GalleryGridItemView) view;
+            gridView.showGallery(true);
+        } else {
+            bindView(view, context, cursor);
+        }
     }
-  }
 
-  public void insertEntries(@NonNull List<GalleryGridItemData> entries) {
-    Assert.checkArgument(entries.size() != 0);
-    LogUtil.i("GalleryGridAdapter.insertRows", "inserting %d rows", entries.size());
-    MatrixCursor extraRow = new MatrixCursor(GalleryGridItemData.IMAGE_PROJECTION);
-    for (GalleryGridItemData entry : entries) {
-      extraRow.addRow(new Object[] {0L, entry.getFilePath(), entry.getMimeType(), ""});
+    @Override
+    public void bindView(View view, Context context, Cursor cursor) {
+        GalleryGridItemView gridView = (GalleryGridItemView) view;
+        gridView.bind(cursor);
+        gridView.setSelected(gridView.getData().equals(selectedData));
     }
-    extraRow.moveToFirst();
-    Cursor extendedCursor = new MergeCursor(new Cursor[] {extraRow, getCursor()});
-    swapCursor(extendedCursor);
-  }
 
-  public GalleryGridItemData insertEntry(String filePath, String mimeType) {
-    LogUtil.i("GalleryGridAdapter.insertRow", mimeType + " " + filePath);
+    @Override
+    public View newView(Context context, Cursor cursor, ViewGroup parent) {
+        GalleryGridItemView view =
+                (GalleryGridItemView)
+                        LayoutInflater.from(context).inflate(R.layout.gallery_grid_item_view, parent, false);
+        view.setOnClickListener(onClickListener);
+        views.add(view);
+        return view;
+    }
 
-    MatrixCursor extraRow = new MatrixCursor(GalleryGridItemData.IMAGE_PROJECTION);
-    extraRow.addRow(new Object[] {0L, filePath, mimeType, ""});
-    extraRow.moveToFirst();
-    Cursor extendedCursor = new MergeCursor(new Cursor[] {extraRow, getCursor()});
-    swapCursor(extendedCursor);
+    public void setSelected(GalleryGridItemData selectedData) {
+        this.selectedData = selectedData;
+        for (GalleryGridItemView view : views) {
+            view.setSelected(view.getData().equals(selectedData));
+        }
+    }
 
-    return new GalleryGridItemData(extraRow);
-  }
+    public void insertEntries(@NonNull List<GalleryGridItemData> entries) {
+        Assert.checkArgument(entries.size() != 0);
+        LogUtil.i("GalleryGridAdapter.insertRows", "inserting %d rows", entries.size());
+        MatrixCursor extraRow = new MatrixCursor(GalleryGridItemData.IMAGE_PROJECTION);
+        for (GalleryGridItemData entry : entries) {
+            extraRow.addRow(new Object[]{0L, entry.getFilePath(), entry.getMimeType(), ""});
+        }
+        extraRow.moveToFirst();
+        Cursor extendedCursor = new MergeCursor(new Cursor[]{extraRow, getCursor()});
+        swapCursor(extendedCursor);
+    }
+
+    public GalleryGridItemData insertEntry(String filePath, String mimeType) {
+        LogUtil.i("GalleryGridAdapter.insertRow", mimeType + " " + filePath);
+
+        MatrixCursor extraRow = new MatrixCursor(GalleryGridItemData.IMAGE_PROJECTION);
+        extraRow.addRow(new Object[]{0L, filePath, mimeType, ""});
+        extraRow.moveToFirst();
+        Cursor extendedCursor = new MergeCursor(new Cursor[]{extraRow, getCursor()});
+        swapCursor(extendedCursor);
+
+        return new GalleryGridItemData(extraRow);
+    }
 }

@@ -22,6 +22,7 @@ import android.os.Parcelable;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+
 import java.io.IOException;
 
 /**
@@ -33,88 +34,88 @@ import java.io.IOException;
  * implementations of the shared methods are delegated to CameraPreview
  */
 public class SoftwareCameraPreview extends SurfaceView implements CameraPreview.CameraPreviewHost {
-  private final CameraPreview preview;
+    private final CameraPreview preview;
 
-  public SoftwareCameraPreview(final Context context) {
-    super(context);
-    preview = new CameraPreview(this);
-    getHolder()
-        .addCallback(
-            new SurfaceHolder.Callback() {
-              @Override
-              public void surfaceCreated(final SurfaceHolder surfaceHolder) {
-                CameraManager.get().setSurface(preview);
-              }
+    public SoftwareCameraPreview(final Context context) {
+        super(context);
+        preview = new CameraPreview(this);
+        getHolder()
+                .addCallback(
+                        new SurfaceHolder.Callback() {
+                            @Override
+                            public void surfaceCreated(final SurfaceHolder surfaceHolder) {
+                                CameraManager.get().setSurface(preview);
+                            }
 
-              @Override
-              public void surfaceChanged(
-                  final SurfaceHolder surfaceHolder,
-                  final int format,
-                  final int width,
-                  final int height) {
-                CameraManager.get().setSurface(preview);
-              }
+                            @Override
+                            public void surfaceChanged(
+                                    final SurfaceHolder surfaceHolder,
+                                    final int format,
+                                    final int width,
+                                    final int height) {
+                                CameraManager.get().setSurface(preview);
+                            }
 
-              @Override
-              public void surfaceDestroyed(final SurfaceHolder surfaceHolder) {
-                CameraManager.get().setSurface(null);
-              }
-            });
-  }
+                            @Override
+                            public void surfaceDestroyed(final SurfaceHolder surfaceHolder) {
+                                CameraManager.get().setSurface(null);
+                            }
+                        });
+    }
 
-  @Override
-  public void setShown() {
-    preview.setShown();
-  }
+    @Override
+    public void setShown() {
+        preview.setShown();
+    }
 
-  @Override
-  protected void onVisibilityChanged(final View changedView, final int visibility) {
-    super.onVisibilityChanged(changedView, visibility);
-    preview.onVisibilityChanged(visibility);
-  }
+    @Override
+    protected void onVisibilityChanged(final View changedView, final int visibility) {
+        super.onVisibilityChanged(changedView, visibility);
+        preview.onVisibilityChanged(visibility);
+    }
 
-  @Override
-  protected void onDetachedFromWindow() {
-    super.onDetachedFromWindow();
-    preview.onDetachedFromWindow();
-  }
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        preview.onDetachedFromWindow();
+    }
 
-  @Override
-  protected void onAttachedToWindow() {
-    super.onAttachedToWindow();
-    preview.onAttachedToWindow();
-  }
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        preview.onAttachedToWindow();
+    }
 
-  @Override
-  protected void onRestoreInstanceState(final Parcelable state) {
-    super.onRestoreInstanceState(state);
-    preview.onRestoreInstanceState();
-  }
+    @Override
+    protected void onRestoreInstanceState(final Parcelable state) {
+        super.onRestoreInstanceState(state);
+        preview.onRestoreInstanceState();
+    }
 
-  @Override
-  protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-    widthMeasureSpec = preview.getWidthMeasureSpec(widthMeasureSpec, heightMeasureSpec);
-    heightMeasureSpec = preview.getHeightMeasureSpec(widthMeasureSpec, heightMeasureSpec);
-    super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-  }
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        widthMeasureSpec = preview.getWidthMeasureSpec(widthMeasureSpec, heightMeasureSpec);
+        heightMeasureSpec = preview.getHeightMeasureSpec(widthMeasureSpec, heightMeasureSpec);
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    }
 
-  @Override
-  public View getView() {
-    return this;
-  }
+    @Override
+    public View getView() {
+        return this;
+    }
 
-  @Override
-  public boolean isValid() {
-    return getHolder() != null;
-  }
+    @Override
+    public boolean isValid() {
+        return getHolder() != null;
+    }
 
-  @Override
-  public void startPreview(final Camera camera) throws IOException {
-    camera.setPreviewDisplay(getHolder());
-  }
+    @Override
+    public void startPreview(final Camera camera) throws IOException {
+        camera.setPreviewDisplay(getHolder());
+    }
 
-  @Override
-  public void onCameraPermissionGranted() {
-    preview.onCameraPermissionGranted();
-  }
+    @Override
+    public void onCameraPermissionGranted() {
+        preview.onCameraPermissionGranted();
+    }
 }

@@ -16,15 +16,21 @@ package com.android.contacts.common.extensions;
 
 import android.content.Context;
 import android.net.Uri;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
-/** An interface for adding extended phone directories. */
+/**
+ * An interface for adding extended phone directories.
+ */
 public interface PhoneDirectoryExtender {
 
-  /** returns true if the nearby places directory is enabled. */
-  boolean isEnabled(Context context);
+    /**
+     * returns true if the nearby places directory is enabled.
+     */
+    boolean isEnabled(Context context);
 
-  /** Returns the content uri for nearby places. */
-  @Nullable
-  Uri getContentUri();
+    /**
+     * Returns the content uri for nearby places.
+     */
+    @Nullable
+    Uri getContentUri();
 }

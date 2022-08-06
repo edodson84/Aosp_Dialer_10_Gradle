@@ -16,49 +16,51 @@
 
 package com.fissy.dialer.util;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.text.TextUtils;
 
-/** Static utility methods for Strings. */
+/**
+ * Static utility methods for Strings.
+ */
 public class MoreStrings {
 
-  /**
-   * Returns the given string if it is non-null; the empty string otherwise.
-   *
-   * @param string the string to test and possibly return
-   * @return {@code string} itself if it is non-null; {@code ""} if it is null
-   */
-  public static String nullToEmpty(@Nullable String string) {
-    return (string == null) ? "" : string;
-  }
-
-  /**
-   * Returns the given string if it is nonempty; {@code null} otherwise.
-   *
-   * @param string the string to test and possibly return
-   * @return {@code string} itself if it is nonempty; {@code null} if it is empty or null
-   */
-  @Nullable
-  public static String emptyToNull(@Nullable String string) {
-    return TextUtils.isEmpty(string) ? null : string;
-  }
-
-  public static String toSafeString(String value) {
-    if (value == null) {
-      return null;
+    /**
+     * Returns the given string if it is non-null; the empty string otherwise.
+     *
+     * @param string the string to test and possibly return
+     * @return {@code string} itself if it is non-null; {@code ""} if it is null
+     */
+    public static String nullToEmpty(@Nullable String string) {
+        return (string == null) ? "" : string;
     }
 
-    // Do exactly same thing as Uri#toSafeString() does, which will enable us to compare
-    // sanitized phone numbers.
-    final StringBuilder builder = new StringBuilder();
-    for (int i = 0; i < value.length(); i++) {
-      final char c = value.charAt(i);
-      if (c == '-' || c == '@' || c == '.') {
-        builder.append(c);
-      } else {
-        builder.append('x');
-      }
+    /**
+     * Returns the given string if it is nonempty; {@code null} otherwise.
+     *
+     * @param string the string to test and possibly return
+     * @return {@code string} itself if it is nonempty; {@code null} if it is empty or null
+     */
+    @Nullable
+    public static String emptyToNull(@Nullable String string) {
+        return TextUtils.isEmpty(string) ? null : string;
     }
-    return builder.toString();
-  }
+
+    public static String toSafeString(String value) {
+        if (value == null) {
+            return null;
+        }
+
+        // Do exactly same thing as Uri#toSafeString() does, which will enable us to compare
+        // sanitized phone numbers.
+        final StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < value.length(); i++) {
+            final char c = value.charAt(i);
+            if (c == '-' || c == '@' || c == '.') {
+                builder.append(c);
+            } else {
+                builder.append('x');
+            }
+        }
+        return builder.toString();
+    }
 }

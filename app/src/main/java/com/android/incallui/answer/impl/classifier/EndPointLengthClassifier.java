@@ -20,17 +20,17 @@ package com.android.incallui.answer.impl.classifier;
  * A classifier which looks at the distance between the first and the last point from the stroke.
  */
 class EndPointLengthClassifier extends StrokeClassifier {
-  public EndPointLengthClassifier(ClassifierData classifierData) {
-    this.classifierData = classifierData;
-  }
+    public EndPointLengthClassifier(ClassifierData classifierData) {
+        this.classifierData = classifierData;
+    }
 
-  @Override
-  public String getTag() {
-    return "END_LNGTH";
-  }
+    @Override
+    public String getTag() {
+        return "END_LNGTH";
+    }
 
-  @Override
-  public float getFalseTouchEvaluation(Stroke stroke) {
-    return EndPointLengthEvaluator.evaluate(stroke.getEndPointLength());
-  }
+    @Override
+    public float getFalseTouchEvaluation(Stroke stroke) {
+        return EndPointLengthEvaluator.evaluate(stroke.getEndPointLength());
+    }
 }

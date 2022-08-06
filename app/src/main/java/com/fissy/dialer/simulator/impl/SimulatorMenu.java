@@ -17,60 +17,64 @@
 package com.fissy.dialer.simulator.impl;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.view.ActionProvider;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
+
 import com.fissy.dialer.common.Assert;
+
 import java.util.Map.Entry;
 
-/** Makes option menu for simulator. */
+/**
+ * Makes option menu for simulator.
+ */
 public final class SimulatorMenu extends ActionProvider {
 
-  SimulatorPortalEntryGroup portal;
+    SimulatorPortalEntryGroup portal;
 
-  Context context;
+    Context context;
 
-  public SimulatorMenu(@NonNull Context context, SimulatorPortalEntryGroup portal) {
-    super(Assert.isNotNull(context));
-    this.context = context;
-    this.portal = portal;
-  }
-
-  @Override
-  public View onCreateActionView() {
-    return null;
-  }
-
-  @Override
-  public View onCreateActionView(MenuItem forItem) {
-    return null;
-  }
-
-  @Override
-  public boolean hasSubMenu() {
-    return true;
-  }
-
-  @Override
-  public void onPrepareSubMenu(SubMenu subMenu) {
-    super.onPrepareSubMenu(subMenu);
-    subMenu.clear();
-
-    for (Entry<String, SimulatorPortalEntryGroup> subPortal : portal.subPortals().entrySet()) {
-      subMenu
-          .add(subPortal.getKey())
-          .setActionProvider(new SimulatorMenu(context, subPortal.getValue()));
+    public SimulatorMenu(@NonNull Context context, SimulatorPortalEntryGroup portal) {
+        super(Assert.isNotNull(context));
+        this.context = context;
+        this.portal = portal;
     }
-    for (Entry<String, Runnable> method : portal.methods().entrySet()) {
-      subMenu
-          .add(method.getKey())
-          .setOnMenuItemClickListener(
-              (i) -> {
-                method.getValue().run();
-                return true;
-              });
+
+    @Override
+    public View onCreateActionView() {
+        return null;
     }
-  }
+
+    @Override
+    public View onCreateActionView(MenuItem forItem) {
+        return null;
+    }
+
+    @Override
+    public boolean hasSubMenu() {
+        return true;
+    }
+
+    @Override
+    public void onPrepareSubMenu(SubMenu subMenu) {
+        super.onPrepareSubMenu(subMenu);
+        subMenu.clear();
+
+        for (Entry<String, SimulatorPortalEntryGroup> subPortal : portal.subPortals().entrySet()) {
+            subMenu
+                    .add(subPortal.getKey())
+                    .setActionProvider(new SimulatorMenu(context, subPortal.getValue()));
+        }
+        for (Entry<String, Runnable> method : portal.methods().entrySet()) {
+            subMenu
+                    .add(method.getKey())
+                    .setOnMenuItemClickListener(
+                            (i) -> {
+                                method.getValue().run();
+                                return true;
+                            });
+        }
+    }
 }

@@ -17,22 +17,28 @@
 package com.fissy.dialer.glidephotomanager;
 
 import android.content.Context;
+
 import com.fissy.dialer.inject.HasRootComponent;
+
 import dagger.Subcomponent;
 
-/** Entry point for {@link GlidePhotoManager} */
+/**
+ * Entry point for {@link GlidePhotoManager}
+ */
 @Subcomponent
 public abstract class GlidePhotoManagerComponent {
 
-  public abstract GlidePhotoManager glidePhotoManager();
+    public static GlidePhotoManagerComponent get(Context context) {
+        return ((HasComponent) ((HasRootComponent) context.getApplicationContext()).component())
+                .glidePhotoManagerComponent();
+    }
 
-  public static GlidePhotoManagerComponent get(Context context) {
-    return ((HasComponent) ((HasRootComponent) context.getApplicationContext()).component())
-        .glidePhotoManagerComponent();
-  }
+    public abstract GlidePhotoManager glidePhotoManager();
 
-  /** Used to refer to the root application component. */
-  public interface HasComponent {
-    GlidePhotoManagerComponent glidePhotoManagerComponent();
-  }
+    /**
+     * Used to refer to the root application component.
+     */
+    public interface HasComponent {
+        GlidePhotoManagerComponent glidePhotoManagerComponent();
+    }
 }

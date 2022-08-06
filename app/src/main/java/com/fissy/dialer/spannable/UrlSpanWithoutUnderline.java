@@ -18,16 +18,18 @@ package com.fissy.dialer.spannable;
 import android.text.TextPaint;
 import android.text.style.URLSpan;
 
-/** Version of {@link URLSpan} which doesn't underline links. */
+/**
+ * Version of {@link URLSpan} which doesn't underline links.
+ */
 final class UrlSpanWithoutUnderline extends URLSpan {
 
-  UrlSpanWithoutUnderline(String url) {
-    super(url);
-  }
+    UrlSpanWithoutUnderline(String url) {
+        super(url);
+    }
 
-  @Override
-  public void updateDrawState(TextPaint ds) {
-    super.updateDrawState(ds);
-    ds.setUnderlineText(false);
-  }
+    @Override
+    public void updateDrawState(TextPaint ds) {
+        super.updateDrawState(ds);
+        ds.setUnderlineText(false);
+    }
 }

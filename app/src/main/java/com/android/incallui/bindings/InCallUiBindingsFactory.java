@@ -22,5 +22,5 @@ package com.android.incallui.bindings;
  */
 public interface InCallUiBindingsFactory {
 
-  InCallUiBindings newInCallUiBindings();
+    InCallUiBindings newInCallUiBindings();
 }

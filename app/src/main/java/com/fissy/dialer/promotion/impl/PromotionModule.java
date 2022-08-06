@@ -20,17 +20,20 @@ import com.fissy.dialer.inject.DialerVariant;
 import com.fissy.dialer.inject.InstallIn;
 import com.fissy.dialer.promotion.Promotion;
 import com.google.common.collect.ImmutableList;
+
 import dagger.Module;
 import dagger.Provides;
 
-/** Module for Promotion. */
+/**
+ * Module for Promotion.
+ */
 @InstallIn(variants = {DialerVariant.DIALER_TEST})
 @Module
 public abstract class PromotionModule {
 
-  @Provides
-  static ImmutableList<Promotion> providePriorityPromotionList(
-      RttPromotion rttPromotion, DuoPromotion duoPromotion) {
-    return ImmutableList.of(rttPromotion, duoPromotion);
-  }
+    @Provides
+    static ImmutableList<Promotion> providePriorityPromotionList(
+            RttPromotion rttPromotion, DuoPromotion duoPromotion) {
+        return ImmutableList.of(rttPromotion, duoPromotion);
+    }
 }

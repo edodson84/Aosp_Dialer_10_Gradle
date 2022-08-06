@@ -27,69 +27,77 @@ import com.fissy.dialer.R;
 import com.fissy.dialer.phonenumberutil.PhoneNumberHelper;
 import com.google.common.base.Optional;
 
-/** Helper for formatting and managing the display of phone numbers. */
+/**
+ * Helper for formatting and managing the display of phone numbers.
+ */
 public class PhoneNumberDisplayUtil {
 
-  /** Returns the string to display for the given phone number if there is no matching contact. */
-  public static CharSequence getDisplayName(
-      Context context, CharSequence number, int presentation, boolean isVoicemail) {
-    Optional<String> presentationString = getNameForPresentation(context, presentation);
-    if (presentationString.isPresent()) {
-      return presentationString.get();
-    }
-    if (isVoicemail) {
-      return context.getResources().getString(R.string.voicemail_string);
-    }
-    if (PhoneNumberHelper.isLegacyUnknownNumbers(number)) {
-      return context.getResources().getString(R.string.unknown);
-    }
-    return "";
-  }
-
-  /** Returns the string associated with the given presentation. */
-  public static Optional<String> getNameForPresentation(Context appContext, int presentation) {
-    if (presentation == Calls.PRESENTATION_UNKNOWN) {
-      return Optional.of(appContext.getResources().getString(R.string.unknown));
-    }
-    if (presentation == Calls.PRESENTATION_RESTRICTED) {
-      return Optional.of(PhoneNumberHelper.getDisplayNameForRestrictedNumber(appContext));
-    }
-    if (presentation == Calls.PRESENTATION_PAYPHONE) {
-      return Optional.of(appContext.getResources().getString(R.string.payphone));
-    }
-    return Optional.absent();
-  }
-
-  /**
-   * Returns the string to display for the given phone number.
-   *
-   * @param number the number to display
-   * @param formattedNumber the formatted number if available, may be null
-   */
-  static CharSequence getDisplayNumber(
-      Context context,
-      CharSequence number,
-      int presentation,
-      CharSequence formattedNumber,
-      CharSequence postDialDigits,
-      boolean isVoicemail) {
-    final CharSequence displayName = getDisplayName(context, number, presentation, isVoicemail);
-    if (!TextUtils.isEmpty(displayName)) {
-      return getTtsSpannableLtrNumber(displayName);
+    /**
+     * Returns the string to display for the given phone number if there is no matching contact.
+     */
+    public static CharSequence getDisplayName(
+            Context context, CharSequence number, int presentation, boolean isVoicemail) {
+        Optional<String> presentationString = getNameForPresentation(context, presentation);
+        if (presentationString.isPresent()) {
+            return presentationString.get();
+        }
+        if (isVoicemail) {
+            return context.getResources().getString(R.string.voicemail_string);
+        }
+        if (PhoneNumberHelper.isLegacyUnknownNumbers(number)) {
+            return context.getResources().getString(R.string.unknown);
+        }
+        return "";
     }
 
-    if (!TextUtils.isEmpty(formattedNumber)) {
-      return getTtsSpannableLtrNumber(formattedNumber);
-    } else if (!TextUtils.isEmpty(number)) {
-      return getTtsSpannableLtrNumber(number.toString() + postDialDigits);
-    } else {
-      return context.getResources().getString(R.string.unknown);
+    /**
+     * Returns the string associated with the given presentation.
+     */
+    public static Optional<String> getNameForPresentation(Context appContext, int presentation) {
+        if (presentation == Calls.PRESENTATION_UNKNOWN) {
+            return Optional.of(appContext.getResources().getString(R.string.unknown));
+        }
+        if (presentation == Calls.PRESENTATION_RESTRICTED) {
+            return Optional.of(PhoneNumberHelper.getDisplayNameForRestrictedNumber(appContext));
+        }
+        if (presentation == Calls.PRESENTATION_PAYPHONE) {
+            return Optional.of(appContext.getResources().getString(R.string.payphone));
+        }
+        return Optional.absent();
     }
-  }
 
-  /** Returns number annotated as phone number in LTR direction. */
-  private static CharSequence getTtsSpannableLtrNumber(CharSequence number) {
-    return PhoneNumberUtils.createTtsSpannable(
-        BidiFormatter.getInstance().unicodeWrap(number.toString(), TextDirectionHeuristics.LTR));
-  }
+    /**
+     * Returns the string to display for the given phone number.
+     *
+     * @param number          the number to display
+     * @param formattedNumber the formatted number if available, may be null
+     */
+    static CharSequence getDisplayNumber(
+            Context context,
+            CharSequence number,
+            int presentation,
+            CharSequence formattedNumber,
+            CharSequence postDialDigits,
+            boolean isVoicemail) {
+        final CharSequence displayName = getDisplayName(context, number, presentation, isVoicemail);
+        if (!TextUtils.isEmpty(displayName)) {
+            return getTtsSpannableLtrNumber(displayName);
+        }
+
+        if (!TextUtils.isEmpty(formattedNumber)) {
+            return getTtsSpannableLtrNumber(formattedNumber);
+        } else if (!TextUtils.isEmpty(number)) {
+            return getTtsSpannableLtrNumber(number.toString() + postDialDigits);
+        } else {
+            return context.getResources().getString(R.string.unknown);
+        }
+    }
+
+    /**
+     * Returns number annotated as phone number in LTR direction.
+     */
+    private static CharSequence getTtsSpannableLtrNumber(CharSequence number) {
+        return PhoneNumberUtils.createTtsSpannable(
+                BidiFormatter.getInstance().unicodeWrap(number.toString(), TextDirectionHeuristics.LTR));
+    }
 }

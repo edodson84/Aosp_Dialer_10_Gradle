@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout android:layout_width="wrap_content" android:layout_height="48.0dip" android:layout_marginBottom="2.0dip" android:layout_marginStart="16.0dip" android:layout_marginEnd="16.0dip"
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <TextView android:layout_gravity="center_vertical" android:id="@id/header" android:layout_width="wrap_content" android:layout_height="wrap_content" style="@style/Dialer.TextAppearance.Secondary.Ellipsize" />
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="48.0dip"
+    android:layout_marginStart="16.0dip"
+    android:layout_marginEnd="16.0dip"
+    android:layout_marginBottom="2.0dip">
+
+    <TextView
+        android:id="@id/header"
+        style="@style/Dialer.TextAppearance.Secondary.Ellipsize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical" />
 </FrameLayout>

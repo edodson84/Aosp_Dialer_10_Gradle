@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.provider.VoicemailContract;
+
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.database.CallLogQueryHandler;
 import com.fissy.dialer.voicemail.listui.error.VoicemailStatusCorruptionHandler;
@@ -34,46 +35,46 @@ import com.fissy.dialer.voicemail.listui.error.VoicemailStatusCorruptionHandler.
  */
 public class CallLogReceiver extends BroadcastReceiver {
 
-  @Override
-  public void onReceive(Context context, Intent intent) {
-    if (VoicemailContract.ACTION_NEW_VOICEMAIL.equals(intent.getAction())) {
-      checkVoicemailStatus(context);
-      PendingResult pendingResult = goAsync();
-      VisualVoicemailUpdateTask.scheduleTask(context, pendingResult::finish);
-    } else if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
-      PendingResult pendingResult = goAsync();
-      VisualVoicemailUpdateTask.scheduleTask(context, pendingResult::finish);
-    } else {
-      LogUtil.w("CallLogReceiver.onReceive", "could not handle: " + intent);
+    private static void checkVoicemailStatus(Context context) {
+        new CallLogQueryHandler(
+                context,
+                context.getContentResolver(),
+                new CallLogQueryHandler.Listener() {
+                    @Override
+                    public void onVoicemailStatusFetched(Cursor statusCursor) {
+                        VoicemailStatusCorruptionHandler.maybeFixVoicemailStatus(
+                                context, statusCursor, Source.Notification);
+                    }
+
+                    @Override
+                    public void onVoicemailUnreadCountFetched(Cursor cursor) {
+                        // Do nothing
+                    }
+
+                    @Override
+                    public void onMissedCallsUnreadCountFetched(Cursor cursor) {
+                        // Do nothing
+                    }
+
+                    @Override
+                    public boolean onCallsFetched(Cursor combinedCursor) {
+                        return false;
+                    }
+                })
+                .fetchVoicemailStatus();
     }
-  }
 
-  private static void checkVoicemailStatus(Context context) {
-    new CallLogQueryHandler(
-            context,
-            context.getContentResolver(),
-            new CallLogQueryHandler.Listener() {
-              @Override
-              public void onVoicemailStatusFetched(Cursor statusCursor) {
-                VoicemailStatusCorruptionHandler.maybeFixVoicemailStatus(
-                    context, statusCursor, Source.Notification);
-              }
-
-              @Override
-              public void onVoicemailUnreadCountFetched(Cursor cursor) {
-                // Do nothing
-              }
-
-              @Override
-              public void onMissedCallsUnreadCountFetched(Cursor cursor) {
-                // Do nothing
-              }
-
-              @Override
-              public boolean onCallsFetched(Cursor combinedCursor) {
-                return false;
-              }
-            })
-        .fetchVoicemailStatus();
-  }
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        if (VoicemailContract.ACTION_NEW_VOICEMAIL.equals(intent.getAction())) {
+            checkVoicemailStatus(context);
+            PendingResult pendingResult = goAsync();
+            VisualVoicemailUpdateTask.scheduleTask(context, pendingResult::finish);
+        } else if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
+            PendingResult pendingResult = goAsync();
+            VisualVoicemailUpdateTask.scheduleTask(context, pendingResult::finish);
+        } else {
+            LogUtil.w("CallLogReceiver.onReceive", "could not handle: " + intent);
+        }
+    }
 }

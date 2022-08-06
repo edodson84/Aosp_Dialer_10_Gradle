@@ -18,8 +18,10 @@ package com.android.incallui.call;
 
 import android.telecom.Call;
 
-/** Callback from the call module to the container. */
+/**
+ * Callback from the call module to the container.
+ */
 public interface DialerCallDelegate {
 
-  DialerCall getDialerCallFromTelecomCall(Call telecomCall);
+    DialerCall getDialerCallFromTelecomCall(Call telecomCall);
 }

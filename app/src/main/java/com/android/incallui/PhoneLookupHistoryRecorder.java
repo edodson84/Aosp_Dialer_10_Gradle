@@ -17,8 +17,9 @@ package com.android.incallui;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.telecom.Call;
+
 import com.fissy.dialer.calllog.config.CallLogConfigComponent;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
@@ -38,49 +39,49 @@ import com.google.common.util.concurrent.ListenableFuture;
  */
 final class PhoneLookupHistoryRecorder {
 
-  /**
-   * If the call log framework is enabled, fetches the current {@link PhoneLookupInfo} for the
-   * provided call and writes it to the PhoneLookupHistory. Otherwise does nothing.
-   */
-  static void recordPhoneLookupInfo(Context appContext, Call call) {
-    if (!CallLogConfigComponent.get(appContext).callLogConfig().isCallLogFrameworkEnabled()) {
-      return;
+    /**
+     * If the call log framework is enabled, fetches the current {@link PhoneLookupInfo} for the
+     * provided call and writes it to the PhoneLookupHistory. Otherwise does nothing.
+     */
+    static void recordPhoneLookupInfo(Context appContext, Call call) {
+        if (!CallLogConfigComponent.get(appContext).callLogConfig().isCallLogFrameworkEnabled()) {
+            return;
+        }
+
+        ListenableFuture<PhoneLookupInfo> infoFuture =
+                PhoneLookupComponent.get(appContext).compositePhoneLookup().lookup(call);
+
+        Futures.addCallback(
+                infoFuture,
+                new FutureCallback<PhoneLookupInfo>() {
+                    @Override
+                    public void onSuccess(@Nullable PhoneLookupInfo result) {
+                        Assert.checkArgument(result != null);
+                        Optional<String> normalizedNumber =
+                                TelecomCallUtil.getNormalizedNumber(appContext, call);
+                        if (!normalizedNumber.isPresent()) {
+                            LogUtil.w("PhoneLookupHistoryRecorder.onSuccess", "couldn't get a number");
+                            return;
+                        }
+                        ContentValues contentValues = new ContentValues();
+                        contentValues.put(PhoneLookupHistory.PHONE_LOOKUP_INFO, result.toByteArray());
+                        contentValues.put(PhoneLookupHistory.LAST_MODIFIED, System.currentTimeMillis());
+                        appContext
+                                .getContentResolver()
+                                .update(
+                                        PhoneLookupHistory.contentUriForNumber(normalizedNumber.get()),
+                                        contentValues,
+                                        null,
+                                        null);
+                    }
+
+                    @Override
+                    public void onFailure(Throwable t) {
+                        // TODO(zachh): Consider how to best handle this; take measures to repair call log?
+                        LogUtil.w(
+                                "PhoneLookupHistoryRecorder.onFailure", "could not write PhoneLookupHistory", t);
+                    }
+                },
+                DialerExecutorComponent.get(appContext).backgroundExecutor());
     }
-
-    ListenableFuture<PhoneLookupInfo> infoFuture =
-        PhoneLookupComponent.get(appContext).compositePhoneLookup().lookup(call);
-
-    Futures.addCallback(
-        infoFuture,
-        new FutureCallback<PhoneLookupInfo>() {
-          @Override
-          public void onSuccess(@Nullable PhoneLookupInfo result) {
-            Assert.checkArgument(result != null);
-            Optional<String> normalizedNumber =
-                TelecomCallUtil.getNormalizedNumber(appContext, call);
-            if (!normalizedNumber.isPresent()) {
-              LogUtil.w("PhoneLookupHistoryRecorder.onSuccess", "couldn't get a number");
-              return;
-            }
-            ContentValues contentValues = new ContentValues();
-            contentValues.put(PhoneLookupHistory.PHONE_LOOKUP_INFO, result.toByteArray());
-            contentValues.put(PhoneLookupHistory.LAST_MODIFIED, System.currentTimeMillis());
-            appContext
-                .getContentResolver()
-                .update(
-                    PhoneLookupHistory.contentUriForNumber(normalizedNumber.get()),
-                    contentValues,
-                    null,
-                    null);
-          }
-
-          @Override
-          public void onFailure(Throwable t) {
-            // TODO(zachh): Consider how to best handle this; take measures to repair call log?
-            LogUtil.w(
-                "PhoneLookupHistoryRecorder.onFailure", "could not write PhoneLookupHistory", t);
-          }
-        },
-        DialerExecutorComponent.get(appContext).backgroundExecutor());
-  }
 }

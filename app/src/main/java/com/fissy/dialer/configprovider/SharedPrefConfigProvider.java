@@ -20,12 +20,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
+
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.storage.StorageComponent;
 import com.fissy.dialer.storage.Unencrypted;
 import com.fissy.dialer.strictmode.StrictModeUtils;
+
 import javax.inject.Inject;
 
 /**
@@ -50,83 +52,87 @@ import javax.inject.Inject;
  * </pre>
  */
 public class SharedPrefConfigProvider implements ConfigProvider {
-  private static final String PREF_PREFIX = "config_provider_prefs_";
+    private static final String PREF_PREFIX = "config_provider_prefs_";
 
-  private final SharedPreferences sharedPreferences;
+    private final SharedPreferences sharedPreferences;
 
-  @Inject
-  SharedPrefConfigProvider(@Unencrypted SharedPreferences sharedPreferences) {
-    this.sharedPreferences = sharedPreferences;
-  }
+    @Inject
+    SharedPrefConfigProvider(@Unencrypted SharedPreferences sharedPreferences) {
+        this.sharedPreferences = sharedPreferences;
+    }
 
-  /** Service to write values into {@link SharedPrefConfigProvider} using adb. */
-  public static class Service extends IntentService {
+    private static SharedPreferences getSharedPrefs(Context appContext) {
+        return StorageComponent.get(appContext).unencryptedSharedPrefs();
+    }
 
-    public Service() {
-      super("SharedPrefConfigProvider.Service");
+    /**
+     * Set a boolean config value.
+     */
+    public void putBoolean(String key, boolean value) {
+        sharedPreferences.edit().putBoolean(PREF_PREFIX + key, value).apply();
+    }
+
+    public void putLong(String key, long value) {
+        sharedPreferences.edit().putLong(PREF_PREFIX + key, value).apply();
+    }
+
+    public void putString(String key, String value) {
+        sharedPreferences.edit().putString(PREF_PREFIX + key, value).apply();
     }
 
     @Override
-    protected void onHandleIntent(@Nullable Intent intent) {
-      if (intent == null || intent.getExtras() == null || intent.getExtras().size() != 1) {
-        LogUtil.w("SharedPrefConfigProvider.Service.onHandleIntent", "must set exactly one extra");
-        return;
-      }
-      String key = intent.getExtras().keySet().iterator().next();
-      Object value = intent.getExtras().get(key);
-      put(key, value);
+    public String getString(String key, String defaultValue) {
+        // Reading shared prefs on the main thread is generally safe since a single instance is cached.
+        return StrictModeUtils.bypass(
+                () -> sharedPreferences.getString(PREF_PREFIX + key, defaultValue));
     }
 
-    private void put(String key, Object value) {
-      Editor editor = getSharedPrefs(getApplicationContext()).edit();
-      String prefixedKey = PREF_PREFIX + key;
-      if (value instanceof Boolean) {
-        editor.putBoolean(prefixedKey, (Boolean) value);
-      } else if (value instanceof Long) {
-        editor.putLong(prefixedKey, (Long) value);
-      } else if (value instanceof String) {
-        editor.putString(prefixedKey, (String) value);
-      } else {
-        throw Assert.createAssertionFailException("unsupported extra type: " + value.getClass());
-      }
-      editor.apply();
+    @Override
+    public long getLong(String key, long defaultValue) {
+        // Reading shared prefs on the main thread is generally safe since a single instance is cached.
+        return StrictModeUtils.bypass(() -> sharedPreferences.getLong(PREF_PREFIX + key, defaultValue));
     }
-  }
 
-  /** Set a boolean config value. */
-  public void putBoolean(String key, boolean value) {
-    sharedPreferences.edit().putBoolean(PREF_PREFIX + key, value).apply();
-  }
+    @Override
+    public boolean getBoolean(String key, boolean defaultValue) {
+        // Reading shared prefs on the main thread is generally safe since a single instance is cached.
+        return StrictModeUtils.bypass(
+                () -> sharedPreferences.getBoolean(PREF_PREFIX + key, defaultValue));
+    }
 
-  public void putLong(String key, long value) {
-    sharedPreferences.edit().putLong(PREF_PREFIX + key, value).apply();
-  }
+    /**
+     * Service to write values into {@link SharedPrefConfigProvider} using adb.
+     */
+    public static class Service extends IntentService {
 
-  public void putString(String key, String value) {
-    sharedPreferences.edit().putString(PREF_PREFIX + key, value).apply();
-  }
+        public Service() {
+            super("SharedPrefConfigProvider.Service");
+        }
 
-  @Override
-  public String getString(String key, String defaultValue) {
-    // Reading shared prefs on the main thread is generally safe since a single instance is cached.
-    return StrictModeUtils.bypass(
-        () -> sharedPreferences.getString(PREF_PREFIX + key, defaultValue));
-  }
+        @Override
+        protected void onHandleIntent(@Nullable Intent intent) {
+            if (intent == null || intent.getExtras() == null || intent.getExtras().size() != 1) {
+                LogUtil.w("SharedPrefConfigProvider.Service.onHandleIntent", "must set exactly one extra");
+                return;
+            }
+            String key = intent.getExtras().keySet().iterator().next();
+            Object value = intent.getExtras().get(key);
+            put(key, value);
+        }
 
-  @Override
-  public long getLong(String key, long defaultValue) {
-    // Reading shared prefs on the main thread is generally safe since a single instance is cached.
-    return StrictModeUtils.bypass(() -> sharedPreferences.getLong(PREF_PREFIX + key, defaultValue));
-  }
-
-  @Override
-  public boolean getBoolean(String key, boolean defaultValue) {
-    // Reading shared prefs on the main thread is generally safe since a single instance is cached.
-    return StrictModeUtils.bypass(
-        () -> sharedPreferences.getBoolean(PREF_PREFIX + key, defaultValue));
-  }
-
-  private static SharedPreferences getSharedPrefs(Context appContext) {
-    return StorageComponent.get(appContext).unencryptedSharedPrefs();
-  }
+        private void put(String key, Object value) {
+            Editor editor = getSharedPrefs(getApplicationContext()).edit();
+            String prefixedKey = PREF_PREFIX + key;
+            if (value instanceof Boolean) {
+                editor.putBoolean(prefixedKey, (Boolean) value);
+            } else if (value instanceof Long) {
+                editor.putLong(prefixedKey, (Long) value);
+            } else if (value instanceof String) {
+                editor.putString(prefixedKey, (String) value);
+            } else {
+                throw Assert.createAssertionFailException("unsupported extra type: " + value.getClass());
+            }
+            editor.apply();
+        }
+    }
 }

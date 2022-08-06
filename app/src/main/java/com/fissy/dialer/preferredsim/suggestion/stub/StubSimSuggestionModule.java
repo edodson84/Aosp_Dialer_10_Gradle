@@ -17,16 +17,20 @@
 package com.fissy.dialer.preferredsim.suggestion.stub;
 
 import com.fissy.dialer.preferredsim.suggestion.SuggestionProvider;
-import dagger.Binds;
-import dagger.Module;
+
 import javax.inject.Singleton;
 
-/** Stub module for {@link com.fissy.dialer.preferredsim.suggestion.SimSuggestionComponent} */
+import dagger.Binds;
+import dagger.Module;
+
+/**
+ * Stub module for {@link com.fissy.dialer.preferredsim.suggestion.SimSuggestionComponent}
+ */
 @Module
 public abstract class StubSimSuggestionModule {
 
-  @Binds
-  @Singleton
-  public abstract SuggestionProvider bindSuggestionProvider(
-      StubSuggestionProvider suggestionProvider);
+    @Binds
+    @Singleton
+    public abstract SuggestionProvider bindSuggestionProvider(
+            StubSuggestionProvider suggestionProvider);
 }

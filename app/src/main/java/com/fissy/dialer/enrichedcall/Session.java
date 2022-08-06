@@ -16,78 +16,94 @@
 
 package com.fissy.dialer.enrichedcall;
 
-import android.support.annotation.IntDef;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.IntDef;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.fissy.dialer.multimedia.MultimediaData;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-/** Holds state information and data about enriched calling sessions. */
+/**
+ * Holds state information and data about enriched calling sessions.
+ */
 public interface Session {
 
-  /** Possible states for call composer sessions. */
-  @Retention(RetentionPolicy.SOURCE)
-  @IntDef({
-    STATE_NONE,
-    STATE_STARTING,
-    STATE_STARTED,
-    STATE_START_FAILED,
-    STATE_MESSAGE_SENT,
-    STATE_MESSAGE_FAILED,
-    STATE_CLOSED,
-  })
-  @interface State {}
+    int STATE_NONE = 0;
+    int STATE_STARTING = STATE_NONE + 1;
+    int STATE_STARTED = STATE_STARTING + 1;
+    int STATE_START_FAILED = STATE_STARTED + 1;
+    int STATE_MESSAGE_SENT = STATE_START_FAILED + 1;
+    int STATE_MESSAGE_FAILED = STATE_MESSAGE_SENT + 1;
+    int STATE_CLOSED = STATE_MESSAGE_FAILED + 1;
+    /**
+     * Id used for sessions that fail to start.
+     */
+    long NO_SESSION_ID = -1;
+    /**
+     * An id for the specific case when sending a message fails so early that a message id isn't
+     * created.
+     */
+    String MESSAGE_ID_COULD_NOT_CREATE_ID = "messageIdCouldNotCreateId";
 
-  int STATE_NONE = 0;
-  int STATE_STARTING = STATE_NONE + 1;
-  int STATE_STARTED = STATE_STARTING + 1;
-  int STATE_START_FAILED = STATE_STARTED + 1;
-  int STATE_MESSAGE_SENT = STATE_START_FAILED + 1;
-  int STATE_MESSAGE_FAILED = STATE_MESSAGE_SENT + 1;
-  int STATE_CLOSED = STATE_MESSAGE_FAILED + 1;
+    /**
+     * Returns the id associated with this session, or {@link #NO_SESSION_ID} if this represents a
+     * session that failed to start.
+     */
+    long getSessionId();
 
-  /** Id used for sessions that fail to start. */
-  long NO_SESSION_ID = -1;
+    /**
+     * Returns the id of the dialer call associated with this session, or null if there isn't one.
+     */
+    @Nullable
+    String getUniqueDialerCallId();
 
-  /**
-   * An id for the specific case when sending a message fails so early that a message id isn't
-   * created.
-   */
-  String MESSAGE_ID_COULD_NOT_CREATE_ID = "messageIdCouldNotCreateId";
+    void setUniqueDialerCallId(@NonNull String id);
 
-  /**
-   * Returns the id associated with this session, or {@link #NO_SESSION_ID} if this represents a
-   * session that failed to start.
-   */
-  long getSessionId();
+    /**
+     * Returns the number associated with the remote end of this session.
+     */
+    @NonNull
+    String getRemoteNumber();
 
-  /** Returns the id of the dialer call associated with this session, or null if there isn't one. */
-  @Nullable
-  String getUniqueDialerCallId();
+    /**
+     * Returns the {@link State} for this session.
+     */
+    @State
+    int getState();
 
-  void setUniqueDialerCallId(@NonNull String id);
+    /**
+     * Returns the {@link MultimediaData} associated with this session.
+     */
+    @NonNull
+    MultimediaData getMultimediaData();
 
-  /** Returns the number associated with the remote end of this session. */
-  @NonNull
-  String getRemoteNumber();
+    /**
+     * Returns type of this session, based on some arbitrarily defined type.
+     */
+    int getType();
 
-  /** Returns the {@link State} for this session. */
-  @State
-  int getState();
+    /**
+     * Sets the {@link MultimediaData} for this session.
+     *
+     * @throws IllegalArgumentException if the type is invalid
+     */
+    void setSessionData(@NonNull MultimediaData multimediaData, int type);
 
-  /** Returns the {@link MultimediaData} associated with this session. */
-  @NonNull
-  MultimediaData getMultimediaData();
-
-  /** Returns type of this session, based on some arbitrarily defined type. */
-  int getType();
-
-  /**
-   * Sets the {@link MultimediaData} for this session.
-   *
-   *
-   * @throws IllegalArgumentException if the type is invalid
-   */
-  void setSessionData(@NonNull MultimediaData multimediaData, int type);
+    /**
+     * Possible states for call composer sessions.
+     */
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({
+            STATE_NONE,
+            STATE_STARTING,
+            STATE_STARTED,
+            STATE_START_FAILED,
+            STATE_MESSAGE_SENT,
+            STATE_MESSAGE_FAILED,
+            STATE_CLOSED,
+    })
+    @interface State {
+    }
 }

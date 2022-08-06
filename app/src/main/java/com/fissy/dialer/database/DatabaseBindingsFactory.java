@@ -22,5 +22,5 @@ package com.fissy.dialer.database;
  */
 public interface DatabaseBindingsFactory {
 
-  DatabaseBindings newDatabaseBindings();
+    DatabaseBindings newDatabaseBindings();
 }

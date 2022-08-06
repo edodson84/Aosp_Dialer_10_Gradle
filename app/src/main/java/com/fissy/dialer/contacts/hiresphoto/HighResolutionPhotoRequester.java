@@ -17,6 +17,7 @@
 package com.fissy.dialer.contacts.hiresphoto;
 
 import android.net.Uri;
+
 import com.google.common.util.concurrent.ListenableFuture;
 
 /**
@@ -26,5 +27,5 @@ import com.google.common.util.concurrent.ListenableFuture;
  */
 public interface HighResolutionPhotoRequester {
 
-  ListenableFuture<Void> request(Uri contactUri);
+    ListenableFuture<Void> request(Uri contactUri);
 }

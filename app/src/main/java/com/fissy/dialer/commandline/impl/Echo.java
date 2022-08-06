@@ -16,36 +16,41 @@
 
 package com.fissy.dialer.commandline.impl;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.VisibleForTesting;
+import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
 import android.text.TextUtils;
+
 import com.fissy.dialer.commandline.Arguments;
 import com.fissy.dialer.commandline.Command;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
+
 import javax.inject.Inject;
 
-/** Print arguments. */
+/**
+ * Print arguments.
+ */
 public class Echo implements Command {
 
-  @NonNull
-  @Override
-  public String getShortDescription() {
-    return "@hide Print all arguments.";
-  }
+    @VisibleForTesting
+    @Inject
+    public Echo() {
+    }
 
-  @NonNull
-  @Override
-  public String getUsage() {
-    return "echo [arguments...]";
-  }
+    @NonNull
+    @Override
+    public String getShortDescription() {
+        return "@hide Print all arguments.";
+    }
 
-  @VisibleForTesting
-  @Inject
-  public Echo() {}
+    @NonNull
+    @Override
+    public String getUsage() {
+        return "echo [arguments...]";
+    }
 
-  @Override
-  public ListenableFuture<String> run(Arguments args) throws IllegalCommandLineArgumentException {
-    return Futures.immediateFuture(TextUtils.join(" ", args.getPositionals()));
-  }
+    @Override
+    public ListenableFuture<String> run(Arguments args) throws IllegalCommandLineArgumentException {
+        return Futures.immediateFuture(TextUtils.join(" ", args.getPositionals()));
+    }
 }

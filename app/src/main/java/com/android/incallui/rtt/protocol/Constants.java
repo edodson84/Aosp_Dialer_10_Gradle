@@ -16,9 +16,13 @@
 
 package com.android.incallui.rtt.protocol;
 
-/** Constants for RTT call. */
+/**
+ * Constants for RTT call.
+ */
 public interface Constants {
 
-  /** String used to break bubble, which means one RTT message is complete. */
-  String BUBBLE_BREAKER = "\n";
+    /**
+     * String used to break bubble, which means one RTT message is complete.
+     */
+    String BUBBLE_BREAKER = "\n";
 }

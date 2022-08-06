@@ -20,52 +20,54 @@ import android.content.Context;
 import android.os.Bundle;
 import android.telecom.CallAudioState;
 
-/** Callbacks from the module out to the container. */
+/**
+ * Callbacks from the module out to the container.
+ */
 public interface InCallButtonUiDelegate {
 
-  void onInCallButtonUiReady(InCallButtonUi inCallButtonUi);
+    void onInCallButtonUiReady(InCallButtonUi inCallButtonUi);
 
-  void onInCallButtonUiUnready();
+    void onInCallButtonUiUnready();
 
-  void onSaveInstanceState(Bundle outState);
+    void onSaveInstanceState(Bundle outState);
 
-  void onRestoreInstanceState(Bundle savedInstanceState);
+    void onRestoreInstanceState(Bundle savedInstanceState);
 
-  void refreshMuteState();
+    void refreshMuteState();
 
-  void addCallClicked();
+    void addCallClicked();
 
-  void muteClicked(boolean checked, boolean clickedByUser);
+    void muteClicked(boolean checked, boolean clickedByUser);
 
-  void mergeClicked();
+    void mergeClicked();
 
-  void holdClicked(boolean checked);
+    void holdClicked(boolean checked);
 
-  void swapClicked();
+    void swapClicked();
 
-  void showDialpadClicked(boolean checked);
+    void showDialpadClicked(boolean checked);
 
-  void changeToVideoClicked();
+    void changeToVideoClicked();
 
-  void changeToRttClicked();
+    void changeToRttClicked();
 
-  void switchCameraClicked(boolean useFrontFacingCamera);
+    void switchCameraClicked(boolean useFrontFacingCamera);
 
-  void toggleCameraClicked();
+    void toggleCameraClicked();
 
-  void pauseVideoClicked(boolean pause);
+    void pauseVideoClicked(boolean pause);
 
-  void toggleSpeakerphone();
+    void toggleSpeakerphone();
 
-  CallAudioState getCurrentAudioState();
+    CallAudioState getCurrentAudioState();
 
-  void setAudioRoute(int route);
+    void setAudioRoute(int route);
 
-  void onEndCallClicked();
+    void onEndCallClicked();
 
-  void showAudioRouteSelector();
+    void showAudioRouteSelector();
 
-  void swapSimClicked();
+    void swapSimClicked();
 
-  Context getContext();
+    Context getContext();
 }

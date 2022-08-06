@@ -21,7 +21,8 @@ import android.content.Context;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.provider.CallLog.Calls;
-import android.support.annotation.RequiresPermission;
+import androidx.annotation.RequiresPermission;
+
 import com.fissy.dialer.common.concurrent.DialerExecutorComponent;
 import com.fissy.dialer.common.concurrent.UiListener;
 import com.fissy.dialer.main.impl.bottomnav.BottomNavBar.TabIndex;
@@ -33,50 +34,50 @@ import com.google.common.util.concurrent.ListenableFuture;
  * <p>Used only when the new call log fragment is enabled.
  */
 public final class MissedCallCountObserver extends ContentObserver {
-  private final Context appContext;
-  private final BottomNavBar bottomNavBar;
-  private final UiListener<Integer> uiListener;
+    private final Context appContext;
+    private final BottomNavBar bottomNavBar;
+    private final UiListener<Integer> uiListener;
 
-  public MissedCallCountObserver(
-      Context appContext, BottomNavBar bottomNavBar, UiListener<Integer> uiListener) {
-    super(null);
-    this.appContext = appContext;
-    this.bottomNavBar = bottomNavBar;
-    this.uiListener = uiListener;
-  }
+    public MissedCallCountObserver(
+            Context appContext, BottomNavBar bottomNavBar, UiListener<Integer> uiListener) {
+        super(null);
+        this.appContext = appContext;
+        this.bottomNavBar = bottomNavBar;
+        this.uiListener = uiListener;
+    }
 
-  @RequiresPermission(Manifest.permission.READ_CALL_LOG)
-  @Override
-  public void onChange(boolean selfChange) {
-    ListenableFuture<Integer> countFuture =
-        DialerExecutorComponent.get(appContext)
-            .backgroundExecutor()
-            .submit(
-                () -> {
-                  try (Cursor cursor =
-                      appContext
-                          .getContentResolver()
-                          .query(
-                              Calls.CONTENT_URI,
-                              new String[] {Calls._ID},
-                              "("
-                                  + Calls.IS_READ
-                                  + " = ? OR "
-                                  + Calls.IS_READ
-                                  + " IS NULL) AND "
-                                  + Calls.TYPE
-                                  + " = ?",
-                              new String[] {"0", Integer.toString(Calls.MISSED_TYPE)},
-                              /* sortOrder= */ null)) {
-                    return cursor == null ? 0 : cursor.getCount();
-                  }
+    @RequiresPermission(Manifest.permission.READ_CALL_LOG)
+    @Override
+    public void onChange(boolean selfChange) {
+        ListenableFuture<Integer> countFuture =
+                DialerExecutorComponent.get(appContext)
+                        .backgroundExecutor()
+                        .submit(
+                                () -> {
+                                    try (Cursor cursor =
+                                                 appContext
+                                                         .getContentResolver()
+                                                         .query(
+                                                                 Calls.CONTENT_URI,
+                                                                 new String[]{Calls._ID},
+                                                                 "("
+                                                                         + Calls.IS_READ
+                                                                         + " = ? OR "
+                                                                         + Calls.IS_READ
+                                                                         + " IS NULL) AND "
+                                                                         + Calls.TYPE
+                                                                         + " = ?",
+                                                                 new String[]{"0", Integer.toString(Calls.MISSED_TYPE)},
+                                                                 /* sortOrder= */ null)) {
+                                        return cursor == null ? 0 : cursor.getCount();
+                                    }
+                                });
+        uiListener.listen(
+                appContext,
+                countFuture,
+                count -> bottomNavBar.setNotificationCount(TabIndex.CALL_LOG, count == null ? 0 : count),
+                throwable -> {
+                    throw new RuntimeException(throwable);
                 });
-    uiListener.listen(
-        appContext,
-        countFuture,
-        count -> bottomNavBar.setNotificationCount(TabIndex.CALL_LOG, count == null ? 0 : count),
-        throwable -> {
-          throw new RuntimeException(throwable);
-        });
-  }
+    }
 }

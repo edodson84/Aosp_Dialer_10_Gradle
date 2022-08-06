@@ -16,8 +16,10 @@
 
 package com.fissy.dialer.oem;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
+
 import com.fissy.dialer.common.LogUtil;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -26,39 +28,40 @@ import java.lang.reflect.Method;
  * ro.carrier and some other values.
  */
 class SystemPropertiesAccessor {
-  private Method systemPropertiesGetMethod;
+    private Method systemPropertiesGetMethod;
 
-  @SuppressWarnings("PrivateApi")
-  public String get(String name) {
-    Method systemPropertiesGetMethod = getSystemPropertiesGetMethod();
-    if (systemPropertiesGetMethod == null) {
-      return null;
+    @SuppressWarnings("PrivateApi")
+    public String get(String name) {
+        Method systemPropertiesGetMethod = getSystemPropertiesGetMethod();
+        if (systemPropertiesGetMethod == null) {
+            return null;
+        }
+
+        try {
+            return (String) systemPropertiesGetMethod.invoke(null, name);
+        } catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
+            LogUtil.e("SystemPropertiesAccessor.get", "unable to invoke system method", e);
+            return null;
+        }
     }
 
-    try {
-      return (String) systemPropertiesGetMethod.invoke(null, name);
-    } catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
-      LogUtil.e("SystemPropertiesAccessor.get", "unable to invoke system method", e);
-      return null;
-    }
-  }
+    @SuppressWarnings("PrivateApi")
+    private @Nullable
+    Method getSystemPropertiesGetMethod() {
+        if (systemPropertiesGetMethod != null) {
+            return systemPropertiesGetMethod;
+        }
 
-  @SuppressWarnings("PrivateApi")
-  private @Nullable Method getSystemPropertiesGetMethod() {
-    if (systemPropertiesGetMethod != null) {
-      return systemPropertiesGetMethod;
+        try {
+            Class<?> systemPropertiesClass = Class.forName("android.os.SystemProperties");
+            if (systemPropertiesClass == null) {
+                return null;
+            }
+            systemPropertiesGetMethod = systemPropertiesClass.getMethod("get", String.class);
+            return systemPropertiesGetMethod;
+        } catch (ClassNotFoundException | NoSuchMethodException e) {
+            LogUtil.e("SystemPropertiesAccessor.get", "unable to access system class", e);
+            return null;
+        }
     }
-
-    try {
-      Class<?> systemPropertiesClass = Class.forName("android.os.SystemProperties");
-      if (systemPropertiesClass == null) {
-        return null;
-      }
-      systemPropertiesGetMethod = systemPropertiesClass.getMethod("get", String.class);
-      return systemPropertiesGetMethod;
-    } catch (ClassNotFoundException | NoSuchMethodException e) {
-      LogUtil.e("SystemPropertiesAccessor.get", "unable to access system class", e);
-      return null;
-    }
-  }
 }

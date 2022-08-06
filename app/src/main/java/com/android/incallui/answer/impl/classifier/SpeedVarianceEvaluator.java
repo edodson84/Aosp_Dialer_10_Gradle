@@ -17,20 +17,20 @@
 package com.android.incallui.answer.impl.classifier;
 
 class SpeedVarianceEvaluator {
-  public static float evaluate(float value) {
-    float evaluation = 0.0f;
-    if (value > 0.06) {
-      evaluation++;
+    public static float evaluate(float value) {
+        float evaluation = 0.0f;
+        if (value > 0.06) {
+            evaluation++;
+        }
+        if (value > 0.15) {
+            evaluation++;
+        }
+        if (value > 0.3) {
+            evaluation++;
+        }
+        if (value > 0.6) {
+            evaluation++;
+        }
+        return evaluation;
     }
-    if (value > 0.15) {
-      evaluation++;
-    }
-    if (value > 0.3) {
-      evaluation++;
-    }
-    if (value > 0.6) {
-      evaluation++;
-    }
-    return evaluation;
-  }
 }

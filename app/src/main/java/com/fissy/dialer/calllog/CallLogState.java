@@ -17,60 +17,64 @@
 package com.fissy.dialer.calllog;
 
 import android.content.SharedPreferences;
-import android.support.annotation.AnyThread;
-import android.support.annotation.VisibleForTesting;
+import androidx.annotation.AnyThread;
+import androidx.annotation.VisibleForTesting;
+
 import com.fissy.dialer.common.concurrent.Annotations.BackgroundExecutor;
 import com.fissy.dialer.storage.Unencrypted;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListeningExecutorService;
+
 import javax.annotation.concurrent.ThreadSafe;
 import javax.inject.Inject;
 
-/** Provides information about the state of the annotated call log. */
+/**
+ * Provides information about the state of the annotated call log.
+ */
 @ThreadSafe
 public final class CallLogState {
 
-  private static final String ANNOTATED_CALL_LOG_BUILT_PREF = "annotated_call_log_built";
+    private static final String ANNOTATED_CALL_LOG_BUILT_PREF = "annotated_call_log_built";
 
-  private final SharedPreferences sharedPreferences;
-  private final ListeningExecutorService backgroundExecutor;
+    private final SharedPreferences sharedPreferences;
+    private final ListeningExecutorService backgroundExecutor;
 
-  @VisibleForTesting
-  @Inject
-  public CallLogState(
-      @Unencrypted SharedPreferences sharedPreferences,
-      @BackgroundExecutor ListeningExecutorService backgroundExecutor) {
-    this.sharedPreferences = sharedPreferences;
-    this.backgroundExecutor = backgroundExecutor;
-  }
+    @VisibleForTesting
+    @Inject
+    public CallLogState(
+            @Unencrypted SharedPreferences sharedPreferences,
+            @BackgroundExecutor ListeningExecutorService backgroundExecutor) {
+        this.sharedPreferences = sharedPreferences;
+        this.backgroundExecutor = backgroundExecutor;
+    }
 
-  /**
-   * Mark the call log as having been built. This is written to disk the first time the annotated
-   * call log has been built and shouldn't ever be reset unless the user clears data.
-   */
-  @AnyThread
-  public void markBuilt() {
-    sharedPreferences.edit().putBoolean(ANNOTATED_CALL_LOG_BUILT_PREF, true).apply();
-  }
+    /**
+     * Mark the call log as having been built. This is written to disk the first time the annotated
+     * call log has been built and shouldn't ever be reset unless the user clears data.
+     */
+    @AnyThread
+    public void markBuilt() {
+        sharedPreferences.edit().putBoolean(ANNOTATED_CALL_LOG_BUILT_PREF, true).apply();
+    }
 
-  /**
-   * Clear the call log state. This is useful for example if the annotated call log needs to be
-   * disabled because there was a problem.
-   */
-  @AnyThread
-  public void clearData() {
-    sharedPreferences.edit().remove(ANNOTATED_CALL_LOG_BUILT_PREF).apply();
-  }
+    /**
+     * Clear the call log state. This is useful for example if the annotated call log needs to be
+     * disabled because there was a problem.
+     */
+    @AnyThread
+    public void clearData() {
+        sharedPreferences.edit().remove(ANNOTATED_CALL_LOG_BUILT_PREF).apply();
+    }
 
-  /**
-   * Returns true if the annotated call log has been built at least once.
-   *
-   * <p>It may not yet have been built if the user was just upgraded to the new call log, or they
-   * just cleared data.
-   */
-  @AnyThread
-  public ListenableFuture<Boolean> isBuilt() {
-    return backgroundExecutor.submit(
-        () -> sharedPreferences.getBoolean(ANNOTATED_CALL_LOG_BUILT_PREF, false));
-  }
+    /**
+     * Returns true if the annotated call log has been built at least once.
+     *
+     * <p>It may not yet have been built if the user was just upgraded to the new call log, or they
+     * just cleared data.
+     */
+    @AnyThread
+    public ListenableFuture<Boolean> isBuilt() {
+        return backgroundExecutor.submit(
+                () -> sharedPreferences.getBoolean(ANNOTATED_CALL_LOG_BUILT_PREF, false));
+    }
 }

@@ -21,23 +21,23 @@ package com.android.incallui.answer.impl.classifier;
  * distance between the first and last point from this stroke.
  */
 class EndPointRatioClassifier extends StrokeClassifier {
-  public EndPointRatioClassifier(ClassifierData classifierData) {
-    this.classifierData = classifierData;
-  }
-
-  @Override
-  public String getTag() {
-    return "END_RTIO";
-  }
-
-  @Override
-  public float getFalseTouchEvaluation(Stroke stroke) {
-    float ratio;
-    if (stroke.getTotalLength() == 0.0f) {
-      ratio = 1.0f;
-    } else {
-      ratio = stroke.getEndPointLength() / stroke.getTotalLength();
+    public EndPointRatioClassifier(ClassifierData classifierData) {
+        this.classifierData = classifierData;
     }
-    return EndPointRatioEvaluator.evaluate(ratio);
-  }
+
+    @Override
+    public String getTag() {
+        return "END_RTIO";
+    }
+
+    @Override
+    public float getFalseTouchEvaluation(Stroke stroke) {
+        float ratio;
+        if (stroke.getTotalLength() == 0.0f) {
+            ratio = 1.0f;
+        } else {
+            ratio = stroke.getEndPointLength() / stroke.getTotalLength();
+        }
+        return EndPointRatioEvaluator.evaluate(ratio);
+    }
 }

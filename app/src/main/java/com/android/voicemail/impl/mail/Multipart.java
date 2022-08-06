@@ -18,45 +18,45 @@ package com.android.voicemail.impl.mail;
 import java.util.ArrayList;
 
 public abstract class Multipart implements Body {
-  protected Part parent;
+    protected Part parent;
 
-  protected ArrayList<BodyPart> parts = new ArrayList<BodyPart>();
+    protected ArrayList<BodyPart> parts = new ArrayList<BodyPart>();
 
-  protected String contentType;
+    protected String contentType;
 
-  public void addBodyPart(BodyPart part) throws MessagingException {
-    parts.add(part);
-  }
+    public void addBodyPart(BodyPart part) throws MessagingException {
+        parts.add(part);
+    }
 
-  public void addBodyPart(BodyPart part, int index) throws MessagingException {
-    parts.add(index, part);
-  }
+    public void addBodyPart(BodyPart part, int index) throws MessagingException {
+        parts.add(index, part);
+    }
 
-  public BodyPart getBodyPart(int index) throws MessagingException {
-    return parts.get(index);
-  }
+    public BodyPart getBodyPart(int index) throws MessagingException {
+        return parts.get(index);
+    }
 
-  public String getContentType() throws MessagingException {
-    return contentType;
-  }
+    public String getContentType() throws MessagingException {
+        return contentType;
+    }
 
-  public int getCount() throws MessagingException {
-    return parts.size();
-  }
+    public int getCount() throws MessagingException {
+        return parts.size();
+    }
 
-  public boolean removeBodyPart(BodyPart part) throws MessagingException {
-    return parts.remove(part);
-  }
+    public boolean removeBodyPart(BodyPart part) throws MessagingException {
+        return parts.remove(part);
+    }
 
-  public void removeBodyPart(int index) throws MessagingException {
-    parts.remove(index);
-  }
+    public void removeBodyPart(int index) throws MessagingException {
+        parts.remove(index);
+    }
 
-  public Part getParent() throws MessagingException {
-    return parent;
-  }
+    public Part getParent() throws MessagingException {
+        return parent;
+    }
 
-  public void setParent(Part parent) throws MessagingException {
-    this.parent = parent;
-  }
+    public void setParent(Part parent) throws MessagingException {
+        this.parent = parent;
+    }
 }

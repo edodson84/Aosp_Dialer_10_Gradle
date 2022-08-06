@@ -27,8 +27,6 @@
     <bytecodeTargetLevel target="1.8">
       <module name="Dialer_10.app" target="11" />
       <module name="Dialer_10.PhoneCommon" target="11" />
-      <module name="Dialer_Support.app" target="11" />
-      <module name="Dialer_Support.PhoneCommon" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>

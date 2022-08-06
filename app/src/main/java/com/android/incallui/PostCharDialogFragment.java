@@ -20,10 +20,10 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
+import androidx.fragment.app.DialogFragment;
 
-import com.fissy.dialer.R;
 import com.android.incallui.call.TelecomAdapter;
+import com.fissy.dialer.R;
 
 /**
  * Pop up an alert dialog with OK and Cancel buttons to allow user to Accept or Reject the WAIT
@@ -31,68 +31,69 @@ import com.android.incallui.call.TelecomAdapter;
  */
 public class PostCharDialogFragment extends DialogFragment {
 
-  private static final String STATE_CALL_ID = "CALL_ID";
-  private static final String STATE_POST_CHARS = "POST_CHARS";
+    private static final String STATE_CALL_ID = "CALL_ID";
+    private static final String STATE_POST_CHARS = "POST_CHARS";
 
-  private String callId;
-  private String postDialStr;
+    private String callId;
+    private String postDialStr;
 
-  public PostCharDialogFragment() {}
-
-  public PostCharDialogFragment(String callId, String postDialStr) {
-    this.callId = callId;
-    this.postDialStr = postDialStr;
-  }
-
-  @Override
-  public Dialog onCreateDialog(Bundle savedInstanceState) {
-    super.onCreateDialog(savedInstanceState);
-
-    if (postDialStr == null && savedInstanceState != null) {
-      callId = savedInstanceState.getString(STATE_CALL_ID);
-      postDialStr = savedInstanceState.getString(STATE_POST_CHARS);
+    public PostCharDialogFragment() {
     }
 
-    final StringBuilder buf = new StringBuilder();
-    buf.append(getResources().getText(R.string.wait_prompt_str));
-    buf.append(postDialStr);
+    public PostCharDialogFragment(String callId, String postDialStr) {
+        this.callId = callId;
+        this.postDialStr = postDialStr;
+    }
 
-    final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-    builder.setMessage(buf.toString());
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        super.onCreateDialog(savedInstanceState);
 
-    builder.setPositiveButton(
-        R.string.pause_prompt_yes,
-        new DialogInterface.OnClickListener() {
-          @Override
-          public void onClick(DialogInterface dialog, int whichButton) {
-            TelecomAdapter.getInstance().postDialContinue(callId, true);
-          }
-        });
-    builder.setNegativeButton(
-        R.string.pause_prompt_no,
-        new DialogInterface.OnClickListener() {
-          @Override
-          public void onClick(DialogInterface dialog, int whichButton) {
-            dialog.cancel();
-          }
-        });
+        if (postDialStr == null && savedInstanceState != null) {
+            callId = savedInstanceState.getString(STATE_CALL_ID);
+            postDialStr = savedInstanceState.getString(STATE_POST_CHARS);
+        }
 
-    final AlertDialog dialog = builder.create();
-    return dialog;
-  }
+        final StringBuilder buf = new StringBuilder();
+        buf.append(getResources().getText(R.string.wait_prompt_str));
+        buf.append(postDialStr);
 
-  @Override
-  public void onCancel(DialogInterface dialog) {
-    super.onCancel(dialog);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage(buf.toString());
 
-    TelecomAdapter.getInstance().postDialContinue(callId, false);
-  }
+        builder.setPositiveButton(
+                R.string.pause_prompt_yes,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        TelecomAdapter.getInstance().postDialContinue(callId, true);
+                    }
+                });
+        builder.setNegativeButton(
+                R.string.pause_prompt_no,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        dialog.cancel();
+                    }
+                });
 
-  @Override
-  public void onSaveInstanceState(Bundle outState) {
-    super.onSaveInstanceState(outState);
+        final AlertDialog dialog = builder.create();
+        return dialog;
+    }
 
-    outState.putString(STATE_CALL_ID, callId);
-    outState.putString(STATE_POST_CHARS, postDialStr);
-  }
+    @Override
+    public void onCancel(DialogInterface dialog) {
+        super.onCancel(dialog);
+
+        TelecomAdapter.getInstance().postDialContinue(callId, false);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putString(STATE_CALL_ID, callId);
+        outState.putString(STATE_POST_CHARS, postDialStr);
+    }
 }

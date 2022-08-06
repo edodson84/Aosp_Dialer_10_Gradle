@@ -16,25 +16,29 @@
 
 package com.fissy.dialer.rtt;
 
-/** Contract for the RTT transcript database. */
+/**
+ * Contract for the RTT transcript database.
+ */
 public final class RttTranscriptContract {
 
-  /** Columns for RTT transcript. */
-  static final class RttTranscriptColumn {
-
     /**
-     * Unique key that should match {@link android.provider.CallLog.Calls#DATE} of the data row it
-     * is associated with.
-     *
-     * <p>TYPE: TEXT
+     * Columns for RTT transcript.
      */
-    static final String TRANSCRIPT_ID = "rtt_transcript_id";
+    static final class RttTranscriptColumn {
 
-    /**
-     * Transcript data, encoded as {@link RttTranscript} proto.
-     *
-     * <p>TYPE: BLOB
-     */
-    static final String TRANSCRIPT_DATA = "transcript_data";
-  }
+        /**
+         * Unique key that should match {@link android.provider.CallLog.Calls#DATE} of the data row it
+         * is associated with.
+         *
+         * <p>TYPE: TEXT
+         */
+        static final String TRANSCRIPT_ID = "rtt_transcript_id";
+
+        /**
+         * Transcript data, encoded as {@link RttTranscript} proto.
+         *
+         * <p>TYPE: BLOB
+         */
+        static final String TRANSCRIPT_DATA = "transcript_data";
+    }
 }

@@ -1,8 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout android:clipChildren="false" android:layout_width="fill_parent" android:layout_height="fill_parent"
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <FrameLayout android:id="@id/contact_tile_frame" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_alignParentLeft="true" android:layout_alignParentTop="true" android:paddingStart="@dimen/favorites_row_start_padding" android:paddingEnd="@dimen/favorites_row_end_padding">
-        <com.fissy.dialer.app.list.PhoneFavoriteListView android:id="@id/contact_tile_list" android:paddingTop="@dimen/favorites_row_top_padding" android:paddingBottom="@dimen/floating_action_button_list_bottom_padding" android:fadingEdge="none" android:clipToPadding="false" android:layout_width="fill_parent" android:layout_height="fill_parent" android:numColumns="@integer/contact_tile_column_count_in_favorites" android:divider="@null" android:nestedScrollingEnabled="true" />
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:clipChildren="false">
+
+    <FrameLayout
+        android:id="@id/contact_tile_frame"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:paddingStart="@dimen/favorites_row_start_padding"
+        android:paddingEnd="@dimen/favorites_row_end_padding">
+
+        <com.fissy.dialer.app.list.PhoneFavoriteListView
+            android:id="@id/contact_tile_list"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:clipToPadding="false"
+            android:divider="@null"
+            android:fadingEdge="none"
+            android:nestedScrollingEnabled="true"
+            android:numColumns="@integer/contact_tile_column_count_in_favorites"
+            android:paddingTop="@dimen/favorites_row_top_padding"
+            android:paddingBottom="@dimen/floating_action_button_list_bottom_padding" />
     </FrameLayout>
-    <com.fissy.dialer.widget.EmptyContentView android:layout_gravity="center" android:id="@id/empty_list_view" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+
+    <com.fissy.dialer.widget.EmptyContentView
+        android:id="@id/empty_list_view"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
 </FrameLayout>

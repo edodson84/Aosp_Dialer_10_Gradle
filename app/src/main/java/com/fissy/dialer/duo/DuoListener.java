@@ -17,5 +17,5 @@
 package com.fissy.dialer.duo;
 
 public interface DuoListener {
-  void onDuoStateChanged();
+    void onDuoStateChanged();
 }

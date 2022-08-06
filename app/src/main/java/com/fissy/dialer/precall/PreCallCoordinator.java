@@ -17,9 +17,10 @@
 package com.fissy.dialer.precall;
 
 import android.app.Activity;
-import android.support.annotation.MainThread;
-import android.support.annotation.NonNull;
-import android.support.annotation.VisibleForTesting;
+import androidx.annotation.MainThread;
+import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
+
 import com.fissy.dialer.callintent.CallIntentBuilder;
 import com.fissy.dialer.function.Consumer;
 import com.google.common.util.concurrent.ListenableFuture;
@@ -30,47 +31,49 @@ import com.google.common.util.concurrent.ListenableFuture;
  */
 public interface PreCallCoordinator {
 
-  @VisibleForTesting
-  String EXTRA_CALL_INTENT_BUILDER = "extra_call_intent_builder";
+    @VisibleForTesting
+    String EXTRA_CALL_INTENT_BUILDER = "extra_call_intent_builder";
 
-  @NonNull
-  CallIntentBuilder getBuilder();
+    @NonNull
+    CallIntentBuilder getBuilder();
 
-  /** @return the activity to attach the UI to. */
-  @NonNull
-  Activity getActivity();
+    /**
+     * @return the activity to attach the UI to.
+     */
+    @NonNull
+    Activity getActivity();
 
-  /**
-   * Called by a {@link PreCallAction} to abort the call. For example, the user has dismissed the
-   * dialog and must start over.
-   */
-  void abortCall();
+    /**
+     * Called by a {@link PreCallAction} to abort the call. For example, the user has dismissed the
+     * dialog and must start over.
+     */
+    void abortCall();
 
-  /**
-   * Callback from a {@link PreCallAction} to signal the action started by {@link
-   * PreCallCoordinator#startPendingAction()} has finished.
-   */
-  interface PendingAction {
-
+    /**
+     * Called by the current running {@link PreCallAction} to release the main thread and resume
+     * pre-call later.
+     *
+     * @return a {@link PendingAction} which {@link PendingAction#finish()} should be called to resume
+     * pre-call. For example the action shows a dialog to the user, startPendingAction() should be
+     * called as the action will not be finished immediately. When the dialog is completed, {@code
+     * finish()} is then called to continue the next step.
+     */
     @MainThread
-    void finish();
-  }
+    @NonNull
+    PendingAction startPendingAction();
 
-  /**
-   * Called by the current running {@link PreCallAction} to release the main thread and resume
-   * pre-call later.
-   *
-   * @return a {@link PendingAction} which {@link PendingAction#finish()} should be called to resume
-   *     pre-call. For example the action shows a dialog to the user, startPendingAction() should be
-   *     called as the action will not be finished immediately. When the dialog is completed, {@code
-   *     finish()} is then called to continue the next step.
-   */
-  @MainThread
-  @NonNull
-  PendingAction startPendingAction();
+    <OutputT> void listen(
+            ListenableFuture<OutputT> future,
+            Consumer<OutputT> successListener,
+            Consumer<Throwable> failureListener);
 
-  <OutputT> void listen(
-      ListenableFuture<OutputT> future,
-      Consumer<OutputT> successListener,
-      Consumer<Throwable> failureListener);
+    /**
+     * Callback from a {@link PreCallAction} to signal the action started by {@link
+     * PreCallCoordinator#startPendingAction()} has finished.
+     */
+    interface PendingAction {
+
+        @MainThread
+        void finish();
+    }
 }

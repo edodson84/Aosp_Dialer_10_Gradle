@@ -16,13 +16,15 @@
 
 package com.android.incallui.answer.impl.classifier;
 
-/** An abstract class for classifiers which classify each stroke separately. */
+/**
+ * An abstract class for classifiers which classify each stroke separately.
+ */
 abstract class StrokeClassifier extends Classifier {
 
-  /**
-   * @param stroke the stroke for which the evaluation will be calculated
-   * @return a non-negative value which is used to determine whether this a false touch; the bigger
-   *     the value the greater the chance that this a false touch
-   */
-  public abstract float getFalseTouchEvaluation(Stroke stroke);
+    /**
+     * @param stroke the stroke for which the evaluation will be calculated
+     * @return a non-negative value which is used to determine whether this a false touch; the bigger
+     * the value the greater the chance that this a false touch
+     */
+    public abstract float getFalseTouchEvaluation(Stroke stroke);
 }

@@ -15,44 +15,50 @@
  */
 package com.android.voicemail.impl.transcribe.grpc;
 
-import android.support.annotation.Nullable;
-import android.support.annotation.VisibleForTesting;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
+
 import com.fissy.dialer.common.Assert;
 import com.google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncResponse;
+
 import io.grpc.Status;
 
-/** Container for response and status objects for an asynchronous transcription upload request */
+/**
+ * Container for response and status objects for an asynchronous transcription upload request
+ */
 public class TranscriptionResponseAsync extends TranscriptionResponse {
-  @Nullable private final TranscribeVoicemailAsyncResponse response;
+    @Nullable
+    private final TranscribeVoicemailAsyncResponse response;
 
-  @VisibleForTesting
-  public TranscriptionResponseAsync(TranscribeVoicemailAsyncResponse response) {
-    Assert.checkArgument(response != null);
-    this.response = response;
-  }
-
-  @VisibleForTesting
-  public TranscriptionResponseAsync(Status status) {
-    super(status);
-    this.response = null;
-  }
-
-  public @Nullable String getTranscriptionId() {
-    if (response != null) {
-      return response.getTranscriptionId();
+    @VisibleForTesting
+    public TranscriptionResponseAsync(TranscribeVoicemailAsyncResponse response) {
+        Assert.checkArgument(response != null);
+        this.response = response;
     }
-    return null;
-  }
 
-  public long getEstimatedWaitMillis() {
-    if (response != null) {
-      return response.getEstimatedWaitSecs() * 1_000L;
+    @VisibleForTesting
+    public TranscriptionResponseAsync(Status status) {
+        super(status);
+        this.response = null;
     }
-    return 0;
-  }
 
-  @Override
-  public String toString() {
-    return super.toString() + ", response: " + response;
-  }
+    public @Nullable
+    String getTranscriptionId() {
+        if (response != null) {
+            return response.getTranscriptionId();
+        }
+        return null;
+    }
+
+    public long getEstimatedWaitMillis() {
+        if (response != null) {
+            return response.getEstimatedWaitSecs() * 1_000L;
+        }
+        return 0;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", response: " + response;
+    }
 }

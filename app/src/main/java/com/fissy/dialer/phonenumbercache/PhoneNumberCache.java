@@ -17,34 +17,38 @@
 package com.fissy.dialer.phonenumbercache;
 
 import android.content.Context;
+
 import java.util.Objects;
 
-/** Accessor for the phone number cache bindings. */
+/**
+ * Accessor for the phone number cache bindings.
+ */
 public class PhoneNumberCache {
 
-  private static PhoneNumberCacheBindings phoneNumberCacheBindings;
+    private static PhoneNumberCacheBindings phoneNumberCacheBindings;
 
-  private PhoneNumberCache() {}
-
-  public static PhoneNumberCacheBindings get(Context context) {
-    Objects.requireNonNull(context);
-    if (phoneNumberCacheBindings != null) {
-      return phoneNumberCacheBindings;
+    private PhoneNumberCache() {
     }
 
-    Context application = context.getApplicationContext();
-    if (application instanceof PhoneNumberCacheBindingsFactory) {
-      phoneNumberCacheBindings =
-          ((PhoneNumberCacheBindingsFactory) application).newPhoneNumberCacheBindings();
+    public static PhoneNumberCacheBindings get(Context context) {
+        Objects.requireNonNull(context);
+        if (phoneNumberCacheBindings != null) {
+            return phoneNumberCacheBindings;
+        }
+
+        Context application = context.getApplicationContext();
+        if (application instanceof PhoneNumberCacheBindingsFactory) {
+            phoneNumberCacheBindings =
+                    ((PhoneNumberCacheBindingsFactory) application).newPhoneNumberCacheBindings();
+        }
+
+        if (phoneNumberCacheBindings == null) {
+            phoneNumberCacheBindings = new PhoneNumberCacheBindingsStub();
+        }
+        return phoneNumberCacheBindings;
     }
 
-    if (phoneNumberCacheBindings == null) {
-      phoneNumberCacheBindings = new PhoneNumberCacheBindingsStub();
+    public static void setForTesting(PhoneNumberCacheBindings phoneNumberCacheBindings) {
+        PhoneNumberCache.phoneNumberCacheBindings = phoneNumberCacheBindings;
     }
-    return phoneNumberCacheBindings;
-  }
-
-  public static void setForTesting(PhoneNumberCacheBindings phoneNumberCacheBindings) {
-    PhoneNumberCache.phoneNumberCacheBindings = phoneNumberCacheBindings;
-  }
 }

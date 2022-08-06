@@ -16,29 +16,31 @@
 
 package com.android.incallui.video.protocol;
 
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 
-/** Interface for call video call module. */
+/**
+ * Interface for call video call module.
+ */
 public interface VideoCallScreen {
 
-  void onVideoScreenStart();
+    void onVideoScreenStart();
 
-  void onVideoScreenStop();
+    void onVideoScreenStop();
 
-  void showVideoViews(boolean shouldShowPreview, boolean shouldShowRemote, boolean isRemotelyHeld);
+    void showVideoViews(boolean shouldShowPreview, boolean shouldShowRemote, boolean isRemotelyHeld);
 
-  void onLocalVideoDimensionsChanged();
+    void onLocalVideoDimensionsChanged();
 
-  void onLocalVideoOrientationChanged();
+    void onLocalVideoOrientationChanged();
 
-  void onRemoteVideoDimensionsChanged();
+    void onRemoteVideoDimensionsChanged();
 
-  void updateFullscreenAndGreenScreenMode(
-      boolean shouldShowFullscreen, boolean shouldShowGreenScreen);
+    void updateFullscreenAndGreenScreenMode(
+            boolean shouldShowFullscreen, boolean shouldShowGreenScreen);
 
-  Fragment getVideoCallScreenFragment();
+    Fragment getVideoCallScreenFragment();
 
-  String getCallId();
+    String getCallId();
 
-  void onHandoverFromWiFiToLte();
+    void onHandoverFromWiFiToLte();
 }

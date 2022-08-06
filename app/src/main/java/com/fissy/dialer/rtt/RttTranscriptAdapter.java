@@ -17,7 +17,7 @@
 package com.fissy.dialer.rtt;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,89 +26,90 @@ import com.fissy.dialer.R;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.glidephotomanager.PhotoInfo;
 
-/** Adapter class for holding RTT chat data. */
+/**
+ * Adapter class for holding RTT chat data.
+ */
 public class RttTranscriptAdapter extends RecyclerView.Adapter<RttTranscriptMessageViewHolder> {
 
-  private PhotoInfo photoInfo;
+    private final Context context;
+    private PhotoInfo photoInfo;
+    private RttTranscript rttTranscript;
+    private int firstPositionToShowTimestamp;
 
-  private final Context context;
-  private RttTranscript rttTranscript;
-  private int firstPositionToShowTimestamp;
-
-  RttTranscriptAdapter(Context context) {
-    this.context = context;
-  }
-
-  @Override
-  public RttTranscriptMessageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    LayoutInflater layoutInflater = LayoutInflater.from(context);
-    View view = layoutInflater.inflate(R.layout.rtt_transcript_list_item, parent, false);
-    return new RttTranscriptMessageViewHolder(view);
-  }
-
-  @Override
-  public int getItemViewType(int position) {
-    return super.getItemViewType(position);
-  }
-
-  @Override
-  public void onBindViewHolder(RttTranscriptMessageViewHolder rttChatMessageViewHolder, int i) {
-    boolean isSameGroup = false;
-    boolean hasMoreInSameGroup = false;
-    RttTranscriptMessage rttTranscriptMessage = rttTranscript.getMessages(i);
-    if (i > 0) {
-      isSameGroup =
-          rttTranscriptMessage.getIsRemote() == rttTranscript.getMessages(i - 1).getIsRemote();
+    RttTranscriptAdapter(Context context) {
+        this.context = context;
     }
-    if (i + 1 < getItemCount()) {
-      hasMoreInSameGroup =
-          rttTranscriptMessage.getIsRemote() == rttTranscript.getMessages(i + 1).getIsRemote();
-    }
-    rttChatMessageViewHolder.setMessage(rttTranscriptMessage, isSameGroup, photoInfo);
-    if (hasMoreInSameGroup) {
-      rttChatMessageViewHolder.hideTimestamp();
-    } else {
-      rttChatMessageViewHolder.showTimestamp(
-          rttTranscriptMessage.getTimestamp(),
-          rttTranscriptMessage.getIsRemote(),
-          i == firstPositionToShowTimestamp);
-    }
-  }
 
-  @Override
-  public int getItemCount() {
-    if (rttTranscript == null) {
-      return 0;
+    /**
+     * Returns first position of message that should show time stamp. This is usually the last one of
+     * first grouped messages.
+     */
+    protected static int findFirstPositionToShowTimestamp(RttTranscript rttTranscript) {
+        int i = 0;
+        while (i + 1 < rttTranscript.getMessagesCount()
+                && rttTranscript.getMessages(i).getIsRemote()
+                == rttTranscript.getMessages(i + 1).getIsRemote()) {
+            i++;
+        }
+        return i;
     }
-    return rttTranscript.getMessagesCount();
-  }
 
-  void setRttTranscript(RttTranscript rttTranscript) {
-    if (rttTranscript == null) {
-      LogUtil.w("RttTranscriptAdapter.setRttTranscript", "null RttTranscript");
-      return;
+    @Override
+    public RttTranscriptMessageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
+        View view = layoutInflater.inflate(R.layout.rtt_transcript_list_item, parent, false);
+        return new RttTranscriptMessageViewHolder(view);
     }
-    this.rttTranscript = rttTranscript;
-    firstPositionToShowTimestamp = findFirstPositionToShowTimestamp(rttTranscript);
 
-    notifyDataSetChanged();
-  }
-
-  /**
-   * Returns first position of message that should show time stamp. This is usually the last one of
-   * first grouped messages.
-   */
-  protected static int findFirstPositionToShowTimestamp(RttTranscript rttTranscript) {
-    int i = 0;
-    while (i + 1 < rttTranscript.getMessagesCount()
-        && rttTranscript.getMessages(i).getIsRemote()
-            == rttTranscript.getMessages(i + 1).getIsRemote()) {
-      i++;
+    @Override
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
     }
-    return i;
-  }
 
-  void setPhotoInfo(PhotoInfo photoInfo) {
-    this.photoInfo = photoInfo;
-  }
+    @Override
+    public void onBindViewHolder(RttTranscriptMessageViewHolder rttChatMessageViewHolder, int i) {
+        boolean isSameGroup = false;
+        boolean hasMoreInSameGroup = false;
+        RttTranscriptMessage rttTranscriptMessage = rttTranscript.getMessages(i);
+        if (i > 0) {
+            isSameGroup =
+                    rttTranscriptMessage.getIsRemote() == rttTranscript.getMessages(i - 1).getIsRemote();
+        }
+        if (i + 1 < getItemCount()) {
+            hasMoreInSameGroup =
+                    rttTranscriptMessage.getIsRemote() == rttTranscript.getMessages(i + 1).getIsRemote();
+        }
+        rttChatMessageViewHolder.setMessage(rttTranscriptMessage, isSameGroup, photoInfo);
+        if (hasMoreInSameGroup) {
+            rttChatMessageViewHolder.hideTimestamp();
+        } else {
+            rttChatMessageViewHolder.showTimestamp(
+                    rttTranscriptMessage.getTimestamp(),
+                    rttTranscriptMessage.getIsRemote(),
+                    i == firstPositionToShowTimestamp);
+        }
+    }
+
+    @Override
+    public int getItemCount() {
+        if (rttTranscript == null) {
+            return 0;
+        }
+        return rttTranscript.getMessagesCount();
+    }
+
+    void setRttTranscript(RttTranscript rttTranscript) {
+        if (rttTranscript == null) {
+            LogUtil.w("RttTranscriptAdapter.setRttTranscript", "null RttTranscript");
+            return;
+        }
+        this.rttTranscript = rttTranscript;
+        firstPositionToShowTimestamp = findFirstPositionToShowTimestamp(rttTranscript);
+
+        notifyDataSetChanged();
+    }
+
+    void setPhotoInfo(PhotoInfo photoInfo) {
+        this.photoInfo = photoInfo;
+    }
 }

@@ -24,56 +24,56 @@ import java.io.InputStream;
  * where the protocol handler intended the client to read.
  */
 public class FixedLengthInputStream extends InputStream {
-  private final InputStream in;
-  private final int length;
-  private int count;
+    private final InputStream in;
+    private final int length;
+    private int count;
 
-  public FixedLengthInputStream(InputStream in, int length) {
-    this.in = in;
-    this.length = length;
-  }
-
-  @Override
-  public int available() throws IOException {
-    return length - count;
-  }
-
-  @Override
-  public int read() throws IOException {
-    if (count < length) {
-      count++;
-      return in.read();
-    } else {
-      return -1;
+    public FixedLengthInputStream(InputStream in, int length) {
+        this.in = in;
+        this.length = length;
     }
-  }
 
-  @Override
-  public int read(byte[] b, int offset, int length) throws IOException {
-    if (count < this.length) {
-      int d = in.read(b, offset, Math.min(this.length - count, length));
-      if (d == -1) {
-        return -1;
-      } else {
-        count += d;
-        return d;
-      }
-    } else {
-      return -1;
+    @Override
+    public int available() throws IOException {
+        return length - count;
     }
-  }
 
-  @Override
-  public int read(byte[] b) throws IOException {
-    return read(b, 0, b.length);
-  }
+    @Override
+    public int read() throws IOException {
+        if (count < length) {
+            count++;
+            return in.read();
+        } else {
+            return -1;
+        }
+    }
 
-  public int getLength() {
-    return length;
-  }
+    @Override
+    public int read(byte[] b, int offset, int length) throws IOException {
+        if (count < this.length) {
+            int d = in.read(b, offset, Math.min(this.length - count, length));
+            if (d == -1) {
+                return -1;
+            } else {
+                count += d;
+                return d;
+            }
+        } else {
+            return -1;
+        }
+    }
 
-  @Override
-  public String toString() {
-    return String.format("FixedLengthInputStream(in=%s, length=%d)", in.toString(), length);
-  }
+    @Override
+    public int read(byte[] b) throws IOException {
+        return read(b, 0, b.length);
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("FixedLengthInputStream(in=%s, length=%d)", in.toString(), length);
+    }
 }

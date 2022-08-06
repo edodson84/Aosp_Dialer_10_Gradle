@@ -24,26 +24,27 @@ import javax.inject.Inject;
  */
 public final class ContactDisplayPreferencesStub implements ContactDisplayPreferences {
 
-  @Inject
-  ContactDisplayPreferencesStub() {}
+    @Inject
+    ContactDisplayPreferencesStub() {
+    }
 
-  @Override
-  public DisplayOrder getDisplayOrder() {
-    return DisplayOrder.PRIMARY;
-  }
+    @Override
+    public DisplayOrder getDisplayOrder() {
+        return DisplayOrder.PRIMARY;
+    }
 
-  @Override
-  public void setDisplayOrder(DisplayOrder displayOrder) {
-    // Do nothing
-  }
+    @Override
+    public void setDisplayOrder(DisplayOrder displayOrder) {
+        // Do nothing
+    }
 
-  @Override
-  public SortOrder getSortOrder() {
-    return SortOrder.BY_PRIMARY;
-  }
+    @Override
+    public SortOrder getSortOrder() {
+        return SortOrder.BY_PRIMARY;
+    }
 
-  @Override
-  public void setSortOrder(SortOrder sortOrder) {
-    // Do nothing
-  }
+    @Override
+    public void setSortOrder(SortOrder sortOrder) {
+        // Do nothing
+    }
 }

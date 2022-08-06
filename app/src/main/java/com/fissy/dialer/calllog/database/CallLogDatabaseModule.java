@@ -19,18 +19,20 @@ package com.fissy.dialer.calllog.database;
 import dagger.Module;
 import dagger.Provides;
 
-/** Binds database dependencies. */
+/**
+ * Binds database dependencies.
+ */
 @Module
 public class CallLogDatabaseModule {
 
-  @Provides
-  @AnnotatedCallLogMaxRows
-  static int provideMaxRows() {
-    /*
-     * We sometimes run queries where we potentially pass every ID into a where clause using the
-     * (?,?,?,...) syntax. The maximum number of host parameters is 999, so that's the maximum size
-     * this table can be. See https://www.sqlite.org/limits.html for more details.
-     */
-    return 999;
-  }
+    @Provides
+    @AnnotatedCallLogMaxRows
+    static int provideMaxRows() {
+        /*
+         * We sometimes run queries where we potentially pass every ID into a where clause using the
+         * (?,?,?,...) syntax. The maximum number of host parameters is 999, so that's the maximum size
+         * this table can be. See https://www.sqlite.org/limits.html for more details.
+         */
+        return 999;
+    }
 }

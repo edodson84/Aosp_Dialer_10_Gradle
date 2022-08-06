@@ -17,21 +17,27 @@
 package com.fissy.dialer.preferredsim;
 
 import android.content.Context;
+
 import com.fissy.dialer.inject.HasRootComponent;
+
 import dagger.Subcomponent;
 
-/** Component for preferred SIM */
+/**
+ * Component for preferred SIM
+ */
 @Subcomponent
 public abstract class PreferredSimComponent {
-  public abstract PreferredAccountWorker preferredAccountWorker();
+    public static PreferredSimComponent get(Context context) {
+        return ((HasComponent) ((HasRootComponent) context.getApplicationContext()).component())
+                .preferredSimComponent();
+    }
 
-  public static PreferredSimComponent get(Context context) {
-    return ((HasComponent) ((HasRootComponent) context.getApplicationContext()).component())
-        .preferredSimComponent();
-  }
+    public abstract PreferredAccountWorker preferredAccountWorker();
 
-  /** Used to refer to the root application component. */
-  public interface HasComponent {
-    PreferredSimComponent preferredSimComponent();
-  }
+    /**
+     * Used to refer to the root application component.
+     */
+    public interface HasComponent {
+        PreferredSimComponent preferredSimComponent();
+    }
 }

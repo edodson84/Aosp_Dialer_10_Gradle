@@ -18,26 +18,32 @@ package com.fissy.dialer.spam.status;
 
 import com.google.common.base.Optional;
 
-/** An interface representing a number's spam status. */
+/**
+ * An interface representing a number's spam status.
+ */
 @SuppressWarnings("Guava")
 public interface SpamStatus {
 
-  /** Returns true if the number is spam. */
-  boolean isSpam();
+    /**
+     * Returns true if the number is spam.
+     */
+    boolean isSpam();
 
-  /**
-   * Returns the timestamp (in milliseconds) indicating when the number's spam status entered the
-   * underlying data source.
-   *
-   * <p>{@code Optional.absent()} is returned if
-   *
-   * <ul>
-   *   <li>the number's spam status doesn't exist in the underlying data source, or
-   *   <li>the underlying data source can't provide a timestamp.
-   * </ul>
-   */
-  Optional<Long> getTimestampMillis();
+    /**
+     * Returns the timestamp (in milliseconds) indicating when the number's spam status entered the
+     * underlying data source.
+     *
+     * <p>{@code Optional.absent()} is returned if
+     *
+     * <ul>
+     *   <li>the number's spam status doesn't exist in the underlying data source, or
+     *   <li>the underlying data source can't provide a timestamp.
+     * </ul>
+     */
+    Optional<Long> getTimestampMillis();
 
-  /** Returns the {@link SpamMetadata} associated with this status. */
-  SpamMetadata getSpamMetadata();
+    /**
+     * Returns the {@link SpamMetadata} associated with this status.
+     */
+    SpamMetadata getSpamMetadata();
 }

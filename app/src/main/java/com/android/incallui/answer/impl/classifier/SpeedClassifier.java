@@ -22,19 +22,20 @@ package com.android.incallui.answer.impl.classifier;
  */
 class SpeedClassifier extends StrokeClassifier {
 
-  public SpeedClassifier(ClassifierData classifierData) {}
-
-  @Override
-  public String getTag() {
-    return "SPD";
-  }
-
-  @Override
-  public float getFalseTouchEvaluation(Stroke stroke) {
-    float duration = stroke.getDurationSeconds();
-    if (duration == 0.0f) {
-      return SpeedEvaluator.evaluate(0.0f);
+    public SpeedClassifier(ClassifierData classifierData) {
     }
-    return SpeedEvaluator.evaluate(stroke.getTotalLength() / duration);
-  }
+
+    @Override
+    public String getTag() {
+        return "SPD";
+    }
+
+    @Override
+    public float getFalseTouchEvaluation(Stroke stroke) {
+        float duration = stroke.getDurationSeconds();
+        if (duration == 0.0f) {
+            return SpeedEvaluator.evaluate(0.0f);
+        }
+        return SpeedEvaluator.evaluate(stroke.getTotalLength() / duration);
+    }
 }

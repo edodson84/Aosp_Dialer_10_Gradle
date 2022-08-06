@@ -20,71 +20,77 @@ import android.content.Context;
 import android.hardware.display.DisplayManager;
 import android.hardware.display.DisplayManager.DisplayListener;
 import android.os.PowerManager;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.view.Display;
+
 import com.fissy.dialer.common.LogUtil;
 
-/** The normal PROXIMITY_SCREEN_OFF_WAKE_LOCK provided by the OS. */
+/**
+ * The normal PROXIMITY_SCREEN_OFF_WAKE_LOCK provided by the OS.
+ */
 public class SystemProximityWakeLock implements AnswerProximityWakeLock, DisplayListener {
 
-  private static final String TAG = "SystemProximityWakeLock";
+    private static final String TAG = "SystemProximityWakeLock";
 
-  private final Context context;
-  private final PowerManager.WakeLock wakeLock;
+    private final Context context;
+    private final PowerManager.WakeLock wakeLock;
 
-  @Nullable private ScreenOnListener listener;
+    @Nullable
+    private ScreenOnListener listener;
 
-  public SystemProximityWakeLock(Context context) {
-    this.context = context;
-    wakeLock =
-        context
-            .getSystemService(PowerManager.class)
-            .newWakeLock(PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK, TAG);
-  }
-
-  @Override
-  public void acquire() {
-    wakeLock.acquire();
-    context.getSystemService(DisplayManager.class).registerDisplayListener(this, null);
-  }
-
-  @Override
-  public void release() {
-    wakeLock.release();
-    context.getSystemService(DisplayManager.class).unregisterDisplayListener(this);
-  }
-
-  @Override
-  public boolean isHeld() {
-    return wakeLock.isHeld();
-  }
-
-  @Override
-  public void setScreenOnListener(ScreenOnListener listener) {
-    this.listener = listener;
-  }
-
-  @Override
-  public void onDisplayAdded(int displayId) {}
-
-  @Override
-  public void onDisplayRemoved(int displayId) {}
-
-  @Override
-  public void onDisplayChanged(int displayId) {
-    if (displayId == Display.DEFAULT_DISPLAY) {
-      if (isDefaultDisplayOn(context)) {
-        LogUtil.i("SystemProximityWakeLock.onDisplayChanged", "display turned on");
-        if (listener != null) {
-          listener.onScreenOn();
-        }
-      }
+    public SystemProximityWakeLock(Context context) {
+        this.context = context;
+        wakeLock =
+                context
+                        .getSystemService(PowerManager.class)
+                        .newWakeLock(PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK, TAG);
     }
-  }
 
-  private static boolean isDefaultDisplayOn(Context context) {
-    Display display =
-        context.getSystemService(DisplayManager.class).getDisplay(Display.DEFAULT_DISPLAY);
-    return display.getState() != Display.STATE_OFF;
-  }
+    private static boolean isDefaultDisplayOn(Context context) {
+        Display display =
+                context.getSystemService(DisplayManager.class).getDisplay(Display.DEFAULT_DISPLAY);
+        return display.getState() != Display.STATE_OFF;
+    }
+
+    @Override
+    public void acquire() {
+        wakeLock.acquire();
+        context.getSystemService(DisplayManager.class).registerDisplayListener(this, null);
+    }
+
+    @Override
+    public void release() {
+        wakeLock.release();
+        context.getSystemService(DisplayManager.class).unregisterDisplayListener(this);
+    }
+
+    @Override
+    public boolean isHeld() {
+        return wakeLock.isHeld();
+    }
+
+    @Override
+    public void setScreenOnListener(ScreenOnListener listener) {
+        this.listener = listener;
+    }
+
+    @Override
+    public void onDisplayAdded(int displayId) {
+    }
+
+    @Override
+    public void onDisplayRemoved(int displayId) {
+    }
+
+    @Override
+    public void onDisplayChanged(int displayId) {
+        if (displayId == Display.DEFAULT_DISPLAY) {
+            if (isDefaultDisplayOn(context)) {
+                LogUtil.i("SystemProximityWakeLock.onDisplayChanged", "display turned on");
+                if (listener != null) {
+                    listener.onScreenOn();
+                }
+            }
+        }
+    }
 }

@@ -15,24 +15,26 @@
  */
 package com.fissy.dialer.calllog.ui;
 
-import android.support.annotation.StringRes;
-import android.support.v7.widget.RecyclerView.ViewHolder;
+import androidx.annotation.StringRes;
+import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import android.view.View;
 import android.widget.TextView;
 
 import com.fissy.dialer.R;
 
-/** ViewHolder for {@link NewCallLogAdapter} to display "Today" or "Older" divider row. */
+/**
+ * ViewHolder for {@link NewCallLogAdapter} to display "Today" or "Older" divider row.
+ */
 final class HeaderViewHolder extends ViewHolder {
 
-  private final TextView headerTextView;
+    private final TextView headerTextView;
 
-  HeaderViewHolder(View view) {
-    super(view);
-    headerTextView = view.findViewById(R.id.new_call_log_header_text);
-  }
+    HeaderViewHolder(View view) {
+        super(view);
+        headerTextView = view.findViewById(R.id.new_call_log_header_text);
+    }
 
-  void setHeader(@StringRes int header) {
-    headerTextView.setText(header);
-  }
+    void setHeader(@StringRes int header) {
+        headerTextView.setText(header);
+    }
 }

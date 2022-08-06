@@ -17,7 +17,8 @@
 package com.fissy.dialer.common.concurrent;
 
 import android.app.FragmentManager;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
+
 import com.fissy.dialer.common.concurrent.DialerExecutor.Worker;
 
 /**
@@ -30,34 +31,34 @@ import com.fissy.dialer.common.concurrent.DialerExecutor.Worker;
  */
 public interface DialerExecutorFactory {
 
-  /**
-   * Must be called from onCreate of your activity or fragment.
-   *
-   * @param taskId used for the headless fragment ID and task ID
-   * @param worker a function executed on a worker thread which accepts an {@link InputT} and
-   *     returns an {@link OutputT}. It should ideally not be an inner class of your (meaning it
-   *     should not be a lambda, anonymous, or non-static) but it can be a static nested class. The
-   *     static nested class should not contain any reference to UI, including any activity or
-   *     fragment or activity context, though it may reference some threadsafe system objects such
-   *     as the application context.
-   */
-  @NonNull
-  <InputT, OutputT> DialerExecutor.Builder<InputT, OutputT> createUiTaskBuilder(
-      @NonNull FragmentManager fragmentManager,
-      @NonNull String taskId,
-      @NonNull Worker<InputT, OutputT> worker);
+    /**
+     * Must be called from onCreate of your activity or fragment.
+     *
+     * @param taskId used for the headless fragment ID and task ID
+     * @param worker a function executed on a worker thread which accepts an {@link InputT} and
+     *               returns an {@link OutputT}. It should ideally not be an inner class of your (meaning it
+     *               should not be a lambda, anonymous, or non-static) but it can be a static nested class. The
+     *               static nested class should not contain any reference to UI, including any activity or
+     *               fragment or activity context, though it may reference some threadsafe system objects such
+     *               as the application context.
+     */
+    @NonNull
+    <InputT, OutputT> DialerExecutor.Builder<InputT, OutputT> createUiTaskBuilder(
+            @NonNull FragmentManager fragmentManager,
+            @NonNull String taskId,
+            @NonNull Worker<InputT, OutputT> worker);
 
-  /**
-   * Create a task from a non-UI context.
-   *
-   * @param worker a function executed on a worker thread which accepts an {@link InputT} and
-   *     returns an {@link OutputT}. It should ideally not be an inner class of your (meaning it
-   *     should not be a lambda, anonymous, or non-static) but it can be a static nested class. The
-   *     static nested class should not contain any reference to UI, including any activity or
-   *     fragment or activity context, though it may reference some threadsafe system objects such
-   *     as the application context.
-   */
-  @NonNull
-  <InputT, OutputT> DialerExecutor.Builder<InputT, OutputT> createNonUiTaskBuilder(
-      @NonNull Worker<InputT, OutputT> worker);
+    /**
+     * Create a task from a non-UI context.
+     *
+     * @param worker a function executed on a worker thread which accepts an {@link InputT} and
+     *               returns an {@link OutputT}. It should ideally not be an inner class of your (meaning it
+     *               should not be a lambda, anonymous, or non-static) but it can be a static nested class. The
+     *               static nested class should not contain any reference to UI, including any activity or
+     *               fragment or activity context, though it may reference some threadsafe system objects such
+     *               as the application context.
+     */
+    @NonNull
+    <InputT, OutputT> DialerExecutor.Builder<InputT, OutputT> createNonUiTaskBuilder(
+            @NonNull Worker<InputT, OutputT> worker);
 }

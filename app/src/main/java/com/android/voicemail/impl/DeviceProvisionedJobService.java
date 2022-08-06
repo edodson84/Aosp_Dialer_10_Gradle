@@ -29,8 +29,9 @@ import android.content.Intent;
 import android.os.Build.VERSION_CODES;
 import android.provider.Settings;
 import android.provider.Settings.Global;
-import android.support.annotation.VisibleForTesting;
+import androidx.annotation.VisibleForTesting;
 import android.telecom.PhoneAccountHandle;
+
 import com.fissy.dialer.constants.ScheduledJobIds;
 
 /**
@@ -40,53 +41,56 @@ import com.fissy.dialer.constants.ScheduledJobIds;
 @TargetApi(VERSION_CODES.O)
 public class DeviceProvisionedJobService extends JobService {
 
-  @VisibleForTesting static final String EXTRA_PHONE_ACCOUNT_HANDLE = "EXTRA_PHONE_ACCOUNT_HANDLE";
+    @VisibleForTesting
+    static final String EXTRA_PHONE_ACCOUNT_HANDLE = "EXTRA_PHONE_ACCOUNT_HANDLE";
 
-  /** Queue the phone account to be reactivated after the setup wizard has completed. */
-  public static void activateAfterProvisioned(
-      Context context, PhoneAccountHandle phoneAccountHandle) {
-    Intent intent = new Intent();
-    intent.putExtra(EXTRA_PHONE_ACCOUNT_HANDLE, phoneAccountHandle);
-    context
-        .getSystemService(JobScheduler.class)
-        .enqueue(createJobInfo(context), new JobWorkItem(intent));
-  }
-
-  @Override
-  public boolean onStartJob(JobParameters params) {
-    if (!isDeviceProvisioned()) {
-      VvmLog.i("DeviceProvisionedJobService.onStartJob", "device not provisioned, rescheduling");
-      getSystemService(JobScheduler.class).schedule(createJobInfo(this));
-      return false; // job not running in background
+    /**
+     * Queue the phone account to be reactivated after the setup wizard has completed.
+     */
+    public static void activateAfterProvisioned(
+            Context context, PhoneAccountHandle phoneAccountHandle) {
+        Intent intent = new Intent();
+        intent.putExtra(EXTRA_PHONE_ACCOUNT_HANDLE, phoneAccountHandle);
+        context
+                .getSystemService(JobScheduler.class)
+                .enqueue(createJobInfo(context), new JobWorkItem(intent));
     }
-    VvmLog.i("DeviceProvisionedJobService.onStartJob", "device provisioned");
-    for (JobWorkItem item = params.dequeueWork(); item != null; item = params.dequeueWork()) {
-      PhoneAccountHandle phoneAccountHandle =
-          item.getIntent().getParcelableExtra(EXTRA_PHONE_ACCOUNT_HANDLE);
-      VvmLog.i(
-          "DeviceProvisionedJobService.onStartJob",
-          "restarting activation for " + phoneAccountHandle);
-      ActivationTask.start(this, phoneAccountHandle, null);
+
+    private static JobInfo createJobInfo(Context context) {
+        return new JobInfo.Builder(
+                ScheduledJobIds.VVM_DEVICE_PROVISIONED_JOB,
+                new ComponentName(context, DeviceProvisionedJobService.class))
+                .addTriggerContentUri(new TriggerContentUri(Global.getUriFor(Global.DEVICE_PROVISIONED), 0))
+                // VVM activation must be run as soon as possible to avoid voicemail loss
+                .setTriggerContentMaxDelay(0)
+                .build();
     }
-    return false; // job not running in background
-  }
 
-  @Override
-  public boolean onStopJob(JobParameters params) {
-    return true; // reschedule job
-  }
+    @Override
+    public boolean onStartJob(JobParameters params) {
+        if (!isDeviceProvisioned()) {
+            VvmLog.i("DeviceProvisionedJobService.onStartJob", "device not provisioned, rescheduling");
+            getSystemService(JobScheduler.class).schedule(createJobInfo(this));
+            return false; // job not running in background
+        }
+        VvmLog.i("DeviceProvisionedJobService.onStartJob", "device provisioned");
+        for (JobWorkItem item = params.dequeueWork(); item != null; item = params.dequeueWork()) {
+            PhoneAccountHandle phoneAccountHandle =
+                    item.getIntent().getParcelableExtra(EXTRA_PHONE_ACCOUNT_HANDLE);
+            VvmLog.i(
+                    "DeviceProvisionedJobService.onStartJob",
+                    "restarting activation for " + phoneAccountHandle);
+            ActivationTask.start(this, phoneAccountHandle, null);
+        }
+        return false; // job not running in background
+    }
 
-  private boolean isDeviceProvisioned() {
-    return Settings.Global.getInt(getContentResolver(), Settings.Global.DEVICE_PROVISIONED, 0) == 1;
-  }
+    @Override
+    public boolean onStopJob(JobParameters params) {
+        return true; // reschedule job
+    }
 
-  private static JobInfo createJobInfo(Context context) {
-    return new JobInfo.Builder(
-            ScheduledJobIds.VVM_DEVICE_PROVISIONED_JOB,
-            new ComponentName(context, DeviceProvisionedJobService.class))
-        .addTriggerContentUri(new TriggerContentUri(Global.getUriFor(Global.DEVICE_PROVISIONED), 0))
-        // VVM activation must be run as soon as possible to avoid voicemail loss
-        .setTriggerContentMaxDelay(0)
-        .build();
-  }
+    private boolean isDeviceProvisioned() {
+        return Settings.Global.getInt(getContentResolver(), Settings.Global.DEVICE_PROVISIONED, 0) == 1;
+    }
 }

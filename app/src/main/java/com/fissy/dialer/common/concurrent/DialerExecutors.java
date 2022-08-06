@@ -17,22 +17,26 @@
 package com.fissy.dialer.common.concurrent;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
+
 import com.fissy.dialer.common.Assert;
+
 import java.util.concurrent.ExecutorService;
 
-/** Shared application executors. */
+/**
+ * Shared application executors.
+ */
 public final class DialerExecutors {
 
-  /**
-   * An application-wide thread pool used for low priority (non-UI) tasks.
-   *
-   * <p>This exists to prevent each individual dialer component from having to create its own
-   * threads/pools, which would result in the application having more threads than really necessary.
-   *
-   * @param context any valid context object from which the application context can be retrieved
-   */
-  public static ExecutorService getLowPriorityThreadPool(@NonNull Context context) {
-    return DialerExecutorComponent.get(Assert.isNotNull(context)).lowPriorityThreadPool();
-  }
+    /**
+     * An application-wide thread pool used for low priority (non-UI) tasks.
+     *
+     * <p>This exists to prevent each individual dialer component from having to create its own
+     * threads/pools, which would result in the application having more threads than really necessary.
+     *
+     * @param context any valid context object from which the application context can be retrieved
+     */
+    public static ExecutorService getLowPriorityThreadPool(@NonNull Context context) {
+        return DialerExecutorComponent.get(Assert.isNotNull(context)).lowPriorityThreadPool();
+    }
 }

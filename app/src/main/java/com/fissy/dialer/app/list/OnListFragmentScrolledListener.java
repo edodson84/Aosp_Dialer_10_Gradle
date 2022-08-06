@@ -21,7 +21,7 @@ package com.fissy.dialer.app.list;
  */
 public interface OnListFragmentScrolledListener {
 
-  void onListFragmentScrollStateChange(int scrollState);
+    void onListFragmentScrollStateChange(int scrollState);
 
-  void onListFragmentScroll(int firstVisibleItem, int visibleItemCount, int totalItemCount);
+    void onListFragmentScroll(int firstVisibleItem, int visibleItemCount, int totalItemCount);
 }

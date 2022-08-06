@@ -19,21 +19,23 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build.VERSION_CODES;
 import android.os.UserManager;
-import android.support.annotation.MainThread;
-import android.support.annotation.NonNull;
-import android.support.annotation.VisibleForTesting;
+import androidx.annotation.MainThread;
+import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
 import android.telecom.PhoneAccountHandle;
 import android.telecom.TelecomManager;
 import android.util.ArraySet;
-import com.fissy.dialer.common.Assert;
-import com.fissy.dialer.common.PerAccountSharedPreferences;
-import com.fissy.dialer.common.concurrent.ThreadUtil;
-import com.fissy.dialer.storage.StorageComponent;
+
 import com.android.voicemail.VoicemailClient.ActivationStateListener;
 import com.android.voicemail.impl.OmtpConstants;
 import com.android.voicemail.impl.VisualVoicemailPreferences;
 import com.android.voicemail.impl.VoicemailStatus;
 import com.android.voicemail.impl.sms.StatusMessage;
+import com.fissy.dialer.common.Assert;
+import com.fissy.dialer.common.PerAccountSharedPreferences;
+import com.fissy.dialer.common.concurrent.ThreadUtil;
+import com.fissy.dialer.storage.StorageComponent;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -49,114 +51,115 @@ import java.util.Set;
  */
 @TargetApi(VERSION_CODES.O)
 public class VvmAccountManager {
-  public static final String TAG = "VvmAccountManager";
+    public static final String TAG = "VvmAccountManager";
 
-  @VisibleForTesting static final String IS_ACCOUNT_ACTIVATED = "is_account_activated";
+    @VisibleForTesting
+    static final String IS_ACCOUNT_ACTIVATED = "is_account_activated";
 
-  private static final Set<ActivationStateListener> listeners = new ArraySet<>();
+    private static final Set<ActivationStateListener> listeners = new ArraySet<>();
 
-  public static void addAccount(
-      Context context, PhoneAccountHandle phoneAccountHandle, StatusMessage statusMessage) {
-    VisualVoicemailPreferences preferences =
-        new VisualVoicemailPreferences(context, phoneAccountHandle);
-    statusMessage.putStatus(preferences.edit()).apply();
-    setAccountActivated(context, phoneAccountHandle, true);
+    public static void addAccount(
+            Context context, PhoneAccountHandle phoneAccountHandle, StatusMessage statusMessage) {
+        VisualVoicemailPreferences preferences =
+                new VisualVoicemailPreferences(context, phoneAccountHandle);
+        statusMessage.putStatus(preferences.edit()).apply();
+        setAccountActivated(context, phoneAccountHandle, true);
 
-    ThreadUtil.postOnUiThread(
-        () -> {
-          for (ActivationStateListener listener : listeners) {
-            listener.onActivationStateChanged(phoneAccountHandle, true);
-          }
-        });
-  }
-
-  public static void removeAccount(Context context, PhoneAccountHandle phoneAccount) {
-    VoicemailStatus.disable(context, phoneAccount);
-    setAccountActivated(context, phoneAccount, false);
-    VisualVoicemailPreferences preferences = new VisualVoicemailPreferences(context, phoneAccount);
-    preferences
-        .edit()
-        .putString(OmtpConstants.IMAP_USER_NAME, null)
-        .putString(OmtpConstants.IMAP_PASSWORD, null)
-        .apply();
-    ThreadUtil.postOnUiThread(
-        () -> {
-          for (ActivationStateListener listener : listeners) {
-            listener.onActivationStateChanged(phoneAccount, false);
-          }
-        });
-  }
-
-  public static boolean isAccountActivated(Context context, PhoneAccountHandle phoneAccount) {
-    Assert.isNotNull(phoneAccount);
-    PerAccountSharedPreferences preferences =
-        getPreferenceForActivationState(context, phoneAccount);
-    migrateActivationState(context, preferences, phoneAccount);
-    return preferences.getBoolean(IS_ACCOUNT_ACTIVATED, false);
-  }
-
-  @NonNull
-  public static List<PhoneAccountHandle> getActiveAccounts(Context context) {
-    List<PhoneAccountHandle> results = new ArrayList<>();
-    for (PhoneAccountHandle phoneAccountHandle :
-        context.getSystemService(TelecomManager.class).getCallCapablePhoneAccounts()) {
-      if (isAccountActivated(context, phoneAccountHandle)) {
-        results.add(phoneAccountHandle);
-      }
-    }
-    return results;
-  }
-
-  @MainThread
-  public static void addListener(ActivationStateListener listener) {
-    Assert.isMainThread();
-    listeners.add(listener);
-  }
-
-  @MainThread
-  public static void removeListener(ActivationStateListener listener) {
-    Assert.isMainThread();
-    listeners.remove(listener);
-  }
-
-  /**
-   * The activation state is moved from credential protected storage to device protected storage
-   * after v10, so it can be checked under FBE. The state should be migrated to avoid reactivation.
-   */
-  private static void migrateActivationState(
-      Context context,
-      PerAccountSharedPreferences deviceProtectedPreference,
-      PhoneAccountHandle phoneAccountHandle) {
-    if (!context.getSystemService(UserManager.class).isUserUnlocked()) {
-      return;
-    }
-    if (deviceProtectedPreference.contains(IS_ACCOUNT_ACTIVATED)) {
-      return;
+        ThreadUtil.postOnUiThread(
+                () -> {
+                    for (ActivationStateListener listener : listeners) {
+                        listener.onActivationStateChanged(phoneAccountHandle, true);
+                    }
+                });
     }
 
-    PerAccountSharedPreferences credentialProtectedPreference =
-        new VisualVoicemailPreferences(context, phoneAccountHandle);
+    public static void removeAccount(Context context, PhoneAccountHandle phoneAccount) {
+        VoicemailStatus.disable(context, phoneAccount);
+        setAccountActivated(context, phoneAccount, false);
+        VisualVoicemailPreferences preferences = new VisualVoicemailPreferences(context, phoneAccount);
+        preferences
+                .edit()
+                .putString(OmtpConstants.IMAP_USER_NAME, null)
+                .putString(OmtpConstants.IMAP_PASSWORD, null)
+                .apply();
+        ThreadUtil.postOnUiThread(
+                () -> {
+                    for (ActivationStateListener listener : listeners) {
+                        listener.onActivationStateChanged(phoneAccount, false);
+                    }
+                });
+    }
 
-    deviceProtectedPreference
-        .edit()
-        .putBoolean(
-            IS_ACCOUNT_ACTIVATED,
-            credentialProtectedPreference.getBoolean(IS_ACCOUNT_ACTIVATED, false))
-        .apply();
-  }
+    public static boolean isAccountActivated(Context context, PhoneAccountHandle phoneAccount) {
+        Assert.isNotNull(phoneAccount);
+        PerAccountSharedPreferences preferences =
+                getPreferenceForActivationState(context, phoneAccount);
+        migrateActivationState(context, preferences, phoneAccount);
+        return preferences.getBoolean(IS_ACCOUNT_ACTIVATED, false);
+    }
 
-  private static void setAccountActivated(
-      Context context, PhoneAccountHandle phoneAccountHandle, boolean activated) {
-    Assert.isNotNull(phoneAccountHandle);
-    getPreferenceForActivationState(context, phoneAccountHandle)
-        .edit()
-        .putBoolean(IS_ACCOUNT_ACTIVATED, activated)
-        .apply();
-  }
+    @NonNull
+    public static List<PhoneAccountHandle> getActiveAccounts(Context context) {
+        List<PhoneAccountHandle> results = new ArrayList<>();
+        for (PhoneAccountHandle phoneAccountHandle :
+                context.getSystemService(TelecomManager.class).getCallCapablePhoneAccounts()) {
+            if (isAccountActivated(context, phoneAccountHandle)) {
+                results.add(phoneAccountHandle);
+            }
+        }
+        return results;
+    }
 
-  private static PerAccountSharedPreferences getPreferenceForActivationState(
-      Context context, PhoneAccountHandle phoneAccountHandle) {
-    return new PerAccountSharedPreferences(
-        context, phoneAccountHandle, StorageComponent.get(context).unencryptedSharedPrefs());
-  }
+    @MainThread
+    public static void addListener(ActivationStateListener listener) {
+        Assert.isMainThread();
+        listeners.add(listener);
+    }
+
+    @MainThread
+    public static void removeListener(ActivationStateListener listener) {
+        Assert.isMainThread();
+        listeners.remove(listener);
+    }
+
+    /**
+     * The activation state is moved from credential protected storage to device protected storage
+     * after v10, so it can be checked under FBE. The state should be migrated to avoid reactivation.
+     */
+    private static void migrateActivationState(
+            Context context,
+            PerAccountSharedPreferences deviceProtectedPreference,
+            PhoneAccountHandle phoneAccountHandle) {
+        if (!context.getSystemService(UserManager.class).isUserUnlocked()) {
+            return;
+        }
+        if (deviceProtectedPreference.contains(IS_ACCOUNT_ACTIVATED)) {
+            return;
+        }
+
+        PerAccountSharedPreferences credentialProtectedPreference =
+                new VisualVoicemailPreferences(context, phoneAccountHandle);
+
+        deviceProtectedPreference
+                .edit()
+                .putBoolean(
+                        IS_ACCOUNT_ACTIVATED,
+                        credentialProtectedPreference.getBoolean(IS_ACCOUNT_ACTIVATED, false))
+                .apply();
+    }
+
+    private static void setAccountActivated(
+            Context context, PhoneAccountHandle phoneAccountHandle, boolean activated) {
+        Assert.isNotNull(phoneAccountHandle);
+        getPreferenceForActivationState(context, phoneAccountHandle)
+                .edit()
+                .putBoolean(IS_ACCOUNT_ACTIVATED, activated)
+                .apply();
+    }
+
+    private static PerAccountSharedPreferences getPreferenceForActivationState(
+            Context context, PhoneAccountHandle phoneAccountHandle) {
+        return new PerAccountSharedPreferences(
+                context, phoneAccountHandle, StorageComponent.get(context).unencryptedSharedPrefs());
+    }
 }

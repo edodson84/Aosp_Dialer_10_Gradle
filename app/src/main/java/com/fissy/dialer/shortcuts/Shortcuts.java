@@ -17,20 +17,26 @@
 package com.fissy.dialer.shortcuts;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
+
 import com.fissy.dialer.configprovider.ConfigProviderComponent;
 
-/** Checks if dynamic shortcuts should be enabled. */
+/**
+ * Checks if dynamic shortcuts should be enabled.
+ */
 public class Shortcuts {
 
-  /** Key for boolean config value which determines whether or not to enable dynamic shortcuts. */
-  private static final String DYNAMIC_SHORTCUTS_ENABLED = "dynamic_shortcuts_enabled";
+    /**
+     * Key for boolean config value which determines whether or not to enable dynamic shortcuts.
+     */
+    private static final String DYNAMIC_SHORTCUTS_ENABLED = "dynamic_shortcuts_enabled";
 
-  static boolean areDynamicShortcutsEnabled(@NonNull Context context) {
-    return ConfigProviderComponent.get(context)
-        .getConfigProvider()
-        .getBoolean(DYNAMIC_SHORTCUTS_ENABLED, true);
-  }
+    private Shortcuts() {
+    }
 
-  private Shortcuts() {}
+    static boolean areDynamicShortcutsEnabled(@NonNull Context context) {
+        return ConfigProviderComponent.get(context)
+                .getConfigProvider()
+                .getBoolean(DYNAMIC_SHORTCUTS_ENABLED, true);
+    }
 }

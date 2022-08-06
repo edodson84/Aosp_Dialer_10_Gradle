@@ -1,19 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:orientation="vertical" android:background="?android:colorBackgroundFloating" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginStart="64.0dip" android:layout_marginEnd="24.0dip"
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <TextView android:gravity="center" android:id="@id/playback_state_text" android:layout_width="fill_parent" android:layout_height="wrap_content" style="@style/Dialer.TextAppearance.Secondary" />
-    <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:paddingTop="@dimen/voicemail_playback_top_padding" android:layout_width="fill_parent" android:layout_height="wrap_content">
-        <TextView android:id="@id/playback_position_text" android:layout_width="wrap_content" android:layout_height="wrap_content" android:importantForAccessibility="no" style="@style/Dialer.TextAppearance.Secondary" />
-        <SeekBar android:id="@id/playback_seek" android:layout_width="0.0dip" android:layout_height="wrap_content" android:max="0" android:progress="0" android:progressDrawable="@drawable/seekbar_drawable" android:thumb="@drawable/ic_voicemail_seek_handle" android:layout_weight="1.0" android:contentDescription="@string/description_playback_seek" />
-        <TextView android:id="@id/total_duration_text" android:layout_width="wrap_content" android:layout_height="wrap_content" android:importantForAccessibility="no" style="@style/Dialer.TextAppearance.Secondary" />
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="64.0dip"
+    android:layout_marginEnd="24.0dip"
+    android:background="?android:colorBackgroundFloating"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@id/playback_state_text"
+        style="@style/Dialer.TextAppearance.Secondary"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/voicemail_playback_top_padding">
+
+        <TextView
+            android:id="@id/playback_position_text"
+            style="@style/Dialer.TextAppearance.Secondary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:importantForAccessibility="no" />
+
+        <SeekBar
+            android:id="@id/playback_seek"
+            android:layout_width="0.0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:contentDescription="@string/description_playback_seek"
+            android:max="0"
+            android:progress="0"
+            android:progressDrawable="@drawable/seekbar_drawable"
+            android:thumb="@drawable/ic_voicemail_seek_handle" />
+
+        <TextView
+            android:id="@id/total_duration_text"
+            style="@style/Dialer.TextAppearance.Secondary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:importantForAccessibility="no" />
     </LinearLayout>
-    <LinearLayout android:gravity="center" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
-        <Space android:layout_width="0.0dip" android:layout_height="fill_parent" android:layout_weight="1.0" />
-        <ImageButton android:id="@id/playback_speakerphone" android:src="@drawable/quantum_ic_volume_down_white_24" android:tint="?colorIcon" android:contentDescription="@string/description_playback_speakerphone" style="@style/VoicemailPlaybackLayoutButtonStyle" />
-        <Space android:layout_width="0.0dip" android:layout_height="fill_parent" android:layout_weight="1.0" />
-        <ImageButton android:id="@id/playback_start_stop" android:src="@drawable/ic_play_arrow" android:contentDescription="@string/voicemail_play_start_pause" style="@style/VoicemailPlaybackLayoutButtonStyle" />
-        <Space android:layout_width="0.0dip" android:layout_height="fill_parent" android:layout_weight="1.0" />
-        <ImageButton android:id="@id/delete_voicemail" android:src="@drawable/quantum_ic_delete_white_24" android:tint="?colorIcon" android:contentDescription="@string/call_log_trash_voicemail" style="@style/VoicemailPlaybackLayoutButtonStyle" />
-        <Space android:layout_width="0.0dip" android:layout_height="fill_parent" android:layout_weight="1.0" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Space
+            android:layout_width="0.0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0" />
+
+        <ImageButton
+            android:id="@id/playback_speakerphone"
+            style="@style/VoicemailPlaybackLayoutButtonStyle"
+            android:contentDescription="@string/description_playback_speakerphone"
+            android:src="@drawable/quantum_ic_volume_down_white_24"
+            android:tint="?colorIcon" />
+
+        <Space
+            android:layout_width="0.0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0" />
+
+        <ImageButton
+            android:id="@id/playback_start_stop"
+            style="@style/VoicemailPlaybackLayoutButtonStyle"
+            android:contentDescription="@string/voicemail_play_start_pause"
+            android:src="@drawable/ic_play_arrow" />
+
+        <Space
+            android:layout_width="0.0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0" />
+
+        <ImageButton
+            android:id="@id/delete_voicemail"
+            style="@style/VoicemailPlaybackLayoutButtonStyle"
+            android:contentDescription="@string/call_log_trash_voicemail"
+            android:src="@drawable/quantum_ic_delete_white_24"
+            android:tint="?colorIcon" />
+
+        <Space
+            android:layout_width="0.0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0" />
     </LinearLayout>
 </LinearLayout>

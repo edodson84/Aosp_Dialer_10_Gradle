@@ -16,21 +16,23 @@
 
 package com.android.voicemail.impl.imap;
 
-/** The payload for a voicemail, usually audio data. */
+/**
+ * The payload for a voicemail, usually audio data.
+ */
 public class VoicemailPayload {
-  private final String mimeType;
-  private final byte[] bytes;
+    private final String mimeType;
+    private final byte[] bytes;
 
-  public VoicemailPayload(String mimeType, byte[] bytes) {
-    this.mimeType = mimeType;
-    this.bytes = bytes;
-  }
+    public VoicemailPayload(String mimeType, byte[] bytes) {
+        this.mimeType = mimeType;
+        this.bytes = bytes;
+    }
 
-  public byte[] getBytes() {
-    return bytes;
-  }
+    public byte[] getBytes() {
+        return bytes;
+    }
 
-  public String getMimeType() {
-    return mimeType;
-  }
+    public String getMimeType() {
+        return mimeType;
+    }
 }

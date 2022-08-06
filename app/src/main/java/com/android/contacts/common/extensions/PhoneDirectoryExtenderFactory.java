@@ -14,7 +14,7 @@
 
 package com.android.contacts.common.extensions;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 /**
  * This interface should be implemented by the Application subclass. It allows the contacts module
@@ -22,6 +22,6 @@ import android.support.annotation.NonNull;
  */
 public interface PhoneDirectoryExtenderFactory {
 
-  @NonNull
-  PhoneDirectoryExtender newPhoneDirectoryExtender();
+    @NonNull
+    PhoneDirectoryExtender newPhoneDirectoryExtender();
 }

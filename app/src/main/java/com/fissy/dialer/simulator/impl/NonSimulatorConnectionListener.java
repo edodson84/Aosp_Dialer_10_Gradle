@@ -16,53 +16,56 @@
 
 package com.fissy.dialer.simulator.impl;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.telecom.Connection.RttModifyStatus;
 import android.telecom.DisconnectCause;
+
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.common.concurrent.ThreadUtil;
 import com.fissy.dialer.simulator.Simulator.Event;
 
-/** Listen to call backs from Connections not made by simulator. */
+/**
+ * Listen to call backs from Connections not made by simulator.
+ */
 final class NonSimulatorConnectionListener implements SimulatorConnection.Listener {
 
-  @Override
-  public void onEvent(@NonNull SimulatorConnection connection, @NonNull Event event) {
-    switch (event.type) {
-      case Event.STATE_CHANGE:
-        LogUtil.i(
-            "SimulatorVoiceCall.onEvent",
-            String.format("state changed from %s to %s ", event.data1, event.data2));
-        break;
-      case Event.REJECT:
-        connection.setDisconnected(new DisconnectCause(DisconnectCause.REJECTED));
-        break;
-      case Event.HOLD:
-        connection.setOnHold();
-        break;
-      case Event.ANSWER:
-      case Event.UNHOLD:
-        connection.setActive();
-        break;
-      case Event.DISCONNECT:
-        connection.setDisconnected(new DisconnectCause(DisconnectCause.LOCAL));
-        break;
-      case Event.SESSION_MODIFY_REQUEST:
-        ThreadUtil.postDelayedOnUiThread(() -> connection.handleSessionModifyRequest(event), 2000);
-        break;
-      case Event.START_RTT:
-        boolean accept = true;
-        if (accept) {
-          connection.sendRttInitiationSuccess();
-        } else {
-          connection.sendRttInitiationFailure(RttModifyStatus.SESSION_MODIFY_REQUEST_FAIL);
+    @Override
+    public void onEvent(@NonNull SimulatorConnection connection, @NonNull Event event) {
+        switch (event.type) {
+            case Event.STATE_CHANGE:
+                LogUtil.i(
+                        "SimulatorVoiceCall.onEvent",
+                        String.format("state changed from %s to %s ", event.data1, event.data2));
+                break;
+            case Event.REJECT:
+                connection.setDisconnected(new DisconnectCause(DisconnectCause.REJECTED));
+                break;
+            case Event.HOLD:
+                connection.setOnHold();
+                break;
+            case Event.ANSWER:
+            case Event.UNHOLD:
+                connection.setActive();
+                break;
+            case Event.DISCONNECT:
+                connection.setDisconnected(new DisconnectCause(DisconnectCause.LOCAL));
+                break;
+            case Event.SESSION_MODIFY_REQUEST:
+                ThreadUtil.postDelayedOnUiThread(() -> connection.handleSessionModifyRequest(event), 2000);
+                break;
+            case Event.START_RTT:
+                boolean accept = true;
+                if (accept) {
+                    connection.sendRttInitiationSuccess();
+                } else {
+                    connection.sendRttInitiationFailure(RttModifyStatus.SESSION_MODIFY_REQUEST_FAIL);
+                }
+                break;
+            case Event.NONE:
+            default:
+                LogUtil.i("SimulatorVoiceCall.onEvent", "unexpected event: " + event.type);
+                throw Assert.createIllegalStateFailException();
         }
-        break;
-      case Event.NONE:
-      default:
-        LogUtil.i("SimulatorVoiceCall.onEvent", "unexpected event: " + event.type);
-        throw Assert.createIllegalStateFailException();
     }
-  }
 }

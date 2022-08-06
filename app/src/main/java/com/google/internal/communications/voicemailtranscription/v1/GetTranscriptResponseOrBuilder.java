@@ -4,52 +4,55 @@
 package com.google.internal.communications.voicemailtranscription.v1;
 
 public interface GetTranscriptResponseOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:google.internal.communications.voicemailtranscription.v1.GetTranscriptResponse)
-    com.google.protobuf.MessageLiteOrBuilder {
+        // @@protoc_insertion_point(interface_extends:google.internal.communications.voicemailtranscription.v1.GetTranscriptResponse)
+        com.google.protobuf.MessageLiteOrBuilder {
 
-  /**
-   * <pre>
-   * Status of the trascription process.
-   * </pre>
-   *
-   * <code>optional .google.internal.communications.voicemailtranscription.v1.TranscriptionStatus status = 1;</code>
-   */
-  boolean hasStatus();
-  /**
-   * <pre>
-   * Status of the trascription process.
-   * </pre>
-   *
-   * <code>optional .google.internal.communications.voicemailtranscription.v1.TranscriptionStatus status = 1;</code>
-   */
-  com.google.internal.communications.voicemailtranscription.v1.TranscriptionStatus getStatus();
+    /**
+     * <pre>
+     * Status of the trascription process.
+     * </pre>
+     *
+     * <code>optional .google.internal.communications.voicemailtranscription.v1.TranscriptionStatus status = 1;</code>
+     */
+    boolean hasStatus();
 
-  /**
-   * <pre>
-   * The transcribed text of the voicemail. This is only present if the status
-   * is SUCCESS.
-   * </pre>
-   *
-   * <code>optional string transcript = 2;</code>
-   */
-  boolean hasTranscript();
-  /**
-   * <pre>
-   * The transcribed text of the voicemail. This is only present if the status
-   * is SUCCESS.
-   * </pre>
-   *
-   * <code>optional string transcript = 2;</code>
-   */
-  java.lang.String getTranscript();
-  /**
-   * <pre>
-   * The transcribed text of the voicemail. This is only present if the status
-   * is SUCCESS.
-   * </pre>
-   *
-   * <code>optional string transcript = 2;</code>
-   */
-  com.google.protobuf.ByteString
-      getTranscriptBytes();
+    /**
+     * <pre>
+     * Status of the trascription process.
+     * </pre>
+     *
+     * <code>optional .google.internal.communications.voicemailtranscription.v1.TranscriptionStatus status = 1;</code>
+     */
+    com.google.internal.communications.voicemailtranscription.v1.TranscriptionStatus getStatus();
+
+    /**
+     * <pre>
+     * The transcribed text of the voicemail. This is only present if the status
+     * is SUCCESS.
+     * </pre>
+     *
+     * <code>optional string transcript = 2;</code>
+     */
+    boolean hasTranscript();
+
+    /**
+     * <pre>
+     * The transcribed text of the voicemail. This is only present if the status
+     * is SUCCESS.
+     * </pre>
+     *
+     * <code>optional string transcript = 2;</code>
+     */
+    java.lang.String getTranscript();
+
+    /**
+     * <pre>
+     * The transcribed text of the voicemail. This is only present if the status
+     * is SUCCESS.
+     * </pre>
+     *
+     * <code>optional string transcript = 2;</code>
+     */
+    com.google.protobuf.ByteString
+    getTranscriptBytes();
 }

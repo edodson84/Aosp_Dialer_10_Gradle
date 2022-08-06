@@ -18,6 +18,7 @@ package com.android.voicemail.impl;
 import android.content.Context;
 import android.preference.PreferenceManager;
 import android.telecom.PhoneAccountHandle;
+
 import com.fissy.dialer.common.PerAccountSharedPreferences;
 
 /**
@@ -27,11 +28,11 @@ import com.fissy.dialer.common.PerAccountSharedPreferences;
  */
 public class VisualVoicemailPreferences extends PerAccountSharedPreferences {
 
-  public VisualVoicemailPreferences(Context context, PhoneAccountHandle phoneAccountHandle) {
-    super(
-        context,
-        phoneAccountHandle,
-        PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext()),
-        "visual_voicemail_");
-  }
+    public VisualVoicemailPreferences(Context context, PhoneAccountHandle phoneAccountHandle) {
+        super(
+                context,
+                phoneAccountHandle,
+                PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext()),
+                "visual_voicemail_");
+    }
 }

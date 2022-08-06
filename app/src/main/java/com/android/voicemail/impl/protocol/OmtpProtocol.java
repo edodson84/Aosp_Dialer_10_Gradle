@@ -18,25 +18,26 @@ package com.android.voicemail.impl.protocol;
 
 import android.content.Context;
 import android.telecom.PhoneAccountHandle;
+
 import com.android.voicemail.impl.OmtpConstants;
 import com.android.voicemail.impl.sms.OmtpMessageSender;
 import com.android.voicemail.impl.sms.OmtpStandardMessageSender;
 
 public class OmtpProtocol extends VisualVoicemailProtocol {
 
-  @Override
-  public OmtpMessageSender createMessageSender(
-      Context context,
-      PhoneAccountHandle phoneAccountHandle,
-      short applicationPort,
-      String destinationNumber) {
-    return new OmtpStandardMessageSender(
-        context,
-        phoneAccountHandle,
-        applicationPort,
-        destinationNumber,
-        OmtpConstants.getClientType(),
-        OmtpConstants.PROTOCOL_VERSION1_1,
-        null /*clientPrefix*/);
-  }
+    @Override
+    public OmtpMessageSender createMessageSender(
+            Context context,
+            PhoneAccountHandle phoneAccountHandle,
+            short applicationPort,
+            String destinationNumber) {
+        return new OmtpStandardMessageSender(
+                context,
+                phoneAccountHandle,
+                applicationPort,
+                destinationNumber,
+                OmtpConstants.getClientType(),
+                OmtpConstants.PROTOCOL_VERSION1_1,
+                null /*clientPrefix*/);
+    }
 }

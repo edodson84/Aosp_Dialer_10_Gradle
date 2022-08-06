@@ -18,14 +18,16 @@ package com.fissy.dialer.common;
 
 import android.content.Context;
 
-/** Utility for dp to px conversion */
+/**
+ * Utility for dp to px conversion
+ */
 public class DpUtil {
 
-  public static float pxToDp(Context context, float px) {
-    return px / context.getResources().getDisplayMetrics().density;
-  }
+    public static float pxToDp(Context context, float px) {
+        return px / context.getResources().getDisplayMetrics().density;
+    }
 
-  public static float dpToPx(Context context, float dp) {
-    return dp * context.getResources().getDisplayMetrics().density;
-  }
+    public static float dpToPx(Context context, float dp) {
+        return dp * context.getResources().getDisplayMetrics().density;
+    }
 }

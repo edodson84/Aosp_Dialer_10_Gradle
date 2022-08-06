@@ -17,6 +17,9 @@
 package com.android.incallui.answerproximitysensor;
 
 import android.util.ArraySet;
+
+import com.android.incallui.InCallActivity;
+
 import java.util.Set;
 
 /**
@@ -34,33 +37,34 @@ import java.util.Set;
  */
 public class PseudoScreenState {
 
-  /** Notifies when the on state has changed. */
-  public interface StateChangedListener {
-    void onPseudoScreenStateChanged(boolean isOn);
-  }
+    private final Set<StateChangedListener> listeners = new ArraySet<>();
+    private boolean on = true;
 
-  private final Set<StateChangedListener> listeners = new ArraySet<>();
-
-  private boolean on = true;
-
-  public boolean isOn() {
-    return on;
-  }
-
-  public void setOn(boolean value) {
-    if (on != value) {
-      on = value;
-      for (StateChangedListener listener : listeners) {
-        listener.onPseudoScreenStateChanged(on);
-      }
+    public boolean isOn() {
+        return on;
     }
-  }
 
-  public void addListener(StateChangedListener listener) {
-    listeners.add(listener);
-  }
+    public void setOn(boolean value) {
+        if (on != value) {
+            on = value;
+            for (StateChangedListener listener : listeners) {
+                listener.onPseudoScreenStateChanged(on);
+            }
+        }
+    }
 
-  public void removeListener(StateChangedListener listener) {
-    listeners.remove(listener);
-  }
+    public void addListener(StateChangedListener listener) {
+        listeners.add(listener);
+    }
+
+    public void removeListener(StateChangedListener listener) {
+        listeners.remove(listener);
+    }
+
+    /**
+     * Notifies when the on state has changed.
+     */
+    public interface StateChangedListener {
+        void onPseudoScreenStateChanged(boolean isOn);
+    }
 }

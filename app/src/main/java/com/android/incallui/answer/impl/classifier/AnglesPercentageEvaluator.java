@@ -17,17 +17,17 @@
 package com.android.incallui.answer.impl.classifier;
 
 class AnglesPercentageEvaluator {
-  public static float evaluate(float value) {
-    float evaluation = 0.0f;
-    if (value < 1.00) {
-      evaluation++;
+    public static float evaluate(float value) {
+        float evaluation = 0.0f;
+        if (value < 1.00) {
+            evaluation++;
+        }
+        if (value < 0.90) {
+            evaluation++;
+        }
+        if (value < 0.70) {
+            evaluation++;
+        }
+        return evaluation;
     }
-    if (value < 0.90) {
-      evaluation++;
-    }
-    if (value < 0.70) {
-      evaluation++;
-    }
-    return evaluation;
-  }
 }

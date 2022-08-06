@@ -17,33 +17,37 @@
 package com.fissy.dialer.database;
 
 import android.content.Context;
+
 import java.util.Objects;
 
-/** Accessor for the database bindings. */
+/**
+ * Accessor for the database bindings.
+ */
 public class Database {
 
-  private static DatabaseBindings databaseBindings;
+    private static DatabaseBindings databaseBindings;
 
-  private Database() {}
-
-  public static DatabaseBindings get(Context context) {
-    Objects.requireNonNull(context);
-    if (databaseBindings != null) {
-      return databaseBindings;
+    private Database() {
     }
 
-    Context application = context.getApplicationContext();
-    if (application instanceof DatabaseBindingsFactory) {
-      databaseBindings = ((DatabaseBindingsFactory) application).newDatabaseBindings();
+    public static DatabaseBindings get(Context context) {
+        Objects.requireNonNull(context);
+        if (databaseBindings != null) {
+            return databaseBindings;
+        }
+
+        Context application = context.getApplicationContext();
+        if (application instanceof DatabaseBindingsFactory) {
+            databaseBindings = ((DatabaseBindingsFactory) application).newDatabaseBindings();
+        }
+
+        if (databaseBindings == null) {
+            databaseBindings = new DatabaseBindingsStub();
+        }
+        return databaseBindings;
     }
 
-    if (databaseBindings == null) {
-      databaseBindings = new DatabaseBindingsStub();
+    public static void setForTesting(DatabaseBindings databaseBindings) {
+        Database.databaseBindings = databaseBindings;
     }
-    return databaseBindings;
-  }
-
-  public static void setForTesting(DatabaseBindings databaseBindings) {
-    Database.databaseBindings = databaseBindings;
-  }
 }

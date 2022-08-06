@@ -18,15 +18,18 @@ package com.android.incallui.disconnectdialog;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.telecom.DisconnectCause;
 import android.util.Pair;
+
 import com.android.incallui.call.DialerCall;
 
-/** Interface for disconnect dialog. */
+/**
+ * Interface for disconnect dialog.
+ */
 public interface DisconnectDialog {
 
-  boolean shouldShow(DisconnectCause disconnectCause);
+    boolean shouldShow(DisconnectCause disconnectCause);
 
-  Pair<Dialog, CharSequence> createDialog(@NonNull Context context, DialerCall call);
+    Pair<Dialog, CharSequence> createDialog(@NonNull Context context, DialerCall call);
 }

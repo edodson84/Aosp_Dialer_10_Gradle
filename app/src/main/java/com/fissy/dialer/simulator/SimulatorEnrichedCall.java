@@ -19,11 +19,17 @@ package com.fissy.dialer.simulator;
 import com.fissy.dialer.enrichedcall.EnrichedCallManager;
 import com.google.common.util.concurrent.ListenableFuture;
 
-/** Setup enriched calling environment for {@link Simulator}. */
+/**
+ * Setup enriched calling environment for {@link Simulator}.
+ */
 public interface SimulatorEnrichedCall extends EnrichedCallManager.StateChangedListener {
-  /** Setup a session for an incoming enriched call. */
-  ListenableFuture<Void> setupIncomingEnrichedCall(String number);
+    /**
+     * Setup a session for an incoming enriched call.
+     */
+    ListenableFuture<Void> setupIncomingEnrichedCall(String number);
 
-  /** Setup a session for outgoing enriched call. */
-  ListenableFuture<Void> setupOutgoingEnrichedCall(String number);
+    /**
+     * Setup a session for outgoing enriched call.
+     */
+    ListenableFuture<Void> setupOutgoingEnrichedCall(String number);
 }

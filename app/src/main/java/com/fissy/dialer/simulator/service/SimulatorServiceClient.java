@@ -23,48 +23,55 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.os.RemoteException;
 
-/** Contains the basic logic that a simulator service client needs to get access to the service. */
+/**
+ * Contains the basic logic that a simulator service client needs to get access to the service.
+ */
 public abstract class SimulatorServiceClient {
 
-  /** Initiates service connection. */
-  public void connectionService(Context context) {
-    Intent intent = new Intent(context, SimulatorService.class);
-    SimulatorServiceConnection mConnection = new SimulatorServiceConnection();
-    context.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-    mConnection.bindToClient(this);
-  }
-
-  /** Contains client logic using SimulatorService api defined in ISimulatorService.aidl. */
-  public abstract void process(ISimulatorService service) throws RemoteException;
-
-  private void onServiceConnected(ISimulatorService service) {
-    try {
-      process(service);
-    } catch (RemoteException e) {
-      throw new RuntimeException(e);
-    }
-  }
-
-  private void onServiceDisconnected() {}
-
-  static class SimulatorServiceConnection implements ServiceConnection {
-
-    private SimulatorServiceClient client;
-    private ISimulatorService simulatorService;
-
-    @Override
-    public void onServiceConnected(ComponentName name, IBinder service) {
-      simulatorService = ISimulatorService.Stub.asInterface(service);
-      client.onServiceConnected(simulatorService);
+    /**
+     * Initiates service connection.
+     */
+    public void connectionService(Context context) {
+        Intent intent = new Intent(context, SimulatorService.class);
+        SimulatorServiceConnection mConnection = new SimulatorServiceConnection();
+        context.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+        mConnection.bindToClient(this);
     }
 
-    @Override
-    public void onServiceDisconnected(ComponentName name) {
-      client.onServiceDisconnected();
+    /**
+     * Contains client logic using SimulatorService api defined in ISimulatorService.aidl.
+     */
+    public abstract void process(ISimulatorService service) throws RemoteException;
+
+    private void onServiceConnected(ISimulatorService service) {
+        try {
+            process(service);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    void bindToClient(SimulatorServiceClient client) {
-      this.client = client;
+    private void onServiceDisconnected() {
     }
-  }
+
+    static class SimulatorServiceConnection implements ServiceConnection {
+
+        private SimulatorServiceClient client;
+        private ISimulatorService simulatorService;
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            simulatorService = ISimulatorService.Stub.asInterface(service);
+            client.onServiceConnected(simulatorService);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            client.onServiceDisconnected();
+        }
+
+        void bindToClient(SimulatorServiceClient client) {
+            this.client = client;
+        }
+    }
 }

@@ -25,56 +25,56 @@ import java.io.InputStream;
  * will still return the peeked byte.
  */
 public class PeekableInputStream extends InputStream {
-  private final InputStream in;
-  private boolean peeked;
-  private int peekedByte;
+    private final InputStream in;
+    private boolean peeked;
+    private int peekedByte;
 
-  public PeekableInputStream(InputStream in) {
-    this.in = in;
-  }
-
-  @Override
-  public int read() throws IOException {
-    if (!peeked) {
-      return in.read();
-    } else {
-      peeked = false;
-      return peekedByte;
+    public PeekableInputStream(InputStream in) {
+        this.in = in;
     }
-  }
 
-  public int peek() throws IOException {
-    if (!peeked) {
-      peekedByte = read();
-      peeked = true;
+    @Override
+    public int read() throws IOException {
+        if (!peeked) {
+            return in.read();
+        } else {
+            peeked = false;
+            return peekedByte;
+        }
     }
-    return peekedByte;
-  }
 
-  @Override
-  public int read(byte[] b, int offset, int length) throws IOException {
-    if (!peeked) {
-      return in.read(b, offset, length);
-    } else {
-      b[0] = (byte) peekedByte;
-      peeked = false;
-      int r = in.read(b, offset + 1, length - 1);
-      if (r == -1) {
-        return 1;
-      } else {
-        return r + 1;
-      }
+    public int peek() throws IOException {
+        if (!peeked) {
+            peekedByte = read();
+            peeked = true;
+        }
+        return peekedByte;
     }
-  }
 
-  @Override
-  public int read(byte[] b) throws IOException {
-    return read(b, 0, b.length);
-  }
+    @Override
+    public int read(byte[] b, int offset, int length) throws IOException {
+        if (!peeked) {
+            return in.read(b, offset, length);
+        } else {
+            b[0] = (byte) peekedByte;
+            peeked = false;
+            int r = in.read(b, offset + 1, length - 1);
+            if (r == -1) {
+                return 1;
+            } else {
+                return r + 1;
+            }
+        }
+    }
 
-  @Override
-  public String toString() {
-    return String.format(
-        "PeekableInputStream(in=%s, peeked=%b, peekedByte=%d)", in.toString(), peeked, peekedByte);
-  }
+    @Override
+    public int read(byte[] b) throws IOException {
+        return read(b, 0, b.length);
+    }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "PeekableInputStream(in=%s, peeked=%b, peekedByte=%d)", in.toString(), peeked, peekedByte);
+    }
 }

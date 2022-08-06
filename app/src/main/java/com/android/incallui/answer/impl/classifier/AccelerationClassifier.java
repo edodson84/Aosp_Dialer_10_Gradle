@@ -18,6 +18,7 @@ package com.android.incallui.answer.impl.classifier;
 
 import android.util.ArrayMap;
 import android.view.MotionEvent;
+
 import java.util.Map;
 
 /**
@@ -29,71 +30,71 @@ import java.util.Map;
  * the speed of a part.
  */
 class AccelerationClassifier extends StrokeClassifier {
-  private final Map<Stroke, Data> strokeMap = new ArrayMap<>();
+    private final Map<Stroke, Data> strokeMap = new ArrayMap<>();
 
-  public AccelerationClassifier(ClassifierData classifierData) {
-    this.classifierData = classifierData;
-  }
-
-  @Override
-  public String getTag() {
-    return "ACC";
-  }
-
-  @Override
-  public void onTouchEvent(MotionEvent event) {
-    int action = event.getActionMasked();
-
-    if (action == MotionEvent.ACTION_DOWN) {
-      strokeMap.clear();
+    public AccelerationClassifier(ClassifierData classifierData) {
+        this.classifierData = classifierData;
     }
 
-    for (int i = 0; i < event.getPointerCount(); i++) {
-      Stroke stroke = classifierData.getStroke(event.getPointerId(i));
-      Point point = stroke.getPoints().get(stroke.getPoints().size() - 1);
-      if (strokeMap.get(stroke) == null) {
-        strokeMap.put(stroke, new Data(point));
-      } else {
-        strokeMap.get(stroke).addPoint(point);
-      }
-    }
-  }
-
-  @Override
-  public float getFalseTouchEvaluation(Stroke stroke) {
-    Data data = strokeMap.get(stroke);
-    return 2 * SpeedRatioEvaluator.evaluate(data.maxSpeedRatio);
-  }
-
-  private static class Data {
-
-    static final float MILLIS_TO_NANOS = 1e6f;
-
-    Point previousPoint;
-    float previousSpeed = 0;
-    float maxSpeedRatio = 0;
-
-    public Data(Point point) {
-      previousPoint = point;
+    @Override
+    public String getTag() {
+        return "ACC";
     }
 
-    public void addPoint(Point point) {
-      float distance = previousPoint.dist(point);
-      float duration = (float) (point.timeOffsetNano - previousPoint.timeOffsetNano + 1);
-      float speed = distance / duration;
+    @Override
+    public void onTouchEvent(MotionEvent event) {
+        int action = event.getActionMasked();
 
-      if (duration > 20 * MILLIS_TO_NANOS || duration < 5 * MILLIS_TO_NANOS) {
-        // reject this segment and ensure we won't use data about it in the next round.
-        previousSpeed = 0;
-        previousPoint = point;
-        return;
-      }
-      if (previousSpeed != 0.0f) {
-        maxSpeedRatio = Math.max(maxSpeedRatio, speed / previousSpeed);
-      }
+        if (action == MotionEvent.ACTION_DOWN) {
+            strokeMap.clear();
+        }
 
-      previousSpeed = speed;
-      previousPoint = point;
+        for (int i = 0; i < event.getPointerCount(); i++) {
+            Stroke stroke = classifierData.getStroke(event.getPointerId(i));
+            Point point = stroke.getPoints().get(stroke.getPoints().size() - 1);
+            if (strokeMap.get(stroke) == null) {
+                strokeMap.put(stroke, new Data(point));
+            } else {
+                strokeMap.get(stroke).addPoint(point);
+            }
+        }
     }
-  }
+
+    @Override
+    public float getFalseTouchEvaluation(Stroke stroke) {
+        Data data = strokeMap.get(stroke);
+        return 2 * SpeedRatioEvaluator.evaluate(data.maxSpeedRatio);
+    }
+
+    private static class Data {
+
+        static final float MILLIS_TO_NANOS = 1e6f;
+
+        Point previousPoint;
+        float previousSpeed = 0;
+        float maxSpeedRatio = 0;
+
+        public Data(Point point) {
+            previousPoint = point;
+        }
+
+        public void addPoint(Point point) {
+            float distance = previousPoint.dist(point);
+            float duration = (float) (point.timeOffsetNano - previousPoint.timeOffsetNano + 1);
+            float speed = distance / duration;
+
+            if (duration > 20 * MILLIS_TO_NANOS || duration < 5 * MILLIS_TO_NANOS) {
+                // reject this segment and ensure we won't use data about it in the next round.
+                previousSpeed = 0;
+                previousPoint = point;
+                return;
+            }
+            if (previousSpeed != 0.0f) {
+                maxSpeedRatio = Math.max(maxSpeedRatio, speed / previousSpeed);
+            }
+
+            previousSpeed = speed;
+            previousPoint = point;
+        }
+    }
 }

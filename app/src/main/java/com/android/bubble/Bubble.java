@@ -17,7 +17,8 @@
 package com.android.bubble;
 
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
+
 import java.util.List;
 
 /**
@@ -27,54 +28,60 @@ import java.util.List;
  */
 public interface Bubble {
 
-  /**
-   * Make the bubble visible. Will show a short entrance animation as it enters. If the bubble is
-   * already showing this method does nothing.
-   */
-  void show();
+    /**
+     * Make the bubble visible. Will show a short entrance animation as it enters. If the bubble is
+     * already showing this method does nothing.
+     */
+    void show();
 
-  /** Hide the bubble. */
-  void hide();
+    /**
+     * Hide the bubble.
+     */
+    void hide();
 
-  /** Returns whether the bubble is currently visible */
-  boolean isVisible();
+    /**
+     * Returns whether the bubble is currently visible
+     */
+    boolean isVisible();
 
-  /** Returns whether the bubble is currently dismissed */
-  boolean isDismissed();
+    /**
+     * Returns whether the bubble is currently dismissed
+     */
+    boolean isDismissed();
 
-  /**
-   * Set the info for this Bubble to display
-   *
-   * @param bubbleInfo the BubbleInfo to display in this Bubble.
-   */
-  void setBubbleInfo(@NonNull BubbleInfo bubbleInfo);
+    /**
+     * Set the info for this Bubble to display
+     *
+     * @param bubbleInfo the BubbleInfo to display in this Bubble.
+     */
+    void setBubbleInfo(@NonNull BubbleInfo bubbleInfo);
 
-  /**
-   * Update the state and behavior of actions.
-   *
-   * @param actions the new state of the bubble's actions
-   */
-  void updateActions(@NonNull List<BubbleInfo.Action> actions);
+    /**
+     * Update the state and behavior of actions.
+     *
+     * @param actions the new state of the bubble's actions
+     */
+    void updateActions(@NonNull List<BubbleInfo.Action> actions);
 
-  /**
-   * Update the avatar from photo.
-   *
-   * @param avatar the new photo avatar in the bubble's primary button
-   */
-  void updatePhotoAvatar(@NonNull Drawable avatar);
+    /**
+     * Update the avatar from photo.
+     *
+     * @param avatar the new photo avatar in the bubble's primary button
+     */
+    void updatePhotoAvatar(@NonNull Drawable avatar);
 
-  /**
-   * Update the avatar.
-   *
-   * @param avatar the new avatar in the bubble's primary button
-   */
-  void updateAvatar(@NonNull Drawable avatar);
+    /**
+     * Update the avatar.
+     *
+     * @param avatar the new avatar in the bubble's primary button
+     */
+    void updateAvatar(@NonNull Drawable avatar);
 
-  /**
-   * Display text. The bubble's drawer is not expandable while text is showing, and the drawer will
-   * be closed if already open.
-   *
-   * @param text the text to display to the user
-   */
-  void showText(@NonNull CharSequence text);
+    /**
+     * Display text. The bubble's drawer is not expandable while text is showing, and the drawer will
+     * be closed if already open.
+     *
+     * @param text the text to display to the user
+     */
+    void showText(@NonNull CharSequence text);
 }

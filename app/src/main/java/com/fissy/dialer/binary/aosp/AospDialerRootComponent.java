@@ -17,6 +17,10 @@
 package com.fissy.dialer.binary.aosp;
 
 import com.android.bubble.stub.StubBubbleModule;
+import com.android.incallui.calllocation.stub.StubCallLocationModule;
+import com.android.incallui.maps.stub.StubMapsModule;
+import com.android.incallui.speakeasy.StubSpeakEasyModule;
+import com.android.voicemail.impl.VoicemailModule;
 import com.fissy.dialer.activecalls.ActiveCallsModule;
 import com.fissy.dialer.binary.basecomponent.BaseDialerRootComponent;
 import com.fissy.dialer.calllog.CallLogModule;
@@ -43,46 +47,47 @@ import com.fissy.dialer.spam.stub.StubSpamModule;
 import com.fissy.dialer.storage.StorageModule;
 import com.fissy.dialer.strictmode.impl.SystemStrictModeModule;
 import com.fissy.dialer.theme.base.impl.AospThemeModule;
-import com.android.incallui.calllocation.stub.StubCallLocationModule;
-import com.android.incallui.maps.stub.StubMapsModule;
-import com.android.incallui.speakeasy.StubSpeakEasyModule;
-import com.android.voicemail.impl.VoicemailModule;
-import dagger.Component;
+
 import javax.inject.Singleton;
 
-/** Root component for the AOSP Dialer application. */
+import dagger.Component;
+
+/**
+ * Root component for the AOSP Dialer application.
+ */
 @Singleton
 @Component(
-    modules = {
-      ActiveCallsModule.class,
-      CallLogModule.class,
-      CallLogConfigModule.class,
-      CommandLineModule.class,
-      ContactsModule.class,
-      ContextModule.class,
-      DialerExecutorModule.class,
-      GlidePhotoManagerModule.class,
-      PhoneLookupModule.class,
-      PhoneNumberGeoUtilModule.class,
-      PreCallModule.class,
-      PreferredSimModule.class,
-      PromotionModule.class,
-      SharedPrefConfigProviderModule.class,
-      SimulatorModule.class,
-      StubSimulatorEnrichedCallModule.class,
-      StorageModule.class,
-      StubCallLocationModule.class,
-      StubDuoModule.class,
-      StubEnrichedCallModule.class,
-      StubBubbleModule.class,
-      StubMetricsModule.class,
-      StubFeedbackModule.class,
-      StubMapsModule.class,
-      StubSimSuggestionModule.class,
-      StubSpamModule.class,
-      StubSpeakEasyModule.class,
-      SystemStrictModeModule.class,
-      AospThemeModule.class,
-      VoicemailModule.class,
-    })
-public interface AospDialerRootComponent extends BaseDialerRootComponent {}
+        modules = {
+                ActiveCallsModule.class,
+                CallLogModule.class,
+                CallLogConfigModule.class,
+                CommandLineModule.class,
+                ContactsModule.class,
+                ContextModule.class,
+                DialerExecutorModule.class,
+                GlidePhotoManagerModule.class,
+                PhoneLookupModule.class,
+                PhoneNumberGeoUtilModule.class,
+                PreCallModule.class,
+                PreferredSimModule.class,
+                PromotionModule.class,
+                SharedPrefConfigProviderModule.class,
+                SimulatorModule.class,
+                StubSimulatorEnrichedCallModule.class,
+                StorageModule.class,
+                StubCallLocationModule.class,
+                StubDuoModule.class,
+                StubEnrichedCallModule.class,
+                StubBubbleModule.class,
+                StubMetricsModule.class,
+                StubFeedbackModule.class,
+                StubMapsModule.class,
+                StubSimSuggestionModule.class,
+                StubSpamModule.class,
+                StubSpeakEasyModule.class,
+                SystemStrictModeModule.class,
+                AospThemeModule.class,
+                VoicemailModule.class,
+        })
+public interface AospDialerRootComponent extends BaseDialerRootComponent {
+}

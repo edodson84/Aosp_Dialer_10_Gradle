@@ -19,10 +19,12 @@ package com.android.incallui.rtt.bindings;
 import com.android.incallui.rtt.impl.RttChatFragment;
 import com.android.incallui.rtt.protocol.RttCallScreen;
 
-/** Bindings for RTT module. */
+/**
+ * Bindings for RTT module.
+ */
 public class RttBindings {
 
-  public static RttCallScreen createRttCallScreen(String callId) {
-    return RttChatFragment.newInstance(callId);
-  }
+    public static RttCallScreen createRttCallScreen(String callId) {
+        return RttChatFragment.newInstance(callId);
+    }
 }

@@ -16,26 +16,30 @@
 
 package com.android.incallui.rtt.protocol;
 
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
+
+import com.android.incallui.incall.protocol.InCallScreen;
 import com.fissy.dialer.rtt.RttTranscript;
 import com.fissy.dialer.rtt.RttTranscriptMessage;
-import com.android.incallui.incall.protocol.InCallScreen;
+
 import java.util.List;
 
-/** Interface for call RTT call module. */
+/**
+ * Interface for call RTT call module.
+ */
 public interface RttCallScreen extends InCallScreen {
 
-  void onRttScreenStart();
+    void onRttScreenStart();
 
-  void onRttScreenStop();
+    void onRttScreenStop();
 
-  void onRemoteMessage(String message);
+    void onRemoteMessage(String message);
 
-  void onRestoreRttChat(RttTranscript rttTranscript);
+    void onRestoreRttChat(RttTranscript rttTranscript);
 
-  List<RttTranscriptMessage> getRttTranscriptMessageList();
+    List<RttTranscriptMessage> getRttTranscriptMessageList();
 
-  Fragment getRttCallScreenFragment();
+    Fragment getRttCallScreenFragment();
 
-  String getCallId();
+    String getCallId();
 }

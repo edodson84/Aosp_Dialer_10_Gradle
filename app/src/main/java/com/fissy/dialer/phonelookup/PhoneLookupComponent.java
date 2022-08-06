@@ -16,25 +16,31 @@
 package com.fissy.dialer.phonelookup;
 
 import android.content.Context;
+
 import com.fissy.dialer.inject.HasRootComponent;
 import com.fissy.dialer.inject.IncludeInDialerRoot;
 import com.fissy.dialer.phonelookup.composite.CompositePhoneLookup;
+
 import dagger.Subcomponent;
 
-/** Dagger component for the PhoneLookup package. */
+/**
+ * Dagger component for the PhoneLookup package.
+ */
 @Subcomponent
 public abstract class PhoneLookupComponent {
 
-  public abstract CompositePhoneLookup compositePhoneLookup();
+    public static PhoneLookupComponent get(Context context) {
+        return ((HasComponent) ((HasRootComponent) context.getApplicationContext()).component())
+                .phoneLookupComponent();
+    }
 
-  public static PhoneLookupComponent get(Context context) {
-    return ((HasComponent) ((HasRootComponent) context.getApplicationContext()).component())
-        .phoneLookupComponent();
-  }
+    public abstract CompositePhoneLookup compositePhoneLookup();
 
-  /** Used to refer to the root application component. */
-  @IncludeInDialerRoot
-  public interface HasComponent {
-    PhoneLookupComponent phoneLookupComponent();
-  }
+    /**
+     * Used to refer to the root application component.
+     */
+    @IncludeInDialerRoot
+    public interface HasComponent {
+        PhoneLookupComponent phoneLookupComponent();
+    }
 }

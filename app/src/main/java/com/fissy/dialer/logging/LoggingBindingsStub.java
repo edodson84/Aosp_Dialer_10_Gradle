@@ -16,62 +16,79 @@ package com.fissy.dialer.logging;
 
 import android.app.Activity;
 import android.widget.QuickContactBadge;
+
 import java.util.Collection;
 
-/** Default implementation for logging bindings. */
+/**
+ * Default implementation for logging bindings.
+ */
 public class LoggingBindingsStub implements LoggingBindings {
 
-  @Override
-  public void logImpression(DialerImpression.Type dialerImpression) {}
+    @Override
+    public void logImpression(DialerImpression.Type dialerImpression) {
+    }
 
-  @Override
-  public void logImpression(int dialerImpression) {}
+    @Override
+    public void logImpression(int dialerImpression) {
+    }
 
-  @Override
-  public void logCallImpression(
-      DialerImpression.Type dialerImpression, String callId, long callStartTimeMillis) {}
+    @Override
+    public void logCallImpression(
+            DialerImpression.Type dialerImpression, String callId, long callStartTimeMillis) {
+    }
 
-  @Override
-  public void logInteraction(InteractionEvent.Type interaction) {}
+    @Override
+    public void logInteraction(InteractionEvent.Type interaction) {
+    }
 
-  @Override
-  public void logScreenView(ScreenEvent.Type screenEvent, Activity activity) {}
+    @Override
+    public void logScreenView(ScreenEvent.Type screenEvent, Activity activity) {
+    }
 
-  @Override
-  public void logSpeedDialContactComposition(
-      int counter,
-      int starredContactsCount,
-      int pinnedContactsCount,
-      int multipleNumbersContactsCount,
-      int contactsWithPhotoCount,
-      int contactsWithNameCount,
-      int lightbringerReachableContactsCount) {}
+    @Override
+    public void logSpeedDialContactComposition(
+            int counter,
+            int starredContactsCount,
+            int pinnedContactsCount,
+            int multipleNumbersContactsCount,
+            int contactsWithPhotoCount,
+            int contactsWithNameCount,
+            int lightbringerReachableContactsCount) {
+    }
 
-  @Override
-  public void sendHitEventAnalytics(String category, String action, String label, long value) {}
+    @Override
+    public void sendHitEventAnalytics(String category, String action, String label, long value) {
+    }
 
-  @Override
-  public void logQuickContactOnTouch(
-      QuickContactBadge quickContact,
-      InteractionEvent.Type interactionEvent,
-      boolean shouldPerformClick) {}
+    @Override
+    public void logQuickContactOnTouch(
+            QuickContactBadge quickContact,
+            InteractionEvent.Type interactionEvent,
+            boolean shouldPerformClick) {
+    }
 
-  @Override
-  public void logPeopleApiLookupReportWithError(
-      long latency, int httpResponseCode, PeopleApiLookupError.Type errorType) {}
+    @Override
+    public void logPeopleApiLookupReportWithError(
+            long latency, int httpResponseCode, PeopleApiLookupError.Type errorType) {
+    }
 
-  @Override
-  public void logSuccessfulPeopleApiLookupReport(long latency, int httpResponseCode) {}
+    @Override
+    public void logSuccessfulPeopleApiLookupReport(long latency, int httpResponseCode) {
+    }
 
-  @Override
-  public void logAutoBlockedCall(String phoneNumber) {}
+    @Override
+    public void logAutoBlockedCall(String phoneNumber) {
+    }
 
-  @Override
-  public void logAnnotatedCallLogMetrics(int invalidNumbersInCallLog) {}
+    @Override
+    public void logAnnotatedCallLogMetrics(int invalidNumbersInCallLog) {
+    }
 
-  @Override
-  public void logAnnotatedCallLogMetrics(int numberRowsThatDidPop, int numberRowsThatDidNotPop) {}
+    @Override
+    public void logAnnotatedCallLogMetrics(int numberRowsThatDidPop, int numberRowsThatDidNotPop) {
+    }
 
-  @Override
-  public void logContactsProviderMetrics(Collection<ContactsProviderMatchInfo> matchInfos) {}
+    @Override
+    public void logContactsProviderMetrics(Collection<ContactsProviderMatchInfo> matchInfos) {
+    }
 }

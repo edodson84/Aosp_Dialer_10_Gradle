@@ -19,13 +19,15 @@ package com.fissy.dialer.buildtype;
 import com.fissy.dialer.buildtype.BuildType.Type;
 import com.fissy.dialer.proguard.UsedByReflection;
 
-/** Gets the build type. */
+/**
+ * Gets the build type.
+ */
 @UsedByReflection(value = "BuildType.java")
 public class BuildTypeAccessorImpl implements BuildTypeAccessor {
 
-  @Override
-  @BuildType.Type
-  public int getBuildType() {
-    return Type.RELEASE;
-  }
+    @Override
+    @BuildType.Type
+    public int getBuildType() {
+        return Type.RELEASE;
+    }
 }

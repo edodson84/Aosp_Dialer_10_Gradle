@@ -18,36 +18,38 @@ package com.android.voicemail.impl.scheduling;
 
 import android.content.Context;
 import android.os.Bundle;
-import com.fissy.dialer.proguard.UsedByReflection;
-import com.android.voicemail.impl.VvmLog;
 
-/** Task to block another task of the same ID from being queued for a certain amount of time. */
+import com.android.voicemail.impl.VvmLog;
+import com.fissy.dialer.proguard.UsedByReflection;
+
+/**
+ * Task to block another task of the same ID from being queued for a certain amount of time.
+ */
 @UsedByReflection(value = "Tasks.java")
 public class BlockerTask extends BaseTask {
 
-  private static final String TAG = "BlockerTask";
+    public static final String EXTRA_TASK_ID = "extra_task_id";
+    public static final String EXTRA_BLOCK_FOR_MILLIS = "extra_block_for_millis";
+    private static final String TAG = "BlockerTask";
 
-  public static final String EXTRA_TASK_ID = "extra_task_id";
-  public static final String EXTRA_BLOCK_FOR_MILLIS = "extra_block_for_millis";
+    public BlockerTask() {
+        super(TASK_INVALID);
+    }
 
-  public BlockerTask() {
-    super(TASK_INVALID);
-  }
+    @Override
+    public void onCreate(Context context, Bundle extras) {
+        super.onCreate(context, extras);
+        setId(extras.getInt(EXTRA_TASK_ID, TASK_INVALID));
+        setExecutionTime(getTimeMillis() + extras.getInt(EXTRA_BLOCK_FOR_MILLIS, 0));
+    }
 
-  @Override
-  public void onCreate(Context context, Bundle extras) {
-    super.onCreate(context, extras);
-    setId(extras.getInt(EXTRA_TASK_ID, TASK_INVALID));
-    setExecutionTime(getTimeMillis() + extras.getInt(EXTRA_BLOCK_FOR_MILLIS, 0));
-  }
+    @Override
+    public void onExecuteInBackgroundThread() {
+        // Do nothing.
+    }
 
-  @Override
-  public void onExecuteInBackgroundThread() {
-    // Do nothing.
-  }
-
-  @Override
-  public void onDuplicatedTaskAdded(Task task) {
-    VvmLog.i(TAG, task + "blocked, " + getReadyInMilliSeconds() + "millis remaining");
-  }
+    @Override
+    public void onDuplicatedTaskAdded(Task task) {
+        VvmLog.i(TAG, task + "blocked, " + getReadyInMilliSeconds() + "millis remaining");
+    }
 }

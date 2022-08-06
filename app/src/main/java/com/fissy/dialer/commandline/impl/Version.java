@@ -19,46 +19,51 @@ package com.fissy.dialer.commandline.impl;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
+
 import com.fissy.dialer.commandline.Arguments;
 import com.fissy.dialer.commandline.Command;
 import com.fissy.dialer.inject.ApplicationContext;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
+
 import java.util.Locale;
+
 import javax.inject.Inject;
 
-/** Print the version name and code. */
+/**
+ * Print the version name and code.
+ */
 public class Version implements Command {
 
-  @NonNull
-  @Override
-  public String getShortDescription() {
-    return "Print dialer version";
-  }
+    private final Context appContext;
 
-  @NonNull
-  @Override
-  public String getUsage() {
-    return "version";
-  }
-
-  private final Context appContext;
-
-  @Inject
-  Version(@ApplicationContext Context context) {
-    this.appContext = context;
-  }
-
-  @Override
-  public ListenableFuture<String> run(Arguments args) throws IllegalCommandLineArgumentException {
-    try {
-      PackageInfo info =
-          appContext.getPackageManager().getPackageInfo(appContext.getPackageName(), 0);
-      return Futures.immediateFuture(
-          String.format(Locale.US, "%s(%d)", info.versionName, info.versionCode));
-    } catch (NameNotFoundException e) {
-      throw new RuntimeException(e);
+    @Inject
+    Version(@ApplicationContext Context context) {
+        this.appContext = context;
     }
-  }
+
+    @NonNull
+    @Override
+    public String getShortDescription() {
+        return "Print dialer version";
+    }
+
+    @NonNull
+    @Override
+    public String getUsage() {
+        return "version";
+    }
+
+    @Override
+    public ListenableFuture<String> run(Arguments args) throws IllegalCommandLineArgumentException {
+        try {
+            PackageInfo info =
+                    appContext.getPackageManager().getPackageInfo(appContext.getPackageName(), 0);
+            return Futures.immediateFuture(
+                    String.format(Locale.US, "%s(%d)", info.versionName, info.versionCode));
+        } catch (NameNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

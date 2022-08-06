@@ -17,28 +17,34 @@
 package com.fissy.dialer.simulator;
 
 import android.content.Context;
+
 import com.fissy.dialer.inject.HasRootComponent;
 import com.fissy.dialer.inject.IncludeInDialerRoot;
+
 import dagger.Subcomponent;
 
-/** Subcomponent that can be used to access the simulator implementation. */
+/**
+ * Subcomponent that can be used to access the simulator implementation.
+ */
 @Subcomponent
 public abstract class SimulatorComponent {
 
-  public abstract Simulator getSimulator();
+    public static SimulatorComponent get(Context context) {
+        return ((HasComponent) ((HasRootComponent) context.getApplicationContext()).component())
+                .simulatorComponent();
+    }
 
-  public abstract SimulatorEnrichedCall getSimulatorEnrichedCall();
+    public abstract Simulator getSimulator();
 
-  public abstract SimulatorConnectionsBank getSimulatorConnectionsBank();
+    public abstract SimulatorEnrichedCall getSimulatorEnrichedCall();
 
-  public static SimulatorComponent get(Context context) {
-    return ((HasComponent) ((HasRootComponent) context.getApplicationContext()).component())
-        .simulatorComponent();
-  }
+    public abstract SimulatorConnectionsBank getSimulatorConnectionsBank();
 
-  /** Used to refer to the root application component. */
-  @IncludeInDialerRoot
-  public interface HasComponent {
-    SimulatorComponent simulatorComponent();
-  }
+    /**
+     * Used to refer to the root application component.
+     */
+    @IncludeInDialerRoot
+    public interface HasComponent {
+        SimulatorComponent simulatorComponent();
+    }
 }

@@ -19,10 +19,11 @@ import android.annotation.TargetApi;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.os.Build.VERSION_CODES;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.telecom.PhoneAccountHandle;
 import android.telephony.SmsManager;
 import android.telephony.TelephonyManager;
+
 import com.android.voicemail.impl.OmtpConstants;
 import com.android.voicemail.impl.VvmLog;
 
@@ -37,59 +38,62 @@ import com.android.voicemail.impl.VvmLog;
  */
 @TargetApi(VERSION_CODES.O)
 public abstract class OmtpMessageSender {
-  protected static final String TAG = "OmtpMessageSender";
-  protected final Context context;
-  protected final PhoneAccountHandle phoneAccountHandle;
-  protected final short applicationPort;
-  protected final String destinationNumber;
+    protected static final String TAG = "OmtpMessageSender";
+    protected final Context context;
+    protected final PhoneAccountHandle phoneAccountHandle;
+    protected final short applicationPort;
+    protected final String destinationNumber;
 
-  public OmtpMessageSender(
-      Context context,
-      PhoneAccountHandle phoneAccountHandle,
-      short applicationPort,
-      String destinationNumber) {
-    this.context = context;
-    this.phoneAccountHandle = phoneAccountHandle;
-    this.applicationPort = applicationPort;
-    this.destinationNumber = destinationNumber;
-  }
+    public OmtpMessageSender(
+            Context context,
+            PhoneAccountHandle phoneAccountHandle,
+            short applicationPort,
+            String destinationNumber) {
+        this.context = context;
+        this.phoneAccountHandle = phoneAccountHandle;
+        this.applicationPort = applicationPort;
+        this.destinationNumber = destinationNumber;
+    }
 
-  /**
-   * Sends a request to the VVM server to activate VVM for the current subscriber.
-   *
-   * @param sentIntent If not NULL this PendingIntent is broadcast when the message is successfully
-   *     sent, or failed.
-   */
-  public void requestVvmActivation(@Nullable PendingIntent sentIntent) {}
+    /**
+     * Sends a request to the VVM server to activate VVM for the current subscriber.
+     *
+     * @param sentIntent If not NULL this PendingIntent is broadcast when the message is successfully
+     *                   sent, or failed.
+     */
+    public void requestVvmActivation(@Nullable PendingIntent sentIntent) {
+    }
 
-  /**
-   * Sends a request to the VVM server to deactivate VVM for the current subscriber.
-   *
-   * @param sentIntent If not NULL this PendingIntent is broadcast when the message is successfully
-   *     sent, or failed.
-   */
-  public void requestVvmDeactivation(@Nullable PendingIntent sentIntent) {}
+    /**
+     * Sends a request to the VVM server to deactivate VVM for the current subscriber.
+     *
+     * @param sentIntent If not NULL this PendingIntent is broadcast when the message is successfully
+     *                   sent, or failed.
+     */
+    public void requestVvmDeactivation(@Nullable PendingIntent sentIntent) {
+    }
 
-  /**
-   * Send a request to the VVM server to get account status of the current subscriber.
-   *
-   * @param sentIntent If not NULL this PendingIntent is broadcast when the message is successfully
-   *     sent, or failed.
-   */
-  public void requestVvmStatus(@Nullable PendingIntent sentIntent) {}
+    /**
+     * Send a request to the VVM server to get account status of the current subscriber.
+     *
+     * @param sentIntent If not NULL this PendingIntent is broadcast when the message is successfully
+     *                   sent, or failed.
+     */
+    public void requestVvmStatus(@Nullable PendingIntent sentIntent) {
+    }
 
-  protected void sendSms(String text, PendingIntent sentIntent) {
+    protected void sendSms(String text, PendingIntent sentIntent) {
 
-    VvmLog.v(
-        TAG, String.format("Sending sms '%s' to %s:%d", text, destinationNumber, applicationPort));
+        VvmLog.v(
+                TAG, String.format("Sending sms '%s' to %s:%d", text, destinationNumber, applicationPort));
 
-    context
-        .getSystemService(TelephonyManager.class)
-        .createForPhoneAccountHandle(phoneAccountHandle)
-        .sendVisualVoicemailSms(destinationNumber, applicationPort, text, sentIntent);
-  }
+        context
+                .getSystemService(TelephonyManager.class)
+                .createForPhoneAccountHandle(phoneAccountHandle)
+                .sendVisualVoicemailSms(destinationNumber, applicationPort, text, sentIntent);
+    }
 
-  protected void appendField(StringBuilder sb, String field, Object value) {
-    sb.append(field).append(OmtpConstants.SMS_KEY_VALUE_SEPARATOR).append(value);
-  }
+    protected void appendField(StringBuilder sb, String field, Object value) {
+        sb.append(field).append(OmtpConstants.SMS_KEY_VALUE_SEPARATOR).append(value);
+    }
 }

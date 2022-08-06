@@ -18,11 +18,13 @@ package com.android.incallui.answer.impl.hint;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
-/** Loads a {@link Drawable} payload for the {@link PawAnswerHint} if it should be displayed. */
+/**
+ * Loads a {@link Drawable} payload for the {@link PawAnswerHint} if it should be displayed.
+ */
 public interface PawImageLoader {
-  @Nullable
-  Drawable loadPayload(@NonNull Context context);
+    @Nullable
+    Drawable loadPayload(@NonNull Context context);
 }

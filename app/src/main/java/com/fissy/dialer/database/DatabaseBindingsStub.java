@@ -18,18 +18,20 @@ package com.fissy.dialer.database;
 
 import android.content.Context;
 
-/** Default implementation for database bindings. */
+/**
+ * Default implementation for database bindings.
+ */
 public class DatabaseBindingsStub implements DatabaseBindings {
 
-  private DialerDatabaseHelper dialerDatabaseHelper;
+    private DialerDatabaseHelper dialerDatabaseHelper;
 
-  @Override
-  public DialerDatabaseHelper getDatabaseHelper(Context context) {
-    if (dialerDatabaseHelper == null) {
-      dialerDatabaseHelper =
-          new DialerDatabaseHelper(
-              context, DialerDatabaseHelper.DATABASE_NAME, DialerDatabaseHelper.DATABASE_VERSION);
+    @Override
+    public DialerDatabaseHelper getDatabaseHelper(Context context) {
+        if (dialerDatabaseHelper == null) {
+            dialerDatabaseHelper =
+                    new DialerDatabaseHelper(
+                            context, DialerDatabaseHelper.DATABASE_NAME, DialerDatabaseHelper.DATABASE_VERSION);
+        }
+        return dialerDatabaseHelper;
     }
-    return dialerDatabaseHelper;
-  }
 }

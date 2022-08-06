@@ -17,17 +17,17 @@
 package com.android.voicemail.impl.mail;
 
 public class AuthenticationFailedException extends MessagingException {
-  public static final long serialVersionUID = -1;
+    public static final long serialVersionUID = -1;
 
-  public AuthenticationFailedException(String message) {
-    super(MessagingException.AUTHENTICATION_FAILED, message);
-  }
+    public AuthenticationFailedException(String message) {
+        super(MessagingException.AUTHENTICATION_FAILED, message);
+    }
 
-  public AuthenticationFailedException(int exceptionType, String message) {
-    super(exceptionType, message);
-  }
+    public AuthenticationFailedException(int exceptionType, String message) {
+        super(exceptionType, message);
+    }
 
-  public AuthenticationFailedException(String message, Throwable throwable) {
-    super(MessagingException.AUTHENTICATION_FAILED, message, throwable);
-  }
+    public AuthenticationFailedException(String message, Throwable throwable) {
+        super(MessagingException.AUTHENTICATION_FAILED, message, throwable);
+    }
 }

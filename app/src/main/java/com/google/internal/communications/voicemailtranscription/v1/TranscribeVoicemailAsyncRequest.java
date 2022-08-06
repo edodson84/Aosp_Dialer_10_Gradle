@@ -7,394 +7,125 @@ package com.google.internal.communications.voicemailtranscription.v1;
  * <pre>
  * Request for asynchronous voicemail transcription.
  * </pre>
- *
+ * <p>
  * Protobuf type {@code google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest}
  */
-public  final class TranscribeVoicemailAsyncRequest extends
-    com.google.protobuf.GeneratedMessageLite<
-        TranscribeVoicemailAsyncRequest, TranscribeVoicemailAsyncRequest.Builder> implements
-    // @@protoc_insertion_point(message_implements:google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest)
-    TranscribeVoicemailAsyncRequestOrBuilder {
-  private TranscribeVoicemailAsyncRequest() {
-    voicemailData_ = com.google.protobuf.ByteString.EMPTY;
-    audioFormat_ = 0;
-    transcriptionId_ = "";
-    donationPreference_ = 0;
-  }
-  private int bitField0_;
-  public static final int VOICEMAIL_DATA_FIELD_NUMBER = 1;
-  private com.google.protobuf.ByteString voicemailData_;
-  /**
-   * <pre>
-   * Voicemail audio data encoded in the format specified by audio_format.
-   * </pre>
-   *
-   * <code>optional bytes voicemail_data = 1;</code>
-   */
-  public boolean hasVoicemailData() {
-    return ((bitField0_ & 0x00000001) == 0x00000001);
-  }
-  /**
-   * <pre>
-   * Voicemail audio data encoded in the format specified by audio_format.
-   * </pre>
-   *
-   * <code>optional bytes voicemail_data = 1;</code>
-   */
-  public com.google.protobuf.ByteString getVoicemailData() {
-    return voicemailData_;
-  }
-  /**
-   * <pre>
-   * Voicemail audio data encoded in the format specified by audio_format.
-   * </pre>
-   *
-   * <code>optional bytes voicemail_data = 1;</code>
-   */
-  private void setVoicemailData(com.google.protobuf.ByteString value) {
-    if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000001;
-    voicemailData_ = value;
-  }
-  /**
-   * <pre>
-   * Voicemail audio data encoded in the format specified by audio_format.
-   * </pre>
-   *
-   * <code>optional bytes voicemail_data = 1;</code>
-   */
-  private void clearVoicemailData() {
-    bitField0_ = (bitField0_ & ~0x00000001);
-    voicemailData_ = getDefaultInstance().getVoicemailData();
-  }
+public final class TranscribeVoicemailAsyncRequest extends
+        com.google.protobuf.GeneratedMessageLite<
+                TranscribeVoicemailAsyncRequest, TranscribeVoicemailAsyncRequest.Builder> implements
+        // @@protoc_insertion_point(message_implements:google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest)
+        TranscribeVoicemailAsyncRequestOrBuilder {
+    public static final int VOICEMAIL_DATA_FIELD_NUMBER = 1;
+    public static final int AUDIO_FORMAT_FIELD_NUMBER = 2;
+    public static final int TRANSCRIPTION_ID_FIELD_NUMBER = 3;
+    public static final int DONATION_PREFERENCE_FIELD_NUMBER = 4;
+    // @@protoc_insertion_point(class_scope:google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest)
+    private static final com.google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest DEFAULT_INSTANCE;
+    private static volatile com.google.protobuf.Parser<TranscribeVoicemailAsyncRequest> PARSER;
 
-  public static final int AUDIO_FORMAT_FIELD_NUMBER = 2;
-  private int audioFormat_;
-  /**
-   * <pre>
-   * Audio format of the voicemail file.
-   * </pre>
-   *
-   * <code>optional .google.internal.communications.voicemailtranscription.v1.AudioFormat audio_format = 2;</code>
-   */
-  public boolean hasAudioFormat() {
-    return ((bitField0_ & 0x00000002) == 0x00000002);
-  }
-  /**
-   * <pre>
-   * Audio format of the voicemail file.
-   * </pre>
-   *
-   * <code>optional .google.internal.communications.voicemailtranscription.v1.AudioFormat audio_format = 2;</code>
-   */
-  public com.google.internal.communications.voicemailtranscription.v1.AudioFormat getAudioFormat() {
-    com.google.internal.communications.voicemailtranscription.v1.AudioFormat result = com.google.internal.communications.voicemailtranscription.v1.AudioFormat.forNumber(audioFormat_);
-    return result == null ? com.google.internal.communications.voicemailtranscription.v1.AudioFormat.AUDIO_FORMAT_UNSPECIFIED : result;
-  }
-  /**
-   * <pre>
-   * Audio format of the voicemail file.
-   * </pre>
-   *
-   * <code>optional .google.internal.communications.voicemailtranscription.v1.AudioFormat audio_format = 2;</code>
-   */
-  private void setAudioFormat(com.google.internal.communications.voicemailtranscription.v1.AudioFormat value) {
-    if (value == null) {
-      throw new NullPointerException();
-    }
-    bitField0_ |= 0x00000002;
-    audioFormat_ = value.getNumber();
-  }
-  /**
-   * <pre>
-   * Audio format of the voicemail file.
-   * </pre>
-   *
-   * <code>optional .google.internal.communications.voicemailtranscription.v1.AudioFormat audio_format = 2;</code>
-   */
-  private void clearAudioFormat() {
-    bitField0_ = (bitField0_ & ~0x00000002);
-    audioFormat_ = 0;
-  }
-
-  public static final int TRANSCRIPTION_ID_FIELD_NUMBER = 3;
-  private java.lang.String transcriptionId_;
-  /**
-   * <pre>
-   * The client may provide their own unique ID for this transcription. It
-   * should be globally unique across all voicemails from all users.
-   * If the given transcription_id is not unique, an ALREADY_EXISTS (409) error
-   * will be returned.
-   * If no transcription_id is provided, one will be generated by the server.
-   * </pre>
-   *
-   * <code>optional string transcription_id = 3;</code>
-   */
-  public boolean hasTranscriptionId() {
-    return ((bitField0_ & 0x00000004) == 0x00000004);
-  }
-  /**
-   * <pre>
-   * The client may provide their own unique ID for this transcription. It
-   * should be globally unique across all voicemails from all users.
-   * If the given transcription_id is not unique, an ALREADY_EXISTS (409) error
-   * will be returned.
-   * If no transcription_id is provided, one will be generated by the server.
-   * </pre>
-   *
-   * <code>optional string transcription_id = 3;</code>
-   */
-  public java.lang.String getTranscriptionId() {
-    return transcriptionId_;
-  }
-  /**
-   * <pre>
-   * The client may provide their own unique ID for this transcription. It
-   * should be globally unique across all voicemails from all users.
-   * If the given transcription_id is not unique, an ALREADY_EXISTS (409) error
-   * will be returned.
-   * If no transcription_id is provided, one will be generated by the server.
-   * </pre>
-   *
-   * <code>optional string transcription_id = 3;</code>
-   */
-  public com.google.protobuf.ByteString
-      getTranscriptionIdBytes() {
-    return com.google.protobuf.ByteString.copyFromUtf8(transcriptionId_);
-  }
-  /**
-   * <pre>
-   * The client may provide their own unique ID for this transcription. It
-   * should be globally unique across all voicemails from all users.
-   * If the given transcription_id is not unique, an ALREADY_EXISTS (409) error
-   * will be returned.
-   * If no transcription_id is provided, one will be generated by the server.
-   * </pre>
-   *
-   * <code>optional string transcription_id = 3;</code>
-   */
-  private void setTranscriptionId(
-      java.lang.String value) {
-    if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000004;
-    transcriptionId_ = value;
-  }
-  /**
-   * <pre>
-   * The client may provide their own unique ID for this transcription. It
-   * should be globally unique across all voicemails from all users.
-   * If the given transcription_id is not unique, an ALREADY_EXISTS (409) error
-   * will be returned.
-   * If no transcription_id is provided, one will be generated by the server.
-   * </pre>
-   *
-   * <code>optional string transcription_id = 3;</code>
-   */
-  private void clearTranscriptionId() {
-    bitField0_ = (bitField0_ & ~0x00000004);
-    transcriptionId_ = getDefaultInstance().getTranscriptionId();
-  }
-  /**
-   * <pre>
-   * The client may provide their own unique ID for this transcription. It
-   * should be globally unique across all voicemails from all users.
-   * If the given transcription_id is not unique, an ALREADY_EXISTS (409) error
-   * will be returned.
-   * If no transcription_id is provided, one will be generated by the server.
-   * </pre>
-   *
-   * <code>optional string transcription_id = 3;</code>
-   */
-  private void setTranscriptionIdBytes(
-      com.google.protobuf.ByteString value) {
-    if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000004;
-    transcriptionId_ = value.toStringUtf8();
-  }
-
-  public static final int DONATION_PREFERENCE_FIELD_NUMBER = 4;
-  private int donationPreference_;
-  /**
-   * <pre>
-   * User's donation preference.
-   * </pre>
-   *
-   * <code>optional .google.internal.communications.voicemailtranscription.v1.DonationPreference donation_preference = 4;</code>
-   */
-  public boolean hasDonationPreference() {
-    return ((bitField0_ & 0x00000008) == 0x00000008);
-  }
-  /**
-   * <pre>
-   * User's donation preference.
-   * </pre>
-   *
-   * <code>optional .google.internal.communications.voicemailtranscription.v1.DonationPreference donation_preference = 4;</code>
-   */
-  public com.google.internal.communications.voicemailtranscription.v1.DonationPreference getDonationPreference() {
-    com.google.internal.communications.voicemailtranscription.v1.DonationPreference result = com.google.internal.communications.voicemailtranscription.v1.DonationPreference.forNumber(donationPreference_);
-    return result == null ? com.google.internal.communications.voicemailtranscription.v1.DonationPreference.USER_PREFERENCE_UNSPECIFIED : result;
-  }
-  /**
-   * <pre>
-   * User's donation preference.
-   * </pre>
-   *
-   * <code>optional .google.internal.communications.voicemailtranscription.v1.DonationPreference donation_preference = 4;</code>
-   */
-  private void setDonationPreference(com.google.internal.communications.voicemailtranscription.v1.DonationPreference value) {
-    if (value == null) {
-      throw new NullPointerException();
-    }
-    bitField0_ |= 0x00000008;
-    donationPreference_ = value.getNumber();
-  }
-  /**
-   * <pre>
-   * User's donation preference.
-   * </pre>
-   *
-   * <code>optional .google.internal.communications.voicemailtranscription.v1.DonationPreference donation_preference = 4;</code>
-   */
-  private void clearDonationPreference() {
-    bitField0_ = (bitField0_ & ~0x00000008);
-    donationPreference_ = 0;
-  }
-
-  public void writeTo(com.google.protobuf.CodedOutputStream output)
-                      throws java.io.IOException {
-    if (((bitField0_ & 0x00000001) == 0x00000001)) {
-      output.writeBytes(1, voicemailData_);
-    }
-    if (((bitField0_ & 0x00000002) == 0x00000002)) {
-      output.writeEnum(2, audioFormat_);
-    }
-    if (((bitField0_ & 0x00000004) == 0x00000004)) {
-      output.writeString(3, getTranscriptionId());
-    }
-    if (((bitField0_ & 0x00000008) == 0x00000008)) {
-      output.writeEnum(4, donationPreference_);
-    }
-    unknownFields.writeTo(output);
-  }
-
-  public int getSerializedSize() {
-    int size = memoizedSerializedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (((bitField0_ & 0x00000001) == 0x00000001)) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeBytesSize(1, voicemailData_);
-    }
-    if (((bitField0_ & 0x00000002) == 0x00000002)) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeEnumSize(2, audioFormat_);
-    }
-    if (((bitField0_ & 0x00000004) == 0x00000004)) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeStringSize(3, getTranscriptionId());
-    }
-    if (((bitField0_ & 0x00000008) == 0x00000008)) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeEnumSize(4, donationPreference_);
-    }
-    size += unknownFields.getSerializedSize();
-    memoizedSerializedSize = size;
-    return size;
-  }
-
-  public static com.google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest parseFrom(
-      com.google.protobuf.ByteString data)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-    return com.google.protobuf.GeneratedMessageLite.parseFrom(
-        DEFAULT_INSTANCE, data);
-  }
-  public static com.google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest parseFrom(
-      com.google.protobuf.ByteString data,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-    return com.google.protobuf.GeneratedMessageLite.parseFrom(
-        DEFAULT_INSTANCE, data, extensionRegistry);
-  }
-  public static com.google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest parseFrom(byte[] data)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-    return com.google.protobuf.GeneratedMessageLite.parseFrom(
-        DEFAULT_INSTANCE, data);
-  }
-  public static com.google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest parseFrom(
-      byte[] data,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-    return com.google.protobuf.GeneratedMessageLite.parseFrom(
-        DEFAULT_INSTANCE, data, extensionRegistry);
-  }
-  public static com.google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest parseFrom(java.io.InputStream input)
-      throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageLite.parseFrom(
-        DEFAULT_INSTANCE, input);
-  }
-  public static com.google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest parseFrom(
-      java.io.InputStream input,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageLite.parseFrom(
-        DEFAULT_INSTANCE, input, extensionRegistry);
-  }
-  public static com.google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest parseDelimitedFrom(java.io.InputStream input)
-      throws java.io.IOException {
-    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
-  }
-  public static com.google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest parseDelimitedFrom(
-      java.io.InputStream input,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws java.io.IOException {
-    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
-  }
-  public static com.google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest parseFrom(
-      com.google.protobuf.CodedInputStream input)
-      throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageLite.parseFrom(
-        DEFAULT_INSTANCE, input);
-  }
-  public static com.google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest parseFrom(
-      com.google.protobuf.CodedInputStream input,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageLite.parseFrom(
-        DEFAULT_INSTANCE, input, extensionRegistry);
-  }
-
-  public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
-  }
-  public static Builder newBuilder(com.google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-  }
-
-  /**
-   * <pre>
-   * Request for asynchronous voicemail transcription.
-   * </pre>
-   *
-   * Protobuf type {@code google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest}
-   */
-  public static final class Builder extends
-      com.google.protobuf.GeneratedMessageLite.Builder<
-        com.google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest, Builder> implements
-      // @@protoc_insertion_point(builder_implements:google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest)
-      com.google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequestOrBuilder {
-    // Construct using com.google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest.newBuilder()
-    private Builder() {
-      super(DEFAULT_INSTANCE);
+    static {
+        DEFAULT_INSTANCE = new TranscribeVoicemailAsyncRequest();
+        DEFAULT_INSTANCE.makeImmutable();
     }
 
+    private int bitField0_;
+    private com.google.protobuf.ByteString voicemailData_;
+    private int audioFormat_;
+    private java.lang.String transcriptionId_;
+    private int donationPreference_;
+
+    private TranscribeVoicemailAsyncRequest() {
+        voicemailData_ = com.google.protobuf.ByteString.EMPTY;
+        audioFormat_ = 0;
+        transcriptionId_ = "";
+        donationPreference_ = 0;
+    }
+
+    public static com.google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest parseFrom(
+            com.google.protobuf.ByteString data)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+        return com.google.protobuf.GeneratedMessageLite.parseFrom(
+                DEFAULT_INSTANCE, data);
+    }
+
+    public static com.google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest parseFrom(
+            com.google.protobuf.ByteString data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+        return com.google.protobuf.GeneratedMessageLite.parseFrom(
+                DEFAULT_INSTANCE, data, extensionRegistry);
+    }
+
+    public static com.google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest parseFrom(byte[] data)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+        return com.google.protobuf.GeneratedMessageLite.parseFrom(
+                DEFAULT_INSTANCE, data);
+    }
+
+    public static com.google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest parseFrom(
+            byte[] data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+        return com.google.protobuf.GeneratedMessageLite.parseFrom(
+                DEFAULT_INSTANCE, data, extensionRegistry);
+    }
+
+    public static com.google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest parseFrom(java.io.InputStream input)
+            throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageLite.parseFrom(
+                DEFAULT_INSTANCE, input);
+    }
+
+    public static com.google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest parseFrom(
+            java.io.InputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageLite.parseFrom(
+                DEFAULT_INSTANCE, input, extensionRegistry);
+    }
+
+    public static com.google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest parseDelimitedFrom(java.io.InputStream input)
+            throws java.io.IOException {
+        return parseDelimitedFrom(DEFAULT_INSTANCE, input);
+    }
+
+    public static com.google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest parseDelimitedFrom(
+            java.io.InputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+        return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
+    }
+
+    public static com.google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest parseFrom(
+            com.google.protobuf.CodedInputStream input)
+            throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageLite.parseFrom(
+                DEFAULT_INSTANCE, input);
+    }
+
+    public static com.google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest parseFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageLite.parseFrom(
+                DEFAULT_INSTANCE, input, extensionRegistry);
+    }
+
+    public static Builder newBuilder() {
+        return DEFAULT_INSTANCE.toBuilder();
+    }
+
+    public static Builder newBuilder(com.google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest prototype) {
+        return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+
+    public static com.google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest getDefaultInstance() {
+        return DEFAULT_INSTANCE;
+    }
+
+    public static com.google.protobuf.Parser<TranscribeVoicemailAsyncRequest> parser() {
+        return DEFAULT_INSTANCE.getParserForType();
+    }
 
     /**
      * <pre>
@@ -404,8 +135,9 @@ public  final class TranscribeVoicemailAsyncRequest extends
      * <code>optional bytes voicemail_data = 1;</code>
      */
     public boolean hasVoicemailData() {
-      return instance.hasVoicemailData();
+        return ((bitField0_ & 0x00000001) == 0x00000001);
     }
+
     /**
      * <pre>
      * Voicemail audio data encoded in the format specified by audio_format.
@@ -414,8 +146,9 @@ public  final class TranscribeVoicemailAsyncRequest extends
      * <code>optional bytes voicemail_data = 1;</code>
      */
     public com.google.protobuf.ByteString getVoicemailData() {
-      return instance.getVoicemailData();
+        return voicemailData_;
     }
+
     /**
      * <pre>
      * Voicemail audio data encoded in the format specified by audio_format.
@@ -423,11 +156,14 @@ public  final class TranscribeVoicemailAsyncRequest extends
      *
      * <code>optional bytes voicemail_data = 1;</code>
      */
-    public Builder setVoicemailData(com.google.protobuf.ByteString value) {
-      copyOnWrite();
-      instance.setVoicemailData(value);
-      return this;
+    private void setVoicemailData(com.google.protobuf.ByteString value) {
+        if (value == null) {
+            throw new NullPointerException();
+        }
+        bitField0_ |= 0x00000001;
+        voicemailData_ = value;
     }
+
     /**
      * <pre>
      * Voicemail audio data encoded in the format specified by audio_format.
@@ -435,10 +171,9 @@ public  final class TranscribeVoicemailAsyncRequest extends
      *
      * <code>optional bytes voicemail_data = 1;</code>
      */
-    public Builder clearVoicemailData() {
-      copyOnWrite();
-      instance.clearVoicemailData();
-      return this;
+    private void clearVoicemailData() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        voicemailData_ = getDefaultInstance().getVoicemailData();
     }
 
     /**
@@ -449,8 +184,9 @@ public  final class TranscribeVoicemailAsyncRequest extends
      * <code>optional .google.internal.communications.voicemailtranscription.v1.AudioFormat audio_format = 2;</code>
      */
     public boolean hasAudioFormat() {
-      return instance.hasAudioFormat();
+        return ((bitField0_ & 0x00000002) == 0x00000002);
     }
+
     /**
      * <pre>
      * Audio format of the voicemail file.
@@ -459,8 +195,10 @@ public  final class TranscribeVoicemailAsyncRequest extends
      * <code>optional .google.internal.communications.voicemailtranscription.v1.AudioFormat audio_format = 2;</code>
      */
     public com.google.internal.communications.voicemailtranscription.v1.AudioFormat getAudioFormat() {
-      return instance.getAudioFormat();
+        com.google.internal.communications.voicemailtranscription.v1.AudioFormat result = com.google.internal.communications.voicemailtranscription.v1.AudioFormat.forNumber(audioFormat_);
+        return result == null ? com.google.internal.communications.voicemailtranscription.v1.AudioFormat.AUDIO_FORMAT_UNSPECIFIED : result;
     }
+
     /**
      * <pre>
      * Audio format of the voicemail file.
@@ -468,11 +206,14 @@ public  final class TranscribeVoicemailAsyncRequest extends
      *
      * <code>optional .google.internal.communications.voicemailtranscription.v1.AudioFormat audio_format = 2;</code>
      */
-    public Builder setAudioFormat(com.google.internal.communications.voicemailtranscription.v1.AudioFormat value) {
-      copyOnWrite();
-      instance.setAudioFormat(value);
-      return this;
+    private void setAudioFormat(com.google.internal.communications.voicemailtranscription.v1.AudioFormat value) {
+        if (value == null) {
+            throw new NullPointerException();
+        }
+        bitField0_ |= 0x00000002;
+        audioFormat_ = value.getNumber();
     }
+
     /**
      * <pre>
      * Audio format of the voicemail file.
@@ -480,10 +221,9 @@ public  final class TranscribeVoicemailAsyncRequest extends
      *
      * <code>optional .google.internal.communications.voicemailtranscription.v1.AudioFormat audio_format = 2;</code>
      */
-    public Builder clearAudioFormat() {
-      copyOnWrite();
-      instance.clearAudioFormat();
-      return this;
+    private void clearAudioFormat() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        audioFormat_ = 0;
     }
 
     /**
@@ -498,8 +238,9 @@ public  final class TranscribeVoicemailAsyncRequest extends
      * <code>optional string transcription_id = 3;</code>
      */
     public boolean hasTranscriptionId() {
-      return instance.hasTranscriptionId();
+        return ((bitField0_ & 0x00000004) == 0x00000004);
     }
+
     /**
      * <pre>
      * The client may provide their own unique ID for this transcription. It
@@ -512,8 +253,29 @@ public  final class TranscribeVoicemailAsyncRequest extends
      * <code>optional string transcription_id = 3;</code>
      */
     public java.lang.String getTranscriptionId() {
-      return instance.getTranscriptionId();
+        return transcriptionId_;
     }
+
+    /**
+     * <pre>
+     * The client may provide their own unique ID for this transcription. It
+     * should be globally unique across all voicemails from all users.
+     * If the given transcription_id is not unique, an ALREADY_EXISTS (409) error
+     * will be returned.
+     * If no transcription_id is provided, one will be generated by the server.
+     * </pre>
+     *
+     * <code>optional string transcription_id = 3;</code>
+     */
+    private void setTranscriptionId(
+            java.lang.String value) {
+        if (value == null) {
+            throw new NullPointerException();
+        }
+        bitField0_ |= 0x00000004;
+        transcriptionId_ = value;
+    }
+
     /**
      * <pre>
      * The client may provide their own unique ID for this transcription. It
@@ -526,9 +288,10 @@ public  final class TranscribeVoicemailAsyncRequest extends
      * <code>optional string transcription_id = 3;</code>
      */
     public com.google.protobuf.ByteString
-        getTranscriptionIdBytes() {
-      return instance.getTranscriptionIdBytes();
+    getTranscriptionIdBytes() {
+        return com.google.protobuf.ByteString.copyFromUtf8(transcriptionId_);
     }
+
     /**
      * <pre>
      * The client may provide their own unique ID for this transcription. It
@@ -540,12 +303,15 @@ public  final class TranscribeVoicemailAsyncRequest extends
      *
      * <code>optional string transcription_id = 3;</code>
      */
-    public Builder setTranscriptionId(
-        java.lang.String value) {
-      copyOnWrite();
-      instance.setTranscriptionId(value);
-      return this;
+    private void setTranscriptionIdBytes(
+            com.google.protobuf.ByteString value) {
+        if (value == null) {
+            throw new NullPointerException();
+        }
+        bitField0_ |= 0x00000004;
+        transcriptionId_ = value.toStringUtf8();
     }
+
     /**
      * <pre>
      * The client may provide their own unique ID for this transcription. It
@@ -557,27 +323,9 @@ public  final class TranscribeVoicemailAsyncRequest extends
      *
      * <code>optional string transcription_id = 3;</code>
      */
-    public Builder clearTranscriptionId() {
-      copyOnWrite();
-      instance.clearTranscriptionId();
-      return this;
-    }
-    /**
-     * <pre>
-     * The client may provide their own unique ID for this transcription. It
-     * should be globally unique across all voicemails from all users.
-     * If the given transcription_id is not unique, an ALREADY_EXISTS (409) error
-     * will be returned.
-     * If no transcription_id is provided, one will be generated by the server.
-     * </pre>
-     *
-     * <code>optional string transcription_id = 3;</code>
-     */
-    public Builder setTranscriptionIdBytes(
-        com.google.protobuf.ByteString value) {
-      copyOnWrite();
-      instance.setTranscriptionIdBytes(value);
-      return this;
+    private void clearTranscriptionId() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        transcriptionId_ = getDefaultInstance().getTranscriptionId();
     }
 
     /**
@@ -588,8 +336,9 @@ public  final class TranscribeVoicemailAsyncRequest extends
      * <code>optional .google.internal.communications.voicemailtranscription.v1.DonationPreference donation_preference = 4;</code>
      */
     public boolean hasDonationPreference() {
-      return instance.hasDonationPreference();
+        return ((bitField0_ & 0x00000008) == 0x00000008);
     }
+
     /**
      * <pre>
      * User's donation preference.
@@ -598,8 +347,10 @@ public  final class TranscribeVoicemailAsyncRequest extends
      * <code>optional .google.internal.communications.voicemailtranscription.v1.DonationPreference donation_preference = 4;</code>
      */
     public com.google.internal.communications.voicemailtranscription.v1.DonationPreference getDonationPreference() {
-      return instance.getDonationPreference();
+        com.google.internal.communications.voicemailtranscription.v1.DonationPreference result = com.google.internal.communications.voicemailtranscription.v1.DonationPreference.forNumber(donationPreference_);
+        return result == null ? com.google.internal.communications.voicemailtranscription.v1.DonationPreference.USER_PREFERENCE_UNSPECIFIED : result;
     }
+
     /**
      * <pre>
      * User's donation preference.
@@ -607,11 +358,14 @@ public  final class TranscribeVoicemailAsyncRequest extends
      *
      * <code>optional .google.internal.communications.voicemailtranscription.v1.DonationPreference donation_preference = 4;</code>
      */
-    public Builder setDonationPreference(com.google.internal.communications.voicemailtranscription.v1.DonationPreference value) {
-      copyOnWrite();
-      instance.setDonationPreference(value);
-      return this;
+    private void setDonationPreference(com.google.internal.communications.voicemailtranscription.v1.DonationPreference value) {
+        if (value == null) {
+            throw new NullPointerException();
+        }
+        bitField0_ |= 0x00000008;
+        donationPreference_ = value.getNumber();
     }
+
     /**
      * <pre>
      * User's donation preference.
@@ -619,144 +373,431 @@ public  final class TranscribeVoicemailAsyncRequest extends
      *
      * <code>optional .google.internal.communications.voicemailtranscription.v1.DonationPreference donation_preference = 4;</code>
      */
-    public Builder clearDonationPreference() {
-      copyOnWrite();
-      instance.clearDonationPreference();
-      return this;
+    private void clearDonationPreference() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        donationPreference_ = 0;
     }
 
-    // @@protoc_insertion_point(builder_scope:google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest)
-  }
-  protected final Object dynamicMethod(
-      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
-      Object arg0, Object arg1) {
-    switch (method) {
-      case NEW_MUTABLE_INSTANCE: {
-        return new com.google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest();
-      }
-      case IS_INITIALIZED: {
-        return DEFAULT_INSTANCE;
-      }
-      case MAKE_IMMUTABLE: {
-        return null;
-      }
-      case NEW_BUILDER: {
-        return new Builder();
-      }
-      case VISIT: {
-        Visitor visitor = (Visitor) arg0;
-        com.google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest other = (com.google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest) arg1;
-        voicemailData_ = visitor.visitByteString(
-            hasVoicemailData(), voicemailData_,
-            other.hasVoicemailData(), other.voicemailData_);
-        audioFormat_ = visitor.visitInt(hasAudioFormat(), audioFormat_,
-            other.hasAudioFormat(), other.audioFormat_);
-        transcriptionId_ = visitor.visitString(
-            hasTranscriptionId(), transcriptionId_,
-            other.hasTranscriptionId(), other.transcriptionId_);
-        donationPreference_ = visitor.visitInt(hasDonationPreference(), donationPreference_,
-            other.hasDonationPreference(), other.donationPreference_);
-        if (visitor == com.google.protobuf.GeneratedMessageLite.MergeFromVisitor
-            .INSTANCE) {
-          bitField0_ |= other.bitField0_;
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+            throws java.io.IOException {
+        if (((bitField0_ & 0x00000001) == 0x00000001)) {
+            output.writeBytes(1, voicemailData_);
         }
-        return this;
-      }
-      case MERGE_FROM_STREAM: {
-        com.google.protobuf.CodedInputStream input =
-            (com.google.protobuf.CodedInputStream) arg0;
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry =
-            (com.google.protobuf.ExtensionRegistryLite) arg1;
-        try {
-          boolean done = false;
-          while (!done) {
-            int tag = input.readTag();
-            switch (tag) {
-              case 0:
-                done = true;
-                break;
-              default: {
-                if (!parseUnknownField(tag, input)) {
-                  done = true;
-                }
-                break;
-              }
-              case 10: {
-                bitField0_ |= 0x00000001;
-                voicemailData_ = input.readBytes();
-                break;
-              }
-              case 16: {
-                int rawValue = input.readEnum();
-                com.google.internal.communications.voicemailtranscription.v1.AudioFormat value = com.google.internal.communications.voicemailtranscription.v1.AudioFormat.forNumber(rawValue);
-                if (value == null) {
-                  super.mergeVarintField(2, rawValue);
-                } else {
-                  bitField0_ |= 0x00000002;
-                  audioFormat_ = rawValue;
-                }
-                break;
-              }
-              case 26: {
-                String s = input.readString();
-                bitField0_ |= 0x00000004;
-                transcriptionId_ = s;
-                break;
-              }
-              case 32: {
-                int rawValue = input.readEnum();
-                com.google.internal.communications.voicemailtranscription.v1.DonationPreference value = com.google.internal.communications.voicemailtranscription.v1.DonationPreference.forNumber(rawValue);
-                if (value == null) {
-                  super.mergeVarintField(4, rawValue);
-                } else {
-                  bitField0_ |= 0x00000008;
-                  donationPreference_ = rawValue;
-                }
-                break;
-              }
-            }
-          }
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          throw new RuntimeException(e.setUnfinishedMessage(this));
-        } catch (java.io.IOException e) {
-          throw new RuntimeException(
-              new com.google.protobuf.InvalidProtocolBufferException(
-                  e.getMessage()).setUnfinishedMessage(this));
-        } finally {
+        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+            output.writeEnum(2, audioFormat_);
         }
-      }
-      case GET_DEFAULT_INSTANCE: {
-        return DEFAULT_INSTANCE;
-      }
-      case GET_PARSER: {
-        if (PARSER == null) {    synchronized (com.google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest.class) {
-            if (PARSER == null) {
-              PARSER = new DefaultInstanceBasedParser(DEFAULT_INSTANCE);
-            }
-          }
+        if (((bitField0_ & 0x00000004) == 0x00000004)) {
+            output.writeString(3, getTranscriptionId());
         }
-        return PARSER;
-      }
+        if (((bitField0_ & 0x00000008) == 0x00000008)) {
+            output.writeEnum(4, donationPreference_);
+        }
+        unknownFields.writeTo(output);
     }
-    throw new UnsupportedOperationException();
-  }
+
+    public int getSerializedSize() {
+        int size = memoizedSerializedSize;
+        if (size != -1) return size;
+
+        size = 0;
+        if (((bitField0_ & 0x00000001) == 0x00000001)) {
+            size += com.google.protobuf.CodedOutputStream
+                    .computeBytesSize(1, voicemailData_);
+        }
+        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+            size += com.google.protobuf.CodedOutputStream
+                    .computeEnumSize(2, audioFormat_);
+        }
+        if (((bitField0_ & 0x00000004) == 0x00000004)) {
+            size += com.google.protobuf.CodedOutputStream
+                    .computeStringSize(3, getTranscriptionId());
+        }
+        if (((bitField0_ & 0x00000008) == 0x00000008)) {
+            size += com.google.protobuf.CodedOutputStream
+                    .computeEnumSize(4, donationPreference_);
+        }
+        size += unknownFields.getSerializedSize();
+        memoizedSerializedSize = size;
+        return size;
+    }
+
+    protected final Object dynamicMethod(
+            com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+            Object arg0, Object arg1) {
+        switch (method) {
+            case NEW_MUTABLE_INSTANCE: {
+                return new com.google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest();
+            }
+            case IS_INITIALIZED: {
+                return DEFAULT_INSTANCE;
+            }
+            case MAKE_IMMUTABLE: {
+                return null;
+            }
+            case NEW_BUILDER: {
+                return new Builder();
+            }
+            case VISIT: {
+                Visitor visitor = (Visitor) arg0;
+                com.google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest other = (com.google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest) arg1;
+                voicemailData_ = visitor.visitByteString(
+                        hasVoicemailData(), voicemailData_,
+                        other.hasVoicemailData(), other.voicemailData_);
+                audioFormat_ = visitor.visitInt(hasAudioFormat(), audioFormat_,
+                        other.hasAudioFormat(), other.audioFormat_);
+                transcriptionId_ = visitor.visitString(
+                        hasTranscriptionId(), transcriptionId_,
+                        other.hasTranscriptionId(), other.transcriptionId_);
+                donationPreference_ = visitor.visitInt(hasDonationPreference(), donationPreference_,
+                        other.hasDonationPreference(), other.donationPreference_);
+                if (visitor == com.google.protobuf.GeneratedMessageLite.MergeFromVisitor
+                        .INSTANCE) {
+                    bitField0_ |= other.bitField0_;
+                }
+                return this;
+            }
+            case MERGE_FROM_STREAM: {
+                com.google.protobuf.CodedInputStream input =
+                        (com.google.protobuf.CodedInputStream) arg0;
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry =
+                        (com.google.protobuf.ExtensionRegistryLite) arg1;
+                try {
+                    boolean done = false;
+                    while (!done) {
+                        int tag = input.readTag();
+                        switch (tag) {
+                            case 0:
+                                done = true;
+                                break;
+                            default: {
+                                if (!parseUnknownField(tag, input)) {
+                                    done = true;
+                                }
+                                break;
+                            }
+                            case 10: {
+                                bitField0_ |= 0x00000001;
+                                voicemailData_ = input.readBytes();
+                                break;
+                            }
+                            case 16: {
+                                int rawValue = input.readEnum();
+                                com.google.internal.communications.voicemailtranscription.v1.AudioFormat value = com.google.internal.communications.voicemailtranscription.v1.AudioFormat.forNumber(rawValue);
+                                if (value == null) {
+                                    super.mergeVarintField(2, rawValue);
+                                } else {
+                                    bitField0_ |= 0x00000002;
+                                    audioFormat_ = rawValue;
+                                }
+                                break;
+                            }
+                            case 26: {
+                                String s = input.readString();
+                                bitField0_ |= 0x00000004;
+                                transcriptionId_ = s;
+                                break;
+                            }
+                            case 32: {
+                                int rawValue = input.readEnum();
+                                com.google.internal.communications.voicemailtranscription.v1.DonationPreference value = com.google.internal.communications.voicemailtranscription.v1.DonationPreference.forNumber(rawValue);
+                                if (value == null) {
+                                    super.mergeVarintField(4, rawValue);
+                                } else {
+                                    bitField0_ |= 0x00000008;
+                                    donationPreference_ = rawValue;
+                                }
+                                break;
+                            }
+                        }
+                    }
+                } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+                    throw new RuntimeException(e.setUnfinishedMessage(this));
+                } catch (java.io.IOException e) {
+                    throw new RuntimeException(
+                            new com.google.protobuf.InvalidProtocolBufferException(
+                                    e.getMessage()).setUnfinishedMessage(this));
+                } finally {
+                }
+            }
+            case GET_DEFAULT_INSTANCE: {
+                return DEFAULT_INSTANCE;
+            }
+            case GET_PARSER: {
+                if (PARSER == null) {
+                    synchronized (com.google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest.class) {
+                        if (PARSER == null) {
+                            PARSER = new DefaultInstanceBasedParser(DEFAULT_INSTANCE);
+                        }
+                    }
+                }
+                return PARSER;
+            }
+        }
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * <pre>
+     * Request for asynchronous voicemail transcription.
+     * </pre>
+     * <p>
+     * Protobuf type {@code google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest}
+     */
+    public static final class Builder extends
+            com.google.protobuf.GeneratedMessageLite.Builder<
+                    com.google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest, Builder> implements
+            // @@protoc_insertion_point(builder_implements:google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest)
+            com.google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequestOrBuilder {
+        // Construct using com.google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest.newBuilder()
+        private Builder() {
+            super(DEFAULT_INSTANCE);
+        }
 
 
-  // @@protoc_insertion_point(class_scope:google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest)
-  private static final com.google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest DEFAULT_INSTANCE;
-  static {
-    DEFAULT_INSTANCE = new TranscribeVoicemailAsyncRequest();
-    DEFAULT_INSTANCE.makeImmutable();
-  }
+        /**
+         * <pre>
+         * Voicemail audio data encoded in the format specified by audio_format.
+         * </pre>
+         *
+         * <code>optional bytes voicemail_data = 1;</code>
+         */
+        public boolean hasVoicemailData() {
+            return instance.hasVoicemailData();
+        }
 
-  public static com.google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest getDefaultInstance() {
-    return DEFAULT_INSTANCE;
-  }
+        /**
+         * <pre>
+         * Voicemail audio data encoded in the format specified by audio_format.
+         * </pre>
+         *
+         * <code>optional bytes voicemail_data = 1;</code>
+         */
+        public com.google.protobuf.ByteString getVoicemailData() {
+            return instance.getVoicemailData();
+        }
 
-  private static volatile com.google.protobuf.Parser<TranscribeVoicemailAsyncRequest> PARSER;
+        /**
+         * <pre>
+         * Voicemail audio data encoded in the format specified by audio_format.
+         * </pre>
+         *
+         * <code>optional bytes voicemail_data = 1;</code>
+         */
+        public Builder setVoicemailData(com.google.protobuf.ByteString value) {
+            copyOnWrite();
+            instance.setVoicemailData(value);
+            return this;
+        }
 
-  public static com.google.protobuf.Parser<TranscribeVoicemailAsyncRequest> parser() {
-    return DEFAULT_INSTANCE.getParserForType();
-  }
+        /**
+         * <pre>
+         * Voicemail audio data encoded in the format specified by audio_format.
+         * </pre>
+         *
+         * <code>optional bytes voicemail_data = 1;</code>
+         */
+        public Builder clearVoicemailData() {
+            copyOnWrite();
+            instance.clearVoicemailData();
+            return this;
+        }
+
+        /**
+         * <pre>
+         * Audio format of the voicemail file.
+         * </pre>
+         *
+         * <code>optional .google.internal.communications.voicemailtranscription.v1.AudioFormat audio_format = 2;</code>
+         */
+        public boolean hasAudioFormat() {
+            return instance.hasAudioFormat();
+        }
+
+        /**
+         * <pre>
+         * Audio format of the voicemail file.
+         * </pre>
+         *
+         * <code>optional .google.internal.communications.voicemailtranscription.v1.AudioFormat audio_format = 2;</code>
+         */
+        public com.google.internal.communications.voicemailtranscription.v1.AudioFormat getAudioFormat() {
+            return instance.getAudioFormat();
+        }
+
+        /**
+         * <pre>
+         * Audio format of the voicemail file.
+         * </pre>
+         *
+         * <code>optional .google.internal.communications.voicemailtranscription.v1.AudioFormat audio_format = 2;</code>
+         */
+        public Builder setAudioFormat(com.google.internal.communications.voicemailtranscription.v1.AudioFormat value) {
+            copyOnWrite();
+            instance.setAudioFormat(value);
+            return this;
+        }
+
+        /**
+         * <pre>
+         * Audio format of the voicemail file.
+         * </pre>
+         *
+         * <code>optional .google.internal.communications.voicemailtranscription.v1.AudioFormat audio_format = 2;</code>
+         */
+        public Builder clearAudioFormat() {
+            copyOnWrite();
+            instance.clearAudioFormat();
+            return this;
+        }
+
+        /**
+         * <pre>
+         * The client may provide their own unique ID for this transcription. It
+         * should be globally unique across all voicemails from all users.
+         * If the given transcription_id is not unique, an ALREADY_EXISTS (409) error
+         * will be returned.
+         * If no transcription_id is provided, one will be generated by the server.
+         * </pre>
+         *
+         * <code>optional string transcription_id = 3;</code>
+         */
+        public boolean hasTranscriptionId() {
+            return instance.hasTranscriptionId();
+        }
+
+        /**
+         * <pre>
+         * The client may provide their own unique ID for this transcription. It
+         * should be globally unique across all voicemails from all users.
+         * If the given transcription_id is not unique, an ALREADY_EXISTS (409) error
+         * will be returned.
+         * If no transcription_id is provided, one will be generated by the server.
+         * </pre>
+         *
+         * <code>optional string transcription_id = 3;</code>
+         */
+        public java.lang.String getTranscriptionId() {
+            return instance.getTranscriptionId();
+        }
+
+        /**
+         * <pre>
+         * The client may provide their own unique ID for this transcription. It
+         * should be globally unique across all voicemails from all users.
+         * If the given transcription_id is not unique, an ALREADY_EXISTS (409) error
+         * will be returned.
+         * If no transcription_id is provided, one will be generated by the server.
+         * </pre>
+         *
+         * <code>optional string transcription_id = 3;</code>
+         */
+        public Builder setTranscriptionId(
+                java.lang.String value) {
+            copyOnWrite();
+            instance.setTranscriptionId(value);
+            return this;
+        }
+
+        /**
+         * <pre>
+         * The client may provide their own unique ID for this transcription. It
+         * should be globally unique across all voicemails from all users.
+         * If the given transcription_id is not unique, an ALREADY_EXISTS (409) error
+         * will be returned.
+         * If no transcription_id is provided, one will be generated by the server.
+         * </pre>
+         *
+         * <code>optional string transcription_id = 3;</code>
+         */
+        public com.google.protobuf.ByteString
+        getTranscriptionIdBytes() {
+            return instance.getTranscriptionIdBytes();
+        }
+
+        /**
+         * <pre>
+         * The client may provide their own unique ID for this transcription. It
+         * should be globally unique across all voicemails from all users.
+         * If the given transcription_id is not unique, an ALREADY_EXISTS (409) error
+         * will be returned.
+         * If no transcription_id is provided, one will be generated by the server.
+         * </pre>
+         *
+         * <code>optional string transcription_id = 3;</code>
+         */
+        public Builder setTranscriptionIdBytes(
+                com.google.protobuf.ByteString value) {
+            copyOnWrite();
+            instance.setTranscriptionIdBytes(value);
+            return this;
+        }
+
+        /**
+         * <pre>
+         * The client may provide their own unique ID for this transcription. It
+         * should be globally unique across all voicemails from all users.
+         * If the given transcription_id is not unique, an ALREADY_EXISTS (409) error
+         * will be returned.
+         * If no transcription_id is provided, one will be generated by the server.
+         * </pre>
+         *
+         * <code>optional string transcription_id = 3;</code>
+         */
+        public Builder clearTranscriptionId() {
+            copyOnWrite();
+            instance.clearTranscriptionId();
+            return this;
+        }
+
+        /**
+         * <pre>
+         * User's donation preference.
+         * </pre>
+         *
+         * <code>optional .google.internal.communications.voicemailtranscription.v1.DonationPreference donation_preference = 4;</code>
+         */
+        public boolean hasDonationPreference() {
+            return instance.hasDonationPreference();
+        }
+
+        /**
+         * <pre>
+         * User's donation preference.
+         * </pre>
+         *
+         * <code>optional .google.internal.communications.voicemailtranscription.v1.DonationPreference donation_preference = 4;</code>
+         */
+        public com.google.internal.communications.voicemailtranscription.v1.DonationPreference getDonationPreference() {
+            return instance.getDonationPreference();
+        }
+
+        /**
+         * <pre>
+         * User's donation preference.
+         * </pre>
+         *
+         * <code>optional .google.internal.communications.voicemailtranscription.v1.DonationPreference donation_preference = 4;</code>
+         */
+        public Builder setDonationPreference(com.google.internal.communications.voicemailtranscription.v1.DonationPreference value) {
+            copyOnWrite();
+            instance.setDonationPreference(value);
+            return this;
+        }
+
+        /**
+         * <pre>
+         * User's donation preference.
+         * </pre>
+         *
+         * <code>optional .google.internal.communications.voicemailtranscription.v1.DonationPreference donation_preference = 4;</code>
+         */
+        public Builder clearDonationPreference() {
+            copyOnWrite();
+            instance.clearDonationPreference();
+            return this;
+        }
+
+        // @@protoc_insertion_point(builder_scope:google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailAsyncRequest)
+    }
 }
 

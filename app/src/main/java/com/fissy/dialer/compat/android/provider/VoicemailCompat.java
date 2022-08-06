@@ -23,70 +23,70 @@ package com.fissy.dialer.compat.android.provider;
  */
 public class VoicemailCompat {
 
-  /**
-   * The state of the voicemail transcription.
-   *
-   * <p>Possible values: {@link #TRANSCRIPTION_NOT_STARTED}, {@link #TRANSCRIPTION_IN_PROGRESS},
-   * {@link #TRANSCRIPTION_FAILED}, {@link #TRANSCRIPTION_AVAILABLE}.
-   *
-   * <p>Type: INTEGER
-   */
-  public static final String TRANSCRIPTION_STATE = "transcription_state";
+    /**
+     * The state of the voicemail transcription.
+     *
+     * <p>Possible values: {@link #TRANSCRIPTION_NOT_STARTED}, {@link #TRANSCRIPTION_IN_PROGRESS},
+     * {@link #TRANSCRIPTION_FAILED}, {@link #TRANSCRIPTION_AVAILABLE}.
+     *
+     * <p>Type: INTEGER
+     */
+    public static final String TRANSCRIPTION_STATE = "transcription_state";
 
-  /**
-   * Value of {@link #TRANSCRIPTION_STATE} when the voicemail transcription has not yet been
-   * attempted.
-   */
-  public static final int TRANSCRIPTION_NOT_STARTED = 0;
+    /**
+     * Value of {@link #TRANSCRIPTION_STATE} when the voicemail transcription has not yet been
+     * attempted.
+     */
+    public static final int TRANSCRIPTION_NOT_STARTED = 0;
 
-  /**
-   * Value of {@link #TRANSCRIPTION_STATE} when the voicemail transcription has begun but is not yet
-   * complete.
-   */
-  public static final int TRANSCRIPTION_IN_PROGRESS = 1;
+    /**
+     * Value of {@link #TRANSCRIPTION_STATE} when the voicemail transcription has begun but is not yet
+     * complete.
+     */
+    public static final int TRANSCRIPTION_IN_PROGRESS = 1;
 
-  /**
-   * Value of {@link #TRANSCRIPTION_STATE} when the voicemail transcription has been attempted and
-   * failed for an unspecified reason.
-   */
-  public static final int TRANSCRIPTION_FAILED = 2;
+    /**
+     * Value of {@link #TRANSCRIPTION_STATE} when the voicemail transcription has been attempted and
+     * failed for an unspecified reason.
+     */
+    public static final int TRANSCRIPTION_FAILED = 2;
 
-  /**
-   * Value of {@link #TRANSCRIPTION_STATE} when the voicemail transcription has completed and the
-   * result has been stored in the {@link #TRANSCRIPTION} column.
-   */
-  public static final int TRANSCRIPTION_AVAILABLE = 3;
+    /**
+     * Value of {@link #TRANSCRIPTION_STATE} when the voicemail transcription has completed and the
+     * result has been stored in the {@link #TRANSCRIPTION} column.
+     */
+    public static final int TRANSCRIPTION_AVAILABLE = 3;
 
-  /**
-   * Value of {@link #TRANSCRIPTION_STATE} when the voicemail transcription has been attempted and
-   * failed because no speech was detected.
-   *
-   * <p>Internal dialer use only, not part of the public SDK.
-   */
-  public static final int TRANSCRIPTION_FAILED_NO_SPEECH_DETECTED = -1;
+    /**
+     * Value of {@link #TRANSCRIPTION_STATE} when the voicemail transcription has been attempted and
+     * failed because no speech was detected.
+     *
+     * <p>Internal dialer use only, not part of the public SDK.
+     */
+    public static final int TRANSCRIPTION_FAILED_NO_SPEECH_DETECTED = -1;
 
-  /**
-   * Value of {@link #TRANSCRIPTION_STATE} when the voicemail transcription has been attempted and
-   * failed because the language was not supported.
-   *
-   * <p>Internal dialer use only, not part of the public SDK.
-   */
-  public static final int TRANSCRIPTION_FAILED_LANGUAGE_NOT_SUPPORTED = -2;
+    /**
+     * Value of {@link #TRANSCRIPTION_STATE} when the voicemail transcription has been attempted and
+     * failed because the language was not supported.
+     *
+     * <p>Internal dialer use only, not part of the public SDK.
+     */
+    public static final int TRANSCRIPTION_FAILED_LANGUAGE_NOT_SUPPORTED = -2;
 
-  /**
-   * Value of {@link #TRANSCRIPTION_STATE} when the voicemail transcription has completed and the
-   * result has been stored in the {@link #TRANSCRIPTION} column of the database, and the user has
-   * provided a quality rating for the transcription.
-   */
-  public static final int TRANSCRIPTION_AVAILABLE_AND_RATED = -3;
+    /**
+     * Value of {@link #TRANSCRIPTION_STATE} when the voicemail transcription has completed and the
+     * result has been stored in the {@link #TRANSCRIPTION} column of the database, and the user has
+     * provided a quality rating for the transcription.
+     */
+    public static final int TRANSCRIPTION_AVAILABLE_AND_RATED = -3;
 
-  /**
-   * Voicemail transcription quality rating value sent to the server indicating a good transcription
-   */
-  public static final int TRANSCRIPTION_QUALITY_RATING_GOOD = 1;
+    /**
+     * Voicemail transcription quality rating value sent to the server indicating a good transcription
+     */
+    public static final int TRANSCRIPTION_QUALITY_RATING_GOOD = 1;
 
-  /**
-   * Voicemail transcription quality rating value sent to the server indicating a bad transcription
-   */
-  public static final int TRANSCRIPTION_QUALITY_RATING_BAD = 2;
+    /**
+     * Voicemail transcription quality rating value sent to the server indicating a bad transcription
+     */
+    public static final int TRANSCRIPTION_QUALITY_RATING_BAD = 2;
 }

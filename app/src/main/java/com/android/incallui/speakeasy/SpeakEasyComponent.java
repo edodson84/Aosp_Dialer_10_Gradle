@@ -18,37 +18,47 @@ package com.android.incallui.speakeasy;
 
 import android.content.Context;
 import android.preference.PreferenceActivity;
-import com.fissy.dialer.inject.HasRootComponent;
+
 import com.android.incallui.speakeasy.Annotations.SpeakEasyChipResourceId;
 import com.android.incallui.speakeasy.Annotations.SpeakEasySettingsActivity;
 import com.android.incallui.speakeasy.Annotations.SpeakEasySettingsObject;
 import com.android.incallui.speakeasy.Annotations.SpeakEasyTextResourceId;
+import com.fissy.dialer.inject.HasRootComponent;
 import com.google.common.base.Optional;
+
 import dagger.Subcomponent;
 
-/** Dagger component to get SpeakEasyCallManager. */
+/**
+ * Dagger component to get SpeakEasyCallManager.
+ */
 @Subcomponent
 public abstract class SpeakEasyComponent {
 
-  public static SpeakEasyComponent get(Context context) {
-    return ((SpeakEasyComponent.HasComponent)
-            ((HasRootComponent) context.getApplicationContext()).component())
-        .speakEasyComponent();
-  }
+    public static SpeakEasyComponent get(Context context) {
+        return ((SpeakEasyComponent.HasComponent)
+                ((HasRootComponent) context.getApplicationContext()).component())
+                .speakEasyComponent();
+    }
 
-  public abstract SpeakEasyCallManager speakEasyCallManager();
+    public abstract SpeakEasyCallManager speakEasyCallManager();
 
-  public abstract @SpeakEasySettingsActivity Optional<PreferenceActivity>
-      speakEasySettingsActivity();
+    public abstract @SpeakEasySettingsActivity
+    Optional<PreferenceActivity>
+    speakEasySettingsActivity();
 
-  public abstract @SpeakEasySettingsObject Optional<Object> speakEasySettingsObject();
+    public abstract @SpeakEasySettingsObject
+    Optional<Object> speakEasySettingsObject();
 
-  public abstract @SpeakEasyChipResourceId Optional<Integer> speakEasyChip();
+    public abstract @SpeakEasyChipResourceId
+    Optional<Integer> speakEasyChip();
 
-  public abstract @SpeakEasyTextResourceId Optional<Integer> speakEasyTextResource();
+    public abstract @SpeakEasyTextResourceId
+    Optional<Integer> speakEasyTextResource();
 
-  /** Used to refer to the root application component. */
-  public interface HasComponent {
-    SpeakEasyComponent speakEasyComponent();
-  }
+    /**
+     * Used to refer to the root application component.
+     */
+    public interface HasComponent {
+        SpeakEasyComponent speakEasyComponent();
+    }
 }

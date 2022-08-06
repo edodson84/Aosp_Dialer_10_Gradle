@@ -18,33 +18,39 @@ package com.fissy.dialer.storage;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
 import com.fissy.dialer.inject.HasRootComponent;
 import com.fissy.dialer.inject.IncludeInDialerRoot;
+
 import dagger.Subcomponent;
 
-/** Dagger component for storage. */
+/**
+ * Dagger component for storage.
+ */
 @Subcomponent
 public abstract class StorageComponent {
 
-  /**
-   * Returns unencrypted default shared preferences. This method should not be used for private
-   * data.
-   *
-   * <p>These shared prefs are available even when the device is in FBE mode and are generally the
-   * ones that should be used, because Dialer needs to function while in FBE mode.
-   */
-  @Unencrypted
-  public abstract SharedPreferences unencryptedSharedPrefs();
+    public static StorageComponent get(Context context) {
+        return ((StorageComponent.HasComponent)
+                ((HasRootComponent) context.getApplicationContext()).component())
+                .storageComponent();
+    }
 
-  public static StorageComponent get(Context context) {
-    return ((StorageComponent.HasComponent)
-            ((HasRootComponent) context.getApplicationContext()).component())
-        .storageComponent();
-  }
+    /**
+     * Returns unencrypted default shared preferences. This method should not be used for private
+     * data.
+     *
+     * <p>These shared prefs are available even when the device is in FBE mode and are generally the
+     * ones that should be used, because Dialer needs to function while in FBE mode.
+     */
+    @Unencrypted
+    public abstract SharedPreferences unencryptedSharedPrefs();
 
-  /** Used to refer to the root application component. */
-  @IncludeInDialerRoot
-  public interface HasComponent {
-    StorageComponent storageComponent();
-  }
+    /**
+     * Used to refer to the root application component.
+     */
+    @IncludeInDialerRoot
+    public interface HasComponent {
+        StorageComponent storageComponent();
+    }
 }

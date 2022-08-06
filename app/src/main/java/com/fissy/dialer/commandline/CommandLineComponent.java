@@ -17,26 +17,32 @@
 package com.fissy.dialer.commandline;
 
 import android.content.Context;
+
 import com.fissy.dialer.function.Supplier;
 import com.fissy.dialer.inject.HasRootComponent;
 import com.fissy.dialer.inject.IncludeInDialerRoot;
 import com.google.common.collect.ImmutableMap;
+
 import dagger.Subcomponent;
 
-/** Component to get all available commands. */
+/**
+ * Component to get all available commands.
+ */
 @Subcomponent
 public abstract class CommandLineComponent {
 
-  public abstract Supplier<ImmutableMap<String, Command>> commandSupplier();
+    public static CommandLineComponent get(Context context) {
+        return ((HasComponent) ((HasRootComponent) context.getApplicationContext()).component())
+                .commandLineComponent();
+    }
 
-  public static CommandLineComponent get(Context context) {
-    return ((HasComponent) ((HasRootComponent) context.getApplicationContext()).component())
-        .commandLineComponent();
-  }
+    public abstract Supplier<ImmutableMap<String, Command>> commandSupplier();
 
-  /** Used to refer to the root application component. */
-  @IncludeInDialerRoot
-  public interface HasComponent {
-    CommandLineComponent commandLineComponent();
-  }
+    /**
+     * Used to refer to the root application component.
+     */
+    @IncludeInDialerRoot
+    public interface HasComponent {
+        CommandLineComponent commandLineComponent();
+    }
 }

@@ -16,31 +16,34 @@
 
 package com.android.incallui.answer.protocol;
 
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
+
 import java.util.List;
 
-/** Interface for the answer module. */
+/**
+ * Interface for the answer module.
+ */
 public interface AnswerScreen {
 
-  String getCallId();
+    String getCallId();
 
-  boolean isRttCall();
+    boolean isRttCall();
 
-  boolean isVideoCall();
+    boolean isVideoCall();
 
-  boolean isVideoUpgradeRequest();
+    boolean isVideoUpgradeRequest();
 
-  boolean allowAnswerAndRelease();
+    boolean allowAnswerAndRelease();
 
-  boolean allowSpeakEasy();
+    boolean allowSpeakEasy();
 
-  boolean isActionTimeout();
+    boolean isActionTimeout();
 
-  void setTextResponses(List<String> textResponses);
+    void setTextResponses(List<String> textResponses);
 
-  boolean hasPendingDialogs();
+    boolean hasPendingDialogs();
 
-  void dismissPendingDialogs();
+    void dismissPendingDialogs();
 
-  Fragment getAnswerScreenFragment();
+    Fragment getAnswerScreenFragment();
 }

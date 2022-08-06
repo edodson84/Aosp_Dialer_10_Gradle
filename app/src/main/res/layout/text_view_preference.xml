@@ -1,3 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView android:linksClickable="true" android:id="@id/text" android:padding="16.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:singleLine="false" android:fontFamily="sans-serif"
-  xmlns:android="http://schemas.android.com/apk/res/android" />
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/text"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:fontFamily="sans-serif"
+    android:linksClickable="true"
+    android:padding="16.0dip"
+    android:singleLine="false" />

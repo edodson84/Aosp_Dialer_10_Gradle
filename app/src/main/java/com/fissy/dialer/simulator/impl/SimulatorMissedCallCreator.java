@@ -18,9 +18,10 @@ package com.fissy.dialer.simulator.impl;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.telecom.Connection;
 import android.telecom.DisconnectCause;
+
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.common.concurrent.ThreadUtil;
@@ -31,62 +32,64 @@ import com.fissy.dialer.common.concurrent.ThreadUtil;
  * like the real application.
  */
 final class SimulatorMissedCallCreator implements SimulatorConnectionService.Listener {
-  private static final String EXTRA_CALL_COUNT = "call_count";
-  private static final String EXTRA_IS_MISSED_CALL_CONNECTION = "is_missed_call_connection";
-  private static final int DISCONNECT_DELAY_MILLIS = 1000;
+    private static final String EXTRA_CALL_COUNT = "call_count";
+    private static final String EXTRA_IS_MISSED_CALL_CONNECTION = "is_missed_call_connection";
+    private static final int DISCONNECT_DELAY_MILLIS = 1000;
 
-  private final Context context;
+    private final Context context;
 
-  SimulatorMissedCallCreator(@NonNull Context context) {
-    this.context = Assert.isNotNull(context);
-  }
-
-  public void start(int callCount) {
-    SimulatorConnectionService.addListener(this);
-    addNextIncomingCall(callCount);
-  }
-
-  @Override
-  public void onNewOutgoingConnection(@NonNull SimulatorConnection connection) {}
-
-  @Override
-  public void onNewIncomingConnection(@NonNull SimulatorConnection connection) {
-    if (!isMissedCallConnection(connection)) {
-      return;
-    }
-    ThreadUtil.postDelayedOnUiThread(
-        () -> {
-          connection.setDisconnected(new DisconnectCause(DisconnectCause.MISSED));
-          addNextIncomingCall(getCallCount(connection));
-        },
-        DISCONNECT_DELAY_MILLIS);
-  }
-
-  @Override
-  public void onConference(
-      @NonNull SimulatorConnection connection1, @NonNull SimulatorConnection connection2) {}
-
-  private void addNextIncomingCall(int callCount) {
-    if (callCount <= 0) {
-      LogUtil.i("SimulatorMissedCallCreator.addNextIncomingCall", "done adding calls");
-      SimulatorConnectionService.removeListener(this);
-      return;
+    SimulatorMissedCallCreator(@NonNull Context context) {
+        this.context = Assert.isNotNull(context);
     }
 
-    String callerId = String.format("+%d", callCount);
-    Bundle extras = new Bundle();
-    extras.putInt(EXTRA_CALL_COUNT, callCount - 1);
-    extras.putBoolean(EXTRA_IS_MISSED_CALL_CONNECTION, true);
+    private static boolean isMissedCallConnection(@NonNull Connection connection) {
+        return connection.getExtras().getBoolean(EXTRA_IS_MISSED_CALL_CONNECTION);
+    }
 
-    SimulatorSimCallManager.addNewIncomingCall(
-        context, callerId, SimulatorSimCallManager.CALL_TYPE_VOICE, extras);
-  }
+    private static int getCallCount(@NonNull Connection connection) {
+        return connection.getExtras().getInt(EXTRA_CALL_COUNT);
+    }
 
-  private static boolean isMissedCallConnection(@NonNull Connection connection) {
-    return connection.getExtras().getBoolean(EXTRA_IS_MISSED_CALL_CONNECTION);
-  }
+    public void start(int callCount) {
+        SimulatorConnectionService.addListener(this);
+        addNextIncomingCall(callCount);
+    }
 
-  private static int getCallCount(@NonNull Connection connection) {
-    return connection.getExtras().getInt(EXTRA_CALL_COUNT);
-  }
+    @Override
+    public void onNewOutgoingConnection(@NonNull SimulatorConnection connection) {
+    }
+
+    @Override
+    public void onNewIncomingConnection(@NonNull SimulatorConnection connection) {
+        if (!isMissedCallConnection(connection)) {
+            return;
+        }
+        ThreadUtil.postDelayedOnUiThread(
+                () -> {
+                    connection.setDisconnected(new DisconnectCause(DisconnectCause.MISSED));
+                    addNextIncomingCall(getCallCount(connection));
+                },
+                DISCONNECT_DELAY_MILLIS);
+    }
+
+    @Override
+    public void onConference(
+            @NonNull SimulatorConnection connection1, @NonNull SimulatorConnection connection2) {
+    }
+
+    private void addNextIncomingCall(int callCount) {
+        if (callCount <= 0) {
+            LogUtil.i("SimulatorMissedCallCreator.addNextIncomingCall", "done adding calls");
+            SimulatorConnectionService.removeListener(this);
+            return;
+        }
+
+        String callerId = String.format("+%d", callCount);
+        Bundle extras = new Bundle();
+        extras.putInt(EXTRA_CALL_COUNT, callCount - 1);
+        extras.putBoolean(EXTRA_IS_MISSED_CALL_CONNECTION, true);
+
+        SimulatorSimCallManager.addNewIncomingCall(
+                context, callerId, SimulatorSimCallManager.CALL_TYPE_VOICE, extras);
+    }
 }

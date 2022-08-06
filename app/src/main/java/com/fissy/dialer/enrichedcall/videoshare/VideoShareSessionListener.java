@@ -16,18 +16,20 @@
 
 package com.fissy.dialer.enrichedcall.videoshare;
 
-/** Interface for receiving updates on session initialization failure or termination. */
+/**
+ * Interface for receiving updates on session initialization failure or termination.
+ */
 public interface VideoShareSessionListener {
 
-  void onSessionTerminated(VideoShareSession session);
+    void onSessionTerminated(VideoShareSession session);
 
-  void onSessionInitializationFailed(VideoShareSession session, Exception e);
+    void onSessionInitializationFailed(VideoShareSession session, Exception e);
 
-  /**
-   * Called when a session hasn't received a keep-alive or video packet within the timeout time
-   * period.
-   *
-   * @param session The session that timed out
-   */
-  void onSessionTimedOut(VideoShareSession session);
+    /**
+     * Called when a session hasn't received a keep-alive or video packet within the timeout time
+     * period.
+     *
+     * @param session The session that timed out
+     */
+    void onSessionTimedOut(VideoShareSession session);
 }

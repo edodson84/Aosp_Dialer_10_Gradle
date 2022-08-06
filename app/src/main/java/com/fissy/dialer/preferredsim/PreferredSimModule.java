@@ -17,13 +17,16 @@
 package com.fissy.dialer.preferredsim;
 
 import com.fissy.dialer.preferredsim.impl.PreferredAccountWorkerImpl;
+
 import dagger.Binds;
 import dagger.Module;
 
-/** Module for preferred SIM */
+/**
+ * Module for preferred SIM
+ */
 @Module
 public abstract class PreferredSimModule {
 
-  @Binds
-  public abstract PreferredAccountWorker to(PreferredAccountWorkerImpl impl);
+    @Binds
+    public abstract PreferredAccountWorker to(PreferredAccountWorkerImpl impl);
 }

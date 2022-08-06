@@ -18,31 +18,33 @@ package com.android.dialer.rootcomponentgenerator;
 
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
+
 import java.io.IOException;
+
 import javax.annotation.processing.ProcessingEnvironment;
 
 /**
  * Contains a basic method writing java file to a curtain package. ProcessingEnvironment is needed.
  */
 public abstract class RootComponentUtils {
-  /**
-   * The place where the generator puts metadata files storing reference for {@link
-   * RootComponentGeneratingStep}.
-   */
-  static final String METADATA_PACKAGE_NAME = "com.android.dialer.rootcomponentgenerator.metadata";
+    /**
+     * The place where the generator puts metadata files storing reference for {@link
+     * RootComponentGeneratingStep}.
+     */
+    static final String METADATA_PACKAGE_NAME = "com.android.dialer.rootcomponentgenerator.metadata";
 
-  static final String GENERATED_COMPONENT_PREFIX = "Gen";
+    static final String GENERATED_COMPONENT_PREFIX = "Gen";
 
-  static void writeJavaFile(
-      ProcessingEnvironment processingEnv, String packageName, TypeSpec typeSpec) {
-    try {
-      JavaFile.builder(packageName, typeSpec)
-          .skipJavaLangImports(true)
-          .build()
-          .writeTo(processingEnv.getFiler());
-    } catch (IOException e) {
-      System.out.println(e);
-      throw new RuntimeException(e);
+    static void writeJavaFile(
+            ProcessingEnvironment processingEnv, String packageName, TypeSpec typeSpec) {
+        try {
+            JavaFile.builder(packageName, typeSpec)
+                    .skipJavaLangImports(true)
+                    .build()
+                    .writeTo(processingEnv.getFiler());
+        } catch (IOException e) {
+            System.out.println(e);
+            throw new RuntimeException(e);
+        }
     }
-  }
 }

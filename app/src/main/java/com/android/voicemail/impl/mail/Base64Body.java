@@ -17,45 +17,47 @@ package com.android.voicemail.impl.mail;
 
 import android.util.Base64;
 import android.util.Base64OutputStream;
+
+import org.apache.commons.io.IOUtils;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import org.apache.commons.io.IOUtils;
 
 public class Base64Body implements Body {
-  private final InputStream source;
-  // Because we consume the input stream, we can only write out once
-  private boolean alreadyWritten;
+    private final InputStream source;
+    // Because we consume the input stream, we can only write out once
+    private boolean alreadyWritten;
 
-  public Base64Body(InputStream source) {
-    this.source = source;
-  }
-
-  @Override
-  public InputStream getInputStream() throws MessagingException {
-    return source;
-  }
-
-  /**
-   * This method consumes the input stream, so can only be called once
-   *
-   * @param out Stream to write to
-   * @throws IllegalStateException If called more than once
-   * @throws IOException
-   * @throws MessagingException
-   */
-  @Override
-  public void writeTo(OutputStream out)
-      throws IllegalStateException, IOException, MessagingException {
-    if (alreadyWritten) {
-      throw new IllegalStateException("Base64Body can only be written once");
+    public Base64Body(InputStream source) {
+        this.source = source;
     }
-    alreadyWritten = true;
-    try {
-      final Base64OutputStream b64out = new Base64OutputStream(out, Base64.DEFAULT);
-      IOUtils.copyLarge(source, b64out);
-    } finally {
-      source.close();
+
+    @Override
+    public InputStream getInputStream() throws MessagingException {
+        return source;
     }
-  }
+
+    /**
+     * This method consumes the input stream, so can only be called once
+     *
+     * @param out Stream to write to
+     * @throws IllegalStateException If called more than once
+     * @throws IOException
+     * @throws MessagingException
+     */
+    @Override
+    public void writeTo(OutputStream out)
+            throws IllegalStateException, IOException, MessagingException {
+        if (alreadyWritten) {
+            throw new IllegalStateException("Base64Body can only be written once");
+        }
+        alreadyWritten = true;
+        try {
+            final Base64OutputStream b64out = new Base64OutputStream(out, Base64.DEFAULT);
+            IOUtils.copyLarge(source, b64out);
+        } finally {
+            source.close();
+        }
+    }
 }

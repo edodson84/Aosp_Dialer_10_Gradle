@@ -18,6 +18,7 @@ package com.android.incallui.answer.impl.classifier;
 
 import android.util.ArrayMap;
 import android.view.MotionEvent;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -47,146 +48,146 @@ import java.util.Map;
  * angels or right angles)
  */
 class AnglesClassifier extends StrokeClassifier {
-  private final Map<Stroke, Data> strokeMap = new ArrayMap<>();
+    private final Map<Stroke, Data> strokeMap = new ArrayMap<>();
 
-  public AnglesClassifier(ClassifierData classifierData) {
-    this.classifierData = classifierData;
-  }
-
-  @Override
-  public String getTag() {
-    return "ANG";
-  }
-
-  @Override
-  public void onTouchEvent(MotionEvent event) {
-    int action = event.getActionMasked();
-
-    if (action == MotionEvent.ACTION_DOWN) {
-      strokeMap.clear();
+    public AnglesClassifier(ClassifierData classifierData) {
+        this.classifierData = classifierData;
     }
 
-    for (int i = 0; i < event.getPointerCount(); i++) {
-      Stroke stroke = classifierData.getStroke(event.getPointerId(i));
-
-      if (strokeMap.get(stroke) == null) {
-        strokeMap.put(stroke, new Data());
-      }
-      strokeMap.get(stroke).addPoint(stroke.getPoints().get(stroke.getPoints().size() - 1));
-    }
-  }
-
-  @Override
-  public float getFalseTouchEvaluation(Stroke stroke) {
-    Data data = strokeMap.get(stroke);
-    return AnglesVarianceEvaluator.evaluate(data.getAnglesVariance())
-        + AnglesPercentageEvaluator.evaluate(data.getAnglesPercentage());
-  }
-
-  private static class Data {
-    private static final float ANGLE_DEVIATION = (float) Math.PI / 20.0f;
-    private static final float MIN_MOVE_DIST_DP = .01f;
-
-    private final List<Point> lastThreePoints = new ArrayList<>();
-    private float firstAngleVariance;
-    private float previousAngle;
-    private float biggestAngle;
-    private float sumSquares;
-    private float secondSumSquares;
-    private float sum;
-    private float secondSum;
-    private float count;
-    private float secondCount;
-    private float firstLength;
-    private float length;
-    private float anglesCount;
-    private float leftAngles;
-    private float rightAngles;
-    private float straightAngles;
-
-    public Data() {
-      firstAngleVariance = 0.0f;
-      previousAngle = (float) Math.PI;
-      biggestAngle = 0.0f;
-      sumSquares = secondSumSquares = 0.0f;
-      sum = secondSum = 0.0f;
-      count = secondCount = 1.0f;
-      length = firstLength = 0.0f;
-      anglesCount = leftAngles = rightAngles = straightAngles = 0.0f;
+    @Override
+    public String getTag() {
+        return "ANG";
     }
 
-    public void addPoint(Point point) {
-      // Checking if the added point is different than the previously added point
-      // Repetitions and short distances are being ignored so that proper angles are calculated.
-      if (lastThreePoints.isEmpty()
-          || (!lastThreePoints.get(lastThreePoints.size() - 1).equals(point)
-              && (lastThreePoints.get(lastThreePoints.size() - 1).dist(point)
-                  > MIN_MOVE_DIST_DP))) {
-        if (!lastThreePoints.isEmpty()) {
-          length += lastThreePoints.get(lastThreePoints.size() - 1).dist(point);
+    @Override
+    public void onTouchEvent(MotionEvent event) {
+        int action = event.getActionMasked();
+
+        if (action == MotionEvent.ACTION_DOWN) {
+            strokeMap.clear();
         }
-        lastThreePoints.add(point);
-        if (lastThreePoints.size() == 4) {
-          lastThreePoints.remove(0);
 
-          float angle =
-              lastThreePoints.get(1).getAngle(lastThreePoints.get(0), lastThreePoints.get(2));
+        for (int i = 0; i < event.getPointerCount(); i++) {
+            Stroke stroke = classifierData.getStroke(event.getPointerId(i));
 
-          anglesCount++;
-          if (angle < Math.PI - ANGLE_DEVIATION) {
-            leftAngles++;
-          } else if (angle <= Math.PI + ANGLE_DEVIATION) {
-            straightAngles++;
-          } else {
-            rightAngles++;
-          }
-
-          float difference = angle - previousAngle;
-
-          // If this is the biggest angle of the stroke so then we save the value of
-          // the angle variance so far and start to count the values for the angle
-          // variance of the second part.
-          if (biggestAngle < angle) {
-            biggestAngle = angle;
-            firstLength = length;
-            firstAngleVariance = getAnglesVariance(sumSquares, sum, count);
-            secondSumSquares = 0.0f;
-            secondSum = 0.0f;
-            secondCount = 1.0f;
-          } else {
-            secondSum += difference;
-            secondSumSquares += difference * difference;
-            secondCount += 1.0f;
-          }
-
-          sum += difference;
-          sumSquares += difference * difference;
-          count += 1.0f;
-          previousAngle = angle;
+            if (strokeMap.get(stroke) == null) {
+                strokeMap.put(stroke, new Data());
+            }
+            strokeMap.get(stroke).addPoint(stroke.getPoints().get(stroke.getPoints().size() - 1));
         }
-      }
     }
 
-    public float getAnglesVariance(float sumSquares, float sum, float count) {
-      return sumSquares / count - (sum / count) * (sum / count);
+    @Override
+    public float getFalseTouchEvaluation(Stroke stroke) {
+        Data data = strokeMap.get(stroke);
+        return AnglesVarianceEvaluator.evaluate(data.getAnglesVariance())
+                + AnglesPercentageEvaluator.evaluate(data.getAnglesPercentage());
     }
 
-    public float getAnglesVariance() {
-      float anglesVariance = getAnglesVariance(sumSquares, sum, count);
-      if (firstLength < length / 2f) {
-        anglesVariance =
-            Math.min(
-                anglesVariance,
-                firstAngleVariance + getAnglesVariance(secondSumSquares, secondSum, secondCount));
-      }
-      return anglesVariance;
-    }
+    private static class Data {
+        private static final float ANGLE_DEVIATION = (float) Math.PI / 20.0f;
+        private static final float MIN_MOVE_DIST_DP = .01f;
 
-    public float getAnglesPercentage() {
-      if (anglesCount == 0.0f) {
-        return 1.0f;
-      }
-      return (Math.max(leftAngles, rightAngles) + straightAngles) / anglesCount;
+        private final List<Point> lastThreePoints = new ArrayList<>();
+        private float firstAngleVariance;
+        private float previousAngle;
+        private float biggestAngle;
+        private float sumSquares;
+        private float secondSumSquares;
+        private float sum;
+        private float secondSum;
+        private float count;
+        private float secondCount;
+        private float firstLength;
+        private float length;
+        private float anglesCount;
+        private float leftAngles;
+        private float rightAngles;
+        private float straightAngles;
+
+        public Data() {
+            firstAngleVariance = 0.0f;
+            previousAngle = (float) Math.PI;
+            biggestAngle = 0.0f;
+            sumSquares = secondSumSquares = 0.0f;
+            sum = secondSum = 0.0f;
+            count = secondCount = 1.0f;
+            length = firstLength = 0.0f;
+            anglesCount = leftAngles = rightAngles = straightAngles = 0.0f;
+        }
+
+        public void addPoint(Point point) {
+            // Checking if the added point is different than the previously added point
+            // Repetitions and short distances are being ignored so that proper angles are calculated.
+            if (lastThreePoints.isEmpty()
+                    || (!lastThreePoints.get(lastThreePoints.size() - 1).equals(point)
+                    && (lastThreePoints.get(lastThreePoints.size() - 1).dist(point)
+                    > MIN_MOVE_DIST_DP))) {
+                if (!lastThreePoints.isEmpty()) {
+                    length += lastThreePoints.get(lastThreePoints.size() - 1).dist(point);
+                }
+                lastThreePoints.add(point);
+                if (lastThreePoints.size() == 4) {
+                    lastThreePoints.remove(0);
+
+                    float angle =
+                            lastThreePoints.get(1).getAngle(lastThreePoints.get(0), lastThreePoints.get(2));
+
+                    anglesCount++;
+                    if (angle < Math.PI - ANGLE_DEVIATION) {
+                        leftAngles++;
+                    } else if (angle <= Math.PI + ANGLE_DEVIATION) {
+                        straightAngles++;
+                    } else {
+                        rightAngles++;
+                    }
+
+                    float difference = angle - previousAngle;
+
+                    // If this is the biggest angle of the stroke so then we save the value of
+                    // the angle variance so far and start to count the values for the angle
+                    // variance of the second part.
+                    if (biggestAngle < angle) {
+                        biggestAngle = angle;
+                        firstLength = length;
+                        firstAngleVariance = getAnglesVariance(sumSquares, sum, count);
+                        secondSumSquares = 0.0f;
+                        secondSum = 0.0f;
+                        secondCount = 1.0f;
+                    } else {
+                        secondSum += difference;
+                        secondSumSquares += difference * difference;
+                        secondCount += 1.0f;
+                    }
+
+                    sum += difference;
+                    sumSquares += difference * difference;
+                    count += 1.0f;
+                    previousAngle = angle;
+                }
+            }
+        }
+
+        public float getAnglesVariance(float sumSquares, float sum, float count) {
+            return sumSquares / count - (sum / count) * (sum / count);
+        }
+
+        public float getAnglesVariance() {
+            float anglesVariance = getAnglesVariance(sumSquares, sum, count);
+            if (firstLength < length / 2f) {
+                anglesVariance =
+                        Math.min(
+                                anglesVariance,
+                                firstAngleVariance + getAnglesVariance(secondSumSquares, secondSum, secondCount));
+            }
+            return anglesVariance;
+        }
+
+        public float getAnglesPercentage() {
+            if (anglesCount == 0.0f) {
+                return 1.0f;
+            }
+            return (Math.max(leftAngles, rightAngles) + straightAngles) / anglesCount;
+        }
     }
-  }
 }

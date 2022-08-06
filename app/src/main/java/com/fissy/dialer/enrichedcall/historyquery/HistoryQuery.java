@@ -15,7 +15,8 @@
  */
 package com.fissy.dialer.enrichedcall.historyquery;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
+
 import com.fissy.dialer.common.LogUtil;
 import com.google.auto.value.AutoValue;
 
@@ -26,21 +27,21 @@ import com.google.auto.value.AutoValue;
 @AutoValue
 public abstract class HistoryQuery {
 
-  @NonNull
-  public static HistoryQuery create(@NonNull String number, long callStartTime, long callEndTime) {
-    return new AutoValue_HistoryQuery(number, callStartTime, callEndTime);
-  }
+    @NonNull
+    public static HistoryQuery create(@NonNull String number, long callStartTime, long callEndTime) {
+        return new AutoValue_HistoryQuery(number, callStartTime, callEndTime);
+    }
 
-  public abstract String getNumber();
+    public abstract String getNumber();
 
-  public abstract long getCallStartTimestamp();
+    public abstract long getCallStartTimestamp();
 
-  public abstract long getCallEndTimestamp();
+    public abstract long getCallEndTimestamp();
 
-  @Override
-  public String toString() {
-    return String.format(
-        "HistoryQuery{number: %s, callStartTimestamp: %d, callEndTimestamp: %d}",
-        LogUtil.sanitizePhoneNumber(getNumber()), getCallStartTimestamp(), getCallEndTimestamp());
-  }
+    @Override
+    public String toString() {
+        return String.format(
+                "HistoryQuery{number: %s, callStartTimestamp: %d, callEndTimestamp: %d}",
+                LogUtil.sanitizePhoneNumber(getNumber()), getCallStartTimestamp(), getCallEndTimestamp());
+    }
 }

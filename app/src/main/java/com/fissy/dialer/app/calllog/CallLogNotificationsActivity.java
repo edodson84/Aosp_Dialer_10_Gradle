@@ -18,7 +18,8 @@ package com.fissy.dialer.app.calllog;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.util.PermissionsUtil;
 
@@ -34,37 +35,37 @@ import com.fissy.dialer.util.PermissionsUtil;
  */
 public class CallLogNotificationsActivity extends AppCompatActivity {
 
-  public static final String ACTION_SEND_SMS_FROM_MISSED_CALL_NOTIFICATION =
-      "com.fissy.dialer.calllog.SEND_SMS_FROM_MISSED_CALL_NOTIFICATION";
+    public static final String ACTION_SEND_SMS_FROM_MISSED_CALL_NOTIFICATION =
+            "com.fissy.dialer.calllog.SEND_SMS_FROM_MISSED_CALL_NOTIFICATION";
 
-  /**
-   * Extra to be included with {@link #ACTION_SEND_SMS_FROM_MISSED_CALL_NOTIFICATION} to identify
-   * the number to text back.
-   *
-   * <p>It must be a {@link String}.
-   */
-  public static final String EXTRA_MISSED_CALL_NUMBER = "MISSED_CALL_NUMBER";
+    /**
+     * Extra to be included with {@link #ACTION_SEND_SMS_FROM_MISSED_CALL_NOTIFICATION} to identify
+     * the number to text back.
+     *
+     * <p>It must be a {@link String}.
+     */
+    public static final String EXTRA_MISSED_CALL_NUMBER = "MISSED_CALL_NUMBER";
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    Intent intent = getIntent();
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
 
-    if (!PermissionsUtil.hasPermission(this, android.Manifest.permission.READ_CALL_LOG)) {
-      return;
+        if (!PermissionsUtil.hasPermission(this, android.Manifest.permission.READ_CALL_LOG)) {
+            return;
+        }
+
+        String action = intent.getAction();
+        switch (action) {
+            case ACTION_SEND_SMS_FROM_MISSED_CALL_NOTIFICATION:
+                MissedCallNotifier.getInstance(this)
+                        .sendSmsFromMissedCall(
+                                intent.getStringExtra(EXTRA_MISSED_CALL_NUMBER), intent.getData());
+                break;
+            default:
+                LogUtil.d("CallLogNotificationsActivity.onCreate", "could not handle: " + intent);
+                break;
+        }
+        finish();
     }
-
-    String action = intent.getAction();
-    switch (action) {
-      case ACTION_SEND_SMS_FROM_MISSED_CALL_NOTIFICATION:
-        MissedCallNotifier.getInstance(this)
-            .sendSmsFromMissedCall(
-                intent.getStringExtra(EXTRA_MISSED_CALL_NUMBER), intent.getData());
-        break;
-      default:
-        LogUtil.d("CallLogNotificationsActivity.onCreate", "could not handle: " + intent);
-        break;
-    }
-    finish();
-  }
 }

@@ -18,140 +18,148 @@ package com.android.incallui.incall.protocol;
 
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
+
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.multimedia.MultimediaData;
 import com.google.auto.value.AutoValue;
+
 import java.util.Locale;
 
-/** Information about the primary call. */
+/**
+ * Information about the primary call.
+ */
 @AutoValue
 public abstract class PrimaryInfo {
-  @Nullable
-  public abstract String number();
+    public static Builder builder() {
+        return new AutoValue_PrimaryInfo.Builder();
+    }
 
-  @Nullable
-  public abstract String name();
+    public static PrimaryInfo empty() {
+        return PrimaryInfo.builder()
+                .setNameIsNumber(false)
+                .setPhotoType(ContactPhotoType.DEFAULT_PLACEHOLDER)
+                .setIsSipCall(false)
+                .setIsContactPhotoShown(false)
+                .setIsWorkCall(false)
+                .setIsSpam(false)
+                .setIsLocalContact(false)
+                .setAnsweringDisconnectsOngoingCall(false)
+                .setShouldShowLocation(false)
+                .setShowInCallButtonGrid(true)
+                .setNumberPresentation(-1)
+                .build();
+    }
 
-  public abstract boolean nameIsNumber();
-  // This is from contacts and shows the type of number. For example, "Mobile".
-  @Nullable
-  public abstract String label();
+    @Nullable
+    public abstract String number();
 
-  @Nullable
-  public abstract String location();
+    @Nullable
+    public abstract String name();
 
-  @Nullable
-  public abstract Drawable photo();
+    public abstract boolean nameIsNumber();
 
-  @Nullable
-  public abstract Uri photoUri();
+    // This is from contacts and shows the type of number. For example, "Mobile".
+    @Nullable
+    public abstract String label();
 
-  @ContactPhotoType
-  public abstract int photoType();
+    @Nullable
+    public abstract String location();
 
-  public abstract boolean isSipCall();
+    @Nullable
+    public abstract Drawable photo();
 
-  public abstract boolean isContactPhotoShown();
+    @Nullable
+    public abstract Uri photoUri();
 
-  public abstract boolean isWorkCall();
+    @ContactPhotoType
+    public abstract int photoType();
 
-  public abstract boolean isSpam();
+    public abstract boolean isSipCall();
 
-  public abstract boolean isLocalContact();
+    public abstract boolean isContactPhotoShown();
 
-  public abstract boolean answeringDisconnectsOngoingCall();
+    public abstract boolean isWorkCall();
 
-  public abstract boolean shouldShowLocation();
-  // Used for consistent LetterTile coloring.
-  @Nullable
-  public abstract String contactInfoLookupKey();
+    public abstract boolean isSpam();
 
-  @Nullable
-  public abstract MultimediaData multimediaData();
+    public abstract boolean isLocalContact();
 
-  public abstract boolean showInCallButtonGrid();
+    public abstract boolean answeringDisconnectsOngoingCall();
 
-  public abstract int numberPresentation();
+    public abstract boolean shouldShowLocation();
 
-  public static Builder builder() {
-    return new AutoValue_PrimaryInfo.Builder();
-  }
+    // Used for consistent LetterTile coloring.
+    @Nullable
+    public abstract String contactInfoLookupKey();
 
-  /** Builder class for primary call info. */
-  @AutoValue.Builder
-  public abstract static class Builder {
-    public abstract Builder setNumber(String number);
+    @Nullable
+    public abstract MultimediaData multimediaData();
 
-    public abstract Builder setName(String name);
+    public abstract boolean showInCallButtonGrid();
 
-    public abstract Builder setNameIsNumber(boolean nameIsNumber);
+    public abstract int numberPresentation();
 
-    public abstract Builder setLabel(String label);
+    @Override
+    public String toString() {
+        return String.format(
+                Locale.US,
+                "PrimaryInfo, number: %s, name: %s, location: %s, label: %s, "
+                        + "photo: %s, photoType: %d, isPhotoVisible: %b, MultimediaData: %s",
+                LogUtil.sanitizePhoneNumber(number()),
+                LogUtil.sanitizePii(name()),
+                LogUtil.sanitizePii(location()),
+                label(),
+                photo(),
+                photoType(),
+                isContactPhotoShown(),
+                multimediaData());
+    }
 
-    public abstract Builder setLocation(String location);
+    /**
+     * Builder class for primary call info.
+     */
+    @AutoValue.Builder
+    public abstract static class Builder {
+        public abstract Builder setNumber(String number);
 
-    public abstract Builder setPhoto(Drawable photo);
+        public abstract Builder setName(String name);
 
-    public abstract Builder setPhotoUri(Uri photoUri);
+        public abstract Builder setNameIsNumber(boolean nameIsNumber);
 
-    public abstract Builder setPhotoType(@ContactPhotoType int photoType);
+        public abstract Builder setLabel(String label);
 
-    public abstract Builder setIsSipCall(boolean isSipCall);
+        public abstract Builder setLocation(String location);
 
-    public abstract Builder setIsContactPhotoShown(boolean isContactPhotoShown);
+        public abstract Builder setPhoto(Drawable photo);
 
-    public abstract Builder setIsWorkCall(boolean isWorkCall);
+        public abstract Builder setPhotoUri(Uri photoUri);
 
-    public abstract Builder setIsSpam(boolean isSpam);
+        public abstract Builder setPhotoType(@ContactPhotoType int photoType);
 
-    public abstract Builder setIsLocalContact(boolean isLocalContact);
+        public abstract Builder setIsSipCall(boolean isSipCall);
 
-    public abstract Builder setAnsweringDisconnectsOngoingCall(
-        boolean answeringDisconnectsOngoingCall);
+        public abstract Builder setIsContactPhotoShown(boolean isContactPhotoShown);
 
-    public abstract Builder setShouldShowLocation(boolean shouldShowLocation);
+        public abstract Builder setIsWorkCall(boolean isWorkCall);
 
-    public abstract Builder setContactInfoLookupKey(String contactInfoLookupKey);
+        public abstract Builder setIsSpam(boolean isSpam);
 
-    public abstract Builder setMultimediaData(MultimediaData multimediaData);
+        public abstract Builder setIsLocalContact(boolean isLocalContact);
 
-    public abstract Builder setShowInCallButtonGrid(boolean showInCallButtonGrid);
+        public abstract Builder setAnsweringDisconnectsOngoingCall(
+                boolean answeringDisconnectsOngoingCall);
 
-    public abstract Builder setNumberPresentation(int numberPresentation);
+        public abstract Builder setShouldShowLocation(boolean shouldShowLocation);
 
-    public abstract PrimaryInfo build();
-  }
+        public abstract Builder setContactInfoLookupKey(String contactInfoLookupKey);
 
-  public static PrimaryInfo empty() {
-    return PrimaryInfo.builder()
-        .setNameIsNumber(false)
-        .setPhotoType(ContactPhotoType.DEFAULT_PLACEHOLDER)
-        .setIsSipCall(false)
-        .setIsContactPhotoShown(false)
-        .setIsWorkCall(false)
-        .setIsSpam(false)
-        .setIsLocalContact(false)
-        .setAnsweringDisconnectsOngoingCall(false)
-        .setShouldShowLocation(false)
-        .setShowInCallButtonGrid(true)
-        .setNumberPresentation(-1)
-        .build();
-  }
+        public abstract Builder setMultimediaData(MultimediaData multimediaData);
 
-  @Override
-  public String toString() {
-    return String.format(
-        Locale.US,
-        "PrimaryInfo, number: %s, name: %s, location: %s, label: %s, "
-            + "photo: %s, photoType: %d, isPhotoVisible: %b, MultimediaData: %s",
-        LogUtil.sanitizePhoneNumber(number()),
-        LogUtil.sanitizePii(name()),
-        LogUtil.sanitizePii(location()),
-        label(),
-        photo(),
-        photoType(),
-        isContactPhotoShown(),
-        multimediaData());
-  }
+        public abstract Builder setShowInCallButtonGrid(boolean showInCallButtonGrid);
+
+        public abstract Builder setNumberPresentation(int numberPresentation);
+
+        public abstract PrimaryInfo build();
+    }
 }

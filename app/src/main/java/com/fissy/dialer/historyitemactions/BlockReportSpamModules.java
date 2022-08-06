@@ -23,118 +23,122 @@ import com.fissy.dialer.blockreportspam.BlockReportSpamDialogInfo;
 import com.fissy.dialer.blockreportspam.ShowBlockReportSpamDialogNotifier;
 import com.fissy.dialer.logging.DialerImpression;
 import com.fissy.dialer.logging.Logger;
+
 import java.util.Optional;
 
-/** Modules for blocking/unblocking a number and/or reporting it as spam/not spam. */
+/**
+ * Modules for blocking/unblocking a number and/or reporting it as spam/not spam.
+ */
 final class BlockReportSpamModules {
 
-  private BlockReportSpamModules() {}
+    private BlockReportSpamModules() {
+    }
 
-  static HistoryItemActionModule moduleForMarkingNumberAsNotSpam(
-      Context context,
-      BlockReportSpamDialogInfo blockReportSpamDialogInfo,
-      Optional<DialerImpression.Type> impression) {
+    static HistoryItemActionModule moduleForMarkingNumberAsNotSpam(
+            Context context,
+            BlockReportSpamDialogInfo blockReportSpamDialogInfo,
+            Optional<DialerImpression.Type> impression) {
 
-    return new HistoryItemActionModule() {
-      @Override
-      public int getStringId() {
-        return R.string.not_spam;
-      }
+        return new HistoryItemActionModule() {
+            @Override
+            public int getStringId() {
+                return R.string.not_spam;
+            }
 
-      @Override
-      public int getDrawableId() {
-        return R.drawable.quantum_ic_report_off_vd_theme_24;
-      }
+            @Override
+            public int getDrawableId() {
+                return R.drawable.quantum_ic_report_off_vd_theme_24;
+            }
 
-      @Override
-      public boolean onClick() {
-        ShowBlockReportSpamDialogNotifier.notifyShowDialogToReportNotSpam(
-            context, blockReportSpamDialogInfo);
+            @Override
+            public boolean onClick() {
+                ShowBlockReportSpamDialogNotifier.notifyShowDialogToReportNotSpam(
+                        context, blockReportSpamDialogInfo);
 
-        impression.ifPresent(Logger.get(context)::logImpression);
-        return true; // Close the bottom sheet.
-      }
-    };
-  }
+                impression.ifPresent(Logger.get(context)::logImpression);
+                return true; // Close the bottom sheet.
+            }
+        };
+    }
 
-  static HistoryItemActionModule moduleForBlockingNumber(
-      Context context,
-      BlockReportSpamDialogInfo blockReportSpamDialogInfo,
-      Optional<DialerImpression.Type> impression) {
+    static HistoryItemActionModule moduleForBlockingNumber(
+            Context context,
+            BlockReportSpamDialogInfo blockReportSpamDialogInfo,
+            Optional<DialerImpression.Type> impression) {
 
-    return new HistoryItemActionModule() {
-      @Override
-      public int getStringId() {
-        return R.string.block_number;
-      }
+        return new HistoryItemActionModule() {
+            @Override
+            public int getStringId() {
+                return R.string.block_number;
+            }
 
-      @Override
-      public int getDrawableId() {
-        return R.drawable.quantum_ic_block_vd_theme_24;
-      }
+            @Override
+            public int getDrawableId() {
+                return R.drawable.quantum_ic_block_vd_theme_24;
+            }
 
-      @Override
-      public boolean onClick() {
-        ShowBlockReportSpamDialogNotifier.notifyShowDialogToBlockNumber(
-            context, blockReportSpamDialogInfo);
+            @Override
+            public boolean onClick() {
+                ShowBlockReportSpamDialogNotifier.notifyShowDialogToBlockNumber(
+                        context, blockReportSpamDialogInfo);
 
-        impression.ifPresent(Logger.get(context)::logImpression);
-        return true; // Close the bottom sheet.
-      }
-    };
-  }
+                impression.ifPresent(Logger.get(context)::logImpression);
+                return true; // Close the bottom sheet.
+            }
+        };
+    }
 
-  static HistoryItemActionModule moduleForUnblockingNumber(
-      Context context,
-      BlockReportSpamDialogInfo blockReportSpamDialogInfo,
-      Optional<DialerImpression.Type> impression) {
+    static HistoryItemActionModule moduleForUnblockingNumber(
+            Context context,
+            BlockReportSpamDialogInfo blockReportSpamDialogInfo,
+            Optional<DialerImpression.Type> impression) {
 
-    return new HistoryItemActionModule() {
-      @Override
-      public int getStringId() {
-        return R.string.unblock_number;
-      }
+        return new HistoryItemActionModule() {
+            @Override
+            public int getStringId() {
+                return R.string.unblock_number;
+            }
 
-      @Override
-      public int getDrawableId() {
-        return R.drawable.quantum_ic_unblock_vd_theme_24;
-      }
+            @Override
+            public int getDrawableId() {
+                return R.drawable.quantum_ic_unblock_vd_theme_24;
+            }
 
-      @Override
-      public boolean onClick() {
-        ShowBlockReportSpamDialogNotifier.notifyShowDialogToUnblockNumber(
-            context, blockReportSpamDialogInfo);
+            @Override
+            public boolean onClick() {
+                ShowBlockReportSpamDialogNotifier.notifyShowDialogToUnblockNumber(
+                        context, blockReportSpamDialogInfo);
 
-        impression.ifPresent(Logger.get(context)::logImpression);
-        return true; // Close the bottom sheet.
-      }
-    };
-  }
+                impression.ifPresent(Logger.get(context)::logImpression);
+                return true; // Close the bottom sheet.
+            }
+        };
+    }
 
-  static HistoryItemActionModule moduleForBlockingNumberAndOptionallyReportingSpam(
-      Context context,
-      BlockReportSpamDialogInfo blockReportSpamDialogInfo,
-      Optional<DialerImpression.Type> impression) {
+    static HistoryItemActionModule moduleForBlockingNumberAndOptionallyReportingSpam(
+            Context context,
+            BlockReportSpamDialogInfo blockReportSpamDialogInfo,
+            Optional<DialerImpression.Type> impression) {
 
-    return new HistoryItemActionModule() {
-      @Override
-      public int getStringId() {
-        return R.string.block_and_optionally_report_spam;
-      }
+        return new HistoryItemActionModule() {
+            @Override
+            public int getStringId() {
+                return R.string.block_and_optionally_report_spam;
+            }
 
-      @Override
-      public int getDrawableId() {
-        return R.drawable.quantum_ic_block_vd_theme_24;
-      }
+            @Override
+            public int getDrawableId() {
+                return R.drawable.quantum_ic_block_vd_theme_24;
+            }
 
-      @Override
-      public boolean onClick() {
-        ShowBlockReportSpamDialogNotifier.notifyShowDialogToBlockNumberAndOptionallyReportSpam(
-            context, blockReportSpamDialogInfo);
+            @Override
+            public boolean onClick() {
+                ShowBlockReportSpamDialogNotifier.notifyShowDialogToBlockNumberAndOptionallyReportSpam(
+                        context, blockReportSpamDialogInfo);
 
-        impression.ifPresent(Logger.get(context)::logImpression);
-        return true; // Close the bottom sheet.
-      }
-    };
-  }
+                impression.ifPresent(Logger.get(context)::logImpression);
+                return true; // Close the bottom sheet.
+            }
+        };
+    }
 }

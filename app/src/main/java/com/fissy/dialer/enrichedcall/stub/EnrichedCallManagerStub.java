@@ -17,9 +17,10 @@
 package com.fissy.dialer.enrichedcall.stub;
 
 import android.content.BroadcastReceiver.PendingResult;
-import android.support.annotation.MainThread;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.MainThread;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.fissy.dialer.calldetails.CallDetailsEntries;
 import com.fissy.dialer.calldetails.CallDetailsEntries.CallDetailsEntry;
 import com.fissy.dialer.common.Assert;
@@ -30,168 +31,189 @@ import com.fissy.dialer.enrichedcall.historyquery.proto.HistoryResult;
 import com.fissy.dialer.enrichedcall.videoshare.VideoShareListener;
 import com.fissy.dialer.enrichedcall.videoshare.VideoShareSession;
 import com.fissy.dialer.multimedia.MultimediaData;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-/** Stub implementation of {@link EnrichedCallManager}. */
+/**
+ * Stub implementation of {@link EnrichedCallManager}.
+ */
 public final class EnrichedCallManagerStub implements EnrichedCallManager {
 
-  @Override
-  public void registerCapabilitiesListener(@NonNull CapabilitiesListener listener) {}
+    @Override
+    public void registerCapabilitiesListener(@NonNull CapabilitiesListener listener) {
+    }
 
-  @Override
-  public void requestCapabilities(@NonNull String number) {}
+    @Override
+    public void requestCapabilities(@NonNull String number) {
+    }
 
-  @Override
-  public void unregisterCapabilitiesListener(@NonNull CapabilitiesListener listener) {}
+    @Override
+    public void unregisterCapabilitiesListener(@NonNull CapabilitiesListener listener) {
+    }
 
-  @Override
-  public EnrichedCallCapabilities getCapabilities(@NonNull String number) {
-    return null;
-  }
+    @Override
+    public EnrichedCallCapabilities getCapabilities(@NonNull String number) {
+        return null;
+    }
 
-  @Override
-  public void clearCachedData() {}
+    @Override
+    public void clearCachedData() {
+    }
 
-  @Override
-  public long startCallComposerSession(@NonNull String number) {
-    return Session.NO_SESSION_ID;
-  }
+    @Override
+    public long startCallComposerSession(@NonNull String number) {
+        return Session.NO_SESSION_ID;
+    }
 
-  @Override
-  public void sendCallComposerData(long sessionId, @NonNull MultimediaData data) {}
+    @Override
+    public void sendCallComposerData(long sessionId, @NonNull MultimediaData data) {
+    }
 
-  @Override
-  public void endCallComposerSession(long sessionId) {}
+    @Override
+    public void endCallComposerSession(long sessionId) {
+    }
 
-  @Override
-  public void sendPostCallNote(@NonNull String number, @NonNull String message) {}
+    @Override
+    public void sendPostCallNote(@NonNull String number, @NonNull String message) {
+    }
 
-  @Override
-  public void onCapabilitiesReceived(
-      @NonNull String number, @NonNull EnrichedCallCapabilities capabilities) {}
+    @Override
+    public void onCapabilitiesReceived(
+            @NonNull String number, @NonNull EnrichedCallCapabilities capabilities) {
+    }
 
-  @Override
-  public void registerStateChangedListener(@NonNull StateChangedListener listener) {}
+    @Override
+    public void registerStateChangedListener(@NonNull StateChangedListener listener) {
+    }
 
-  @Nullable
-  @Override
-  public Session getSession(
-      @NonNull String uniqueCallId, @NonNull String number, @Nullable Filter filter) {
-    return null;
-  }
+    @Nullable
+    @Override
+    public Session getSession(
+            @NonNull String uniqueCallId, @NonNull String number, @Nullable Filter filter) {
+        return null;
+    }
 
-  @Nullable
-  @Override
-  public Session getSession(long sessionId) {
-    return null;
-  }
+    @Nullable
+    @Override
+    public Session getSession(long sessionId) {
+        return null;
+    }
 
-  @MainThread
-  @NonNull
-  @Override
-  public List<String> getAllSessionsForDisplay() {
-    Assert.isMainThread();
-    return Collections.emptyList();
-  }
+    @MainThread
+    @NonNull
+    @Override
+    public List<String> getAllSessionsForDisplay() {
+        Assert.isMainThread();
+        return Collections.emptyList();
+    }
 
-  @NonNull
-  @Override
-  public Filter createIncomingCallComposerFilter() {
-    return session -> false;
-  }
+    @NonNull
+    @Override
+    public Filter createIncomingCallComposerFilter() {
+        return session -> false;
+    }
 
-  @NonNull
-  @Override
-  public Filter createOutgoingCallComposerFilter() {
-    return session -> false;
-  }
+    @NonNull
+    @Override
+    public Filter createOutgoingCallComposerFilter() {
+        return session -> false;
+    }
 
-  @Override
-  public void registerHistoricalDataChangedListener(
-      @NonNull HistoricalDataChangedListener listener) {}
+    @Override
+    public void registerHistoricalDataChangedListener(
+            @NonNull HistoricalDataChangedListener listener) {
+    }
 
-  @Override
-  public void unregisterHistoricalDataChangedListener(
-      @NonNull HistoricalDataChangedListener listener) {}
+    @Override
+    public void unregisterHistoricalDataChangedListener(
+            @NonNull HistoricalDataChangedListener listener) {
+    }
 
-  @Nullable
-  @Override
-  @MainThread
-  public Map<CallDetailsEntry, List<HistoryResult>> getAllHistoricalData(
-      @NonNull String number, @NonNull CallDetailsEntries entries) {
-    Assert.isMainThread();
-    return null;
-  }
+    @Nullable
+    @Override
+    @MainThread
+    public Map<CallDetailsEntry, List<HistoryResult>> getAllHistoricalData(
+            @NonNull String number, @NonNull CallDetailsEntries entries) {
+        Assert.isMainThread();
+        return null;
+    }
 
-  @Override
-  public boolean hasStoredData() {
-    Assert.isMainThread();
-    return false;
-  }
+    @Override
+    public boolean hasStoredData() {
+        Assert.isMainThread();
+        return false;
+    }
 
-  @MainThread
-  @Override
-  public void requestAllHistoricalData(
-      @NonNull String number, @NonNull CallDetailsEntries entries) {
-    Assert.isMainThread();
-  }
+    @MainThread
+    @Override
+    public void requestAllHistoricalData(
+            @NonNull String number, @NonNull CallDetailsEntries entries) {
+        Assert.isMainThread();
+    }
 
-  @Override
-  public void unregisterStateChangedListener(@NonNull StateChangedListener listener) {}
+    @Override
+    public void unregisterStateChangedListener(@NonNull StateChangedListener listener) {
+    }
 
-  @Override
-  public void onSessionStatusUpdate(long sessionId, @NonNull String number, int state) {}
+    @Override
+    public void onSessionStatusUpdate(long sessionId, @NonNull String number, int state) {
+    }
 
-  @Override
-  public void onMessageUpdate(long sessionId, @NonNull String messageId, int state) {}
+    @Override
+    public void onMessageUpdate(long sessionId, @NonNull String messageId, int state) {
+    }
 
-  @Override
-  public void onIncomingCallComposerData(long sessionId, @NonNull MultimediaData multimediaData) {}
+    @Override
+    public void onIncomingCallComposerData(long sessionId, @NonNull MultimediaData multimediaData) {
+    }
 
-  @Override
-  public void onIncomingPostCallData(
-      @NonNull PendingResult pendingResult,
-      long sessionId,
-      @NonNull MultimediaData multimediaData) {
-    pendingResult.finish();
-  }
+    @Override
+    public void onIncomingPostCallData(
+            @NonNull PendingResult pendingResult,
+            long sessionId,
+            @NonNull MultimediaData multimediaData) {
+        pendingResult.finish();
+    }
 
-  @Override
-  public void registerVideoShareListener(@NonNull VideoShareListener listener) {}
+    @Override
+    public void registerVideoShareListener(@NonNull VideoShareListener listener) {
+    }
 
-  @Override
-  public void unregisterVideoShareListener(@NonNull VideoShareListener listener) {}
+    @Override
+    public void unregisterVideoShareListener(@NonNull VideoShareListener listener) {
+    }
 
-  @Override
-  public boolean onIncomingVideoShareInvite(long sessionId, @NonNull String number) {
-    return false;
-  }
+    @Override
+    public boolean onIncomingVideoShareInvite(long sessionId, @NonNull String number) {
+        return false;
+    }
 
-  @Override
-  public long startVideoShareSession(String number) {
-    return Session.NO_SESSION_ID;
-  }
+    @Override
+    public long startVideoShareSession(String number) {
+        return Session.NO_SESSION_ID;
+    }
 
-  @Override
-  public boolean acceptVideoShareSession(long sessionId) {
-    return false;
-  }
+    @Override
+    public boolean acceptVideoShareSession(long sessionId) {
+        return false;
+    }
 
-  @Override
-  public long getVideoShareInviteSessionId(@NonNull String number) {
-    return Session.NO_SESSION_ID;
-  }
+    @Override
+    public long getVideoShareInviteSessionId(@NonNull String number) {
+        return Session.NO_SESSION_ID;
+    }
 
-  @MainThread
-  @Nullable
-  @Override
-  public VideoShareSession getVideoShareSession(long sessionId) {
-    Assert.isMainThread();
-    return null;
-  }
+    @MainThread
+    @Nullable
+    @Override
+    public VideoShareSession getVideoShareSession(long sessionId) {
+        Assert.isMainThread();
+        return null;
+    }
 
-  @Override
-  public void endVideoShareSession(long sessionId) {}
+    @Override
+    public void endVideoShareSession(long sessionId) {
+    }
 }

@@ -17,12 +17,11 @@
 package com.android.incallui;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentActivity;
 import android.telecom.CallAudioState;
-import com.fissy.dialer.logging.DialerImpression;
-import com.fissy.dialer.logging.Logger;
+
 import com.android.incallui.audiomode.AudioModeProvider;
 import com.android.incallui.audioroute.AudioRouteSelectorDialogFragment;
 import com.android.incallui.audioroute.AudioRouteSelectorDialogFragment.AudioRouteSelectorPresenter;
@@ -30,109 +29,120 @@ import com.android.incallui.call.CallList;
 import com.android.incallui.call.CallList.Listener;
 import com.android.incallui.call.DialerCall;
 import com.android.incallui.call.TelecomAdapter;
+import com.fissy.dialer.logging.DialerImpression;
+import com.fissy.dialer.logging.Logger;
 
-/** Simple activity that just shows the audio route selector fragment */
+/**
+ * Simple activity that just shows the audio route selector fragment
+ */
 public class AudioRouteSelectorActivity extends FragmentActivity
-    implements AudioRouteSelectorPresenter, Listener {
+        implements AudioRouteSelectorPresenter, Listener {
 
-  @Override
-  protected void onCreate(@Nullable Bundle bundle) {
-    super.onCreate(bundle);
-    AudioRouteSelectorDialogFragment.newInstance(AudioModeProvider.getInstance().getAudioState())
-        .show(getSupportFragmentManager(), AudioRouteSelectorDialogFragment.TAG);
+    @Override
+    protected void onCreate(@Nullable Bundle bundle) {
+        super.onCreate(bundle);
+        AudioRouteSelectorDialogFragment.newInstance(AudioModeProvider.getInstance().getAudioState())
+                .show(getSupportFragmentManager(), AudioRouteSelectorDialogFragment.TAG);
 
-    CallList.getInstance().addListener(this);
-  }
-
-  @Override
-  public void onAudioRouteSelected(int audioRoute) {
-    TelecomAdapter.getInstance().setAudioRoute(audioRoute);
-    finish();
-
-    // Log the select action with audio route and call
-    DialerImpression.Type impressionType = null;
-    if ((audioRoute & CallAudioState.ROUTE_WIRED_OR_EARPIECE) != 0) {
-      impressionType = DialerImpression.Type.BUBBLE_V2_WIRED_OR_EARPIECE;
-    } else if (audioRoute == CallAudioState.ROUTE_SPEAKER) {
-      impressionType = DialerImpression.Type.BUBBLE_V2_SPEAKERPHONE;
-    } else if (audioRoute == CallAudioState.ROUTE_BLUETOOTH) {
-      impressionType = DialerImpression.Type.BUBBLE_V2_BLUETOOTH;
-    }
-    if (impressionType == null) {
-      return;
+        CallList.getInstance().addListener(this);
     }
 
-    DialerCall call = getCall();
-    if (call != null) {
-      Logger.get(this)
-          .logCallImpression(impressionType, call.getUniqueCallId(), call.getTimeAddedMs());
-    } else {
-      Logger.get(this).logImpression(impressionType);
+    @Override
+    public void onAudioRouteSelected(int audioRoute) {
+        TelecomAdapter.getInstance().setAudioRoute(audioRoute);
+        finish();
+
+        // Log the select action with audio route and call
+        DialerImpression.Type impressionType = null;
+        if ((audioRoute & CallAudioState.ROUTE_WIRED_OR_EARPIECE) != 0) {
+            impressionType = DialerImpression.Type.BUBBLE_V2_WIRED_OR_EARPIECE;
+        } else if (audioRoute == CallAudioState.ROUTE_SPEAKER) {
+            impressionType = DialerImpression.Type.BUBBLE_V2_SPEAKERPHONE;
+        } else if (audioRoute == CallAudioState.ROUTE_BLUETOOTH) {
+            impressionType = DialerImpression.Type.BUBBLE_V2_BLUETOOTH;
+        }
+        if (impressionType == null) {
+            return;
+        }
+
+        DialerCall call = getCall();
+        if (call != null) {
+            Logger.get(this)
+                    .logCallImpression(impressionType, call.getUniqueCallId(), call.getTimeAddedMs());
+        } else {
+            Logger.get(this).logImpression(impressionType);
+        }
     }
-  }
 
-  @Override
-  public void onAudioRouteSelectorDismiss() {
-    finish();
-  }
-
-  @Override
-  protected void onPause() {
-    super.onPause();
-    AudioRouteSelectorDialogFragment audioRouteSelectorDialogFragment =
-        (AudioRouteSelectorDialogFragment)
-            getSupportFragmentManager().findFragmentByTag(AudioRouteSelectorDialogFragment.TAG);
-    // If Android back button is pressed, the fragment is dismissed and removed. If home button is
-    // pressed, we have to manually dismiss the fragment here. The fragment is also removed when
-    // dismissed.
-    if (audioRouteSelectorDialogFragment != null) {
-      audioRouteSelectorDialogFragment.dismiss();
+    @Override
+    public void onAudioRouteSelectorDismiss() {
+        finish();
     }
-    // We don't expect the activity to resume, except for orientation change.
-    if (!isChangingConfigurations()) {
-      finish();
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        AudioRouteSelectorDialogFragment audioRouteSelectorDialogFragment =
+                (AudioRouteSelectorDialogFragment)
+                        getSupportFragmentManager().findFragmentByTag(AudioRouteSelectorDialogFragment.TAG);
+        // If Android back button is pressed, the fragment is dismissed and removed. If home button is
+        // pressed, we have to manually dismiss the fragment here. The fragment is also removed when
+        // dismissed.
+        if (audioRouteSelectorDialogFragment != null) {
+            audioRouteSelectorDialogFragment.dismiss();
+        }
+        // We don't expect the activity to resume, except for orientation change.
+        if (!isChangingConfigurations()) {
+            finish();
+        }
     }
-  }
 
-  @Override
-  protected void onDestroy() {
-    CallList.getInstance().removeListener(this);
-    super.onDestroy();
-  }
-
-  private DialerCall getCall() {
-    DialerCall dialerCall = CallList.getInstance().getOutgoingCall();
-    if (dialerCall == null) {
-      dialerCall = CallList.getInstance().getActiveOrBackgroundCall();
+    @Override
+    protected void onDestroy() {
+        CallList.getInstance().removeListener(this);
+        super.onDestroy();
     }
-    return dialerCall;
-  }
 
-  @Override
-  public void onDisconnect(DialerCall call) {
-    if (getCall() == null) {
-      finish();
+    private DialerCall getCall() {
+        DialerCall dialerCall = CallList.getInstance().getOutgoingCall();
+        if (dialerCall == null) {
+            dialerCall = CallList.getInstance().getActiveOrBackgroundCall();
+        }
+        return dialerCall;
     }
-  }
 
-  @Override
-  public void onIncomingCall(DialerCall call) {}
+    @Override
+    public void onDisconnect(DialerCall call) {
+        if (getCall() == null) {
+            finish();
+        }
+    }
 
-  @Override
-  public void onUpgradeToVideo(DialerCall call) {}
+    @Override
+    public void onIncomingCall(DialerCall call) {
+    }
 
-  @Override
-  public void onSessionModificationStateChange(DialerCall call) {}
+    @Override
+    public void onUpgradeToVideo(DialerCall call) {
+    }
 
-  @Override
-  public void onCallListChange(CallList callList) {}
+    @Override
+    public void onSessionModificationStateChange(DialerCall call) {
+    }
 
-  @Override
-  public void onWiFiToLteHandover(DialerCall call) {}
+    @Override
+    public void onCallListChange(CallList callList) {
+    }
 
-  @Override
-  public void onHandoverToWifiFailed(DialerCall call) {}
+    @Override
+    public void onWiFiToLteHandover(DialerCall call) {
+    }
 
-  @Override
-  public void onInternationalCallOnWifi(@NonNull DialerCall call) {}
+    @Override
+    public void onHandoverToWifiFailed(DialerCall call) {
+    }
+
+    @Override
+    public void onInternationalCallOnWifi(@NonNull DialerCall call) {
+    }
 }

@@ -16,13 +16,15 @@
 
 package com.fissy.dialer.callcomposer.camera.camerafocus;
 
-/** Methods needed by the CameraPreview in order communicate camera events. */
+/**
+ * Methods needed by the CameraPreview in order communicate camera events.
+ */
 public interface FocusIndicator {
-  void showStart();
+    void showStart();
 
-  void showSuccess(boolean timeout);
+    void showSuccess(boolean timeout);
 
-  void showFail(boolean timeout);
+    void showFail(boolean timeout);
 
-  void clear();
+    void clear();
 }

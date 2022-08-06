@@ -16,39 +16,44 @@
 
 package com.fissy.dialer.enrichedcall.extensions;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
+
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.enrichedcall.Session;
 import com.fissy.dialer.enrichedcall.Session.State;
 
-/** Extends the {@link State} to include a toString method. */
+/**
+ * Extends the {@link State} to include a toString method.
+ */
 public class StateExtension {
 
-  /** Returns the string representation for the given {@link State}. */
-  @NonNull
-  public static String toString(@State int callComposerState) {
-    if (callComposerState == Session.STATE_NONE) {
-      return "STATE_NONE";
+    /**
+     * Returns the string representation for the given {@link State}.
+     */
+    @NonNull
+    public static String toString(@State int callComposerState) {
+        if (callComposerState == Session.STATE_NONE) {
+            return "STATE_NONE";
+        }
+        if (callComposerState == Session.STATE_STARTING) {
+            return "STATE_STARTING";
+        }
+        if (callComposerState == Session.STATE_STARTED) {
+            return "STATE_STARTED";
+        }
+        if (callComposerState == Session.STATE_START_FAILED) {
+            return "STATE_START_FAILED";
+        }
+        if (callComposerState == Session.STATE_MESSAGE_SENT) {
+            return "STATE_MESSAGE_SENT";
+        }
+        if (callComposerState == Session.STATE_MESSAGE_FAILED) {
+            return "STATE_MESSAGE_FAILED";
+        }
+        if (callComposerState == Session.STATE_CLOSED) {
+            return "STATE_CLOSED";
+        }
+        Assert.checkArgument(false, "Unexpected callComposerState: %d", callComposerState);
+        return null;
     }
-    if (callComposerState == Session.STATE_STARTING) {
-      return "STATE_STARTING";
-    }
-    if (callComposerState == Session.STATE_STARTED) {
-      return "STATE_STARTED";
-    }
-    if (callComposerState == Session.STATE_START_FAILED) {
-      return "STATE_START_FAILED";
-    }
-    if (callComposerState == Session.STATE_MESSAGE_SENT) {
-      return "STATE_MESSAGE_SENT";
-    }
-    if (callComposerState == Session.STATE_MESSAGE_FAILED) {
-      return "STATE_MESSAGE_FAILED";
-    }
-    if (callComposerState == Session.STATE_CLOSED) {
-      return "STATE_CLOSED";
-    }
-    Assert.checkArgument(false, "Unexpected callComposerState: %d", callComposerState);
-    return null;
-  }
 }

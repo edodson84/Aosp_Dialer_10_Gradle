@@ -16,31 +16,36 @@
 
 package com.fissy.dialer.enrichedcall.stub;
 
+import com.android.incallui.videotech.empty.EmptyVideoTech;
 import com.fissy.dialer.enrichedcall.EnrichedCallManager;
 import com.fissy.dialer.enrichedcall.RcsVideoShareFactory;
 import com.fissy.dialer.inject.DialerVariant;
 import com.fissy.dialer.inject.InstallIn;
-import com.android.incallui.videotech.empty.EmptyVideoTech;
-import dagger.Module;
-import dagger.Provides;
+
 import javax.inject.Singleton;
 
-/** Module which binds {@link EnrichedCallManagerStub}. */
+import dagger.Module;
+import dagger.Provides;
+
+/**
+ * Module which binds {@link EnrichedCallManagerStub}.
+ */
 @InstallIn(variants = {DialerVariant.DIALER_TEST})
 @Module
 public class StubEnrichedCallModule {
 
-  @Provides
-  @Singleton
-  static EnrichedCallManager provideEnrichedCallManager() {
-    return new EnrichedCallManagerStub();
-  }
+    private StubEnrichedCallModule() {
+    }
 
-  @Provides
-  @Singleton
-  static RcsVideoShareFactory providesRcsVideoShareFactory() {
-    return (enrichedCallManager, videoTechListener, number) -> new EmptyVideoTech();
-  }
+    @Provides
+    @Singleton
+    static EnrichedCallManager provideEnrichedCallManager() {
+        return new EnrichedCallManagerStub();
+    }
 
-  private StubEnrichedCallModule() {}
+    @Provides
+    @Singleton
+    static RcsVideoShareFactory providesRcsVideoShareFactory() {
+        return (enrichedCallManager, videoTechListener, number) -> new EmptyVideoTech();
+    }
 }

@@ -17,27 +17,32 @@
 package com.fissy.dialer.duo;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
+
 import com.fissy.dialer.inject.HasRootComponent;
 import com.fissy.dialer.inject.IncludeInDialerRoot;
+
 import dagger.Subcomponent;
 
 /**
+ *
  */
 @Subcomponent
 public abstract class DuoComponent {
 
-  @NonNull
-  public abstract Duo getDuo();
+    public static DuoComponent get(Context context) {
+        return ((HasComponent) ((HasRootComponent) context.getApplicationContext()).component())
+                .duoComponent();
+    }
 
-  public static DuoComponent get(Context context) {
-    return ((HasComponent) ((HasRootComponent) context.getApplicationContext()).component())
-        .duoComponent();
-  }
+    @NonNull
+    public abstract Duo getDuo();
 
-  /** Used to refer to the root application component. */
-  @IncludeInDialerRoot
-  public interface HasComponent {
-    DuoComponent duoComponent();
-  }
+    /**
+     * Used to refer to the root application component.
+     */
+    @IncludeInDialerRoot
+    public interface HasComponent {
+        DuoComponent duoComponent();
+    }
 }

@@ -22,22 +22,27 @@ package com.fissy.dialer.constants;
  */
 public final class ActivityRequestCodes {
 
-  private ActivityRequestCodes() {}
+    /**
+     * Request code for {@link android.speech.RecognizerIntent#ACTION_RECOGNIZE_SPEECH} intent.
+     */
+    public static final int DIALTACTS_VOICE_SEARCH = 1;
+    /**
+     * Request code for {@link com.fissy.dialer.callcomposer.CallComposerActivity} intent.
+     */
+    public static final int DIALTACTS_CALL_COMPOSER = 2;
+    /**
+     * Request code for {@link com.fissy.dialer.duo.Duo#getCallIntent(String)}.
+     */
+    public static final int DIALTACTS_DUO = 3;
+    /**
+     * Request code for {@link com.fissy.dialer.calldetails.OldCallDetailsActivity} intent.
+     */
+    public static final int DIALTACTS_CALL_DETAILS = 4;
+    /**
+     * Request code for {@link com.fissy.dialer.speeddial.SpeedDialFragment} contact picker intent.
+     */
+    public static final int SPEED_DIAL_ADD_FAVORITE = 5;
 
-  /** Request code for {@link android.speech.RecognizerIntent#ACTION_RECOGNIZE_SPEECH} intent. */
-  public static final int DIALTACTS_VOICE_SEARCH = 1;
-
-  /** Request code for {@link com.fissy.dialer.callcomposer.CallComposerActivity} intent. */
-  public static final int DIALTACTS_CALL_COMPOSER = 2;
-
-  /** Request code for {@link com.fissy.dialer.duo.Duo#getCallIntent(String)}. */
-  public static final int DIALTACTS_DUO = 3;
-
-  /** Request code for {@link com.fissy.dialer.calldetails.OldCallDetailsActivity} intent. */
-  public static final int DIALTACTS_CALL_DETAILS = 4;
-
-  /**
-   * Request code for {@link com.fissy.dialer.speeddial.SpeedDialFragment} contact picker intent.
-   */
-  public static final int SPEED_DIAL_ADD_FAVORITE = 5;
+    private ActivityRequestCodes() {
+    }
 }

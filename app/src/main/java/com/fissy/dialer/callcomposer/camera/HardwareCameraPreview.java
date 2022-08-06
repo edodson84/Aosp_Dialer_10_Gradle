@@ -23,6 +23,7 @@ import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.TextureView;
 import android.view.View;
+
 import java.io.IOException;
 
 /**
@@ -35,91 +36,91 @@ import java.io.IOException;
  * implementations of the shared methods are delegated to CameraPreview
  */
 public class HardwareCameraPreview extends TextureView implements CameraPreview.CameraPreviewHost {
-  private final CameraPreview preview;
+    private final CameraPreview preview;
 
-  public HardwareCameraPreview(final Context context, final AttributeSet attrs) {
-    super(context, attrs);
-    preview = new CameraPreview(this);
-    setSurfaceTextureListener(
-        new SurfaceTextureListener() {
-          @Override
-          public void onSurfaceTextureAvailable(
-              final SurfaceTexture surfaceTexture, final int i, final int i2) {
-            CameraManager.get().setSurface(preview);
-          }
+    public HardwareCameraPreview(final Context context, final AttributeSet attrs) {
+        super(context, attrs);
+        preview = new CameraPreview(this);
+        setSurfaceTextureListener(
+                new SurfaceTextureListener() {
+                    @Override
+                    public void onSurfaceTextureAvailable(
+                            final SurfaceTexture surfaceTexture, final int i, final int i2) {
+                        CameraManager.get().setSurface(preview);
+                    }
 
-          @Override
-          public void onSurfaceTextureSizeChanged(
-              final SurfaceTexture surfaceTexture, final int i, final int i2) {
-            CameraManager.get().setSurface(preview);
-          }
+                    @Override
+                    public void onSurfaceTextureSizeChanged(
+                            final SurfaceTexture surfaceTexture, final int i, final int i2) {
+                        CameraManager.get().setSurface(preview);
+                    }
 
-          @Override
-          public boolean onSurfaceTextureDestroyed(final SurfaceTexture surfaceTexture) {
-            CameraManager.get().setSurface(null);
-            return true;
-          }
+                    @Override
+                    public boolean onSurfaceTextureDestroyed(final SurfaceTexture surfaceTexture) {
+                        CameraManager.get().setSurface(null);
+                        return true;
+                    }
 
-          @Override
-          public void onSurfaceTextureUpdated(final SurfaceTexture surfaceTexture) {
-            CameraManager.get().setSurface(preview);
-          }
-        });
-  }
+                    @Override
+                    public void onSurfaceTextureUpdated(final SurfaceTexture surfaceTexture) {
+                        CameraManager.get().setSurface(preview);
+                    }
+                });
+    }
 
-  @Override
-  public void setShown() {
-    preview.setShown();
-  }
+    @Override
+    public void setShown() {
+        preview.setShown();
+    }
 
-  @Override
-  protected void onVisibilityChanged(final View changedView, final int visibility) {
-    super.onVisibilityChanged(changedView, visibility);
-    preview.onVisibilityChanged(visibility);
-  }
+    @Override
+    protected void onVisibilityChanged(final View changedView, final int visibility) {
+        super.onVisibilityChanged(changedView, visibility);
+        preview.onVisibilityChanged(visibility);
+    }
 
-  @Override
-  protected void onDetachedFromWindow() {
-    super.onDetachedFromWindow();
-    preview.onDetachedFromWindow();
-  }
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        preview.onDetachedFromWindow();
+    }
 
-  @Override
-  protected void onAttachedToWindow() {
-    super.onAttachedToWindow();
-    preview.onAttachedToWindow();
-  }
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        preview.onAttachedToWindow();
+    }
 
-  @Override
-  protected void onRestoreInstanceState(final Parcelable state) {
-    super.onRestoreInstanceState(state);
-    preview.onRestoreInstanceState();
-  }
+    @Override
+    protected void onRestoreInstanceState(final Parcelable state) {
+        super.onRestoreInstanceState(state);
+        preview.onRestoreInstanceState();
+    }
 
-  @Override
-  protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-    widthMeasureSpec = preview.getWidthMeasureSpec(widthMeasureSpec, heightMeasureSpec);
-    heightMeasureSpec = preview.getHeightMeasureSpec(widthMeasureSpec, heightMeasureSpec);
-    super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-  }
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        widthMeasureSpec = preview.getWidthMeasureSpec(widthMeasureSpec, heightMeasureSpec);
+        heightMeasureSpec = preview.getHeightMeasureSpec(widthMeasureSpec, heightMeasureSpec);
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    }
 
-  @Override
-  public View getView() {
-    return this;
-  }
+    @Override
+    public View getView() {
+        return this;
+    }
 
-  @Override
-  public boolean isValid() {
-    return getSurfaceTexture() != null;
-  }
+    @Override
+    public boolean isValid() {
+        return getSurfaceTexture() != null;
+    }
 
-  @Override
-  public void startPreview(final Camera camera) throws IOException {
-    camera.setPreviewTexture(getSurfaceTexture());
-  }
+    @Override
+    public void startPreview(final Camera camera) throws IOException {
+        camera.setPreviewTexture(getSurfaceTexture());
+    }
 
-  @Override
-  public void onCameraPermissionGranted() {
-    preview.onCameraPermissionGranted();
-  }
+    @Override
+    public void onCameraPermissionGranted() {
+        preview.onCameraPermissionGranted();
+    }
 }

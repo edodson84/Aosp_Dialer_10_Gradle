@@ -24,33 +24,36 @@ import android.widget.Toast;
 
 import com.fissy.dialer.R;
 
-/** Copies provided label and text to the clipboard and optionally shows a "text copied" toast. */
+/**
+ * Copies provided label and text to the clipboard and optionally shows a "text copied" toast.
+ */
 public final class ClipboardUtils {
 
-  private ClipboardUtils() {}
-
-  /**
-   * Copy a text to clipboard.
-   *
-   * @param context Context
-   * @param label Label to show to the user describing this clip.
-   * @param text Text to copy.
-   * @param showToast If {@code true}, a toast is shown to the user.
-   */
-  public static void copyText(
-      Context context, CharSequence label, CharSequence text, boolean showToast) {
-    if (TextUtils.isEmpty(text)) {
-      return;
+    private ClipboardUtils() {
     }
 
-    ClipboardManager clipboardManager =
-        (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-    ClipData clipData = ClipData.newPlainText(label == null ? "" : label, text);
-    clipboardManager.setPrimaryClip(clipData);
+    /**
+     * Copy a text to clipboard.
+     *
+     * @param context   Context
+     * @param label     Label to show to the user describing this clip.
+     * @param text      Text to copy.
+     * @param showToast If {@code true}, a toast is shown to the user.
+     */
+    public static void copyText(
+            Context context, CharSequence label, CharSequence text, boolean showToast) {
+        if (TextUtils.isEmpty(text)) {
+            return;
+        }
 
-    if (showToast) {
-      String toastText = context.getString(R.string.toast_text_copied);
-      Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show();
+        ClipboardManager clipboardManager =
+                (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clipData = ClipData.newPlainText(label == null ? "" : label, text);
+        clipboardManager.setPrimaryClip(clipData);
+
+        if (showToast) {
+            String toastText = context.getString(R.string.toast_text_copied);
+            Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show();
+        }
     }
-  }
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="DialpadKeyLettersStyle">
         <item name="android:textSize">?dialpad_key_letters_size_for_single_alphabet</item>
         <item name="android:textColor">?dialpad_text_color_secondary</item>
@@ -8,6 +9,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:fontFamily">sans-serif-regular</item>
     </style>
+
     <style name="DialpadKeyNumberStyle">
         <item name="android:textSize">?dialpad_key_numbers_size</item>
         <item name="android:textColor">?dialpad_text_color_primary</item>
@@ -16,9 +18,11 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
+
     <style name="HistoryItemBottomSheet.BottomSheetStyle" parent="@style/Widget.Design.BottomSheet.Modal">
         <item name="behavior_peekHeight">206.0dip</item>
     </style>
+
     <style name="VideoPreviewHolder">
         <item name="android:background">@android:color/black</item>
         <item name="android:layout_width">@dimen/videocall_preview_long</item>
@@ -28,6 +32,7 @@
         <item name="android:layout_marginEnd">@dimen/videocall_preview_margin_end</item>
         <item name="android:layout_alignParentEnd">true</item>
     </style>
+
     <style name="Widget.Design.TabLayout" parent="@style/Base.Widget.Design.TabLayout">
         <item name="tabGravity">center</item>
         <item name="tabMode">fixed</item>

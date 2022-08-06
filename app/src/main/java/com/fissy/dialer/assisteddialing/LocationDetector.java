@@ -16,66 +16,72 @@
 
 package com.fissy.dialer.assisteddialing;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+
 import com.fissy.dialer.common.LogUtil;
+
 import java.util.Locale;
 import java.util.Optional;
 
 // TODO(erfanian): Improve definition of roaming and home country in finalized API.
+
 /**
  * LocationDetector is responsible for determining the Roaming location of the User, in addition to
  * User's home country.
  */
 final class LocationDetector {
 
-  private final TelephonyManager telephonyManager;
-  private final String userProvidedHomeCountry;
+    private final TelephonyManager telephonyManager;
+    private final String userProvidedHomeCountry;
 
-  LocationDetector(
-      @NonNull TelephonyManager telephonyManager, @Nullable String userProvidedHomeCountry) {
-    if (telephonyManager == null) {
-      throw new NullPointerException("Provided TelephonyManager was null");
+    LocationDetector(
+            @NonNull TelephonyManager telephonyManager, @Nullable String userProvidedHomeCountry) {
+        if (telephonyManager == null) {
+            throw new NullPointerException("Provided TelephonyManager was null");
+        }
+
+        this.telephonyManager = telephonyManager;
+        this.userProvidedHomeCountry = userProvidedHomeCountry;
     }
 
-    this.telephonyManager = telephonyManager;
-    this.userProvidedHomeCountry = userProvidedHomeCountry;
-  }
+    // TODO(erfanian):  confirm this is based on ISO 3166-1 alpha-2. libphonenumber expects Unicode's
+    // CLDR
+    // TODO(erfanian):  confirm these are still valid in a multi-sim environment.
 
-  // TODO(erfanian):  confirm this is based on ISO 3166-1 alpha-2. libphonenumber expects Unicode's
-  // CLDR
-  // TODO(erfanian):  confirm these are still valid in a multi-sim environment.
-  /**
-   * Returns what we believe to be the User's home country. This should resolve to
-   * PROPERTY_ICC_OPERATOR_ISO_COUNTRY
-   */
-  Optional<String> getUpperCaseUserHomeCountry() {
+    /**
+     * Returns what we believe to be the User's home country. This should resolve to
+     * PROPERTY_ICC_OPERATOR_ISO_COUNTRY
+     */
+    Optional<String> getUpperCaseUserHomeCountry() {
 
-    if (!TextUtils.isEmpty(userProvidedHomeCountry)) {
-      LogUtil.i(
-          "LocationDetector.getUpperCaseUserRoamingCountry", "user provided home country code");
-      return Optional.of(userProvidedHomeCountry.toUpperCase(Locale.US));
+        if (!TextUtils.isEmpty(userProvidedHomeCountry)) {
+            LogUtil.i(
+                    "LocationDetector.getUpperCaseUserRoamingCountry", "user provided home country code");
+            return Optional.of(userProvidedHomeCountry.toUpperCase(Locale.US));
+        }
+
+        String simCountryIso = telephonyManager.getSimCountryIso();
+        if (simCountryIso != null) {
+            LogUtil.i("LocationDetector.getUpperCaseUserRoamingCountry", "using sim country iso");
+            return Optional.of(telephonyManager.getSimCountryIso().toUpperCase(Locale.US));
+        }
+        LogUtil.i("LocationDetector.getUpperCaseUserHomeCountry", "user home country was null");
+        return Optional.empty();
     }
 
-    String simCountryIso = telephonyManager.getSimCountryIso();
-    if (simCountryIso != null) {
-      LogUtil.i("LocationDetector.getUpperCaseUserRoamingCountry", "using sim country iso");
-      return Optional.of(telephonyManager.getSimCountryIso().toUpperCase(Locale.US));
+    /**
+     * Returns what we believe to be the User's current (roaming) country
+     */
+    Optional<String> getUpperCaseUserRoamingCountry() {
+        // TODO Increase coverage of location resolution??
+        String networkCountryIso = telephonyManager.getNetworkCountryIso();
+        if (networkCountryIso != null) {
+            return Optional.of(telephonyManager.getNetworkCountryIso().toUpperCase(Locale.US));
+        }
+        LogUtil.i("LocationDetector.getUpperCaseUserRoamingCountry", "user roaming country was null");
+        return Optional.empty();
     }
-    LogUtil.i("LocationDetector.getUpperCaseUserHomeCountry", "user home country was null");
-    return Optional.empty();
-  }
-
-  /** Returns what we believe to be the User's current (roaming) country */
-  Optional<String> getUpperCaseUserRoamingCountry() {
-    // TODO Increase coverage of location resolution??
-    String networkCountryIso = telephonyManager.getNetworkCountryIso();
-    if (networkCountryIso != null) {
-      return Optional.of(telephonyManager.getNetworkCountryIso().toUpperCase(Locale.US));
-    }
-    LogUtil.i("LocationDetector.getUpperCaseUserRoamingCountry", "user roaming country was null");
-    return Optional.empty();
-  }
 }

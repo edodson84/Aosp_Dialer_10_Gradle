@@ -16,8 +16,10 @@
 
 package com.android.incallui.video.protocol;
 
-/** Callbacks from the module out to the container. */
+/**
+ * Callbacks from the module out to the container.
+ */
 public interface VideoCallScreenDelegateFactory {
 
-  VideoCallScreenDelegate newVideoCallScreenDelegate(VideoCallScreen videoCallScreen);
+    VideoCallScreenDelegate newVideoCallScreenDelegate(VideoCallScreen videoCallScreen);
 }

@@ -22,5 +22,5 @@ package com.fissy.dialer.app.legacybindings;
  */
 public interface DialerLegacyBindingsFactory {
 
-  DialerLegacyBindings newDialerLegacyBindings();
+    DialerLegacyBindings newDialerLegacyBindings();
 }

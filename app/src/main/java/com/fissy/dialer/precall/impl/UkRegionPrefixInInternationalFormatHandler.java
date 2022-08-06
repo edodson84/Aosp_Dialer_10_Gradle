@@ -18,6 +18,7 @@ package com.fissy.dialer.precall.impl;
 
 import android.content.Context;
 import android.telephony.PhoneNumberUtils;
+
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.configprovider.ConfigProviderComponent;
 import com.fissy.dialer.precall.impl.MalformedNumberRectifier.MalformedNumberHandler;
@@ -33,38 +34,38 @@ import com.google.common.base.Optional;
  */
 class UkRegionPrefixInInternationalFormatHandler implements MalformedNumberHandler {
 
-  private static final String MALFORMED_PREFIX = "+440";
+    private static final String MALFORMED_PREFIX = "+440";
 
-  @Override
-  public Optional<String> handle(Context context, String number) {
-    if (!ConfigProviderComponent.get(context)
-        .getConfigProvider()
-        .getBoolean("uk_region_prefix_in_international_format_fix_enabled", true)) {
-      return Optional.absent();
-    }
-    if (!PhoneNumberUtils.normalizeNumber(number).startsWith(MALFORMED_PREFIX)) {
-      return Optional.absent();
-    }
-    LogUtil.i("UkRegionPrefixInInternationalFormatHandler.handle", "removing (0) in UK numbers");
+    @Override
+    public Optional<String> handle(Context context, String number) {
+        if (!ConfigProviderComponent.get(context)
+                .getConfigProvider()
+                .getBoolean("uk_region_prefix_in_international_format_fix_enabled", true)) {
+            return Optional.absent();
+        }
+        if (!PhoneNumberUtils.normalizeNumber(number).startsWith(MALFORMED_PREFIX)) {
+            return Optional.absent();
+        }
+        LogUtil.i("UkRegionPrefixInInternationalFormatHandler.handle", "removing (0) in UK numbers");
 
-    // libPhoneNumber is not used because we want to keep post dial digits, and this is on the main
-    // thread.
-    String convertedNumber = PhoneNumberUtils.convertKeypadLettersToDigits(number);
-    StringBuilder result = new StringBuilder();
-    int prefixPosition = 0;
-    for (int i = 0; i < convertedNumber.length(); i++) {
-      char c = convertedNumber.charAt(i);
-      if (c != MALFORMED_PREFIX.charAt(prefixPosition)) {
-        result.append(c);
-        continue;
-      }
-      prefixPosition++;
-      if (prefixPosition == MALFORMED_PREFIX.length()) {
-        result.append(convertedNumber.substring(i + 1));
-        break;
-      }
-      result.append(c);
+        // libPhoneNumber is not used because we want to keep post dial digits, and this is on the main
+        // thread.
+        String convertedNumber = PhoneNumberUtils.convertKeypadLettersToDigits(number);
+        StringBuilder result = new StringBuilder();
+        int prefixPosition = 0;
+        for (int i = 0; i < convertedNumber.length(); i++) {
+            char c = convertedNumber.charAt(i);
+            if (c != MALFORMED_PREFIX.charAt(prefixPosition)) {
+                result.append(c);
+                continue;
+            }
+            prefixPosition++;
+            if (prefixPosition == MALFORMED_PREFIX.length()) {
+                result.append(convertedNumber.substring(i + 1));
+                break;
+            }
+            result.append(c);
+        }
+        return Optional.of(result.toString());
     }
-    return Optional.of(result.toString());
-  }
 }

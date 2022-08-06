@@ -17,21 +17,24 @@
 package com.fissy.dialer.calllog.ui.menu;
 
 import android.content.Context;
+
 import com.fissy.dialer.calllog.model.CoalescedRow;
 import com.fissy.dialer.calllogutils.CallLogEntryText;
 import com.fissy.dialer.calllogutils.PhotoInfoBuilder;
 import com.fissy.dialer.historyitemactions.HistoryItemBottomSheetHeaderInfo;
 
-/** Configures the top row in the bottom sheet. */
+/**
+ * Configures the top row in the bottom sheet.
+ */
 final class BottomSheetHeader {
 
-  static HistoryItemBottomSheetHeaderInfo fromRow(Context context, CoalescedRow row) {
-    return HistoryItemBottomSheetHeaderInfo.newBuilder()
-        .setNumber(row.getNumber())
-        .setPhotoInfo(PhotoInfoBuilder.fromCoalescedRow(context, row))
-        .setPrimaryText(CallLogEntryText.buildPrimaryText(context, row).toString())
-        .setSecondaryText(
-            CallLogEntryText.buildSecondaryTextForBottomSheet(context, row).toString())
-        .build();
-  }
+    static HistoryItemBottomSheetHeaderInfo fromRow(Context context, CoalescedRow row) {
+        return HistoryItemBottomSheetHeaderInfo.newBuilder()
+                .setNumber(row.getNumber())
+                .setPhotoInfo(PhotoInfoBuilder.fromCoalescedRow(context, row))
+                .setPrimaryText(CallLogEntryText.buildPrimaryText(context, row).toString())
+                .setSecondaryText(
+                        CallLogEntryText.buildSecondaryTextForBottomSheet(context, row).toString())
+                .build();
+    }
 }

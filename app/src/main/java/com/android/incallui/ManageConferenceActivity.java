@@ -17,72 +17,74 @@
 package com.android.incallui;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.fissy.dialer.R;
 
-/** Shows the {@link ConferenceManagerFragment} */
+/**
+ * Shows the {@link ConferenceManagerFragment}
+ */
 public class ManageConferenceActivity extends AppCompatActivity {
 
-  private boolean isVisible;
+    private boolean isVisible;
 
-  public boolean isVisible() {
-    return isVisible;
-  }
-
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    InCallPresenter.getInstance().setManageConferenceActivity(this);
-
-    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-    setContentView(R.layout.activity_manage_conference);
-    Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.manageConferencePanel);
-    if (fragment == null) {
-      fragment = new ConferenceManagerFragment();
-      getSupportFragmentManager()
-          .beginTransaction()
-          .replace(R.id.manageConferencePanel, fragment)
-          .commit();
+    public boolean isVisible() {
+        return isVisible;
     }
-  }
 
-  @Override
-  protected void onDestroy() {
-    super.onDestroy();
-    if (isFinishing()) {
-      InCallPresenter.getInstance().setManageConferenceActivity(null);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        InCallPresenter.getInstance().setManageConferenceActivity(this);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        setContentView(R.layout.activity_manage_conference);
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.manageConferencePanel);
+        if (fragment == null) {
+            fragment = new ConferenceManagerFragment();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.manageConferencePanel, fragment)
+                    .commit();
+        }
     }
-  }
 
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    final int itemId = item.getItemId();
-    if (itemId == android.R.id.home) {
-      onBackPressed();
-      return true;
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (isFinishing()) {
+            InCallPresenter.getInstance().setManageConferenceActivity(null);
+        }
     }
-    return super.onOptionsItemSelected(item);
-  }
 
-  @Override
-  public void onBackPressed() {
-    InCallPresenter.getInstance().bringToForeground(false);
-    finish();
-  }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        final int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
-  @Override
-  protected void onStart() {
-    super.onStart();
-    isVisible = true;
-  }
+    @Override
+    public void onBackPressed() {
+        InCallPresenter.getInstance().bringToForeground(false);
+        finish();
+    }
 
-  @Override
-  protected void onStop() {
-    super.onStop();
-    isVisible = false;
-  }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        isVisible = true;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        isVisible = false;
+    }
 }

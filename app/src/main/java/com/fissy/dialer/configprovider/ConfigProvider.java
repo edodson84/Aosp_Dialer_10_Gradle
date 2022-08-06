@@ -16,12 +16,14 @@
 
 package com.fissy.dialer.configprovider;
 
-/** Gets config values from the container application. */
+/**
+ * Gets config values from the container application.
+ */
 public interface ConfigProvider {
 
-  String getString(String key, String defaultValue);
+    String getString(String key, String defaultValue);
 
-  long getLong(String key, long defaultValue);
+    long getLong(String key, long defaultValue);
 
-  boolean getBoolean(String key, boolean defaultValue);
+    boolean getBoolean(String key, boolean defaultValue);
 }

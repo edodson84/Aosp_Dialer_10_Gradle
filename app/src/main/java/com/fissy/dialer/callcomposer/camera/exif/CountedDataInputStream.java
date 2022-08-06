@@ -17,6 +17,7 @@
 package com.fissy.dialer.callcomposer.camera.exif;
 
 import com.fissy.dialer.common.Assert;
+
 import java.io.EOFException;
 import java.io.FilterInputStream;
 import java.io.IOException;
@@ -27,103 +28,102 @@ import java.nio.charset.Charset;
 
 class CountedDataInputStream extends FilterInputStream {
 
-  private int count = 0;
+    // allocate a byte buffer for a long value;
+    private final byte[] byteArray = new byte[8];
+    private final ByteBuffer byteBuffer = ByteBuffer.wrap(byteArray);
+    private int count = 0;
 
-  // allocate a byte buffer for a long value;
-  private final byte[] byteArray = new byte[8];
-  private final ByteBuffer byteBuffer = ByteBuffer.wrap(byteArray);
-
-  CountedDataInputStream(InputStream in) {
-    super(in);
-  }
-
-  int getReadByteCount() {
-    return count;
-  }
-
-  @Override
-  public int read(byte[] b) throws IOException {
-    int r = in.read(b);
-    count += (r >= 0) ? r : 0;
-    return r;
-  }
-
-  @Override
-  public int read(byte[] b, int off, int len) throws IOException {
-    int r = in.read(b, off, len);
-    count += (r >= 0) ? r : 0;
-    return r;
-  }
-
-  @Override
-  public int read() throws IOException {
-    int r = in.read();
-    count += (r >= 0) ? 1 : 0;
-    return r;
-  }
-
-  @Override
-  public long skip(long length) throws IOException {
-    long skip = in.skip(length);
-    count += skip;
-    return skip;
-  }
-
-  private void skipOrThrow(long length) throws IOException {
-    if (skip(length) != length) {
-      throw new EOFException();
+    CountedDataInputStream(InputStream in) {
+        super(in);
     }
-  }
 
-  void skipTo(long target) throws IOException {
-    long cur = count;
-    long diff = target - cur;
-    Assert.checkArgument(diff >= 0);
-    skipOrThrow(diff);
-  }
-
-  private void readOrThrow(byte[] b, int off, int len) throws IOException {
-    int r = read(b, off, len);
-    if (r != len) {
-      throw new EOFException();
+    int getReadByteCount() {
+        return count;
     }
-  }
 
-  private void readOrThrow(byte[] b) throws IOException {
-    readOrThrow(b, 0, b.length);
-  }
+    @Override
+    public int read(byte[] b) throws IOException {
+        int r = in.read(b);
+        count += (r >= 0) ? r : 0;
+        return r;
+    }
 
-  void setByteOrder(ByteOrder order) {
-    byteBuffer.order(order);
-  }
+    @Override
+    public int read(byte[] b, int off, int len) throws IOException {
+        int r = in.read(b, off, len);
+        count += (r >= 0) ? r : 0;
+        return r;
+    }
 
-  ByteOrder getByteOrder() {
-    return byteBuffer.order();
-  }
+    @Override
+    public int read() throws IOException {
+        int r = in.read();
+        count += (r >= 0) ? 1 : 0;
+        return r;
+    }
 
-  short readShort() throws IOException {
-    readOrThrow(byteArray, 0, 2);
-    byteBuffer.rewind();
-    return byteBuffer.getShort();
-  }
+    @Override
+    public long skip(long length) throws IOException {
+        long skip = in.skip(length);
+        count += skip;
+        return skip;
+    }
 
-  int readUnsignedShort() throws IOException {
-    return readShort() & 0xffff;
-  }
+    private void skipOrThrow(long length) throws IOException {
+        if (skip(length) != length) {
+            throw new EOFException();
+        }
+    }
 
-  int readInt() throws IOException {
-    readOrThrow(byteArray, 0, 4);
-    byteBuffer.rewind();
-    return byteBuffer.getInt();
-  }
+    void skipTo(long target) throws IOException {
+        long cur = count;
+        long diff = target - cur;
+        Assert.checkArgument(diff >= 0);
+        skipOrThrow(diff);
+    }
 
-  long readUnsignedInt() throws IOException {
-    return readInt() & 0xffffffffL;
-  }
+    private void readOrThrow(byte[] b, int off, int len) throws IOException {
+        int r = read(b, off, len);
+        if (r != len) {
+            throw new EOFException();
+        }
+    }
 
-  String readString(int n, Charset charset) throws IOException {
-    byte[] buf = new byte[n];
-    readOrThrow(buf);
-    return new String(buf, charset);
-  }
+    private void readOrThrow(byte[] b) throws IOException {
+        readOrThrow(b, 0, b.length);
+    }
+
+    ByteOrder getByteOrder() {
+        return byteBuffer.order();
+    }
+
+    void setByteOrder(ByteOrder order) {
+        byteBuffer.order(order);
+    }
+
+    short readShort() throws IOException {
+        readOrThrow(byteArray, 0, 2);
+        byteBuffer.rewind();
+        return byteBuffer.getShort();
+    }
+
+    int readUnsignedShort() throws IOException {
+        return readShort() & 0xffff;
+    }
+
+    int readInt() throws IOException {
+        readOrThrow(byteArray, 0, 4);
+        byteBuffer.rewind();
+        return byteBuffer.getInt();
+    }
+
+    long readUnsignedInt() throws IOException {
+        return readInt() & 0xffffffffL;
+    }
+
+    String readString(int n, Charset charset) throws IOException {
+        byte[] buf = new byte[n];
+        readOrThrow(buf);
+        return new String(buf, charset);
+    }
 }

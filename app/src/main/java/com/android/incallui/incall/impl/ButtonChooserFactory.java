@@ -16,10 +16,12 @@
 
 package com.android.incallui.incall.impl;
 
-import android.support.v4.util.ArrayMap;
+import androidx.collection.ArrayMap;
 import android.telephony.TelephonyManager;
+
 import com.android.incallui.incall.impl.MappedButtonConfig.MappingInfo;
 import com.android.incallui.incall.protocol.InCallButtonIds;
+
 import java.util.Map;
 
 /**
@@ -27,99 +29,99 @@ import java.util.Map;
  */
 class ButtonChooserFactory {
 
-  /**
-   * Creates the appropriate {@link ButtonChooser} based on the given information.
-   *
-   * @param voiceNetworkType the result of a call to {@link TelephonyManager#getVoiceNetworkType()}.
-   * @param isWiFi {@code true} if the call is made over WiFi, {@code false} otherwise.
-   * @param phoneType the result of a call to {@link TelephonyManager#getPhoneType()}.
-   * @return the ButtonChooser.
-   */
-  public static ButtonChooser newButtonChooser(
-      int voiceNetworkType, boolean isWiFi, int phoneType) {
-    if (voiceNetworkType == TelephonyManager.NETWORK_TYPE_LTE || isWiFi) {
-      return newImsAndWiFiButtonChooser();
-    }
-
-    if (phoneType == TelephonyManager.PHONE_TYPE_CDMA) {
-      return newCdmaButtonChooser();
-    }
-
-    if (phoneType == TelephonyManager.PHONE_TYPE_GSM) {
-      return newGsmButtonChooser();
-    }
-
-    return newImsAndWiFiButtonChooser();
-  }
-
-  private static ButtonChooser newImsAndWiFiButtonChooser() {
-    Map<Integer, MappingInfo> mapping = createCommonMapping();
-    mapping.put(
-        InCallButtonIds.BUTTON_MANAGE_VOICE_CONFERENCE,
-        MappingInfo.builder(4).setSlotOrder(0).build());
-    // RTT call is only supported on IMS and WiFi.
-    mapping.put(
-        InCallButtonIds.BUTTON_UPGRADE_TO_RTT, MappingInfo.builder(3).setSlotOrder(0).build());
-    mapping.put(
-        InCallButtonIds.BUTTON_UPGRADE_TO_VIDEO, MappingInfo.builder(4).setSlotOrder(10).build());
-    mapping.put(
-        InCallButtonIds.BUTTON_SWITCH_TO_SECONDARY, MappingInfo.builder(5).setSlotOrder(0).build());
-    mapping.put(InCallButtonIds.BUTTON_HOLD, MappingInfo.builder(5).setSlotOrder(10).build());
-
-    return new ButtonChooser(new MappedButtonConfig(mapping));
-  }
-
-  private static ButtonChooser newCdmaButtonChooser() {
-    Map<Integer, MappingInfo> mapping = createCommonMapping();
-    mapping.put(
-        InCallButtonIds.BUTTON_MANAGE_VOICE_CONFERENCE,
-        MappingInfo.builder(4).setSlotOrder(0).build());
-    mapping.put(
-        InCallButtonIds.BUTTON_UPGRADE_TO_VIDEO, MappingInfo.builder(4).setSlotOrder(10).build());
-    mapping.put(InCallButtonIds.BUTTON_SWAP, MappingInfo.builder(5).setSlotOrder(0).build());
-    // For multi-sim devices, the first sim's phoneType is used so hold button might be not
-    // available for CDMA + GSM devices calling with GSM sim. Adding hold button as low priority
-    // here to let telecom control whether it should be shown.
-    mapping.put(InCallButtonIds.BUTTON_HOLD, MappingInfo.builder(5).setSlotOrder(5).build());
-    mapping.put(
-        InCallButtonIds.BUTTON_SWITCH_TO_SECONDARY,
-        MappingInfo.builder(5)
-            .setSlotOrder(Integer.MAX_VALUE)
-            .setMutuallyExclusiveButton(InCallButtonIds.BUTTON_SWAP)
-            .build());
-
-    return new ButtonChooser(new MappedButtonConfig(mapping));
-  }
-
-  private static ButtonChooser newGsmButtonChooser() {
-    Map<Integer, MappingInfo> mapping = createCommonMapping();
-    mapping.put(
-        InCallButtonIds.BUTTON_SWITCH_TO_SECONDARY, MappingInfo.builder(4).setSlotOrder(0).build());
-    mapping.put(
-        InCallButtonIds.BUTTON_UPGRADE_TO_VIDEO, MappingInfo.builder(4).setSlotOrder(10).build());
-
-    /*
-     * Unlike the other configurations, MANAGE_VOICE_CONFERENCE shares a spot with HOLD for GSM.
-     * On GSM, pressing hold while there's a background call just swaps to the background call. It
-     * doesn't make sense to show both SWITCH_TO_SECONDARY and HOLD when they do the same thing, so
-     * we show MANAGE_VOICE_CONFERENCE instead. Previously MANAGE_VOICE_CONFERENCE would not show.
+    /**
+     * Creates the appropriate {@link ButtonChooser} based on the given information.
+     *
+     * @param voiceNetworkType the result of a call to {@link TelephonyManager#getVoiceNetworkType()}.
+     * @param isWiFi           {@code true} if the call is made over WiFi, {@code false} otherwise.
+     * @param phoneType        the result of a call to {@link TelephonyManager#getPhoneType()}.
+     * @return the ButtonChooser.
      */
-    mapping.put(
-        InCallButtonIds.BUTTON_MANAGE_VOICE_CONFERENCE,
-        MappingInfo.builder(5).setSlotOrder(0).build());
-    mapping.put(InCallButtonIds.BUTTON_HOLD, MappingInfo.builder(5).setSlotOrder(5).build());
+    public static ButtonChooser newButtonChooser(
+            int voiceNetworkType, boolean isWiFi, int phoneType) {
+        if (voiceNetworkType == TelephonyManager.NETWORK_TYPE_LTE || isWiFi) {
+            return newImsAndWiFiButtonChooser();
+        }
 
-    return new ButtonChooser(new MappedButtonConfig(mapping));
-  }
+        if (phoneType == TelephonyManager.PHONE_TYPE_CDMA) {
+            return newCdmaButtonChooser();
+        }
 
-  private static Map<Integer, MappingInfo> createCommonMapping() {
-    Map<Integer, MappingInfo> mapping = new ArrayMap<>();
-    mapping.put(InCallButtonIds.BUTTON_MUTE, MappingInfo.builder(0).build());
-    mapping.put(InCallButtonIds.BUTTON_DIALPAD, MappingInfo.builder(1).build());
-    mapping.put(InCallButtonIds.BUTTON_AUDIO, MappingInfo.builder(2).build());
-    mapping.put(InCallButtonIds.BUTTON_MERGE, MappingInfo.builder(3).setSlotOrder(5).build());
-    mapping.put(InCallButtonIds.BUTTON_ADD_CALL, MappingInfo.builder(3).build());
-    mapping.put(InCallButtonIds.BUTTON_SWAP_SIM, MappingInfo.builder(4).build());
-    return mapping;
-  }
+        if (phoneType == TelephonyManager.PHONE_TYPE_GSM) {
+            return newGsmButtonChooser();
+        }
+
+        return newImsAndWiFiButtonChooser();
+    }
+
+    private static ButtonChooser newImsAndWiFiButtonChooser() {
+        Map<Integer, MappingInfo> mapping = createCommonMapping();
+        mapping.put(
+                InCallButtonIds.BUTTON_MANAGE_VOICE_CONFERENCE,
+                MappingInfo.builder(4).setSlotOrder(0).build());
+        // RTT call is only supported on IMS and WiFi.
+        mapping.put(
+                InCallButtonIds.BUTTON_UPGRADE_TO_RTT, MappingInfo.builder(3).setSlotOrder(0).build());
+        mapping.put(
+                InCallButtonIds.BUTTON_UPGRADE_TO_VIDEO, MappingInfo.builder(4).setSlotOrder(10).build());
+        mapping.put(
+                InCallButtonIds.BUTTON_SWITCH_TO_SECONDARY, MappingInfo.builder(5).setSlotOrder(0).build());
+        mapping.put(InCallButtonIds.BUTTON_HOLD, MappingInfo.builder(5).setSlotOrder(10).build());
+
+        return new ButtonChooser(new MappedButtonConfig(mapping));
+    }
+
+    private static ButtonChooser newCdmaButtonChooser() {
+        Map<Integer, MappingInfo> mapping = createCommonMapping();
+        mapping.put(
+                InCallButtonIds.BUTTON_MANAGE_VOICE_CONFERENCE,
+                MappingInfo.builder(4).setSlotOrder(0).build());
+        mapping.put(
+                InCallButtonIds.BUTTON_UPGRADE_TO_VIDEO, MappingInfo.builder(4).setSlotOrder(10).build());
+        mapping.put(InCallButtonIds.BUTTON_SWAP, MappingInfo.builder(5).setSlotOrder(0).build());
+        // For multi-sim devices, the first sim's phoneType is used so hold button might be not
+        // available for CDMA + GSM devices calling with GSM sim. Adding hold button as low priority
+        // here to let telecom control whether it should be shown.
+        mapping.put(InCallButtonIds.BUTTON_HOLD, MappingInfo.builder(5).setSlotOrder(5).build());
+        mapping.put(
+                InCallButtonIds.BUTTON_SWITCH_TO_SECONDARY,
+                MappingInfo.builder(5)
+                        .setSlotOrder(Integer.MAX_VALUE)
+                        .setMutuallyExclusiveButton(InCallButtonIds.BUTTON_SWAP)
+                        .build());
+
+        return new ButtonChooser(new MappedButtonConfig(mapping));
+    }
+
+    private static ButtonChooser newGsmButtonChooser() {
+        Map<Integer, MappingInfo> mapping = createCommonMapping();
+        mapping.put(
+                InCallButtonIds.BUTTON_SWITCH_TO_SECONDARY, MappingInfo.builder(4).setSlotOrder(0).build());
+        mapping.put(
+                InCallButtonIds.BUTTON_UPGRADE_TO_VIDEO, MappingInfo.builder(4).setSlotOrder(10).build());
+
+        /*
+         * Unlike the other configurations, MANAGE_VOICE_CONFERENCE shares a spot with HOLD for GSM.
+         * On GSM, pressing hold while there's a background call just swaps to the background call. It
+         * doesn't make sense to show both SWITCH_TO_SECONDARY and HOLD when they do the same thing, so
+         * we show MANAGE_VOICE_CONFERENCE instead. Previously MANAGE_VOICE_CONFERENCE would not show.
+         */
+        mapping.put(
+                InCallButtonIds.BUTTON_MANAGE_VOICE_CONFERENCE,
+                MappingInfo.builder(5).setSlotOrder(0).build());
+        mapping.put(InCallButtonIds.BUTTON_HOLD, MappingInfo.builder(5).setSlotOrder(5).build());
+
+        return new ButtonChooser(new MappedButtonConfig(mapping));
+    }
+
+    private static Map<Integer, MappingInfo> createCommonMapping() {
+        Map<Integer, MappingInfo> mapping = new ArrayMap<>();
+        mapping.put(InCallButtonIds.BUTTON_MUTE, MappingInfo.builder(0).build());
+        mapping.put(InCallButtonIds.BUTTON_DIALPAD, MappingInfo.builder(1).build());
+        mapping.put(InCallButtonIds.BUTTON_AUDIO, MappingInfo.builder(2).build());
+        mapping.put(InCallButtonIds.BUTTON_MERGE, MappingInfo.builder(3).setSlotOrder(5).build());
+        mapping.put(InCallButtonIds.BUTTON_ADD_CALL, MappingInfo.builder(3).build());
+        mapping.put(InCallButtonIds.BUTTON_SWAP_SIM, MappingInfo.builder(4).build());
+        return mapping;
+    }
 }

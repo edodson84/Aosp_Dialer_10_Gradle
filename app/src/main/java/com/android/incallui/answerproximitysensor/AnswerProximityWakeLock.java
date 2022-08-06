@@ -21,17 +21,19 @@ package com.android.incallui.answerproximitysensor;
  */
 public interface AnswerProximityWakeLock {
 
-  /** Called when the wake lock turned the screen back on. */
-  interface ScreenOnListener {
+    void acquire();
 
-    void onScreenOn();
-  }
+    void release();
 
-  void acquire();
+    boolean isHeld();
 
-  void release();
+    void setScreenOnListener(ScreenOnListener listener);
 
-  boolean isHeld();
+    /**
+     * Called when the wake lock turned the screen back on.
+     */
+    interface ScreenOnListener {
 
-  void setScreenOnListener(ScreenOnListener listener);
+        void onScreenOn();
+    }
 }

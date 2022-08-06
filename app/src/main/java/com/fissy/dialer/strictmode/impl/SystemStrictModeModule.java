@@ -19,16 +19,20 @@ package com.fissy.dialer.strictmode.impl;
 import com.fissy.dialer.inject.DialerVariant;
 import com.fissy.dialer.inject.InstallIn;
 import com.fissy.dialer.strictmode.DialerStrictMode;
-import dagger.Binds;
-import dagger.Module;
+
 import javax.inject.Singleton;
 
-/** Module which binds {@link SystemDialerStrictMode}. */
+import dagger.Binds;
+import dagger.Module;
+
+/**
+ * Module which binds {@link SystemDialerStrictMode}.
+ */
 @InstallIn(variants = {DialerVariant.DIALER_TEST})
 @Module
 public abstract class SystemStrictModeModule {
 
-  @Binds
-  @Singleton
-  public abstract DialerStrictMode bindDialerStrictMode(SystemDialerStrictMode impl);
+    @Binds
+    @Singleton
+    public abstract DialerStrictMode bindDialerStrictMode(SystemDialerStrictMode impl);
 }

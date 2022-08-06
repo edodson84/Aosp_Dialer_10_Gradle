@@ -20,32 +20,36 @@ import com.fissy.dialer.function.Supplier;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableMap;
 
-/** Supplies commands */
+/**
+ * Supplies commands
+ */
 @AutoValue
 public abstract class CommandSupplier implements Supplier<ImmutableMap<String, Command>> {
 
-  public static Builder builder() {
-    return new AutoValue_CommandSupplier.Builder();
-  }
-
-  public abstract ImmutableMap<String, Command> commands();
-
-  @Override
-  public ImmutableMap<String, Command> get() {
-    return commands();
-  }
-
-  /** builder for the supplier */
-  @AutoValue.Builder
-  public abstract static class Builder {
-
-    abstract ImmutableMap.Builder<String, Command> commandsBuilder();
-
-    public Builder addCommand(String key, Command command) {
-      commandsBuilder().put(key, command);
-      return this;
+    public static Builder builder() {
+        return new AutoValue_CommandSupplier.Builder();
     }
 
-    public abstract CommandSupplier build();
-  }
+    public abstract ImmutableMap<String, Command> commands();
+
+    @Override
+    public ImmutableMap<String, Command> get() {
+        return commands();
+    }
+
+    /**
+     * builder for the supplier
+     */
+    @AutoValue.Builder
+    public abstract static class Builder {
+
+        abstract ImmutableMap.Builder<String, Command> commandsBuilder();
+
+        public Builder addCommand(String key, Command command) {
+            commandsBuilder().put(key, command);
+            return this;
+        }
+
+        public abstract CommandSupplier build();
+    }
 }

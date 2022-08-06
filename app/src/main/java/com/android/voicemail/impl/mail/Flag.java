@@ -15,13 +15,15 @@
  */
 package com.android.voicemail.impl.mail;
 
-/** Flags that can be applied to Messages. */
+/**
+ * Flags that can be applied to Messages.
+ */
 public class Flag {
-  // If adding new flags: ALL FLAGS MUST BE UPPER CASE.
-  public static final String DELETED = "deleted";
-  public static final String SEEN = "seen";
-  public static final String ANSWERED = "answered";
-  public static final String FLAGGED = "flagged";
-  public static final String DRAFT = "draft";
-  public static final String RECENT = "recent";
+    // If adding new flags: ALL FLAGS MUST BE UPPER CASE.
+    public static final String DELETED = "deleted";
+    public static final String SEEN = "seen";
+    public static final String ANSWERED = "answered";
+    public static final String FLAGGED = "flagged";
+    public static final String DRAFT = "draft";
+    public static final String RECENT = "recent";
 }

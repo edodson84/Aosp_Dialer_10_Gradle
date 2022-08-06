@@ -28,115 +28,119 @@ import android.os.Handler;
 import android.os.Vibrator;
 import android.view.View;
 
-/** Animates the dial button on "emergency" phone numbers. */
+/**
+ * Animates the dial button on "emergency" phone numbers.
+ */
 public class PseudoEmergencyAnimator {
 
-  static final String PSEUDO_EMERGENCY_NUMBER = "01189998819991197253";
-  private static final int VIBRATE_LENGTH_MILLIS = 200;
-  private static final int ITERATION_LENGTH_MILLIS = 1000;
-  private static final int ANIMATION_ITERATION_COUNT = 6;
-  private ViewProvider viewProvider;
-  private ValueAnimator pseudoEmergencyColorAnimator;
+    static final String PSEUDO_EMERGENCY_NUMBER = "01189998819991197253";
+    private static final int VIBRATE_LENGTH_MILLIS = 200;
+    private static final int ITERATION_LENGTH_MILLIS = 1000;
+    private static final int ANIMATION_ITERATION_COUNT = 6;
+    private ViewProvider viewProvider;
+    private ValueAnimator pseudoEmergencyColorAnimator;
 
-  PseudoEmergencyAnimator(ViewProvider viewProvider) {
-    this.viewProvider = viewProvider;
-  }
+    PseudoEmergencyAnimator(ViewProvider viewProvider) {
+        this.viewProvider = viewProvider;
+    }
 
-  public void destroy() {
-    end();
-    viewProvider = null;
-  }
+    public void destroy() {
+        end();
+        viewProvider = null;
+    }
 
-  public void start() {
-    if (pseudoEmergencyColorAnimator == null) {
-      Integer colorFrom = Color.BLUE;
-      Integer colorTo = Color.RED;
-      pseudoEmergencyColorAnimator =
-          ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+    public void start() {
+        if (pseudoEmergencyColorAnimator == null) {
+            Integer colorFrom = Color.BLUE;
+            Integer colorTo = Color.RED;
+            pseudoEmergencyColorAnimator =
+                    ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
 
-      pseudoEmergencyColorAnimator.addUpdateListener(
-          animator -> {
-            try {
-              int color = (int) animator.getAnimatedValue();
-              ColorFilter colorFilter = new LightingColorFilter(Color.BLACK, color);
+            pseudoEmergencyColorAnimator.addUpdateListener(
+                    animator -> {
+                        try {
+                            int color = (int) animator.getAnimatedValue();
+                            ColorFilter colorFilter = new LightingColorFilter(Color.BLACK, color);
 
-              if (viewProvider.getFab() != null) {
-                viewProvider.getFab().getBackground().setColorFilter(colorFilter);
-              }
-            } catch (Exception e) {
-              animator.cancel();
+                            if (viewProvider.getFab() != null) {
+                                viewProvider.getFab().getBackground().setColorFilter(colorFilter);
+                            }
+                        } catch (Exception e) {
+                            animator.cancel();
+                        }
+                    });
+
+            pseudoEmergencyColorAnimator.addListener(
+                    new AnimatorListener() {
+                        @Override
+                        public void onAnimationCancel(Animator animation) {
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animator animation) {
+                            try {
+                                vibrate(VIBRATE_LENGTH_MILLIS);
+                            } catch (Exception e) {
+                                animation.cancel();
+                            }
+                        }
+
+                        @Override
+                        public void onAnimationStart(Animator animation) {
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            try {
+                                if (viewProvider.getFab() != null) {
+                                    viewProvider.getFab().getBackground().clearColorFilter();
+                                }
+
+                                new Handler()
+                                        .postDelayed(
+                                                () -> {
+                                                    try {
+                                                        vibrate(VIBRATE_LENGTH_MILLIS);
+                                                    } catch (Exception e) {
+                                                        // ignored
+                                                    }
+                                                },
+                                                ITERATION_LENGTH_MILLIS);
+                            } catch (Exception e) {
+                                animation.cancel();
+                            }
+                        }
+                    });
+
+            pseudoEmergencyColorAnimator.setDuration(VIBRATE_LENGTH_MILLIS);
+            pseudoEmergencyColorAnimator.setRepeatMode(ValueAnimator.REVERSE);
+            pseudoEmergencyColorAnimator.setRepeatCount(ANIMATION_ITERATION_COUNT);
+        }
+        if (!pseudoEmergencyColorAnimator.isStarted()) {
+            pseudoEmergencyColorAnimator.start();
+        }
+    }
+
+    public void end() {
+        if (pseudoEmergencyColorAnimator != null && pseudoEmergencyColorAnimator.isStarted()) {
+            pseudoEmergencyColorAnimator.end();
+        }
+    }
+
+    private void vibrate(long milliseconds) {
+        Context context = viewProvider.getContext();
+        if (context != null) {
+            Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+            if (vibrator != null) {
+                vibrator.vibrate(milliseconds);
             }
-          });
-
-      pseudoEmergencyColorAnimator.addListener(
-          new AnimatorListener() {
-            @Override
-            public void onAnimationCancel(Animator animation) {}
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-              try {
-                vibrate(VIBRATE_LENGTH_MILLIS);
-              } catch (Exception e) {
-                animation.cancel();
-              }
-            }
-
-            @Override
-            public void onAnimationStart(Animator animation) {}
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-              try {
-                if (viewProvider.getFab() != null) {
-                  viewProvider.getFab().getBackground().clearColorFilter();
-                }
-
-                new Handler()
-                    .postDelayed(
-                        () -> {
-                          try {
-                            vibrate(VIBRATE_LENGTH_MILLIS);
-                          } catch (Exception e) {
-                            // ignored
-                          }
-                        },
-                        ITERATION_LENGTH_MILLIS);
-              } catch (Exception e) {
-                animation.cancel();
-              }
-            }
-          });
-
-      pseudoEmergencyColorAnimator.setDuration(VIBRATE_LENGTH_MILLIS);
-      pseudoEmergencyColorAnimator.setRepeatMode(ValueAnimator.REVERSE);
-      pseudoEmergencyColorAnimator.setRepeatCount(ANIMATION_ITERATION_COUNT);
+        }
     }
-    if (!pseudoEmergencyColorAnimator.isStarted()) {
-      pseudoEmergencyColorAnimator.start();
+
+    interface ViewProvider {
+
+        View getFab();
+
+        Context getContext();
     }
-  }
-
-  public void end() {
-    if (pseudoEmergencyColorAnimator != null && pseudoEmergencyColorAnimator.isStarted()) {
-      pseudoEmergencyColorAnimator.end();
-    }
-  }
-
-  private void vibrate(long milliseconds) {
-    Context context = viewProvider.getContext();
-    if (context != null) {
-      Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-      if (vibrator != null) {
-        vibrator.vibrate(milliseconds);
-      }
-    }
-  }
-
-  interface ViewProvider {
-
-    View getFab();
-
-    Context getContext();
-  }
 }

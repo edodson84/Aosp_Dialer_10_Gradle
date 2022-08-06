@@ -19,16 +19,20 @@ package com.fissy.dialer.phonenumbergeoutil.impl;
 import com.fissy.dialer.inject.DialerVariant;
 import com.fissy.dialer.inject.InstallIn;
 import com.fissy.dialer.phonenumbergeoutil.PhoneNumberGeoUtil;
-import dagger.Binds;
-import dagger.Module;
+
 import javax.inject.Singleton;
 
-/** Module which binds {@link PhoneNumberGeoUtilImpl}. */
+import dagger.Binds;
+import dagger.Module;
+
+/**
+ * Module which binds {@link PhoneNumberGeoUtilImpl}.
+ */
 @InstallIn(variants = {DialerVariant.DIALER_TEST})
 @Module
 public abstract class PhoneNumberGeoUtilModule {
 
-  @Binds
-  @Singleton
-  public abstract PhoneNumberGeoUtil bindPhoneNumberGeoUtil(PhoneNumberGeoUtilImpl impl);
+    @Binds
+    @Singleton
+    public abstract PhoneNumberGeoUtil bindPhoneNumberGeoUtil(PhoneNumberGeoUtilImpl impl);
 }

@@ -17,60 +17,66 @@
 package com.fissy.dialer.theme.base;
 
 import android.content.Context;
-import android.support.annotation.ColorInt;
-import android.support.annotation.IntDef;
-import android.support.annotation.StyleRes;
+import androidx.annotation.ColorInt;
+import androidx.annotation.IntDef;
+import androidx.annotation.StyleRes;
 import android.view.LayoutInflater;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-/** Interface for theme. */
+/**
+ * Interface for theme.
+ */
 public interface Theme {
 
-  /** IntDef for the different themes Dialer supports. */
-  @Retention(RetentionPolicy.SOURCE)
-  @IntDef({UNKNOWN, LIGHT, DARK, LIGHT_M2})
-  @interface Type {}
+    int UNKNOWN = 0;
+    int LIGHT = 1;
+    int DARK = 2;
+    int LIGHT_M2 = 3;
 
-  int UNKNOWN = 0;
-  int LIGHT = 1;
-  int DARK = 2;
-  int LIGHT_M2 = 3;
+    @Type
+    int getTheme();
 
-  @Type
-  int getTheme();
+    @StyleRes
+    int getApplicationThemeRes();
 
-  @StyleRes
-  int getApplicationThemeRes();
+    Context getThemedContext(Context context);
 
-  Context getThemedContext(Context context);
+    LayoutInflater getThemedLayoutInflator(LayoutInflater inflater);
 
-  LayoutInflater getThemedLayoutInflator(LayoutInflater inflater);
+    @ColorInt
+    int getColorIcon();
 
-  @ColorInt
-  int getColorIcon();
+    @ColorInt
+    int getColorIconSecondary();
 
-  @ColorInt
-  int getColorIconSecondary();
+    @ColorInt
+    int getColorPrimary();
 
-  @ColorInt
-  int getColorPrimary();
+    @ColorInt
+    int getColorPrimaryDark();
 
-  @ColorInt
-  int getColorPrimaryDark();
+    @ColorInt
+    int getColorAccent();
 
-  @ColorInt
-  int getColorAccent();
+    @ColorInt
+    int getTextColorSecondary();
 
-  @ColorInt
-  int getTextColorSecondary();
+    @ColorInt
+    int getTextColorPrimary();
 
-  @ColorInt
-  int getTextColorPrimary();
+    @ColorInt
+    int getColorTextOnUnthemedDarkBackground();
 
-  @ColorInt
-  int getColorTextOnUnthemedDarkBackground();
+    @ColorInt
+    int getColorIconOnUnthemedDarkBackground();
 
-  @ColorInt
-  int getColorIconOnUnthemedDarkBackground();
+    /**
+     * IntDef for the different themes Dialer supports.
+     */
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({UNKNOWN, LIGHT, DARK, LIGHT_M2})
+    @interface Type {
+    }
 }

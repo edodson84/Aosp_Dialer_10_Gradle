@@ -16,7 +16,8 @@
 
 package com.fissy.dialer.calllog.datasources;
 
-import android.support.annotation.MainThread;
+import androidx.annotation.MainThread;
+
 import com.google.common.util.concurrent.ListenableFuture;
 
 /**
@@ -44,58 +45,58 @@ import com.google.common.util.concurrent.ListenableFuture;
  */
 public interface CallLogDataSource {
 
-  /**
-   * A lightweight check which runs frequently to detect if the annotated call log is out of date
-   * with respect to this data source.
-   *
-   * <p>This is typically used to detect external changes to the underlying data source which have
-   * been made in such a way that the dialer application was not notified.
-   *
-   * <p>Most implementations of this method will rely on some sort of last modified timestamp. If it
-   * is impossible for a data source to be modified without the dialer application being notified,
-   * this method may immediately return false.
-   *
-   * @see CallLogDataSource class doc for complete lifecyle information
-   */
-  ListenableFuture<Boolean> isDirty();
+    /**
+     * A lightweight check which runs frequently to detect if the annotated call log is out of date
+     * with respect to this data source.
+     *
+     * <p>This is typically used to detect external changes to the underlying data source which have
+     * been made in such a way that the dialer application was not notified.
+     *
+     * <p>Most implementations of this method will rely on some sort of last modified timestamp. If it
+     * is impossible for a data source to be modified without the dialer application being notified,
+     * this method may immediately return false.
+     *
+     * @see CallLogDataSource class doc for complete lifecyle information
+     */
+    ListenableFuture<Boolean> isDirty();
 
-  /**
-   * Computes the set of mutations necessary to update the annotated call log with respect to this
-   * data source.
-   *
-   * @see CallLogDataSource class doc for complete lifecyle information
-   * @param mutations the set of mutations which this method should contribute to. Note that it may
-   *     contain inserts from the system call log, and these inserts should be modified by each data
-   *     source.
-   */
-  ListenableFuture<Void> fill(CallLogMutations mutations);
+    /**
+     * Computes the set of mutations necessary to update the annotated call log with respect to this
+     * data source.
+     *
+     * @param mutations the set of mutations which this method should contribute to. Note that it may
+     *                  contain inserts from the system call log, and these inserts should be modified by each data
+     *                  source.
+     * @see CallLogDataSource class doc for complete lifecyle information
+     */
+    ListenableFuture<Void> fill(CallLogMutations mutations);
 
-  /**
-   * Called after database mutations have been applied to all data sources. This is useful for
-   * saving state such as the timestamp of the last row processed in an underlying database. Note
-   * that all mutations across all data sources are applied in a single transaction.
-   *
-   * @see CallLogDataSource class doc for complete lifecyle information
-   */
-  ListenableFuture<Void> onSuccessfulFill();
+    /**
+     * Called after database mutations have been applied to all data sources. This is useful for
+     * saving state such as the timestamp of the last row processed in an underlying database. Note
+     * that all mutations across all data sources are applied in a single transaction.
+     *
+     * @see CallLogDataSource class doc for complete lifecyle information
+     */
+    ListenableFuture<Void> onSuccessfulFill();
 
-  @MainThread
-  void registerContentObservers();
+    @MainThread
+    void registerContentObservers();
 
-  @MainThread
-  void unregisterContentObservers();
+    @MainThread
+    void unregisterContentObservers();
 
-  /**
-   * Clear any data written by this data source. This is called when the new call log framework has
-   * been disabled (because for example there was a problem with it).
-   */
-  @MainThread
-  ListenableFuture<Void> clearData();
+    /**
+     * Clear any data written by this data source. This is called when the new call log framework has
+     * been disabled (because for example there was a problem with it).
+     */
+    @MainThread
+    ListenableFuture<Void> clearData();
 
-  /**
-   * The name of this daa source for logging purposes. This is generally the same as the class name
-   * (but should not use methods from {@link Class} because the class names are generally obfuscated
-   * by Proguard.
-   */
-  String getLoggingName();
+    /**
+     * The name of this daa source for logging purposes. This is generally the same as the class name
+     * (but should not use methods from {@link Class} because the class names are generally obfuscated
+     * by Proguard.
+     */
+    String getLoggingName();
 }

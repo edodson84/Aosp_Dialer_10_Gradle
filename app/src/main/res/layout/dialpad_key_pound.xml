@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.fissy.dialer.dialpadview.DialpadKeyButton android:id="@id/pound" style="@style/DialpadKeyButtonStyle"
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <LinearLayout android:id="@id/dialpad_key_layout" style="@style/DialpadKeyInternalLayoutStyle">
-        <com.fissy.dialer.dialpadview.DialpadTextView android:id="@id/dialpad_key_number" style="@style/DialpadKeyPoundStyle" />
+<com.fissy.dialer.dialpadview.DialpadKeyButton xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/pound"
+    style="@style/DialpadKeyButtonStyle">
+
+    <LinearLayout
+        android:id="@id/dialpad_key_layout"
+        style="@style/DialpadKeyInternalLayoutStyle">
+
+        <com.fissy.dialer.dialpadview.DialpadTextView
+            android:id="@id/dialpad_key_number"
+            style="@style/DialpadKeyPoundStyle" />
     </LinearLayout>
 </com.fissy.dialer.dialpadview.DialpadKeyButton>

@@ -20,5 +20,5 @@ package com.fissy.dialer.logging;
  */
 public interface LoggingBindingsFactory {
 
-  LoggingBindings newLoggingBindings();
+    LoggingBindings newLoggingBindings();
 }

@@ -16,42 +16,45 @@
 
 package com.fissy.dialer.callcomposer;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+
 import com.fissy.dialer.common.Assert;
 
-/** ViewPager adapter for call compose UI. */
+/**
+ * ViewPager adapter for call compose UI.
+ */
 public class CallComposerPagerAdapter extends FragmentPagerAdapter {
 
-  public static final int INDEX_CAMERA = 0;
-  public static final int INDEX_GALLERY = 1;
-  public static final int INDEX_MESSAGE = 2;
+    public static final int INDEX_CAMERA = 0;
+    public static final int INDEX_GALLERY = 1;
+    public static final int INDEX_MESSAGE = 2;
 
-  private final int messageComposerCharLimit;
+    private final int messageComposerCharLimit;
 
-  public CallComposerPagerAdapter(FragmentManager fragmentManager, int messageComposerCharLimit) {
-    super(fragmentManager);
-    this.messageComposerCharLimit = messageComposerCharLimit;
-  }
-
-  @Override
-  public Fragment getItem(int position) {
-    switch (position) {
-      case INDEX_MESSAGE:
-        return MessageComposerFragment.newInstance(messageComposerCharLimit);
-      case INDEX_GALLERY:
-        return GalleryComposerFragment.newInstance();
-      case INDEX_CAMERA:
-        return new CameraComposerFragment();
-      default:
-        Assert.fail();
-        return null;
+    public CallComposerPagerAdapter(FragmentManager fragmentManager, int messageComposerCharLimit) {
+        super(fragmentManager);
+        this.messageComposerCharLimit = messageComposerCharLimit;
     }
-  }
 
-  @Override
-  public int getCount() {
-    return 3;
-  }
+    @Override
+    public Fragment getItem(int position) {
+        switch (position) {
+            case INDEX_MESSAGE:
+                return MessageComposerFragment.newInstance(messageComposerCharLimit);
+            case INDEX_GALLERY:
+                return GalleryComposerFragment.newInstance();
+            case INDEX_CAMERA:
+                return new CameraComposerFragment();
+            default:
+                Assert.fail();
+                return null;
+        }
+    }
+
+    @Override
+    public int getCount() {
+        return 3;
+    }
 }

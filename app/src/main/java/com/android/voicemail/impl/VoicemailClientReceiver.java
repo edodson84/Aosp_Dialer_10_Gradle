@@ -20,38 +20,43 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.telecom.PhoneAccountHandle;
-import com.fissy.dialer.common.Assert;
-import com.fissy.dialer.common.LogUtil;
+
 import com.android.voicemail.VoicemailClient;
 import com.android.voicemail.VoicemailComponent;
 import com.android.voicemail.impl.sync.UploadTask;
 import com.android.voicemail.impl.sync.VvmAccountManager;
+import com.fissy.dialer.common.Assert;
+import com.fissy.dialer.common.LogUtil;
 
-/** Receiver for broadcasts in {@link VoicemailClient#ACTION_UPLOAD} */
+/**
+ * Receiver for broadcasts in {@link VoicemailClient#ACTION_UPLOAD}
+ */
 public class VoicemailClientReceiver extends BroadcastReceiver {
 
-  @Override
-  public void onReceive(Context context, Intent intent) {
-    if (!VoicemailComponent.get(context).getVoicemailClient().isVoicemailModuleEnabled()) {
-      LogUtil.i(
-          "VoicemailClientReceiver.onReceive", "module disabled, ignoring " + intent.getAction());
-      return;
+    /**
+     * Upload local database changes to the server.
+     */
+    private static void doUpload(Context context) {
+        LogUtil.i("VoicemailClientReceiver.onReceive", "ACTION_UPLOAD received");
+        for (PhoneAccountHandle phoneAccountHandle : VvmAccountManager.getActiveAccounts(context)) {
+            UploadTask.start(context, phoneAccountHandle);
+        }
     }
-    switch (intent.getAction()) {
-      case VoicemailClient.ACTION_UPLOAD:
-        doUpload(context);
-        break;
-      default:
-        Assert.fail("Unexpected action " + intent.getAction());
-        break;
-    }
-  }
 
-  /** Upload local database changes to the server. */
-  private static void doUpload(Context context) {
-    LogUtil.i("VoicemailClientReceiver.onReceive", "ACTION_UPLOAD received");
-    for (PhoneAccountHandle phoneAccountHandle : VvmAccountManager.getActiveAccounts(context)) {
-      UploadTask.start(context, phoneAccountHandle);
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        if (!VoicemailComponent.get(context).getVoicemailClient().isVoicemailModuleEnabled()) {
+            LogUtil.i(
+                    "VoicemailClientReceiver.onReceive", "module disabled, ignoring " + intent.getAction());
+            return;
+        }
+        switch (intent.getAction()) {
+            case VoicemailClient.ACTION_UPLOAD:
+                doUpload(context);
+                break;
+            default:
+                Assert.fail("Unexpected action " + intent.getAction());
+                break;
+        }
     }
-  }
 }

@@ -23,131 +23,134 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
+
 import java.util.ArrayList;
 import java.util.List;
 
-/** Focusing overlay. */
+/**
+ * Focusing overlay.
+ */
 public class RenderOverlay extends FrameLayout {
 
-  /** Render interface. */
-  interface Renderer {
-    boolean handlesTouch();
+    private final RenderView renderView;
+    private final List<Renderer> clients;
+    // reverse list of touch clients
+    private final List<Renderer> touchClients;
+    private final int[] position = new int[2];
+    public RenderOverlay(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        renderView = new RenderView(context);
+        addView(renderView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        clients = new ArrayList<>(10);
+        touchClients = new ArrayList<>(10);
+        setWillNotDraw(false);
 
-    boolean onTouchEvent(MotionEvent evt);
-
-    void setOverlay(RenderOverlay overlay);
-
-    void layout(int left, int top, int right, int bottom);
-
-    void draw(Canvas canvas);
-  }
-
-  private final RenderView renderView;
-  private final List<Renderer> clients;
-
-  // reverse list of touch clients
-  private final List<Renderer> touchClients;
-  private final int[] position = new int[2];
-
-  public RenderOverlay(Context context, AttributeSet attrs) {
-    super(context, attrs);
-    renderView = new RenderView(context);
-    addView(renderView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-    clients = new ArrayList<>(10);
-    touchClients = new ArrayList<>(10);
-    setWillNotDraw(false);
-
-    addRenderer(new PieRenderer(context));
-  }
-
-  public PieRenderer getPieRenderer() {
-    for (Renderer renderer : clients) {
-      if (renderer instanceof PieRenderer) {
-        return (PieRenderer) renderer;
-      }
-    }
-    return null;
-  }
-
-  public void addRenderer(Renderer renderer) {
-    clients.add(renderer);
-    renderer.setOverlay(this);
-    if (renderer.handlesTouch()) {
-      touchClients.add(0, renderer);
-    }
-    renderer.layout(getLeft(), getTop(), getRight(), getBottom());
-  }
-
-  public void addRenderer(int pos, Renderer renderer) {
-    clients.add(pos, renderer);
-    renderer.setOverlay(this);
-    renderer.layout(getLeft(), getTop(), getRight(), getBottom());
-  }
-
-  public void remove(Renderer renderer) {
-    clients.remove(renderer);
-    renderer.setOverlay(null);
-  }
-
-  @Override
-  public boolean dispatchTouchEvent(MotionEvent m) {
-    return false;
-  }
-
-  private void adjustPosition() {
-    getLocationInWindow(position);
-  }
-
-  public void update() {
-    renderView.invalidate();
-  }
-
-  @SuppressLint("ClickableViewAccessibility")
-  private class RenderView extends View {
-
-    public RenderView(Context context) {
-      super(context);
-      setWillNotDraw(false);
+        addRenderer(new PieRenderer(context));
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent evt) {
-      if (touchClients != null) {
-        boolean res = false;
-        for (Renderer client : touchClients) {
-          res |= client.onTouchEvent(evt);
+    public PieRenderer getPieRenderer() {
+        for (Renderer renderer : clients) {
+            if (renderer instanceof PieRenderer) {
+                return (PieRenderer) renderer;
+            }
         }
-        return res;
-      }
-      return false;
+        return null;
+    }
+
+    public void addRenderer(Renderer renderer) {
+        clients.add(renderer);
+        renderer.setOverlay(this);
+        if (renderer.handlesTouch()) {
+            touchClients.add(0, renderer);
+        }
+        renderer.layout(getLeft(), getTop(), getRight(), getBottom());
+    }
+
+    public void addRenderer(int pos, Renderer renderer) {
+        clients.add(pos, renderer);
+        renderer.setOverlay(this);
+        renderer.layout(getLeft(), getTop(), getRight(), getBottom());
+    }
+
+    public void remove(Renderer renderer) {
+        clients.remove(renderer);
+        renderer.setOverlay(null);
     }
 
     @Override
-    public void onLayout(boolean changed, int left, int top, int right, int bottom) {
-      adjustPosition();
-      super.onLayout(changed, left, top, right, bottom);
-      if (clients == null) {
-        return;
-      }
-      for (Renderer renderer : clients) {
-        renderer.layout(left, top, right, bottom);
-      }
+    public boolean dispatchTouchEvent(MotionEvent m) {
+        return false;
     }
 
-    @Override
-    public void draw(Canvas canvas) {
-      super.draw(canvas);
-      if (clients == null) {
-        return;
-      }
-      boolean redraw = false;
-      for (Renderer renderer : clients) {
-        renderer.draw(canvas);
-        redraw = redraw || ((OverlayRenderer) renderer).isVisible();
-      }
-      if (redraw) {
-        invalidate();
-      }
+    private void adjustPosition() {
+        getLocationInWindow(position);
     }
-  }
+
+    public void update() {
+        renderView.invalidate();
+    }
+
+    /**
+     * Render interface.
+     */
+    interface Renderer {
+        boolean handlesTouch();
+
+        boolean onTouchEvent(MotionEvent evt);
+
+        void setOverlay(RenderOverlay overlay);
+
+        void layout(int left, int top, int right, int bottom);
+
+        void draw(Canvas canvas);
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private class RenderView extends View {
+
+        public RenderView(Context context) {
+            super(context);
+            setWillNotDraw(false);
+        }
+
+        @Override
+        public boolean onTouchEvent(MotionEvent evt) {
+            if (touchClients != null) {
+                boolean res = false;
+                for (Renderer client : touchClients) {
+                    res |= client.onTouchEvent(evt);
+                }
+                return res;
+            }
+            return false;
+        }
+
+        @Override
+        public void onLayout(boolean changed, int left, int top, int right, int bottom) {
+            adjustPosition();
+            super.onLayout(changed, left, top, right, bottom);
+            if (clients == null) {
+                return;
+            }
+            for (Renderer renderer : clients) {
+                renderer.layout(left, top, right, bottom);
+            }
+        }
+
+        @Override
+        public void draw(Canvas canvas) {
+            super.draw(canvas);
+            if (clients == null) {
+                return;
+            }
+            boolean redraw = false;
+            for (Renderer renderer : clients) {
+                renderer.draw(canvas);
+                redraw = redraw || ((OverlayRenderer) renderer).isVisible();
+            }
+            if (redraw) {
+                invalidate();
+            }
+        }
+    }
 }

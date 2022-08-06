@@ -29,127 +29,131 @@ import java.util.Arrays;
  */
 public class IndentingPrintWriter extends PrintWriter {
 
-  private final String singleIndent;
-  private final int wrapLength;
+    private final String singleIndent;
+    private final int wrapLength;
 
-  /** Mutable version of current indent */
-  private final StringBuilder indentBuilder = new StringBuilder();
-  /** Cache of current {@link #indentBuilder} value */
-  private char[] currentIndent;
-  /** Length of current line being built, excluding any indent */
-  private int currentLength;
+    /**
+     * Mutable version of current indent
+     */
+    private final StringBuilder indentBuilder = new StringBuilder();
+    private final char[] singleChar = new char[1];
+    /**
+     * Cache of current {@link #indentBuilder} value
+     */
+    private char[] currentIndent;
+    /**
+     * Length of current line being built, excluding any indent
+     */
+    private int currentLength;
+    /**
+     * Flag indicating if we're currently sitting on an empty line, and that next write should be
+     * prefixed with the current indent.
+     */
+    private boolean emptyLine = true;
 
-  /**
-   * Flag indicating if we're currently sitting on an empty line, and that next write should be
-   * prefixed with the current indent.
-   */
-  private boolean emptyLine = true;
+    public IndentingPrintWriter(Writer writer, String singleIndent) {
+        this(writer, singleIndent, -1);
+    }
 
-  private final char[] singleChar = new char[1];
+    public IndentingPrintWriter(Writer writer, String singleIndent, int wrapLength) {
+        super(writer);
+        this.singleIndent = singleIndent;
+        this.wrapLength = wrapLength;
+    }
 
-  public IndentingPrintWriter(Writer writer, String singleIndent) {
-    this(writer, singleIndent, -1);
-  }
+    public void increaseIndent() {
+        indentBuilder.append(singleIndent);
+        currentIndent = null;
+    }
 
-  public IndentingPrintWriter(Writer writer, String singleIndent, int wrapLength) {
-    super(writer);
-    this.singleIndent = singleIndent;
-    this.wrapLength = wrapLength;
-  }
+    public void decreaseIndent() {
+        indentBuilder.delete(0, singleIndent.length());
+        currentIndent = null;
+    }
 
-  public void increaseIndent() {
-    indentBuilder.append(singleIndent);
-    currentIndent = null;
-  }
+    public void printPair(String key, Object value) {
+        print(key + "=" + value + " ");
+    }
 
-  public void decreaseIndent() {
-    indentBuilder.delete(0, singleIndent.length());
-    currentIndent = null;
-  }
+    public void printPair(String key, Object[] value) {
+        print(key + "=" + Arrays.toString(value) + " ");
+    }
 
-  public void printPair(String key, Object value) {
-    print(key + "=" + value + " ");
-  }
+    public void printHexPair(String key, int value) {
+        print(key + "=0x" + Integer.toHexString(value) + " ");
+    }
 
-  public void printPair(String key, Object[] value) {
-    print(key + "=" + Arrays.toString(value) + " ");
-  }
+    @Override
+    public void println() {
+        write('\n');
+    }
 
-  public void printHexPair(String key, int value) {
-    print(key + "=0x" + Integer.toHexString(value) + " ");
-  }
+    @Override
+    public void write(int c) {
+        singleChar[0] = (char) c;
+        write(singleChar, 0, 1);
+    }
 
-  @Override
-  public void println() {
-    write('\n');
-  }
+    @Override
+    public void write(String s, int off, int len) {
+        final char[] buf = new char[len];
+        s.getChars(off, len - off, buf, 0);
+        write(buf, 0, len);
+    }
 
-  @Override
-  public void write(int c) {
-    singleChar[0] = (char) c;
-    write(singleChar, 0, 1);
-  }
+    @Override
+    public void write(char[] buf, int offset, int count) {
+        final int indentLength = indentBuilder.length();
+        final int bufferEnd = offset + count;
+        int lineStart = offset;
+        int lineEnd = offset;
 
-  @Override
-  public void write(String s, int off, int len) {
-    final char[] buf = new char[len];
-    s.getChars(off, len - off, buf, 0);
-    write(buf, 0, len);
-  }
+        // March through incoming buffer looking for newlines
+        while (lineEnd < bufferEnd) {
+            char ch = buf[lineEnd++];
+            currentLength++;
+            if (ch == '\n') {
+                maybeWriteIndent();
+                super.write(buf, lineStart, lineEnd - lineStart);
+                lineStart = lineEnd;
+                emptyLine = true;
+                currentLength = 0;
+            }
 
-  @Override
-  public void write(char[] buf, int offset, int count) {
-    final int indentLength = indentBuilder.length();
-    final int bufferEnd = offset + count;
-    int lineStart = offset;
-    int lineEnd = offset;
-
-    // March through incoming buffer looking for newlines
-    while (lineEnd < bufferEnd) {
-      char ch = buf[lineEnd++];
-      currentLength++;
-      if (ch == '\n') {
-        maybeWriteIndent();
-        super.write(buf, lineStart, lineEnd - lineStart);
-        lineStart = lineEnd;
-        emptyLine = true;
-        currentLength = 0;
-      }
-
-      // Wrap if we've pushed beyond line length
-      if (wrapLength > 0 && currentLength >= wrapLength - indentLength) {
-        if (!emptyLine) {
-          // Give ourselves a fresh line to work with
-          super.write('\n');
-          emptyLine = true;
-          currentLength = lineEnd - lineStart;
-        } else {
-          // We need more than a dedicated line, slice it hard
-          maybeWriteIndent();
-          super.write(buf, lineStart, lineEnd - lineStart);
-          super.write('\n');
-          emptyLine = true;
-          lineStart = lineEnd;
-          currentLength = 0;
+            // Wrap if we've pushed beyond line length
+            if (wrapLength > 0 && currentLength >= wrapLength - indentLength) {
+                if (!emptyLine) {
+                    // Give ourselves a fresh line to work with
+                    super.write('\n');
+                    emptyLine = true;
+                    currentLength = lineEnd - lineStart;
+                } else {
+                    // We need more than a dedicated line, slice it hard
+                    maybeWriteIndent();
+                    super.write(buf, lineStart, lineEnd - lineStart);
+                    super.write('\n');
+                    emptyLine = true;
+                    lineStart = lineEnd;
+                    currentLength = 0;
+                }
+            }
         }
-      }
-    }
 
-    if (lineStart != lineEnd) {
-      maybeWriteIndent();
-      super.write(buf, lineStart, lineEnd - lineStart);
-    }
-  }
-
-  private void maybeWriteIndent() {
-    if (emptyLine) {
-      emptyLine = false;
-      if (indentBuilder.length() != 0) {
-        if (currentIndent == null) {
-          currentIndent = indentBuilder.toString().toCharArray();
+        if (lineStart != lineEnd) {
+            maybeWriteIndent();
+            super.write(buf, lineStart, lineEnd - lineStart);
         }
-        super.write(currentIndent, 0, currentIndent.length);
-      }
     }
-  }
+
+    private void maybeWriteIndent() {
+        if (emptyLine) {
+            emptyLine = false;
+            if (indentBuilder.length() != 0) {
+                if (currentIndent == null) {
+                    currentIndent = indentBuilder.toString().toCharArray();
+                }
+                super.write(currentIndent, 0, currentIndent.length);
+            }
+        }
+    }
 }

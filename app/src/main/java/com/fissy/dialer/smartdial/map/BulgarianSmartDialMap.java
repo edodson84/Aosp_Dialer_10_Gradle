@@ -16,34 +16,38 @@
 
 package com.fissy.dialer.smartdial.map;
 
-import android.support.v4.util.SimpleArrayMap;
+import androidx.collection.SimpleArrayMap;
+
 import com.fissy.dialer.dialpadview.DialpadCharMappings;
 import com.google.common.base.Optional;
 
-/** A {@link SmartDialMap} for the Bulgarian alphabet. */
+/**
+ * A {@link SmartDialMap} for the Bulgarian alphabet.
+ */
 @SuppressWarnings("Guava")
 final class BulgarianSmartDialMap extends SmartDialMap {
 
-  private static BulgarianSmartDialMap instance;
+    private static BulgarianSmartDialMap instance;
 
-  static BulgarianSmartDialMap getInstance() {
-    if (instance == null) {
-      instance = new BulgarianSmartDialMap();
+    private BulgarianSmartDialMap() {
     }
 
-    return instance;
-  }
+    static BulgarianSmartDialMap getInstance() {
+        if (instance == null) {
+            instance = new BulgarianSmartDialMap();
+        }
 
-  private BulgarianSmartDialMap() {}
+        return instance;
+    }
 
-  @Override
-  Optional<Character> normalizeCharacter(char ch) {
-    ch = Character.toLowerCase(ch);
-    return isValidDialpadAlphabeticChar(ch) ? Optional.of(ch) : Optional.absent();
-  }
+    @Override
+    Optional<Character> normalizeCharacter(char ch) {
+        ch = Character.toLowerCase(ch);
+        return isValidDialpadAlphabeticChar(ch) ? Optional.of(ch) : Optional.absent();
+    }
 
-  @Override
-  SimpleArrayMap<Character, Character> getCharToKeyMap() {
-    return DialpadCharMappings.getCharToKeyMap("bul");
-  }
+    @Override
+    SimpleArrayMap<Character, Character> getCharToKeyMap() {
+        return DialpadCharMappings.getCharToKeyMap("bul");
+    }
 }

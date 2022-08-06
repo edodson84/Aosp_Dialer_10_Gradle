@@ -26,52 +26,56 @@ import com.google.common.collect.ImmutableMap;
  */
 public interface SpeedDialEntryDao {
 
-  /** Return all entries in the database */
-  ImmutableList<SpeedDialEntry> getAllEntries();
+    /**
+     * Return all entries in the database
+     */
+    ImmutableList<SpeedDialEntry> getAllEntries();
 
-  /**
-   * Insert new entries.
-   *
-   * <p>{@link SpeedDialEntry#id() ids} must be null.
-   *
-   * @return a map of the inserted entries to their new ids.
-   */
-  ImmutableMap<SpeedDialEntry, Long> insert(ImmutableList<SpeedDialEntry> entries);
+    /**
+     * Insert new entries.
+     *
+     * <p>{@link SpeedDialEntry#id() ids} must be null.
+     *
+     * @return a map of the inserted entries to their new ids.
+     */
+    ImmutableMap<SpeedDialEntry, Long> insert(ImmutableList<SpeedDialEntry> entries);
 
-  /**
-   * Insert a new entry.
-   *
-   * <p>{@link SpeedDialEntry#id() ids} must be null.
-   */
-  long insert(SpeedDialEntry entry);
+    /**
+     * Insert a new entry.
+     *
+     * <p>{@link SpeedDialEntry#id() ids} must be null.
+     */
+    long insert(SpeedDialEntry entry);
 
-  /**
-   * Updates existing entries based on {@link SpeedDialEntry#id}.
-   *
-   * <p>Fails if the {@link SpeedDialEntry#id()} doesn't exist.
-   */
-  void update(ImmutableList<SpeedDialEntry> entries);
+    /**
+     * Updates existing entries based on {@link SpeedDialEntry#id}.
+     *
+     * <p>Fails if the {@link SpeedDialEntry#id()} doesn't exist.
+     */
+    void update(ImmutableList<SpeedDialEntry> entries);
 
-  /**
-   * Delete the passed in entries based on {@link SpeedDialEntry#id}.
-   *
-   * <p>Fails if the {@link SpeedDialEntry#id()} doesn't exist.
-   */
-  void delete(ImmutableList<Long> entries);
+    /**
+     * Delete the passed in entries based on {@link SpeedDialEntry#id}.
+     *
+     * <p>Fails if the {@link SpeedDialEntry#id()} doesn't exist.
+     */
+    void delete(ImmutableList<Long> entries);
 
-  /**
-   * Inserts, updates and deletes rows all in on transaction.
-   *
-   * @return a map of the inserted entries to their new ids.
-   * @see #insert(ImmutableList)
-   * @see #update(ImmutableList)
-   * @see #delete(ImmutableList)
-   */
-  ImmutableMap<SpeedDialEntry, Long> insertUpdateAndDelete(
-      ImmutableList<SpeedDialEntry> entriesToInsert,
-      ImmutableList<SpeedDialEntry> entriesToUpdate,
-      ImmutableList<Long> entriesToDelete);
+    /**
+     * Inserts, updates and deletes rows all in on transaction.
+     *
+     * @return a map of the inserted entries to their new ids.
+     * @see #insert(ImmutableList)
+     * @see #update(ImmutableList)
+     * @see #delete(ImmutableList)
+     */
+    ImmutableMap<SpeedDialEntry, Long> insertUpdateAndDelete(
+            ImmutableList<SpeedDialEntry> entriesToInsert,
+            ImmutableList<SpeedDialEntry> entriesToUpdate,
+            ImmutableList<Long> entriesToDelete);
 
-  /** Delete all entries in the database. */
-  void deleteAll();
+    /**
+     * Delete all entries in the database.
+     */
+    void deleteAll();
 }

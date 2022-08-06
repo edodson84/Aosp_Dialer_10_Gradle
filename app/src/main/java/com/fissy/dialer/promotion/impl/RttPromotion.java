@@ -18,7 +18,7 @@ package com.fissy.dialer.promotion.impl;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.annotation.DrawableRes;
+import androidx.annotation.DrawableRes;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.common.LogUtil;
@@ -28,69 +28,72 @@ import com.fissy.dialer.promotion.Promotion;
 import com.fissy.dialer.spannable.ContentWithLearnMoreSpanner;
 import com.fissy.dialer.storage.StorageComponent;
 import com.fissy.dialer.storage.Unencrypted;
+
 import javax.inject.Inject;
 
-/** RTT promotion. */
+/**
+ * RTT promotion.
+ */
 public final class RttPromotion implements Promotion {
-  private static final String SHARED_PREFERENCE_KEY_ENABLED = "rtt_promotion_enabled";
-  private static final String SHARED_PREFERENCE_KEY_DISMISSED = "rtt_promotion_dismissed";
-  private final Context appContext;
-  private final SharedPreferences sharedPreferences;
-  private final ConfigProvider configProvider;
+    private static final String SHARED_PREFERENCE_KEY_ENABLED = "rtt_promotion_enabled";
+    private static final String SHARED_PREFERENCE_KEY_DISMISSED = "rtt_promotion_dismissed";
+    private final Context appContext;
+    private final SharedPreferences sharedPreferences;
+    private final ConfigProvider configProvider;
 
-  @Override
-  public int getType() {
-    return PromotionType.BOTTOM_SHEET;
-  }
+    @Inject
+    RttPromotion(
+            @ApplicationContext Context context,
+            @Unencrypted SharedPreferences sharedPreferences,
+            ConfigProvider configProvider) {
+        appContext = context;
+        this.sharedPreferences = sharedPreferences;
+        this.configProvider = configProvider;
+    }
 
-  @Inject
-  RttPromotion(
-      @ApplicationContext Context context,
-      @Unencrypted SharedPreferences sharedPreferences,
-      ConfigProvider configProvider) {
-    appContext = context;
-    this.sharedPreferences = sharedPreferences;
-    this.configProvider = configProvider;
-  }
+    public static void setEnabled(Context context) {
+        LogUtil.enterBlock("RttPromotion.setEnabled");
+        StorageComponent.get(context)
+                .unencryptedSharedPrefs()
+                .edit()
+                .putBoolean(SHARED_PREFERENCE_KEY_ENABLED, true)
+                .apply();
+    }
 
-  @Override
-  public boolean isEligibleToBeShown() {
-    return sharedPreferences.getBoolean(SHARED_PREFERENCE_KEY_ENABLED, false)
-        && !sharedPreferences.getBoolean(SHARED_PREFERENCE_KEY_DISMISSED, false);
-  }
+    @Override
+    public int getType() {
+        return PromotionType.BOTTOM_SHEET;
+    }
 
-  @Override
-  public CharSequence getTitle() {
-    return appContext.getString(R.string.rtt_promotion_title);
-  }
+    @Override
+    public boolean isEligibleToBeShown() {
+        return sharedPreferences.getBoolean(SHARED_PREFERENCE_KEY_ENABLED, false)
+                && !sharedPreferences.getBoolean(SHARED_PREFERENCE_KEY_DISMISSED, false);
+    }
 
-  @Override
-  public CharSequence getDetails() {
-    return new ContentWithLearnMoreSpanner(appContext)
-        .create(
-            appContext.getString(R.string.rtt_promotion_details),
-            configProvider.getString(
-                "rtt_promo_learn_more_link_full_url",
-                "http://support.google.com/pixelphone/?p=dialer_rtt"));
-  }
+    @Override
+    public CharSequence getTitle() {
+        return appContext.getString(R.string.rtt_promotion_title);
+    }
 
-  @Override
-  @DrawableRes
-  public int getIconRes() {
-    return R.drawable.quantum_ic_rtt_vd_theme_24;
-  }
+    @Override
+    public CharSequence getDetails() {
+        return new ContentWithLearnMoreSpanner(appContext)
+                .create(
+                        appContext.getString(R.string.rtt_promotion_details),
+                        configProvider.getString(
+                                "rtt_promo_learn_more_link_full_url",
+                                "http://support.google.com/pixelphone/?p=dialer_rtt"));
+    }
 
-  public static void setEnabled(Context context) {
-    LogUtil.enterBlock("RttPromotion.setEnabled");
-    StorageComponent.get(context)
-        .unencryptedSharedPrefs()
-        .edit()
-        .putBoolean(SHARED_PREFERENCE_KEY_ENABLED, true)
-        .apply();
-  }
+    @Override
+    @DrawableRes
+    public int getIconRes() {
+        return R.drawable.quantum_ic_rtt_vd_theme_24;
+    }
 
-  @Override
-  public void dismiss() {
-    sharedPreferences.edit().putBoolean(SHARED_PREFERENCE_KEY_DISMISSED, true).apply();
-  }
+    @Override
+    public void dismiss() {
+        sharedPreferences.edit().putBoolean(SHARED_PREFERENCE_KEY_DISMISSED, true).apply();
+    }
 }

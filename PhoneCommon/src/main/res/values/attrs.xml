@@ -16,11 +16,11 @@
 
 <resources>
     <declare-styleable name="Dialpad">
-        <attr name="dialpad_key_button_touch_tint" format="color"/>
+        <attr name="dialpad_key_button_touch_tint" format="color" />
     </declare-styleable>
 
     <declare-styleable name="ResizingText">
-        <attr name="resizing_text_min_size" format="dimension"/>
+        <attr name="resizing_text_min_size" format="dimension" />
     </declare-styleable>
 
     <declare-styleable name="Theme.Dialpad">
@@ -31,7 +31,7 @@
         <attr name="dialpad_voicemail_tint" format="color" />
         <attr name="dialpad_background" format="color" />
         <attr name="dialpad_separator_color" format="color" />
-        <attr name="dialpad_margin_style" format="reference"/>
+        <attr name="dialpad_margin_style" format="reference" />
         <attr name="dialpad_delete_padding" format="dimension" />
     </declare-styleable>
 </resources>

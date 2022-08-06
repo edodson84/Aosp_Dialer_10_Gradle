@@ -17,6 +17,7 @@
 package com.android.voicemail.impl.scheduling;
 
 import android.os.Bundle;
+
 import com.android.voicemail.impl.VvmLog;
 
 /**
@@ -27,42 +28,42 @@ import com.android.voicemail.impl.VvmLog;
  */
 public class PostponePolicy implements Policy {
 
-  private static final String TAG = "PostponePolicy";
+    private static final String TAG = "PostponePolicy";
 
-  private final int postponeMillis;
-  private BaseTask task;
+    private final int postponeMillis;
+    private BaseTask task;
 
-  public PostponePolicy(int postponeMillis) {
-    this.postponeMillis = postponeMillis;
-  }
-
-  @Override
-  public void onCreate(BaseTask task, Bundle extras) {
-    this.task = task;
-    this.task.setExecutionTime(this.task.getTimeMillis() + postponeMillis);
-  }
-
-  @Override
-  public void onBeforeExecute() {
-    // Do nothing
-  }
-
-  @Override
-  public void onCompleted() {
-    // Do nothing
-  }
-
-  @Override
-  public void onFail() {
-    // Do nothing
-  }
-
-  @Override
-  public void onDuplicatedTaskAdded() {
-    if (task.hasStarted()) {
-      return;
+    public PostponePolicy(int postponeMillis) {
+        this.postponeMillis = postponeMillis;
     }
-    VvmLog.i(TAG, "postponing " + task);
-    task.setExecutionTime(task.getTimeMillis() + postponeMillis);
-  }
+
+    @Override
+    public void onCreate(BaseTask task, Bundle extras) {
+        this.task = task;
+        this.task.setExecutionTime(this.task.getTimeMillis() + postponeMillis);
+    }
+
+    @Override
+    public void onBeforeExecute() {
+        // Do nothing
+    }
+
+    @Override
+    public void onCompleted() {
+        // Do nothing
+    }
+
+    @Override
+    public void onFail() {
+        // Do nothing
+    }
+
+    @Override
+    public void onDuplicatedTaskAdded() {
+        if (task.hasStarted()) {
+            return;
+        }
+        VvmLog.i(TAG, "postponing " + task);
+        task.setExecutionTime(task.getTimeMillis() + postponeMillis);
+    }
 }

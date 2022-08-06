@@ -16,7 +16,7 @@
 package com.fissy.dialer.spannable;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.TypefaceSpan;
@@ -39,58 +39,58 @@ import com.fissy.dialer.common.Assert;
  *   SpannableString spannable = creator.create(content, "https://www.myFeatureHelp.com");
  *   content.setText(spannable);
  * </pre>
- *
+ * <p>
  * Users will see: "Try my feature. Learn more" where "Learn more" links to the given url.
  */
 public final class ContentWithLearnMoreSpanner {
 
-  private final Context context;
+    private final Context context;
 
-  public ContentWithLearnMoreSpanner(@NonNull Context context) {
-    this.context = context.getApplicationContext();
-  }
+    public ContentWithLearnMoreSpanner(@NonNull Context context) {
+        this.context = context.getApplicationContext();
+    }
 
-  /**
-   * Creates a spannable string using the given content and learn more url.
-   *
-   * @param contentFormatString a format string {@see java.util.Formatter} with a single string
-   *     format parameter, e.g. "Try my feature. %1$s".
-   * @param learnMoreUrl a url which the "Learn more" text will link to.
-   * @return a {@link SpannableString}. This string is put together by inserting the text "Learn
-   *     more" into the given {@code contentFormatString}, setting "Learn more" to link to the given
-   *     {@code learnMoreUrl}, then styling the "Learn more" text with common Dialer learn more
-   *     styling. The "Learn more" text uses a non-breaking-space character to ensure it says on a
-   *     single line.
-   * @throws java.util.IllegalFormatException if {@code contentFormatString} has an improper format
-   * @throws IllegalArgumentException if it wasn't possible to add "Learn more" to the given
-   *     contentFormatString
-   */
-  @NonNull
-  public SpannableString create(@NonNull String contentFormatString, @NonNull String learnMoreUrl) {
-    String learnMore = context.getString(R.string.general_learn_more);
+    /**
+     * Creates a spannable string using the given content and learn more url.
+     *
+     * @param contentFormatString a format string {@see java.util.Formatter} with a single string
+     *                            format parameter, e.g. "Try my feature. %1$s".
+     * @param learnMoreUrl        a url which the "Learn more" text will link to.
+     * @return a {@link SpannableString}. This string is put together by inserting the text "Learn
+     * more" into the given {@code contentFormatString}, setting "Learn more" to link to the given
+     * {@code learnMoreUrl}, then styling the "Learn more" text with common Dialer learn more
+     * styling. The "Learn more" text uses a non-breaking-space character to ensure it says on a
+     * single line.
+     * @throws java.util.IllegalFormatException if {@code contentFormatString} has an improper format
+     * @throws IllegalArgumentException         if it wasn't possible to add "Learn more" to the given
+     *                                          contentFormatString
+     */
+    @NonNull
+    public SpannableString create(@NonNull String contentFormatString, @NonNull String learnMoreUrl) {
+        String learnMore = context.getString(R.string.general_learn_more);
 
-    SpannableString contents = new SpannableString(String.format(contentFormatString, learnMore));
+        SpannableString contents = new SpannableString(String.format(contentFormatString, learnMore));
 
-    Assert.checkArgument(
-        contents.toString().contains(learnMore),
-        "Couldn't add learn more link to %s",
-        contentFormatString);
+        Assert.checkArgument(
+                contents.toString().contains(learnMore),
+                "Couldn't add learn more link to %s",
+                contentFormatString);
 
-    int learnMoreSpanStartIndex = contents.toString().lastIndexOf(learnMore);
-    int learnMoreSpanEndIndex = learnMoreSpanStartIndex + learnMore.length();
+        int learnMoreSpanStartIndex = contents.toString().lastIndexOf(learnMore);
+        int learnMoreSpanEndIndex = learnMoreSpanStartIndex + learnMore.length();
 
-    contents.setSpan(
-        new TypefaceSpan("sans-serif-medium"),
-        learnMoreSpanStartIndex,
-        learnMoreSpanEndIndex,
-        Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        contents.setSpan(
+                new TypefaceSpan("sans-serif-medium"),
+                learnMoreSpanStartIndex,
+                learnMoreSpanEndIndex,
+                Spanned.SPAN_INCLUSIVE_INCLUSIVE);
 
-    contents.setSpan(
-        new UrlSpanWithoutUnderline(learnMoreUrl),
-        learnMoreSpanStartIndex,
-        learnMoreSpanEndIndex,
-        Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        contents.setSpan(
+                new UrlSpanWithoutUnderline(learnMoreUrl),
+                learnMoreSpanStartIndex,
+                learnMoreSpanEndIndex,
+                Spanned.SPAN_INCLUSIVE_INCLUSIVE);
 
-    return contents;
-  }
+        return contents;
+    }
 }

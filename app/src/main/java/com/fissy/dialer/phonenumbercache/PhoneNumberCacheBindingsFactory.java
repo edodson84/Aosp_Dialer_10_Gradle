@@ -22,5 +22,5 @@ package com.fissy.dialer.phonenumbercache;
  */
 public interface PhoneNumberCacheBindingsFactory {
 
-  PhoneNumberCacheBindings newPhoneNumberCacheBindings();
+    PhoneNumberCacheBindings newPhoneNumberCacheBindings();
 }

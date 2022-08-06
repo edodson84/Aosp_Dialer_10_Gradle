@@ -22,8 +22,8 @@ import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetDialogFragment;
+import androidx.annotation.Nullable;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,115 +34,120 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.incallui.incalluilock.InCallUiLock;
 import com.fissy.dialer.R;
 import com.fissy.dialer.common.DpUtil;
 import com.fissy.dialer.common.FragmentUtils;
 import com.fissy.dialer.common.LogUtil;
-import com.android.incallui.incalluilock.InCallUiLock;
+
 import java.util.ArrayList;
 import java.util.List;
 
-/** Shows options for rejecting call with SMS */
+/**
+ * Shows options for rejecting call with SMS
+ */
 public class SmsBottomSheetFragment extends BottomSheetDialogFragment {
 
-  private static final String ARG_OPTIONS = "options";
+    private static final String ARG_OPTIONS = "options";
 
-  private InCallUiLock inCallUiLock;
+    private InCallUiLock inCallUiLock;
 
-  public static SmsBottomSheetFragment newInstance(@Nullable ArrayList<CharSequence> options) {
-    SmsBottomSheetFragment fragment = new SmsBottomSheetFragment();
-    Bundle args = new Bundle();
-    args.putCharSequenceArrayList(ARG_OPTIONS, options);
-    fragment.setArguments(args);
-    return fragment;
-  }
-
-  @Nullable
-  @Override
-  public View onCreateView(
-      LayoutInflater layoutInflater, @Nullable ViewGroup viewGroup, @Nullable Bundle bundle) {
-    LinearLayout layout = new LinearLayout(getContext());
-    layout.setOrientation(LinearLayout.VERTICAL);
-    List<CharSequence> items = getArguments().getCharSequenceArrayList(ARG_OPTIONS);
-    if (items != null) {
-      for (CharSequence item : items) {
-        layout.addView(newTextViewItem(item));
-      }
+    public static SmsBottomSheetFragment newInstance(@Nullable ArrayList<CharSequence> options) {
+        SmsBottomSheetFragment fragment = new SmsBottomSheetFragment();
+        Bundle args = new Bundle();
+        args.putCharSequenceArrayList(ARG_OPTIONS, options);
+        fragment.setArguments(args);
+        return fragment;
     }
-    layout.addView(newTextViewItem(null));
-    layout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-    return layout;
-  }
 
-  @Override
-  public void onAttach(Context context) {
-    super.onAttach(context);
-    FragmentUtils.checkParent(this, SmsSheetHolder.class);
-  }
+    @Nullable
+    @Override
+    public View onCreateView(
+            LayoutInflater layoutInflater, @Nullable ViewGroup viewGroup, @Nullable Bundle bundle) {
+        LinearLayout layout = new LinearLayout(getContext());
+        layout.setOrientation(LinearLayout.VERTICAL);
+        List<CharSequence> items = getArguments().getCharSequenceArrayList(ARG_OPTIONS);
+        if (items != null) {
+            for (CharSequence item : items) {
+                layout.addView(newTextViewItem(item));
+            }
+        }
+        layout.addView(newTextViewItem(null));
+        layout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+        return layout;
+    }
 
-  @Override
-  public Dialog onCreateDialog(final Bundle savedInstanceState) {
-    LogUtil.i("SmsBottomSheetFragment.onCreateDialog", null);
-    Dialog dialog = super.onCreateDialog(savedInstanceState);
-    dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        FragmentUtils.checkParent(this, SmsSheetHolder.class);
+    }
 
-    inCallUiLock =
-        FragmentUtils.getParentUnsafe(SmsBottomSheetFragment.this, SmsSheetHolder.class)
-            .acquireInCallUiLock("SmsBottomSheetFragment");
-    return dialog;
-  }
+    @Override
+    public Dialog onCreateDialog(final Bundle savedInstanceState) {
+        LogUtil.i("SmsBottomSheetFragment.onCreateDialog", null);
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
+        dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
 
-  private TextView newTextViewItem(@Nullable final CharSequence text) {
-    int[] attrs = new int[] {android.R.attr.selectableItemBackground};
-    Context context = new ContextThemeWrapper(getContext(), getTheme());
-    TypedArray typedArray = context.obtainStyledAttributes(attrs);
-    Drawable background = typedArray.getDrawable(0);
-    // noinspection ResourceType
-    typedArray.recycle();
+        inCallUiLock =
+                FragmentUtils.getParentUnsafe(SmsBottomSheetFragment.this, SmsSheetHolder.class)
+                        .acquireInCallUiLock("SmsBottomSheetFragment");
+        return dialog;
+    }
 
-    TextView textView = new TextView(context);
-    textView.setText(text == null ? getString(R.string.call_incoming_message_custom) : text);
-    int padding = (int) DpUtil.dpToPx(context, 16);
-    textView.setPadding(padding, padding, padding, padding);
-    textView.setBackground(background);
-    textView.setTextColor(context.getColor(R.color.blue_grey_100));
-    textView.setTextAppearance(R.style.TextAppearance_AppCompat_Widget_PopupMenu_Large);
+    private TextView newTextViewItem(@Nullable final CharSequence text) {
+        int[] attrs = new int[]{android.R.attr.selectableItemBackground};
+        Context context = new ContextThemeWrapper(getContext(), getTheme());
+        TypedArray typedArray = context.obtainStyledAttributes(attrs);
+        Drawable background = typedArray.getDrawable(0);
+        // noinspection ResourceType
+        typedArray.recycle();
 
-    LayoutParams params =
-        new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-    textView.setLayoutParams(params);
+        TextView textView = new TextView(context);
+        textView.setText(text == null ? getString(R.string.call_incoming_message_custom) : text);
+        int padding = (int) DpUtil.dpToPx(context, 16);
+        textView.setPadding(padding, padding, padding, padding);
+        textView.setBackground(background);
+        textView.setTextColor(context.getColor(R.color.blue_grey_100));
+        textView.setTextAppearance(R.style.TextAppearance_AppCompat_Widget_PopupMenu_Large);
 
-    textView.setOnClickListener(
-        new OnClickListener() {
-          @Override
-          public void onClick(View v) {
-            FragmentUtils.getParentUnsafe(SmsBottomSheetFragment.this, SmsSheetHolder.class)
-                .smsSelected(text);
-            dismiss();
-          }
-        });
-    return textView;
-  }
+        LayoutParams params =
+                new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        textView.setLayoutParams(params);
 
-  @Override
-  public int getTheme() {
-    return R.style.Theme_Design_Light_BottomSheetDialog;
-  }
+        textView.setOnClickListener(
+                new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        FragmentUtils.getParentUnsafe(SmsBottomSheetFragment.this, SmsSheetHolder.class)
+                                .smsSelected(text);
+                        dismiss();
+                    }
+                });
+        return textView;
+    }
 
-  @Override
-  public void onDismiss(DialogInterface dialogInterface) {
-    super.onDismiss(dialogInterface);
-    FragmentUtils.getParentUnsafe(this, SmsSheetHolder.class).smsDismissed();
-    inCallUiLock.release();
-  }
+    @Override
+    public int getTheme() {
+        return R.style.Theme_Design_Light_BottomSheetDialog;
+    }
 
-  /** Callback interface for {@link SmsBottomSheetFragment} */
-  public interface SmsSheetHolder {
+    @Override
+    public void onDismiss(DialogInterface dialogInterface) {
+        super.onDismiss(dialogInterface);
+        FragmentUtils.getParentUnsafe(this, SmsSheetHolder.class).smsDismissed();
+        inCallUiLock.release();
+    }
 
-    InCallUiLock acquireInCallUiLock(String tag);
+    /**
+     * Callback interface for {@link SmsBottomSheetFragment}
+     */
+    public interface SmsSheetHolder {
 
-    void smsSelected(@Nullable CharSequence text);
+        InCallUiLock acquireInCallUiLock(String tag);
 
-    void smsDismissed();
-  }
+        void smsSelected(@Nullable CharSequence text);
+
+        void smsDismissed();
+    }
 }

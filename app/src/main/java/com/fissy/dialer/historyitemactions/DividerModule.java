@@ -24,18 +24,18 @@ import com.fissy.dialer.common.Assert;
  */
 public final class DividerModule implements HistoryItemActionModule {
 
-  @Override
-  public int getStringId() {
-    throw Assert.createUnsupportedOperationFailException();
-  }
+    @Override
+    public int getStringId() {
+        throw Assert.createUnsupportedOperationFailException();
+    }
 
-  @Override
-  public int getDrawableId() {
-    throw Assert.createUnsupportedOperationFailException();
-  }
+    @Override
+    public int getDrawableId() {
+        throw Assert.createUnsupportedOperationFailException();
+    }
 
-  @Override
-  public boolean onClick() {
-    throw Assert.createUnsupportedOperationFailException();
-  }
+    @Override
+    public boolean onClick() {
+        throw Assert.createUnsupportedOperationFailException();
+    }
 }

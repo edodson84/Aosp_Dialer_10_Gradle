@@ -16,34 +16,38 @@
 
 package com.fissy.dialer.smartdial.map;
 
-import android.support.v4.util.SimpleArrayMap;
+import androidx.collection.SimpleArrayMap;
+
 import com.fissy.dialer.dialpadview.DialpadCharMappings;
 import com.google.common.base.Optional;
 
-/** A {@link SmartDialMap} for the Russian alphabet. */
+/**
+ * A {@link SmartDialMap} for the Russian alphabet.
+ */
 @SuppressWarnings("Guava")
 final class RussianSmartDialMap extends SmartDialMap {
 
-  private static RussianSmartDialMap instance;
+    private static RussianSmartDialMap instance;
 
-  static RussianSmartDialMap getInstance() {
-    if (instance == null) {
-      instance = new RussianSmartDialMap();
+    private RussianSmartDialMap() {
     }
 
-    return instance;
-  }
+    static RussianSmartDialMap getInstance() {
+        if (instance == null) {
+            instance = new RussianSmartDialMap();
+        }
 
-  private RussianSmartDialMap() {}
+        return instance;
+    }
 
-  @Override
-  Optional<Character> normalizeCharacter(char ch) {
-    ch = Character.toLowerCase(ch);
-    return isValidDialpadAlphabeticChar(ch) ? Optional.of(ch) : Optional.absent();
-  }
+    @Override
+    Optional<Character> normalizeCharacter(char ch) {
+        ch = Character.toLowerCase(ch);
+        return isValidDialpadAlphabeticChar(ch) ? Optional.of(ch) : Optional.absent();
+    }
 
-  @Override
-  SimpleArrayMap<Character, Character> getCharToKeyMap() {
-    return DialpadCharMappings.getCharToKeyMap("rus");
-  }
+    @Override
+    SimpleArrayMap<Character, Character> getCharToKeyMap() {
+        return DialpadCharMappings.getCharToKeyMap("rus");
+    }
 }

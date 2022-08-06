@@ -17,6 +17,7 @@
 package com.fissy.dialer.app.list;
 
 import android.view.View;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,69 +27,71 @@ import java.util.List;
  */
 public class DragDropController {
 
-  private final List<OnDragDropListener> onDragDropListeners = new ArrayList<OnDragDropListener>();
-  private final DragItemContainer dragItemContainer;
-  private final int[] locationOnScreen = new int[2];
+    private final List<OnDragDropListener> onDragDropListeners = new ArrayList<OnDragDropListener>();
+    private final DragItemContainer dragItemContainer;
+    private final int[] locationOnScreen = new int[2];
 
-  public DragDropController(DragItemContainer dragItemContainer) {
-    this.dragItemContainer = dragItemContainer;
-  }
-
-  /** @return True if the drag is started, false if the drag is cancelled for some reason. */
-  boolean handleDragStarted(View v, int x, int y) {
-    v.getLocationOnScreen(locationOnScreen);
-    x = x + locationOnScreen[0];
-    y = y + locationOnScreen[1];
-    final PhoneFavoriteSquareTileView tileView = dragItemContainer.getViewForLocation(x, y);
-    if (tileView == null) {
-      return false;
-    }
-    for (int i = 0; i < onDragDropListeners.size(); i++) {
-      onDragDropListeners.get(i).onDragStarted(x, y, tileView);
+    public DragDropController(DragItemContainer dragItemContainer) {
+        this.dragItemContainer = dragItemContainer;
     }
 
-    return true;
-  }
+    /**
+     * @return True if the drag is started, false if the drag is cancelled for some reason.
+     */
+    boolean handleDragStarted(View v, int x, int y) {
+        v.getLocationOnScreen(locationOnScreen);
+        x = x + locationOnScreen[0];
+        y = y + locationOnScreen[1];
+        final PhoneFavoriteSquareTileView tileView = dragItemContainer.getViewForLocation(x, y);
+        if (tileView == null) {
+            return false;
+        }
+        for (int i = 0; i < onDragDropListeners.size(); i++) {
+            onDragDropListeners.get(i).onDragStarted(x, y, tileView);
+        }
 
-  public void handleDragHovered(View v, int x, int y) {
-    v.getLocationOnScreen(locationOnScreen);
-    final int screenX = x + locationOnScreen[0];
-    final int screenY = y + locationOnScreen[1];
-    final PhoneFavoriteSquareTileView view = dragItemContainer.getViewForLocation(screenX, screenY);
-    for (int i = 0; i < onDragDropListeners.size(); i++) {
-      onDragDropListeners.get(i).onDragHovered(screenX, screenY, view);
-    }
-  }
-
-  public void handleDragFinished(int x, int y, boolean isRemoveView) {
-    if (isRemoveView) {
-      for (int i = 0; i < onDragDropListeners.size(); i++) {
-        onDragDropListeners.get(i).onDroppedOnRemove();
-      }
+        return true;
     }
 
-    for (int i = 0; i < onDragDropListeners.size(); i++) {
-      onDragDropListeners.get(i).onDragFinished(x, y);
+    public void handleDragHovered(View v, int x, int y) {
+        v.getLocationOnScreen(locationOnScreen);
+        final int screenX = x + locationOnScreen[0];
+        final int screenY = y + locationOnScreen[1];
+        final PhoneFavoriteSquareTileView view = dragItemContainer.getViewForLocation(screenX, screenY);
+        for (int i = 0; i < onDragDropListeners.size(); i++) {
+            onDragDropListeners.get(i).onDragHovered(screenX, screenY, view);
+        }
     }
-  }
 
-  public void addOnDragDropListener(OnDragDropListener listener) {
-    if (!onDragDropListeners.contains(listener)) {
-      onDragDropListeners.add(listener);
+    public void handleDragFinished(int x, int y, boolean isRemoveView) {
+        if (isRemoveView) {
+            for (int i = 0; i < onDragDropListeners.size(); i++) {
+                onDragDropListeners.get(i).onDroppedOnRemove();
+            }
+        }
+
+        for (int i = 0; i < onDragDropListeners.size(); i++) {
+            onDragDropListeners.get(i).onDragFinished(x, y);
+        }
     }
-  }
 
-  public void removeOnDragDropListener(OnDragDropListener listener) {
-      onDragDropListeners.remove(listener);
-  }
+    public void addOnDragDropListener(OnDragDropListener listener) {
+        if (!onDragDropListeners.contains(listener)) {
+            onDragDropListeners.add(listener);
+        }
+    }
 
-  /**
-   * Callback interface used to retrieve views based on the current touch coordinates of the drag
-   * event. The {@link DragItemContainer} houses the draggable views that this {@link
-   * DragDropController} controls.
-   */
-  public interface DragItemContainer {
+    public void removeOnDragDropListener(OnDragDropListener listener) {
+        onDragDropListeners.remove(listener);
+    }
 
-    PhoneFavoriteSquareTileView getViewForLocation(int x, int y);
-  }
+    /**
+     * Callback interface used to retrieve views based on the current touch coordinates of the drag
+     * event. The {@link DragItemContainer} houses the draggable views that this {@link
+     * DragDropController} controls.
+     */
+    public interface DragItemContainer {
+
+        PhoneFavoriteSquareTileView getViewForLocation(int x, int y);
+    }
 }

@@ -19,16 +19,20 @@ package com.fissy.dialer.simulator.stub;
 import com.fissy.dialer.inject.DialerVariant;
 import com.fissy.dialer.inject.InstallIn;
 import com.fissy.dialer.simulator.SimulatorEnrichedCall;
-import dagger.Binds;
-import dagger.Module;
+
 import javax.inject.Singleton;
 
-/** Provides a stub instance of SimulatorEnrichedCall. */
+import dagger.Binds;
+import dagger.Module;
+
+/**
+ * Provides a stub instance of SimulatorEnrichedCall.
+ */
 @InstallIn(variants = {DialerVariant.DIALER_TEST})
 @Module
 public abstract class StubSimulatorEnrichedCallModule {
-  @Binds
-  @Singleton
-  public abstract SimulatorEnrichedCall bindsSimulatorEnrichedCall(
-      SimulatorEnrichedCallStub simulatorEnrichedCall);
+    @Binds
+    @Singleton
+    public abstract SimulatorEnrichedCall bindsSimulatorEnrichedCall(
+            SimulatorEnrichedCallStub simulatorEnrichedCall);
 }

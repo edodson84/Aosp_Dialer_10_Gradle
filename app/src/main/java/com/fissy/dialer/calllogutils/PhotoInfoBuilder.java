@@ -18,48 +18,57 @@ package com.fissy.dialer.calllogutils;
 
 import android.content.Context;
 import android.provider.CallLog.Calls;
-import android.support.v4.os.BuildCompat;
+import androidx.core.os.BuildCompat;
+
 import com.fissy.dialer.NumberAttributes;
 import com.fissy.dialer.calllog.model.CoalescedRow;
 import com.fissy.dialer.glidephotomanager.PhotoInfo;
 import com.fissy.dialer.spam.Spam;
 import com.fissy.dialer.voicemail.model.VoicemailEntry;
 
-/** Builds {@link PhotoInfo} from other data types. */
+/**
+ * Builds {@link PhotoInfo} from other data types.
+ */
 public final class PhotoInfoBuilder {
 
-  /** Returns a {@link PhotoInfo.Builder} with info from {@link CoalescedRow}. */
-  public static PhotoInfo.Builder fromCoalescedRow(Context context, CoalescedRow coalescedRow) {
-    return fromNumberAttributes(coalescedRow.getNumberAttributes())
-        .setName(CallLogEntryText.buildPrimaryText(context, coalescedRow).toString())
-        .setFormattedNumber(coalescedRow.getFormattedNumber())
-        .setIsVoicemail(coalescedRow.getIsVoicemailCall())
-        .setIsSpam(
-            Spam.shouldShowAsSpam(
-                coalescedRow.getNumberAttributes().getIsSpam(), coalescedRow.getCallType()))
-        .setIsVideo((coalescedRow.getFeatures() & Calls.FEATURES_VIDEO) == Calls.FEATURES_VIDEO)
-        .setIsRtt(
-            BuildCompat.isAtLeastP()
-                && (coalescedRow.getFeatures() & Calls.FEATURES_RTT) == Calls.FEATURES_RTT);
-  }
+    /**
+     * Returns a {@link PhotoInfo.Builder} with info from {@link CoalescedRow}.
+     */
+    public static PhotoInfo.Builder fromCoalescedRow(Context context, CoalescedRow coalescedRow) {
+        return fromNumberAttributes(coalescedRow.getNumberAttributes())
+                .setName(CallLogEntryText.buildPrimaryText(context, coalescedRow).toString())
+                .setFormattedNumber(coalescedRow.getFormattedNumber())
+                .setIsVoicemail(coalescedRow.getIsVoicemailCall())
+                .setIsSpam(
+                        Spam.shouldShowAsSpam(
+                                coalescedRow.getNumberAttributes().getIsSpam(), coalescedRow.getCallType()))
+                .setIsVideo((coalescedRow.getFeatures() & Calls.FEATURES_VIDEO) == Calls.FEATURES_VIDEO)
+                .setIsRtt(
+                        BuildCompat.isAtLeastP()
+                                && (coalescedRow.getFeatures() & Calls.FEATURES_RTT) == Calls.FEATURES_RTT);
+    }
 
-  /** Returns a {@link PhotoInfo.Builder} with info from {@link VoicemailEntry}. */
-  public static PhotoInfo.Builder fromVoicemailEntry(VoicemailEntry voicemailEntry) {
-    return fromNumberAttributes(voicemailEntry.getNumberAttributes())
-        .setFormattedNumber(voicemailEntry.getFormattedNumber())
-        .setIsSpam(
-            Spam.shouldShowAsSpam(
-                voicemailEntry.getNumberAttributes().getIsSpam(), voicemailEntry.getCallType()));
-  }
+    /**
+     * Returns a {@link PhotoInfo.Builder} with info from {@link VoicemailEntry}.
+     */
+    public static PhotoInfo.Builder fromVoicemailEntry(VoicemailEntry voicemailEntry) {
+        return fromNumberAttributes(voicemailEntry.getNumberAttributes())
+                .setFormattedNumber(voicemailEntry.getFormattedNumber())
+                .setIsSpam(
+                        Spam.shouldShowAsSpam(
+                                voicemailEntry.getNumberAttributes().getIsSpam(), voicemailEntry.getCallType()));
+    }
 
-  /** Returns a {@link PhotoInfo.Builder} with info from {@link NumberAttributes}. */
-  private static PhotoInfo.Builder fromNumberAttributes(NumberAttributes numberAttributes) {
-    return PhotoInfo.newBuilder()
-        .setName(numberAttributes.getName())
-        .setPhotoUri(numberAttributes.getPhotoUri())
-        .setPhotoId(numberAttributes.getPhotoId())
-        .setLookupUri(numberAttributes.getLookupUri())
-        .setIsBusiness(numberAttributes.getIsBusiness())
-        .setIsBlocked(numberAttributes.getIsBlocked());
-  }
+    /**
+     * Returns a {@link PhotoInfo.Builder} with info from {@link NumberAttributes}.
+     */
+    private static PhotoInfo.Builder fromNumberAttributes(NumberAttributes numberAttributes) {
+        return PhotoInfo.newBuilder()
+                .setName(numberAttributes.getName())
+                .setPhotoUri(numberAttributes.getPhotoUri())
+                .setPhotoId(numberAttributes.getPhotoId())
+                .setLookupUri(numberAttributes.getLookupUri())
+                .setIsBusiness(numberAttributes.getIsBusiness())
+                .setIsBlocked(numberAttributes.getIsBlocked());
+    }
 }

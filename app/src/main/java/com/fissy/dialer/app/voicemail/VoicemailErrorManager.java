@@ -20,12 +20,14 @@ import android.content.Context;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.os.Handler;
-import android.support.annotation.MainThread;
+import androidx.annotation.MainThread;
 import android.telecom.PhoneAccountHandle;
 import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
 import android.telephony.TelephonyManager;
 import android.util.ArrayMap;
+
+import com.android.voicemail.VoicemailComponent;
 import com.fissy.dialer.app.calllog.CallLogAlertManager;
 import com.fissy.dialer.app.calllog.CallLogModalAlertManager;
 import com.fissy.dialer.common.Assert;
@@ -35,7 +37,7 @@ import com.fissy.dialer.voicemail.listui.error.VoicemailErrorAlert;
 import com.fissy.dialer.voicemail.listui.error.VoicemailErrorMessageCreator;
 import com.fissy.dialer.voicemail.listui.error.VoicemailStatus;
 import com.fissy.dialer.voicemail.listui.error.VoicemailStatusReader;
-import com.android.voicemail.VoicemailComponent;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -46,146 +48,144 @@ import java.util.Map;
  */
 public class VoicemailErrorManager implements CallLogQueryHandler.Listener, VoicemailStatusReader {
 
-  private final Context context;
-  private final CallLogQueryHandler callLogQueryHandler;
-  private final VoicemailErrorAlert alertItem;
+    private final Context context;
+    private final CallLogQueryHandler callLogQueryHandler;
+    private final VoicemailErrorAlert alertItem;
 
-  private final Map<PhoneAccountHandle, ServiceStateListener> listeners = new ArrayMap<>();
+    private final Map<PhoneAccountHandle, ServiceStateListener> listeners = new ArrayMap<>();
+    private boolean isForeground;
+    private boolean statusInvalidated;
+    private final ContentObserver statusObserver =
+            new ContentObserver(new Handler()) {
+                @Override
+                public void onChange(boolean selfChange) {
+                    super.onChange(selfChange);
+                    fetchStatus();
+                }
+            };
 
-  private final ContentObserver statusObserver =
-      new ContentObserver(new Handler()) {
-        @Override
-        public void onChange(boolean selfChange) {
-          super.onChange(selfChange);
-          fetchStatus();
+    public VoicemailErrorManager(
+            Context context,
+            CallLogAlertManager alertManager,
+            CallLogModalAlertManager modalAlertManager) {
+        this.context = context;
+        alertItem =
+                new VoicemailErrorAlert(
+                        context, alertManager, modalAlertManager, new VoicemailErrorMessageCreator());
+        callLogQueryHandler = new CallLogQueryHandler(context, context.getContentResolver(), this);
+        fetchStatus();
+    }
+
+    public ContentObserver getContentObserver() {
+        return statusObserver;
+    }
+
+    @MainThread
+    @Override
+    public void onVoicemailStatusFetched(Cursor statusCursor) {
+        List<VoicemailStatus> statuses = new ArrayList<>();
+        while (statusCursor.moveToNext()) {
+            VoicemailStatus status = new VoicemailStatus(context, statusCursor);
+            if (status.isActive(context)) {
+                statuses.add(status);
+                addServiceStateListener(status);
+            } else {
+                LogUtil.i("VisualVoicemailCallLogFragment.shouldAutoSync", "inactive source ignored");
+            }
         }
-      };
-
-  private boolean isForeground;
-  private boolean statusInvalidated;
-
-  public VoicemailErrorManager(
-      Context context,
-      CallLogAlertManager alertManager,
-      CallLogModalAlertManager modalAlertManager) {
-    this.context = context;
-    alertItem =
-        new VoicemailErrorAlert(
-            context, alertManager, modalAlertManager, new VoicemailErrorMessageCreator());
-    callLogQueryHandler = new CallLogQueryHandler(context, context.getContentResolver(), this);
-    fetchStatus();
-  }
-
-  public ContentObserver getContentObserver() {
-    return statusObserver;
-  }
-
-  @MainThread
-  @Override
-  public void onVoicemailStatusFetched(Cursor statusCursor) {
-    List<VoicemailStatus> statuses = new ArrayList<>();
-    while (statusCursor.moveToNext()) {
-      VoicemailStatus status = new VoicemailStatus(context, statusCursor);
-      if (status.isActive(context)) {
-        statuses.add(status);
-        addServiceStateListener(status);
-      } else {
-        LogUtil.i("VisualVoicemailCallLogFragment.shouldAutoSync", "inactive source ignored");
-      }
+        alertItem.updateStatus(statuses, this);
+        // TODO(twyen): a bug support error from multiple sources.
+        return;
     }
-    alertItem.updateStatus(statuses, this);
-    // TODO(twyen): a bug support error from multiple sources.
-    return;
-  }
 
-  @MainThread
-  private void addServiceStateListener(VoicemailStatus status) {
-    Assert.isMainThread();
-    if (!VoicemailComponent.get(context).getVoicemailClient().isVoicemailModuleEnabled()) {
-      LogUtil.i("VoicemailErrorManager.addServiceStateListener", "VVM module not enabled");
-      return;
+    @MainThread
+    private void addServiceStateListener(VoicemailStatus status) {
+        Assert.isMainThread();
+        if (!VoicemailComponent.get(context).getVoicemailClient().isVoicemailModuleEnabled()) {
+            LogUtil.i("VoicemailErrorManager.addServiceStateListener", "VVM module not enabled");
+            return;
+        }
+        if (!status.sourcePackage.equals(context.getPackageName())) {
+            LogUtil.i("VoicemailErrorManager.addServiceStateListener", "non-dialer source");
+            return;
+        }
+        TelephonyManager telephonyManager =
+                context
+                        .getSystemService(TelephonyManager.class)
+                        .createForPhoneAccountHandle(status.getPhoneAccountHandle());
+        if (telephonyManager == null) {
+            LogUtil.e("VoicemailErrorManager.addServiceStateListener", "invalid PhoneAccountHandle");
+            return;
+        }
+        PhoneAccountHandle phoneAccountHandle = status.getPhoneAccountHandle();
+        if (listeners.containsKey(phoneAccountHandle)) {
+            return;
+        }
+        LogUtil.i(
+                "VoicemailErrorManager.addServiceStateListener",
+                "adding listener for " + phoneAccountHandle);
+        ServiceStateListener serviceStateListener = new ServiceStateListener();
+        telephonyManager.listen(serviceStateListener, PhoneStateListener.LISTEN_SERVICE_STATE);
+        listeners.put(phoneAccountHandle, serviceStateListener);
     }
-    if (!status.sourcePackage.equals(context.getPackageName())) {
-      LogUtil.i("VoicemailErrorManager.addServiceStateListener", "non-dialer source");
-      return;
-    }
-    TelephonyManager telephonyManager =
-        context
-            .getSystemService(TelephonyManager.class)
-            .createForPhoneAccountHandle(status.getPhoneAccountHandle());
-    if (telephonyManager == null) {
-      LogUtil.e("VoicemailErrorManager.addServiceStateListener", "invalid PhoneAccountHandle");
-      return;
-    }
-    PhoneAccountHandle phoneAccountHandle = status.getPhoneAccountHandle();
-    if (listeners.containsKey(phoneAccountHandle)) {
-      return;
-    }
-    LogUtil.i(
-        "VoicemailErrorManager.addServiceStateListener",
-        "adding listener for " + phoneAccountHandle);
-    ServiceStateListener serviceStateListener = new ServiceStateListener();
-    telephonyManager.listen(serviceStateListener, PhoneStateListener.LISTEN_SERVICE_STATE);
-    listeners.put(phoneAccountHandle, serviceStateListener);
-  }
-
-  @Override
-  public void onVoicemailUnreadCountFetched(Cursor cursor) {
-    // Do nothing
-  }
-
-  @Override
-  public void onMissedCallsUnreadCountFetched(Cursor cursor) {
-    // Do nothing
-  }
-
-  @Override
-  public boolean onCallsFetched(Cursor combinedCursor) {
-    // Do nothing
-    return false;
-  }
-
-  public void onResume() {
-    isForeground = true;
-    if (statusInvalidated) {
-      fetchStatus();
-    }
-  }
-
-  public void onPause() {
-    isForeground = false;
-    statusInvalidated = false;
-  }
-
-  public void onDestroy() {
-    TelephonyManager telephonyManager = context.getSystemService(TelephonyManager.class);
-    for (ServiceStateListener listener : listeners.values()) {
-      telephonyManager.listen(listener, PhoneStateListener.LISTEN_NONE);
-    }
-  }
-
-  @Override
-  public void refresh() {
-    fetchStatus();
-  }
-
-  /**
-   * Fetch the status when the dialer is in foreground, or queue a fetch when the dialer resumes.
-   */
-  private void fetchStatus() {
-    if (!isForeground) {
-      // Dialer is in the background, UI should not be updated. Reload the status when it resumes.
-      statusInvalidated = true;
-      return;
-    }
-    callLogQueryHandler.fetchVoicemailStatus();
-  }
-
-  private class ServiceStateListener extends PhoneStateListener {
 
     @Override
-    public void onServiceStateChanged(ServiceState serviceState) {
-      fetchStatus();
+    public void onVoicemailUnreadCountFetched(Cursor cursor) {
+        // Do nothing
     }
-  }
+
+    @Override
+    public void onMissedCallsUnreadCountFetched(Cursor cursor) {
+        // Do nothing
+    }
+
+    @Override
+    public boolean onCallsFetched(Cursor combinedCursor) {
+        // Do nothing
+        return false;
+    }
+
+    public void onResume() {
+        isForeground = true;
+        if (statusInvalidated) {
+            fetchStatus();
+        }
+    }
+
+    public void onPause() {
+        isForeground = false;
+        statusInvalidated = false;
+    }
+
+    public void onDestroy() {
+        TelephonyManager telephonyManager = context.getSystemService(TelephonyManager.class);
+        for (ServiceStateListener listener : listeners.values()) {
+            telephonyManager.listen(listener, PhoneStateListener.LISTEN_NONE);
+        }
+    }
+
+    @Override
+    public void refresh() {
+        fetchStatus();
+    }
+
+    /**
+     * Fetch the status when the dialer is in foreground, or queue a fetch when the dialer resumes.
+     */
+    private void fetchStatus() {
+        if (!isForeground) {
+            // Dialer is in the background, UI should not be updated. Reload the status when it resumes.
+            statusInvalidated = true;
+            return;
+        }
+        callLogQueryHandler.fetchVoicemailStatus();
+    }
+
+    private class ServiceStateListener extends PhoneStateListener {
+
+        @Override
+        public void onServiceStateChanged(ServiceState serviceState) {
+            fetchStatus();
+        }
+    }
 }

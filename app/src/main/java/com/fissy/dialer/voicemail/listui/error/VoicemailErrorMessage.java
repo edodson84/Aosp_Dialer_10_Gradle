@@ -20,12 +20,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.provider.Settings;
 import android.provider.VoicemailContract;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.telecom.PhoneAccountHandle;
 import android.view.View;
 import android.view.View.OnClickListener;
 
+import com.android.voicemail.VoicemailClient;
+import com.android.voicemail.VoicemailComponent;
 import com.fissy.dialer.R;
 import com.fissy.dialer.callintent.CallInitiationType;
 import com.fissy.dialer.callintent.CallIntentBuilder;
@@ -35,8 +37,7 @@ import com.fissy.dialer.logging.DialerImpression;
 import com.fissy.dialer.logging.Logger;
 import com.fissy.dialer.precall.PreCall;
 import com.fissy.dialer.voicemail.settings.VoicemailChangePinActivity;
-import com.android.voicemail.VoicemailClient;
-import com.android.voicemail.VoicemailComponent;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -47,212 +48,214 @@ import java.util.List;
  */
 public class VoicemailErrorMessage {
 
-  private final CharSequence title;
-  private final CharSequence description;
-  private final List<Action> actions;
+    private final CharSequence title;
+    private final CharSequence description;
+    private final List<Action> actions;
 
-  private boolean modal;
-  private Integer imageResourceId;
+    private boolean modal;
+    private Integer imageResourceId;
 
-  /** Something the user can click on to resolve an error, such as retrying or calling voicemail */
-  public static class Action {
-
-    private final CharSequence text;
-    private final View.OnClickListener listener;
-    private final boolean raised;
-
-    public Action(CharSequence text, View.OnClickListener listener) {
-      this(text, listener, false);
+    public VoicemailErrorMessage(CharSequence title, CharSequence description, Action... actions) {
+        this(title, description, Arrays.asList(actions));
     }
 
-    public Action(CharSequence text, View.OnClickListener listener, boolean raised) {
-      this.text = text;
-      this.listener = listener;
-      this.raised = raised;
+    public VoicemailErrorMessage(
+            CharSequence title, CharSequence description, @Nullable List<Action> actions) {
+        this.title = title;
+        this.description = description;
+        this.actions = actions;
     }
 
-    public CharSequence getText() {
-      return text;
+    @NonNull
+    public static Action createChangeAirplaneModeAction(final Context context) {
+        return new Action(
+                context.getString(R.string.voicemail_action_turn_off_airplane_mode),
+                new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Logger.get(context)
+                                .logImpression(DialerImpression.Type.VVM_CHANGE_AIRPLANE_MODE_CLICKED);
+                        Intent intent = new Intent(Settings.ACTION_AIRPLANE_MODE_SETTINGS);
+                        context.startActivity(intent);
+                    }
+                });
     }
 
-    public View.OnClickListener getListener() {
-      return listener;
+    @NonNull
+    public static Action createSetPinAction(
+            final Context context, PhoneAccountHandle phoneAccountHandle) {
+        return new Action(
+                context.getString(R.string.voicemail_action_set_pin),
+                new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Logger.get(context)
+                                .logImpression(DialerImpression.Type.VOICEMAIL_ALERT_SET_PIN_CLICKED);
+                        Intent intent = new Intent(VoicemailChangePinActivity.ACTION_CHANGE_PIN);
+                        intent.putExtra(VoicemailClient.PARAM_PHONE_ACCOUNT_HANDLE, phoneAccountHandle);
+                        context.startActivity(intent);
+                    }
+                });
     }
 
-    public boolean isRaised() {
-      return raised;
+    @NonNull
+    public static Action createCallVoicemailAction(
+            final Context context, final PhoneAccountHandle phoneAccountHandle) {
+        return new Action(
+                context.getString(R.string.voicemail_action_call_voicemail),
+                new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Logger.get(context).logImpression(DialerImpression.Type.VVM_CALL_VOICEMAIL_CLICKED);
+                        PreCall.start(
+                                context,
+                                CallIntentBuilder.forVoicemail(
+                                        phoneAccountHandle, CallInitiationType.Type.VOICEMAIL_ERROR_MESSAGE));
+                    }
+                });
     }
-  }
 
-  public CharSequence getTitle() {
-    return title;
-  }
+    @NonNull
+    public static Action createSyncAction(final Context context, final VoicemailStatus status) {
+        return new Action(
+                context.getString(R.string.voicemail_action_sync),
+                new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Logger.get(context).logImpression(DialerImpression.Type.VVM_USER_SYNC);
+                        Intent intent = new Intent(VoicemailContract.ACTION_SYNC_VOICEMAIL);
+                        intent.setPackage(status.sourcePackage);
+                        context.sendBroadcast(intent);
+                    }
+                });
+    }
 
-  public CharSequence getDescription() {
-    return description;
-  }
+    @NonNull
+    public static Action createRetryAction(final Context context, final VoicemailStatus status) {
+        return new Action(
+                context.getString(R.string.voicemail_action_retry),
+                new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Logger.get(context).logImpression(DialerImpression.Type.VVM_USER_RETRY);
+                        Intent intent = new Intent(VoicemailContract.ACTION_SYNC_VOICEMAIL);
+                        intent.setPackage(status.sourcePackage);
+                        context.sendBroadcast(intent);
+                    }
+                });
+    }
 
-  @Nullable
-  public List<Action> getActions() {
-    return actions;
-  }
+    @NonNull
+    public static Action createTurnArchiveOnAction(
+            final Context context,
+            DialerImpression.Type impressionToLog,
+            final VoicemailStatus status,
+            VoicemailStatusReader statusReader,
+            VoicemailClient voicemailClient,
+            PhoneAccountHandle phoneAccountHandle) {
+        return new Action(
+                context.getString(R.string.voicemail_action_turn_archive_on),
+                new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Assert.checkArgument(
+                                VoicemailComponent.get(context)
+                                        .getVoicemailClient()
+                                        .isVoicemailArchiveAvailable(context));
+                        Logger.get(context).logImpression(impressionToLog);
+                        voicemailClient.setVoicemailArchiveEnabled(context, phoneAccountHandle, true);
+                        Intent intent = new Intent(VoicemailContract.ACTION_SYNC_VOICEMAIL);
+                        intent.setPackage(status.sourcePackage);
+                        context.sendBroadcast(intent);
+                        statusReader.refresh();
+                    }
+                });
+    }
 
-  public boolean isModal() {
-    return modal;
-  }
+    @NonNull
+    public static Action createDismissTurnArchiveOnAction(
+            final Context context,
+            DialerImpression.Type impressionToLog,
+            VoicemailStatusReader statusReader,
+            PerAccountSharedPreferences sharedPreferenceForAccount,
+            String preferenceKeyToUpdate) {
+        return new Action(
+                context.getString(R.string.voicemail_action_dimiss),
+                new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Assert.checkArgument(
+                                VoicemailComponent.get(context)
+                                        .getVoicemailClient()
+                                        .isVoicemailArchiveAvailable(context));
+                        Logger.get(context).logImpression(impressionToLog);
+                        sharedPreferenceForAccount.edit().putBoolean(preferenceKeyToUpdate, true).apply();
+                        statusReader.refresh();
+                    }
+                });
+    }
 
-  public VoicemailErrorMessage setModal(boolean value) {
-    modal = value;
-    return this;
-  }
+    public CharSequence getTitle() {
+        return title;
+    }
 
-  @Nullable
-  public Integer getImageResourceId() {
-    return imageResourceId;
-  }
+    public CharSequence getDescription() {
+        return description;
+    }
 
-  public VoicemailErrorMessage setImageResourceId(Integer imageResourceId) {
-    this.imageResourceId = imageResourceId;
-    return this;
-  }
+    @Nullable
+    public List<Action> getActions() {
+        return actions;
+    }
 
-  public VoicemailErrorMessage(CharSequence title, CharSequence description, Action... actions) {
-    this(title, description, Arrays.asList(actions));
-  }
+    public boolean isModal() {
+        return modal;
+    }
 
-  public VoicemailErrorMessage(
-      CharSequence title, CharSequence description, @Nullable List<Action> actions) {
-    this.title = title;
-    this.description = description;
-    this.actions = actions;
-  }
+    public VoicemailErrorMessage setModal(boolean value) {
+        modal = value;
+        return this;
+    }
 
-  @NonNull
-  public static Action createChangeAirplaneModeAction(final Context context) {
-    return new Action(
-        context.getString(R.string.voicemail_action_turn_off_airplane_mode),
-        new OnClickListener() {
-          @Override
-          public void onClick(View v) {
-            Logger.get(context)
-                .logImpression(DialerImpression.Type.VVM_CHANGE_AIRPLANE_MODE_CLICKED);
-            Intent intent = new Intent(Settings.ACTION_AIRPLANE_MODE_SETTINGS);
-            context.startActivity(intent);
-          }
-        });
-  }
+    @Nullable
+    public Integer getImageResourceId() {
+        return imageResourceId;
+    }
 
-  @NonNull
-  public static Action createSetPinAction(
-      final Context context, PhoneAccountHandle phoneAccountHandle) {
-    return new Action(
-        context.getString(R.string.voicemail_action_set_pin),
-        new OnClickListener() {
-          @Override
-          public void onClick(View v) {
-            Logger.get(context)
-                .logImpression(DialerImpression.Type.VOICEMAIL_ALERT_SET_PIN_CLICKED);
-            Intent intent = new Intent(VoicemailChangePinActivity.ACTION_CHANGE_PIN);
-            intent.putExtra(VoicemailClient.PARAM_PHONE_ACCOUNT_HANDLE, phoneAccountHandle);
-            context.startActivity(intent);
-          }
-        });
-  }
+    public VoicemailErrorMessage setImageResourceId(Integer imageResourceId) {
+        this.imageResourceId = imageResourceId;
+        return this;
+    }
 
-  @NonNull
-  public static Action createCallVoicemailAction(
-      final Context context, final PhoneAccountHandle phoneAccountHandle) {
-    return new Action(
-        context.getString(R.string.voicemail_action_call_voicemail),
-        new OnClickListener() {
-          @Override
-          public void onClick(View v) {
-            Logger.get(context).logImpression(DialerImpression.Type.VVM_CALL_VOICEMAIL_CLICKED);
-            PreCall.start(
-                context,
-                CallIntentBuilder.forVoicemail(
-                    phoneAccountHandle, CallInitiationType.Type.VOICEMAIL_ERROR_MESSAGE));
-          }
-        });
-  }
+    /**
+     * Something the user can click on to resolve an error, such as retrying or calling voicemail
+     */
+    public static class Action {
 
-  @NonNull
-  public static Action createSyncAction(final Context context, final VoicemailStatus status) {
-    return new Action(
-        context.getString(R.string.voicemail_action_sync),
-        new OnClickListener() {
-          @Override
-          public void onClick(View v) {
-            Logger.get(context).logImpression(DialerImpression.Type.VVM_USER_SYNC);
-            Intent intent = new Intent(VoicemailContract.ACTION_SYNC_VOICEMAIL);
-            intent.setPackage(status.sourcePackage);
-            context.sendBroadcast(intent);
-          }
-        });
-  }
+        private final CharSequence text;
+        private final View.OnClickListener listener;
+        private final boolean raised;
 
-  @NonNull
-  public static Action createRetryAction(final Context context, final VoicemailStatus status) {
-    return new Action(
-        context.getString(R.string.voicemail_action_retry),
-        new OnClickListener() {
-          @Override
-          public void onClick(View v) {
-            Logger.get(context).logImpression(DialerImpression.Type.VVM_USER_RETRY);
-            Intent intent = new Intent(VoicemailContract.ACTION_SYNC_VOICEMAIL);
-            intent.setPackage(status.sourcePackage);
-            context.sendBroadcast(intent);
-          }
-        });
-  }
+        public Action(CharSequence text, View.OnClickListener listener) {
+            this(text, listener, false);
+        }
 
-  @NonNull
-  public static Action createTurnArchiveOnAction(
-      final Context context,
-      DialerImpression.Type impressionToLog,
-      final VoicemailStatus status,
-      VoicemailStatusReader statusReader,
-      VoicemailClient voicemailClient,
-      PhoneAccountHandle phoneAccountHandle) {
-    return new Action(
-        context.getString(R.string.voicemail_action_turn_archive_on),
-        new OnClickListener() {
-          @Override
-          public void onClick(View v) {
-            Assert.checkArgument(
-                VoicemailComponent.get(context)
-                    .getVoicemailClient()
-                    .isVoicemailArchiveAvailable(context));
-            Logger.get(context).logImpression(impressionToLog);
-            voicemailClient.setVoicemailArchiveEnabled(context, phoneAccountHandle, true);
-            Intent intent = new Intent(VoicemailContract.ACTION_SYNC_VOICEMAIL);
-            intent.setPackage(status.sourcePackage);
-            context.sendBroadcast(intent);
-            statusReader.refresh();
-          }
-        });
-  }
+        public Action(CharSequence text, View.OnClickListener listener, boolean raised) {
+            this.text = text;
+            this.listener = listener;
+            this.raised = raised;
+        }
 
-  @NonNull
-  public static Action createDismissTurnArchiveOnAction(
-      final Context context,
-      DialerImpression.Type impressionToLog,
-      VoicemailStatusReader statusReader,
-      PerAccountSharedPreferences sharedPreferenceForAccount,
-      String preferenceKeyToUpdate) {
-    return new Action(
-        context.getString(R.string.voicemail_action_dimiss),
-        new OnClickListener() {
-          @Override
-          public void onClick(View v) {
-            Assert.checkArgument(
-                VoicemailComponent.get(context)
-                    .getVoicemailClient()
-                    .isVoicemailArchiveAvailable(context));
-            Logger.get(context).logImpression(impressionToLog);
-            sharedPreferenceForAccount.edit().putBoolean(preferenceKeyToUpdate, true).apply();
-            statusReader.refresh();
-          }
-        });
-  }
+        public CharSequence getText() {
+            return text;
+        }
+
+        public View.OnClickListener getListener() {
+            return listener;
+        }
+
+        public boolean isRaised() {
+            return raised;
+        }
+    }
 }

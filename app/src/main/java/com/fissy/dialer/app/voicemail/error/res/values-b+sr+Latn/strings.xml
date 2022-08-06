@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- 
+<?xml version="1.0" encoding="UTF-8"?><!--
   ~ Copyright (C) 2016 The Android Open Source Project
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,8 +14,7 @@
   ~ limitations under the License
    -->
 
-<resources xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="voicemail_error_activating_title" msgid="2428457130578359186">"Aktivira se vizuelna govorna pošta"</string>
     <string name="voicemail_error_activating_message" msgid="7157030596259443393">"Možda nećete dobijati obaveštenja o govornoj pošti dok potpuno ne aktivirate vizuelnu govornu poštu. Pozovite govornu poštu da biste preuzeli nove poruke dok govorna pošta ne bude potpuno aktivirana."</string>
     <string name="voicemail_error_not_activate_no_signal_title" msgid="742273366199085615">"Aktiviranje vizuelne govorne pošte nije uspelo"</string>

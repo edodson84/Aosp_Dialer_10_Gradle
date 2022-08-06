@@ -19,7 +19,8 @@ package com.android.voicemail;
 import android.Manifest.permission;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,32 +30,36 @@ import java.util.List;
  */
 public class VoicemailPermissionHelper {
 
-  /** *_VOICEMAIL permissions are auto-granted by being the default dialer. */
-  private static final String[] VOICEMAIL_PERMISSIONS = {
-    permission.ADD_VOICEMAIL,
-    permission.WRITE_VOICEMAIL,
-    permission.READ_VOICEMAIL,
-    permission.READ_PHONE_STATE,
-    permission.SEND_SMS
-  };
+    /**
+     * _VOICEMAIL permissions are auto-granted by being the default dialer.
+     */
+    private static final String[] VOICEMAIL_PERMISSIONS = {
+            permission.ADD_VOICEMAIL,
+            permission.WRITE_VOICEMAIL,
+            permission.READ_VOICEMAIL,
+            permission.READ_PHONE_STATE,
+            permission.SEND_SMS
+    };
 
-  /**
-   * Returns {@code true} if the app has all permissions required for the voicemail module to
-   * operate.
-   */
-  public static boolean hasPermissions(Context context) {
-    return getMissingPermissions(context).isEmpty();
-  }
-
-  /** Returns a list of permission that is missing for the voicemail module to operate. */
-  @NonNull
-  public static List<String> getMissingPermissions(Context context) {
-    List<String> result = new ArrayList<>();
-    for (String permission : VOICEMAIL_PERMISSIONS) {
-      if (context.checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {
-        result.add(permission);
-      }
+    /**
+     * Returns {@code true} if the app has all permissions required for the voicemail module to
+     * operate.
+     */
+    public static boolean hasPermissions(Context context) {
+        return getMissingPermissions(context).isEmpty();
     }
-    return result;
-  }
+
+    /**
+     * Returns a list of permission that is missing for the voicemail module to operate.
+     */
+    @NonNull
+    public static List<String> getMissingPermissions(Context context) {
+        List<String> result = new ArrayList<>();
+        for (String permission : VOICEMAIL_PERMISSIONS) {
+            if (context.checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {
+                result.add(permission);
+            }
+        }
+        return result;
+    }
 }

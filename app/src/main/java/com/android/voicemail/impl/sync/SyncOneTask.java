@@ -20,13 +20,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telecom.PhoneAccountHandle;
-import com.fissy.dialer.logging.DialerImpression;
-import com.fissy.dialer.proguard.UsedByReflection;
+
 import com.android.voicemail.impl.Voicemail;
 import com.android.voicemail.impl.VoicemailStatus;
 import com.android.voicemail.impl.scheduling.BaseTask;
 import com.android.voicemail.impl.scheduling.RetryPolicy;
 import com.android.voicemail.impl.utils.LoggerUtils;
+import com.fissy.dialer.logging.DialerImpression;
+import com.fissy.dialer.proguard.UsedByReflection;
 
 /**
  * Task to download a single voicemail from the server. This task is initiated by a SMS notifying
@@ -35,46 +36,46 @@ import com.android.voicemail.impl.utils.LoggerUtils;
 @UsedByReflection(value = "Tasks.java")
 public class SyncOneTask extends BaseTask {
 
-  private static final int RETRY_TIMES = 2;
-  private static final int RETRY_INTERVAL_MILLIS = 5_000;
+    private static final int RETRY_TIMES = 2;
+    private static final int RETRY_INTERVAL_MILLIS = 5_000;
 
-  private static final String EXTRA_PHONE_ACCOUNT_HANDLE = "extra_phone_account_handle";
-  private static final String EXTRA_VOICEMAIL = "extra_voicemail";
+    private static final String EXTRA_PHONE_ACCOUNT_HANDLE = "extra_phone_account_handle";
+    private static final String EXTRA_VOICEMAIL = "extra_voicemail";
 
-  private PhoneAccountHandle phone;
-  private Voicemail voicemail;
+    private PhoneAccountHandle phone;
+    private Voicemail voicemail;
 
-  public static void start(Context context, PhoneAccountHandle phone, Voicemail voicemail) {
-    Intent intent = BaseTask.createIntent(context, SyncOneTask.class, phone);
-    intent.putExtra(EXTRA_PHONE_ACCOUNT_HANDLE, phone);
-    intent.putExtra(EXTRA_VOICEMAIL, voicemail);
-    context.sendBroadcast(intent);
-  }
+    public SyncOneTask() {
+        super(TASK_ALLOW_DUPLICATES);
+        addPolicy(new RetryPolicy(RETRY_TIMES, RETRY_INTERVAL_MILLIS));
+    }
 
-  public SyncOneTask() {
-    super(TASK_ALLOW_DUPLICATES);
-    addPolicy(new RetryPolicy(RETRY_TIMES, RETRY_INTERVAL_MILLIS));
-  }
+    public static void start(Context context, PhoneAccountHandle phone, Voicemail voicemail) {
+        Intent intent = BaseTask.createIntent(context, SyncOneTask.class, phone);
+        intent.putExtra(EXTRA_PHONE_ACCOUNT_HANDLE, phone);
+        intent.putExtra(EXTRA_VOICEMAIL, voicemail);
+        context.sendBroadcast(intent);
+    }
 
-  @Override
-  public void onCreate(Context context, Bundle extras) {
-    super.onCreate(context, extras);
-    phone = extras.getParcelable(EXTRA_PHONE_ACCOUNT_HANDLE);
-    voicemail = extras.getParcelable(EXTRA_VOICEMAIL);
-  }
+    @Override
+    public void onCreate(Context context, Bundle extras) {
+        super.onCreate(context, extras);
+        phone = extras.getParcelable(EXTRA_PHONE_ACCOUNT_HANDLE);
+        voicemail = extras.getParcelable(EXTRA_VOICEMAIL);
+    }
 
-  @Override
-  public void onExecuteInBackgroundThread() {
-    OmtpVvmSyncService service = new OmtpVvmSyncService(getContext());
-    service.sync(this, phone, voicemail, VoicemailStatus.edit(getContext(), phone));
-  }
+    @Override
+    public void onExecuteInBackgroundThread() {
+        OmtpVvmSyncService service = new OmtpVvmSyncService(getContext());
+        service.sync(this, phone, voicemail, VoicemailStatus.edit(getContext(), phone));
+    }
 
-  @Override
-  public Intent createRestartIntent() {
-    LoggerUtils.logImpressionOnMainThread(getContext(), DialerImpression.Type.VVM_AUTO_RETRY_SYNC);
-    Intent intent = super.createRestartIntent();
-    intent.putExtra(EXTRA_PHONE_ACCOUNT_HANDLE, phone);
-    intent.putExtra(EXTRA_VOICEMAIL, voicemail);
-    return intent;
-  }
+    @Override
+    public Intent createRestartIntent() {
+        LoggerUtils.logImpressionOnMainThread(getContext(), DialerImpression.Type.VVM_AUTO_RETRY_SYNC);
+        Intent intent = super.createRestartIntent();
+        intent.putExtra(EXTRA_PHONE_ACCOUNT_HANDLE, phone);
+        intent.putExtra(EXTRA_VOICEMAIL, voicemail);
+        return intent;
+    }
 }

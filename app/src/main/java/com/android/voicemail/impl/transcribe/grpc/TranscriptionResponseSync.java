@@ -15,34 +15,40 @@
  */
 package com.android.voicemail.impl.transcribe.grpc;
 
-import android.support.annotation.Nullable;
-import android.support.annotation.VisibleForTesting;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
+
 import com.fissy.dialer.common.Assert;
 import com.google.internal.communications.voicemailtranscription.v1.TranscribeVoicemailResponse;
+
 import io.grpc.Status;
 
-/** Container for response and status objects for a synchronous transcription request */
+/**
+ * Container for response and status objects for a synchronous transcription request
+ */
 public class TranscriptionResponseSync extends TranscriptionResponse {
-  @Nullable private final TranscribeVoicemailResponse response;
+    @Nullable
+    private final TranscribeVoicemailResponse response;
 
-  @VisibleForTesting
-  public TranscriptionResponseSync(Status status) {
-    super(status);
-    this.response = null;
-  }
+    @VisibleForTesting
+    public TranscriptionResponseSync(Status status) {
+        super(status);
+        this.response = null;
+    }
 
-  @VisibleForTesting
-  public TranscriptionResponseSync(TranscribeVoicemailResponse response) {
-    Assert.checkArgument(response != null);
-    this.response = response;
-  }
+    @VisibleForTesting
+    public TranscriptionResponseSync(TranscribeVoicemailResponse response) {
+        Assert.checkArgument(response != null);
+        this.response = response;
+    }
 
-  public @Nullable String getTranscript() {
-    return (response != null) ? response.getTranscript() : null;
-  }
+    public @Nullable
+    String getTranscript() {
+        return (response != null) ? response.getTranscript() : null;
+    }
 
-  @Override
-  public String toString() {
-    return super.toString() + ", response: " + response;
-  }
+    @Override
+    public String toString() {
+        return super.toString() + ", response: " + response;
+    }
 }

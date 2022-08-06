@@ -25,32 +25,36 @@ import com.fissy.dialer.precall.PreCallAction;
 import com.fissy.dialer.precall.PreCallCoordinator;
 import com.fissy.dialer.telecom.TelecomUtil;
 
-/** Aborts call and show a toast if phone permissions are missing. */
+/**
+ * Aborts call and show a toast if phone permissions are missing.
+ */
 public class PermissionCheckAction implements PreCallAction {
 
-  @Override
-  public boolean requiresUi(Context context, CallIntentBuilder builder) {
-    return !TelecomUtil.hasCallPhonePermission(context);
-  }
-
-  @Override
-  public void runWithoutUi(Context context, CallIntentBuilder builder) {}
-
-  @Override
-  public void runWithUi(PreCallCoordinator coordinator) {
-    if (!requiresUi(coordinator.getActivity(), coordinator.getBuilder())) {
-      return;
+    @Override
+    public boolean requiresUi(Context context, CallIntentBuilder builder) {
+        return !TelecomUtil.hasCallPhonePermission(context);
     }
-    Toast.makeText(
-            coordinator.getActivity(),
-            coordinator
-                .getActivity()
-                .getString(R.string.pre_call_permission_check_no_phone_permission),
-            Toast.LENGTH_LONG)
-        .show();
-    coordinator.abortCall();
-  }
 
-  @Override
-  public void onDiscard() {}
+    @Override
+    public void runWithoutUi(Context context, CallIntentBuilder builder) {
+    }
+
+    @Override
+    public void runWithUi(PreCallCoordinator coordinator) {
+        if (!requiresUi(coordinator.getActivity(), coordinator.getBuilder())) {
+            return;
+        }
+        Toast.makeText(
+                        coordinator.getActivity(),
+                        coordinator
+                                .getActivity()
+                                .getString(R.string.pre_call_permission_check_no_phone_permission),
+                        Toast.LENGTH_LONG)
+                .show();
+        coordinator.abortCall();
+    }
+
+    @Override
+    public void onDiscard() {
+    }
 }

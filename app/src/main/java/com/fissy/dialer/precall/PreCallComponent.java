@@ -17,30 +17,36 @@
 package com.fissy.dialer.precall;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
+
 import com.fissy.dialer.inject.HasRootComponent;
 import com.google.common.collect.ImmutableList;
+
 import dagger.Subcomponent;
 
-/** Daggaer component for {@link PreCall} */
+/**
+ * Daggaer component for {@link PreCall}
+ */
 @Subcomponent
 public abstract class PreCallComponent {
-  public abstract PreCall getPreCall();
+    public static PreCallComponent get(Context context) {
+        return ((HasComponent) ((HasRootComponent) context.getApplicationContext()).component())
+                .preCallActionsComponent();
+    }
 
-  /**
-   * @return a list of {@link PreCallAction} in execution order for the {@link PreCallCoordinator}
-   *     to run.
-   */
-  @NonNull
-  public abstract ImmutableList<PreCallAction> createActions();
+    public abstract PreCall getPreCall();
 
-  public static PreCallComponent get(Context context) {
-    return ((HasComponent) ((HasRootComponent) context.getApplicationContext()).component())
-        .preCallActionsComponent();
-  }
+    /**
+     * @return a list of {@link PreCallAction} in execution order for the {@link PreCallCoordinator}
+     * to run.
+     */
+    @NonNull
+    public abstract ImmutableList<PreCallAction> createActions();
 
-  /** Used to refer to the root application component. */
-  public interface HasComponent {
-    PreCallComponent preCallActionsComponent();
-  }
+    /**
+     * Used to refer to the root application component.
+     */
+    public interface HasComponent {
+        PreCallComponent preCallActionsComponent();
+    }
 }

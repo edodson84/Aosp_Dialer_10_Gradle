@@ -21,56 +21,56 @@ package com.android.contacts.common;
  */
 public final class GroupMetaData {
 
-  private final String mAccountName;
-  private final String mAccountType;
-  private final String mDataSet;
-  private final long mGroupId;
-  private final String mTitle;
-  private final boolean mDefaultGroup;
-  private final boolean mFavorites;
+    private final String mAccountName;
+    private final String mAccountType;
+    private final String mDataSet;
+    private final long mGroupId;
+    private final String mTitle;
+    private final boolean mDefaultGroup;
+    private final boolean mFavorites;
 
-  public GroupMetaData(
-      String accountName,
-      String accountType,
-      String dataSet,
-      long groupId,
-      String title,
-      boolean defaultGroup,
-      boolean favorites) {
-    this.mAccountName = accountName;
-    this.mAccountType = accountType;
-    this.mDataSet = dataSet;
-    this.mGroupId = groupId;
-    this.mTitle = title;
-    this.mDefaultGroup = defaultGroup;
-    this.mFavorites = favorites;
-  }
+    public GroupMetaData(
+            String accountName,
+            String accountType,
+            String dataSet,
+            long groupId,
+            String title,
+            boolean defaultGroup,
+            boolean favorites) {
+        this.mAccountName = accountName;
+        this.mAccountType = accountType;
+        this.mDataSet = dataSet;
+        this.mGroupId = groupId;
+        this.mTitle = title;
+        this.mDefaultGroup = defaultGroup;
+        this.mFavorites = favorites;
+    }
 
-  public String getAccountName() {
-    return mAccountName;
-  }
+    public String getAccountName() {
+        return mAccountName;
+    }
 
-  public String getAccountType() {
-    return mAccountType;
-  }
+    public String getAccountType() {
+        return mAccountType;
+    }
 
-  public String getDataSet() {
-    return mDataSet;
-  }
+    public String getDataSet() {
+        return mDataSet;
+    }
 
-  public long getGroupId() {
-    return mGroupId;
-  }
+    public long getGroupId() {
+        return mGroupId;
+    }
 
-  public String getTitle() {
-    return mTitle;
-  }
+    public String getTitle() {
+        return mTitle;
+    }
 
-  public boolean isDefaultGroup() {
-    return mDefaultGroup;
-  }
+    public boolean isDefaultGroup() {
+        return mDefaultGroup;
+    }
 
-  public boolean isFavorites() {
-    return mFavorites;
-  }
+    public boolean isFavorites() {
+        return mFavorites;
+    }
 }

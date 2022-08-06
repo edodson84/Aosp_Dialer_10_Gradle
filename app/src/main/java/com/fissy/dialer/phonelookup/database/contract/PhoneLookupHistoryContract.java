@@ -17,56 +17,63 @@
 package com.fissy.dialer.phonelookup.database.contract;
 
 import android.net.Uri;
+
 import com.fissy.dialer.constants.Constants;
 
-/** Contract for the PhoneLookupHistory content provider. */
+/**
+ * Contract for the PhoneLookupHistory content provider.
+ */
 public class PhoneLookupHistoryContract {
-  public static final String AUTHORITY = Constants.get().getPhoneLookupHistoryProviderAuthority();
+    public static final String AUTHORITY = Constants.get().getPhoneLookupHistoryProviderAuthority();
 
-  public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY);
+    public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY);
 
-  /** PhoneLookupHistory table. */
-  public static final class PhoneLookupHistory {
+    /**
+     * PhoneLookupHistory table.
+     */
+    public static final class PhoneLookupHistory {
 
-    public static final String TABLE = "PhoneLookupHistory";
+        public static final String TABLE = "PhoneLookupHistory";
 
-    public static final String NUMBER_QUERY_PARAM = "number";
+        public static final String NUMBER_QUERY_PARAM = "number";
 
-    /** The content URI for this table. */
-    public static final Uri CONTENT_URI =
-        Uri.withAppendedPath(PhoneLookupHistoryContract.CONTENT_URI, TABLE);
+        /**
+         * The content URI for this table.
+         */
+        public static final Uri CONTENT_URI =
+                Uri.withAppendedPath(PhoneLookupHistoryContract.CONTENT_URI, TABLE);
+        /**
+         * The MIME type of a {@link android.content.ContentProvider#getType(Uri)} single entry.
+         */
+        public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/phone_lookup_history";
+        /**
+         * The phone number's E164 representation if it has one, or otherwise normalized number if it
+         * cannot be normalized to E164. Required, primary key for the table.
+         *
+         * <p>Type: TEXT
+         */
+        public static final String NORMALIZED_NUMBER = "normalized_number";
+        /**
+         * The {@link com.fissy.dialer.phonelookup.PhoneLookupInfo} proto for the number. Required.
+         *
+         * <p>Type: BLOB
+         */
+        public static final String PHONE_LOOKUP_INFO = "phone_lookup_info";
+        /**
+         * Epoch time in milliseconds this entry was last modified. Required.
+         *
+         * <p>Type: INTEGER (long)
+         */
+        public static final String LAST_MODIFIED = "last_modified";
 
-    /** Returns a URI for a specific normalized number */
-    public static Uri contentUriForNumber(String normalizedNumber) {
-      return CONTENT_URI
-          .buildUpon()
-          .appendQueryParameter(NUMBER_QUERY_PARAM, Uri.encode(normalizedNumber))
-          .build();
+        /**
+         * Returns a URI for a specific normalized number
+         */
+        public static Uri contentUriForNumber(String normalizedNumber) {
+            return CONTENT_URI
+                    .buildUpon()
+                    .appendQueryParameter(NUMBER_QUERY_PARAM, Uri.encode(normalizedNumber))
+                    .build();
+        }
     }
-
-    /** The MIME type of a {@link android.content.ContentProvider#getType(Uri)} single entry. */
-    public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/phone_lookup_history";
-
-    /**
-     * The phone number's E164 representation if it has one, or otherwise normalized number if it
-     * cannot be normalized to E164. Required, primary key for the table.
-     *
-     * <p>Type: TEXT
-     */
-    public static final String NORMALIZED_NUMBER = "normalized_number";
-
-    /**
-     * The {@link com.fissy.dialer.phonelookup.PhoneLookupInfo} proto for the number. Required.
-     *
-     * <p>Type: BLOB
-     */
-    public static final String PHONE_LOOKUP_INFO = "phone_lookup_info";
-
-    /**
-     * Epoch time in milliseconds this entry was last modified. Required.
-     *
-     * <p>Type: INTEGER (long)
-     */
-    public static final String LAST_MODIFIED = "last_modified";
-  }
 }

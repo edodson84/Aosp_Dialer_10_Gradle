@@ -17,14 +17,19 @@
 package com.fissy.dialer.metrics;
 
 import android.app.Application;
+
 import javax.inject.Inject;
 
-/** Stub for {@link Metrics.Initializer}. */
+/**
+ * Stub for {@link Metrics.Initializer}.
+ */
 public class StubMetricsInitializer implements Metrics.Initializer {
 
-  @Inject
-  StubMetricsInitializer() {}
+    @Inject
+    StubMetricsInitializer() {
+    }
 
-  @Override
-  public void initialize(Application application) {}
+    @Override
+    public void initialize(Application application) {
+    }
 }

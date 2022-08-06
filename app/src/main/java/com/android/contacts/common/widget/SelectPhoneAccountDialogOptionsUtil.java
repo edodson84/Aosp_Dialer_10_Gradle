@@ -17,39 +17,44 @@
 package com.android.contacts.common.widget;
 
 import android.telecom.PhoneAccountHandle;
+
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.telecom.TelecomUtil;
+
 import java.util.Collection;
 
-/** Provides common operation on a {@link SelectPhoneAccountDialogOptions} */
+/**
+ * Provides common operation on a {@link SelectPhoneAccountDialogOptions}
+ */
 public final class SelectPhoneAccountDialogOptionsUtil {
-  private SelectPhoneAccountDialogOptionsUtil() {}
-
-  public static PhoneAccountHandle getPhoneAccountHandle(
-      SelectPhoneAccountDialogOptions.Entry entry) {
-    return Assert.isNotNull(
-        TelecomUtil.composePhoneAccountHandle(
-            entry.getPhoneAccountHandleComponentName(), entry.getPhoneAccountHandleId()));
-  }
-
-  public static SelectPhoneAccountDialogOptions.Entry.Builder setPhoneAccountHandle(
-      SelectPhoneAccountDialogOptions.Entry.Builder entryBuilder,
-      PhoneAccountHandle phoneAccountHandle) {
-    entryBuilder.setPhoneAccountHandleComponentName(
-        phoneAccountHandle.getComponentName().flattenToString());
-    entryBuilder.setPhoneAccountHandleId(phoneAccountHandle.getId());
-    return entryBuilder;
-  }
-
-  public static SelectPhoneAccountDialogOptions.Builder builderWithAccounts(
-      Collection<PhoneAccountHandle> phoneAccountHandles) {
-    SelectPhoneAccountDialogOptions.Builder optionsBuilder =
-        SelectPhoneAccountDialogOptions.newBuilder();
-    for (PhoneAccountHandle phoneAccountHandle : phoneAccountHandles) {
-      optionsBuilder.addEntries(
-          SelectPhoneAccountDialogOptionsUtil.setPhoneAccountHandle(
-              SelectPhoneAccountDialogOptions.Entry.newBuilder(), phoneAccountHandle));
+    private SelectPhoneAccountDialogOptionsUtil() {
     }
-    return optionsBuilder;
-  }
+
+    public static PhoneAccountHandle getPhoneAccountHandle(
+            SelectPhoneAccountDialogOptions.Entry entry) {
+        return Assert.isNotNull(
+                TelecomUtil.composePhoneAccountHandle(
+                        entry.getPhoneAccountHandleComponentName(), entry.getPhoneAccountHandleId()));
+    }
+
+    public static SelectPhoneAccountDialogOptions.Entry.Builder setPhoneAccountHandle(
+            SelectPhoneAccountDialogOptions.Entry.Builder entryBuilder,
+            PhoneAccountHandle phoneAccountHandle) {
+        entryBuilder.setPhoneAccountHandleComponentName(
+                phoneAccountHandle.getComponentName().flattenToString());
+        entryBuilder.setPhoneAccountHandleId(phoneAccountHandle.getId());
+        return entryBuilder;
+    }
+
+    public static SelectPhoneAccountDialogOptions.Builder builderWithAccounts(
+            Collection<PhoneAccountHandle> phoneAccountHandles) {
+        SelectPhoneAccountDialogOptions.Builder optionsBuilder =
+                SelectPhoneAccountDialogOptions.newBuilder();
+        for (PhoneAccountHandle phoneAccountHandle : phoneAccountHandles) {
+            optionsBuilder.addEntries(
+                    SelectPhoneAccountDialogOptionsUtil.setPhoneAccountHandle(
+                            SelectPhoneAccountDialogOptions.Entry.newBuilder(), phoneAccountHandle));
+        }
+        return optionsBuilder;
+    }
 }

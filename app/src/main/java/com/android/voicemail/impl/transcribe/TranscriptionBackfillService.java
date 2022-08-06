@@ -23,13 +23,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.WorkerThread;
-import android.support.v4.app.JobIntentService;
-import android.support.v4.os.BuildCompat;
+import androidx.annotation.WorkerThread;
+import androidx.core.app.JobIntentService;
+import androidx.core.os.BuildCompat;
 import android.telecom.PhoneAccountHandle;
+
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.common.concurrent.ThreadUtil;
 import com.fissy.dialer.constants.ScheduledJobIds;
+
 import java.util.List;
 
 /**
@@ -39,55 +41,57 @@ import java.util.List;
  */
 public class TranscriptionBackfillService extends JobIntentService {
 
-  /** Schedule a task to scan the database for untranscribed voicemails */
-  public static boolean scheduleTask(Context context, PhoneAccountHandle account) {
-    if (BuildCompat.isAtLeastO()) {
-      LogUtil.enterBlock("TranscriptionBackfillService.transcribeOldVoicemails");
-      ComponentName componentName = new ComponentName(context, TranscriptionBackfillService.class);
-      JobInfo.Builder builder =
-          new JobInfo.Builder(ScheduledJobIds.VVM_TRANSCRIPTION_BACKFILL_JOB, componentName)
-              .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED);
-      JobScheduler scheduler = context.getSystemService(JobScheduler.class);
-      return scheduler.enqueue(builder.build(), makeWorkItem(account))
-          == JobScheduler.RESULT_SUCCESS;
-    } else {
-      LogUtil.i("TranscriptionBackfillService.transcribeOldVoicemails", "not supported");
-      return false;
+    /**
+     * Schedule a task to scan the database for untranscribed voicemails
+     */
+    public static boolean scheduleTask(Context context, PhoneAccountHandle account) {
+        if (BuildCompat.isAtLeastO()) {
+            LogUtil.enterBlock("TranscriptionBackfillService.transcribeOldVoicemails");
+            ComponentName componentName = new ComponentName(context, TranscriptionBackfillService.class);
+            JobInfo.Builder builder =
+                    new JobInfo.Builder(ScheduledJobIds.VVM_TRANSCRIPTION_BACKFILL_JOB, componentName)
+                            .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED);
+            JobScheduler scheduler = context.getSystemService(JobScheduler.class);
+            return scheduler.enqueue(builder.build(), makeWorkItem(account))
+                    == JobScheduler.RESULT_SUCCESS;
+        } else {
+            LogUtil.i("TranscriptionBackfillService.transcribeOldVoicemails", "not supported");
+            return false;
+        }
     }
-  }
 
-  private static JobWorkItem makeWorkItem(PhoneAccountHandle account) {
-    Intent intent = new Intent();
-    intent.putExtra(TranscriptionService.EXTRA_ACCOUNT_HANDLE, account);
-    return new JobWorkItem(intent);
-  }
-
-  @Override
-  @WorkerThread
-  protected void onHandleWork(Intent intent) {
-    LogUtil.enterBlock("TranscriptionBackfillService.onHandleWork");
-
-    Bundle bundle = intent.getExtras();
-    final PhoneAccountHandle account =
-        (PhoneAccountHandle) bundle.get(TranscriptionService.EXTRA_ACCOUNT_HANDLE);
-
-    TranscriptionDbHelper dbHelper = new TranscriptionDbHelper(this);
-    List<Uri> untranscribed = dbHelper.getUntranscribedVoicemails();
-    LogUtil.i(
-        "TranscriptionBackfillService.onHandleWork",
-        "found " + untranscribed.size() + " untranscribed voicemails");
-    // TODO(mdooley): Consider doing the actual transcriptions here instead of scheduling jobs.
-    for (Uri uri : untranscribed) {
-      ThreadUtil.postOnUiThread(
-          () -> {
-            TranscriptionService.scheduleNewVoicemailTranscriptionJob(this, uri, account, false);
-          });
+    private static JobWorkItem makeWorkItem(PhoneAccountHandle account) {
+        Intent intent = new Intent();
+        intent.putExtra(TranscriptionService.EXTRA_ACCOUNT_HANDLE, account);
+        return new JobWorkItem(intent);
     }
-  }
 
-  @Override
-  public void onDestroy() {
-    LogUtil.enterBlock("TranscriptionBackfillService.onDestroy");
-    super.onDestroy();
-  }
+    @Override
+    @WorkerThread
+    protected void onHandleWork(Intent intent) {
+        LogUtil.enterBlock("TranscriptionBackfillService.onHandleWork");
+
+        Bundle bundle = intent.getExtras();
+        final PhoneAccountHandle account =
+                (PhoneAccountHandle) bundle.get(TranscriptionService.EXTRA_ACCOUNT_HANDLE);
+
+        TranscriptionDbHelper dbHelper = new TranscriptionDbHelper(this);
+        List<Uri> untranscribed = dbHelper.getUntranscribedVoicemails();
+        LogUtil.i(
+                "TranscriptionBackfillService.onHandleWork",
+                "found " + untranscribed.size() + " untranscribed voicemails");
+        // TODO(mdooley): Consider doing the actual transcriptions here instead of scheduling jobs.
+        for (Uri uri : untranscribed) {
+            ThreadUtil.postOnUiThread(
+                    () -> {
+                        TranscriptionService.scheduleNewVoicemailTranscriptionJob(this, uri, account, false);
+                    });
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        LogUtil.enterBlock("TranscriptionBackfillService.onDestroy");
+        super.onDestroy();
+    }
 }

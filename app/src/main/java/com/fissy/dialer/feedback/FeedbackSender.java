@@ -16,9 +16,11 @@
 
 package com.fissy.dialer.feedback;
 
-/** Defines the apis provided by the class handling uploading of feedback. */
+/**
+ * Defines the apis provided by the class handling uploading of feedback.
+ */
 public interface FeedbackSender {
-  void sendFeedback(Object feedbackOptions);
+    void sendFeedback(Object feedbackOptions);
 
-  Object getFeedbackOptionsBuilder();
+    Object getFeedbackOptionsBuilder();
 }

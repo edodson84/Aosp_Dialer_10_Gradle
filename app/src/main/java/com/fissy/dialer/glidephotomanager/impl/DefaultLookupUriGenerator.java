@@ -21,7 +21,9 @@ import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds;
 import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.DisplayNameSources;
+
 import com.fissy.dialer.glidephotomanager.PhotoInfo;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,29 +45,29 @@ import org.json.JSONObject;
  */
 final class DefaultLookupUriGenerator {
 
-  static Uri generateUri(PhotoInfo photoInfo) {
-    JSONObject lookupJson = new JSONObject();
-    try {
-      lookupJson.put(Contacts.DISPLAY_NAME, photoInfo.getFormattedNumber());
-      // DISPLAY_NAME_SOURCE required by contacts, otherwise the URI will not be recognized.
-      lookupJson.put(Contacts.DISPLAY_NAME_SOURCE, DisplayNameSources.PHONE);
-      JSONObject contactRows = new JSONObject();
-      JSONObject phone = new JSONObject();
-      phone.put(CommonDataKinds.Phone.NUMBER, photoInfo.getFormattedNumber());
-      contactRows.put(CommonDataKinds.Phone.CONTENT_ITEM_TYPE, new JSONArray().put(phone));
+    static Uri generateUri(PhotoInfo photoInfo) {
+        JSONObject lookupJson = new JSONObject();
+        try {
+            lookupJson.put(Contacts.DISPLAY_NAME, photoInfo.getFormattedNumber());
+            // DISPLAY_NAME_SOURCE required by contacts, otherwise the URI will not be recognized.
+            lookupJson.put(Contacts.DISPLAY_NAME_SOURCE, DisplayNameSources.PHONE);
+            JSONObject contactRows = new JSONObject();
+            JSONObject phone = new JSONObject();
+            phone.put(CommonDataKinds.Phone.NUMBER, photoInfo.getFormattedNumber());
+            contactRows.put(CommonDataKinds.Phone.CONTENT_ITEM_TYPE, new JSONArray().put(phone));
 
-      lookupJson.put(Contacts.CONTENT_ITEM_TYPE, contactRows);
-    } catch (JSONException e) {
-      throw new AssertionError(e);
+            lookupJson.put(Contacts.CONTENT_ITEM_TYPE, contactRows);
+        } catch (JSONException e) {
+            throw new AssertionError(e);
+        }
+        return Contacts.CONTENT_LOOKUP_URI
+                .buildUpon()
+                .appendPath("encoded")
+                .encodedFragment(lookupJson.toString())
+                // Directory is required in the URI but it does not exist, use MAX_VALUE to avoid clashing
+                // with other directory
+                .appendQueryParameter(
+                        ContactsContract.DIRECTORY_PARAM_KEY, String.valueOf(Integer.MAX_VALUE))
+                .build();
     }
-    return Contacts.CONTENT_LOOKUP_URI
-        .buildUpon()
-        .appendPath("encoded")
-        .encodedFragment(lookupJson.toString())
-        // Directory is required in the URI but it does not exist, use MAX_VALUE to avoid clashing
-        // with other directory
-        .appendQueryParameter(
-            ContactsContract.DIRECTORY_PARAM_KEY, String.valueOf(Integer.MAX_VALUE))
-        .build();
-  }
 }

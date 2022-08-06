@@ -16,7 +16,8 @@
 
 package com.fissy.dialer.binary.aosp;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
+
 import com.fissy.dialer.binary.common.DialerApplication;
 import com.fissy.dialer.inject.ContextModule;
 
@@ -26,14 +27,16 @@ import com.fissy.dialer.inject.ContextModule;
  */
 public class AospDialerApplication extends DialerApplication {
 
-  /** Returns a new instance of the root component for the AOSP Dialer. */
-  @Override
-  @NonNull
-  protected Object buildRootComponent() {
-    return DaggerAospDialerRootComponent.builder().contextModule(new ContextModule(this)).build();
-  }
+    /**
+     * Returns a new instance of the root component for the AOSP Dialer.
+     */
+    @Override
+    @NonNull
+    protected Object buildRootComponent() {
+        return DaggerAospDialerRootComponent.builder().contextModule(new ContextModule(this)).build();
+    }
 
-/*  *//** Returns a new instance of the root component for the Google Stub Dialer. *//*
+    /*  *//** Returns a new instance of the root component for the Google Stub Dialer. *//*
   @Override
   @NonNull
   protected Object buildRootComponent() {

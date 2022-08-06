@@ -15,9 +15,13 @@
  */
 package com.fissy.dialer.function;
 
-/** Functional interface for supplying generic values. */
+/**
+ * Functional interface for supplying generic values.
+ */
 public interface Supplier<T> {
 
-  /** Supplies a value. */
-  T get();
+    /**
+     * Supplies a value.
+     */
+    T get();
 }

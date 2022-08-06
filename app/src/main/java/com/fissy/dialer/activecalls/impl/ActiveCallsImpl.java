@@ -16,30 +16,35 @@
 
 package com.fissy.dialer.activecalls.impl;
 
-import android.support.annotation.MainThread;
+import androidx.annotation.MainThread;
+
 import com.fissy.dialer.activecalls.ActiveCallInfo;
 import com.fissy.dialer.activecalls.ActiveCalls;
 import com.fissy.dialer.common.Assert;
 import com.google.common.collect.ImmutableList;
+
 import javax.inject.Inject;
 
-/** Implementation of {@link ActiveCalls} */
+/**
+ * Implementation of {@link ActiveCalls}
+ */
 public class ActiveCallsImpl implements ActiveCalls {
 
-  ImmutableList<ActiveCallInfo> activeCalls = ImmutableList.of();
+    ImmutableList<ActiveCallInfo> activeCalls = ImmutableList.of();
 
-  @Inject
-  ActiveCallsImpl() {}
+    @Inject
+    ActiveCallsImpl() {
+    }
 
-  @Override
-  public ImmutableList<ActiveCallInfo> getActiveCalls() {
-    return activeCalls;
-  }
+    @Override
+    public ImmutableList<ActiveCallInfo> getActiveCalls() {
+        return activeCalls;
+    }
 
-  @Override
-  @MainThread
-  public void setActiveCalls(ImmutableList<ActiveCallInfo> activeCalls) {
-    Assert.isMainThread();
-    this.activeCalls = Assert.isNotNull(activeCalls);
-  }
+    @Override
+    @MainThread
+    public void setActiveCalls(ImmutableList<ActiveCallInfo> activeCalls) {
+        Assert.isMainThread();
+        this.activeCalls = Assert.isNotNull(activeCalls);
+    }
 }

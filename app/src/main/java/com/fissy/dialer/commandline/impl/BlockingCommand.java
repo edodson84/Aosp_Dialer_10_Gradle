@@ -17,7 +17,8 @@
 package com.fissy.dialer.commandline.impl;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
+
 import com.fissy.dialer.DialerPhoneNumber;
 import com.fissy.dialer.blocking.Blocking;
 import com.fissy.dialer.commandline.Arguments;
@@ -33,78 +34,81 @@ import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.common.util.concurrent.MoreExecutors;
+
 import javax.inject.Inject;
 
-/** Block or unblock a number. */
+/**
+ * Block or unblock a number.
+ */
 public class BlockingCommand implements Command {
 
-  @NonNull
-  @Override
-  public String getShortDescription() {
-    return "block or unblock numbers";
-  }
+    private final Context appContext;
+    private final ListeningExecutorService executorService;
 
-  @NonNull
-  @Override
-  public String getUsage() {
-    return "blocking block|unblock|isblocked number\n\n" + "number should be e.164 formatted";
-  }
-
-  private final Context appContext;
-  private final ListeningExecutorService executorService;
-
-  @Inject
-  BlockingCommand(
-      @ApplicationContext Context context,
-      @BackgroundExecutor ListeningExecutorService executorService) {
-    this.appContext = context;
-    this.executorService = executorService;
-  }
-
-  @Override
-  public ListenableFuture<String> run(Arguments args) throws IllegalCommandLineArgumentException {
-    if (args.getPositionals().isEmpty()) {
-      return Futures.immediateFuture(getUsage());
+    @Inject
+    BlockingCommand(
+            @ApplicationContext Context context,
+            @BackgroundExecutor ListeningExecutorService executorService) {
+        this.appContext = context;
+        this.executorService = executorService;
     }
 
-    String command = args.getPositionals().get(0);
-
-    if ("block".equals(command)) {
-      String number = args.getPositionals().get(1);
-      return Futures.transform(
-          Blocking.block(appContext, ImmutableList.of(number), null),
-          (unused) -> "blocked " + number,
-          MoreExecutors.directExecutor());
+    @NonNull
+    @Override
+    public String getShortDescription() {
+        return "block or unblock numbers";
     }
 
-    if ("unblock".equals(command)) {
-      String number = args.getPositionals().get(1);
-      return Futures.transform(
-          Blocking.unblock(appContext, ImmutableList.of(number), null),
-          (unused) -> "unblocked " + number,
-          MoreExecutors.directExecutor());
+    @NonNull
+    @Override
+    public String getUsage() {
+        return "blocking block|unblock|isblocked number\n\n" + "number should be e.164 formatted";
     }
 
-    if ("isblocked".equals(command)) {
-      String number = args.getPositionals().get(1);
-      ListenableFuture<DialerPhoneNumber> dialerPhoneNumberFuture =
-          executorService.submit(() -> new DialerPhoneNumberUtil().parse(number, null));
+    @Override
+    public ListenableFuture<String> run(Arguments args) throws IllegalCommandLineArgumentException {
+        if (args.getPositionals().isEmpty()) {
+            return Futures.immediateFuture(getUsage());
+        }
 
-      ListenableFuture<PhoneLookupInfo> lookupFuture =
-          Futures.transformAsync(
-              dialerPhoneNumberFuture,
-              (dialerPhoneNumber) ->
-                  PhoneLookupComponent.get(appContext)
-                      .compositePhoneLookup()
-                      .lookup(dialerPhoneNumber),
-              executorService);
+        String command = args.getPositionals().get(0);
 
-      return Futures.transform(
-          lookupFuture,
-          (info) -> new PhoneLookupInfoConsolidator(info).isBlocked() ? "true" : "false",
-          MoreExecutors.directExecutor());
+        if ("block".equals(command)) {
+            String number = args.getPositionals().get(1);
+            return Futures.transform(
+                    Blocking.block(appContext, ImmutableList.of(number), null),
+                    (unused) -> "blocked " + number,
+                    MoreExecutors.directExecutor());
+        }
+
+        if ("unblock".equals(command)) {
+            String number = args.getPositionals().get(1);
+            return Futures.transform(
+                    Blocking.unblock(appContext, ImmutableList.of(number), null),
+                    (unused) -> "unblocked " + number,
+                    MoreExecutors.directExecutor());
+        }
+
+        if ("isblocked".equals(command)) {
+            String number = args.getPositionals().get(1);
+            ListenableFuture<DialerPhoneNumber> dialerPhoneNumberFuture =
+                    executorService.submit(() -> new DialerPhoneNumberUtil().parse(number, null));
+
+            ListenableFuture<PhoneLookupInfo> lookupFuture =
+                    Futures.transformAsync(
+                            dialerPhoneNumberFuture,
+                            (dialerPhoneNumber) ->
+                                    PhoneLookupComponent.get(appContext)
+                                            .compositePhoneLookup()
+                                            .lookup(dialerPhoneNumber),
+                            executorService);
+
+            return Futures.transform(
+                    lookupFuture,
+                    (info) -> new PhoneLookupInfoConsolidator(info).isBlocked() ? "true" : "false",
+                    MoreExecutors.directExecutor());
+        }
+
+        return Futures.immediateFuture(getUsage());
     }
-
-    return Futures.immediateFuture(getUsage());
-  }
 }

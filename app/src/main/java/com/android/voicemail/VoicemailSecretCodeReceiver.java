@@ -19,18 +19,21 @@ package com.android.voicemail;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+
 import com.fissy.dialer.common.LogUtil;
 
-/** Receives android.provider.Telephony.SECRET_CODE */
+/**
+ * Receives android.provider.Telephony.SECRET_CODE
+ */
 public class VoicemailSecretCodeReceiver extends BroadcastReceiver {
 
-  @Override
-  public void onReceive(Context context, Intent intent) {
-    String host = intent.getData().getHost();
-    if (!VoicemailClient.VOICEMAIL_SECRET_CODE.equals(host)) {
-      return;
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        String host = intent.getData().getHost();
+        if (!VoicemailClient.VOICEMAIL_SECRET_CODE.equals(host)) {
+            return;
+        }
+        LogUtil.i("VoicemailSecretCodeReceiver.onReceive", "secret code received");
+        VoicemailComponent.get(context).getVoicemailClient().showConfigUi(context);
     }
-    LogUtil.i("VoicemailSecretCodeReceiver.onReceive", "secret code received");
-    VoicemailComponent.get(context).getVoicemailClient().showConfigUi(context);
-  }
 }

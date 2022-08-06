@@ -17,116 +17,121 @@
 package com.fissy.dialer.searchfragment.cp2;
 
 import android.database.Cursor;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
+
 import com.fissy.dialer.searchfragment.common.Projections;
 import com.google.auto.value.AutoValue;
 
-/** POJO Representation for contacts returned in {@link SearchContactsCursorLoader}. */
+/**
+ * POJO Representation for contacts returned in {@link SearchContactsCursorLoader}.
+ */
 @AutoValue
 public abstract class Cp2Contact {
 
-  public abstract long phoneId();
+    public static Builder builder() {
+        return new AutoValue_Cp2Contact.Builder();
+    }
 
-  public abstract int phoneType();
+    public static Cp2Contact fromCursor(Cursor cursor) {
+        return Cp2Contact.builder()
+                .setPhoneId(cursor.getLong(Projections.CONTACT_ID))
+                .setPhoneType(cursor.getInt(Projections.PHONE_TYPE))
+                .setPhoneLabel(cursor.getString(Projections.PHONE_LABEL))
+                .setPhoneNumber(cursor.getString(Projections.PHONE_NUMBER))
+                .setDisplayName(cursor.getString(Projections.DISPLAY_NAME))
+                .setPhotoId(cursor.getInt(Projections.PHOTO_ID))
+                .setPhotoUri(cursor.getString(Projections.PHOTO_URI))
+                .setLookupKey(cursor.getString(Projections.LOOKUP_KEY))
+                .setCarrierPresence(cursor.getInt(Projections.CARRIER_PRESENCE))
+                .setContactId(cursor.getInt(Projections.CONTACT_ID))
+                .setCompanyName(cursor.getString(Projections.COMPANY_NAME))
+                .setNickName(cursor.getString(Projections.NICKNAME))
+                .setMimeType(cursor.getString(Projections.MIME_TYPE))
+                .build();
+    }
 
-  @Nullable
-  public abstract String phoneLabel();
+    public abstract long phoneId();
 
-  public abstract String phoneNumber();
+    public abstract int phoneType();
 
-  @Nullable
-  public abstract String displayName();
+    @Nullable
+    public abstract String phoneLabel();
 
-  public abstract int photoId();
+    public abstract String phoneNumber();
 
-  @Nullable
-  public abstract String photoUri();
+    @Nullable
+    public abstract String displayName();
 
-  public abstract String lookupKey();
+    public abstract int photoId();
 
-  public abstract int carrierPresence();
+    @Nullable
+    public abstract String photoUri();
 
-  public abstract int contactId();
+    public abstract String lookupKey();
 
-  @Nullable
-  public abstract String companyName();
+    public abstract int carrierPresence();
 
-  @Nullable
-  public abstract String nickName();
+    public abstract int contactId();
 
-  public abstract String mimeType();
+    @Nullable
+    public abstract String companyName();
 
-  /** Builder for {@link Cp2Contact}. */
-  @AutoValue.Builder
-  public abstract static class Builder {
-    public abstract Builder setPhoneId(long id);
+    @Nullable
+    public abstract String nickName();
 
-    public abstract Builder setPhoneType(int type);
+    public abstract String mimeType();
 
-    public abstract Builder setPhoneLabel(@Nullable String label);
+    public Object[] toCursorRow() {
+        Object[] row = new Object[Projections.CP2_PROJECTION.length];
+        row[Projections.ID] = phoneId();
+        row[Projections.PHONE_TYPE] = phoneType();
+        row[Projections.PHONE_LABEL] = phoneLabel();
+        row[Projections.PHONE_NUMBER] = phoneNumber();
+        row[Projections.DISPLAY_NAME] = displayName();
+        row[Projections.PHOTO_ID] = photoId();
+        row[Projections.PHOTO_URI] = photoUri();
+        row[Projections.LOOKUP_KEY] = lookupKey();
+        row[Projections.CARRIER_PRESENCE] = carrierPresence();
+        row[Projections.CONTACT_ID] = contactId();
+        row[Projections.COMPANY_NAME] = companyName();
+        row[Projections.NICKNAME] = nickName();
+        row[Projections.MIME_TYPE] = mimeType();
+        return row;
+    }
 
-    public abstract Builder setPhoneNumber(String number);
+    public abstract Builder toBuilder();
 
-    public abstract Builder setDisplayName(@Nullable String name);
+    /**
+     * Builder for {@link Cp2Contact}.
+     */
+    @AutoValue.Builder
+    public abstract static class Builder {
+        public abstract Builder setPhoneId(long id);
 
-    public abstract Builder setPhotoId(int id);
+        public abstract Builder setPhoneType(int type);
 
-    public abstract Builder setPhotoUri(@Nullable String uri);
+        public abstract Builder setPhoneLabel(@Nullable String label);
 
-    public abstract Builder setLookupKey(String lookupKey);
+        public abstract Builder setPhoneNumber(String number);
 
-    public abstract Builder setCarrierPresence(int presence);
+        public abstract Builder setDisplayName(@Nullable String name);
 
-    public abstract Builder setContactId(int id);
+        public abstract Builder setPhotoId(int id);
 
-    public abstract Builder setCompanyName(@Nullable String name);
+        public abstract Builder setPhotoUri(@Nullable String uri);
 
-    public abstract Builder setNickName(@Nullable String nickName);
+        public abstract Builder setLookupKey(String lookupKey);
 
-    public abstract Builder setMimeType(String mimeType);
+        public abstract Builder setCarrierPresence(int presence);
 
-    public abstract Cp2Contact build();
-  }
+        public abstract Builder setContactId(int id);
 
-  public static Builder builder() {
-    return new AutoValue_Cp2Contact.Builder();
-  }
+        public abstract Builder setCompanyName(@Nullable String name);
 
-  public static Cp2Contact fromCursor(Cursor cursor) {
-    return Cp2Contact.builder()
-        .setPhoneId(cursor.getLong(Projections.CONTACT_ID))
-        .setPhoneType(cursor.getInt(Projections.PHONE_TYPE))
-        .setPhoneLabel(cursor.getString(Projections.PHONE_LABEL))
-        .setPhoneNumber(cursor.getString(Projections.PHONE_NUMBER))
-        .setDisplayName(cursor.getString(Projections.DISPLAY_NAME))
-        .setPhotoId(cursor.getInt(Projections.PHOTO_ID))
-        .setPhotoUri(cursor.getString(Projections.PHOTO_URI))
-        .setLookupKey(cursor.getString(Projections.LOOKUP_KEY))
-        .setCarrierPresence(cursor.getInt(Projections.CARRIER_PRESENCE))
-        .setContactId(cursor.getInt(Projections.CONTACT_ID))
-        .setCompanyName(cursor.getString(Projections.COMPANY_NAME))
-        .setNickName(cursor.getString(Projections.NICKNAME))
-        .setMimeType(cursor.getString(Projections.MIME_TYPE))
-        .build();
-  }
+        public abstract Builder setNickName(@Nullable String nickName);
 
-  public Object[] toCursorRow() {
-    Object[] row = new Object[Projections.CP2_PROJECTION.length];
-    row[Projections.ID] = phoneId();
-    row[Projections.PHONE_TYPE] = phoneType();
-    row[Projections.PHONE_LABEL] = phoneLabel();
-    row[Projections.PHONE_NUMBER] = phoneNumber();
-    row[Projections.DISPLAY_NAME] = displayName();
-    row[Projections.PHOTO_ID] = photoId();
-    row[Projections.PHOTO_URI] = photoUri();
-    row[Projections.LOOKUP_KEY] = lookupKey();
-    row[Projections.CARRIER_PRESENCE] = carrierPresence();
-    row[Projections.CONTACT_ID] = contactId();
-    row[Projections.COMPANY_NAME] = companyName();
-    row[Projections.NICKNAME] = nickName();
-    row[Projections.MIME_TYPE] = mimeType();
-    return row;
-  }
+        public abstract Builder setMimeType(String mimeType);
 
-  public abstract Builder toBuilder();
+        public abstract Cp2Contact build();
+    }
 }

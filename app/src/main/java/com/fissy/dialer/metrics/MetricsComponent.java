@@ -17,29 +17,35 @@
 package com.fissy.dialer.metrics;
 
 import android.content.Context;
+
 import com.fissy.dialer.inject.HasRootComponent;
 import com.fissy.dialer.inject.IncludeInDialerRoot;
+
 import dagger.Subcomponent;
 
-/** Component for metrics. */
+/**
+ * Component for metrics.
+ */
 @Subcomponent
 public abstract class MetricsComponent {
 
-  public abstract Metrics metrics();
+    public static MetricsComponent get(Context context) {
+        return ((MetricsComponent.HasComponent)
+                ((HasRootComponent) context.getApplicationContext()).component())
+                .metricsComponent();
+    }
 
-  public abstract Metrics.Initializer metricsInitializer();
+    public abstract Metrics metrics();
 
-  public abstract FutureTimer futureTimer();
+    public abstract Metrics.Initializer metricsInitializer();
 
-  public static MetricsComponent get(Context context) {
-    return ((MetricsComponent.HasComponent)
-            ((HasRootComponent) context.getApplicationContext()).component())
-        .metricsComponent();
-  }
+    public abstract FutureTimer futureTimer();
 
-  /** Used to refer to the root application component. */
-  @IncludeInDialerRoot
-  public interface HasComponent {
-    MetricsComponent metricsComponent();
-  }
+    /**
+     * Used to refer to the root application component.
+     */
+    @IncludeInDialerRoot
+    public interface HasComponent {
+        MetricsComponent metricsComponent();
+    }
 }

@@ -18,28 +18,31 @@ package com.fissy.dialer.simulator.impl;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableMap;
+
 import java.util.Collections;
 import java.util.Map;
 
-/** Represents a portal that receives requests from either UI or IPC. */
+/**
+ * Represents a portal that receives requests from either UI or IPC.
+ */
 @AutoValue
 public abstract class SimulatorPortalEntryGroup {
-  abstract ImmutableMap<String, Runnable> methods();
+    static Builder builder() {
+        return new AutoValue_SimulatorPortalEntryGroup.Builder()
+                .setMethods(Collections.emptyMap())
+                .setSubPortals(Collections.emptyMap());
+    }
 
-  abstract ImmutableMap<String, SimulatorPortalEntryGroup> subPortals();
+    abstract ImmutableMap<String, Runnable> methods();
 
-  static Builder builder() {
-    return new AutoValue_SimulatorPortalEntryGroup.Builder()
-        .setMethods(Collections.emptyMap())
-        .setSubPortals(Collections.emptyMap());
-  }
+    abstract ImmutableMap<String, SimulatorPortalEntryGroup> subPortals();
 
-  @AutoValue.Builder
-  abstract static class Builder {
-    abstract Builder setMethods(Map<String, Runnable> value);
+    @AutoValue.Builder
+    abstract static class Builder {
+        abstract Builder setMethods(Map<String, Runnable> value);
 
-    abstract Builder setSubPortals(Map<String, SimulatorPortalEntryGroup> value);
+        abstract Builder setSubPortals(Map<String, SimulatorPortalEntryGroup> value);
 
-    abstract SimulatorPortalEntryGroup build();
-  }
+        abstract SimulatorPortalEntryGroup build();
+    }
 }

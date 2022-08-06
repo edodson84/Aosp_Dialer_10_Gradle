@@ -21,7 +21,7 @@ import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.Contacts;
-import android.support.annotation.VisibleForTesting;
+import androidx.annotation.VisibleForTesting;
 
 /**
  * Used to create {@link CursorLoader} which finds contacts information from the strequents table.
@@ -30,35 +30,35 @@ import android.support.annotation.VisibleForTesting;
  */
 public final class ContactTileLoaderFactory {
 
-  /**
-   * The _ID field returned for strequent items actually contains data._id instead of contacts._id
-   * because the query is performed on the data table. In order to obtain the contact id for
-   * strequent items, use Phone.contact_id instead.
-   */
-  @VisibleForTesting
-  public static final String[] COLUMNS_PHONE_ONLY =
-      new String[] {
-        Contacts._ID,
-        Contacts.DISPLAY_NAME_PRIMARY,
-        Contacts.STARRED,
-        Contacts.PHOTO_URI,
-        Contacts.LOOKUP_KEY,
-        Phone.NUMBER,
-        Phone.TYPE,
-        Phone.LABEL,
-        Phone.IS_SUPER_PRIMARY,
-        Contacts.PINNED,
-        Phone.CONTACT_ID,
-        Contacts.DISPLAY_NAME_ALTERNATIVE,
-      };
+    /**
+     * The _ID field returned for strequent items actually contains data._id instead of contacts._id
+     * because the query is performed on the data table. In order to obtain the contact id for
+     * strequent items, use Phone.contact_id instead.
+     */
+    @VisibleForTesting
+    public static final String[] COLUMNS_PHONE_ONLY =
+            new String[]{
+                    Contacts._ID,
+                    Contacts.DISPLAY_NAME_PRIMARY,
+                    Contacts.STARRED,
+                    Contacts.PHOTO_URI,
+                    Contacts.LOOKUP_KEY,
+                    Phone.NUMBER,
+                    Phone.TYPE,
+                    Phone.LABEL,
+                    Phone.IS_SUPER_PRIMARY,
+                    Contacts.PINNED,
+                    Phone.CONTACT_ID,
+                    Contacts.DISPLAY_NAME_ALTERNATIVE,
+            };
 
-  public static CursorLoader createStrequentPhoneOnlyLoader(Context context) {
-    Uri uri =
-        Contacts.CONTENT_STREQUENT_URI
-            .buildUpon()
-            .appendQueryParameter(ContactsContract.STREQUENT_PHONE_ONLY, "true")
-            .build();
+    public static CursorLoader createStrequentPhoneOnlyLoader(Context context) {
+        Uri uri =
+                Contacts.CONTENT_STREQUENT_URI
+                        .buildUpon()
+                        .appendQueryParameter(ContactsContract.STREQUENT_PHONE_ONLY, "true")
+                        .build();
 
-    return new CursorLoader(context, uri, COLUMNS_PHONE_ONLY, null, null, null);
-  }
+        return new CursorLoader(context, uri, COLUMNS_PHONE_ONLY, null, null, null);
+    }
 }

@@ -19,40 +19,43 @@ package com.android.voicemail.impl.configui;
 import android.content.Intent;
 import android.preference.PreferenceActivity;
 import android.provider.VoicemailContract;
+
 import java.util.List;
 
-/** Activity launched by simulator->voicemail, provides debug features. */
+/**
+ * Activity launched by simulator->voicemail, provides debug features.
+ */
 @SuppressWarnings("FragmentInjection") // not exported
 public class VoicemailSecretCodeActivity extends PreferenceActivity {
 
-  private Header syncHeader;
+    private Header syncHeader;
 
-  @Override
-  public void onBuildHeaders(List<Header> target) {
-    super.onBuildHeaders(target);
-    syncHeader = new Header();
-    syncHeader.title = "Sync";
-    target.add(syncHeader);
+    @Override
+    public void onBuildHeaders(List<Header> target) {
+        super.onBuildHeaders(target);
+        syncHeader = new Header();
+        syncHeader.title = "Sync";
+        target.add(syncHeader);
 
-    Header configOverride = new Header();
-    configOverride.fragment = ConfigOverrideFragment.class.getName();
-    configOverride.title = "VVM config override";
-    target.add(configOverride);
-  }
-
-  @Override
-  public void onHeaderClick(Header header, int position) {
-    if (header == syncHeader) {
-      Intent intent = new Intent(VoicemailContract.ACTION_SYNC_VOICEMAIL);
-      intent.setPackage(getPackageName());
-      sendBroadcast(intent);
-      return;
+        Header configOverride = new Header();
+        configOverride.fragment = ConfigOverrideFragment.class.getName();
+        configOverride.title = "VVM config override";
+        target.add(configOverride);
     }
-    super.onHeaderClick(header, position);
-  }
 
-  @Override
-  protected boolean isValidFragment(String fragmentName) {
-    return true;
-  }
+    @Override
+    public void onHeaderClick(Header header, int position) {
+        if (header == syncHeader) {
+            Intent intent = new Intent(VoicemailContract.ACTION_SYNC_VOICEMAIL);
+            intent.setPackage(getPackageName());
+            sendBroadcast(intent);
+            return;
+        }
+        super.onHeaderClick(header, position);
+    }
+
+    @Override
+    protected boolean isValidFragment(String fragmentName) {
+        return true;
+    }
 }

@@ -16,16 +16,18 @@
 
 package com.android.incallui.sessiondata;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.widget.ImageView;
 
-/** Interface for interacting with Fragments that can be put in the data container */
+/**
+ * Interface for interacting with Fragments that can be put in the data container
+ */
 public interface AvatarPresenter {
 
-  @Nullable
-  ImageView getAvatarImageView();
+    @Nullable
+    ImageView getAvatarImageView();
 
-  int getAvatarSize();
+    int getAvatarSize();
 
-  boolean shouldShowAnonymousAvatar();
+    boolean shouldShowAnonymousAvatar();
 }

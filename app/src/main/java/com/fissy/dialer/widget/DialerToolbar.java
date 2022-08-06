@@ -18,59 +18,61 @@ package com.fissy.dialer.widget;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.appcompat.widget.Toolbar;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.theme.base.ThemeComponent;
 
-/** Toolbar widget for Dialer. */
+/**
+ * Toolbar widget for Dialer.
+ */
 public class DialerToolbar extends Toolbar {
 
-  private final TextView title;
-  private final BidiTextView subtitle;
+    private final TextView title;
+    private final BidiTextView subtitle;
 
-  public DialerToolbar(Context context, @Nullable AttributeSet attributeSet) {
-    super(context, attributeSet);
-    inflate(context, R.layout.dialer_toolbar, this);
-    title = (TextView) findViewById(R.id.title);
-    subtitle = (BidiTextView) findViewById(R.id.subtitle);
+    public DialerToolbar(Context context, @Nullable AttributeSet attributeSet) {
+        super(context, attributeSet);
+        inflate(context, R.layout.dialer_toolbar, this);
+        title = (TextView) findViewById(R.id.title);
+        subtitle = (BidiTextView) findViewById(R.id.subtitle);
 
-    setElevation(getResources().getDimensionPixelSize(R.dimen.toolbar_elevation));
-    setBackgroundColor(ThemeComponent.get(context).theme().getColorPrimary());
-    setNavigationIcon(R.drawable.quantum_ic_close_white_24);
-    setNavigationContentDescription(R.string.toolbar_close);
-    setNavigationOnClickListener(v -> ((Activity) context).finish());
-    setPaddingRelative(
-        getPaddingStart(),
-        getPaddingTop(),
-        getResources().getDimensionPixelSize(R.dimen.toolbar_end_padding),
-        getPaddingBottom());
-  }
-
-  @Override
-  public void setTitle(@StringRes int id) {
-    setTitle(getResources().getString(id));
-  }
-
-  @Override
-  public void setTitle(CharSequence charSequence) {
-    title.setText(charSequence);
-  }
-
-  @Override
-  public void setSubtitle(@StringRes int id) {
-    setSubtitle(getResources().getString(id));
-  }
-
-  @Override
-  public void setSubtitle(CharSequence charSequence) {
-    if (charSequence != null) {
-      subtitle.setText(charSequence);
-      subtitle.setVisibility(VISIBLE);
+        setElevation(getResources().getDimensionPixelSize(R.dimen.toolbar_elevation));
+        setBackgroundColor(ThemeComponent.get(context).theme().getColorPrimary());
+        setNavigationIcon(R.drawable.quantum_ic_close_white_24);
+        setNavigationContentDescription(R.string.toolbar_close);
+        setNavigationOnClickListener(v -> ((Activity) context).finish());
+        setPaddingRelative(
+                getPaddingStart(),
+                getPaddingTop(),
+                getResources().getDimensionPixelSize(R.dimen.toolbar_end_padding),
+                getPaddingBottom());
     }
-  }
+
+    @Override
+    public void setTitle(@StringRes int id) {
+        setTitle(getResources().getString(id));
+    }
+
+    @Override
+    public void setTitle(CharSequence charSequence) {
+        title.setText(charSequence);
+    }
+
+    @Override
+    public void setSubtitle(@StringRes int id) {
+        setSubtitle(getResources().getString(id));
+    }
+
+    @Override
+    public void setSubtitle(CharSequence charSequence) {
+        if (charSequence != null) {
+            subtitle.setText(charSequence);
+            subtitle.setVisibility(VISIBLE);
+        }
+    }
 }

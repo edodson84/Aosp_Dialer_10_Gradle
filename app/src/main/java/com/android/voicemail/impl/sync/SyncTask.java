@@ -20,58 +20,61 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telecom.PhoneAccountHandle;
-import com.fissy.dialer.logging.DialerImpression;
-import com.fissy.dialer.proguard.UsedByReflection;
+
 import com.android.voicemail.impl.scheduling.BaseTask;
 import com.android.voicemail.impl.scheduling.MinimalIntervalPolicy;
 import com.android.voicemail.impl.scheduling.RetryPolicy;
 import com.android.voicemail.impl.utils.LoggerUtils;
+import com.fissy.dialer.logging.DialerImpression;
+import com.fissy.dialer.proguard.UsedByReflection;
 
-/** System initiated sync request. */
+/**
+ * System initiated sync request.
+ */
 @UsedByReflection(value = "Tasks.java")
 public class SyncTask extends BaseTask {
 
-  // Try sync for a total of 5 times, should take around 5 minutes before finally giving up.
-  private static final int RETRY_TIMES = 4;
-  private static final int RETRY_INTERVAL_MILLIS = 5_000;
-  private static final int MINIMAL_INTERVAL_MILLIS = 60_000;
+    // Try sync for a total of 5 times, should take around 5 minutes before finally giving up.
+    private static final int RETRY_TIMES = 4;
+    private static final int RETRY_INTERVAL_MILLIS = 5_000;
+    private static final int MINIMAL_INTERVAL_MILLIS = 60_000;
 
-  private static final String EXTRA_PHONE_ACCOUNT_HANDLE = "extra_phone_account_handle";
+    private static final String EXTRA_PHONE_ACCOUNT_HANDLE = "extra_phone_account_handle";
 
-  private final RetryPolicy retryPolicy;
+    private final RetryPolicy retryPolicy;
 
-  private PhoneAccountHandle phone;
+    private PhoneAccountHandle phone;
 
-  public static void start(Context context, PhoneAccountHandle phone) {
-    Intent intent = BaseTask.createIntent(context, SyncTask.class, phone);
-    intent.putExtra(EXTRA_PHONE_ACCOUNT_HANDLE, phone);
-    context.sendBroadcast(intent);
-  }
+    public SyncTask() {
+        super(TASK_SYNC);
+        retryPolicy = new RetryPolicy(RETRY_TIMES, RETRY_INTERVAL_MILLIS);
+        addPolicy(retryPolicy);
+        addPolicy(new MinimalIntervalPolicy(MINIMAL_INTERVAL_MILLIS));
+    }
 
-  public SyncTask() {
-    super(TASK_SYNC);
-    retryPolicy = new RetryPolicy(RETRY_TIMES, RETRY_INTERVAL_MILLIS);
-    addPolicy(retryPolicy);
-    addPolicy(new MinimalIntervalPolicy(MINIMAL_INTERVAL_MILLIS));
-  }
+    public static void start(Context context, PhoneAccountHandle phone) {
+        Intent intent = BaseTask.createIntent(context, SyncTask.class, phone);
+        intent.putExtra(EXTRA_PHONE_ACCOUNT_HANDLE, phone);
+        context.sendBroadcast(intent);
+    }
 
-  @Override
-  public void onCreate(Context context, Bundle extras) {
-    super.onCreate(context, extras);
-    phone = extras.getParcelable(EXTRA_PHONE_ACCOUNT_HANDLE);
-  }
+    @Override
+    public void onCreate(Context context, Bundle extras) {
+        super.onCreate(context, extras);
+        phone = extras.getParcelable(EXTRA_PHONE_ACCOUNT_HANDLE);
+    }
 
-  @Override
-  public void onExecuteInBackgroundThread() {
-    OmtpVvmSyncService service = new OmtpVvmSyncService(getContext());
-    service.sync(this, phone, null, retryPolicy.getVoicemailStatusEditor());
-  }
+    @Override
+    public void onExecuteInBackgroundThread() {
+        OmtpVvmSyncService service = new OmtpVvmSyncService(getContext());
+        service.sync(this, phone, null, retryPolicy.getVoicemailStatusEditor());
+    }
 
-  @Override
-  public Intent createRestartIntent() {
-    LoggerUtils.logImpressionOnMainThread(getContext(), DialerImpression.Type.VVM_AUTO_RETRY_SYNC);
-    Intent intent = super.createRestartIntent();
-    intent.putExtra(EXTRA_PHONE_ACCOUNT_HANDLE, phone);
-    return intent;
-  }
+    @Override
+    public Intent createRestartIntent() {
+        LoggerUtils.logImpressionOnMainThread(getContext(), DialerImpression.Type.VVM_AUTO_RETRY_SYNC);
+        Intent intent = super.createRestartIntent();
+        intent.putExtra(EXTRA_PHONE_ACCOUNT_HANDLE, phone);
+        return intent;
+    }
 }

@@ -16,12 +16,14 @@
 
 package com.android.voicemail.stub;
 
+import com.android.voicemail.VoicemailClient;
 import com.fissy.dialer.inject.DialerVariant;
 import com.fissy.dialer.inject.InstallIn;
-import com.android.voicemail.VoicemailClient;
+
+import javax.inject.Singleton;
+
 import dagger.Binds;
 import dagger.Module;
-import javax.inject.Singleton;
 
 /**
  * A no-op version of the voicemail module for build targets that don't support the new OTMP client.
@@ -30,7 +32,7 @@ import javax.inject.Singleton;
 @Module
 public abstract class StubVoicemailModule {
 
-  @Binds
-  @Singleton
-  public abstract VoicemailClient bindVoicemailClient(StubVoicemailClient voicemailClient);
+    @Binds
+    @Singleton
+    public abstract VoicemailClient bindVoicemailClient(StubVoicemailClient voicemailClient);
 }

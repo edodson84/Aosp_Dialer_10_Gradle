@@ -18,28 +18,31 @@ package com.android.incallui.answer.impl.answermethod;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.fissy.dialer.common.FragmentUtils;
 
-/** A fragment that can be used to answer/reject calls. */
+/**
+ * A fragment that can be used to answer/reject calls.
+ */
 public abstract class AnswerMethod extends Fragment {
 
-  public abstract void setHintText(@Nullable CharSequence hintText);
+    public abstract void setHintText(@Nullable CharSequence hintText);
 
-  public abstract void setShowIncomingWillDisconnect(boolean incomingWillDisconnect);
+    public abstract void setShowIncomingWillDisconnect(boolean incomingWillDisconnect);
 
-  public void setContactPhoto(@Nullable Drawable contactPhoto) {
-    // default implementation does nothing. Only some AnswerMethods show a photo
-  }
+    public void setContactPhoto(@Nullable Drawable contactPhoto) {
+        // default implementation does nothing. Only some AnswerMethods show a photo
+    }
 
-  protected AnswerMethodHolder getParent() {
-    return FragmentUtils.getParentUnsafe(this, AnswerMethodHolder.class);
-  }
+    protected AnswerMethodHolder getParent() {
+        return FragmentUtils.getParentUnsafe(this, AnswerMethodHolder.class);
+    }
 
-  @Override
-  public void onAttach(Context context) {
-    super.onAttach(context);
-    FragmentUtils.checkParent(this, AnswerMethodHolder.class);
-  }
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        FragmentUtils.checkParent(this, AnswerMethodHolder.class);
+    }
 }

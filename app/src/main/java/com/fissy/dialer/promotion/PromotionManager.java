@@ -18,7 +18,9 @@ package com.fissy.dialer.promotion;
 
 import com.fissy.dialer.promotion.Promotion.PromotionType;
 import com.google.common.collect.ImmutableList;
+
 import java.util.Optional;
+
 import javax.inject.Inject;
 
 /**
@@ -29,38 +31,40 @@ import javax.inject.Inject;
  */
 public final class PromotionManager {
 
-  /** Promotion priority order list. Promotions with higher priority must be added first. */
-  private final ImmutableList<Promotion> priorityPromotionList;
+    /**
+     * Promotion priority order list. Promotions with higher priority must be added first.
+     */
+    private final ImmutableList<Promotion> priorityPromotionList;
 
-  @Inject
-  public PromotionManager(ImmutableList<Promotion> priorityPromotionList) {
-    this.priorityPromotionList = priorityPromotionList;
-  }
-
-  /**
-   * Returns promotion should show with highest priority. {@link Optional#empty()} if no promotion
-   * should be shown with given {@link PromotionType}.
-   *
-   * <p>e.g. if FooPromotion(card, high priority) and BarPromotion(bottom sheet, low priority) are
-   * both enabled, getHighestPriorityPromotion(CARD) returns Optional.of(FooPromotion) but
-   * getHighestPriorityPromotion(BOTTOM_SHEET) returns {@link Optional#empty()}.
-   *
-   * <p>Currently it only supports promotion in call log tab.
-   *
-   * <p>TODO(wangqi): add support for other tabs.
-   */
-  public Optional<Promotion> getHighestPriorityPromotion(@PromotionType int type) {
-    for (Promotion promotion : priorityPromotionList) {
-      if (promotion.isEligibleToBeShown()) {
-        if (promotion.getType() == type) {
-          return Optional.of(promotion);
-        } else {
-          // Returns empty promotion since it's not the type looking for and only one promotion
-          // should be shown at a time.
-          return Optional.empty();
-        }
-      }
+    @Inject
+    public PromotionManager(ImmutableList<Promotion> priorityPromotionList) {
+        this.priorityPromotionList = priorityPromotionList;
     }
-    return Optional.empty();
-  }
+
+    /**
+     * Returns promotion should show with highest priority. {@link Optional#empty()} if no promotion
+     * should be shown with given {@link PromotionType}.
+     *
+     * <p>e.g. if FooPromotion(card, high priority) and BarPromotion(bottom sheet, low priority) are
+     * both enabled, getHighestPriorityPromotion(CARD) returns Optional.of(FooPromotion) but
+     * getHighestPriorityPromotion(BOTTOM_SHEET) returns {@link Optional#empty()}.
+     *
+     * <p>Currently it only supports promotion in call log tab.
+     *
+     * <p>TODO(wangqi): add support for other tabs.
+     */
+    public Optional<Promotion> getHighestPriorityPromotion(@PromotionType int type) {
+        for (Promotion promotion : priorityPromotionList) {
+            if (promotion.isEligibleToBeShown()) {
+                if (promotion.getType() == type) {
+                    return Optional.of(promotion);
+                } else {
+                    // Returns empty promotion since it's not the type looking for and only one promotion
+                    // should be shown at a time.
+                    return Optional.empty();
+                }
+            }
+        }
+        return Optional.empty();
+    }
 }

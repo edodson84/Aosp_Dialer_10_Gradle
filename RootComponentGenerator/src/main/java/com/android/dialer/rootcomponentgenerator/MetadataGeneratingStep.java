@@ -27,9 +27,11 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.SetMultimap;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.TypeSpec;
+
 import java.lang.annotation.Annotation;
 import java.util.Collections;
 import java.util.Set;
+
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
@@ -43,50 +45,50 @@ import javax.lang.model.element.TypeElement;
  */
 final class MetadataGeneratingStep implements ProcessingStep {
 
-  private final ProcessingEnvironment processingEnv;
+    private final ProcessingEnvironment processingEnv;
 
-  MetadataGeneratingStep(ProcessingEnvironment processingEnv) {
-    this.processingEnv = processingEnv;
-  }
-
-  @Override
-  public Set<? extends Class<? extends Annotation>> annotations() {
-    return ImmutableSet.of(IncludeInDialerRoot.class, InstallIn.class);
-  }
-
-  @Override
-  public Set<Element> process(
-      SetMultimap<Class<? extends Annotation>, Element> elementsByAnnotation) {
-
-    for (Element element : elementsByAnnotation.get(IncludeInDialerRoot.class)) {
-      generateMetadataFor(IncludeInDialerRoot.class, MoreElements.asType(element));
-    }
-    for (Element element : elementsByAnnotation.get(InstallIn.class)) {
-      if (element.getAnnotation(InstallIn.class).variants().length == 0) {
-        processingEnv
-            .getMessager()
-            .printMessage(
-                ERROR, String.format("@InstallIn %s must have at least one variant", element));
-        continue;
-      }
-      generateMetadataFor(InstallIn.class, MoreElements.asType(element));
+    MetadataGeneratingStep(ProcessingEnvironment processingEnv) {
+        this.processingEnv = processingEnv;
     }
 
-    return Collections.emptySet();
-  }
+    @Override
+    public Set<? extends Class<? extends Annotation>> annotations() {
+        return ImmutableSet.of(IncludeInDialerRoot.class, InstallIn.class);
+    }
 
-  private void generateMetadataFor(
-      Class<? extends Annotation> annotation, TypeElement annotatedElement) {
-    TypeSpec.Builder metadataClassBuilder =
-        TypeSpec.classBuilder(
-            annotatedElement.getQualifiedName().toString().replace('.', '_') + "Metadata");
-    metadataClassBuilder.addAnnotation(
-        AnnotationSpec.builder(RootComponentGeneratorMetadata.class)
-            .addMember("tag", "$S", annotation.getSimpleName())
-            .addMember("annotatedClass", "$T.class", annotatedElement.asType())
-            .build());
-    TypeSpec metadataClass = metadataClassBuilder.build();
-    RootComponentUtils.writeJavaFile(
-        processingEnv, RootComponentUtils.METADATA_PACKAGE_NAME, metadataClass);
-  }
+    @Override
+    public Set<Element> process(
+            SetMultimap<Class<? extends Annotation>, Element> elementsByAnnotation) {
+
+        for (Element element : elementsByAnnotation.get(IncludeInDialerRoot.class)) {
+            generateMetadataFor(IncludeInDialerRoot.class, MoreElements.asType(element));
+        }
+        for (Element element : elementsByAnnotation.get(InstallIn.class)) {
+            if (element.getAnnotation(InstallIn.class).variants().length == 0) {
+                processingEnv
+                        .getMessager()
+                        .printMessage(
+                                ERROR, String.format("@InstallIn %s must have at least one variant", element));
+                continue;
+            }
+            generateMetadataFor(InstallIn.class, MoreElements.asType(element));
+        }
+
+        return Collections.emptySet();
+    }
+
+    private void generateMetadataFor(
+            Class<? extends Annotation> annotation, TypeElement annotatedElement) {
+        TypeSpec.Builder metadataClassBuilder =
+                TypeSpec.classBuilder(
+                        annotatedElement.getQualifiedName().toString().replace('.', '_') + "Metadata");
+        metadataClassBuilder.addAnnotation(
+                AnnotationSpec.builder(RootComponentGeneratorMetadata.class)
+                        .addMember("tag", "$S", annotation.getSimpleName())
+                        .addMember("annotatedClass", "$T.class", annotatedElement.asType())
+                        .build());
+        TypeSpec metadataClass = metadataClassBuilder.build();
+        RootComponentUtils.writeJavaFile(
+                processingEnv, RootComponentUtils.METADATA_PACKAGE_NAME, metadataClass);
+    }
 }

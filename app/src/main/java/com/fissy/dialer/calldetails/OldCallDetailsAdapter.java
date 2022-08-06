@@ -18,8 +18,9 @@ package com.fissy.dialer.calldetails;
 
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
+
 import com.fissy.dialer.calldetails.CallDetailsEntryViewHolder.CallDetailsEntryListener;
 import com.fissy.dialer.calldetails.CallDetailsFooterViewHolder.DeleteCallDetailsListener;
 import com.fissy.dialer.calldetails.CallDetailsHeaderViewHolder.CallDetailsHeaderListener;
@@ -35,72 +36,74 @@ import com.fissy.dialer.lettertile.LetterTileDrawable;
  */
 final class OldCallDetailsAdapter extends CallDetailsAdapterCommon {
 
-  /** Contains info to be shown in the header. */
-  private final DialerContact contact;
+    /**
+     * Contains info to be shown in the header.
+     */
+    private final DialerContact contact;
 
-  OldCallDetailsAdapter(
-      Context context,
-      DialerContact contact,
-      CallDetailsEntries callDetailsEntries,
-      CallDetailsEntryListener callDetailsEntryListener,
-      CallDetailsHeaderListener callDetailsHeaderListener,
-      CallDetailsFooterViewHolder.ReportCallIdListener reportCallIdListener,
-      DeleteCallDetailsListener deleteCallDetailsListener) {
-    super(
-        context,
-        callDetailsEntries,
-        callDetailsEntryListener,
-        callDetailsHeaderListener,
-        reportCallIdListener,
-        deleteCallDetailsListener);
-    this.contact = contact;
-  }
-
-  @Override
-  protected CallDetailsHeaderViewHolder createCallDetailsHeaderViewHolder(
-      View container, CallDetailsHeaderListener callDetailsHeaderListener) {
-    return new CallDetailsHeaderViewHolder(
-        container, contact.getNumber(), contact.getPostDialDigits(), callDetailsHeaderListener);
-  }
-
-  @Override
-  protected void bindCallDetailsHeaderViewHolder(
-      CallDetailsHeaderViewHolder callDetailsHeaderViewHolder, int position) {
-    callDetailsHeaderViewHolder.updateContactInfo(contact, getCallbackAction());
-    callDetailsHeaderViewHolder.updateAssistedDialingInfo(
-        getCallDetailsEntries().getEntries(position));
-  }
-
-  @Override
-  protected String getNumber() {
-    return contact.getNumber();
-  }
-
-  @Override
-  protected String getPrimaryText() {
-    return contact.getNameOrNumber();
-  }
-
-  @Override
-  protected PhotoInfo getPhotoInfo() {
-    PhotoInfo.Builder builder =
-        PhotoInfo.newBuilder()
-            .setPhotoUri(contact.getPhotoUri())
-            .setPhotoId(contact.getPhotoId())
-            .setName(contact.getNameOrNumber())
-            .setLookupUri(contact.getContactUri());
-    switch (contact.getContactType()) {
-      case LetterTileDrawable.TYPE_VOICEMAIL:
-        builder.setIsVoicemail(true);
-        break;
-      case LetterTileDrawable.TYPE_BUSINESS:
-        builder.setIsBusiness(true);
-        break;
-      case LetterTileDrawable.TYPE_SPAM:
-        builder.setIsSpam(true);
-        break;
-      default: // fall out
+    OldCallDetailsAdapter(
+            Context context,
+            DialerContact contact,
+            CallDetailsEntries callDetailsEntries,
+            CallDetailsEntryListener callDetailsEntryListener,
+            CallDetailsHeaderListener callDetailsHeaderListener,
+            CallDetailsFooterViewHolder.ReportCallIdListener reportCallIdListener,
+            DeleteCallDetailsListener deleteCallDetailsListener) {
+        super(
+                context,
+                callDetailsEntries,
+                callDetailsEntryListener,
+                callDetailsHeaderListener,
+                reportCallIdListener,
+                deleteCallDetailsListener);
+        this.contact = contact;
     }
-    return builder.build();
-  }
+
+    @Override
+    protected CallDetailsHeaderViewHolder createCallDetailsHeaderViewHolder(
+            View container, CallDetailsHeaderListener callDetailsHeaderListener) {
+        return new CallDetailsHeaderViewHolder(
+                container, contact.getNumber(), contact.getPostDialDigits(), callDetailsHeaderListener);
+    }
+
+    @Override
+    protected void bindCallDetailsHeaderViewHolder(
+            CallDetailsHeaderViewHolder callDetailsHeaderViewHolder, int position) {
+        callDetailsHeaderViewHolder.updateContactInfo(contact, getCallbackAction());
+        callDetailsHeaderViewHolder.updateAssistedDialingInfo(
+                getCallDetailsEntries().getEntries(position));
+    }
+
+    @Override
+    protected String getNumber() {
+        return contact.getNumber();
+    }
+
+    @Override
+    protected String getPrimaryText() {
+        return contact.getNameOrNumber();
+    }
+
+    @Override
+    protected PhotoInfo getPhotoInfo() {
+        PhotoInfo.Builder builder =
+                PhotoInfo.newBuilder()
+                        .setPhotoUri(contact.getPhotoUri())
+                        .setPhotoId(contact.getPhotoId())
+                        .setName(contact.getNameOrNumber())
+                        .setLookupUri(contact.getContactUri());
+        switch (contact.getContactType()) {
+            case LetterTileDrawable.TYPE_VOICEMAIL:
+                builder.setIsVoicemail(true);
+                break;
+            case LetterTileDrawable.TYPE_BUSINESS:
+                builder.setIsBusiness(true);
+                break;
+            case LetterTileDrawable.TYPE_SPAM:
+                builder.setIsSpam(true);
+                break;
+            default: // fall out
+        }
+        return builder.build();
+    }
 }

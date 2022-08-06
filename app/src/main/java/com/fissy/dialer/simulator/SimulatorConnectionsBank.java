@@ -17,9 +17,11 @@
 package com.fissy.dialer.simulator;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.telecom.Connection;
+
 import com.fissy.dialer.simulator.Simulator.ConferenceType;
+
 import java.util.List;
 
 /**
@@ -28,28 +30,40 @@ import java.util.List;
  */
 public interface SimulatorConnectionsBank {
 
-  /** Add a connection into bank. */
-  void add(Connection connection);
+    /**
+     * Add a connection into bank.
+     */
+    void add(Connection connection);
 
-  /** Remove a connection from bank. */
-  void remove(Connection connection);
+    /**
+     * Remove a connection from bank.
+     */
+    void remove(Connection connection);
 
-  /** Merge all existing connections created by simulator into a conference. */
-  void mergeAllConnections(@ConferenceType int conferenceType, Context context);
+    /**
+     * Merge all existing connections created by simulator into a conference.
+     */
+    void mergeAllConnections(@ConferenceType int conferenceType, Context context);
 
-  /** Set all connections created by simulator to disconnected. */
-  void disconnectAllConnections();
+    /**
+     * Set all connections created by simulator to disconnected.
+     */
+    void disconnectAllConnections();
 
-  /**
-   * Update conferenceable connections for all connections in bank (usually after adding a new
-   * connection). Before calling this method, make sure all connections are returned by
-   * ConnectionService.
-   */
-  void updateConferenceableConnections();
+    /**
+     * Update conferenceable connections for all connections in bank (usually after adding a new
+     * connection). Before calling this method, make sure all connections are returned by
+     * ConnectionService.
+     */
+    void updateConferenceableConnections();
 
-  /** Determine whether a connection is created by simulator. */
-  boolean isSimulatorConnection(@NonNull Connection connection);
+    /**
+     * Determine whether a connection is created by simulator.
+     */
+    boolean isSimulatorConnection(@NonNull Connection connection);
 
-  /** Get all connections tags from bank. */
-  List<String> getConnectionTags();
+    /**
+     * Get all connections tags from bank.
+     */
+    List<String> getConnectionTags();
 }

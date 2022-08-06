@@ -19,8 +19,9 @@ package com.android.voicemail.impl.protocol;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.telecom.PhoneAccountHandle;
+
 import com.android.voicemail.impl.ActivationTask;
 import com.android.voicemail.impl.DefaultOmtpEventHandler;
 import com.android.voicemail.impl.OmtpConstants;
@@ -32,76 +33,78 @@ import com.android.voicemail.impl.sms.StatusMessage;
 
 public abstract class VisualVoicemailProtocol {
 
-  /** Activation should cause the carrier to respond with a STATUS SMS. */
-  public void startActivation(OmtpVvmCarrierConfigHelper config, PendingIntent sentIntent) {
-    OmtpMessageSender messageSender = ProtocolHelper.getMessageSender(this, config);
-    if (messageSender != null) {
-      messageSender.requestVvmActivation(sentIntent);
+    /**
+     * Activation should cause the carrier to respond with a STATUS SMS.
+     */
+    public void startActivation(OmtpVvmCarrierConfigHelper config, PendingIntent sentIntent) {
+        OmtpMessageSender messageSender = ProtocolHelper.getMessageSender(this, config);
+        if (messageSender != null) {
+            messageSender.requestVvmActivation(sentIntent);
+        }
     }
-  }
 
-  public void startDeactivation(OmtpVvmCarrierConfigHelper config) {
-    OmtpMessageSender messageSender = ProtocolHelper.getMessageSender(this, config);
-    if (messageSender != null) {
-      messageSender.requestVvmDeactivation(null);
+    public void startDeactivation(OmtpVvmCarrierConfigHelper config) {
+        OmtpMessageSender messageSender = ProtocolHelper.getMessageSender(this, config);
+        if (messageSender != null) {
+            messageSender.requestVvmDeactivation(null);
+        }
     }
-  }
 
-  public boolean supportsProvisioning() {
-    return false;
-  }
-
-  public void startProvisioning(
-      ActivationTask task,
-      PhoneAccountHandle handle,
-      OmtpVvmCarrierConfigHelper config,
-      VoicemailStatus.Editor editor,
-      StatusMessage message,
-      Bundle data,
-      boolean isCarrierInitiated) {
-    // Do nothing
-  }
-
-  public void requestStatus(OmtpVvmCarrierConfigHelper config, @Nullable PendingIntent sentIntent) {
-    OmtpMessageSender messageSender = ProtocolHelper.getMessageSender(this, config);
-    if (messageSender != null) {
-      messageSender.requestVvmStatus(sentIntent);
+    public boolean supportsProvisioning() {
+        return false;
     }
-  }
 
-  public abstract OmtpMessageSender createMessageSender(
-      Context context,
-      PhoneAccountHandle phoneAccountHandle,
-      short applicationPort,
-      String destinationNumber);
+    public void startProvisioning(
+            ActivationTask task,
+            PhoneAccountHandle handle,
+            OmtpVvmCarrierConfigHelper config,
+            VoicemailStatus.Editor editor,
+            StatusMessage message,
+            Bundle data,
+            boolean isCarrierInitiated) {
+        // Do nothing
+    }
 
-  /**
-   * Translate an OMTP IMAP command to the protocol specific one. For example, changing the TUI
-   * password on OMTP is XCHANGE_TUI_PWD, but on CVVM and VVM3 it is CHANGE_TUI_PWD.
-   *
-   * @param command A String command in {@link OmtpConstants}, the exact instance should be used
-   *     instead of its' value.
-   * @returns Translated command, or {@code null} if not available in this protocol
-   */
-  public String getCommand(String command) {
-    return command;
-  }
+    public void requestStatus(OmtpVvmCarrierConfigHelper config, @Nullable PendingIntent sentIntent) {
+        OmtpMessageSender messageSender = ProtocolHelper.getMessageSender(this, config);
+        if (messageSender != null) {
+            messageSender.requestVvmStatus(sentIntent);
+        }
+    }
 
-  public void handleEvent(
-      Context context,
-      OmtpVvmCarrierConfigHelper config,
-      VoicemailStatus.Editor status,
-      OmtpEvents event) {
-    DefaultOmtpEventHandler.handleEvent(context, config, status, event);
-  }
+    public abstract OmtpMessageSender createMessageSender(
+            Context context,
+            PhoneAccountHandle phoneAccountHandle,
+            short applicationPort,
+            String destinationNumber);
 
-  /**
-   * Given an VVM SMS with an unknown {@code event}, let the protocol attempt to translate it into
-   * an equivalent STATUS SMS. Returns {@code null} if it cannot be translated.
-   */
-  @Nullable
-  public Bundle translateStatusSmsBundle(
-      OmtpVvmCarrierConfigHelper config, String event, Bundle data) {
-    return null;
-  }
+    /**
+     * Translate an OMTP IMAP command to the protocol specific one. For example, changing the TUI
+     * password on OMTP is XCHANGE_TUI_PWD, but on CVVM and VVM3 it is CHANGE_TUI_PWD.
+     *
+     * @param command A String command in {@link OmtpConstants}, the exact instance should be used
+     *                instead of its' value.
+     * @returns Translated command, or {@code null} if not available in this protocol
+     */
+    public String getCommand(String command) {
+        return command;
+    }
+
+    public void handleEvent(
+            Context context,
+            OmtpVvmCarrierConfigHelper config,
+            VoicemailStatus.Editor status,
+            OmtpEvents event) {
+        DefaultOmtpEventHandler.handleEvent(context, config, status, event);
+    }
+
+    /**
+     * Given an VVM SMS with an unknown {@code event}, let the protocol attempt to translate it into
+     * an equivalent STATUS SMS. Returns {@code null} if it cannot be translated.
+     */
+    @Nullable
+    public Bundle translateStatusSmsBundle(
+            OmtpVvmCarrierConfigHelper config, String event, Bundle data) {
+        return null;
+    }
 }

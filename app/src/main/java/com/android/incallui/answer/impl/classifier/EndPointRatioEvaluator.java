@@ -17,26 +17,26 @@
 package com.android.incallui.answer.impl.classifier;
 
 class EndPointRatioEvaluator {
-  public static float evaluate(float value) {
-    float evaluation = 0.0f;
-    if (value < 0.85) {
-      evaluation++;
+    public static float evaluate(float value) {
+        float evaluation = 0.0f;
+        if (value < 0.85) {
+            evaluation++;
+        }
+        if (value < 0.75) {
+            evaluation++;
+        }
+        if (value < 0.65) {
+            evaluation++;
+        }
+        if (value < 0.55) {
+            evaluation++;
+        }
+        if (value < 0.45) {
+            evaluation++;
+        }
+        if (value < 0.35) {
+            evaluation++;
+        }
+        return evaluation;
     }
-    if (value < 0.75) {
-      evaluation++;
-    }
-    if (value < 0.65) {
-      evaluation++;
-    }
-    if (value < 0.55) {
-      evaluation++;
-    }
-    if (value < 0.45) {
-      evaluation++;
-    }
-    if (value < 0.35) {
-      evaluation++;
-    }
-    return evaluation;
-  }
 }

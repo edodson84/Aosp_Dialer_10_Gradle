@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:orientation="vertical" android:background="@color/rtt_transcript_background_color" android:layout_width="fill_parent" android:layout_height="fill_parent"
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <com.fissy.dialer.widget.DialerToolbar android:id="@id/toolbar" android:layout_width="fill_parent" android:layout_height="wrap_content" />
-    <android.support.v7.widget.RecyclerView android:id="@id/rtt_recycler_view" android:paddingTop="16.0dip" android:paddingBottom="16.0dip" android:clipToPadding="false" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/rtt_transcript_background_color"
+    android:orientation="vertical">
+
+    <com.fissy.dialer.widget.DialerToolbar
+        android:id="@id/toolbar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@id/rtt_recycler_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:clipToPadding="false"
+        android:paddingTop="16.0dip"
+        android:paddingBottom="16.0dip" />
 </LinearLayout>

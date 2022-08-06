@@ -16,8 +16,6 @@
 
 package com.android.dialer.inject;
 
-import com.android.dialer.inject.DialerVariant;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;
 
@@ -38,5 +36,5 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.TYPE)
 public @interface InstallIn {
-  DialerVariant[] variants();
+    DialerVariant[] variants();
 }

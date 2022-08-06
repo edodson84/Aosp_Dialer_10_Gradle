@@ -30,68 +30,72 @@ import com.fissy.dialer.logging.Logger;
 import com.fissy.dialer.phonenumbercache.ContactInfoHelper;
 import com.fissy.dialer.phonenumberutil.PhoneNumberHelper;
 
-/** TODO(calderwoodra): documentation */
+/**
+ * TODO(calderwoodra): documentation
+ */
 public class BlockedNumbersAdapter extends NumbersAdapter {
 
-  private BlockedNumbersAdapter(
-      Context context,
-      FragmentManager fragmentManager,
-      ContactInfoHelper contactInfoHelper,
-      ContactPhotoManager contactPhotoManager) {
-    super(context, fragmentManager, contactInfoHelper, contactPhotoManager);
-  }
+    private BlockedNumbersAdapter(
+            Context context,
+            FragmentManager fragmentManager,
+            ContactInfoHelper contactInfoHelper,
+            ContactPhotoManager contactPhotoManager) {
+        super(context, fragmentManager, contactInfoHelper, contactPhotoManager);
+    }
 
-  public static BlockedNumbersAdapter newBlockedNumbersAdapter(
-      Context context, FragmentManager fragmentManager) {
-    return new BlockedNumbersAdapter(
-        context,
-        fragmentManager,
-        new ContactInfoHelper(context, GeoUtil.getCurrentCountryIso(context)),
-        ContactPhotoManager.getInstance(context));
-  }
+    public static BlockedNumbersAdapter newBlockedNumbersAdapter(
+            Context context, FragmentManager fragmentManager) {
+        return new BlockedNumbersAdapter(
+                context,
+                fragmentManager,
+                new ContactInfoHelper(context, GeoUtil.getCurrentCountryIso(context)),
+                ContactPhotoManager.getInstance(context));
+    }
 
-  @Override
-  public void bindView(View view, final Context context, Cursor cursor) {
-    super.bindView(view, context, cursor);
-    final Integer id = cursor.getInt(cursor.getColumnIndex(FilteredNumberColumns._ID));
-    final String countryIso =
-        cursor.getString(cursor.getColumnIndex(FilteredNumberColumns.COUNTRY_ISO));
-    final String number = cursor.getString(cursor.getColumnIndex(FilteredNumberColumns.NUMBER));
+    @Override
+    public void bindView(View view, final Context context, Cursor cursor) {
+        super.bindView(view, context, cursor);
+        final Integer id = cursor.getInt(cursor.getColumnIndex(FilteredNumberColumns._ID));
+        final String countryIso =
+                cursor.getString(cursor.getColumnIndex(FilteredNumberColumns.COUNTRY_ISO));
+        final String number = cursor.getString(cursor.getColumnIndex(FilteredNumberColumns.NUMBER));
 
-    final View deleteButton = view.findViewById(R.id.delete_button);
-    deleteButton.setOnClickListener(
-        new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-            BlockNumberDialogFragment.show(
-                id,
-                number,
-                countryIso,
-                PhoneNumberHelper.formatNumber(getContext(), number, countryIso),
-                R.id.blocked_numbers_activity_container,
-                getFragmentManager(),
-                new BlockNumberDialogFragment.Callback() {
-                  @Override
-                  public void onFilterNumberSuccess() {}
+        final View deleteButton = view.findViewById(R.id.delete_button);
+        deleteButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        BlockNumberDialogFragment.show(
+                                id,
+                                number,
+                                countryIso,
+                                PhoneNumberHelper.formatNumber(getContext(), number, countryIso),
+                                R.id.blocked_numbers_activity_container,
+                                getFragmentManager(),
+                                new BlockNumberDialogFragment.Callback() {
+                                    @Override
+                                    public void onFilterNumberSuccess() {
+                                    }
 
-                  @Override
-                  public void onUnfilterNumberSuccess() {
-                    Logger.get(context)
-                        .logInteraction(InteractionEvent.Type.UNBLOCK_NUMBER_MANAGEMENT_SCREEN);
-                  }
+                                    @Override
+                                    public void onUnfilterNumberSuccess() {
+                                        Logger.get(context)
+                                                .logInteraction(InteractionEvent.Type.UNBLOCK_NUMBER_MANAGEMENT_SCREEN);
+                                    }
 
-                  @Override
-                  public void onChangeFilteredNumberUndo() {}
+                                    @Override
+                                    public void onChangeFilteredNumberUndo() {
+                                    }
+                                });
+                    }
                 });
-          }
-        });
 
-    updateView(view, number, countryIso);
-  }
+        updateView(view, number, countryIso);
+    }
 
-  @Override
-  public boolean isEmpty() {
-    // Always return false, so that the header with blocking-related options always shows.
-    return false;
-  }
+    @Override
+    public boolean isEmpty() {
+        // Always return false, so that the header with blocking-related options always shows.
+        return false;
+    }
 }

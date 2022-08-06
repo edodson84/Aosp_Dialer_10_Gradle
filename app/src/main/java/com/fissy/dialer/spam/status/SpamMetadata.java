@@ -27,26 +27,30 @@ import com.google.common.base.Optional;
 @AutoValue
 public abstract class SpamMetadata {
 
-  /** Returns an empty spam metadata, no optional data is set. */
-  public static SpamMetadata empty() {
-    return builder().build();
-  }
+    /**
+     * Returns an empty spam metadata, no optional data is set.
+     */
+    public static SpamMetadata empty() {
+        return builder().build();
+    }
 
-  public static SpamMetadata.Builder builder() {
-    return new AutoValue_SpamMetadata.Builder();
-  }
+    public static SpamMetadata.Builder builder() {
+        return new AutoValue_SpamMetadata.Builder();
+    }
 
-  public abstract Optional<GlobalSpamListStatus> globalSpamListStatus();
+    public abstract Optional<GlobalSpamListStatus> globalSpamListStatus();
 
-  public abstract Optional<UserSpamListStatus> userSpamListStatus();
+    public abstract Optional<UserSpamListStatus> userSpamListStatus();
 
-  /** Creates instances of SpamMetadata. */
-  @AutoValue.Builder
-  public abstract static class Builder {
-    public abstract Builder setGlobalSpamListStatus(GlobalSpamListStatus globalSpamListStatus);
+    /**
+     * Creates instances of SpamMetadata.
+     */
+    @AutoValue.Builder
+    public abstract static class Builder {
+        public abstract Builder setGlobalSpamListStatus(GlobalSpamListStatus globalSpamListStatus);
 
-    public abstract Builder setUserSpamListStatus(UserSpamListStatus userSpamListStatus);
+        public abstract Builder setUserSpamListStatus(UserSpamListStatus userSpamListStatus);
 
-    public abstract SpamMetadata build();
-  }
+        public abstract SpamMetadata build();
+    }
 }

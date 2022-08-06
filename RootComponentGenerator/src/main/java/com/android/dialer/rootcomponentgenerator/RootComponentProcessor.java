@@ -19,21 +19,24 @@ package com.android.dialer.rootcomponentgenerator;
 import com.google.auto.common.BasicAnnotationProcessor;
 import com.google.auto.service.AutoService;
 import com.google.common.collect.ImmutableList;
+
 import javax.annotation.processing.Processor;
 import javax.lang.model.SourceVersion;
 
-/** Processes annotations defined by RootComponentGenerator. */
+/**
+ * Processes annotations defined by RootComponentGenerator.
+ */
 @AutoService(Processor.class)
 public class RootComponentProcessor extends BasicAnnotationProcessor {
 
-  @Override
-  protected Iterable<? extends ProcessingStep> initSteps() {
-    return ImmutableList.of(
-        new MetadataGeneratingStep(processingEnv), new RootComponentGeneratingStep(processingEnv));
-  }
+    @Override
+    protected Iterable<? extends ProcessingStep> initSteps() {
+        return ImmutableList.of(
+                new MetadataGeneratingStep(processingEnv), new RootComponentGeneratingStep(processingEnv));
+    }
 
-  @Override
-  public SourceVersion getSupportedSourceVersion() {
-    return SourceVersion.latestSupported();
-  }
+    @Override
+    public SourceVersion getSupportedSourceVersion() {
+        return SourceVersion.latestSupported();
+    }
 }

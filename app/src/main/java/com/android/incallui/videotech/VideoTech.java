@@ -17,92 +17,97 @@
 package com.android.incallui.videotech;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.telecom.PhoneAccountHandle;
-import com.fissy.dialer.logging.DialerImpression;
+
 import com.android.incallui.video.protocol.VideoCallScreen;
 import com.android.incallui.video.protocol.VideoCallScreenDelegate;
 import com.android.incallui.videotech.utils.SessionModificationState;
+import com.fissy.dialer.logging.DialerImpression;
 
-/** Video calling interface. */
+/**
+ * Video calling interface.
+ */
 public interface VideoTech {
 
-  boolean isAvailable(Context context, PhoneAccountHandle phoneAccountHandle);
+    boolean isAvailable(Context context, PhoneAccountHandle phoneAccountHandle);
 
-  boolean isTransmittingOrReceiving();
+    boolean isTransmittingOrReceiving();
 
-  /**
-   * Determines if the answer video UI should open the camera directly instead of letting the video
-   * tech manage the camera.
-   */
-  boolean isSelfManagedCamera();
+    /**
+     * Determines if the answer video UI should open the camera directly instead of letting the video
+     * tech manage the camera.
+     */
+    boolean isSelfManagedCamera();
 
-  boolean shouldUseSurfaceView();
+    boolean shouldUseSurfaceView();
 
-  /**
-   * Returns true if the video is paused. This is different than if the video stream has been turned
-   * off.
-   *
-   * <p>See {@link #isTransmitting()}
-   */
-  boolean isPaused();
+    /**
+     * Returns true if the video is paused. This is different than if the video stream has been turned
+     * off.
+     *
+     * <p>See {@link #isTransmitting()}
+     */
+    boolean isPaused();
 
-  VideoCallScreenDelegate createVideoCallScreenDelegate(
-      Context context, VideoCallScreen videoCallScreen);
+    VideoCallScreenDelegate createVideoCallScreenDelegate(
+            Context context, VideoCallScreen videoCallScreen);
 
-  void onCallStateChanged(Context context, int newState, PhoneAccountHandle phoneAccountHandle);
+    void onCallStateChanged(Context context, int newState, PhoneAccountHandle phoneAccountHandle);
 
-  void onRemovedFromCallList();
+    void onRemovedFromCallList();
 
-  @SessionModificationState
-  int getSessionModificationState();
+    @SessionModificationState
+    int getSessionModificationState();
 
-  void upgradeToVideo(@NonNull Context context);
+    void upgradeToVideo(@NonNull Context context);
 
-  void acceptVideoRequest(@NonNull Context context);
+    void acceptVideoRequest(@NonNull Context context);
 
-  void acceptVideoRequestAsAudio();
+    void acceptVideoRequestAsAudio();
 
-  void declineVideoRequest();
+    void declineVideoRequest();
 
-  boolean isTransmitting();
+    boolean isTransmitting();
 
-  void stopTransmission();
+    void stopTransmission();
 
-  void resumeTransmission(@NonNull Context context);
+    void resumeTransmission(@NonNull Context context);
 
-  void pause();
+    void pause();
 
-  void unpause();
+    void unpause();
 
-  void setCamera(@Nullable String cameraId);
+    void setCamera(@Nullable String cameraId);
 
-  void setDeviceOrientation(int rotation);
+    void setDeviceOrientation(int rotation);
 
-  /**
-   * Called on {@code VideoTechManager.savedTech} when it's first selected and it will always be
-   * used.
-   */
-  void becomePrimary();
+    /**
+     * Called on {@code VideoTechManager.savedTech} when it's first selected and it will always be
+     * used.
+     */
+    void becomePrimary();
 
-  com.fissy.dialer.logging.VideoTech.Type getVideoTechType();
+    com.fissy.dialer.logging.VideoTech.Type getVideoTechType();
 
-  /** Listener for video call events. */
-  interface VideoTechListener {
+    /**
+     * Listener for video call events.
+     */
+    interface VideoTechListener {
 
-    void onVideoTechStateChanged();
+        void onVideoTechStateChanged();
 
-    void onSessionModificationStateChanged();
+        void onSessionModificationStateChanged();
 
-    void onCameraDimensionsChanged(int width, int height);
+        void onCameraDimensionsChanged(int width, int height);
 
-    void onPeerDimensionsChanged(int width, int height);
+        void onPeerDimensionsChanged(int width, int height);
 
-    void onVideoUpgradeRequestReceived();
+        void onVideoUpgradeRequestReceived();
 
-    void onUpgradedToVideo(boolean switchToSpeaker);
+        void onUpgradedToVideo(boolean switchToSpeaker);
 
-    void onImpressionLoggingNeeded(DialerImpression.Type impressionType);
-  }
+        void onImpressionLoggingNeeded(DialerImpression.Type impressionType);
+    }
 }

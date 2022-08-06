@@ -18,6 +18,7 @@ package com.fissy.dialer.contacts;
 
 import android.content.Context;
 import android.os.UserManager;
+
 import com.fissy.dialer.contacts.displaypreference.ContactDisplayPreferences;
 import com.fissy.dialer.contacts.displaypreference.ContactDisplayPreferencesImpl;
 import com.fissy.dialer.contacts.displaypreference.ContactDisplayPreferencesStub;
@@ -26,27 +27,30 @@ import com.fissy.dialer.contacts.hiresphoto.HighResolutionPhotoRequesterImpl;
 import com.fissy.dialer.inject.ApplicationContext;
 import com.fissy.dialer.inject.DialerVariant;
 import com.fissy.dialer.inject.InstallIn;
+
 import dagger.Binds;
 import dagger.Lazy;
 import dagger.Module;
 import dagger.Provides;
 
-/** Module for standard {@link ContactsComponent} */
+/**
+ * Module for standard {@link ContactsComponent}
+ */
 @InstallIn(variants = {DialerVariant.DIALER_TEST})
 @Module
 public abstract class ContactsModule {
-  @Provides
-  public static ContactDisplayPreferences provideContactDisplayPreferences(
-      @ApplicationContext Context appContext,
-      Lazy<ContactDisplayPreferencesImpl> impl,
-      ContactDisplayPreferencesStub stub) {
-    if (appContext.getSystemService(UserManager.class).isUserUnlocked()) {
-      return impl.get();
+    @Provides
+    public static ContactDisplayPreferences provideContactDisplayPreferences(
+            @ApplicationContext Context appContext,
+            Lazy<ContactDisplayPreferencesImpl> impl,
+            ContactDisplayPreferencesStub stub) {
+        if (appContext.getSystemService(UserManager.class).isUserUnlocked()) {
+            return impl.get();
+        }
+        return stub;
     }
-    return stub;
-  }
 
-  @Binds
-  public abstract HighResolutionPhotoRequester toHighResolutionPhotoRequesterImpl(
-      HighResolutionPhotoRequesterImpl impl);
+    @Binds
+    public abstract HighResolutionPhotoRequester toHighResolutionPhotoRequesterImpl(
+            HighResolutionPhotoRequesterImpl impl);
 }

@@ -16,24 +16,26 @@
 
 package com.fissy.dialer.enrichedcall.simulator;
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
 import com.fissy.dialer.R;
 
-/** ViewHolder for an Enriched call session. */
+/**
+ * ViewHolder for an Enriched call session.
+ */
 class SessionViewHolder extends RecyclerView.ViewHolder {
 
-  private final TextView sessionStringView;
+    private final TextView sessionStringView;
 
-  SessionViewHolder(View view) {
-    super(view);
-    sessionStringView = view.findViewById(R.id.session_string);
-  }
+    SessionViewHolder(View view) {
+        super(view);
+        sessionStringView = view.findViewById(R.id.session_string);
+    }
 
-  void updateSession(@NonNull String sessionString) {
-    sessionStringView.setText(sessionString);
-  }
+    void updateSession(@NonNull String sessionString) {
+        sessionStringView.setText(sessionString);
+    }
 }

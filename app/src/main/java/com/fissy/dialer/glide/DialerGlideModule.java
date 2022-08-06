@@ -24,4 +24,5 @@ import com.bumptech.glide.module.AppGlideModule;
  * generated API, which most documentations are based on.
  */
 @GlideModule
-public class DialerGlideModule extends AppGlideModule {}
+public class DialerGlideModule extends AppGlideModule {
+}

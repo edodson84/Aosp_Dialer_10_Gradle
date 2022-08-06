@@ -19,57 +19,60 @@ package com.android.incallui.disconnectdialog;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.telecom.DisconnectCause;
 import android.telecom.PhoneAccountHandle;
 import android.util.Pair;
+
 import com.android.contacts.common.compat.telecom.TelecomManagerCompat;
+import com.android.incallui.call.DialerCall;
 import com.fissy.dialer.R;
 import com.fissy.dialer.callintent.CallInitiationType;
 import com.fissy.dialer.callintent.CallIntentBuilder;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.precall.PreCall;
-import com.android.incallui.call.DialerCall;
 
-/** Prompt user to make voice call if video call is not currently available. */
+/**
+ * Prompt user to make voice call if video call is not currently available.
+ */
 public class VideoCallNotAvailablePrompt implements DisconnectDialog {
 
-  @Override
-  public boolean shouldShow(DisconnectCause disconnectCause) {
-    if (disconnectCause.getCode() == DisconnectCause.ERROR
-        && TelecomManagerCompat.REASON_IMS_ACCESS_BLOCKED.equals(disconnectCause.getReason())) {
-      LogUtil.i(
-          "VideoCallNotAvailablePrompt.shouldShowPrompt",
-          "showing prompt for disconnect cause: %s",
-          disconnectCause.getReason());
-      return true;
-    } else {
-      return false;
+    @Override
+    public boolean shouldShow(DisconnectCause disconnectCause) {
+        if (disconnectCause.getCode() == DisconnectCause.ERROR
+                && TelecomManagerCompat.REASON_IMS_ACCESS_BLOCKED.equals(disconnectCause.getReason())) {
+            LogUtil.i(
+                    "VideoCallNotAvailablePrompt.shouldShowPrompt",
+                    "showing prompt for disconnect cause: %s",
+                    disconnectCause.getReason());
+            return true;
+        } else {
+            return false;
+        }
     }
-  }
 
-  @Override
-  public Pair<Dialog, CharSequence> createDialog(@NonNull Context context, DialerCall call) {
-    CharSequence title = context.getString(R.string.video_call_not_available_title);
+    @Override
+    public Pair<Dialog, CharSequence> createDialog(@NonNull Context context, DialerCall call) {
+        CharSequence title = context.getString(R.string.video_call_not_available_title);
 
-    Dialog dialog =
-        new AlertDialog.Builder(context)
-            .setTitle(title)
-            .setMessage(context.getString(R.string.video_call_not_available_message))
-            .setPositiveButton(
-                R.string.voice_call,
-                (dialog1, which) ->
-                    makeVoiceCall(context, call.getNumber(), call.getAccountHandle()))
-            .setNegativeButton(android.R.string.cancel, null)
-            .create();
-    return new Pair<>(dialog, title);
-  }
+        Dialog dialog =
+                new AlertDialog.Builder(context)
+                        .setTitle(title)
+                        .setMessage(context.getString(R.string.video_call_not_available_message))
+                        .setPositiveButton(
+                                R.string.voice_call,
+                                (dialog1, which) ->
+                                        makeVoiceCall(context, call.getNumber(), call.getAccountHandle()))
+                        .setNegativeButton(android.R.string.cancel, null)
+                        .create();
+        return new Pair<>(dialog, title);
+    }
 
-  private void makeVoiceCall(Context context, String number, PhoneAccountHandle accountHandle) {
-    LogUtil.enterBlock("VideoCallNotAvailablePrompt.makeVoiceCall");
-    PreCall.start(
-        context,
-        new CallIntentBuilder(number, CallInitiationType.Type.IMS_VIDEO_BLOCKED_FALLBACK_TO_VOICE)
-            .setPhoneAccountHandle(accountHandle));
-  }
+    private void makeVoiceCall(Context context, String number, PhoneAccountHandle accountHandle) {
+        LogUtil.enterBlock("VideoCallNotAvailablePrompt.makeVoiceCall");
+        PreCall.start(
+                context,
+                new CallIntentBuilder(number, CallInitiationType.Type.IMS_VIDEO_BLOCKED_FALLBACK_TO_VOICE)
+                        .setPhoneAccountHandle(accountHandle));
+    }
 }

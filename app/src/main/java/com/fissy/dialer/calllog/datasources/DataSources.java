@@ -18,12 +18,14 @@ package com.fissy.dialer.calllog.datasources;
 
 import com.google.common.collect.ImmutableList;
 
-/** Immutable lists of data sources used to populate the annotated call log. */
+/**
+ * Immutable lists of data sources used to populate the annotated call log.
+ */
 public interface DataSources {
 
-  CallLogDataSource getSystemCallLogDataSource();
+    CallLogDataSource getSystemCallLogDataSource();
 
-  ImmutableList<CallLogDataSource> getDataSourcesIncludingSystemCallLog();
+    ImmutableList<CallLogDataSource> getDataSourcesIncludingSystemCallLog();
 
-  ImmutableList<CallLogDataSource> getDataSourcesExcludingSystemCallLog();
+    ImmutableList<CallLogDataSource> getDataSourcesExcludingSystemCallLog();
 }

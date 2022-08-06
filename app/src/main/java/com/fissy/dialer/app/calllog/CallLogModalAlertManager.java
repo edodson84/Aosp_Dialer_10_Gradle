@@ -29,47 +29,46 @@ import com.fissy.dialer.app.alert.AlertManager;
  */
 public class CallLogModalAlertManager implements AlertManager {
 
-  interface Listener {
-    void onShowModalAlert(boolean show);
-  }
-
-  private final Listener listener;
-  private final ViewGroup parent;
-  private final ViewGroup container;
-  private final LayoutInflater inflater;
-
-  public CallLogModalAlertManager(LayoutInflater inflater, ViewGroup parent, Listener listener) {
-    this.inflater = inflater;
-    this.parent = parent;
-    this.listener = listener;
-    container = (ViewGroup) parent.findViewById(R.id.modal_message_container);
-  }
-
-  @Override
-  public View inflate(int layoutId) {
-    return inflater.inflate(layoutId, parent, false);
-  }
-
-  @Override
-  public void add(View view) {
-    if (contains(view)) {
-      return;
+    private final Listener listener;
+    private final ViewGroup parent;
+    private final ViewGroup container;
+    private final LayoutInflater inflater;
+    public CallLogModalAlertManager(LayoutInflater inflater, ViewGroup parent, Listener listener) {
+        this.inflater = inflater;
+        this.parent = parent;
+        this.listener = listener;
+        container = (ViewGroup) parent.findViewById(R.id.modal_message_container);
     }
-    container.addView(view);
-    listener.onShowModalAlert(true);
-  }
 
-  @Override
-  public void clear() {
-    container.removeAllViews();
-    listener.onShowModalAlert(false);
-  }
+    @Override
+    public View inflate(int layoutId) {
+        return inflater.inflate(layoutId, parent, false);
+    }
 
-  public boolean isEmpty() {
-    return container.getChildCount() == 0;
-  }
+    @Override
+    public void add(View view) {
+        if (contains(view)) {
+            return;
+        }
+        container.addView(view);
+        listener.onShowModalAlert(true);
+    }
 
-  public boolean contains(View view) {
-    return container.indexOfChild(view) != -1;
-  }
+    @Override
+    public void clear() {
+        container.removeAllViews();
+        listener.onShowModalAlert(false);
+    }
+
+    public boolean isEmpty() {
+        return container.getChildCount() == 0;
+    }
+
+    public boolean contains(View view) {
+        return container.indexOfChild(view) != -1;
+    }
+
+    interface Listener {
+        void onShowModalAlert(boolean show);
+    }
 }

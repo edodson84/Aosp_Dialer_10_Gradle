@@ -18,17 +18,20 @@ package com.fissy.dialer.metrics;
 
 import com.fissy.dialer.inject.DialerVariant;
 import com.fissy.dialer.inject.InstallIn;
+
 import dagger.Binds;
 import dagger.Module;
 
-/** Binds stub {@link Metrics}. */
+/**
+ * Binds stub {@link Metrics}.
+ */
 @InstallIn(variants = {DialerVariant.DIALER_TEST})
 @Module
 public interface StubMetricsModule {
 
-  @Binds
-  Metrics bindMetrics(StubMetrics stub);
+    @Binds
+    Metrics bindMetrics(StubMetrics stub);
 
-  @Binds
-  Metrics.Initializer bindMetricsInitializer(StubMetricsInitializer stub);
+    @Binds
+    Metrics.Initializer bindMetricsInitializer(StubMetricsInitializer stub);
 }

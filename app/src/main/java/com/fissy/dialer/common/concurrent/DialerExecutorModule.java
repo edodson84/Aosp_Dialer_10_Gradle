@@ -16,6 +16,7 @@
 package com.fissy.dialer.common.concurrent;
 
 import android.os.AsyncTask;
+
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.common.concurrent.Annotations.BackgroundExecutor;
 import com.fissy.dialer.common.concurrent.Annotations.LightweightExecutor;
@@ -26,100 +27,105 @@ import com.fissy.dialer.common.concurrent.Annotations.UiParallel;
 import com.fissy.dialer.common.concurrent.Annotations.UiSerial;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.common.util.concurrent.MoreExecutors;
-import dagger.Binds;
-import dagger.Module;
-import dagger.Provides;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadFactory;
+
 import javax.inject.Singleton;
 
-/** Module which provides concurrency bindings. */
+import dagger.Binds;
+import dagger.Module;
+import dagger.Provides;
+
+/**
+ * Module which provides concurrency bindings.
+ */
 @Module
 public abstract class DialerExecutorModule {
 
-  @Binds
-  abstract DialerExecutorFactory bindDialerExecutorFactory(
-      DefaultDialerExecutorFactory defaultDialerExecutorFactory);
+    @Provides
+    @Singleton
+    @Ui
+    static ListeningExecutorService provideUiThreadExecutorService() {
+        return new UiThreadExecutor();
+    }
 
-  @Provides
-  @Singleton
-  @Ui
-  static ListeningExecutorService provideUiThreadExecutorService() {
-    return new UiThreadExecutor();
-  }
+    @Provides
+    @Singleton
+    @NonUiParallel
+    static ExecutorService provideNonUiThreadPool() {
+        return Executors.newFixedThreadPool(
+                5,
+                new ThreadFactory() {
+                    @Override
+                    public Thread newThread(Runnable runnable) {
+                        LogUtil.i("DialerExecutorModule.newThread", "creating low priority thread");
+                        Thread thread = new Thread(runnable, "DialerExecutors-LowPriority");
+                        // Java thread priority 4 corresponds to Process.THREAD_PRIORITY_BACKGROUND (10)
+                        thread.setPriority(4);
+                        return thread;
+                    }
+                });
+    }
 
-  @Provides
-  @Singleton
-  @NonUiParallel
-  static ExecutorService provideNonUiThreadPool() {
-    return Executors.newFixedThreadPool(
-        5,
-        new ThreadFactory() {
-          @Override
-          public Thread newThread(Runnable runnable) {
-            LogUtil.i("DialerExecutorModule.newThread", "creating low priority thread");
-            Thread thread = new Thread(runnable, "DialerExecutors-LowPriority");
-            // Java thread priority 4 corresponds to Process.THREAD_PRIORITY_BACKGROUND (10)
-            thread.setPriority(4);
-            return thread;
-          }
-        });
-  }
+    @Provides
+    @Singleton
+    @NonUiSerial
+    static ScheduledExecutorService provideNonUiSerialExecutorService() {
+        return Executors.newSingleThreadScheduledExecutor(
+                new ThreadFactory() {
+                    @Override
+                    public Thread newThread(Runnable runnable) {
+                        LogUtil.i("NonUiTaskBuilder.newThread", "creating serial thread");
+                        Thread thread = new Thread(runnable, "DialerExecutors-LowPriority-Serial");
+                        // Java thread priority 4 corresponds to Process.THREAD_PRIORITY_BACKGROUND (10)
+                        thread.setPriority(4);
+                        return thread;
+                    }
+                });
+    }
 
-  @Provides
-  @Singleton
-  @NonUiSerial
-  static ScheduledExecutorService provideNonUiSerialExecutorService() {
-    return Executors.newSingleThreadScheduledExecutor(
-        new ThreadFactory() {
-          @Override
-          public Thread newThread(Runnable runnable) {
-            LogUtil.i("NonUiTaskBuilder.newThread", "creating serial thread");
-            Thread thread = new Thread(runnable, "DialerExecutors-LowPriority-Serial");
-            // Java thread priority 4 corresponds to Process.THREAD_PRIORITY_BACKGROUND (10)
-            thread.setPriority(4);
-            return thread;
-          }
-        });
-  }
+    @Provides
+    @UiParallel
+    static ExecutorService provideUiThreadPool() {
+        return (ExecutorService) AsyncTask.THREAD_POOL_EXECUTOR;
+    }
 
-  @Provides
-  @UiParallel
-  static ExecutorService provideUiThreadPool() {
-    return (ExecutorService) AsyncTask.THREAD_POOL_EXECUTOR;
-  }
+    @Provides
+    @Singleton
+    @UiSerial
+    static ScheduledExecutorService provideUiSerialExecutorService() {
+        return Executors.newSingleThreadScheduledExecutor(
+                new ThreadFactory() {
+                    @Override
+                    public Thread newThread(Runnable runnable) {
+                        LogUtil.i("DialerExecutorModule.newThread", "creating serial thread");
+                        Thread thread = new Thread(runnable, "DialerExecutors-HighPriority-Serial");
+                        // Java thread priority 5 corresponds to Process.THREAD_PRIORITY_DEFAULT (0)
+                        thread.setPriority(5);
+                        return thread;
+                    }
+                });
+    }
 
-  @Provides
-  @Singleton
-  @UiSerial
-  static ScheduledExecutorService provideUiSerialExecutorService() {
-    return Executors.newSingleThreadScheduledExecutor(
-        new ThreadFactory() {
-          @Override
-          public Thread newThread(Runnable runnable) {
-            LogUtil.i("DialerExecutorModule.newThread", "creating serial thread");
-            Thread thread = new Thread(runnable, "DialerExecutors-HighPriority-Serial");
-            // Java thread priority 5 corresponds to Process.THREAD_PRIORITY_DEFAULT (0)
-            thread.setPriority(5);
-            return thread;
-          }
-        });
-  }
+    @Provides
+    @Singleton
+    @LightweightExecutor
+    static ListeningExecutorService provideLightweightExecutor(@UiParallel ExecutorService delegate) {
+        return MoreExecutors.listeningDecorator(delegate);
+    }
 
-  @Provides
-  @Singleton
-  @LightweightExecutor
-  static ListeningExecutorService provideLightweightExecutor(@UiParallel ExecutorService delegate) {
-    return MoreExecutors.listeningDecorator(delegate);
-  }
+    @Provides
+    @Singleton
+    @BackgroundExecutor
+    static ListeningExecutorService provideBackgroundExecutor(
+            @NonUiParallel ExecutorService delegate) {
+        return MoreExecutors.listeningDecorator(delegate);
+    }
 
-  @Provides
-  @Singleton
-  @BackgroundExecutor
-  static ListeningExecutorService provideBackgroundExecutor(
-      @NonUiParallel ExecutorService delegate) {
-    return MoreExecutors.listeningDecorator(delegate);
-  }
+    @Binds
+    abstract DialerExecutorFactory bindDialerExecutorFactory(
+            DefaultDialerExecutorFactory defaultDialerExecutorFactory);
 }

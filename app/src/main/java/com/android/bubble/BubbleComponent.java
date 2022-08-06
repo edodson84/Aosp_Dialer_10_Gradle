@@ -17,23 +17,27 @@
 package com.android.bubble;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
+
 import com.fissy.dialer.inject.HasRootComponent;
+
 import dagger.Subcomponent;
 
 @Subcomponent
 public abstract class BubbleComponent {
 
-  @NonNull
-  public abstract Bubble getBubble();
+    public static BubbleComponent get(Context context) {
+        return ((HasComponent) ((HasRootComponent) context.getApplicationContext()).component())
+                .bubbleComponent();
+    }
 
-  public static BubbleComponent get(Context context) {
-    return ((HasComponent) ((HasRootComponent) context.getApplicationContext()).component())
-        .bubbleComponent();
-  }
+    @NonNull
+    public abstract Bubble getBubble();
 
-  /** Used to refer to the root application component. */
-  public interface HasComponent {
-    BubbleComponent bubbleComponent();
-  }
+    /**
+     * Used to refer to the root application component.
+     */
+    public interface HasComponent {
+        BubbleComponent bubbleComponent();
+    }
 }

@@ -19,17 +19,27 @@ package com.android.incallui.answer.impl.classifier;
 import android.hardware.SensorEvent;
 import android.view.MotionEvent;
 
-/** An abstract class for classifiers for touch and sensor events. */
+/**
+ * An abstract class for classifiers for touch and sensor events.
+ */
 abstract class Classifier {
 
-  /** Contains all the information about touch events from which the classifier can query */
-  protected ClassifierData classifierData;
+    /**
+     * Contains all the information about touch events from which the classifier can query
+     */
+    protected ClassifierData classifierData;
 
-  /** Informs the classifier that a new touch event has occurred */
-  public void onTouchEvent(MotionEvent event) {}
+    /**
+     * Informs the classifier that a new touch event has occurred
+     */
+    public void onTouchEvent(MotionEvent event) {
+    }
 
-  /** Informs the classifier that a sensor change occurred */
-  public void onSensorChanged(SensorEvent event) {}
+    /**
+     * Informs the classifier that a sensor change occurred
+     */
+    public void onSensorChanged(SensorEvent event) {
+    }
 
-  public abstract String getTag();
+    public abstract String getTag();
 }

@@ -26,39 +26,39 @@ import android.provider.ContactsContract.CommonDataKinds.Organization;
  */
 public class OrganizationDataItem extends DataItem {
 
-  /* package */ OrganizationDataItem(ContentValues values) {
-    super(values);
-  }
+    /* package */ OrganizationDataItem(ContentValues values) {
+        super(values);
+    }
 
-  public String getCompany() {
-    return getContentValues().getAsString(Organization.COMPANY);
-  }
+    public String getCompany() {
+        return getContentValues().getAsString(Organization.COMPANY);
+    }
 
-  public String getLabel() {
-    return getContentValues().getAsString(Organization.LABEL);
-  }
+    public String getLabel() {
+        return getContentValues().getAsString(Organization.LABEL);
+    }
 
-  public String getTitle() {
-    return getContentValues().getAsString(Organization.TITLE);
-  }
+    public String getTitle() {
+        return getContentValues().getAsString(Organization.TITLE);
+    }
 
-  public String getDepartment() {
-    return getContentValues().getAsString(Organization.DEPARTMENT);
-  }
+    public String getDepartment() {
+        return getContentValues().getAsString(Organization.DEPARTMENT);
+    }
 
-  public String getJobDescription() {
-    return getContentValues().getAsString(Organization.JOB_DESCRIPTION);
-  }
+    public String getJobDescription() {
+        return getContentValues().getAsString(Organization.JOB_DESCRIPTION);
+    }
 
-  public String getSymbol() {
-    return getContentValues().getAsString(Organization.SYMBOL);
-  }
+    public String getSymbol() {
+        return getContentValues().getAsString(Organization.SYMBOL);
+    }
 
-  public String getPhoneticName() {
-    return getContentValues().getAsString(Organization.PHONETIC_NAME);
-  }
+    public String getPhoneticName() {
+        return getContentValues().getAsString(Organization.PHONETIC_NAME);
+    }
 
-  public String getOfficeLocation() {
-    return getContentValues().getAsString(Organization.OFFICE_LOCATION);
-  }
+    public String getOfficeLocation() {
+        return getContentValues().getAsString(Organization.OFFICE_LOCATION);
+    }
 }

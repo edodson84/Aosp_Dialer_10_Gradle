@@ -1,15 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_enabled="true" android:state_pressed="true">
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:state_enabled="true"
+        android:state_pressed="true">
         <set>
-            <objectAnimator android:duration="100" android:valueTo="4.0dip" android:valueType="floatType" android:propertyName="translationZ" />
-            <objectAnimator android:duration="0" android:valueTo="@dimen/incall_call_button_elevation" android:valueType="floatType" android:propertyName="elevation" />
+            <objectAnimator
+                android:duration="100"
+                android:propertyName="translationZ"
+                android:valueTo="4.0dip"
+                android:valueType="floatType" />
+            <objectAnimator
+                android:duration="0"
+                android:propertyName="elevation"
+                android:valueTo="@dimen/incall_call_button_elevation"
+                android:valueType="floatType" />
         </set>
     </item>
     <item android:state_enabled="true">
         <set>
-            <objectAnimator android:duration="100" android:valueTo="0" android:valueType="floatType" android:propertyName="translationZ" android:startDelay="100" />
-            <objectAnimator android:duration="0" android:valueTo="@dimen/incall_call_button_elevation" android:valueType="floatType" android:propertyName="elevation" />
+            <objectAnimator
+                android:duration="100"
+                android:propertyName="translationZ"
+                android:startDelay="100"
+                android:valueTo="0"
+                android:valueType="floatType" />
+            <objectAnimator
+                android:duration="0"
+                android:propertyName="elevation"
+                android:valueTo="@dimen/incall_call_button_elevation"
+                android:valueType="floatType" />
         </set>
-    </item> ... </selector>
+    </item>
+    ...
+</selector>

@@ -28,12 +28,13 @@ import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.PhoneLookup;
-import android.support.annotation.MainThread;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.WorkerThread;
-import android.support.v4.content.ContextCompat;
+import androidx.annotation.MainThread;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.WorkerThread;
+import androidx.core.content.ContextCompat;
 import android.text.TextUtils;
+
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.common.concurrent.AsyncTaskExecutor;
@@ -51,82 +52,84 @@ import com.fissy.dialer.common.concurrent.AsyncTaskExecutors;
 @TargetApi(VERSION_CODES.N_MR1) // Shortcuts introduced in N_MR1
 public class ShortcutUsageReporter {
 
-  private static final AsyncTaskExecutor EXECUTOR = AsyncTaskExecutors.createThreadPoolExecutor();
+    private static final AsyncTaskExecutor EXECUTOR = AsyncTaskExecutors.createThreadPoolExecutor();
 
-  /**
-   * Called when an outgoing call is added to the call list in order to report outgoing calls as
-   * shortcut usage. This should be called exactly once for each outgoing call.
-   *
-   * <p>Asynchronously queries the contacts database for the contact's lookup key which corresponds
-   * to the provided phone number, and uses that to report shortcut usage.
-   *
-   * @param context used to access ShortcutManager system service
-   * @param phoneNumber the phone number being called
-   */
-  @MainThread
-  public static void onOutgoingCallAdded(@NonNull Context context, @Nullable String phoneNumber) {
-    Assert.isMainThread();
-    Assert.isNotNull(context);
+    /**
+     * Called when an outgoing call is added to the call list in order to report outgoing calls as
+     * shortcut usage. This should be called exactly once for each outgoing call.
+     *
+     * <p>Asynchronously queries the contacts database for the contact's lookup key which corresponds
+     * to the provided phone number, and uses that to report shortcut usage.
+     *
+     * @param context     used to access ShortcutManager system service
+     * @param phoneNumber the phone number being called
+     */
+    @MainThread
+    public static void onOutgoingCallAdded(@NonNull Context context, @Nullable String phoneNumber) {
+        Assert.isMainThread();
+        Assert.isNotNull(context);
 
-    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N_MR1 || TextUtils.isEmpty(phoneNumber)) {
-      return;
-    }
-
-    EXECUTOR.submit(Task.ID, new Task(context), phoneNumber);
-  }
-
-  private static final class Task extends AsyncTask<String, Void, Void> {
-    private static final String ID = "ShortcutUsageReporter.Task";
-
-    private final Context context;
-
-    public Task(Context context) {
-      this.context = context;
-    }
-
-    /** @param phoneNumbers array with exactly one non-empty phone number */
-    @Override
-    @WorkerThread
-    protected Void doInBackground(@NonNull String... phoneNumbers) {
-      Assert.isWorkerThread();
-
-      String lookupKey = queryForLookupKey(phoneNumbers[0]);
-      if (!TextUtils.isEmpty(lookupKey)) {
-        LogUtil.i("ShortcutUsageReporter.backgroundLogUsage", "%s", lookupKey);
-        ShortcutManager shortcutManager =
-            (ShortcutManager) context.getSystemService(Context.SHORTCUT_SERVICE);
-
-        // Note: There may not currently exist a shortcut with the provided key, but it is logged
-        // anyway, so that launcher applications at least have the information should the shortcut
-        // be created in the future.
-        shortcutManager.reportShortcutUsed(lookupKey);
-      }
-      return null;
-    }
-
-    @Nullable
-    @WorkerThread
-    private String queryForLookupKey(String phoneNumber) {
-      Assert.isWorkerThread();
-
-      if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_CONTACTS)
-          != PackageManager.PERMISSION_GRANTED) {
-        LogUtil.i("ShortcutUsageReporter.queryForLookupKey", "No contact permissions");
-        return null;
-      }
-
-      Uri uri = Uri.withAppendedPath(PhoneLookup.CONTENT_FILTER_URI, Uri.encode(phoneNumber));
-      try (Cursor cursor =
-          context
-              .getContentResolver()
-              .query(uri, new String[] {Contacts.LOOKUP_KEY}, null, null, null)) {
-
-        if (cursor == null || !cursor.moveToNext()) {
-          return null; // No contact for dialed number
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N_MR1 || TextUtils.isEmpty(phoneNumber)) {
+            return;
         }
-        // Arbitrarily use first result.
-        return cursor.getString(cursor.getColumnIndex(Contacts.LOOKUP_KEY));
-      }
+
+        EXECUTOR.submit(Task.ID, new Task(context), phoneNumber);
     }
-  }
+
+    private static final class Task extends AsyncTask<String, Void, Void> {
+        private static final String ID = "ShortcutUsageReporter.Task";
+
+        private final Context context;
+
+        public Task(Context context) {
+            this.context = context;
+        }
+
+        /**
+         * @param phoneNumbers array with exactly one non-empty phone number
+         */
+        @Override
+        @WorkerThread
+        protected Void doInBackground(@NonNull String... phoneNumbers) {
+            Assert.isWorkerThread();
+
+            String lookupKey = queryForLookupKey(phoneNumbers[0]);
+            if (!TextUtils.isEmpty(lookupKey)) {
+                LogUtil.i("ShortcutUsageReporter.backgroundLogUsage", "%s", lookupKey);
+                ShortcutManager shortcutManager =
+                        (ShortcutManager) context.getSystemService(Context.SHORTCUT_SERVICE);
+
+                // Note: There may not currently exist a shortcut with the provided key, but it is logged
+                // anyway, so that launcher applications at least have the information should the shortcut
+                // be created in the future.
+                shortcutManager.reportShortcutUsed(lookupKey);
+            }
+            return null;
+        }
+
+        @Nullable
+        @WorkerThread
+        private String queryForLookupKey(String phoneNumber) {
+            Assert.isWorkerThread();
+
+            if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_CONTACTS)
+                    != PackageManager.PERMISSION_GRANTED) {
+                LogUtil.i("ShortcutUsageReporter.queryForLookupKey", "No contact permissions");
+                return null;
+            }
+
+            Uri uri = Uri.withAppendedPath(PhoneLookup.CONTENT_FILTER_URI, Uri.encode(phoneNumber));
+            try (Cursor cursor =
+                         context
+                                 .getContentResolver()
+                                 .query(uri, new String[]{Contacts.LOOKUP_KEY}, null, null, null)) {
+
+                if (cursor == null || !cursor.moveToNext()) {
+                    return null; // No contact for dialed number
+                }
+                // Arbitrarily use first result.
+                return cursor.getString(cursor.getColumnIndex(Contacts.LOOKUP_KEY));
+            }
+        }
+    }
 }

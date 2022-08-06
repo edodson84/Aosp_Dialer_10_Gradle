@@ -17,28 +17,31 @@
 package com.android.incallui.videosurface.bindings;
 
 import android.view.TextureView;
+
 import com.android.incallui.videosurface.impl.VideoScale;
 import com.android.incallui.videosurface.impl.VideoSurfaceTextureImpl;
 import com.android.incallui.videosurface.protocol.VideoSurfaceTexture;
 
-/** Bindings for video surface module. */
+/**
+ * Bindings for video surface module.
+ */
 public class VideoSurfaceBindings {
 
-  public static VideoSurfaceTexture createLocalVideoSurfaceTexture(boolean isPixel2017) {
-    return new VideoSurfaceTextureImpl(isPixel2017, VideoSurfaceTexture.SURFACE_TYPE_LOCAL);
-  }
+    public static VideoSurfaceTexture createLocalVideoSurfaceTexture(boolean isPixel2017) {
+        return new VideoSurfaceTextureImpl(isPixel2017, VideoSurfaceTexture.SURFACE_TYPE_LOCAL);
+    }
 
-  public static VideoSurfaceTexture createRemoteVideoSurfaceTexture(boolean isPixel2017) {
-    return new VideoSurfaceTextureImpl(isPixel2017, VideoSurfaceTexture.SURFACE_TYPE_REMOTE);
-  }
+    public static VideoSurfaceTexture createRemoteVideoSurfaceTexture(boolean isPixel2017) {
+        return new VideoSurfaceTextureImpl(isPixel2017, VideoSurfaceTexture.SURFACE_TYPE_REMOTE);
+    }
 
-  public static void scaleVideoAndFillView(
-      TextureView textureView, float videoWidth, float videoHeight, float rotationDegrees) {
-    VideoScale.scaleVideoAndFillView(textureView, videoWidth, videoHeight, rotationDegrees);
-  }
+    public static void scaleVideoAndFillView(
+            TextureView textureView, float videoWidth, float videoHeight, float rotationDegrees) {
+        VideoScale.scaleVideoAndFillView(textureView, videoWidth, videoHeight, rotationDegrees);
+    }
 
-  public static void scaleVideoMaintainingAspectRatio(
-      TextureView textureView, int videoWidth, int videoHeight) {
-    VideoScale.scaleVideoMaintainingAspectRatio(textureView, videoWidth, videoHeight);
-  }
+    public static void scaleVideoMaintainingAspectRatio(
+            TextureView textureView, int videoWidth, int videoHeight) {
+        VideoScale.scaleVideoMaintainingAspectRatio(textureView, videoWidth, videoHeight);
+    }
 }

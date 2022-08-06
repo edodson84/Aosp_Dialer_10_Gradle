@@ -26,33 +26,35 @@ import com.fissy.dialer.contactphoto.ContactPhotoManager;
 import com.fissy.dialer.location.GeoUtil;
 import com.fissy.dialer.phonenumbercache.ContactInfoHelper;
 
-/** TODO(calderwoodra): documentation */
+/**
+ * TODO(calderwoodra): documentation
+ */
 public class ViewNumbersToImportAdapter extends NumbersAdapter {
 
-  private ViewNumbersToImportAdapter(
-      Context context,
-      FragmentManager fragmentManager,
-      ContactInfoHelper contactInfoHelper,
-      ContactPhotoManager contactPhotoManager) {
-    super(context, fragmentManager, contactInfoHelper, contactPhotoManager);
-  }
+    private ViewNumbersToImportAdapter(
+            Context context,
+            FragmentManager fragmentManager,
+            ContactInfoHelper contactInfoHelper,
+            ContactPhotoManager contactPhotoManager) {
+        super(context, fragmentManager, contactInfoHelper, contactPhotoManager);
+    }
 
-  public static ViewNumbersToImportAdapter newViewNumbersToImportAdapter(
-      Context context, FragmentManager fragmentManager) {
-    return new ViewNumbersToImportAdapter(
-        context,
-        fragmentManager,
-        new ContactInfoHelper(context, GeoUtil.getCurrentCountryIso(context)),
-        ContactPhotoManager.getInstance(context));
-  }
+    public static ViewNumbersToImportAdapter newViewNumbersToImportAdapter(
+            Context context, FragmentManager fragmentManager) {
+        return new ViewNumbersToImportAdapter(
+                context,
+                fragmentManager,
+                new ContactInfoHelper(context, GeoUtil.getCurrentCountryIso(context)),
+                ContactPhotoManager.getInstance(context));
+    }
 
-  @Override
-  public void bindView(View view, Context context, Cursor cursor) {
-    super.bindView(view, context, cursor);
+    @Override
+    public void bindView(View view, Context context, Cursor cursor) {
+        super.bindView(view, context, cursor);
 
-    final String number = cursor.getString(FilteredNumbersUtil.PhoneQuery.NUMBER_COLUMN_INDEX);
+        final String number = cursor.getString(FilteredNumbersUtil.PhoneQuery.NUMBER_COLUMN_INDEX);
 
-    view.findViewById(R.id.delete_button).setVisibility(View.GONE);
-    updateView(view, number, null /* countryIso */);
-  }
+        view.findViewById(R.id.delete_button).setVisibility(View.GONE);
+        updateView(view, number, null /* countryIso */);
+    }
 }

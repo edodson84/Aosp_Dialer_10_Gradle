@@ -17,34 +17,36 @@
 package com.fissy.dialer.widget;
 
 import android.content.Context;
-import android.support.v4.view.ViewPager;
+import androidx.viewpager.widget.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
-/** {@link ViewPager} useful for disabled swiping between pages. */
+/**
+ * {@link ViewPager} useful for disabled swiping between pages.
+ */
 public class LockableViewPager extends ViewPager {
 
-  private boolean swipingLocked;
+    private boolean swipingLocked;
 
-  public LockableViewPager(Context context, AttributeSet attributeSet) {
-    super(context, attributeSet);
-  }
+    public LockableViewPager(Context context, AttributeSet attributeSet) {
+        super(context, attributeSet);
+    }
 
-  public void setSwipingLocked(boolean swipingLocked) {
-    this.swipingLocked = swipingLocked;
-  }
+    public boolean isSwipingLocked() {
+        return swipingLocked;
+    }
 
-  public boolean isSwipingLocked() {
-    return swipingLocked;
-  }
+    public void setSwipingLocked(boolean swipingLocked) {
+        this.swipingLocked = swipingLocked;
+    }
 
-  @Override
-  public boolean onInterceptTouchEvent(MotionEvent motionEvent) {
-    return !swipingLocked && super.onInterceptTouchEvent(motionEvent);
-  }
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent motionEvent) {
+        return !swipingLocked && super.onInterceptTouchEvent(motionEvent);
+    }
 
-  @Override
-  public boolean onTouchEvent(MotionEvent motionEvent) {
-    return !swipingLocked && super.onTouchEvent(motionEvent);
-  }
+    @Override
+    public boolean onTouchEvent(MotionEvent motionEvent) {
+        return !swipingLocked && super.onTouchEvent(motionEvent);
+    }
 }

@@ -16,8 +16,10 @@
 
 package com.android.incallui.rtt.protocol;
 
-/** Callbacks from the module out to the container. */
+/**
+ * Callbacks from the module out to the container.
+ */
 public interface RttCallScreenDelegateFactory {
 
-  RttCallScreenDelegate newRttCallScreenDelegate(RttCallScreen rttCallScreen);
+    RttCallScreenDelegate newRttCallScreenDelegate(RttCallScreen rttCallScreen);
 }

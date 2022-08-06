@@ -18,65 +18,73 @@ package com.fissy.dialer.calllogutils;
 
 import android.content.Context;
 import android.provider.CallLog.Calls;
-import android.support.annotation.IntDef;
+import androidx.annotation.IntDef;
 import android.text.TextUtils;
+
 import com.fissy.dialer.duo.DuoComponent;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-/** Helper class to determine the callback action associated with a call in the call log. */
+/**
+ * Helper class to determine the callback action associated with a call in the call log.
+ */
 public class CallbackActionHelper {
 
-  /** Specifies the action a user can take to make a callback. */
-  @Retention(RetentionPolicy.SOURCE)
-  @IntDef({CallbackAction.NONE, CallbackAction.IMS_VIDEO, CallbackAction.DUO, CallbackAction.VOICE})
-  public @interface CallbackAction {
-    int NONE = 0;
-    int IMS_VIDEO = 1;
-    int DUO = 2;
-    int VOICE = 3;
-  }
-
-  /**
-   * Returns the {@link CallbackAction} that can be associated with a call.
-   *
-   * @param number The phone number in column {@link android.provider.CallLog.Calls#NUMBER}.
-   * @param features Value of features in column {@link android.provider.CallLog.Calls#FEATURES}.
-   * @param phoneAccountComponentName Account name in column {@link
-   *     android.provider.CallLog.Calls#PHONE_ACCOUNT_COMPONENT_NAME}.
-   * @return One of the values in {@link CallbackAction}
-   */
-  public static @CallbackAction int getCallbackAction(
-      Context context, String number, int features, String phoneAccountComponentName) {
-    return getCallbackAction(number, features, isDuoCall(context, phoneAccountComponentName));
-  }
-
-  /**
-   * Returns the {@link CallbackAction} that can be associated with a call.
-   *
-   * @param number The phone number in column {@link android.provider.CallLog.Calls#NUMBER}.
-   * @param features Value of features in column {@link android.provider.CallLog.Calls#FEATURES}.
-   * @param isDuoCall Whether the call is a Duo call.
-   * @return One of the values in {@link CallbackAction}
-   */
-  public static @CallbackAction int getCallbackAction(
-      String number, int features, boolean isDuoCall) {
-    if (TextUtils.isEmpty(number)) {
-      return CallbackAction.NONE;
-    }
-    if (isDuoCall) {
-      return CallbackAction.DUO;
+    /**
+     * Returns the {@link CallbackAction} that can be associated with a call.
+     *
+     * @param number                    The phone number in column {@link android.provider.CallLog.Calls#NUMBER}.
+     * @param features                  Value of features in column {@link android.provider.CallLog.Calls#FEATURES}.
+     * @param phoneAccountComponentName Account name in column {@link
+     *                                  android.provider.CallLog.Calls#PHONE_ACCOUNT_COMPONENT_NAME}.
+     * @return One of the values in {@link CallbackAction}
+     */
+    public static @CallbackAction
+    int getCallbackAction(
+            Context context, String number, int features, String phoneAccountComponentName) {
+        return getCallbackAction(number, features, isDuoCall(context, phoneAccountComponentName));
     }
 
-    boolean isVideoCall = (features & Calls.FEATURES_VIDEO) == Calls.FEATURES_VIDEO;
-    if (isVideoCall) {
-      return CallbackAction.IMS_VIDEO;
+    /**
+     * Returns the {@link CallbackAction} that can be associated with a call.
+     *
+     * @param number    The phone number in column {@link android.provider.CallLog.Calls#NUMBER}.
+     * @param features  Value of features in column {@link android.provider.CallLog.Calls#FEATURES}.
+     * @param isDuoCall Whether the call is a Duo call.
+     * @return One of the values in {@link CallbackAction}
+     */
+    public static @CallbackAction
+    int getCallbackAction(
+            String number, int features, boolean isDuoCall) {
+        if (TextUtils.isEmpty(number)) {
+            return CallbackAction.NONE;
+        }
+        if (isDuoCall) {
+            return CallbackAction.DUO;
+        }
+
+        boolean isVideoCall = (features & Calls.FEATURES_VIDEO) == Calls.FEATURES_VIDEO;
+        if (isVideoCall) {
+            return CallbackAction.IMS_VIDEO;
+        }
+
+        return CallbackAction.VOICE;
     }
 
-    return CallbackAction.VOICE;
-  }
+    private static boolean isDuoCall(Context context, String phoneAccountComponentName) {
+        return DuoComponent.get(context).getDuo().isDuoAccount(phoneAccountComponentName);
+    }
 
-  private static boolean isDuoCall(Context context, String phoneAccountComponentName) {
-    return DuoComponent.get(context).getDuo().isDuoAccount(phoneAccountComponentName);
-  }
+    /**
+     * Specifies the action a user can take to make a callback.
+     */
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({CallbackAction.NONE, CallbackAction.IMS_VIDEO, CallbackAction.DUO, CallbackAction.VOICE})
+    public @interface CallbackAction {
+        int NONE = 0;
+        int IMS_VIDEO = 1;
+        int DUO = 2;
+        int VOICE = 3;
+    }
 }

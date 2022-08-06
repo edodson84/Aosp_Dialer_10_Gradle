@@ -17,31 +17,34 @@ package com.fissy.dialer.calllogutils;
 
 import android.app.Activity;
 import android.provider.CallLog.Calls;
+
 import com.fissy.dialer.callintent.CallInitiationType;
 import com.fissy.dialer.callintent.CallIntentBuilder;
 import com.fissy.dialer.calllog.model.CoalescedRow;
 import com.fissy.dialer.duo.DuoComponent;
 import com.fissy.dialer.precall.PreCall;
 
-/** Actions which can be performed on a call log row. */
+/**
+ * Actions which can be performed on a call log row.
+ */
 public final class CallLogRowActions {
 
-  /**
-   * Places a call to the number in the provided {@link CoalescedRow}.
-   *
-   * <p>If the call was a video call, a video call will be placed, and if the call was an audio
-   * call, an audio call will be placed. The phone account corresponding to the row is used.
-   */
-  public static void startCallForRow(Activity activity, CoalescedRow row) {
-    // TODO(zachh): More granular logging?
-    PreCall.start(
-        activity,
-        new CallIntentBuilder(
-                row.getNumber().getNormalizedNumber(), CallInitiationType.Type.CALL_LOG)
-            .setIsVideoCall((row.getFeatures() & Calls.FEATURES_VIDEO) == Calls.FEATURES_VIDEO)
-            .setIsDuoCall(
-                DuoComponent.get(activity)
-                    .getDuo()
-                    .isDuoAccount(row.getPhoneAccountComponentName())));
-  }
+    /**
+     * Places a call to the number in the provided {@link CoalescedRow}.
+     *
+     * <p>If the call was a video call, a video call will be placed, and if the call was an audio
+     * call, an audio call will be placed. The phone account corresponding to the row is used.
+     */
+    public static void startCallForRow(Activity activity, CoalescedRow row) {
+        // TODO(zachh): More granular logging?
+        PreCall.start(
+                activity,
+                new CallIntentBuilder(
+                        row.getNumber().getNormalizedNumber(), CallInitiationType.Type.CALL_LOG)
+                        .setIsVideoCall((row.getFeatures() & Calls.FEATURES_VIDEO) == Calls.FEATURES_VIDEO)
+                        .setIsDuoCall(
+                                DuoComponent.get(activity)
+                                        .getDuo()
+                                        .isDuoAccount(row.getPhoneAccountComponentName())));
+    }
 }

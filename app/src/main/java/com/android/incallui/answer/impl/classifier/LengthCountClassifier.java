@@ -24,16 +24,17 @@ package com.android.incallui.answer.impl.classifier;
  * other classifiers).
  */
 class LengthCountClassifier extends StrokeClassifier {
-  public LengthCountClassifier(ClassifierData classifierData) {}
+    public LengthCountClassifier(ClassifierData classifierData) {
+    }
 
-  @Override
-  public String getTag() {
-    return "LEN_CNT";
-  }
+    @Override
+    public String getTag() {
+        return "LEN_CNT";
+    }
 
-  @Override
-  public float getFalseTouchEvaluation(Stroke stroke) {
-    return LengthCountEvaluator.evaluate(
-        stroke.getTotalLength() / Math.max(1.0f, stroke.getCount() - 2));
-  }
+    @Override
+    public float getFalseTouchEvaluation(Stroke stroke) {
+        return LengthCountEvaluator.evaluate(
+                stroke.getTotalLength() / Math.max(1.0f, stroke.getCount() - 2));
+    }
 }

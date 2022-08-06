@@ -79,10 +79,9 @@
 
     <application
         android:name="com.fissy.dialer.binary.aosp.AospDialerApplication"
-        android:appComponentFactory="android.support.v4.app.CoreComponentFactory"
         android:extractNativeLibs="false"
         android:hardwareAccelerated="true"
-        android:icon="@mipmap/ic_launcher_phone"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/applicationLabel"
         android:supportsRtl="true"
         android:usesCleartextTraffic="false">
@@ -175,7 +174,7 @@
             android:exported="false" />
 
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name="androidx.core.content.FileProvider"
             android:authorities="com.fissy.dialer.files"
             android:exported="false"
             android:grantUriPermissions="true">
@@ -229,11 +228,6 @@
             android:name="com.fissy.dialer.calldetails.CallDetailsActivity"
             android:exported="false"
             android:label="@string/call_details" />
-
-        <service
-            android:name="com.fissy.dialer.calllog.CallLogConfig$PollingJob"
-            android:exported="false"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
         <service
             android:name="com.fissy.dialer.calllog.config.CallLogConfigImpl$PollingJob"
             android:exported="false"
@@ -354,7 +348,8 @@
         <activity
             android:name="com.fissy.dialer.postcall.PostCallActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/Theme.AppCompat.Light"/>
         <activity
             android:name="com.fissy.dialer.precall.externalreceiver.LaunchPreCallActivity"
             android:excludeFromRecents="true"
@@ -647,11 +642,6 @@
                 <action android:name="android.telephony.VisualVoicemailService" />
             </intent-filter>
         </service>
-
-        <activity
-            android:name="com.android.voicemail.impl.settings.VoicemailChangePinActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize|stateVisible" />
 
         <receiver
             android:name="com.android.voicemail.impl.PackageReplacedReceiver"

@@ -21,51 +21,56 @@ import android.app.job.JobParameters;
 import android.app.job.JobService;
 import android.os.AsyncTask;
 import android.os.Build.VERSION_CODES;
-import android.support.annotation.MainThread;
-import android.support.annotation.NonNull;
-import android.support.annotation.WorkerThread;
+import androidx.annotation.MainThread;
+import androidx.annotation.NonNull;
+import androidx.annotation.WorkerThread;
+
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
 
-/** {@link AsyncTask} used by the periodic job service to refresh dynamic and pinned shortcuts. */
+/**
+ * {@link AsyncTask} used by the periodic job service to refresh dynamic and pinned shortcuts.
+ */
 @TargetApi(VERSION_CODES.N_MR1) // Shortcuts introduced in N MR1
 final class RefreshShortcutsTask extends AsyncTask<JobParameters, Void, JobParameters> {
 
-  private final JobService jobService;
+    private final JobService jobService;
 
-  RefreshShortcutsTask(@NonNull JobService jobService) {
-    this.jobService = jobService;
-  }
+    RefreshShortcutsTask(@NonNull JobService jobService) {
+        this.jobService = jobService;
+    }
 
-  /** @param params array with length 1, provided from PeriodicJobService */
-  @Override
-  @NonNull
-  @WorkerThread
-  protected JobParameters doInBackground(JobParameters... params) {
-    Assert.isWorkerThread();
-    LogUtil.enterBlock("RefreshShortcutsTask.doInBackground");
+    /**
+     * @param params array with length 1, provided from PeriodicJobService
+     */
+    @Override
+    @NonNull
+    @WorkerThread
+    protected JobParameters doInBackground(JobParameters... params) {
+        Assert.isWorkerThread();
+        LogUtil.enterBlock("RefreshShortcutsTask.doInBackground");
 
-    // Dynamic shortcuts are refreshed from the UI but icons can become stale, so update them
-    // periodically using the job service.
-    //
-    // The reason that icons can become is stale is that there is no last updated timestamp for
-    // pictures; there is only a last updated timestamp for the entire contact row, which changes
-    // frequently (for example, when they are called their "times_contacted" is incremented).
-    // Relying on such a spuriously updated timestamp would result in too frequent shortcut updates,
-    // so instead we just allow the icon to become stale in the case that the contact's photo is
-    // updated, and then rely on the job service to periodically force update it.
-    new DynamicShortcuts(jobService, new IconFactory(jobService)).updateIcons(); // Blocking
-    new PinnedShortcuts(jobService).refresh(); // Blocking
+        // Dynamic shortcuts are refreshed from the UI but icons can become stale, so update them
+        // periodically using the job service.
+        //
+        // The reason that icons can become is stale is that there is no last updated timestamp for
+        // pictures; there is only a last updated timestamp for the entire contact row, which changes
+        // frequently (for example, when they are called their "times_contacted" is incremented).
+        // Relying on such a spuriously updated timestamp would result in too frequent shortcut updates,
+        // so instead we just allow the icon to become stale in the case that the contact's photo is
+        // updated, and then rely on the job service to periodically force update it.
+        new DynamicShortcuts(jobService, new IconFactory(jobService)).updateIcons(); // Blocking
+        new PinnedShortcuts(jobService).refresh(); // Blocking
 
-    return params[0];
-  }
+        return params[0];
+    }
 
-  @Override
-  @MainThread
-  protected void onPostExecute(JobParameters params) {
-    Assert.isMainThread();
-    LogUtil.enterBlock("RefreshShortcutsTask.onPostExecute");
+    @Override
+    @MainThread
+    protected void onPostExecute(JobParameters params) {
+        Assert.isMainThread();
+        LogUtil.enterBlock("RefreshShortcutsTask.onPostExecute");
 
-    jobService.jobFinished(params, false /* needsReschedule */);
-  }
+        jobService.jobFinished(params, false /* needsReschedule */);
+    }
 }

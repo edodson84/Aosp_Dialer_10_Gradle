@@ -1,11 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:orientation="horizontal" android:background="?android:selectableItemBackground" android:layout_width="fill_parent" android:layout_height="@dimen/search_row_height" android:paddingStart="8.0dip" android:paddingEnd="8.0dip"
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <QuickContactBadge android:id="@id/photo" android:padding="@dimen/search_photo_padding" android:clickable="false" android:layout_width="@dimen/search_row_height" android:layout_height="@dimen/search_row_height" />
-    <LinearLayout android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerVertical="true" android:layout_marginStart="8.0dip" android:layout_toStartOf="@id/call_to_action" android:layout_toEndOf="@id/photo">
-        <com.fissy.dialer.widget.BidiTextView android:gravity="start|center" android:id="@id/primary" android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="sans-serif" style="@style/Dialer.TextAppearance.Primary" />
-        <com.fissy.dialer.widget.BidiTextView android:gravity="start|center" android:id="@id/secondary" android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="sans-serif" style="@style/Dialer.TextAppearance.Secondary" />
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="@dimen/search_row_height"
+    android:background="?android:selectableItemBackground"
+    android:orientation="horizontal"
+    android:paddingStart="8.0dip"
+    android:paddingEnd="8.0dip">
+
+    <QuickContactBadge
+        android:id="@id/photo"
+        android:layout_width="@dimen/search_row_height"
+        android:layout_height="@dimen/search_row_height"
+        android:clickable="false"
+        android:padding="@dimen/search_photo_padding" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="8.0dip"
+        android:layout_toStartOf="@id/call_to_action"
+        android:layout_toEndOf="@id/photo"
+        android:orientation="vertical">
+
+        <com.fissy.dialer.widget.BidiTextView
+            android:id="@id/primary"
+            style="@style/Dialer.TextAppearance.Primary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:gravity="start|center" />
+
+        <com.fissy.dialer.widget.BidiTextView
+            android:id="@id/secondary"
+            style="@style/Dialer.TextAppearance.Secondary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:gravity="start|center" />
     </LinearLayout>
-    <ImageView android:id="@id/call_to_action" android:padding="@dimen/call_to_action_padding" android:visibility="gone" android:layout_width="@dimen/search_row_height" android:layout_height="@dimen/search_row_height" android:scaleType="center" android:tint="?colorIcon" android:layout_alignParentEnd="true" />
-    <ImageView android:id="@id/work_icon" android:padding="@dimen/call_to_action_padding" android:visibility="gone" android:layout_width="@dimen/search_row_height" android:layout_height="@dimen/search_row_height" android:src="@drawable/ic_work_profile" android:scaleType="centerInside" android:tint="?colorIcon" android:layout_centerVertical="true" android:layout_alignParentEnd="true" />
+
+    <ImageView
+        android:id="@id/call_to_action"
+        android:layout_width="@dimen/search_row_height"
+        android:layout_height="@dimen/search_row_height"
+        android:layout_alignParentEnd="true"
+        android:padding="@dimen/call_to_action_padding"
+        android:scaleType="center"
+        android:tint="?colorIcon"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@id/work_icon"
+        android:layout_width="@dimen/search_row_height"
+        android:layout_height="@dimen/search_row_height"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:padding="@dimen/call_to_action_padding"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_work_profile"
+        android:tint="?colorIcon"
+        android:visibility="gone" />
 </RelativeLayout>

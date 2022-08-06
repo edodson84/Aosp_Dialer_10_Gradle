@@ -21,31 +21,36 @@ import com.fissy.dialer.inject.InstallIn;
 import com.fissy.dialer.precall.PreCall;
 import com.fissy.dialer.precall.PreCallAction;
 import com.google.common.collect.ImmutableList;
+
+import javax.inject.Singleton;
+
 import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
-import javax.inject.Singleton;
 
-/** Dagger module for {@link PreCall}. */
+/**
+ * Dagger module for {@link PreCall}.
+ */
 @InstallIn(variants = {DialerVariant.DIALER_TEST})
 @Module
 public abstract class PreCallModule {
 
-  private PreCallModule() {}
+    private PreCallModule() {
+    }
 
-  @Binds
-  @Singleton
-  public abstract PreCall to(PreCallImpl impl);
+    @Provides
+    public static ImmutableList<PreCallAction> provideActions(
+            DuoAction duoAction, CallingAccountSelector callingAccountSelector) {
+        return ImmutableList.of(
+                new PermissionCheckAction(),
+                new MalformedNumberRectifier(
+                        ImmutableList.of(new UkRegionPrefixInInternationalFormatHandler())),
+                callingAccountSelector,
+                duoAction,
+                new AssistedDialAction());
+    }
 
-  @Provides
-  public static ImmutableList<PreCallAction> provideActions(
-      DuoAction duoAction, CallingAccountSelector callingAccountSelector) {
-    return ImmutableList.of(
-        new PermissionCheckAction(),
-        new MalformedNumberRectifier(
-            ImmutableList.of(new UkRegionPrefixInInternationalFormatHandler())),
-        callingAccountSelector,
-        duoAction,
-        new AssistedDialAction());
-  }
+    @Binds
+    @Singleton
+    public abstract PreCall to(PreCallImpl impl);
 }

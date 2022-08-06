@@ -17,29 +17,35 @@
 package com.fissy.dialer.enrichedcall;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
+
 import com.fissy.dialer.inject.HasRootComponent;
 import com.fissy.dialer.inject.IncludeInDialerRoot;
+
 import dagger.Subcomponent;
 
-/** Subcomponent that can be used to access the enriched call implementation. */
+/**
+ * Subcomponent that can be used to access the enriched call implementation.
+ */
 @Subcomponent
 public abstract class EnrichedCallComponent {
 
-  @NonNull
-  public abstract EnrichedCallManager getEnrichedCallManager();
+    public static EnrichedCallComponent get(Context context) {
+        return ((HasComponent) ((HasRootComponent) context.getApplicationContext()).component())
+                .enrichedCallComponent();
+    }
 
-  @NonNull
-  public abstract RcsVideoShareFactory getRcsVideoShareFactory();
+    @NonNull
+    public abstract EnrichedCallManager getEnrichedCallManager();
 
-  public static EnrichedCallComponent get(Context context) {
-    return ((HasComponent) ((HasRootComponent) context.getApplicationContext()).component())
-        .enrichedCallComponent();
-  }
+    @NonNull
+    public abstract RcsVideoShareFactory getRcsVideoShareFactory();
 
-  /** Used to refer to the root application component. */
-  @IncludeInDialerRoot
-  public interface HasComponent {
-    EnrichedCallComponent enrichedCallComponent();
-  }
+    /**
+     * Used to refer to the root application component.
+     */
+    @IncludeInDialerRoot
+    public interface HasComponent {
+        EnrichedCallComponent enrichedCallComponent();
+    }
 }

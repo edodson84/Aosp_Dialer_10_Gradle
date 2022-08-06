@@ -19,10 +19,10 @@ package com.fissy.dialer.rtt;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.MenuItem;
 
 import com.fissy.dialer.R;
@@ -33,85 +33,87 @@ import com.fissy.dialer.glidephotomanager.PhotoInfo;
 import com.fissy.dialer.protos.ProtoParsers;
 import com.fissy.dialer.widget.DialerToolbar;
 
-/** Activity holds RTT transcript. */
+/**
+ * Activity holds RTT transcript.
+ */
 public class RttTranscriptActivity extends AppCompatActivity {
 
-  public static final String EXTRA_TRANSCRIPT_ID = "extra_transcript_id";
-  public static final String EXTRA_PRIMARY_TEXT = "extra_primary_text";
-  public static final String EXTRA_PHOTO_INFO = "extra_photo_info";
+    public static final String EXTRA_TRANSCRIPT_ID = "extra_transcript_id";
+    public static final String EXTRA_PRIMARY_TEXT = "extra_primary_text";
+    public static final String EXTRA_PHOTO_INFO = "extra_photo_info";
 
-  private RttTranscriptAdapter adapter;
-  private UiListener<RttTranscript> rttTranscriptUiListener;
-  private DialerToolbar toolbar;
+    private RttTranscriptAdapter adapter;
+    private UiListener<RttTranscript> rttTranscriptUiListener;
+    private DialerToolbar toolbar;
 
-  public static Intent getIntent(
-      Context context, String transcriptId, String primaryText, PhotoInfo photoInfo) {
-    Intent intent = new Intent(context, RttTranscriptActivity.class);
-    intent.putExtra(RttTranscriptActivity.EXTRA_TRANSCRIPT_ID, transcriptId);
-    intent.putExtra(RttTranscriptActivity.EXTRA_PRIMARY_TEXT, primaryText);
-    ProtoParsers.put(intent, RttTranscriptActivity.EXTRA_PHOTO_INFO, Assert.isNotNull(photoInfo));
-    return intent;
-  }
-
-  @Override
-  protected void onCreate(@Nullable Bundle bundle) {
-    super.onCreate(bundle);
-    setContentView(R.layout.activity_rtt_transcript);
-    toolbar = findViewById(R.id.toolbar);
-    toolbar.setBackgroundColor(getColor(R.color.rtt_transcript_primary_color));
-    getWindow().setStatusBarColor(getColor(R.color.rtt_transcript_primary_color_dark));
-
-    RecyclerView recyclerView = findViewById(R.id.rtt_recycler_view);
-    LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-    recyclerView.setLayoutManager(layoutManager);
-    recyclerView.setHasFixedSize(true);
-    adapter = new RttTranscriptAdapter(this);
-    recyclerView.setAdapter(adapter);
-
-    rttTranscriptUiListener =
-        DialerExecutorComponent.get(this)
-            .createUiListener(getFragmentManager(), "Load RTT transcript");
-    handleIntent(getIntent());
-  }
-
-  private void handleIntent(Intent intent) {
-    Assert.checkArgument(intent.hasExtra(EXTRA_TRANSCRIPT_ID));
-    Assert.checkArgument(intent.hasExtra(EXTRA_PRIMARY_TEXT));
-    Assert.checkArgument(intent.hasExtra(EXTRA_PHOTO_INFO));
-
-    String id = intent.getStringExtra(EXTRA_TRANSCRIPT_ID);
-    rttTranscriptUiListener.listen(
-        this,
-        RttTranscriptUtil.loadRttTranscript(this, id),
-        adapter::setRttTranscript,
-        throwable -> {
-          throw new RuntimeException(throwable);
-        });
-
-    String primaryText = intent.getStringExtra(EXTRA_PRIMARY_TEXT);
-    toolbar.setTitle(primaryText);
-
-    PhotoInfo photoInfo =
-        ProtoParsers.getTrusted(intent, EXTRA_PHOTO_INFO, PhotoInfo.getDefaultInstance());
-    // Photo shown here shouldn't have video or RTT badge.
-    PhotoInfo sanitizedPhotoInfo =
-        PhotoInfo.newBuilder().mergeFrom(photoInfo).setIsRtt(false).setIsVideo(false).build();
-    adapter.setPhotoInfo(sanitizedPhotoInfo);
-  }
-
-  @Override
-  protected void onNewIntent(Intent intent) {
-    super.onNewIntent(intent);
-    handleIntent(intent);
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    final int itemId = item.getItemId();
-    if (itemId == android.R.id.home) {
-      onBackPressed();
-      return true;
+    public static Intent getIntent(
+            Context context, String transcriptId, String primaryText, PhotoInfo photoInfo) {
+        Intent intent = new Intent(context, RttTranscriptActivity.class);
+        intent.putExtra(RttTranscriptActivity.EXTRA_TRANSCRIPT_ID, transcriptId);
+        intent.putExtra(RttTranscriptActivity.EXTRA_PRIMARY_TEXT, primaryText);
+        ProtoParsers.put(intent, RttTranscriptActivity.EXTRA_PHOTO_INFO, Assert.isNotNull(photoInfo));
+        return intent;
     }
-    return super.onOptionsItemSelected(item);
-  }
+
+    @Override
+    protected void onCreate(@Nullable Bundle bundle) {
+        super.onCreate(bundle);
+        setContentView(R.layout.activity_rtt_transcript);
+        toolbar = findViewById(R.id.toolbar);
+        toolbar.setBackgroundColor(getColor(R.color.rtt_transcript_primary_color));
+        getWindow().setStatusBarColor(getColor(R.color.rtt_transcript_primary_color_dark));
+
+        RecyclerView recyclerView = findViewById(R.id.rtt_recycler_view);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+        adapter = new RttTranscriptAdapter(this);
+        recyclerView.setAdapter(adapter);
+
+        rttTranscriptUiListener =
+                DialerExecutorComponent.get(this)
+                        .createUiListener(getFragmentManager(), "Load RTT transcript");
+        handleIntent(getIntent());
+    }
+
+    private void handleIntent(Intent intent) {
+        Assert.checkArgument(intent.hasExtra(EXTRA_TRANSCRIPT_ID));
+        Assert.checkArgument(intent.hasExtra(EXTRA_PRIMARY_TEXT));
+        Assert.checkArgument(intent.hasExtra(EXTRA_PHOTO_INFO));
+
+        String id = intent.getStringExtra(EXTRA_TRANSCRIPT_ID);
+        rttTranscriptUiListener.listen(
+                this,
+                RttTranscriptUtil.loadRttTranscript(this, id),
+                adapter::setRttTranscript,
+                throwable -> {
+                    throw new RuntimeException(throwable);
+                });
+
+        String primaryText = intent.getStringExtra(EXTRA_PRIMARY_TEXT);
+        toolbar.setTitle(primaryText);
+
+        PhotoInfo photoInfo =
+                ProtoParsers.getTrusted(intent, EXTRA_PHOTO_INFO, PhotoInfo.getDefaultInstance());
+        // Photo shown here shouldn't have video or RTT badge.
+        PhotoInfo sanitizedPhotoInfo =
+                PhotoInfo.newBuilder().mergeFrom(photoInfo).setIsRtt(false).setIsVideo(false).build();
+        adapter.setPhotoInfo(sanitizedPhotoInfo);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        handleIntent(intent);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        final int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

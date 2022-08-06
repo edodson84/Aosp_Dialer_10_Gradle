@@ -16,44 +16,49 @@
 
 package com.fissy.dialer.simulator.impl;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.ActionProvider;
+
 import com.fissy.dialer.buildtype.BuildType;
 import com.fissy.dialer.buildtype.BuildType.Type;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.simulator.Simulator;
+
 import javax.inject.Inject;
 
-/** The entry point for the simulator feature. */
+/**
+ * The entry point for the simulator feature.
+ */
 final class SimulatorImpl implements Simulator {
 
-  private boolean simulatorMode = false;
+    private boolean simulatorMode = false;
 
-  @Inject
-  public SimulatorImpl() {}
+    @Inject
+    public SimulatorImpl() {
+    }
 
-  @Override
-  public boolean shouldShow() {
-    return BuildType.get() == Type.BUGFOOD || LogUtil.isDebugEnabled();
-  }
+    @Override
+    public boolean shouldShow() {
+        return BuildType.get() == Type.BUGFOOD || LogUtil.isDebugEnabled();
+    }
 
-  @Override
-  public ActionProvider getActionProvider(AppCompatActivity activity) {
-    return new SimulatorMainPortal(activity).getActionProvider();
-  }
+    @Override
+    public ActionProvider getActionProvider(AppCompatActivity activity) {
+        return new SimulatorMainPortal(activity).getActionProvider();
+    }
 
-  @Override
-  public boolean isSimulatorMode() {
-    return simulatorMode;
-  }
+    @Override
+    public boolean isSimulatorMode() {
+        return simulatorMode;
+    }
 
-  @Override
-  public void enableSimulatorMode() {
-    simulatorMode = true;
-  }
+    @Override
+    public void enableSimulatorMode() {
+        simulatorMode = true;
+    }
 
-  @Override
-  public void disableSimulatorMode() {
-    simulatorMode = false;
-  }
+    @Override
+    public void disableSimulatorMode() {
+        simulatorMode = false;
+    }
 }

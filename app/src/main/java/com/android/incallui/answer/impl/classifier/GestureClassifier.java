@@ -22,10 +22,10 @@ package com.android.incallui.answer.impl.classifier;
  */
 abstract class GestureClassifier extends Classifier {
 
-  /**
-   * @return a non-negative value which is used to determine whether the most recent gesture is a
-   *     false interaction; the bigger the value the greater the chance that this a false
-   *     interaction.
-   */
-  public abstract float getFalseTouchEvaluation();
+    /**
+     * @return a non-negative value which is used to determine whether the most recent gesture is a
+     * false interaction; the bigger the value the greater the chance that this a false
+     * interaction.
+     */
+    public abstract float getFalseTouchEvaluation();
 }

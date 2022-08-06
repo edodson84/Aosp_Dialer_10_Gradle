@@ -18,56 +18,60 @@ package com.fissy.dialer.oem;
 
 import android.content.Context;
 import android.os.Build;
-import android.support.annotation.VisibleForTesting;
+import androidx.annotation.VisibleForTesting;
+
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.compat.telephony.TelephonyManagerCompat;
 import com.google.common.collect.ImmutableSet;
 
-/** Utilities for Transsion devices. */
+/**
+ * Utilities for Transsion devices.
+ */
 public final class TranssionUtils {
 
-  @VisibleForTesting
-  public static final ImmutableSet<String> TRANSSION_DEVICE_MANUFACTURERS =
-      ImmutableSet.of("INFINIX MOBILITY LIMITED", "itel", "TECNO");
+    @VisibleForTesting
+    public static final ImmutableSet<String> TRANSSION_DEVICE_MANUFACTURERS =
+            ImmutableSet.of("INFINIX MOBILITY LIMITED", "itel", "TECNO");
 
-  @VisibleForTesting
-  public static final ImmutableSet<String> TRANSSION_SECRET_CODES =
-      ImmutableSet.of("*#07#", "*#87#", "*#43#", "*#2727#", "*#88#");
+    @VisibleForTesting
+    public static final ImmutableSet<String> TRANSSION_SECRET_CODES =
+            ImmutableSet.of("*#07#", "*#87#", "*#43#", "*#2727#", "*#88#");
 
-  private TranssionUtils() {}
+    private TranssionUtils() {
+    }
 
-  /**
-   * Returns true if
-   *
-   * <ul>
-   *   <li>the device is a Transsion device, AND
-   *   <li>the input is a secret code for Transsion devices.
-   * </ul>
-   */
-  public static boolean isTranssionSecretCode(String input) {
-    return TRANSSION_DEVICE_MANUFACTURERS.contains(Build.MANUFACTURER)
-        && TRANSSION_SECRET_CODES.contains(input);
-  }
+    /**
+     * Returns true if
+     *
+     * <ul>
+     *   <li>the device is a Transsion device, AND
+     *   <li>the input is a secret code for Transsion devices.
+     * </ul>
+     */
+    public static boolean isTranssionSecretCode(String input) {
+        return TRANSSION_DEVICE_MANUFACTURERS.contains(Build.MANUFACTURER)
+                && TRANSSION_SECRET_CODES.contains(input);
+    }
 
-  /**
-   * Handle a Transsion secret code by passing it to {@link
-   * TelephonyManagerCompat#handleSecretCode(Context, String)}.
-   *
-   * <p>Before calling this method, we must use {@link #isTranssionSecretCode(String)} to ensure the
-   * device is a Transsion device and the input is a valid Transsion secret code.
-   *
-   * <p>An exception will be thrown if either of the conditions above is not met.
-   */
-  public static void handleTranssionSecretCode(Context context, String input) {
-    Assert.checkState(isTranssionSecretCode(input));
+    /**
+     * Handle a Transsion secret code by passing it to {@link
+     * TelephonyManagerCompat#handleSecretCode(Context, String)}.
+     *
+     * <p>Before calling this method, we must use {@link #isTranssionSecretCode(String)} to ensure the
+     * device is a Transsion device and the input is a valid Transsion secret code.
+     *
+     * <p>An exception will be thrown if either of the conditions above is not met.
+     */
+    public static void handleTranssionSecretCode(Context context, String input) {
+        Assert.checkState(isTranssionSecretCode(input));
 
-    TelephonyManagerCompat.handleSecretCode(context, getDigitsFromSecretCode(input));
-  }
+        TelephonyManagerCompat.handleSecretCode(context, getDigitsFromSecretCode(input));
+    }
 
-  private static String getDigitsFromSecretCode(String input) {
-    // We assume a valid secret code is of format "*#{[0-9]+}#".
-    Assert.checkArgument(input.length() > 3 && input.startsWith("*#") && input.endsWith("#"));
+    private static String getDigitsFromSecretCode(String input) {
+        // We assume a valid secret code is of format "*#{[0-9]+}#".
+        Assert.checkArgument(input.length() > 3 && input.startsWith("*#") && input.endsWith("#"));
 
-    return input.substring(2, input.length() - 1);
-  }
+        return input.substring(2, input.length() - 1);
+    }
 }

@@ -20,8 +20,9 @@ import android.content.AsyncQueryHandler;
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
-import android.support.annotation.Nullable;
-import android.support.annotation.VisibleForTesting;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
+
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -30,75 +31,80 @@ import java.util.concurrent.atomic.AtomicInteger;
  * <p>Instead, will return a {@link Cursor} with 0 records.
  */
 public abstract class NoNullCursorAsyncQueryHandler extends AsyncQueryHandler {
-  private static final AtomicInteger pendingQueryCount = new AtomicInteger();
-  @Nullable private static PendingQueryCountChangedListener pendingQueryCountChangedListener;
+    private static final AtomicInteger pendingQueryCount = new AtomicInteger();
+    @Nullable
+    private static PendingQueryCountChangedListener pendingQueryCountChangedListener;
 
-  public NoNullCursorAsyncQueryHandler(ContentResolver cr) {
-    super(cr);
-  }
-
-  @Override
-  public void startQuery(
-      int token,
-      Object cookie,
-      Uri uri,
-      String[] projection,
-      String selection,
-      String[] selectionArgs,
-      String orderBy) {
-    pendingQueryCount.getAndIncrement();
-    if (pendingQueryCountChangedListener != null) {
-      pendingQueryCountChangedListener.onPendingQueryCountChanged();
+    public NoNullCursorAsyncQueryHandler(ContentResolver cr) {
+        super(cr);
     }
 
-    final CookieWithProjection projectionCookie = new CookieWithProjection(cookie, projection);
-    super.startQuery(token, projectionCookie, uri, projection, selection, selectionArgs, orderBy);
-  }
-
-  @Override
-  protected final void onQueryComplete(int token, Object cookie, Cursor cursor) {
-    CookieWithProjection projectionCookie = (CookieWithProjection) cookie;
-
-    super.onQueryComplete(token, projectionCookie.originalCookie, cursor);
-
-    if (cursor == null) {
-      cursor = new EmptyCursor(projectionCookie.projection);
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    public static void setPendingQueryCountChangedListener(
+            @Nullable PendingQueryCountChangedListener listener) {
+        pendingQueryCountChangedListener = listener;
     }
-    onNotNullableQueryComplete(token, projectionCookie.originalCookie, cursor);
 
-    pendingQueryCount.getAndDecrement();
-    if (pendingQueryCountChangedListener != null) {
-      pendingQueryCountChangedListener.onPendingQueryCountChanged();
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    public static int getPendingQueryCount() {
+        return pendingQueryCount.get();
     }
-  }
 
-  protected abstract void onNotNullableQueryComplete(int token, Object cookie, Cursor cursor);
+    @Override
+    public void startQuery(
+            int token,
+            Object cookie,
+            Uri uri,
+            String[] projection,
+            String selection,
+            String[] selectionArgs,
+            String orderBy) {
+        pendingQueryCount.getAndIncrement();
+        if (pendingQueryCountChangedListener != null) {
+            pendingQueryCountChangedListener.onPendingQueryCountChanged();
+        }
 
-  @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-  public static void setPendingQueryCountChangedListener(
-      @Nullable PendingQueryCountChangedListener listener) {
-    pendingQueryCountChangedListener = listener;
-  }
-
-  @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-  public static int getPendingQueryCount() {
-    return pendingQueryCount.get();
-  }
-
-  /** Callback to listen for changes in the number of queries that have not completed. */
-  public interface PendingQueryCountChangedListener {
-    void onPendingQueryCountChanged();
-  }
-
-  /** Class to add projection to an existing cookie. */
-  private static class CookieWithProjection {
-
-    public final Object originalCookie;
-    public final String[] projection;
-
-    public CookieWithProjection(Object cookie, String[] projection) {
-      this.originalCookie = cookie;
-      this.projection = projection;
+        final CookieWithProjection projectionCookie = new CookieWithProjection(cookie, projection);
+        super.startQuery(token, projectionCookie, uri, projection, selection, selectionArgs, orderBy);
     }
-  }
+
+    @Override
+    protected final void onQueryComplete(int token, Object cookie, Cursor cursor) {
+        CookieWithProjection projectionCookie = (CookieWithProjection) cookie;
+
+        super.onQueryComplete(token, projectionCookie.originalCookie, cursor);
+
+        if (cursor == null) {
+            cursor = new EmptyCursor(projectionCookie.projection);
+        }
+        onNotNullableQueryComplete(token, projectionCookie.originalCookie, cursor);
+
+        pendingQueryCount.getAndDecrement();
+        if (pendingQueryCountChangedListener != null) {
+            pendingQueryCountChangedListener.onPendingQueryCountChanged();
+        }
+    }
+
+    protected abstract void onNotNullableQueryComplete(int token, Object cookie, Cursor cursor);
+
+    /**
+     * Callback to listen for changes in the number of queries that have not completed.
+     */
+    public interface PendingQueryCountChangedListener {
+        void onPendingQueryCountChanged();
+    }
+
+    /**
+     * Class to add projection to an existing cookie.
+     */
+    private static class CookieWithProjection {
+
+        public final Object originalCookie;
+        public final String[] projection;
+
+        public CookieWithProjection(Object cookie, String[] projection) {
+            this.originalCookie = cookie;
+            this.projection = projection;
+        }
+    }
 }

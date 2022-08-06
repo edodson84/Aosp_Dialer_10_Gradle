@@ -55,36 +55,28 @@ public class DialpadView extends LinearLayout {
 
     private static final double DELAY_MULTIPLIER = 0.66;
     private static final double DURATION_MULTIPLIER = 0.8;
-
+    // For animation.
+    private static final int KEY_FRAME_DURATION = 33;
     /**
      * {@code True} if the dialpad is in landscape orientation.
      */
     private final boolean mIsLandscape;
-
     /**
      * {@code True} if the dialpad is showing in a right-to-left locale.
      */
     private final boolean mIsRtl;
-
+    private final ColorStateList mRippleColor;
+    private final int[] mButtonIds = new int[]{R.id.zero, R.id.one, R.id.two, R.id.three,
+            R.id.four, R.id.five, R.id.six, R.id.seven, R.id.eight, R.id.nine, R.id.star,
+            R.id.pound};
+    private final int mTranslateDistance;
     private EditText mDigits;
     private ImageButton mDelete;
     private View mOverflowMenuButton;
-    private final ColorStateList mRippleColor;
-
     private ViewGroup mRateContainer;
     private TextView mIldCountry;
     private TextView mIldRate;
-
     private boolean mCanDigitsBeEdited;
-
-    private final int[] mButtonIds = new int[] {R.id.zero, R.id.one, R.id.two, R.id.three,
-            R.id.four, R.id.five, R.id.six, R.id.seven, R.id.eight, R.id.nine, R.id.star,
-            R.id.pound};
-
-    // For animation.
-    private static final int KEY_FRAME_DURATION = 33;
-
-    private final int mTranslateDistance;
 
     public DialpadView(Context context) {
         this(context, null);
@@ -129,19 +121,19 @@ public class DialpadView extends LinearLayout {
     }
 
     private void setupKeypad() {
-        final int[] letterIds = new int[] {
-            R.string.dialpad_0_letters,
-            R.string.dialpad_1_letters,
-            R.string.dialpad_2_letters,
-            R.string.dialpad_3_letters,
-            R.string.dialpad_4_letters,
-            R.string.dialpad_5_letters,
-            R.string.dialpad_6_letters,
-            R.string.dialpad_7_letters,
-            R.string.dialpad_8_letters,
-            R.string.dialpad_9_letters,
-            R.string.dialpad_star_letters,
-            R.string.dialpad_pound_letters
+        final int[] letterIds = new int[]{
+                R.string.dialpad_0_letters,
+                R.string.dialpad_1_letters,
+                R.string.dialpad_2_letters,
+                R.string.dialpad_3_letters,
+                R.string.dialpad_4_letters,
+                R.string.dialpad_5_letters,
+                R.string.dialpad_6_letters,
+                R.string.dialpad_7_letters,
+                R.string.dialpad_8_letters,
+                R.string.dialpad_9_letters,
+                R.string.dialpad_star_letters,
+                R.string.dialpad_pound_letters
         };
 
         final Resources resources = getContext().getResources();
@@ -234,7 +226,7 @@ public class DialpadView extends LinearLayout {
      * Whether or not the digits above the dialer can be edited.
      *
      * @param canBeEdited If true, the backspace button will be shown and the digits EditText
-     *         will be configured to allow text manipulation.
+     *                    will be configured to allow text manipulation.
      */
     public void setCanDigitsBeEdited(boolean canBeEdited) {
         View deleteButton = findViewById(R.id.deleteButton);
@@ -277,12 +269,13 @@ public class DialpadView extends LinearLayout {
     public void animateShow() {
         // This is a hack; without this, the setTranslationY is delayed in being applied, and the
         // numbers appear at their original position (0) momentarily before animating.
-        final AnimatorListenerAdapter showListener = new AnimatorListenerAdapter() {};
+        final AnimatorListenerAdapter showListener = new AnimatorListenerAdapter() {
+        };
 
         for (int i = 0; i < mButtonIds.length; i++) {
-            int delay = (int)(getKeyButtonAnimationDelay(mButtonIds[i]) * DELAY_MULTIPLIER);
+            int delay = (int) (getKeyButtonAnimationDelay(mButtonIds[i]) * DELAY_MULTIPLIER);
             int duration =
-                    (int)(getKeyButtonAnimationDuration(mButtonIds[i]) * DURATION_MULTIPLIER);
+                    (int) (getKeyButtonAnimationDuration(mButtonIds[i]) * DURATION_MULTIPLIER);
             final DialpadKeyButton dialpadKey = (DialpadKeyButton) findViewById(mButtonIds[i]);
 
             ViewPropertyAnimator animator = dialpadKey.animate();

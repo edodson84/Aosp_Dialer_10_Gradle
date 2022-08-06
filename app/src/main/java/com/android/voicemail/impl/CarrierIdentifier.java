@@ -19,60 +19,68 @@ package com.android.voicemail.impl;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build.VERSION_CODES;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.telecom.PhoneAccountHandle;
 import android.telephony.TelephonyManager;
+
 import com.google.auto.value.AutoValue;
+
 import java.util.Optional;
 
-/** Identifies a carrier. */
+/**
+ * Identifies a carrier.
+ */
 @AutoValue
 @TargetApi(VERSION_CODES.O)
 @SuppressWarnings({"missingpermission"})
 public abstract class CarrierIdentifier {
 
-  public abstract String mccMnc();
-
-  /**
-   * Group ID Level 1. Used to identify MVNO(Mobile Virtual Network Operators) who subleases other
-   * carrier's network and share their mccMnc. MVNO should have a GID1 different from the host.
-   */
-  public abstract String gid1();
-
-  /** Builder for the matcher */
-  @AutoValue.Builder
-  public abstract static class Builder {
-
-    public abstract Builder setMccMnc(String mccMnc);
-
-    public abstract Builder setGid1(String gid1);
-
-    public abstract CarrierIdentifier build();
-  }
-
-  public static Builder builder() {
-    return new AutoValue_CarrierIdentifier.Builder().setGid1("");
-  }
-
-  /** Create a identifier for a {@link PhoneAccountHandle}. Absent if the handle is not valid. */
-  public static Optional<CarrierIdentifier> forHandle(
-      Context context, @Nullable PhoneAccountHandle phoneAccountHandle) {
-    if (phoneAccountHandle == null) {
-      return Optional.empty();
-    }
-    TelephonyManager telephonyManager =
-        context
-            .getSystemService(TelephonyManager.class)
-            .createForPhoneAccountHandle(phoneAccountHandle);
-    if (telephonyManager == null) {
-      return Optional.empty();
-    }
-    String gid1 = telephonyManager.getGroupIdLevel1();
-    if (gid1 == null) {
-      gid1 = "";
+    public static Builder builder() {
+        return new AutoValue_CarrierIdentifier.Builder().setGid1("");
     }
 
-    return Optional.of(
-        builder().setMccMnc(telephonyManager.getSimOperator()).setGid1(gid1).build());
-  }
+    /**
+     * Create a identifier for a {@link PhoneAccountHandle}. Absent if the handle is not valid.
+     */
+    public static Optional<CarrierIdentifier> forHandle(
+            Context context, @Nullable PhoneAccountHandle phoneAccountHandle) {
+        if (phoneAccountHandle == null) {
+            return Optional.empty();
+        }
+        TelephonyManager telephonyManager =
+                context
+                        .getSystemService(TelephonyManager.class)
+                        .createForPhoneAccountHandle(phoneAccountHandle);
+        if (telephonyManager == null) {
+            return Optional.empty();
+        }
+        String gid1 = telephonyManager.getGroupIdLevel1();
+        if (gid1 == null) {
+            gid1 = "";
+        }
+
+        return Optional.of(
+                builder().setMccMnc(telephonyManager.getSimOperator()).setGid1(gid1).build());
+    }
+
+    public abstract String mccMnc();
+
+    /**
+     * Group ID Level 1. Used to identify MVNO(Mobile Virtual Network Operators) who subleases other
+     * carrier's network and share their mccMnc. MVNO should have a GID1 different from the host.
+     */
+    public abstract String gid1();
+
+    /**
+     * Builder for the matcher
+     */
+    @AutoValue.Builder
+    public abstract static class Builder {
+
+        public abstract Builder setMccMnc(String mccMnc);
+
+        public abstract Builder setGid1(String gid1);
+
+        public abstract CarrierIdentifier build();
+    }
 }

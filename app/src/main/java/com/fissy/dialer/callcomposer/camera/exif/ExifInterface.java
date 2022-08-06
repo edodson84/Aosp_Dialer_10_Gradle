@@ -19,6 +19,7 @@ package com.fissy.dialer.callcomposer.camera.exif;
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.util.SparseIntArray;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -43,332 +44,342 @@ import java.util.TimeZone;
  * @see ExifTag
  */
 public class ExifInterface {
-  private static final int IFD_NULL = -1;
-  static final int DEFINITION_NULL = 0;
-
-  /** Tag constants for Jeita EXIF 2.2 */
-  // IFD 0
-  public static final int TAG_ORIENTATION = defineTag(IfdId.TYPE_IFD_0, (short) 0x0112);
-
-  static final int TAG_EXIF_IFD = defineTag(IfdId.TYPE_IFD_0, (short) 0x8769);
-  static final int TAG_GPS_IFD = defineTag(IfdId.TYPE_IFD_0, (short) 0x8825);
-  static final int TAG_STRIP_OFFSETS = defineTag(IfdId.TYPE_IFD_0, (short) 0x0111);
-  static final int TAG_STRIP_BYTE_COUNTS = defineTag(IfdId.TYPE_IFD_0, (short) 0x0117);
-  // IFD 1
-  static final int TAG_JPEG_INTERCHANGE_FORMAT = defineTag(IfdId.TYPE_IFD_1, (short) 0x0201);
-  static final int TAG_JPEG_INTERCHANGE_FORMAT_LENGTH = defineTag(IfdId.TYPE_IFD_1, (short) 0x0202);
-  // IFD Exif Tags
-  static final int TAG_INTEROPERABILITY_IFD = defineTag(IfdId.TYPE_IFD_EXIF, (short) 0xA005);
-
-  /** Tags that contain offset markers. These are included in the banned defines. */
-  private static final HashSet<Short> offsetTags = new HashSet<>();
-
-  static {
-    offsetTags.add(getTrueTagKey(TAG_GPS_IFD));
-    offsetTags.add(getTrueTagKey(TAG_EXIF_IFD));
-    offsetTags.add(getTrueTagKey(TAG_JPEG_INTERCHANGE_FORMAT));
-    offsetTags.add(getTrueTagKey(TAG_INTEROPERABILITY_IFD));
-    offsetTags.add(getTrueTagKey(TAG_STRIP_OFFSETS));
-  }
-
-  private static final String NULL_ARGUMENT_STRING = "Argument is null";
-
-  private static final String GPS_DATE_FORMAT_STR = "yyyy:MM:dd";
-
-  private ExifData data = new ExifData();
-
-  @SuppressLint("SimpleDateFormat")
-  public ExifInterface() {
-    DateFormat mGPSDateStampFormat = new SimpleDateFormat(GPS_DATE_FORMAT_STR);
-    mGPSDateStampFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-  }
-
-  /**
-   * Reads the exif tags from a byte array, clearing this ExifInterface object's existing exif tags.
-   *
-   * @param jpeg a byte array containing a jpeg compressed image.
-   * @throws java.io.IOException
-   */
-  public void readExif(byte[] jpeg) throws IOException {
-    readExif(new ByteArrayInputStream(jpeg));
-  }
-
-  /**
-   * Reads the exif tags from an InputStream, clearing this ExifInterface object's existing exif
-   * tags.
-   *
-   * @param inStream an InputStream containing a jpeg compressed image.
-   * @throws java.io.IOException
-   */
-  private void readExif(InputStream inStream) throws IOException {
-    if (inStream == null) {
-      throw new IllegalArgumentException(NULL_ARGUMENT_STRING);
-    }
-    ExifData d;
-    try {
-      d = new ExifReader(this).read(inStream);
-    } catch (ExifInvalidFormatException e) {
-      throw new IOException("Invalid exif format : " + e);
-    }
-    data = d;
-  }
-
-  /** Returns the TID for a tag constant. */
-  static short getTrueTagKey(int tag) {
-    // Truncate
-    return (short) tag;
-  }
-
-  /** Returns the constant representing a tag with a given TID and default IFD. */
-  private static int defineTag(int ifdId, short tagId) {
-    return (tagId & 0x0000ffff) | (ifdId << 16);
-  }
-
-  static boolean isIfdAllowed(int info, int ifd) {
-    int[] ifds = IfdData.getIfds();
-    int ifdFlags = getAllowedIfdFlagsFromInfo(info);
-    for (int i = 0; i < ifds.length; i++) {
-      if (ifd == ifds[i] && ((ifdFlags >> i) & 1) == 1) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  private static int getAllowedIfdFlagsFromInfo(int info) {
-    return info >>> 24;
-  }
-
-  /**
-   * Returns true if tag TID is one of the following: {@code TAG_EXIF_IFD}, {@code TAG_GPS_IFD},
-   * {@code TAG_JPEG_INTERCHANGE_FORMAT}, {@code TAG_STRIP_OFFSETS}, {@code
-   * TAG_INTEROPERABILITY_IFD}
-   *
-   * <p>Note: defining tags with these TID's is disallowed.
-   *
-   * @param tag a tag's TID (can be obtained from a defined tag constant with {@link
-   *     #getTrueTagKey}).
-   * @return true if the TID is that of an offset tag.
-   */
-  static boolean isOffsetTag(short tag) {
-    return offsetTags.contains(tag);
-  }
-
-  private SparseIntArray tagInfo = null;
-
-  SparseIntArray getTagInfo() {
-    if (tagInfo == null) {
-      tagInfo = new SparseIntArray();
-      initTagInfo();
-    }
-    return tagInfo;
-  }
-
-  private void initTagInfo() {
     /**
-     * We put tag information in a 4-bytes integer. The first byte a bitmask representing the
-     * allowed IFDs of the tag, the second byte is the data type, and the last two byte are a short
-     * value indicating the default component count of this tag.
+     * Tag constants for Jeita EXIF 2.2
      */
-    // IFD0 tags
-    int[] ifdAllowedIfds = {IfdId.TYPE_IFD_0, IfdId.TYPE_IFD_1};
-    int ifdFlags = getFlagsFromAllowedIfds(ifdAllowedIfds) << 24;
-    tagInfo.put(ExifInterface.TAG_STRIP_OFFSETS, ifdFlags | ExifTag.TYPE_UNSIGNED_LONG << 16);
-    tagInfo.put(ExifInterface.TAG_EXIF_IFD, ifdFlags | ExifTag.TYPE_UNSIGNED_LONG << 16 | 1);
-    tagInfo.put(ExifInterface.TAG_GPS_IFD, ifdFlags | ExifTag.TYPE_UNSIGNED_LONG << 16 | 1);
-    tagInfo.put(ExifInterface.TAG_ORIENTATION, ifdFlags | ExifTag.TYPE_UNSIGNED_SHORT << 16 | 1);
-    tagInfo.put(ExifInterface.TAG_STRIP_BYTE_COUNTS, ifdFlags | ExifTag.TYPE_UNSIGNED_LONG << 16);
-    // IFD1 tags
-    int[] ifd1AllowedIfds = {IfdId.TYPE_IFD_1};
-    int ifdFlags1 = getFlagsFromAllowedIfds(ifd1AllowedIfds) << 24;
-    tagInfo.put(
-        ExifInterface.TAG_JPEG_INTERCHANGE_FORMAT,
-        ifdFlags1 | ExifTag.TYPE_UNSIGNED_LONG << 16 | 1);
-    tagInfo.put(
-        ExifInterface.TAG_JPEG_INTERCHANGE_FORMAT_LENGTH,
-        ifdFlags1 | ExifTag.TYPE_UNSIGNED_LONG << 16 | 1);
-    // Exif tags
-    int[] exifAllowedIfds = {IfdId.TYPE_IFD_EXIF};
-    int exifFlags = getFlagsFromAllowedIfds(exifAllowedIfds) << 24;
-    tagInfo.put(
-        ExifInterface.TAG_INTEROPERABILITY_IFD, exifFlags | ExifTag.TYPE_UNSIGNED_LONG << 16 | 1);
-  }
+    // IFD 0
+    public static final int TAG_ORIENTATION = defineTag(IfdId.TYPE_IFD_0, (short) 0x0112);
+    static final int DEFINITION_NULL = 0;
+    static final int TAG_EXIF_IFD = defineTag(IfdId.TYPE_IFD_0, (short) 0x8769);
+    static final int TAG_GPS_IFD = defineTag(IfdId.TYPE_IFD_0, (short) 0x8825);
+    static final int TAG_STRIP_OFFSETS = defineTag(IfdId.TYPE_IFD_0, (short) 0x0111);
+    static final int TAG_STRIP_BYTE_COUNTS = defineTag(IfdId.TYPE_IFD_0, (short) 0x0117);
+    // IFD 1
+    static final int TAG_JPEG_INTERCHANGE_FORMAT = defineTag(IfdId.TYPE_IFD_1, (short) 0x0201);
+    static final int TAG_JPEG_INTERCHANGE_FORMAT_LENGTH = defineTag(IfdId.TYPE_IFD_1, (short) 0x0202);
+    // IFD Exif Tags
+    static final int TAG_INTEROPERABILITY_IFD = defineTag(IfdId.TYPE_IFD_EXIF, (short) 0xA005);
+    private static final int IFD_NULL = -1;
+    /**
+     * Tags that contain offset markers. These are included in the banned defines.
+     */
+    private static final HashSet<Short> offsetTags = new HashSet<>();
+    private static final String NULL_ARGUMENT_STRING = "Argument is null";
+    private static final String GPS_DATE_FORMAT_STR = "yyyy:MM:dd";
 
-  private static int getFlagsFromAllowedIfds(int[] allowedIfds) {
-    if (allowedIfds == null || allowedIfds.length == 0) {
-      return 0;
+    static {
+        offsetTags.add(getTrueTagKey(TAG_GPS_IFD));
+        offsetTags.add(getTrueTagKey(TAG_EXIF_IFD));
+        offsetTags.add(getTrueTagKey(TAG_JPEG_INTERCHANGE_FORMAT));
+        offsetTags.add(getTrueTagKey(TAG_INTEROPERABILITY_IFD));
+        offsetTags.add(getTrueTagKey(TAG_STRIP_OFFSETS));
     }
-    int flags = 0;
-    int[] ifds = IfdData.getIfds();
-    for (int i = 0; i < IfdId.TYPE_IFD_COUNT; i++) {
-      for (int j : allowedIfds) {
-        if (ifds[i] == j) {
-          flags |= 1 << i;
-          break;
+
+    private ExifData data = new ExifData();
+    private SparseIntArray tagInfo = null;
+
+    @SuppressLint("SimpleDateFormat")
+    public ExifInterface() {
+        DateFormat mGPSDateStampFormat = new SimpleDateFormat(GPS_DATE_FORMAT_STR);
+        mGPSDateStampFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+    }
+
+    /**
+     * Returns the TID for a tag constant.
+     */
+    static short getTrueTagKey(int tag) {
+        // Truncate
+        return (short) tag;
+    }
+
+    /**
+     * Returns the constant representing a tag with a given TID and default IFD.
+     */
+    private static int defineTag(int ifdId, short tagId) {
+        return (tagId & 0x0000ffff) | (ifdId << 16);
+    }
+
+    static boolean isIfdAllowed(int info, int ifd) {
+        int[] ifds = IfdData.getIfds();
+        int ifdFlags = getAllowedIfdFlagsFromInfo(info);
+        for (int i = 0; i < ifds.length; i++) {
+            if (ifd == ifds[i] && ((ifdFlags >> i) & 1) == 1) {
+                return true;
+            }
         }
-      }
+        return false;
     }
-    return flags;
-  }
 
-  private Integer getTagIntValue(int tagId, int ifdId) {
-    int[] l = getTagIntValues(tagId, ifdId);
-    if (l == null || l.length <= 0) {
-      return null;
+    private static int getAllowedIfdFlagsFromInfo(int info) {
+        return info >>> 24;
     }
-    return l[0];
-  }
 
-  private int[] getTagIntValues(int tagId, int ifdId) {
-    ExifTag t = getTag(tagId, ifdId);
-    if (t == null) {
-      return null;
+    /**
+     * Returns true if tag TID is one of the following: {@code TAG_EXIF_IFD}, {@code TAG_GPS_IFD},
+     * {@code TAG_JPEG_INTERCHANGE_FORMAT}, {@code TAG_STRIP_OFFSETS}, {@code
+     * TAG_INTEROPERABILITY_IFD}
+     *
+     * <p>Note: defining tags with these TID's is disallowed.
+     *
+     * @param tag a tag's TID (can be obtained from a defined tag constant with {@link
+     *            #getTrueTagKey}).
+     * @return true if the TID is that of an offset tag.
+     */
+    static boolean isOffsetTag(short tag) {
+        return offsetTags.contains(tag);
     }
-    return t.getValueAsInts();
-  }
 
-  /** Gets an ExifTag for an IFD other than the tag's default. */
-  public ExifTag getTag(int tagId, int ifdId) {
-    if (!ExifTag.isValidIfd(ifdId)) {
-      return null;
+    private static int getFlagsFromAllowedIfds(int[] allowedIfds) {
+        if (allowedIfds == null || allowedIfds.length == 0) {
+            return 0;
+        }
+        int flags = 0;
+        int[] ifds = IfdData.getIfds();
+        for (int i = 0; i < IfdId.TYPE_IFD_COUNT; i++) {
+            for (int j : allowedIfds) {
+                if (ifds[i] == j) {
+                    flags |= 1 << i;
+                    break;
+                }
+            }
+        }
+        return flags;
     }
-    return data.getTag(getTrueTagKey(tagId), ifdId);
-  }
 
-  public Integer getTagIntValue(int tagId) {
-    int ifdId = getDefinedTagDefaultIfd(tagId);
-    return getTagIntValue(tagId, ifdId);
-  }
-
-  /**
-   * Gets the default IFD for a tag.
-   *
-   * @param tagId a defined tag constant, e.g. {@link #TAG_EXIF_IFD}.
-   * @return the default IFD for a tag definition or {@link #IFD_NULL} if no definition exists.
-   */
-  private int getDefinedTagDefaultIfd(int tagId) {
-    int info = getTagInfo().get(tagId);
-    if (info == DEFINITION_NULL) {
-      return IFD_NULL;
+    /**
+     * Returns the default IFD for a tag constant.
+     */
+    private static int getTrueIfd(int tag) {
+        return tag >>> 16;
     }
-    return getTrueIfd(tagId);
-  }
 
-  /** Returns the default IFD for a tag constant. */
-  private static int getTrueIfd(int tag) {
-    return tag >>> 16;
-  }
-
-  /**
-   * Constants for {@code TAG_ORIENTATION}. They can be interpreted as follows:
-   *
-   * <ul>
-   *   <li>TOP_LEFT is the normal orientation.
-   *   <li>TOP_RIGHT is a left-right mirror.
-   *   <li>BOTTOM_LEFT is a 180 degree rotation.
-   *   <li>BOTTOM_RIGHT is a top-bottom mirror.
-   *   <li>LEFT_TOP is mirrored about the top-left<->bottom-right axis.
-   *   <li>RIGHT_TOP is a 90 degree clockwise rotation.
-   *   <li>LEFT_BOTTOM is mirrored about the top-right<->bottom-left axis.
-   *   <li>RIGHT_BOTTOM is a 270 degree clockwise rotation.
-   * </ul>
-   */
-  interface Orientation {
-    short TOP_LEFT = 1;
-    short TOP_RIGHT = 2;
-    short BOTTOM_LEFT = 3;
-    short BOTTOM_RIGHT = 4;
-    short LEFT_TOP = 5;
-    short RIGHT_TOP = 6;
-    short LEFT_BOTTOM = 7;
-    short RIGHT_BOTTOM = 8;
-  }
-
-  /** Wrapper class to define some orientation parameters. */
-  public static class OrientationParams {
-    public int rotation = 0;
-    int scaleX = 1;
-    int scaleY = 1;
-    public boolean invertDimensions = false;
-  }
-
-  public static OrientationParams getOrientationParams(int orientation) {
-    OrientationParams params = new OrientationParams();
-    switch (orientation) {
-      case Orientation.TOP_RIGHT: // Flip horizontal
-        params.scaleX = -1;
-        break;
-      case Orientation.BOTTOM_RIGHT: // Flip vertical
-        params.scaleY = -1;
-        break;
-      case Orientation.BOTTOM_LEFT: // Rotate 180
-        params.rotation = 180;
-        break;
-      case Orientation.RIGHT_BOTTOM: // Rotate 270
-        params.rotation = 270;
-        params.invertDimensions = true;
-        break;
-      case Orientation.RIGHT_TOP: // Rotate 90
-        params.rotation = 90;
-        params.invertDimensions = true;
-        break;
-      case Orientation.LEFT_TOP: // Transpose
-        params.rotation = 90;
-        params.scaleX = -1;
-        params.invertDimensions = true;
-        break;
-      case Orientation.LEFT_BOTTOM: // Transverse
-        params.rotation = 270;
-        params.scaleX = -1;
-        params.invertDimensions = true;
-        break;
+    public static OrientationParams getOrientationParams(int orientation) {
+        OrientationParams params = new OrientationParams();
+        switch (orientation) {
+            case Orientation.TOP_RIGHT: // Flip horizontal
+                params.scaleX = -1;
+                break;
+            case Orientation.BOTTOM_RIGHT: // Flip vertical
+                params.scaleY = -1;
+                break;
+            case Orientation.BOTTOM_LEFT: // Rotate 180
+                params.rotation = 180;
+                break;
+            case Orientation.RIGHT_BOTTOM: // Rotate 270
+                params.rotation = 270;
+                params.invertDimensions = true;
+                break;
+            case Orientation.RIGHT_TOP: // Rotate 90
+                params.rotation = 90;
+                params.invertDimensions = true;
+                break;
+            case Orientation.LEFT_TOP: // Transpose
+                params.rotation = 90;
+                params.scaleX = -1;
+                params.invertDimensions = true;
+                break;
+            case Orientation.LEFT_BOTTOM: // Transverse
+                params.rotation = 270;
+                params.scaleX = -1;
+                params.invertDimensions = true;
+                break;
+        }
+        return params;
     }
-    return params;
-  }
 
-  /** Clears this ExifInterface object's existing exif tags. */
-  public void clearExif() {
-    data = new ExifData();
-  }
-
-  /**
-   * Puts an ExifTag into this ExifInterface object's tags, removing a previous ExifTag with the
-   * same TID and IFD. The IFD it is put into will be the one the tag was created with in {@link
-   * #buildTag}.
-   *
-   * @param tag an ExifTag to put into this ExifInterface's tags.
-   * @return the previous ExifTag with the same TID and IFD or null if none exists.
-   */
-  public ExifTag setTag(ExifTag tag) {
-    return data.addTag(tag);
-  }
-
-  /**
-   * Returns the ExifTag in that tag's default IFD for a defined tag constant or null if none
-   * exists.
-   *
-   * @param tagId a defined tag constant, e.g. {@link #TAG_EXIF_IFD}.
-   * @return an {@link ExifTag} or null if none exists.
-   */
-  public ExifTag getTag(int tagId) {
-    int ifdId = getDefinedTagDefaultIfd(tagId);
-    return getTag(tagId, ifdId);
-  }
-
-  /**
-   * Writes the tags from this ExifInterface object into a jpeg compressed bitmap, removing prior
-   * exif tags.
-   *
-   * @param bmap a bitmap to compress and write exif into.
-   * @param exifOutStream the OutputStream to which the jpeg image with added exif tags will be
-   *     written.
-   * @throws java.io.IOException
-   */
-  public void writeExif(Bitmap bmap, OutputStream exifOutStream) throws IOException {
-    if (bmap == null || exifOutStream == null) {
-      throw new IllegalArgumentException(NULL_ARGUMENT_STRING);
+    /**
+     * Reads the exif tags from a byte array, clearing this ExifInterface object's existing exif tags.
+     *
+     * @param jpeg a byte array containing a jpeg compressed image.
+     * @throws java.io.IOException
+     */
+    public void readExif(byte[] jpeg) throws IOException {
+        readExif(new ByteArrayInputStream(jpeg));
     }
-    bmap.compress(Bitmap.CompressFormat.JPEG, 90, exifOutStream);
-    exifOutStream.flush();
-  }
+
+    /**
+     * Reads the exif tags from an InputStream, clearing this ExifInterface object's existing exif
+     * tags.
+     *
+     * @param inStream an InputStream containing a jpeg compressed image.
+     * @throws java.io.IOException
+     */
+    private void readExif(InputStream inStream) throws IOException {
+        if (inStream == null) {
+            throw new IllegalArgumentException(NULL_ARGUMENT_STRING);
+        }
+        ExifData d;
+        try {
+            d = new ExifReader(this).read(inStream);
+        } catch (ExifInvalidFormatException e) {
+            throw new IOException("Invalid exif format : " + e);
+        }
+        data = d;
+    }
+
+    SparseIntArray getTagInfo() {
+        if (tagInfo == null) {
+            tagInfo = new SparseIntArray();
+            initTagInfo();
+        }
+        return tagInfo;
+    }
+
+    private void initTagInfo() {
+        /**
+         * We put tag information in a 4-bytes integer. The first byte a bitmask representing the
+         * allowed IFDs of the tag, the second byte is the data type, and the last two byte are a short
+         * value indicating the default component count of this tag.
+         */
+        // IFD0 tags
+        int[] ifdAllowedIfds = {IfdId.TYPE_IFD_0, IfdId.TYPE_IFD_1};
+        int ifdFlags = getFlagsFromAllowedIfds(ifdAllowedIfds) << 24;
+        tagInfo.put(ExifInterface.TAG_STRIP_OFFSETS, ifdFlags | ExifTag.TYPE_UNSIGNED_LONG << 16);
+        tagInfo.put(ExifInterface.TAG_EXIF_IFD, ifdFlags | ExifTag.TYPE_UNSIGNED_LONG << 16 | 1);
+        tagInfo.put(ExifInterface.TAG_GPS_IFD, ifdFlags | ExifTag.TYPE_UNSIGNED_LONG << 16 | 1);
+        tagInfo.put(ExifInterface.TAG_ORIENTATION, ifdFlags | ExifTag.TYPE_UNSIGNED_SHORT << 16 | 1);
+        tagInfo.put(ExifInterface.TAG_STRIP_BYTE_COUNTS, ifdFlags | ExifTag.TYPE_UNSIGNED_LONG << 16);
+        // IFD1 tags
+        int[] ifd1AllowedIfds = {IfdId.TYPE_IFD_1};
+        int ifdFlags1 = getFlagsFromAllowedIfds(ifd1AllowedIfds) << 24;
+        tagInfo.put(
+                ExifInterface.TAG_JPEG_INTERCHANGE_FORMAT,
+                ifdFlags1 | ExifTag.TYPE_UNSIGNED_LONG << 16 | 1);
+        tagInfo.put(
+                ExifInterface.TAG_JPEG_INTERCHANGE_FORMAT_LENGTH,
+                ifdFlags1 | ExifTag.TYPE_UNSIGNED_LONG << 16 | 1);
+        // Exif tags
+        int[] exifAllowedIfds = {IfdId.TYPE_IFD_EXIF};
+        int exifFlags = getFlagsFromAllowedIfds(exifAllowedIfds) << 24;
+        tagInfo.put(
+                ExifInterface.TAG_INTEROPERABILITY_IFD, exifFlags | ExifTag.TYPE_UNSIGNED_LONG << 16 | 1);
+    }
+
+    private Integer getTagIntValue(int tagId, int ifdId) {
+        int[] l = getTagIntValues(tagId, ifdId);
+        if (l == null || l.length <= 0) {
+            return null;
+        }
+        return l[0];
+    }
+
+    private int[] getTagIntValues(int tagId, int ifdId) {
+        ExifTag t = getTag(tagId, ifdId);
+        if (t == null) {
+            return null;
+        }
+        return t.getValueAsInts();
+    }
+
+    /**
+     * Gets an ExifTag for an IFD other than the tag's default.
+     */
+    public ExifTag getTag(int tagId, int ifdId) {
+        if (!ExifTag.isValidIfd(ifdId)) {
+            return null;
+        }
+        return data.getTag(getTrueTagKey(tagId), ifdId);
+    }
+
+    public Integer getTagIntValue(int tagId) {
+        int ifdId = getDefinedTagDefaultIfd(tagId);
+        return getTagIntValue(tagId, ifdId);
+    }
+
+    /**
+     * Gets the default IFD for a tag.
+     *
+     * @param tagId a defined tag constant, e.g. {@link #TAG_EXIF_IFD}.
+     * @return the default IFD for a tag definition or {@link #IFD_NULL} if no definition exists.
+     */
+    private int getDefinedTagDefaultIfd(int tagId) {
+        int info = getTagInfo().get(tagId);
+        if (info == DEFINITION_NULL) {
+            return IFD_NULL;
+        }
+        return getTrueIfd(tagId);
+    }
+
+    /**
+     * Clears this ExifInterface object's existing exif tags.
+     */
+    public void clearExif() {
+        data = new ExifData();
+    }
+
+    /**
+     * Puts an ExifTag into this ExifInterface object's tags, removing a previous ExifTag with the
+     * same TID and IFD. The IFD it is put into will be the one the tag was created with in {@link
+     * #buildTag}.
+     *
+     * @param tag an ExifTag to put into this ExifInterface's tags.
+     * @return the previous ExifTag with the same TID and IFD or null if none exists.
+     */
+    public ExifTag setTag(ExifTag tag) {
+        return data.addTag(tag);
+    }
+
+    /**
+     * Returns the ExifTag in that tag's default IFD for a defined tag constant or null if none
+     * exists.
+     *
+     * @param tagId a defined tag constant, e.g. {@link #TAG_EXIF_IFD}.
+     * @return an {@link ExifTag} or null if none exists.
+     */
+    public ExifTag getTag(int tagId) {
+        int ifdId = getDefinedTagDefaultIfd(tagId);
+        return getTag(tagId, ifdId);
+    }
+
+    /**
+     * Writes the tags from this ExifInterface object into a jpeg compressed bitmap, removing prior
+     * exif tags.
+     *
+     * @param bmap          a bitmap to compress and write exif into.
+     * @param exifOutStream the OutputStream to which the jpeg image with added exif tags will be
+     *                      written.
+     * @throws java.io.IOException
+     */
+    public void writeExif(Bitmap bmap, OutputStream exifOutStream) throws IOException {
+        if (bmap == null || exifOutStream == null) {
+            throw new IllegalArgumentException(NULL_ARGUMENT_STRING);
+        }
+        bmap.compress(Bitmap.CompressFormat.JPEG, 90, exifOutStream);
+        exifOutStream.flush();
+    }
+
+    /**
+     * Constants for {@code TAG_ORIENTATION}. They can be interpreted as follows:
+     *
+     * <ul>
+     *   <li>TOP_LEFT is the normal orientation.
+     *   <li>TOP_RIGHT is a left-right mirror.
+     *   <li>BOTTOM_LEFT is a 180 degree rotation.
+     *   <li>BOTTOM_RIGHT is a top-bottom mirror.
+     *   <li>LEFT_TOP is mirrored about the top-left<->bottom-right axis.
+     *   <li>RIGHT_TOP is a 90 degree clockwise rotation.
+     *   <li>LEFT_BOTTOM is mirrored about the top-right<->bottom-left axis.
+     *   <li>RIGHT_BOTTOM is a 270 degree clockwise rotation.
+     * </ul>
+     */
+    interface Orientation {
+        short TOP_LEFT = 1;
+        short TOP_RIGHT = 2;
+        short BOTTOM_LEFT = 3;
+        short BOTTOM_RIGHT = 4;
+        short LEFT_TOP = 5;
+        short RIGHT_TOP = 6;
+        short LEFT_BOTTOM = 7;
+        short RIGHT_BOTTOM = 8;
+    }
+
+    /**
+     * Wrapper class to define some orientation parameters.
+     */
+    public static class OrientationParams {
+        public int rotation = 0;
+        public boolean invertDimensions = false;
+        int scaleX = 1;
+        int scaleY = 1;
+    }
 }

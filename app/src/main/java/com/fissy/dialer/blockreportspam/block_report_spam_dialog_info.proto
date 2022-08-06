@@ -7,8 +7,8 @@ option optimize_for = LITE_RUNTIME;
 
 package com.fissy.dialer.blockreportspam;
 
-import "java/com/android/dialer/logging/contact_source.proto";
-import "java/com/android/dialer/logging/reporting_location.proto";
+import "java/com/fissy/dialer/logging/contact_source.proto";
+import "java/com/fissy/dialer/logging/reporting_location.proto";
 
 // Contains information needed in dialogs that allow a user to block a number
 // and/or report it as spam/not spam.

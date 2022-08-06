@@ -17,32 +17,39 @@ package com.fissy.dialer.notification.missedcalls;
 
 import android.content.Context;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.notification.DialerNotificationManager;
 import com.fissy.dialer.notification.NotificationManagerUtils;
 
-/** Cancels missed calls notifications. */
+/**
+ * Cancels missed calls notifications.
+ */
 public final class MissedCallNotificationCanceller {
 
-  /** Cancels all missed call notifications. */
-  public static void cancelAll(@NonNull Context context) {
-    NotificationManagerUtils.cancelAllInGroup(context, MissedCallConstants.GROUP_KEY);
-  }
-
-  /** Cancels a missed call notification for a single call. */
-  public static void cancelSingle(@NonNull Context context, @Nullable Uri callUri) {
-    if (callUri == null) {
-      LogUtil.e(
-          "MissedCallNotificationCanceller.cancelSingle",
-          "unable to cancel notification, uri is null");
-      return;
+    /**
+     * Cancels all missed call notifications.
+     */
+    public static void cancelAll(@NonNull Context context) {
+        NotificationManagerUtils.cancelAllInGroup(context, MissedCallConstants.GROUP_KEY);
     }
-    // This will also dismiss the group summary if there are no more missed call notifications.
-    DialerNotificationManager.cancel(
-        context,
-        MissedCallNotificationTags.getNotificationTagForCallUri(callUri),
-        MissedCallConstants.NOTIFICATION_ID);
-  }
+
+    /**
+     * Cancels a missed call notification for a single call.
+     */
+    public static void cancelSingle(@NonNull Context context, @Nullable Uri callUri) {
+        if (callUri == null) {
+            LogUtil.e(
+                    "MissedCallNotificationCanceller.cancelSingle",
+                    "unable to cancel notification, uri is null");
+            return;
+        }
+        // This will also dismiss the group summary if there are no more missed call notifications.
+        DialerNotificationManager.cancel(
+                context,
+                MissedCallNotificationTags.getNotificationTagForCallUri(callUri),
+                MissedCallConstants.NOTIFICATION_ID);
+    }
 }

@@ -25,65 +25,67 @@ package com.fissy.dialer.callcomposer.camera.exif;
  */
 public class ExifData {
 
-  private final IfdData[] ifdDatas = new IfdData[IfdId.TYPE_IFD_COUNT];
+    private final IfdData[] ifdDatas = new IfdData[IfdId.TYPE_IFD_COUNT];
 
-  /**
-   * Adds IFD data. If IFD data of the same type already exists, it will be replaced by the new
-   * data.
-   */
-  void addIfdData(IfdData data) {
-    ifdDatas[data.getId()] = data;
-  }
-
-  /** Returns the {@link IfdData} object corresponding to a given IFD if it exists or null. */
-  IfdData getIfdData(int ifdId) {
-    if (ExifTag.isValidIfd(ifdId)) {
-      return ifdDatas[ifdId];
+    /**
+     * Adds IFD data. If IFD data of the same type already exists, it will be replaced by the new
+     * data.
+     */
+    void addIfdData(IfdData data) {
+        ifdDatas[data.getId()] = data;
     }
-    return null;
-  }
 
-  /**
-   * Returns the tag with a given TID in the given IFD if the tag exists. Otherwise returns null.
-   */
-  protected ExifTag getTag(short tag, int ifd) {
-    IfdData ifdData = ifdDatas[ifd];
-    return (ifdData == null) ? null : ifdData.getTag(tag);
-  }
-
-  /**
-   * Adds the given ExifTag to its default IFD and returns an existing ExifTag with the same TID or
-   * null if none exist.
-   */
-  ExifTag addTag(ExifTag tag) {
-    if (tag != null) {
-      int ifd = tag.getIfd();
-      return addTag(tag, ifd);
+    /**
+     * Returns the {@link IfdData} object corresponding to a given IFD if it exists or null.
+     */
+    IfdData getIfdData(int ifdId) {
+        if (ExifTag.isValidIfd(ifdId)) {
+            return ifdDatas[ifdId];
+        }
+        return null;
     }
-    return null;
-  }
 
-  /**
-   * Adds the given ExifTag to the given IFD and returns an existing ExifTag with the same TID or
-   * null if none exist.
-   */
-  private ExifTag addTag(ExifTag tag, int ifdId) {
-    if (tag != null && ExifTag.isValidIfd(ifdId)) {
-      IfdData ifdData = getOrCreateIfdData(ifdId);
-      return ifdData.setTag(tag);
+    /**
+     * Returns the tag with a given TID in the given IFD if the tag exists. Otherwise returns null.
+     */
+    protected ExifTag getTag(short tag, int ifd) {
+        IfdData ifdData = ifdDatas[ifd];
+        return (ifdData == null) ? null : ifdData.getTag(tag);
     }
-    return null;
-  }
 
-  /**
-   * Returns the {@link IfdData} object corresponding to a given IFD or generates one if none exist.
-   */
-  private IfdData getOrCreateIfdData(int ifdId) {
-    IfdData ifdData = ifdDatas[ifdId];
-    if (ifdData == null) {
-      ifdData = new IfdData(ifdId);
-      ifdDatas[ifdId] = ifdData;
+    /**
+     * Adds the given ExifTag to its default IFD and returns an existing ExifTag with the same TID or
+     * null if none exist.
+     */
+    ExifTag addTag(ExifTag tag) {
+        if (tag != null) {
+            int ifd = tag.getIfd();
+            return addTag(tag, ifd);
+        }
+        return null;
     }
-    return ifdData;
-  }
+
+    /**
+     * Adds the given ExifTag to the given IFD and returns an existing ExifTag with the same TID or
+     * null if none exist.
+     */
+    private ExifTag addTag(ExifTag tag, int ifdId) {
+        if (tag != null && ExifTag.isValidIfd(ifdId)) {
+            IfdData ifdData = getOrCreateIfdData(ifdId);
+            return ifdData.setTag(tag);
+        }
+        return null;
+    }
+
+    /**
+     * Returns the {@link IfdData} object corresponding to a given IFD or generates one if none exist.
+     */
+    private IfdData getOrCreateIfdData(int ifdId) {
+        IfdData ifdData = ifdDatas[ifdId];
+        if (ifdData == null) {
+            ifdData = new IfdData(ifdId);
+            ifdDatas[ifdId] = ifdData;
+        }
+        return ifdData;
+    }
 }

@@ -16,29 +16,30 @@
 
 package com.android.dialer.inject;
 
-/** Represents all dialer variants. */
+/**
+ * Represents all dialer variants.
+ */
 public enum DialerVariant {
-  // AOSP Dialer variants
-  DIALER_AOSP("DialerAosp"),
-  DIALER_AOSP_ESPRESSO("DialerAospEspresso"),
-  DIALER_ROBOLECTRIC("DialerRobolectric"),
+    // AOSP Dialer variants
+    DIALER_AOSP("DialerAosp"),
+    DIALER_AOSP_ESPRESSO("DialerAospEspresso"),
+    DIALER_ROBOLECTRIC("DialerRobolectric"),
 
 
+    // TEST variant will be used in situations where we need create in-test application class which
+    // doesn't belong to any variants listed above
+    DIALER_TEST("DialerTest"),
+    // Just for sample code in inject/demo.
+    DIALER_DEMO("DialerDemo");
 
-  // TEST variant will be used in situations where we need create in-test application class which
-  // doesn't belong to any variants listed above
-  DIALER_TEST("DialerTest"),
-  // Just for sample code in inject/demo.
-  DIALER_DEMO("DialerDemo");
+    private final String variant;
 
-  private final String variant;
+    DialerVariant(String variant) {
+        this.variant = variant;
+    }
 
-  DialerVariant(String variant) {
-    this.variant = variant;
-  }
-
-  @Override
-  public String toString() {
-    return variant;
-  }
+    @Override
+    public String toString() {
+        return variant;
+    }
 }

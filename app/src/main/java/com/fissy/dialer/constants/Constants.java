@@ -17,7 +17,8 @@
 package com.fissy.dialer.constants;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
+
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.proguard.UsedByReflection;
 
@@ -29,44 +30,45 @@ import com.fissy.dialer.proguard.UsedByReflection;
  */
 @UsedByReflection(value = "Constants.java")
 public abstract class Constants {
-  private static Constants instance;
-  private static boolean didInitializeInstance;
+    private static Constants instance;
+    private static boolean didInitializeInstance;
 
-  @NonNull
-  public static synchronized Constants get() {
-    if (!didInitializeInstance) {
-      didInitializeInstance = true;
-      try {
-        Class<?> clazz = Class.forName(Constants.class.getName() + "Impl");
-        instance = (Constants) clazz.getConstructor().newInstance();
-      } catch (ReflectiveOperationException e) {
-        Assert.fail(
-            "Unable to create an instance of ConstantsImpl. To fix this error include one of the "
-                + "constants modules (googledialer, aosp etc...) in your target.");
-      }
+    protected Constants() {
     }
-    return instance;
-  }
 
-  @NonNull
-  public abstract String getFilteredNumberProviderAuthority();
+    @NonNull
+    public static synchronized Constants get() {
+        if (!didInitializeInstance) {
+            didInitializeInstance = true;
+            try {
+                Class<?> clazz = Class.forName(Constants.class.getName() + "Impl");
+                instance = (Constants) clazz.getConstructor().newInstance();
+            } catch (ReflectiveOperationException e) {
+                Assert.fail(
+                        "Unable to create an instance of ConstantsImpl. To fix this error include one of the "
+                                + "constants modules (googledialer, aosp etc...) in your target.");
+            }
+        }
+        return instance;
+    }
 
-  @NonNull
-  public abstract String getFileProviderAuthority();
+    @NonNull
+    public abstract String getFilteredNumberProviderAuthority();
 
-  @NonNull
-  public abstract String getAnnotatedCallLogProviderAuthority();
+    @NonNull
+    public abstract String getFileProviderAuthority();
 
-  @NonNull
-  public abstract String getPhoneLookupHistoryProviderAuthority();
+    @NonNull
+    public abstract String getAnnotatedCallLogProviderAuthority();
 
-  @NonNull
-  public abstract String getPreferredSimFallbackProviderAuthority();
+    @NonNull
+    public abstract String getPhoneLookupHistoryProviderAuthority();
 
-  public abstract String getUserAgent(Context context);
+    @NonNull
+    public abstract String getPreferredSimFallbackProviderAuthority();
 
-  @NonNull
-  public abstract String getSettingsActivity();
+    public abstract String getUserAgent(Context context);
 
-  protected Constants() {}
+    @NonNull
+    public abstract String getSettingsActivity();
 }

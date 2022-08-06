@@ -17,41 +17,41 @@ package com.android.voicemail.impl.sms;
 
 import android.app.PendingIntent;
 import android.content.Context;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.telecom.PhoneAccountHandle;
 
 public class Vvm3MessageSender extends OmtpMessageSender {
 
-  /**
-   * Creates a new instance of Vvm3MessageSender.
-   *
-   * @param applicationPort If set to a value > 0 then a binary sms is sent to this port number.
-   *     Otherwise, a standard text SMS is sent.
-   */
-  public Vvm3MessageSender(
-      Context context,
-      PhoneAccountHandle phoneAccountHandle,
-      short applicationPort,
-      String destinationNumber) {
-    super(context, phoneAccountHandle, applicationPort, destinationNumber);
-  }
+    /**
+     * Creates a new instance of Vvm3MessageSender.
+     *
+     * @param applicationPort If set to a value > 0 then a binary sms is sent to this port number.
+     *                        Otherwise, a standard text SMS is sent.
+     */
+    public Vvm3MessageSender(
+            Context context,
+            PhoneAccountHandle phoneAccountHandle,
+            short applicationPort,
+            String destinationNumber) {
+        super(context, phoneAccountHandle, applicationPort, destinationNumber);
+    }
 
-  @Override
-  public void requestVvmActivation(@Nullable PendingIntent sentIntent) {
-    // Activation not supported for VVM3, send a status request instead.
-    requestVvmStatus(sentIntent);
-  }
+    @Override
+    public void requestVvmActivation(@Nullable PendingIntent sentIntent) {
+        // Activation not supported for VVM3, send a status request instead.
+        requestVvmStatus(sentIntent);
+    }
 
-  @Override
-  public void requestVvmDeactivation(@Nullable PendingIntent sentIntent) {
-    // Deactivation not supported for VVM3, do nothing
-  }
+    @Override
+    public void requestVvmDeactivation(@Nullable PendingIntent sentIntent) {
+        // Deactivation not supported for VVM3, do nothing
+    }
 
-  @Override
-  public void requestVvmStatus(@Nullable PendingIntent sentIntent) {
-    // Status message:
-    // STATUS
-    StringBuilder sb = new StringBuilder().append("STATUS");
-    sendSms(sb.toString(), sentIntent);
-  }
+    @Override
+    public void requestVvmStatus(@Nullable PendingIntent sentIntent) {
+        // Status message:
+        // STATUS
+        StringBuilder sb = new StringBuilder().append("STATUS");
+        sendSms(sb.toString(), sentIntent);
+    }
 }

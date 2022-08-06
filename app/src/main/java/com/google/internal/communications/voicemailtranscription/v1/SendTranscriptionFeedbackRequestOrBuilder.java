@@ -4,35 +4,37 @@
 package com.google.internal.communications.voicemailtranscription.v1;
 
 public interface SendTranscriptionFeedbackRequestOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:google.internal.communications.voicemailtranscription.v1.SendTranscriptionFeedbackRequest)
-    com.google.protobuf.MessageLiteOrBuilder {
+        // @@protoc_insertion_point(interface_extends:google.internal.communications.voicemailtranscription.v1.SendTranscriptionFeedbackRequest)
+        com.google.protobuf.MessageLiteOrBuilder {
 
-  /**
-   * <pre>
-   * User feedback indicating the transcription quality for one or more
-   * voicemails
-   * </pre>
-   *
-   * <code>repeated .google.internal.communications.voicemailtranscription.v1.TranscriptionRating rating = 1;</code>
-   */
-  java.util.List<com.google.internal.communications.voicemailtranscription.v1.TranscriptionRating> 
-      getRatingList();
-  /**
-   * <pre>
-   * User feedback indicating the transcription quality for one or more
-   * voicemails
-   * </pre>
-   *
-   * <code>repeated .google.internal.communications.voicemailtranscription.v1.TranscriptionRating rating = 1;</code>
-   */
-  com.google.internal.communications.voicemailtranscription.v1.TranscriptionRating getRating(int index);
-  /**
-   * <pre>
-   * User feedback indicating the transcription quality for one or more
-   * voicemails
-   * </pre>
-   *
-   * <code>repeated .google.internal.communications.voicemailtranscription.v1.TranscriptionRating rating = 1;</code>
-   */
-  int getRatingCount();
+    /**
+     * <pre>
+     * User feedback indicating the transcription quality for one or more
+     * voicemails
+     * </pre>
+     *
+     * <code>repeated .google.internal.communications.voicemailtranscription.v1.TranscriptionRating rating = 1;</code>
+     */
+    java.util.List<com.google.internal.communications.voicemailtranscription.v1.TranscriptionRating>
+    getRatingList();
+
+    /**
+     * <pre>
+     * User feedback indicating the transcription quality for one or more
+     * voicemails
+     * </pre>
+     *
+     * <code>repeated .google.internal.communications.voicemailtranscription.v1.TranscriptionRating rating = 1;</code>
+     */
+    com.google.internal.communications.voicemailtranscription.v1.TranscriptionRating getRating(int index);
+
+    /**
+     * <pre>
+     * User feedback indicating the transcription quality for one or more
+     * voicemails
+     * </pre>
+     *
+     * <code>repeated .google.internal.communications.voicemailtranscription.v1.TranscriptionRating rating = 1;</code>
+     */
+    int getRatingCount();
 }

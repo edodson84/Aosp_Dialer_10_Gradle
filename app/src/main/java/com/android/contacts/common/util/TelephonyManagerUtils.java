@@ -18,19 +18,21 @@ package com.android.contacts.common.util;
 import android.content.Context;
 import android.telephony.TelephonyManager;
 
-/** This class provides several TelephonyManager util functions. */
+/**
+ * This class provides several TelephonyManager util functions.
+ */
 public class TelephonyManagerUtils {
 
-  /**
-   * Gets the voicemail tag from Telephony Manager.
-   *
-   * @param context Current application context
-   * @return Voicemail tag, the alphabetic identifier associated with the voice mail number.
-   */
-  public static String getVoiceMailAlphaTag(Context context) {
-    final TelephonyManager telephonyManager =
-        (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-    final String voiceMailLabel = telephonyManager.getVoiceMailAlphaTag();
-    return voiceMailLabel;
-  }
+    /**
+     * Gets the voicemail tag from Telephony Manager.
+     *
+     * @param context Current application context
+     * @return Voicemail tag, the alphabetic identifier associated with the voice mail number.
+     */
+    public static String getVoiceMailAlphaTag(Context context) {
+        final TelephonyManager telephonyManager =
+                (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        final String voiceMailLabel = telephonyManager.getVoiceMailAlphaTag();
+        return voiceMailLabel;
+    }
 }

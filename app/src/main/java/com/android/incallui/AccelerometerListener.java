@@ -23,6 +23,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Handler;
 import android.os.Message;
+
 import com.fissy.dialer.common.LogUtil;
 
 /**
@@ -31,142 +32,142 @@ import com.fissy.dialer.common.LogUtil;
  */
 public class AccelerometerListener {
 
-  // Device orientation
-  public static final int ORIENTATION_UNKNOWN = 0;
-  public static final int ORIENTATION_VERTICAL = 1;
-  public static final int ORIENTATION_HORIZONTAL = 2;
-  private static final String TAG = "AccelerometerListener";
-  private static final boolean DEBUG = true;
-  private static final boolean VDEBUG = false;
-  private static final int ORIENTATION_CHANGED = 1234;
-  private static final int VERTICAL_DEBOUNCE = 100;
-  private static final int HORIZONTAL_DEBOUNCE = 500;
-  private static final double VERTICAL_ANGLE = 50.0;
-  private final SensorManager sensorManager;
-  private final Sensor sensor;
-  // mOrientation is the orientation value most recently reported to the client.
-  private int orientation;
-  // mPendingOrientation is the latest orientation computed based on the sensor value.
-  // This is sent to the client after a rebounce delay, at which point it is copied to
-  // mOrientation.
-  private int pendingOrientation;
-  private OrientationListener listener;
-  Handler handler =
-      new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-          switch (msg.what) {
-            case ORIENTATION_CHANGED:
-              synchronized (this) {
-                orientation = pendingOrientation;
-                if (DEBUG) {
-                  LogUtil.d(
-                      TAG,
-                      "orientation: "
-                          + (orientation == ORIENTATION_HORIZONTAL
-                              ? "horizontal"
-                              : (orientation == ORIENTATION_VERTICAL ? "vertical" : "unknown")));
+    // Device orientation
+    public static final int ORIENTATION_UNKNOWN = 0;
+    public static final int ORIENTATION_VERTICAL = 1;
+    public static final int ORIENTATION_HORIZONTAL = 2;
+    private static final String TAG = "AccelerometerListener";
+    private static final boolean DEBUG = true;
+    private static final boolean VDEBUG = false;
+    private static final int ORIENTATION_CHANGED = 1234;
+    private static final int VERTICAL_DEBOUNCE = 100;
+    private static final int HORIZONTAL_DEBOUNCE = 500;
+    private static final double VERTICAL_ANGLE = 50.0;
+    private final SensorManager sensorManager;
+    private final Sensor sensor;
+    // mOrientation is the orientation value most recently reported to the client.
+    private int orientation;
+    // mPendingOrientation is the latest orientation computed based on the sensor value.
+    // This is sent to the client after a rebounce delay, at which point it is copied to
+    // mOrientation.
+    private int pendingOrientation;
+    private OrientationListener listener;
+    Handler handler =
+            new Handler() {
+                @Override
+                public void handleMessage(Message msg) {
+                    switch (msg.what) {
+                        case ORIENTATION_CHANGED:
+                            synchronized (this) {
+                                orientation = pendingOrientation;
+                                if (DEBUG) {
+                                    LogUtil.d(
+                                            TAG,
+                                            "orientation: "
+                                                    + (orientation == ORIENTATION_HORIZONTAL
+                                                    ? "horizontal"
+                                                    : (orientation == ORIENTATION_VERTICAL ? "vertical" : "unknown")));
+                                }
+                                if (listener != null) {
+                                    listener.orientationChanged(orientation);
+                                }
+                            }
+                            break;
+                    }
                 }
-                if (listener != null) {
-                  listener.orientationChanged(orientation);
+            };
+    SensorEventListener sensorListener =
+            new SensorEventListener() {
+                @Override
+                public void onSensorChanged(SensorEvent event) {
+                    onSensorEvent(event.values[0], event.values[1], event.values[2]);
                 }
-              }
-              break;
-          }
+
+                @Override
+                public void onAccuracyChanged(Sensor sensor, int accuracy) {
+                    // ignore
+                }
+            };
+
+    public AccelerometerListener(Context context) {
+        sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
+        sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+    }
+
+    public void setListener(OrientationListener listener) {
+        this.listener = listener;
+    }
+
+    public void enable(boolean enable) {
+        if (DEBUG) {
+            LogUtil.d(TAG, "enable(" + enable + ")");
         }
-      };
-  SensorEventListener sensorListener =
-      new SensorEventListener() {
-        @Override
-        public void onSensorChanged(SensorEvent event) {
-          onSensorEvent(event.values[0], event.values[1], event.values[2]);
+        synchronized (this) {
+            if (enable) {
+                orientation = ORIENTATION_UNKNOWN;
+                pendingOrientation = ORIENTATION_UNKNOWN;
+                sensorManager.registerListener(sensorListener, sensor, SensorManager.SENSOR_DELAY_NORMAL);
+            } else {
+                sensorManager.unregisterListener(sensorListener);
+                handler.removeMessages(ORIENTATION_CHANGED);
+            }
+        }
+    }
+
+    private void setOrientation(int orientation) {
+        synchronized (this) {
+            if (pendingOrientation == orientation) {
+                // Pending orientation has not changed, so do nothing.
+                return;
+            }
+
+            // Cancel any pending messages.
+            // We will either start a new timer or cancel alltogether
+            // if the orientation has not changed.
+            handler.removeMessages(ORIENTATION_CHANGED);
+
+            if (this.orientation != orientation) {
+                // Set timer to send an event if the orientation has changed since its
+                // previously reported value.
+                pendingOrientation = orientation;
+                final Message m = handler.obtainMessage(ORIENTATION_CHANGED);
+                // set delay to our debounce timeout
+                int delay = (orientation == ORIENTATION_VERTICAL ? VERTICAL_DEBOUNCE : HORIZONTAL_DEBOUNCE);
+                handler.sendMessageDelayed(m, delay);
+            } else {
+                // no message is pending
+                pendingOrientation = ORIENTATION_UNKNOWN;
+            }
+        }
+    }
+
+    private void onSensorEvent(double x, double y, double z) {
+        if (VDEBUG) {
+            LogUtil.d(TAG, "onSensorEvent(" + x + ", " + y + ", " + z + ")");
         }
 
-        @Override
-        public void onAccuracyChanged(Sensor sensor, int accuracy) {
-          // ignore
+        // If some values are exactly zero, then likely the sensor is not powered up yet.
+        // ignore these events to avoid false horizontal positives.
+        if (x == 0.0 || y == 0.0 || z == 0.0) {
+            return;
         }
-      };
 
-  public AccelerometerListener(Context context) {
-    sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
-    sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-  }
-
-  public void setListener(OrientationListener listener) {
-    this.listener = listener;
-  }
-
-  public void enable(boolean enable) {
-    if (DEBUG) {
-      LogUtil.d(TAG, "enable(" + enable + ")");
-    }
-    synchronized (this) {
-      if (enable) {
-        orientation = ORIENTATION_UNKNOWN;
-        pendingOrientation = ORIENTATION_UNKNOWN;
-        sensorManager.registerListener(sensorListener, sensor, SensorManager.SENSOR_DELAY_NORMAL);
-      } else {
-        sensorManager.unregisterListener(sensorListener);
-        handler.removeMessages(ORIENTATION_CHANGED);
-      }
-    }
-  }
-
-  private void setOrientation(int orientation) {
-    synchronized (this) {
-      if (pendingOrientation == orientation) {
-        // Pending orientation has not changed, so do nothing.
-        return;
-      }
-
-      // Cancel any pending messages.
-      // We will either start a new timer or cancel alltogether
-      // if the orientation has not changed.
-      handler.removeMessages(ORIENTATION_CHANGED);
-
-      if (this.orientation != orientation) {
-        // Set timer to send an event if the orientation has changed since its
-        // previously reported value.
-        pendingOrientation = orientation;
-        final Message m = handler.obtainMessage(ORIENTATION_CHANGED);
-        // set delay to our debounce timeout
-        int delay = (orientation == ORIENTATION_VERTICAL ? VERTICAL_DEBOUNCE : HORIZONTAL_DEBOUNCE);
-        handler.sendMessageDelayed(m, delay);
-      } else {
-        // no message is pending
-        pendingOrientation = ORIENTATION_UNKNOWN;
-      }
-    }
-  }
-
-  private void onSensorEvent(double x, double y, double z) {
-    if (VDEBUG) {
-      LogUtil.d(TAG, "onSensorEvent(" + x + ", " + y + ", " + z + ")");
+        // magnitude of the acceleration vector projected onto XY plane
+        final double xy = Math.hypot(x, y);
+        // compute the vertical angle
+        double angle = Math.atan2(xy, z);
+        // convert to degrees
+        angle = angle * 180.0 / Math.PI;
+        final int orientation =
+                (angle > VERTICAL_ANGLE ? ORIENTATION_VERTICAL : ORIENTATION_HORIZONTAL);
+        if (VDEBUG) {
+            LogUtil.d(TAG, "angle: " + angle + " orientation: " + orientation);
+        }
+        setOrientation(orientation);
     }
 
-    // If some values are exactly zero, then likely the sensor is not powered up yet.
-    // ignore these events to avoid false horizontal positives.
-    if (x == 0.0 || y == 0.0 || z == 0.0) {
-      return;
+    public interface OrientationListener {
+
+        void orientationChanged(int orientation);
     }
-
-    // magnitude of the acceleration vector projected onto XY plane
-    final double xy = Math.hypot(x, y);
-    // compute the vertical angle
-    double angle = Math.atan2(xy, z);
-    // convert to degrees
-    angle = angle * 180.0 / Math.PI;
-    final int orientation =
-        (angle > VERTICAL_ANGLE ? ORIENTATION_VERTICAL : ORIENTATION_HORIZONTAL);
-    if (VDEBUG) {
-      LogUtil.d(TAG, "angle: " + angle + " orientation: " + orientation);
-    }
-    setOrientation(orientation);
-  }
-
-  public interface OrientationListener {
-
-    void orientationChanged(int orientation);
-  }
 }

@@ -33,39 +33,41 @@ import android.widget.TextView;
  */
 public class DialpadTextView extends TextView {
 
-  private final Rect textBounds = new Rect();
-  private String textStr;
+    private final Rect textBounds = new Rect();
+    private String textStr;
 
-  public DialpadTextView(Context context, AttributeSet attrs) {
-    super(context, attrs);
-  }
+    public DialpadTextView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
 
-  /** Draw the text to fit within the height/width which have been specified during measurement. */
-  @Override
-  public void draw(Canvas canvas) {
-    Paint paint = getPaint();
+    /**
+     * Draw the text to fit within the height/width which have been specified during measurement.
+     */
+    @Override
+    public void draw(Canvas canvas) {
+        Paint paint = getPaint();
 
-    // Without this, the draw does not respect the style's specified text color.
-    paint.setColor(getCurrentTextColor());
+        // Without this, the draw does not respect the style's specified text color.
+        paint.setColor(getCurrentTextColor());
 
-    // The text bounds values are relative and can be negative,, so rather than specifying a
-    // standard origin such as 0, 0, we need to use negative of the left/top bounds.
-    // For example, the bounds may be: Left: 11, Right: 37, Top: -77, Bottom: 0
-    canvas.drawText(textStr, -textBounds.left, -textBounds.top, paint);
-  }
+        // The text bounds values are relative and can be negative,, so rather than specifying a
+        // standard origin such as 0, 0, we need to use negative of the left/top bounds.
+        // For example, the bounds may be: Left: 11, Right: 37, Top: -77, Bottom: 0
+        canvas.drawText(textStr, -textBounds.left, -textBounds.top, paint);
+    }
 
-  /**
-   * Calculate the pixel-accurate bounds of the text when rendered, and use that to specify the
-   * height and width.
-   */
-  @Override
-  protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-    super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-    textStr = getText().toString();
-    getPaint().getTextBounds(textStr, 0, textStr.length(), textBounds);
+    /**
+     * Calculate the pixel-accurate bounds of the text when rendered, and use that to specify the
+     * height and width.
+     */
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        textStr = getText().toString();
+        getPaint().getTextBounds(textStr, 0, textStr.length(), textBounds);
 
-    int width = resolveSize(textBounds.width(), widthMeasureSpec);
-    int height = resolveSize(textBounds.height(), heightMeasureSpec);
-    setMeasuredDimension(width, height);
-  }
+        int width = resolveSize(textBounds.width(), widthMeasureSpec);
+        int height = resolveSize(textBounds.height(), heightMeasureSpec);
+        setMeasuredDimension(width, height);
+    }
 }
