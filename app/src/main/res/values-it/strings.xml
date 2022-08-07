@@ -48,6 +48,9 @@
     <string name="abc_shareactionprovider_share_with_application">Condividi tramite %s</string>
     <string name="abc_toolbar_collapse_description">Comprimi</string>
     <string name="about_phone_label">Informazioni</string>
+    <string name="ringtone_title">Suoneria telefono</string>
+    <string name="vibrate_on_ring_title">"Vibrazione per le chiamate</string>
+    <string name="dtmf_tone_enable_title">Toni tastierino</string>
     <string name="accessibility_settings_title">Accessibilità</string>
     <string name="account_phone">Solo dispositivo, non sincronizzato</string>
     <string name="action_copy_number_text">Copia numero</string>
