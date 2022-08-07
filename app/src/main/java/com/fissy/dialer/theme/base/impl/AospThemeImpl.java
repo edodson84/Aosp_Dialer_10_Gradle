@@ -16,10 +16,14 @@
 
 package com.fissy.dialer.theme.base.impl;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import androidx.annotation.ColorInt;
 import androidx.annotation.StyleRes;
+import androidx.core.app.ActivityCompat;
+
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 
@@ -97,7 +101,6 @@ public class AospThemeImpl implements Theme {
     @Override
     public @Type
     int getTheme() {
-        // TODO(a bug): add share prefs check to configure this
         return LIGHT;
     }
 

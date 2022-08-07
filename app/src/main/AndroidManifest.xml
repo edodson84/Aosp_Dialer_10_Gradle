@@ -101,12 +101,12 @@
             android:name="com.fissy.dialer.about.LicenseMenuActivity"
             android:exported="true"
             android:label="@string/licenseActivityLabel"
-            android:theme="@style/Theme.AppCompat.Light" />
+            android:theme="@style/daynight" />
         <activity
             android:name="com.fissy.dialer.about.LicenseActivity"
             android:exported="false"
             android:label="@string/licenseActivityLabel"
-            android:theme="@style/Theme.AppCompat.Light" />
+            android:theme="@style/daynight" />
         <activity
             android:name="com.fissy.dialer.app.filterednumber.BlockedNumbersSettingsActivity"
             android:exported="false"
@@ -349,7 +349,7 @@
             android:name="com.fissy.dialer.postcall.PostCallActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize"
-            android:theme="@style/Theme.AppCompat.Light"/>
+            android:theme="@style/daynight"/>
         <activity
             android:name="com.fissy.dialer.precall.externalreceiver.LaunchPreCallActivity"
             android:excludeFromRecents="true"

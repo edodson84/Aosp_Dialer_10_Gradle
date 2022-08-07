@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (C) 2018 The Android Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License
+  -->
+<resources>
+
+    <style name="Theme.InCallScreen.ManageConference" parent="@style/Dialer.ThemeBase.ActionBar" />
+
+    <style name="daynight" parent="@style/Theme.AppCompat" />
+
+    <style name="MainActivityTheme" parent="@style/MainActivityThemeBase">
+        <item name="android:navigationBarColor">?android:colorBackgroundFloating</item>
+    </style>
+
+    <style name="MainActivityThemeBase" parent="@style/Dialer.ThemeBase.NoActionBar">
+        <item name="actionBarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+        <item name="actionModeStyle">@style/MainActionModeStyle</item>
+        <item name="dialpad_style">@style/Dialpad.Themed</item>
+    </style>
+
+    <style name="Dialer" parent="@style/Theme.AppCompat">
+        <item name="android:textColorLink">@color/dialer_theme_color</item>
+        <item name="android:textAppearanceButton">@style/DialerButtonTextStyle</item>
+        <item name="android:alertDialogTheme">@style/AlertDialogTheme</item>
+        <item name="android:colorButtonNormal">?android:colorPrimary</item>
+        <item name="alertDialogTheme">@style/AlertDialogTheme</item>
+    </style>
+
+    <style name="Theme.InCallScreen" parent="@style/Dialer.ThemeBase.NoActionBar">
+        <item name="android:windowBackground">@drawable/incall_background_gradient</item>
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:windowShowWallpaper">true</item>
+        <item name="android:colorPrimaryDark">@color/dialer_theme_color_dark</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="colorPrimaryDark">@color/dialer_theme_color_dark</item>
+        <item name="dialpad_key_button_touch_tint">?colorPrimary20pct</item>
+        <item name="dialpad_style">@style/InCallDialpad</item>
+    </style>
+
+    <style name="InCallDialpad" parent="@style/Dialpad.Themed">
+        <item name="dialpad_digits_adjustable_height">
+            @dimen/incall_dialpad_digits_adjustable_height
+        </item>
+        <item name="dialpad_digits_adjustable_text_size">
+            @dimen/incall_dialpad_digits_adjustable_text_size
+        </item>
+        <item name="dialpad_elevation">10.0dip</item>
+        <item name="dialpad_end_key_spacing">@dimen/incall_end_call_spacing</item>
+        <item name="dialpad_key_letters_size_for_dual_alphabets">
+            @dimen/incall_dialpad_key_letters_size_for_dual_alphabets
+        </item>
+        <item name="dialpad_key_letters_size_for_single_alphabet">
+            @dimen/incall_dialpad_key_letters_size_for_single_alphabet
+        </item>
+        <item name="dialpad_key_number_margin_bottom">
+            @dimen/incall_dialpad_key_number_margin_bottom
+        </item>
+        <item name="dialpad_key_numbers_size">@dimen/incall_dialpad_key_numbers_size</item>
+    </style>
+
+    <style name="Dialpad.Themed" parent="@style/Dialpad">
+        <item name="dialpad_background">?android:colorBackgroundFloating</item>
+        <item name="dialpad_text_color">?android:textColorSecondary</item>
+        <item name="dialpad_text_color_primary">?android:colorPrimary</item>
+        <item name="dialpad_text_color_secondary">?android:textColorSecondary</item>
+    </style>
+
+    <style name="Dialpad">
+        <item name="dialpad_digits_adjustable_height">@dimen/dialpad_digits_height</item>
+        <item name="dialpad_digits_adjustable_text_size">@dimen/dialpad_digits_text_size</item>
+        <item name="dialpad_elevation">0.0dip</item>
+        <item name="dialpad_end_key_spacing">@dimen/dialpad_bottom_space_height</item>
+        <item name="dialpad_key_letters_size_for_dual_alphabets">
+            @dimen/dialpad_key_letters_default_size_for_dual_alphabets
+        </item>
+        <item name="dialpad_key_letters_size_for_single_alphabet">
+            @dimen/dialpad_key_letters_default_size_for_single_alphabet
+        </item>
+        <item name="dialpad_key_number_margin_bottom">
+            @dimen/dialpad_key_number_default_margin_bottom
+        </item>
+        <item name="dialpad_key_numbers_size">@dimen/dialpad_key_numbers_default_size</item>
+    </style>
+
+    <style name="Dialer.ThemeBase" parent="@style/Dialer">
+        <item name="android:colorBackground">@color/google_grey_900</item>
+        <item name="android:textColorPrimary">@color/dialer_dark_primary_text_color</item>
+        <item name="android:textColorSecondary">@color/dialer_dark_secondary_text_color</item>
+        <item name="android:textColorPrimaryInverse">@color/dialer_primary_text_color</item>
+        <item name="android:textColorSecondaryInverse">@color/dialer_secondary_text_color</item>
+        <item name="android:textColorHint">@color/google_grey_600</item>
+        <item name="android:colorPrimary">@color/dialer_dark_theme_color</item>
+        <item name="android:colorPrimaryDark">@color/dialer_dark_theme_color_dark</item>
+        <item name="android:colorAccent">@color/dialer_dark_secondary_color</item>
+        <item name="android:colorBackgroundFloating">@color/google_grey_800</item>
+        <item name="colorAccent">@color/dialer_dark_secondary_color</item>
+        <item name="colorControlActivated">?android:colorPrimary</item>
+        <item name="colorIcon">?android:textColorSecondary</item>
+        <item name="colorIconOnUnthemedDarkBackground">@android:color/white</item>
+        <item name="colorIconSecondary">?android:textColorSecondary</item>
+        <item name="colorPrimary">@color/dialer_dark_theme_color</item>
+        <item name="colorPrimary20pct">@color/dialer_dark_theme_color_20pct</item>
+        <item name="colorPrimaryDark">@color/dialer_dark_theme_color_dark</item>
+        <item name="colorTextOnUnthemedDarkBackground">@android:color/white</item>
+    </style>
+
+    <style name="Dialer.ThemeBase.NoActionBar" parent="@style/Dialer.ThemeBase">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AfterCallNotificationTheme" parent="@style/Dialer.ThemeBase.NoActionBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+    </style>
+
+    <style name="Theme.AppCompat.CallComposer" parent="@style/Dialer.ThemeBase.NoActionBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:listViewStyle">@style/ListViewStyle</item>
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:actionBarItemBackground">
+            @drawable/item_background_material_borderless_dark
+        </item>
+    </style>
+
+    <style name="Theme.PreCall.DialogHolder" parent="@style/Dialer.ThemeBase.NoActionBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowActivityTransitions">false</item>
+    </style>
+
+    <style name="SettingsStyle" parent="@style/Dialer.ThemeBase.ActionBar">
+        <item name="android:textColorPrimary">@color/settings_text_color_primary_dark</item>
+        <item name="android:textColorSecondary">@color/settings_text_color_secondary_dark</item>
+        <item name="android:windowBackground">?android:colorBackground</item>
+        <item name="android:colorAccent">?android:colorPrimary</item>
+    </style>
+</resources>

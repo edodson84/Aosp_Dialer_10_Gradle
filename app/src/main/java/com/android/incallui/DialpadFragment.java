@@ -144,12 +144,12 @@ public class DialpadFragment extends BaseFragment<DialpadPresenter, DialpadUi>
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Context contextThemeWrapper = new ContextThemeWrapper(getActivity(), R.style.Dialer_ThemeBase);
-        LayoutInflater layoutInflater = inflater.cloneInContext(contextThemeWrapper);
-        final View parent = layoutInflater.inflate(R.layout.incall_dialpad_fragment, container, false);
+        //Context contextThemeWrapper = new ContextThemeWrapper(getActivity(), R.style.Dialer_ThemeBase);
+        //LayoutInflater layoutInflater = inflater.cloneInContext(contextThemeWrapper);
+        final View parent = inflater.inflate(R.layout.incall_dialpad_fragment, container, false);
         dialpadView = (DialpadView) parent.findViewById(R.id.dialpad_view);
         dialpadView.setCanDigitsBeEdited(false);
-        dialpadView.setBackgroundResource(R.color.incall_dialpad_background);
+        //dialpadView.setBackgroundResource(R.color.background_dialpad);
         dtmfDialerField = (EditText) parent.findViewById(R.id.digits);
         if (dtmfDialerField != null) {
             LogUtil.i("DialpadFragment.onCreateView", "creating dtmfKeyListener");

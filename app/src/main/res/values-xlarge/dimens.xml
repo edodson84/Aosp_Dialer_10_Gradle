@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <item name="abc_dialog_fixed_width_major" type="dimen">50.0%</item>
-    <item name="abc_dialog_fixed_width_minor" type="dimen">70.00001%</item>
-    <item name="abc_dialog_min_width_major" type="dimen">45.000004%</item>
-    <item name="abc_dialog_min_width_minor" type="dimen">72.0%</item>
-</resources>

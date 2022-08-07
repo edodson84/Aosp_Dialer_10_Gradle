@@ -12,7 +12,6 @@
     <bool name="motorola_disable_phone_number_formatting">false</bool>
     <bool name="motorola_hidden_menu_enabled">false</bool>
     <bool name="motorola_sprint_hd_codec">false</bool>
-    <bool name="mtrl_btn_textappearance_all_caps">true</bool>
     <bool name="scale_height">false</bool>
     <bool name="scale_width">true</bool>
     <bool name="show_device_id_as_barcode">false</bool>

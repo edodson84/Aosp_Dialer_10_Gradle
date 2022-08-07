@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="abc_action_bar_default_height_material">48.0dip</dimen>
-    <dimen name="abc_text_size_subtitle_material_toolbar">12.0dip</dimen>
-    <dimen name="abc_text_size_title_material_toolbar">14.0dip</dimen>
     <dimen name="dialpad_bottom_space_height">65.0dip</dimen>
     <dimen name="dialpad_symbol_margin_bottom">0.0dip</dimen>
     <dimen name="videocall_preview_long">96.0dip</dimen>
