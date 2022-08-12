@@ -24,6 +24,7 @@ import android.view.View;
 import com.fissy.dialer.calldetails.CallDetailsEntryViewHolder.CallDetailsEntryListener;
 import com.fissy.dialer.calldetails.CallDetailsFooterViewHolder.DeleteCallDetailsListener;
 import com.fissy.dialer.calldetails.CallDetailsHeaderViewHolder.CallDetailsHeaderListener;
+import com.fissy.dialer.callrecord.CallRecordingDataStore;
 import com.fissy.dialer.dialercontact.DialerContact;
 import com.fissy.dialer.glidephotomanager.PhotoInfo;
 import com.fissy.dialer.lettertile.LetterTileDrawable;
@@ -48,14 +49,16 @@ final class OldCallDetailsAdapter extends CallDetailsAdapterCommon {
             CallDetailsEntryListener callDetailsEntryListener,
             CallDetailsHeaderListener callDetailsHeaderListener,
             CallDetailsFooterViewHolder.ReportCallIdListener reportCallIdListener,
-            DeleteCallDetailsListener deleteCallDetailsListener) {
+            DeleteCallDetailsListener deleteCallDetailsListener,
+            CallRecordingDataStore callRecordingDataStore) {
         super(
                 context,
                 callDetailsEntries,
                 callDetailsEntryListener,
                 callDetailsHeaderListener,
                 reportCallIdListener,
-                deleteCallDetailsListener);
+                deleteCallDetailsListener,
+                callRecordingDataStore);
         this.contact = contact;
     }
 

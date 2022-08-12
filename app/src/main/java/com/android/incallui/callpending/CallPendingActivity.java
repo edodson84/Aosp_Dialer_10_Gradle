@@ -262,6 +262,10 @@ public class CallPendingActivity extends FragmentActivity
                     }
 
                     @Override
+                    public void callRecordClicked(boolean checked) {
+                    }
+
+                    @Override
                     public void showDialpadClicked(boolean checked) {
                     }
 

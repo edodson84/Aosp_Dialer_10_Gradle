@@ -17,7 +17,7 @@
 
     <style name="Theme.InCallScreen.ManageConference" parent="@style/Dialer.ThemeBase.ActionBar" />
 
-    <style name="daynight" parent="@style/Theme.AppCompat" />
+    <style name="daynight" parent="@style/Theme.Material3.Dark" />
 
     <style name="MainActivityTheme" parent="@style/MainActivityThemeBase">
         <item name="android:navigationBarColor">?android:colorBackgroundFloating</item>
@@ -29,7 +29,7 @@
         <item name="dialpad_style">@style/Dialpad.Themed</item>
     </style>
 
-    <style name="Dialer" parent="@style/Theme.AppCompat">
+    <style name="Dialer" parent="@style/Theme.Material3.Dark">
         <item name="android:textColorLink">@color/dialer_theme_color</item>
         <item name="android:textAppearanceButton">@style/DialerButtonTextStyle</item>
         <item name="android:alertDialogTheme">@style/AlertDialogTheme</item>

@@ -33,7 +33,7 @@ import javax.annotation.concurrent.Immutable;
  * Determines where logical buttons should be placed in the {@link InCallFragment} based on the
  * provided mapping.
  *
- * <p>The button placement returned by a call to {@link #getButtonPlacement(int, Set)} is created as
+ * <p>The button placement returned by a call tot, Set)} is created as
  * follows: one button is placed at each UI slot, using the provided mapping to resolve conflicts.
  * Any allowed buttons that were not chosen for their desired slot are filled in at the end of the
  * list until it becomes the proper size.

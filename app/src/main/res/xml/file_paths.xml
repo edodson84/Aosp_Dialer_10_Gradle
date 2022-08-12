@@ -4,4 +4,7 @@
     <files-path
         name="voicemails"
         path="voicemails/" />
+    <external-path
+        name="recordings"
+        path="CallRecordings/" />
 </paths>

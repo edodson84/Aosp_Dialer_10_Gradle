@@ -26,6 +26,7 @@ import android.telecom.InCallService;
 
 import com.android.incallui.audiomode.AudioModeProvider;
 import com.android.incallui.call.CallList;
+import com.android.incallui.call.CallRecorder;
 import com.android.incallui.call.ExternalCallList;
 import com.android.incallui.call.TelecomAdapter;
 import com.android.incallui.speakeasy.SpeakEasyCallManager;
@@ -113,6 +114,7 @@ public class InCallServiceImpl extends InCallService {
         InCallPresenter.getInstance().onServiceBind();
         InCallPresenter.getInstance().maybeStartRevealAnimation(intent);
         TelecomAdapter.getInstance().setInCallService(this);
+        CallRecorder.getInstance().setUp(context);
         returnToCallController =
                 new ReturnToCallController(this, ContactInfoCache.getInstance(context));
         feedbackListener = FeedbackComponent.get(context).getCallFeedbackListener();

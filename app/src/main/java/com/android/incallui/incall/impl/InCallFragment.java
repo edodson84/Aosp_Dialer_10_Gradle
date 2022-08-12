@@ -71,6 +71,7 @@ import com.fissy.dialer.logging.Logger;
 import com.fissy.dialer.multimedia.MultimediaData;
 import com.fissy.dialer.strictmode.StrictModeUtils;
 import com.fissy.dialer.widget.LockableViewPager;
+import com.android.incallui.incall.impl.ButtonController.CallRecordButtonController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -110,6 +111,7 @@ public class InCallFragment extends Fragment
     private int voiceNetworkType;
     private int phoneType;
     private boolean stateRestored;
+    private static final int REQUEST_CODE_CALL_RECORD_PERMISSION = 1000;
 
     private static boolean isSupportedButton(@InCallButtonIds int id) {
         return id == InCallButtonIds.BUTTON_AUDIO
@@ -122,7 +124,8 @@ public class InCallFragment extends Fragment
                 || id == InCallButtonIds.BUTTON_MERGE
                 || id == InCallButtonIds.BUTTON_MANAGE_VOICE_CONFERENCE
                 || id == InCallButtonIds.BUTTON_SWAP_SIM
-                || id == InCallButtonIds.BUTTON_UPGRADE_TO_RTT;
+                || id == InCallButtonIds.BUTTON_UPGRADE_TO_RTT
+                || id == InCallButtonIds.BUTTON_RECORD_CALL;
     }
 
     @Override
@@ -239,6 +242,7 @@ public class InCallFragment extends Fragment
                 new ButtonController.ManageConferenceButtonController(inCallScreenDelegate));
         buttonControllers.add(
                 new ButtonController.SwitchToSecondaryButtonController(inCallScreenDelegate));
+        buttonControllers.add(new ButtonController.CallRecordButtonController(inCallButtonUiDelegate));
 
         inCallScreenDelegate.onInCallScreenDelegateInit(this);
         inCallScreenDelegate.onInCallScreenReady();
@@ -474,6 +478,39 @@ public class InCallFragment extends Fragment
         ((SpeakerButtonController) getButtonController(InCallButtonIds.BUTTON_AUDIO))
                 .setAudioState(audioState);
         getButtonController(InCallButtonIds.BUTTON_MUTE).setChecked(audioState.isMuted());
+    }
+
+    @Override
+    public void setCallRecordingState(boolean isRecording) {
+        ((CallRecordButtonController) getButtonController(InCallButtonIds.BUTTON_RECORD_CALL))
+                .setRecordingState(isRecording);
+    }
+
+    @Override
+    public void setCallRecordingDuration(long durationMs) {
+        ((CallRecordButtonController) getButtonController(InCallButtonIds.BUTTON_RECORD_CALL))
+                .setRecordingDuration(durationMs);
+    }
+
+    @Override
+    public void requestCallRecordingPermissions(String[] permissions) {
+        requestPermissions(permissions, REQUEST_CODE_CALL_RECORD_PERMISSION);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_CODE_CALL_RECORD_PERMISSION) {
+            boolean allGranted = grantResults.length > 0;
+            for (int i = 0; i < grantResults.length; i++) {
+                allGranted &= grantResults[i] == PackageManager.PERMISSION_GRANTED;
+            }
+            if (allGranted) {
+                inCallButtonUiDelegate.callRecordClicked(true);
+            }
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 
     @Override

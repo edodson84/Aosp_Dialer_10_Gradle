@@ -60,7 +60,9 @@ public class InCallButtonIdsExtension {
             return "SWAP_SIM";
         } else if (id == InCallButtonIds.BUTTON_UPGRADE_TO_RTT) {
             return "UPGRADE_TO_RTT";
-        } else {
+        } else if (id == InCallButtonIds.BUTTON_RECORD_CALL) {
+            return "RECORD_CALL";
+        }else {
             return "INVALID_BUTTON: " + id;
         }
     }

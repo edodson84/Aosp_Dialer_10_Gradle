@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="call_record_playback_icon_color">#8a000000</color>
     <color name="DO_NOT_USE_OR_I_WILL_BREAK_YOU_text_span_tertiary_button">#ff1a73e8</color>
     <color name="background_item_grey_pressed">#ffe0e0e0</color>
     <color name="blocked_contact_background">#ffa52714</color>

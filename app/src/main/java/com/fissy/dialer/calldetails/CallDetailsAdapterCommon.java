@@ -34,9 +34,11 @@ import com.fissy.dialer.calldetails.CallDetailsHeaderViewHolder.CallDetailsHeade
 import com.fissy.dialer.calllogutils.CallTypeHelper;
 import com.fissy.dialer.calllogutils.CallbackActionHelper;
 import com.fissy.dialer.calllogutils.CallbackActionHelper.CallbackAction;
+import com.fissy.dialer.callrecord.CallRecordingDataStore;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.duo.DuoComponent;
 import com.fissy.dialer.glidephotomanager.PhotoInfo;
+import com.fissy.dialer.callrecord.CallRecordingDataStore;
 
 /**
  * Contains common logic shared between {@link OldCallDetailsAdapter} and {@link
@@ -53,6 +55,7 @@ abstract class CallDetailsAdapterCommon extends RecyclerView.Adapter<RecyclerVie
     private final ReportCallIdListener reportCallIdListener;
     private final DeleteCallDetailsListener deleteCallDetailsListener;
     private final CallTypeHelper callTypeHelper;
+    private final CallRecordingDataStore callRecordingDataStore;
 
     private CallDetailsEntries callDetailsEntries;
 
@@ -62,12 +65,14 @@ abstract class CallDetailsAdapterCommon extends RecyclerView.Adapter<RecyclerVie
             CallDetailsEntryListener callDetailsEntryListener,
             CallDetailsHeaderListener callDetailsHeaderListener,
             ReportCallIdListener reportCallIdListener,
-            DeleteCallDetailsListener deleteCallDetailsListener) {
+            DeleteCallDetailsListener deleteCallDetailsListener,
+            CallRecordingDataStore callRecordingDataStore) {
         this.callDetailsEntries = callDetailsEntries;
         this.callDetailsEntryListener = callDetailsEntryListener;
         this.callDetailsHeaderListener = callDetailsHeaderListener;
         this.reportCallIdListener = reportCallIdListener;
         this.deleteCallDetailsListener = deleteCallDetailsListener;
+        this.callRecordingDataStore = callRecordingDataStore;
         this.callTypeHelper =
                 new CallTypeHelper(context.getResources(), DuoComponent.get(context).getDuo());
     }
@@ -131,6 +136,7 @@ abstract class CallDetailsAdapterCommon extends RecyclerView.Adapter<RecyclerVie
                     getPhotoInfo(),
                     entry,
                     callTypeHelper,
+                    callRecordingDataStore,
                     !entry.getHistoryResultsList().isEmpty() && position != getItemCount() - 2);
         }
     }

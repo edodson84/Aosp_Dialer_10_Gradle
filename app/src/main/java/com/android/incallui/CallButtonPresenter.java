@@ -17,10 +17,16 @@
 package com.android.incallui;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Trace;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.core.os.UserManagerCompat;
+
+import android.preference.PreferenceManager;
 import android.telecom.CallAudioState;
 import android.telecom.PhoneAccountHandle;
 
@@ -34,6 +40,7 @@ import com.android.incallui.InCallPresenter.IncomingCallListener;
 import com.android.incallui.audiomode.AudioModeProvider;
 import com.android.incallui.audiomode.AudioModeProvider.AudioModeListener;
 import com.android.incallui.call.CallList;
+import com.android.incallui.call.CallRecorder;
 import com.android.incallui.call.DialerCall;
 import com.android.incallui.call.DialerCall.CameraDirection;
 import com.android.incallui.call.TelecomAdapter;
@@ -43,6 +50,7 @@ import com.android.incallui.incall.protocol.InCallButtonUi;
 import com.android.incallui.incall.protocol.InCallButtonUiDelegate;
 import com.android.incallui.multisim.SwapSimWorker;
 import com.android.incallui.videotech.utils.VideoUtils;
+import com.fissy.dialer.R;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.common.concurrent.DialerExecutorComponent;
@@ -63,6 +71,8 @@ public class CallButtonPresenter
         Listener,
         InCallButtonUiDelegate {
 
+    private static final String KEY_RECORDING_WARNING_PRESENTED = "recording_warning_presented";
+
     private static final String KEY_AUTOMATICALLY_MUTED_BY_ADD_CALL =
             "incall_key_automatically_muted_by_add_call";
     private static final String KEY_PREVIOUS_MUTE_STATE = "incall_key_previous_mute_state";
@@ -74,6 +84,25 @@ public class CallButtonPresenter
     private boolean previousMuteState = false;
     private boolean isInCallButtonUiReady;
     private PhoneAccountHandle otherAccount;
+
+    private CallRecorder.RecordingProgressListener recordingProgressListener =
+            new CallRecorder.RecordingProgressListener() {
+                @Override
+                public void onStartRecording() {
+                    inCallButtonUi.setCallRecordingState(true);
+                    inCallButtonUi.setCallRecordingDuration(0);
+                }
+
+                @Override
+                public void onStopRecording() {
+                    inCallButtonUi.setCallRecordingState(false);
+                }
+
+                @Override
+                public void onRecordingTimeProgress(final long elapsedTimeMs) {
+                    inCallButtonUi.setCallRecordingDuration(elapsedTimeMs);
+                }
+            };
 
     public CallButtonPresenter(Context context) {
         this.context = context.getApplicationContext();
@@ -93,6 +122,9 @@ public class CallButtonPresenter
         inCallPresenter.addCanAddCallListener(this);
         inCallPresenter.getInCallCameraManager().addCameraSelectionListener(this);
 
+        CallRecorder recorder = CallRecorder.getInstance();
+        recorder.addRecordingProgressListener(recordingProgressListener);
+
         // Update the buttons state immediately for the current call
         onStateChange(InCallState.NO_CALLS, inCallPresenter.getInCallState(), CallList.getInstance());
         isInCallButtonUiReady = true;
@@ -108,7 +140,10 @@ public class CallButtonPresenter
         InCallPresenter.getInstance().removeDetailsListener(this);
         InCallPresenter.getInstance().getInCallCameraManager().removeCameraSelectionListener(this);
         InCallPresenter.getInstance().removeCanAddCallListener(this);
+        CallRecorder recorder = CallRecorder.getInstance();
+        recorder.removeRecordingProgressListener(recordingProgressListener);
         isInCallButtonUiReady = false;
+
     }
 
     @Override
@@ -306,6 +341,52 @@ public class CallButtonPresenter
     }
 
     @Override
+    public void callRecordClicked(boolean checked) {
+        CallRecorder recorder = CallRecorder.getInstance();
+        if (checked) {
+            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+            boolean warningPresented = prefs.getBoolean(KEY_RECORDING_WARNING_PRESENTED, false);
+            if (!warningPresented) {
+                new AlertDialog.Builder(getActivity())
+                        .setTitle(R.string.recording_warning_title)
+                        .setMessage(R.string.recording_warning_text)
+                        .setPositiveButton(R.string.onscreenCallRecordText, (dialog, which) -> {
+                            prefs.edit()
+                                    .putBoolean(KEY_RECORDING_WARNING_PRESENTED, true)
+                                    .apply();
+                            startCallRecordingOrAskForPermission();
+                        })
+                        .setNegativeButton(android.R.string.cancel, null)
+                        .show();
+            } else {
+                startCallRecordingOrAskForPermission();
+            }
+        } else {
+            if (recorder.isRecording()) {
+                recorder.finishRecording();
+            }
+        }
+    }
+
+    private void startCallRecordingOrAskForPermission() {
+        if (hasAllPermissions(CallRecorder.REQUIRED_PERMISSIONS)) {
+            CallRecorder recorder = CallRecorder.getInstance();
+            recorder.startRecording(call.getNumber(), call.getCreationTimeMillis());
+        } else {
+            inCallButtonUi.requestCallRecordingPermissions(CallRecorder.REQUIRED_PERMISSIONS);
+        }
+    }
+
+    private boolean hasAllPermissions(String[] permissions) {
+        for (String p : permissions) {
+            if (context.checkSelfPermission(p) != PackageManager.PERMISSION_GRANTED) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
     public void changeToVideoClicked() {
         LogUtil.enterBlock("CallButtonPresenter.changeToVideoClicked");
         Logger.get(context)
@@ -492,6 +573,10 @@ public class CallButtonPresenter
                         && call.getState() != DialerCallState.DIALING
                         && call.getState() != DialerCallState.CONNECTING;
 
+        final CallRecorder recorder = CallRecorder.getInstance();
+        final boolean showCallRecordOption = recorder.canRecordInCurrentCountry()
+                && !isVideo && call.getState() == DialerCallState.ACTIVE;
+
         otherAccount = TelecomUtil.getOtherAccount(getContext(), call.getAccountHandle());
         boolean showSwapSim =
                 !call.isEmergencyCall()
@@ -525,6 +610,7 @@ public class CallButtonPresenter
         }
         inCallButtonUi.showButton(InCallButtonIds.BUTTON_DIALPAD, true);
         inCallButtonUi.showButton(InCallButtonIds.BUTTON_MERGE, showMerge);
+        inCallButtonUi.showButton(InCallButtonIds.BUTTON_RECORD_CALL, showCallRecordOption);
 
         inCallButtonUi.updateButtonStates();
     }

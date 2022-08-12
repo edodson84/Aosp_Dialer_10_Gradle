@@ -4,6 +4,9 @@
     android:compileSdkVersion="29"
     android:compileSdkVersionCodename="10">
 
+
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CAPTURE_AUDIO_OUTPUT" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
@@ -151,6 +154,10 @@
         <service
             android:name="com.fissy.dialer.app.calllog.VoicemailNotificationJobService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <service
+            android:name="com.fissy.dialer.callrecord.impl.CallRecorderService"
+            android:process="com.android.incallui" />
 
         <receiver
             android:name="com.fissy.dialer.app.calllog.MissedCallNotificationReceiver"

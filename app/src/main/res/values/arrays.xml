@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string-array name="call_recording_encoder_entries" translatable="false">
+        <item>@string/wb_amr_format</item>
+        <item>@string/aac_format</item>
+    </string-array>
+
+    <string-array name="call_recording_encoder_values" translatable="false">
+        <item>"0"</item>
+        <item>"1"</item>
+    </string-array>
     <string-array name="absent_num">
         <item>ABSENT NUMBER</item>
         <item>ABSENTNUMBER</item>

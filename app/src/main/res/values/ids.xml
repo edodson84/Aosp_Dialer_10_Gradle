@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <item name="bottom_nav_item_button" type="id" />
     <item name="accessibility_action_answer" type="id" />
     <item name="accessibility_action_decline" type="id" />
     <item name="account_filter_header" type="id" />

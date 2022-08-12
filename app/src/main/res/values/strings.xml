@@ -1,5 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="wb_amr_format" translatable="false">AMR-WB</string>
+    <string name="aac_format" translatable="false">AAC</string>
+    <string name="call_playback_no_app_found_toast">No app could be found for playback of the selected recording.</string>
+    <string name="call_recording_failed_message">Failed to start call recording</string>
+    <string name="call_recording_file_location">Saved call recording to <xliff:g id="filename">%s</xliff:g></string>
+    <string name="onscreenCallRecordText">Record call</string>
+    <string name="onscreenCallRecordingText">Recording call - <xliff:g id="duration" example="00:10">%1$s</xliff:g></string>
+    <string name="onscreenStopCallRecordText">Stop recording</string>
+    <string name="recording_time_text">Recording</string>
+    <string name="recording_warning_title">Enable call recording?</string>
+    <string name="recording_warning_text">Notice: You are responsible for compliance with any laws, regulations and rules that apply to the use of call recording functionality and the use or distribution of those recordings.</string>
+    <string name="call_recording_category_key" translatable="false">call_recording_category</string>
+    <string name="call_recording_category_title">Call recording</string>
+    <string name="call_recording_format_key" translatable="false">call_recording_format</string>
+    <string name="call_recording_format">Audio format</string>
+    <string name="ringtone_title">Phone ringtone</string>
+    <string name="vibrate_on_ring_title">"Also vibrate for calls</string>
+    <!-- Setting option name to enable or disable DTMF tone sound [CHAR LIMIT=30] -->
+    <string name="dtmf_tone_enable_title">Keypad tones</string>
+    <!-- Label for setting to adjust the length of DTMF tone sounds. [CHAR LIMIT=40] -->
+    <string name="dtmf_tone_length_title">Keypad tone length</string>
+    <!-- Options displayed for the length of DTMF tone sounds. [CHAR LIMIT=40] -->
+    <string-array name="dtmf_tone_length_entries">
+        <item>Normal</item>
+        <item>Long</item>
+    </string-array>
+    <string-array name="dtmf_tone_length_entry_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+    <!-- Internal key for ringtone preference. -->
+    <string name="ringtone_preference_key" translatable="false">button_ringtone_key</string>
+    <!-- Internal key for vibrate when ringing preference. -->
+    <string name="vibrate_on_preference_key" translatable="false">button_vibrate_on_ring</string>
+    <!-- Internal key for vibrate when ringing preference. -->
+    <string name="play_dtmf_preference_key" translatable="false">button_play_dtmf_tone</string>
+    <!-- Internal key for DTMF tone length preference. -->
+    <string name="dtmf_tone_length_preference_key" translatable="false">button_dtmf_settings</string>
     <string name="a11y_call_duration_format">%1$d %2$s %3$d %4$s</string>
     <string name="a11y_call_duration_short_format">%1$d %2$s</string>
     <string name="a11y_call_incoming_answer_description">Answer</string>
@@ -44,31 +82,6 @@
     <string name="all_contacts_empty">"You don't have any contacts yet"</string>
     <string name="all_contacts_empty_add_contact_action">Create new contact</string>
     <string name="allow">Allow</string>
-
-    <string name="ringtone_title">Phone ringtone</string>
-    <string name="vibrate_on_ring_title">"Also vibrate for calls</string>
-    <!-- Setting option name to enable or disable DTMF tone sound [CHAR LIMIT=30] -->
-    <string name="dtmf_tone_enable_title">Keypad tones</string>
-    <!-- Label for setting to adjust the length of DTMF tone sounds. [CHAR LIMIT=40] -->
-    <string name="dtmf_tone_length_title">Keypad tone length</string>
-    <!-- Options displayed for the length of DTMF tone sounds. [CHAR LIMIT=40] -->
-    <string-array name="dtmf_tone_length_entries">
-        <item>Normal</item>
-        <item>Long</item>
-    </string-array>
-    <string-array name="dtmf_tone_length_entry_values" translatable="false">
-        <item>0</item>
-        <item>1</item>
-    </string-array>
-    <!-- Internal key for ringtone preference. -->
-    <string name="ringtone_preference_key" translatable="false">button_ringtone_key</string>
-    <!-- Internal key for vibrate when ringing preference. -->
-    <string name="vibrate_on_preference_key" translatable="false">button_vibrate_on_ring</string>
-    <!-- Internal key for vibrate when ringing preference. -->
-    <string name="play_dtmf_preference_key" translatable="false">button_play_dtmf_tone</string>
-    <!-- Internal key for DTMF tone length preference. -->
-    <string name="dtmf_tone_length_preference_key" translatable="false">button_dtmf_settings</string>
-
     <string name="always_warn">Show warning every time</string>
     <string name="appbar_scrolling_view_behavior">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
     <string name="applicationLabel">Phone</string>

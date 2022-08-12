@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="56.0dip"
     android:layout_height="48.0dip"
     android:layout_gravity="center"
@@ -40,6 +41,6 @@
             android:layout_height="13.0dip"
             android:layout_gravity="center"
             android:src="@drawable/quantum_ic_rtt_vd_theme_24"
-            android:tint="?android:colorBackground" />
+            app:tint="?android:colorBackground" />
     </FrameLayout>
 </FrameLayout>

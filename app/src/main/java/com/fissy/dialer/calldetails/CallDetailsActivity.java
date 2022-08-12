@@ -29,9 +29,11 @@ import com.fissy.dialer.calldetails.CallDetailsFooterViewHolder.DeleteCallDetail
 import com.fissy.dialer.calldetails.CallDetailsFooterViewHolder.ReportCallIdListener;
 import com.fissy.dialer.calldetails.CallDetailsHeaderViewHolder.CallDetailsHeaderListener;
 import com.fissy.dialer.calllog.database.contract.AnnotatedCallLogContract.AnnotatedCallLog;
+import com.fissy.dialer.callrecord.CallRecordingDataStore;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.enrichedcall.EnrichedCallComponent;
 import com.fissy.dialer.protos.ProtoParsers;
+import com.fissy.dialer.callrecord.CallRecordingDataStore;
 
 /**
  * Displays the details of a specific call log entry.
@@ -100,7 +102,8 @@ public final class CallDetailsActivity extends CallDetailsActivityCommon {
             CallDetailsEntryListener callDetailsEntryListener,
             CallDetailsHeaderListener callDetailsHeaderListener,
             ReportCallIdListener reportCallIdListener,
-            DeleteCallDetailsListener deleteCallDetailsListener) {
+            DeleteCallDetailsListener deleteCallDetailsListener,
+            CallRecordingDataStore callRecordingDataStore) {
         return new CallDetailsAdapter(
                 this,
                 headerInfo,
@@ -108,7 +111,8 @@ public final class CallDetailsActivity extends CallDetailsActivityCommon {
                 callDetailsEntryListener,
                 callDetailsHeaderListener,
                 reportCallIdListener,
-                deleteCallDetailsListener);
+                deleteCallDetailsListener,
+                callRecordingDataStore);
     }
 
     @Override

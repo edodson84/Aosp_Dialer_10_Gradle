@@ -42,7 +42,7 @@ import com.google.common.base.Optional;
 /**
  * Search bar for {@link MainToolbar}. Mostly used to handle expand and collapse animation.
  */
-final class SearchBarView extends FrameLayout {
+public final class SearchBarView extends FrameLayout {
 
     private static final int ANIMATION_DURATION = 200;
     private static final float EXPAND_MARGIN_FRACTION_START = 0.8f;

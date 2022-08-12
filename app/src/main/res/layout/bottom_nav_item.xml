@@ -14,9 +14,11 @@
 
         <ImageView
             android:id="@id/bottom_nav_item_image"
-            android:layout_width="24.0dip"
+            android:layout_width="50.0dip"
             android:layout_height="24.0dip"
-            android:layout_marginTop="8.0dip" />
+            android:layout_marginTop="8.0dip"
+            android:background="@drawable/button_background"
+            />
 
         <TextView
             android:id="@id/notification_badge"

@@ -37,7 +37,7 @@
                     android:importantForAccessibility="no"
                     android:scaleType="center"
                     android:src="@drawable/quantum_ic_search_vd_theme_24"
-                    android:tint="?colorIcon" />
+                    app:tint="?colorIcon" />
 
                 <TextView
                     android:id="@id/search_box_start_search"
@@ -60,7 +60,7 @@
                     android:contentDescription="@string/description_start_voice_search"
                     android:scaleType="center"
                     android:src="@drawable/quantum_ic_mic_vd_theme_24"
-                    android:tint="?colorIcon" />
+                    app:tint="?colorIcon" />
 
                 <ImageButton
                     android:id="@id/main_options_menu_button"
@@ -102,7 +102,7 @@
                     android:layout_marginTop="8.0dip"
                     android:layout_marginBottom="8.0dip"
                     android:src="@drawable/quantum_ic_close_vd_theme_24"
-                    android:tint="?colorIconOnUnthemedDarkBackground" />
+                    app:tint="?colorIconOnUnthemedDarkBackground" />
 
                 <TextView
                     android:id="@id/remove_view_text"

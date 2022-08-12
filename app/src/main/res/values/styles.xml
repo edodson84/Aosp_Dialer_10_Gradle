@@ -12,7 +12,7 @@
         <item name="dialpad_style">@style/Dialpad.Themed</item>
     </style>
 
-    <style name="Dialer.Dark" parent="@style/Theme.AppCompat">
+    <style name="Dialer.Dark" parent="@style/Theme.Material3.Dark">
         <item name="android:textColorLink">@color/dialer_theme_color</item>
         <item name="android:textAppearanceButton">@style/DialerButtonTextStyle</item>
         <item name="android:alertDialogTheme">@style/AlertDialogTheme</item>
@@ -47,7 +47,7 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="ActionModeTitleTextStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionMode.Title">
+    <style name="ActionModeTitleTextStyle" parent="@style/TextAppearance.Material3.ActionBar.Title">
         <item name="android:textColor">?android:textColorPrimary</item>
     </style>
 
@@ -59,7 +59,7 @@
         <item name="android:colorBackgroundCacheHint">@null</item>
     </style>
 
-    <style name="AlertDialogTheme" parent="@style/Theme.AppCompat.Light.Dialog.Alert">
+    <style name="AlertDialogTheme" parent="@style/Theme.Material3.Light.Dialog.Alert">
         <item name="android:textColorPrimary">@color/dialer_primary_text_color</item>
         <item name="android:textColorSecondary">@color/dialer_secondary_text_color</item>
         <item name="android:colorAccent">@color/dialer_theme_color</item>
@@ -67,7 +67,7 @@
     </style>
 
 
-    <style name="Answer.Button" parent="@android:style/Widget.Material.Button">
+    <style name="Answer.Button" parent="@style/Widget.Material3.Button">
         <item name="android:stateListAnimator">@animator/button_state</item>
     </style>
 
@@ -110,7 +110,7 @@
         <item name="android:colorControlHighlight">#33000000</item>
     </style>
 
-    <style name="CallContactsTheme" parent="@style/Theme.AppCompat.Light">
+    <style name="CallContactsTheme" parent="@style/Theme.Material3.Light">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowFrame">@null</item>
         <item name="android:windowNoTitle">true</item>
@@ -182,7 +182,7 @@
         <item name="android:textColor">?android:textColorPrimary</item>
     </style>
 
-    <style name="Dialer" parent="@style/Theme.AppCompat.Light">
+    <style name="Dialer" parent="@style/Theme.Material3.Light">
         <item name="android:textColorLink">@color/dialer_theme_color</item>
         <item name="android:textAppearanceButton">@style/DialerButtonTextStyle</item>
         <item name="android:alertDialogTheme">@style/AlertDialogTheme</item>
@@ -223,13 +223,13 @@
         <item name="android:fontFamily">sans-serif</item>
     </style>
 
-    <style name="Dialer.TextAppearance.Header2" parent="@style/TextAppearance.AppCompat">
+    <style name="Dialer.TextAppearance.Header2" parent="@style/TextAppearance.Material3.DisplayMedium">
         <item name="android:textSize">16.0sp</item>
         <item name="android:textColor">?android:textColorPrimary</item>
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 
-    <style name="Dialer.TextAppearance.OVERLINE" parent="@style/TextAppearance.AppCompat">
+    <style name="Dialer.TextAppearance.OVERLINE" parent="@style/TextAppearance.Material3.DisplayMedium">
         <item name="android:textSize">14.0sp</item>
         <item name="android:textColor">?android:textColorSecondary</item>
         <item name="android:fontFamily">sans-serif-medium</item>
@@ -240,7 +240,7 @@
         <item name="android:maxLines">1</item>
     </style>
 
-    <style name="Dialer.TextAppearance.Primary" parent="@style/TextAppearance.AppCompat">
+    <style name="Dialer.TextAppearance.Primary" parent="@style/TextAppearance.Material3.DisplayMedium">
         <item name="android:textSize">16.0sp</item>
         <item name="android:textColor">?android:textColorPrimary</item>
         <item name="android:fontFamily">sans-serif-regular</item>
@@ -251,7 +251,7 @@
         <item name="android:maxLines">1</item>
     </style>
 
-    <style name="Dialer.TextAppearance.Secondary" parent="@style/TextAppearance.AppCompat">
+    <style name="Dialer.TextAppearance.Secondary" parent="@style/TextAppearance.Material3.DisplayMedium">
         <item name="android:textSize">14.0sp</item>
         <item name="android:textColor">?android:textColorSecondary</item>
         <item name="android:fontFamily">sans-serif-regular</item>
@@ -262,7 +262,7 @@
         <item name="android:maxLines">1</item>
     </style>
 
-    <style name="Dialer.TextAppearance.Secondary2" parent="@style/TextAppearance.AppCompat">
+    <style name="Dialer.TextAppearance.Secondary2" parent="@style/TextAppearance.Material3.DisplayMedium">
         <item name="android:textSize">12.0sp</item>
         <item name="android:textColor">?android:textColorSecondary</item>
         <item name="android:fontFamily">sans-serif-regular</item>
@@ -308,32 +308,32 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="DialerActionBarBaseStyle" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+    <style name="DialerActionBarBaseStyle" parent="@style/Widget.Material3.ActionBar.Solid">
         <item name="android:background">?android:colorPrimary</item>
         <item name="background">?android:colorPrimary</item>
     </style>
 
-    <style name="DialerActionBarBaseTheme" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+    <style name="DialerActionBarBaseTheme" parent="@style/ThemeOverlay.MaterialComponents.ActionBar">
         <item name="colorControlNormal">@android:color/white</item>
     </style>
 
-    <style name="DialerButtonTextStyle" parent="@android:style/TextAppearance.Material.Widget.Button">
+    <style name="DialerButtonTextStyle" parent="@style/TextAppearance.MaterialComponents.Button">
         <item name="android:textColor">?android:textColorPrimaryInverse</item>
     </style>
 
-    <style name="DialerCheckboxStyle" parent="@style/Widget.AppCompat.CompoundButton.CheckBox">
+    <style name="DialerCheckboxStyle" parent="@style/Widget.Material3.CompoundButton.CheckBox">
         <item name="android:paddingLeft">12.0dip</item>
         <item name="android:layout_marginStart">20.0dip</item>
     </style>
 
-    <style name="DialerFlatButtonStyle" parent="@android:style/Widget.Material.Button">
+    <style name="DialerFlatButtonStyle" parent="@style/Widget.Material3.Button">
         <item name="android:textColor">?android:colorPrimary</item>
         <item name="android:background">?android:selectableItemBackground</item>
         <item name="android:paddingStart">@dimen/button_horizontal_padding</item>
         <item name="android:paddingEnd">@dimen/button_horizontal_padding</item>
     </style>
 
-    <style name="DialerPrimaryFlatButtonStyle" parent="@android:style/Widget.Material.Button">
+    <style name="DialerPrimaryFlatButtonStyle" parent="@style/Widget.Material3.Button">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:background">@drawable/selectable_primary_flat_button</item>
         <item name="android:paddingStart">@dimen/button_horizontal_padding</item>
@@ -434,7 +434,7 @@
         <item name="android:layout_weight">1.0</item>
     </style>
 
-    <style name="DialtactsActionBarTabTextStyle" parent="@android:style/Widget.Material.Light.ActionBar.TabText">
+    <style name="DialtactsActionBarTabTextStyle" parent="@style/Widget.Material3.ActionBar.Solid">
         <item name="android:textSize">@dimen/tab_text_size</item>
         <item name="android:textColor">?colorTextOnUnthemedDarkBackground</item>
         <item name="android:fontFamily">sans-serif-medium</item>
@@ -444,7 +444,7 @@
         <item name="android:textColor">?colorTextOnUnthemedDarkBackground</item>
     </style>
 
-    <style name="DialtactsSearchBarThemeOverlay" parent="@style/ThemeOverlay.AppCompat.Light" />
+    <style name="DialtactsSearchBarThemeOverlay" parent="@style/ThemeOverlay.Material3.Light" />
 
     <style name="DialtactsTheme" parent="@style/Dialer.ThemeBase.ActionBar">
         <item name="android:navigationBarColor">?android:windowBackground</item>
@@ -490,7 +490,7 @@
         <item name="android:layout_height">1.0dip</item>
     </style>
 
-    <style name="HistoryItemBottomSheet.Base" parent="@style/Theme.Design.Light.BottomSheetDialog">
+    <style name="HistoryItemBottomSheet.Base" parent="@style/Theme.Material3.Light.BottomSheetDialog">
         <item name="android:windowTranslucentStatus">false</item>
         <item name="android:windowTranslucentNavigation">false</item>
         <item name="android:windowDrawsSystemBarBackgrounds">false</item>
@@ -600,7 +600,7 @@
         <item name="android:popupElevation">@dimen/rtt_overflow_menu_elevation</item>
     </style>
 
-    <style name="RaisedErrorActionStyle" parent="@style/Widget.AppCompat.Button.Colored">
+    <style name="RaisedErrorActionStyle" parent="@style/Widget.Material3.Button.TonalButton">
         <item name="android:textSize">14.0sp</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">@dimen/call_log_action_height</item>
@@ -693,7 +693,7 @@
 
 
 
-    <style name="Theme.CallSubjectDialogTheme" parent="@android:style/Theme.Material.Light.Dialog">
+    <style name="Theme.CallSubjectDialogTheme" parent="@style/Theme.Material3.Light.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsFloating">true</item>
@@ -748,7 +748,7 @@
         <item name="android:windowActivityTransitions">false</item>
     </style>
 
-    <style name="TosButtonStyle" parent="@style/Widget.AppCompat.Button.Borderless">
+    <style name="TosButtonStyle" parent="@style/Widget.Material3.Button">
         <item name="android:gravity">end|center</item>
         <item name="android:padding">8.0dip</item>
         <item name="android:minHeight">48.0dip</item>
@@ -841,5 +841,5 @@
         <item name="android:layout_height">@dimen/voicemail_media_player_height</item>
     </style>
 
-    <style name="daynight" parent="@style/Theme.AppCompat.Light" />
+    <style name="daynight" parent="@style/Theme.Material3.Light" />
 </resources>

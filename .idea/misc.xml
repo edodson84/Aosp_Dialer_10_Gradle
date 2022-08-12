@@ -3,15 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Fissy/.gradle/caches/transforms-3/f3fb8e121effd5569417956c58bf8b53/transformed/appcompat-v7-28.0.0/res/layout/abc_screen_simple.xml" value="0.15260416666666668" />
-        <entry key="..\:/Users/Fissy/AppData/Local/Temp/drawable-temp/fake_of_asd_hd_icon.xml" value="0.137" />
-        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/avd_hd_attempting.xml" value="0.14" />
-        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/abc_action_bar_title_item.xml" value="0.15260416666666668" />
-        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/abc_action_mode_bar.xml" value="0.15260416666666668" />
-        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/abc_activity_chooser_view.xml" value="0.15260416666666668" />
-        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/static_map_fragment.xml" value="0.15260416666666668" />
-        <entry key="..\:/Users/Marco/StudioProjects/Aosp_Dialer_10_Gradle/app/src/main/res/menu/main_menu.xml" value="0.2390625" />
-        <entry key="..\:/Users/Marco/StudioProjects/Aosp_Dialer_10_Gradle/app/src/main/res/xml/display_options_settings.xml" value="0.2390625" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/recording_playback_button.xml" value="0.162" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/start_recording_drawable.xml" value="0.202" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/call_details_entry.xml" value="0.31435897435897436" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/incall_button_grid.xml" value="0.15260416666666668" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/incall_dialpad_fragment.xml" value="0.31435897435897436" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/incall_screen.xml" value="0.31435897435897436" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/xml/sound_settings.xml" value="0.15260416666666668" />
       </map>
     </option>
   </component>

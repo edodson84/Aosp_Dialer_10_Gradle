@@ -25,6 +25,7 @@ import androidx.annotation.StringRes;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -37,7 +38,7 @@ import com.fissy.dialer.theme.base.ThemeComponent;
 /**
  * Navigation item in a bottom nav.
  */
-final class BottomNavItem extends LinearLayout {
+public final class BottomNavItem extends LinearLayout {
 
     private ImageView image;
     private TextView text;
@@ -58,12 +59,12 @@ final class BottomNavItem extends LinearLayout {
     @Override
     public void setSelected(boolean selected) {
         super.setSelected(selected);
-        int colorId =
-                selected
-                        ? ThemeComponent.get(getContext()).theme().getColorPrimary()
-                        : ThemeComponent.get(getContext()).theme().getTextColorSecondary();
-        image.setImageTintList(ColorStateList.valueOf(colorId));
-        text.setTextColor(colorId);
+        int colorId = ThemeComponent.get(getContext()).theme().getColorPrimary();
+        if (selected){
+            image.setBackgroundTintList(ColorStateList.valueOf(colorId));
+        }
+        else{
+            image.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(android.R.color.transparent)));}
     }
 
     void setup(@StringRes int stringRes, @DrawableRes int drawableRes) {

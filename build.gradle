@@ -2,12 +2,12 @@
 buildscript {
 
     ext {
-        COMPILE_SDK_VERSION = 28
+        COMPILE_SDK_VERSION = 31
         APPLICATION_ID = "com.fissy.dialer"
         MIN_SDK_VERSION = 26
         TARGET_SDK_VERSION = 28
-        VERSION_CODE = 1
-        VERSION_NAME = "1.0"
+        VERSION_CODE = 2
+        VERSION_NAME = "2.0"
     }
 
     repositories {

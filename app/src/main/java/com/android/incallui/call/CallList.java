@@ -26,6 +26,7 @@ import androidx.annotation.VisibleForTesting;
 import android.telecom.Call;
 import android.telecom.DisconnectCause;
 import android.telecom.PhoneAccount;
+import android.text.TextUtils;
 import android.util.ArrayMap;
 
 import com.android.incallui.call.state.DialerCallState;
@@ -544,6 +545,15 @@ public class CallList implements DialerCallDelegate {
         }
 
         return retval;
+    }
+
+    public DialerCall getCallWithStateAndNumber(int state, String number) {
+        for (DialerCall call : callById.values()) {
+            if (TextUtils.equals(call.getNumber(), number) && call.getState() == state) {
+                return call;
+            }
+        }
+        return null;
     }
 
     /**

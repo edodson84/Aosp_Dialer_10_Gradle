@@ -23,6 +23,7 @@ import com.fissy.dialer.calldetails.CallDetailsEntryViewHolder.CallDetailsEntryL
 import com.fissy.dialer.calldetails.CallDetailsFooterViewHolder.DeleteCallDetailsListener;
 import com.fissy.dialer.calldetails.CallDetailsFooterViewHolder.ReportCallIdListener;
 import com.fissy.dialer.calldetails.CallDetailsHeaderViewHolder.CallDetailsHeaderListener;
+import com.fissy.dialer.callrecord.CallRecordingDataStore;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.dialercontact.DialerContact;
 import com.fissy.dialer.protos.ProtoParsers;
@@ -85,7 +86,8 @@ public final class OldCallDetailsActivity extends CallDetailsActivityCommon {
             CallDetailsEntryListener callDetailsEntryListener,
             CallDetailsHeaderListener callDetailsHeaderListener,
             ReportCallIdListener reportCallIdListener,
-            DeleteCallDetailsListener deleteCallDetailsListener) {
+            DeleteCallDetailsListener deleteCallDetailsListener,
+            CallRecordingDataStore callRecordingDataStore) {
         return new OldCallDetailsAdapter(
                 /* context = */ this,
                 contact,
@@ -93,7 +95,8 @@ public final class OldCallDetailsActivity extends CallDetailsActivityCommon {
                 callDetailsEntryListener,
                 callDetailsHeaderListener,
                 reportCallIdListener,
-                deleteCallDetailsListener);
+                deleteCallDetailsListener,
+                callRecordingDataStore);
     }
 
     @Override

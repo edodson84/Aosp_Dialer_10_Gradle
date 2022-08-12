@@ -40,6 +40,7 @@ import com.fissy.dialer.assisteddialing.ui.AssistedDialingSettingActivity;
 import com.fissy.dialer.calldetails.CallDetailsEntries.CallDetailsEntry;
 import com.fissy.dialer.callintent.CallInitiationType;
 import com.fissy.dialer.callintent.CallIntentBuilder;
+import com.fissy.dialer.callrecord.CallRecordingDataStore;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.common.concurrent.DialerExecutor.FailureListener;
@@ -66,6 +67,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
+import com.fissy.dialer.callrecord.CallRecordingDataStore;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -99,6 +101,7 @@ abstract class CallDetailsActivityCommon extends AppCompatActivity {
     private CallDetailsAdapterCommon adapter;
     private CallDetailsEntries callDetailsEntries;
     private UiListener<ImmutableSet<String>> checkRttTranscriptAvailabilityListener;
+    private CallRecordingDataStore callRecordingDataStore;
 
     /**
      * Handles the intent that launches {@link OldCallDetailsActivity} or {@link CallDetailsActivity},
@@ -113,7 +116,8 @@ abstract class CallDetailsActivityCommon extends AppCompatActivity {
             CallDetailsEntryViewHolder.CallDetailsEntryListener callDetailsEntryListener,
             CallDetailsHeaderViewHolder.CallDetailsHeaderListener callDetailsHeaderListener,
             CallDetailsFooterViewHolder.ReportCallIdListener reportCallIdListener,
-            CallDetailsFooterViewHolder.DeleteCallDetailsListener deleteCallDetailsListener);
+            CallDetailsFooterViewHolder.DeleteCallDetailsListener deleteCallDetailsListener,
+            CallRecordingDataStore callRecordingDataStore);
 
     /**
      * Returns the phone number of the call details.
@@ -136,9 +140,18 @@ abstract class CallDetailsActivityCommon extends AppCompatActivity {
         checkRttTranscriptAvailabilityListener =
                 DialerExecutorComponent.get(this)
                         .createUiListener(getFragmentManager(), "Query RTT transcript availability");
+        callRecordingDataStore = new CallRecordingDataStore();
         handleIntent(getIntent());
         setupRecyclerViewForEntries();
     }
+
+    @Override
+    @CallSuper
+    protected void onDestroy() {
+        super.onDestroy();
+        callRecordingDataStore.close();
+    }
+
 
     @Override
     @CallSuper
@@ -212,7 +225,8 @@ abstract class CallDetailsActivityCommon extends AppCompatActivity {
                         callDetailsEntryListener,
                         callDetailsHeaderListener,
                         reportCallIdListener,
-                        deleteCallDetailsListener);
+                        deleteCallDetailsListener,
+                        callRecordingDataStore);
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
