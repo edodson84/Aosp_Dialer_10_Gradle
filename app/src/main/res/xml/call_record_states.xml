@@ -1293,7 +1293,7 @@
          Two-party consent state laws:
            https://recordinglaw.com/party-two-party-consent-states/
     -->
-    <country iso="us,vi,gu" allowed="false" />
+    <country iso="us,vi,gu" allowed="true" />
 
     <!-- Enable recording for Kosovo:
          Article 36 of the Constitution of Kosovo defines the Right to Privacy. Article 202 of the

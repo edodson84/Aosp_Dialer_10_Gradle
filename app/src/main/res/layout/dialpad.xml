@@ -12,7 +12,7 @@
         android:layout_weight="1.0"
         android:orientation="horizontal">
 
-        <Space style="@style/DialpadSpaceStyle" />
+        <android.widget.Space style="@style/DialpadSpaceStyle" />
 
         <include layout="@layout/dialpad_key_one" />
 
@@ -26,7 +26,7 @@
             style="@style/DialpadKeyButtonStyle"
             layout="@layout/dialpad_key" />
 
-        <Space style="@style/DialpadSpaceStyle" />
+        <android.widget.Space style="@style/DialpadSpaceStyle" />
     </LinearLayout>
 
     <LinearLayout
@@ -35,7 +35,7 @@
         android:layout_weight="1.0"
         android:orientation="horizontal">
 
-        <Space style="@style/DialpadSpaceStyle" />
+        <android.widget.Space style="@style/DialpadSpaceStyle" />
 
         <include
             android:id="@id/four"
@@ -52,7 +52,7 @@
             style="@style/DialpadKeyButtonStyle"
             layout="@layout/dialpad_key" />
 
-        <Space style="@style/DialpadSpaceStyle" />
+        <android.widget.Space style="@style/DialpadSpaceStyle" />
     </LinearLayout>
 
     <LinearLayout
@@ -61,7 +61,7 @@
         android:layout_weight="1.0"
         android:orientation="horizontal">
 
-        <Space style="@style/DialpadSpaceStyle" />
+        <android.widget.Space style="@style/DialpadSpaceStyle" />
 
         <include
             android:id="@id/seven"
@@ -78,7 +78,7 @@
             style="@style/DialpadKeyButtonStyle"
             layout="@layout/dialpad_key" />
 
-        <Space style="@style/DialpadSpaceStyle" />
+        <android.widget.Space style="@style/DialpadSpaceStyle" />
     </LinearLayout>
 
     <LinearLayout
@@ -87,7 +87,7 @@
         android:layout_weight="1.0"
         android:orientation="horizontal">
 
-        <Space style="@style/DialpadSpaceStyle" />
+        <android.widget.Space style="@style/DialpadSpaceStyle" />
 
         <include layout="@layout/dialpad_key_star" />
 
@@ -97,10 +97,10 @@
 
         <include layout="@layout/dialpad_key_pound" />
 
-        <Space style="@style/DialpadSpaceStyle" />
+        <android.widget.Space style="@style/DialpadSpaceStyle" />
     </LinearLayout>
 
-    <Space
+    <android.widget.Space
         android:id="@id/end_call_space"
         android:layout_width="fill_parent"
         android:layout_height="?dialpad_end_key_spacing" />

@@ -19,7 +19,8 @@
             android:layout_width="104.0dip"
             android:layout_height="104.0dip"
             android:layout_gravity="center_horizontal"
-            android:clickable="false" />
+            android:adjustViewBounds="false"
+            android:clickable="false"/>
 
         <FrameLayout
             android:id="@id/video_call_container"

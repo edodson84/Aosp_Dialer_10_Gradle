@@ -1,119 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
 <view xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@id/contact_tile"
     class="com.fissy.dialer.app.list.PhoneFavoriteSquareTileView"
-    android:paddingEnd="@dimen/contact_tile_divider_width"
-    android:paddingBottom="@dimen/contact_tile_divider_width">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
-    <RelativeLayout
-        android:id="@id/contact_favorite_card"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:focusable="true"
-        android:nextFocusRight="@id/contact_tile_secondary_button">
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardCornerRadius="20dp">
 
-        <com.android.contacts.common.widget.LayoutSuppressingImageView
-            android:id="@id/contact_tile_image"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:scaleType="centerCrop" />
+        <RelativeLayout
+            android:id="@id/contact_favorite_card"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:focusable="true"
+            android:nextFocusRight="@id/contact_tile_secondary_button">
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical">
-
-            <View
+            <ImageView
+                android:id="@id/contact_tile_image"
                 android:layout_width="fill_parent"
-                android:layout_height="0.0dip"
-                android:layout_weight="6.0" />
+                android:layout_height="fill_parent"
+                android:scaleType="centerCrop" />
 
-            <View
-                android:id="@id/shadow_overlay"
+            <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="0.0dip"
-                android:layout_weight="4.0"
-                android:background="@drawable/shadow_contact_photo" />
-        </LinearLayout>
+                android:layout_height="fill_parent"
+                android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:orientation="vertical"
-            android:paddingStart="@dimen/contact_tile_text_side_padding"
-            android:paddingEnd="@dimen/contact_tile_text_side_padding"
-            android:paddingBottom="@dimen/contact_tile_text_bottom_padding">
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="0.0dip"
+                    android:layout_weight="6.0" />
+
+                <View
+                    android:id="@id/shadow_overlay"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0.0dip"
+                    android:layout_weight="4.0"
+                    android:background="@drawable/shadow_contact_photo" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:layout_alignParentBottom="true"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/contact_tile_text_side_padding"
+                android:paddingEnd="@dimen/contact_tile_text_side_padding"
+                android:paddingBottom="@dimen/contact_tile_text_bottom_padding">
 
-                <com.fissy.dialer.widget.BidiTextView
-                    android:id="@id/contact_tile_name"
-                    android:layout_width="0.0dip"
+                <LinearLayout
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1.0"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <com.fissy.dialer.widget.BidiTextView
+                        android:id="@id/contact_tile_name"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.0"
+                        android:ellipsize="marquee"
+                        android:fadingEdge="horizontal"
+                        android:fadingEdgeLength="3.0dip"
+                        android:fontFamily="sans-serif-medium"
+                        android:singleLine="true"
+                        android:textAlignment="viewStart"
+                        android:textColor="?colorTextOnUnthemedDarkBackground"
+                        android:textSize="15.0sp" />
+
+                    <ImageView
+                        android:id="@id/contact_star_icon"
+                        android:layout_width="@dimen/favorites_star_icon_size"
+                        android:layout_height="@dimen/favorites_star_icon_size"
+                        android:layout_marginStart="3.0dip"
+                        android:src="@drawable/ic_star"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@id/contact_tile_phone_type"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
                     android:ellipsize="marquee"
                     android:fadingEdge="horizontal"
                     android:fadingEdgeLength="3.0dip"
-                    android:fontFamily="sans-serif-medium"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center_vertical"
                     android:singleLine="true"
                     android:textAlignment="viewStart"
                     android:textColor="?colorTextOnUnthemedDarkBackground"
-                    android:textSize="15.0sp" />
-
-                <ImageView
-                    android:id="@id/contact_star_icon"
-                    android:layout_width="@dimen/favorites_star_icon_size"
-                    android:layout_height="@dimen/favorites_star_icon_size"
-                    android:layout_marginStart="3.0dip"
-                    android:src="@drawable/ic_star"
-                    android:visibility="gone" />
+                    android:textSize="11.0sp" />
             </LinearLayout>
 
-            <TextView
-                android:id="@id/contact_tile_phone_type"
+            <View
+                android:id="@id/contact_tile_push_state"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:ellipsize="marquee"
-                android:fadingEdge="horizontal"
-                android:fadingEdgeLength="3.0dip"
-                android:fontFamily="sans-serif"
-                android:gravity="center_vertical"
-                android:singleLine="true"
-                android:textAlignment="viewStart"
-                android:textColor="?colorTextOnUnthemedDarkBackground"
-                android:textSize="11.0sp" />
-        </LinearLayout>
+                android:layout_height="fill_parent"
+                android:background="?android:selectableItemBackground"
+                android:importantForAccessibility="no" />
 
-        <View
-            android:id="@id/contact_tile_push_state"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:background="?android:selectableItemBackground"
-            android:importantForAccessibility="no" />
+            <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@android:color/transparent">
 
-        <FrameLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:background="@android:color/transparent">
-
-            <ImageButton
-                android:id="@id/contact_tile_secondary_button"
-                android:layout_width="@dimen/contact_tile_info_button_height_and_width"
-                android:layout_height="@dimen/contact_tile_info_button_height_and_width"
-                android:layout_gravity="end|center|top"
-                android:background="@drawable/item_background_material_borderless_dark"
-                android:contentDescription="@string/description_view_contact_detail"
-                android:paddingStart="4.0dip"
-                android:paddingTop="8.0dip"
-                android:paddingEnd="4.0dip"
-                android:paddingBottom="4.0dip"
-                android:scaleType="center"
-                android:src="@drawable/quantum_ic_more_vert_white_24" />
-        </FrameLayout>
-    </RelativeLayout>
+                <ImageButton
+                    android:id="@id/contact_tile_secondary_button"
+                    android:layout_width="@dimen/contact_tile_info_button_height_and_width"
+                    android:layout_height="@dimen/contact_tile_info_button_height_and_width"
+                    android:layout_gravity="end|center|top"
+                    android:background="@drawable/item_background_material_borderless_dark"
+                    android:contentDescription="@string/description_view_contact_detail"
+                    android:paddingStart="4.0dip"
+                    android:paddingTop="8.0dip"
+                    android:paddingEnd="4.0dip"
+                    android:paddingBottom="4.0dip"
+                    android:scaleType="center"
+                    android:src="@drawable/quantum_ic_more_vert_white_24" />
+            </FrameLayout>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
 </view>

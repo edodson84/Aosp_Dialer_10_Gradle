@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.fissy.dialer.main.impl.bottomnav.BottomNavBar xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="fill_parent"
     android:background="?android:colorBackgroundFloating"
     android:elevation="8.0dip"
     android:orientation="horizontal">
@@ -10,27 +10,27 @@
         android:id="@id/speed_dial_tab"
         layout="@layout/bottom_nav_item"
         android:layout_width="0.0dip"
-        android:layout_height="wrap_content"
+        android:layout_height="75dp"
         android:layout_weight="1.0" />
 
     <include
         android:id="@id/call_log_tab"
         layout="@layout/bottom_nav_item"
         android:layout_width="0.0dip"
-        android:layout_height="wrap_content"
+        android:layout_height="75dp"
         android:layout_weight="1.0" />
 
     <include
         android:id="@id/contacts_tab"
         layout="@layout/bottom_nav_item"
         android:layout_width="0.0dip"
-        android:layout_height="wrap_content"
+        android:layout_height="75dp"
         android:layout_weight="1.0" />
 
     <include
         android:id="@id/voicemail_tab"
         layout="@layout/bottom_nav_item"
         android:layout_width="0.0dip"
-        android:layout_height="wrap_content"
+        android:layout_height="75dp"
         android:layout_weight="1.0" />
 </com.fissy.dialer.main.impl.bottomnav.BottomNavBar>

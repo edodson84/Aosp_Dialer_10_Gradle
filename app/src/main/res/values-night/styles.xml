@@ -21,6 +21,7 @@
 
     <style name="MainActivityTheme" parent="@style/MainActivityThemeBase">
         <item name="android:navigationBarColor">?android:colorBackgroundFloating</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
     <style name="MainActivityThemeBase" parent="@style/Dialer.ThemeBase.NoActionBar">
@@ -72,7 +73,7 @@
     </style>
 
     <style name="Dialpad.Themed" parent="@style/Dialpad">
-        <item name="dialpad_background">?android:colorBackgroundFloating</item>
+        <item name="dialpad_background">?android:colorBackground</item>
         <item name="dialpad_text_color">?android:textColorSecondary</item>
         <item name="dialpad_text_color_primary">?android:colorPrimary</item>
         <item name="dialpad_text_color_secondary">?android:textColorSecondary</item>
@@ -154,10 +155,16 @@
         <item name="android:windowActivityTransitions">false</item>
     </style>
 
-    <style name="SettingsStyle" parent="@style/Dialer.ThemeBase.ActionBar">
-        <item name="android:textColorPrimary">@color/settings_text_color_primary_dark</item>
-        <item name="android:textColorSecondary">@color/settings_text_color_secondary_dark</item>
-        <item name="android:windowBackground">?android:colorBackground</item>
-        <item name="android:colorAccent">?android:colorPrimary</item>
+    <style name="SettingsStyle" parent="Dialer.ThemeBase.Dark.ActionBar">
     </style>
+
+    <style name="Dialer.ThemeBase.Dark.ActionBar" parent="@style/Dialer.ThemeBase">
+        <item name="actionBarPopupTheme">@style/ThemeOverlay.AppCompat</item>
+        <item name="actionBarSize">@dimen/action_bar_height</item>
+        <item name="actionBarStyle">@style/DialerActionBarBaseStyle</item>
+        <item name="actionBarTheme">@style/DialerActionBarBaseTheme</item>
+        <item name="actionBarWidgetTheme">@null</item>
+        <item name="listChoiceBackgroundIndicator">@drawable/abc_list_selector_holo_dark</item>
+    </style>
+
 </resources>

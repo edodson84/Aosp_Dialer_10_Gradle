@@ -28,7 +28,7 @@ import com.fissy.dialer.logging.Logger;
 /**
  * Allows us to click the contact badge for non multi select mode.
  */
-class DialerQuickContactBadge extends QuickContactBadge {
+public class DialerQuickContactBadge extends QuickContactBadge {
 
     private View.OnClickListener extraOnClickListener;
     private OnActionModeStateChangedListener onActionModeStateChangeListener;

@@ -79,7 +79,7 @@
     <color name="rtt_transcript_primary_color">#ff37474f</color>
     <color name="rtt_transcript_primary_color_dark">#ff263238</color>
     <color name="spam_contact_background">#ffa52714</color>
-    <color name="statusbar_background_color">?android:colorPrimary</color>
+    <color name="statusbar_background_color">@android:color/transparent</color>
     <color name="videocall_overlay_background_color">#7e000000</color>
     <color name="voicemail_icon_disabled_tint">#80000000</color>
     <color name="voicemail_playpause_icon_tint">?colorIcon</color>
