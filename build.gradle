@@ -6,13 +6,13 @@ buildscript {
         APPLICATION_ID = "com.fissy.dialer"
         MIN_SDK_VERSION = 26
         TARGET_SDK_VERSION = 28
-        VERSION_CODE = 2
-        VERSION_NAME = "2.0"
+        VERSION_CODE = 3
+        VERSION_NAME = "3.0"
     }
 
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.2.2'
@@ -22,13 +22,7 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
-    }
-
-    gradle.projectsEvaluated {
-        tasks.withType(JavaCompile) {
-            options.compilerArgs << '-Xbootclasspath/p:app/libs/framework_10.jar'
-        }
+        mavenCentral()
     }
 }
 

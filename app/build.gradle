@@ -20,12 +20,6 @@ android {
         signingConfig signingConfigs.debug
     }
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -53,26 +47,24 @@ android {
 }
 
 dependencies {
-    implementation files('libs/android-common.jar')
-    implementation files('libs/dialer-commons-io.jar')
-    implementation files('libs/dialer-grpc-okhttp.jar')
-    implementation files('libs/dialer-grpc-protobuf.jar')
-    implementation files('libs/dialer-grpc-stub.jar')
-    implementation files('libs/dialer-mime4j-core.jar')
-    implementation files('libs/dialer-mime4j-dom.jar')
-    implementation files('libs/google-zxing.jar')
-    implementation files('libs/grpc-core-1.14.0.jar')
-    implementation files('libs/libphonenumber.jar')
-    implementation files('libs/libshortcutbadger.jar')
-    implementation files('libs/volley.jar')
     implementation project(path: ':Backup')
     implementation project(path: ':PhoneCommon')
     api project(path: ':RootComponentGenerator')
+    implementation 'com.android.volley:volley:1.2.1'
+    implementation 'me.leolin:ShortcutBadger:1.1.22'
+    implementation 'com.googlecode.libphonenumber:libphonenumber:8.12.53'
+    implementation 'com.googlecode.libphonenumber:geocoder:2.189'
+    implementation 'io.grpc:grpc-core:1.48.1'
+    implementation 'com.google.zxing:core:3.5.0'
+    implementation 'org.apache.james:apache-mime4j-dom:0.8.7'
+    implementation 'io.grpc:grpc-stub:1.48.1'
+    implementation 'io.grpc:grpc-protobuf-lite:1.0.3'
+    implementation 'io.grpc:grpc-okhttp:1.48.1'
+    implementation 'commons-io:commons-io:2.4'
     compileOnly 'javax.annotation:jsr250-api:1.0'
     implementation 'com.google.android.material:material:1.6.1'
     implementation 'androidx.legacy:legacy-support-v13:1.0.0'
     implementation 'com.google.auto:auto-common:0.6'
     implementation 'com.google.auto.value:auto-value:1.5.2'
     implementation 'com.github.bumptech.glide:glide:4.8.0'
-    implementation 'com.google.protobuf:protobuf-java:3.0.0'
 }
