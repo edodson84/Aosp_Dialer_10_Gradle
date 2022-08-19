@@ -21,7 +21,7 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.widget.EditText;
 
-import com.android.phone.common.R;
+import com.fissy.dialer.R;
 import com.android.phone.common.util.ViewUtil;
 
 /**

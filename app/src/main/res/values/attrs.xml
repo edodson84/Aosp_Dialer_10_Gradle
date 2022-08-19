@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <declare-styleable name="ResizingText">
+        <attr name="resizing_text_min_size" format="dimension" />
+    </declare-styleable>
     <declare-styleable name="MaxHeightScrollView">
         <attr name="maxHeight" format="dimension" />
     </declare-styleable>
@@ -28,6 +31,17 @@
         <attr name="incall_icon" format="reference" />
         <attr name="incall_labelText" format="string|reference" />
         <attr name="android:enabled" />
+    </declare-styleable>
+    <declare-styleable name="Theme.Dialpad">
+        <attr name="dialpad_text_color" format="color" />
+        <attr name="dialpad_text_color_primary" format="color" />
+        <attr name="dialpad_text_color_secondary" format="color" />
+        <attr name="dialpad_icon_tint" format="color" />
+        <attr name="dialpad_voicemail_tint" format="color" />
+        <attr name="dialpad_background" format="color" />
+        <attr name="dialpad_separator_color" format="color" />
+        <attr name="dialpad_margin_style" format="reference" />
+        <attr name="dialpad_delete_padding" format="dimension" />
     </declare-styleable>
     <declare-styleable name="Dialpad">
         <attr name="dialpad_key_button_touch_tint" format="color" />
@@ -252,13 +266,9 @@
     <attr name="dialogCornerRadius" format="dimension" />
     <attr name="dialogPreferredPadding" format="dimension" />
     <attr name="dialogTheme" format="reference" />
-    <attr name="dialpad_background" format="color" />
     <attr name="dialpad_elevation" format="dimension" />
     <attr name="dialpad_end_key_spacing" format="dimension" />
     <attr name="dialpad_style" format="reference" />
-    <attr name="dialpad_text_color" format="color" />
-    <attr name="dialpad_text_color_primary" format="color" />
-    <attr name="dialpad_text_color_secondary" format="color" />
     <attr name="direction" format="string" />
     <attr name="divider" format="reference" />
     <attr name="dividerHorizontal" format="reference" />
@@ -421,7 +431,6 @@
     <attr name="ratingBarStyleIndicator" format="reference" />
     <attr name="ratingBarStyleSmall" format="reference" />
     <attr name="ratio" format="float" />
-    <attr name="resizing_text_min_size" format="dimension" />
     <attr name="reverseLayout" format="boolean" />
     <attr name="rippleColor" format="color" />
     <attr name="scrimBackground" format="reference|color" />

@@ -26,7 +26,7 @@ import android.view.ViewOutlineProvider;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.android.phone.common.R;
+import com.fissy.dialer.R;
 
 /**
  * Provides static functions to work with views

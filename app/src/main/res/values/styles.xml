@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="DialpadBottomKeyNumberStyle" parent="DialpadKeyNumberStyle">
+        <item name="android:layout_marginBottom">@dimen/dialpad_zero_key_number_margin_bottom</item>
+    </style>
+
+    <style name="Dialpad_Light">
+        <item name="dialpad_text_color">@color/dialpad_digits_text_color</item>
+        <item name="dialpad_text_color_primary">@color/dialpad_primary_text_color</item>
+        <item name="dialpad_text_color_secondary">@color/dialpad_secondary_text_color</item>
+        <item name="dialpad_icon_tint">@color/dialpad_icon_tint</item>
+        <item name="dialpad_voicemail_tint">@color/dialpad_voicemail_tint</item>
+        <item name="dialpad_background">@color/background_dialpad</item>
+        <item name="dialpad_separator_color">#e3e3e3</item>
+        <item name="dialpad_margin_style">@style/DialpadSpaceStyle</item>
+        <item name="dialpad_delete_padding">@dimen/dialpad_digits_padding</item>
+    </style>
 
     <style name="MainActivityTheme.Dark" parent="@style/MainActivityThemeBase.Dark">
         <item name="android:navigationBarColor">?android:colorBackgroundFloating</item>

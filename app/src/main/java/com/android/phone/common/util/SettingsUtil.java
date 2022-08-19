@@ -27,7 +27,7 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.text.TextUtils;
 
-import com.android.phone.common.R;
+import com.fissy.dialer.R;
 
 public class SettingsUtil {
     private static final String DEFAULT_NOTIFICATION_URI_STRING =

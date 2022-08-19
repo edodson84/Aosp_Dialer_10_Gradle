@@ -40,7 +40,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.android.phone.common.R;
+import com.fissy.dialer.R;
 import com.android.phone.common.animation.AnimUtils;
 
 import java.text.DecimalFormat;
