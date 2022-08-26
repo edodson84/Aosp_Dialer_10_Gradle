@@ -15,7 +15,7 @@ android {
 
     defaultConfig {
         vectorDrawables.useSupportLibrary = true
-        applicationId "com.fissy.deskclock"
+        applicationId "com.fissy.dialer"
         minSdk 28
         targetSdk 29
         versionCode 3
