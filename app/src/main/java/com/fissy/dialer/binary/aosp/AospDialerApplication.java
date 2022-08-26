@@ -16,16 +16,34 @@
 
 package com.fissy.dialer.binary.aosp;
 
-import androidx.annotation.NonNull;
+import android.content.Context;
+import android.net.Uri;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.android.contacts.common.extensions.PhoneDirectoryExtender;
+import com.android.contacts.common.extensions.PhoneDirectoryExtenderFactory;
+import com.android.incallui.bindings.InCallUiBindings;
+import com.android.incallui.bindings.InCallUiBindingsFactory;
+import com.android.incallui.bindings.InCallUiBindingsStub;
+import com.android.incallui.bindings.PhoneNumberService;
 import com.fissy.dialer.binary.common.DialerApplication;
 import com.fissy.dialer.inject.ContextModule;
+import com.fissy.dialer.lookup.LookupCacheService;
+import com.fissy.dialer.lookup.LookupProvider;
+import com.fissy.dialer.lookup.LookupSettings;
+import com.fissy.dialer.lookup.ReverseLookupService;
+import com.fissy.dialer.phonenumbercache.CachedNumberLookupService;
+import com.fissy.dialer.phonenumbercache.PhoneNumberCacheBindings;
+import com.fissy.dialer.phonenumbercache.PhoneNumberCacheBindingsFactory;
 
 /**
  * The application class for the AOSP Dialer. This is a version of the Dialer app that has no
  * dependency on Google Play Services.
  */
-public class AospDialerApplication extends DialerApplication {
+public class AospDialerApplication extends DialerApplication implements
+        PhoneNumberCacheBindingsFactory, PhoneDirectoryExtenderFactory, InCallUiBindingsFactory {
 
     /**
      * Returns a new instance of the root component for the AOSP Dialer.
@@ -36,12 +54,42 @@ public class AospDialerApplication extends DialerApplication {
         return DaggerAospDialerRootComponent.builder().contextModule(new ContextModule(this)).build();
     }
 
-    /*  *//** Returns a new instance of the root component for the Google Stub Dialer. *//*
-  @Override
-  @NonNull
-  protected Object buildRootComponent() {
-    return DaggerGoogleStubDialerRootComponent.builder()
-            .contextModule(new ContextModule(this))
-            .build();
-  }*/
+    @Override
+    public PhoneDirectoryExtender newPhoneDirectoryExtender() {
+        return new PhoneDirectoryExtender() {
+            @Override
+            public boolean isEnabled(Context context) {
+                return LookupSettings.isForwardLookupEnabled(AospDialerApplication.this)
+                        || LookupSettings.isPeopleLookupEnabled(AospDialerApplication.this);
+            }
+
+            @Override
+            @Nullable
+            public Uri getContentUri() {
+                return LookupProvider.NEARBY_AND_PEOPLE_LOOKUP_URI;
+            }
+        };
+    }
+
+    @Override
+    public InCallUiBindings newInCallUiBindings() {
+        return new InCallUiBindingsStub() {
+            @Override
+            @Nullable
+            public PhoneNumberService newPhoneNumberService(Context context) {
+                return new ReverseLookupService(context);
+            }
+        };
+    }
+
+    @Override
+    public PhoneNumberCacheBindings newPhoneNumberCacheBindings() {
+        return new PhoneNumberCacheBindings() {
+            @Override
+            @Nullable
+            public CachedNumberLookupService getCachedNumberLookupService() {
+                return new LookupCacheService();
+            }
+        };
+    }
 }

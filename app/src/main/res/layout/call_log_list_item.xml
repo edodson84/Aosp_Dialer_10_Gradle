@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@id/call_log_list_item"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
@@ -16,7 +17,7 @@
         android:paddingTop="@dimen/call_log_day_group_padding_top"
         android:paddingBottom="@dimen/call_log_day_group_padding_bottom" />
 
-    <androidx.cardview.widget.CardView
+    <FrameLayout
         android:id="@id/call_log_row"
         style="@style/CallLogCardStyle">
 
@@ -195,8 +196,8 @@
                     android:layout_gravity="center_vertical"
                     android:background="?android:selectableItemBackgroundBorderless"
                     android:scaleType="center"
-                    android:tint="?colorIcon"
-                    android:visibility="gone" />
+                    android:visibility="gone"
+                    app:tint="?colorIcon" />
             </LinearLayout>
 
             <ViewStub
@@ -207,5 +208,5 @@
                 android:inflatedId="@id/call_log_entry_actions"
                 android:layout="@layout/call_log_list_item_actions" />
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </FrameLayout>
 </LinearLayout>

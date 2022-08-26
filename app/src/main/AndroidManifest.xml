@@ -4,7 +4,6 @@
     android:compileSdkVersion="29"
     android:compileSdkVersionCodename="10">
 
-
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CAPTURE_AUDIO_OUTPUT" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
@@ -235,6 +234,7 @@
             android:name="com.fissy.dialer.calldetails.CallDetailsActivity"
             android:exported="false"
             android:label="@string/call_details" />
+
         <service
             android:name="com.fissy.dialer.calllog.config.CallLogConfigImpl$PollingJob"
             android:exported="false"
@@ -355,8 +355,8 @@
         <activity
             android:name="com.fissy.dialer.postcall.PostCallActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize"
-            android:theme="@style/daynight"/>
+            android:theme="@style/daynight"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="com.fissy.dialer.precall.externalreceiver.LaunchPreCallActivity"
             android:excludeFromRecents="true"
@@ -676,5 +676,10 @@
         <activity
             android:name="com.android.voicemail.impl.configui.VoicemailSecretCodeActivity"
             android:exported="false" />
+        <provider
+            android:name="com.fissy.dialer.lookup.LookupProvider"
+            android:authorities="com.fissy.dialer.lookup"
+            android:exported="false"
+            android:multiprocess="false" />
     </application>
 </manifest>

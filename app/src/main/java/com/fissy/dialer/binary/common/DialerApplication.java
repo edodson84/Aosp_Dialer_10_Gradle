@@ -27,6 +27,7 @@ import com.fissy.dialer.calllog.CallLogComponent;
 import com.fissy.dialer.calllog.CallLogFramework;
 import com.fissy.dialer.calllog.config.CallLogConfig;
 import com.fissy.dialer.calllog.config.CallLogConfigComponent;
+import com.fissy.dialer.callrecord.CallRecordingAutoMigrator;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.common.concurrent.DialerExecutorComponent;
 import com.fissy.dialer.inject.HasRootComponent;
@@ -49,6 +50,10 @@ public abstract class DialerApplication extends Application implements HasRootCo
         new BlockedNumbersAutoMigrator(
                 this.getApplicationContext(),
                 new FilteredNumberAsyncQueryHandler(this),
+                DialerExecutorComponent.get(this).dialerExecutorFactory())
+                .asyncAutoMigrate();
+        new CallRecordingAutoMigrator(
+                this.getApplicationContext(),
                 DialerExecutorComponent.get(this).dialerExecutorFactory())
                 .asyncAutoMigrate();
         initializeAnnotatedCallLog();

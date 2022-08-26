@@ -24,7 +24,7 @@
             android:id="@id/fast_scroller_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@id/fast_scroller_scroll_bar"
+            android:layout_toStartOf="@id/fast_scroller_scroll_bar"
             android:background="@drawable/fast_scroller_container_background"
             android:gravity="center"
             android:textColor="?android:textColorPrimaryInverse"
@@ -35,9 +35,9 @@
             android:id="@id/fast_scroller_scroll_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginLeft="8.0dip"
-            android:paddingRight="16.0dip"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="8.0dip"
+            android:paddingEnd="16.0dip"
             android:src="@drawable/fast_scroller_scroll_bar" />
     </com.fissy.dialer.contactsfragment.FastScroller>
 

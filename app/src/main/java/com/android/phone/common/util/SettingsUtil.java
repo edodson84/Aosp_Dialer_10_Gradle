@@ -18,16 +18,23 @@ package com.android.phone.common.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Handler;
+import android.os.Vibrator;
+import android.preference.Preference;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.text.TextUtils;
 
 import com.fissy.dialer.R;
+
+import java.lang.CharSequence;
+import java.lang.String;
 
 public class SettingsUtil {
     private static final String DEFAULT_NOTIFICATION_URI_STRING =
@@ -39,9 +46,9 @@ public class SettingsUtil {
      *
      * @param context The application context.
      * @param handler The handler, which takes the name of the ringtone as a String as a parameter.
-     * @param type    The type of sound.
-     * @param key     The key to the shared preferences entry being updated.
-     * @param msg     An integer identifying the message sent to the handler.
+     * @param type The type of sound.
+     * @param key The key to the shared preferences entry being updated.
+     * @param msg An integer identifying the message sent to the handler.
      */
     public static void updateRingtoneName(
             Context context, Handler handler, int type, String key, int msg) {

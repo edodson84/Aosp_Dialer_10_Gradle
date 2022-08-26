@@ -44,48 +44,42 @@ import android.widget.FrameLayout;
  * <ul>
  */
 public class DialpadKeyButton extends FrameLayout {
-    /**
-     * Timeout before switching to long-click accessibility mode.
-     */
+    /** Timeout before switching to long-click accessibility mode. */
     private static final int LONG_HOVER_TIMEOUT = ViewConfiguration.getLongPressTimeout() * 2;
-    /**
-     * Bounds used to filter HOVER_EXIT events.
-     */
-    private final RectF mHoverBounds = new RectF();
-    /**
-     * Accessibility manager instance used to check touch exploration state.
-     */
+
+    /** Accessibility manager instance used to check touch exploration state. */
     private AccessibilityManager mAccessibilityManager;
-    /**
-     * Whether this view is currently in the long-hover state.
-     */
+
+    /** Bounds used to filter HOVER_EXIT events. */
+    private RectF mHoverBounds = new RectF();
+
+    /** Whether this view is currently in the long-hover state. */
     private boolean mLongHovered;
 
-    /**
-     * Alternate content description for long-hover state.
-     */
+    /** Alternate content description for long-hover state. */
     private CharSequence mLongHoverContentDesc;
 
-    /**
-     * Backup of standard content description. Used for accessibility.
-     */
+    /** Backup of standard content description. Used for accessibility. */
     private CharSequence mBackupContentDesc;
 
-    /**
-     * Backup of clickable property. Used for accessibility.
-     */
+    /** Backup of clickable property. Used for accessibility. */
     private boolean mWasClickable;
 
-    /**
-     * Backup of long-clickable property. Used for accessibility.
-     */
+    /** Backup of long-clickable property. Used for accessibility. */
     private boolean mWasLongClickable;
 
-    /**
-     * Runnable used to trigger long-click mode for accessibility.
-     */
+    /** Runnable used to trigger long-click mode for accessibility. */
     private Runnable mLongHoverRunnable;
+
+    public interface OnPressedListener {
+        public void onPressed(View view, boolean pressed);
+    }
+
     private OnPressedListener mOnPressedListener;
+
+    public void setOnPressedListener(OnPressedListener onPressedListener) {
+        mOnPressedListener = onPressedListener;
+    }
 
     public DialpadKeyButton(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -95,10 +89,6 @@ public class DialpadKeyButton extends FrameLayout {
     public DialpadKeyButton(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         initForAccessibility(context);
-    }
-
-    public void setOnPressedListener(OnPressedListener onPressedListener) {
-        mOnPressedListener = onPressedListener;
     }
 
     private void initForAccessibility(Context context) {
@@ -239,9 +229,5 @@ public class DialpadKeyButton extends FrameLayout {
             removeCallbacks(mLongHoverRunnable);
         }
         setLongHovered(false);
-    }
-
-    public interface OnPressedListener {
-        void onPressed(View view, boolean pressed);
     }
 }

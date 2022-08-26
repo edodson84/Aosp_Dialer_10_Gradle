@@ -1,29 +1,6 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-buildscript {
-
-    ext {
-        COMPILE_SDK_VERSION = 31
-        APPLICATION_ID = "com.fissy.dialer"
-        MIN_SDK_VERSION = 26
-        TARGET_SDK_VERSION = 28
-        VERSION_CODE = 3
-        VERSION_NAME = "3.0"
-    }
-
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:7.2.2'
-    }
-}
-
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
+plugins {
+    id 'com.android.application' version '7.2.2' apply false
 }
 
 task clean(type: Delete) {

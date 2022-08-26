@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreference
+        android:key="enable_forward_lookup"
+        android:title="@string/enable_forward_lookup_title"
+        android:summary="@string/enable_forward_lookup_summary"
+        android:defaultValue="false"
+        android:persistent="false" />
+
+    <ListPreference
+        android:key="forward_lookup_provider"
+        android:title="@string/forward_lookup_provider_title"
+        android:entries="@array/forward_lookup_provider_names"
+        android:entryValues="@array/forward_lookup_providers"
+        android:dependency="enable_forward_lookup"
+        android:summary="%s"
+        android:persistent="false" />
+
+    <SwitchPreference
+        android:key="enable_people_lookup"
+        android:title="@string/enable_people_lookup_title"
+        android:summary="@string/enable_people_lookup_summary"
+        android:defaultValue="false"
+        android:persistent="false" />
+
+    <ListPreference
+        android:key="people_lookup_provider"
+        android:title="@string/people_lookup_provider_title"
+        android:entries="@array/people_lookup_provider_names"
+        android:entryValues="@array/people_lookup_providers"
+        android:summary="%s"
+        android:dependency="enable_people_lookup"
+        android:persistent="false" />
+
+    <SwitchPreference
+        android:key="enable_reverse_lookup"
+        android:title="@string/enable_reverse_lookup_title"
+        android:summary="@string/enable_reverse_lookup_summary"
+        android:defaultValue="false"
+        android:persistent="false" />
+
+    <ListPreference
+        android:key="reverse_lookup_provider"
+        android:title="@string/reverse_lookup_provider_title"
+        android:entries="@array/reverse_lookup_provider_names"
+        android:entryValues="@array/reverse_lookup_providers"
+        android:dependency="enable_reverse_lookup"
+        android:summary="%s"
+        android:persistent="false" />
+
+    <Preference android:summary="@string/lookup_disclaimer" />
+</PreferenceScreen>
+

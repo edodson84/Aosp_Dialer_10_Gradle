@@ -31,7 +31,6 @@ import androidx.annotation.IntDef;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresPermission;
 import androidx.annotation.VisibleForTesting;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import android.telecom.PhoneAccount;
 import android.telecom.PhoneAccountHandle;
@@ -47,6 +46,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewStub;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -136,7 +136,7 @@ public final class CallLogListItemViewHolder extends RecyclerView.ViewHolder
     /**
      * The view containing the details for the call log row, including the action buttons.
      */
-    public final CardView callLogEntryView;
+    public final FrameLayout callLogEntryView;
     /**
      * The actionable view which places a call to the number corresponding to the call log row.
      */
@@ -286,7 +286,7 @@ public final class CallLogListItemViewHolder extends RecyclerView.ViewHolder
             DialerQuickContactBadge dialerQuickContactView,
             View primaryActionView,
             PhoneCallDetailsViews phoneCallDetailsViews,
-            CardView callLogEntryView,
+            FrameLayout callLogEntryView,
             TextView dayGroupHeader,
             ImageView primaryActionButtonView) {
         super(rootView);
@@ -376,12 +376,12 @@ public final class CallLogListItemViewHolder extends RecyclerView.ViewHolder
                 callLogListItemHelper,
                 voicemailPlaybackPresenter,
                 view,
-                (DialerQuickContactBadge) view.findViewById(R.id.quick_contact_photo),
+                view.findViewById(R.id.quick_contact_photo),
                 view.findViewById(R.id.primary_action_view),
                 PhoneCallDetailsViews.fromView(view),
-                (CardView) view.findViewById(R.id.call_log_row),
-                (TextView) view.findViewById(R.id.call_log_day_group_label),
-                (ImageView) view.findViewById(R.id.primary_action_button));
+                view.findViewById(R.id.call_log_row),
+                view.findViewById(R.id.call_log_day_group_label),
+                view.findViewById(R.id.primary_action_button));
     }
 
     public static CallLogListItemViewHolder createForTest(Context context) {
@@ -411,7 +411,7 @@ public final class CallLogListItemViewHolder extends RecyclerView.ViewHolder
                         new DialerQuickContactBadge(context),
                         new View(context),
                         PhoneCallDetailsViews.createForTest(context),
-                        new CardView(context),
+                        new FrameLayout(context),
                         new TextView(context),
                         new ImageView(context));
         viewHolder.detailsButtonView = new TextView(context);

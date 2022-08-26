@@ -41,6 +41,7 @@ import com.fissy.dialer.blocking.FilteredNumberCompat;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.compat.telephony.TelephonyManagerCompat;
 import com.fissy.dialer.configprovider.ConfigProviderComponent;
+import com.fissy.dialer.lookup.LookupSettingsFragment;
 import com.fissy.dialer.proguard.UsedByReflection;
 import com.fissy.dialer.util.PermissionsUtil;
 import com.fissy.dialer.voicemail.settings.VoicemailSettingsFragment;
@@ -116,6 +117,11 @@ public class DialerSettingsActivity extends AppCompatPreferenceActivity {
         quickResponseSettingsHeader.titleRes = R.string.respond_via_sms_setting_title;
         quickResponseSettingsHeader.intent = quickResponseSettingsIntent;
         target.add(quickResponseSettingsHeader);
+
+        final Header lookupSettingsHeader = new Header();
+        lookupSettingsHeader.titleRes = R.string.lookup_settings_label;
+        lookupSettingsHeader.fragment = LookupSettingsFragment.class.getName();
+        target.add(lookupSettingsHeader);
 
         TelephonyManager telephonyManager =
                 (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@id/search_box_expanded"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -45,5 +46,5 @@
         android:contentDescription="@string/description_clear_search"
         android:padding="@dimen/search_box_close_icon_padding"
         android:src="@drawable/quantum_ic_close_vd_theme_24"
-        android:tint="?colorIcon" />
+        app:tint="?colorIcon" />
 </RelativeLayout>
