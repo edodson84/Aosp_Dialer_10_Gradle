@@ -17,13 +17,14 @@
 package com.android.incallui.videotech.ims;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
 import android.telecom.Call;
 import android.telecom.Call.Details;
 import android.telecom.PhoneAccountHandle;
 import android.telecom.VideoProfile;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 
 import com.android.incallui.video.protocol.VideoCallScreen;
 import com.android.incallui.video.protocol.VideoCallScreenDelegate;

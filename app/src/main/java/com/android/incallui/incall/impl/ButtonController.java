@@ -18,15 +18,16 @@ package com.android.incallui.incall.impl;
 
 import android.content.res.Resources;
 import android.graphics.drawable.AnimationDrawable;
-import androidx.annotation.CallSuper;
-import androidx.annotation.DrawableRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.StringRes;
 import android.telecom.CallAudioState;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
+
+import androidx.annotation.CallSuper;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 
 import com.android.incallui.incall.impl.CheckableLabeledButton.OnCheckedChangeListener;
 import com.android.incallui.incall.protocol.InCallButtonIds;

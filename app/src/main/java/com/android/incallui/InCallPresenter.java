@@ -22,11 +22,6 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Trace;
-import androidx.annotation.MainThread;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
-import androidx.core.os.UserManagerCompat;
 import android.telecom.Call.Details;
 import android.telecom.CallAudioState;
 import android.telecom.DisconnectCause;
@@ -40,6 +35,12 @@ import android.util.ArraySet;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
+
+import androidx.annotation.MainThread;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
+import androidx.core.os.UserManagerCompat;
 
 import com.android.contacts.common.compat.CallCompat;
 import com.android.incallui.InCallOrientationEventListener.ScreenOrientation;
@@ -269,7 +270,6 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
      */
     private boolean isChangingConfigurations = false;
     private boolean awaitingCallListUpdate = false;
-    private ThemeColorManager themeColorManager;
     private VideoSurfaceTexture localVideoSurfaceTexture;
     private VideoSurfaceTexture remoteVideoSurfaceTexture;
     private SpeakEasyCallManager speakEasyCallManager;
@@ -415,10 +415,6 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
 
         this.proximitySensor = proximitySensor;
         addListener(this.proximitySensor);
-
-        if (themeColorManager == null) {
-            themeColorManager = new ThemeColorManager(new InCallUIMaterialColorMapUtils(this.context));
-        }
 
         this.callList = callList;
         this.externalCallList = externalCallList;
@@ -926,9 +922,6 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
         } else if (newState == InCallState.INCALL) {
             primary = getCallToDisplay(callList, null, false);
         }
-        if (primary != null) {
-            onForegroundCallChanged(primary);
-        }
 
         // notify listeners of new state
         for (InCallStateListener listener : listeners) {
@@ -1096,7 +1089,6 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
                 "InCallPresenter.setBoundAndWaitingForOutgoingCall",
                 "setBoundAndWaitingForOutgoingCall: " + isBound);
         boundAndWaitingForOutgoingCall = isBound;
-        themeColorManager.setPendingPhoneAccountHandle(handle);
         if (isBound && inCallState == InCallState.NO_CALLS) {
             inCallState = InCallState.PENDING_OUTGOING;
         }
@@ -1848,24 +1840,6 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
         return inCallActivity.isDialpadVisible();
     }
 
-    public ThemeColorManager getThemeColorManager() {
-        return themeColorManager;
-    }
-
-    @VisibleForTesting
-    public void setThemeColorManager(ThemeColorManager themeColorManager) {
-        this.themeColorManager = themeColorManager;
-    }
-
-    /**
-     * Called when the foreground call changes.
-     */
-    public void onForegroundCallChanged(DialerCall newForegroundCall) {
-        themeColorManager.onForegroundCallChanged(context, newForegroundCall);
-        if (inCallActivity != null) {
-            inCallActivity.onForegroundCallChanged(newForegroundCall);
-        }
-    }
 
     public InCallActivity getActivity() {
         return inCallActivity;

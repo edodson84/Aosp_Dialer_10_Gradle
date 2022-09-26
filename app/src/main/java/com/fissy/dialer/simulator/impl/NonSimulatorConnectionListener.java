@@ -16,9 +16,10 @@
 
 package com.fissy.dialer.simulator.impl;
 
-import androidx.annotation.NonNull;
 import android.telecom.Connection.RttModifyStatus;
 import android.telecom.DisconnectCause;
+
+import androidx.annotation.NonNull;
 
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;

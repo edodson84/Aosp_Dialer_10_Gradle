@@ -19,14 +19,15 @@ package com.android.incallui.multisim;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.telecom.PhoneAccount;
+import android.telecom.PhoneAccountHandle;
+import android.telecom.TelecomManager;
+
 import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.annotation.WorkerThread;
-import android.telecom.PhoneAccount;
-import android.telecom.PhoneAccountHandle;
-import android.telecom.TelecomManager;
 
 import com.android.incallui.call.CallList;
 import com.android.incallui.call.DialerCall;

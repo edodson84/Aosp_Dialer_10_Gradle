@@ -17,6 +17,7 @@
 package com.fissy.dialer.searchfragment.list;
 
 import android.database.MatrixCursor;
+
 import androidx.annotation.IntDef;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;

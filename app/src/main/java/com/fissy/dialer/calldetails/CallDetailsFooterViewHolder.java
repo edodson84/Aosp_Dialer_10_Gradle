@@ -18,10 +18,11 @@ package com.fissy.dialer.calldetails;
 
 import android.content.Context;
 import android.content.Intent;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.clipboard.ClipboardUtils;

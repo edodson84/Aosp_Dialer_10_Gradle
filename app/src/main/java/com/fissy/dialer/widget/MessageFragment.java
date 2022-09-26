@@ -17,8 +17,6 @@
 package com.fissy.dialer.widget;
 
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextUtils;
@@ -33,6 +31,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.common.Assert;

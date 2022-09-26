@@ -21,14 +21,13 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Trace;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
-import androidx.core.os.UserManagerCompat;
-
 import android.preference.PreferenceManager;
 import android.telecom.CallAudioState;
 import android.telecom.PhoneAccountHandle;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.os.UserManagerCompat;
+import androidx.fragment.app.Fragment;
 
 import com.android.contacts.common.compat.CallCompat;
 import com.android.incallui.InCallCameraManager.Listener;
@@ -511,11 +510,6 @@ public class CallButtonPresenter
 
         if (inCallButtonUi == null) {
             return;
-        }
-
-        if (call != null) {
-            inCallButtonUi.updateInCallButtonUiColors(
-                    InCallPresenter.getInstance().getThemeColorManager().getSecondaryColor());
         }
 
         final boolean isEnabled =

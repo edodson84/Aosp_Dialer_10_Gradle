@@ -32,9 +32,10 @@ import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.Data;
 import android.provider.ContactsContract.Directory;
+import android.text.TextUtils;
+
 import androidx.annotation.VisibleForTesting;
 import androidx.annotation.WorkerThread;
-import android.text.TextUtils;
 
 import com.android.contacts.common.util.StopWatch;
 import com.fissy.dialer.R;

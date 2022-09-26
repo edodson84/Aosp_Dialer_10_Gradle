@@ -17,11 +17,12 @@
 package com.fissy.dialer.simulator.impl;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
 import android.view.ActionProvider;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
+
+import androidx.annotation.NonNull;
 
 import com.fissy.dialer.common.Assert;
 

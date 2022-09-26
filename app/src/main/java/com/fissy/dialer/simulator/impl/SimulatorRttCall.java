@@ -17,10 +17,11 @@
 package com.fissy.dialer.simulator.impl;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.telecom.Connection;
 import android.telecom.DisconnectCause;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;

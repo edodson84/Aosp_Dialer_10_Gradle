@@ -21,8 +21,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.provider.CallLog.Calls;
 import android.provider.ContactsContract;
-import androidx.annotation.IntDef;
 import android.text.TextUtils;
+
+import androidx.annotation.IntDef;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.blockreportspam.BlockReportSpamDialogInfo;
@@ -111,6 +112,7 @@ public final class HistoryItemActionModulesBuilder {
     private final Context context;
     private final HistoryItemActionModuleInfo moduleInfo;
     private final List<HistoryItemActionModule> modules;
+
     public HistoryItemActionModulesBuilder(Context context, HistoryItemActionModuleInfo moduleInfo) {
         Assert.checkArgument(
                 moduleInfo.getHost() != HistoryItemActionModuleInfo.Host.UNKNOWN,

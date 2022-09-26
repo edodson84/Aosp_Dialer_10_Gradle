@@ -16,28 +16,20 @@
 
 package com.fissy.dialer.simulator.impl;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.provider.VoicemailContract;
-import android.provider.VoicemailContract.Voicemails;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.common.concurrent.DialerExecutor.Worker;
 import com.fissy.dialer.common.concurrent.DialerExecutorComponent;
 import com.fissy.dialer.databasepopulator.BlockedBumberPopulator;
 import com.fissy.dialer.databasepopulator.CallLogPopulator;
 import com.fissy.dialer.databasepopulator.ContactsPopulator;
-import com.fissy.dialer.databasepopulator.VoicemailPopulator;
 import com.fissy.dialer.persistentlog.PersistentLogger;
 import com.fissy.dialer.preferredsim.PreferredSimFallbackContract;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Contains utilities used often in test workflow.
@@ -56,28 +48,6 @@ public class SimulatorUtils {
                 .createNonUiTaskBuilder(new PopulateDatabaseWorker())
                 .build()
                 .executeSerial(new PopulateDatabaseWorkerInput(context, false));
-    }
-
-    /**
-     * Populates voicemail database with predefined voicemail entries.
-     */
-    public static void populateVoicemail(@NonNull Context context) {
-        DialerExecutorComponent.get(context)
-                .dialerExecutorFactory()
-                .createNonUiTaskBuilder(new PopulateVoicemailWorker())
-                .build()
-                .executeSerial(new PopulateDatabaseWorkerInput(context, false));
-    }
-
-    /**
-     * Populates voicemail database with only few predefined voicemail entries.
-     */
-    public static void populateVoicemailFast(@NonNull Context context) {
-        DialerExecutorComponent.get(context)
-                .dialerExecutorFactory()
-                .createNonUiTaskBuilder(new PopulateVoicemailWorker())
-                .build()
-                .executeSerial(new PopulateDatabaseWorkerInput(context, true));
     }
 
     /**
@@ -138,37 +108,6 @@ public class SimulatorUtils {
                 .executeSerial(null);
     }
 
-    public static void addVoicemailNotifications(@NonNull Context context, int notificationNum) {
-        LogUtil.enterBlock("SimulatorNotifications.addVoicemailNotifications");
-        List<ContentValues> voicemails = new ArrayList<>();
-        for (int i = notificationNum; i > 0; i--) {
-            VoicemailPopulator.Voicemail voicemail =
-                    VoicemailPopulator.Voicemail.builder()
-                            .setPhoneNumber(String.format(Locale.ENGLISH, "+%d", i))
-                            .setTranscription(String.format(Locale.ENGLISH, "Short transcript %d", i))
-                            .setDurationSeconds(60)
-                            .setIsRead(false)
-                            .setPhoneAccountComponentName("")
-                            .setTimeMillis(System.currentTimeMillis() - TimeUnit.HOURS.toMillis(i))
-                            .build();
-            voicemails.add(voicemail.getAsContentValues(context));
-        }
-        context
-                .getContentResolver()
-                .bulkInsert(
-                        Voicemails.buildSourceUri(context.getPackageName()),
-                        voicemails.toArray(new ContentValues[voicemails.size()]));
-    }
-
-    private static class PopulateVoicemailWorker
-            implements Worker<PopulateDatabaseWorkerInput, Void> {
-        @Nullable
-        @Override
-        public Void doInBackground(PopulateDatabaseWorkerInput input) {
-            VoicemailPopulator.populateVoicemail(input.context, input.fastMode);
-            return null;
-        }
-    }
 
     private static class PopulateDatabaseWorker implements Worker<PopulateDatabaseWorkerInput, Void> {
         @Nullable
@@ -176,7 +115,6 @@ public class SimulatorUtils {
         public Void doInBackground(PopulateDatabaseWorkerInput input) {
             ContactsPopulator.populateContacts(input.context, input.fastMode);
             CallLogPopulator.populateCallLog(input.context, false, input.fastMode);
-            VoicemailPopulator.populateVoicemail(input.context, input.fastMode);
             return null;
         }
     }
@@ -187,7 +125,6 @@ public class SimulatorUtils {
         public Void doInBackground(Context context) {
             ContactsPopulator.deleteAllContacts(context);
             CallLogPopulator.deleteAllCallLog(context);
-            VoicemailPopulator.deleteAllVoicemail(context);
             BlockedBumberPopulator.deleteBlockedNumbers(context);
             return null;
         }

@@ -17,11 +17,12 @@
 package com.android.incallui.incall.protocol;
 
 import android.graphics.drawable.Drawable;
+import android.telecom.DisconnectCause;
+import android.text.TextUtils;
+
 import androidx.annotation.ColorInt;
 import androidx.annotation.IntDef;
 import androidx.annotation.Nullable;
-import android.telecom.DisconnectCause;
-import android.text.TextUtils;
 
 import com.android.incallui.call.state.DialerCallState;
 import com.android.incallui.videotech.utils.SessionModificationState;

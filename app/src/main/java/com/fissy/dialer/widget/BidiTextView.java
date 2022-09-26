@@ -17,16 +17,17 @@
 package com.fissy.dialer.widget;
 
 import android.content.Context;
-import androidx.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
 
 import com.fissy.dialer.i18n.DialerBidiFormatter;
 
 /**
  * A {@link TextView} that applies bidirectional formatting to its text.
  */
-public final class BidiTextView extends TextView {
+public final class BidiTextView extends androidx.appcompat.widget.AppCompatTextView {
 
     public BidiTextView(Context context) {
         super(context);

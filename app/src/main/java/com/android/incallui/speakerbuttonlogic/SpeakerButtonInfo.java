@@ -16,10 +16,11 @@
 
 package com.android.incallui.speakerbuttonlogic;
 
+import android.telecom.CallAudioState;
+
 import androidx.annotation.DrawableRes;
 import androidx.annotation.IntDef;
 import androidx.annotation.StringRes;
-import android.telecom.CallAudioState;
 
 import com.fissy.dialer.R;
 
@@ -41,6 +42,7 @@ public class SpeakerButtonInfo {
     public final int label;
     public final boolean nonBluetoothMode;
     public final boolean isChecked;
+
     public SpeakerButtonInfo(CallAudioState audioState) {
         if ((audioState.getSupportedRouteMask() & CallAudioState.ROUTE_BLUETOOTH)
                 == CallAudioState.ROUTE_BLUETOOTH) {

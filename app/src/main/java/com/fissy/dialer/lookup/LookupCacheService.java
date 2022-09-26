@@ -33,82 +33,82 @@ import com.fissy.dialer.phonenumbercache.ContactInfo;
 import java.io.InputStream;
 
 public class LookupCacheService implements CachedNumberLookupService {
-  @Override
-  public CachedContactInfo buildCachedContactInfo(ContactInfo info) {
-    return new LookupCachedContactInfo(info);
-  }
-
-  @Override
-  public void addContact(Context context, CachedContactInfo cachedInfo) {
-    LookupCache.cacheContact(context, cachedInfo.getContactInfo());
-  }
-
-  @Override
-  public CachedContactInfo lookupCachedContactFromNumber(Context context, String number) {
-    ContactInfo info = LookupCache.getCachedContact(context, number);
-    return info != null ? new LookupCachedContactInfo(info) : null;
-  }
-
-  @Override
-  public void clearAllCacheEntries(Context context) {
-    LookupCache.deleteCachedContacts(context);
-  }
-
-  @Override
-  public boolean isBusiness(ContactSource.Type sourceType) {
-    // We don't store source type, so assume false
-    return false;
-  }
-
-  @Override
-  public boolean canReportAsInvalid(ContactSource.Type sourceType, String objectId) {
-    return false;
-  }
-
-  @Override
-  public boolean reportAsInvalid(Context context, CachedContactInfo cachedContactInfo) {
-    return false;
-  }
-
-  @Override
-  public @Nullable
-  Uri addPhoto(Context context, String number, InputStream in) {
-    TelephonyManager tm = context.getSystemService(TelephonyManager.class);
-    String countryIso = tm.getSimCountryIso().toUpperCase();
-    String normalized = number != null
-        ? PhoneNumberUtils.formatNumberToE164(number, countryIso) : null;
-    if (normalized != null) {
-      Bitmap bitmap = BitmapFactory.decodeStream(in, null, null);
-      if (bitmap != null) {
-        return LookupCache.cacheImage(context, normalized, bitmap);
-      }
-    }
-    return null;
-  }
-
-  private static class LookupCachedContactInfo implements CachedContactInfo {
-    private final ContactInfo info;
-
-    private LookupCachedContactInfo(ContactInfo info) {
-      this.info = info;
+    @Override
+    public CachedContactInfo buildCachedContactInfo(ContactInfo info) {
+        return new LookupCachedContactInfo(info);
     }
 
     @Override
-    @NonNull
-    public ContactInfo getContactInfo() {
-      return info;
+    public void addContact(Context context, CachedContactInfo cachedInfo) {
+        LookupCache.cacheContact(context, cachedInfo.getContactInfo());
     }
 
     @Override
-    public void setSource(ContactSource.Type sourceType, String name, long directoryId) {
+    public CachedContactInfo lookupCachedContactFromNumber(Context context, String number) {
+        ContactInfo info = LookupCache.getCachedContact(context, number);
+        return info != null ? new LookupCachedContactInfo(info) : null;
     }
 
     @Override
-    public void setDirectorySource(String name, long directoryId) {
+    public void clearAllCacheEntries(Context context) {
+        LookupCache.deleteCachedContacts(context);
     }
 
     @Override
-    public void setLookupKey(String lookupKey) {
+    public boolean isBusiness(ContactSource.Type sourceType) {
+        // We don't store source type, so assume false
+        return false;
     }
-  }
+
+    @Override
+    public boolean canReportAsInvalid(ContactSource.Type sourceType, String objectId) {
+        return false;
+    }
+
+    @Override
+    public boolean reportAsInvalid(Context context, CachedContactInfo cachedContactInfo) {
+        return false;
+    }
+
+    @Override
+    public @Nullable
+    Uri addPhoto(Context context, String number, InputStream in) {
+        TelephonyManager tm = context.getSystemService(TelephonyManager.class);
+        String countryIso = tm.getSimCountryIso().toUpperCase();
+        String normalized = number != null
+                ? PhoneNumberUtils.formatNumberToE164(number, countryIso) : null;
+        if (normalized != null) {
+            Bitmap bitmap = BitmapFactory.decodeStream(in, null, null);
+            if (bitmap != null) {
+                return LookupCache.cacheImage(context, normalized, bitmap);
+            }
+        }
+        return null;
+    }
+
+    private static class LookupCachedContactInfo implements CachedContactInfo {
+        private final ContactInfo info;
+
+        private LookupCachedContactInfo(ContactInfo info) {
+            this.info = info;
+        }
+
+        @Override
+        @NonNull
+        public ContactInfo getContactInfo() {
+            return info;
+        }
+
+        @Override
+        public void setSource(ContactSource.Type sourceType, String name, long directoryId) {
+        }
+
+        @Override
+        public void setDirectorySource(String name, long directoryId) {
+        }
+
+        @Override
+        public void setLookupKey(String lookupKey) {
+        }
+    }
 }

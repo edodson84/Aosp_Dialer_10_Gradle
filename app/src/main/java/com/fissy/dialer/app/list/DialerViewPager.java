@@ -17,9 +17,10 @@
 package com.fissy.dialer.app.list;
 
 import android.content.Context;
-import androidx.viewpager.widget.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+
+import androidx.viewpager.widget.ViewPager;
 
 /**
  * Class that handles enabling/disabling swiping between @{ViewPagerTabs}.

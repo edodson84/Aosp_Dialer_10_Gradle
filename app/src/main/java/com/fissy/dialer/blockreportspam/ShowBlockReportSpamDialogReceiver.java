@@ -20,8 +20,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import androidx.fragment.app.FragmentManager;
 import android.widget.Toast;
+
+import androidx.fragment.app.FragmentManager;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.blocking.Blocking;

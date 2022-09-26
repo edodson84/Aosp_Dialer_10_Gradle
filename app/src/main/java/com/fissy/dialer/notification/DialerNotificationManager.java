@@ -20,11 +20,12 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.service.notification.StatusBarNotification;
+import android.text.TextUtils;
+import android.util.Pair;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.os.BuildCompat;
-import android.text.TextUtils;
-import android.util.Pair;
 
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;

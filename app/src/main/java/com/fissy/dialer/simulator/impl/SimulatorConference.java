@@ -16,11 +16,12 @@
 
 package com.fissy.dialer.simulator.impl;
 
-import androidx.annotation.NonNull;
 import android.telecom.CallAudioState;
 import android.telecom.Conference;
 import android.telecom.Connection;
 import android.telecom.PhoneAccountHandle;
+
+import androidx.annotation.NonNull;
 
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;

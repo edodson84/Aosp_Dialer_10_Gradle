@@ -17,6 +17,7 @@
 package com.android.bubble.stub;
 
 import android.graphics.drawable.Drawable;
+
 import androidx.annotation.NonNull;
 
 import com.android.bubble.Bubble;

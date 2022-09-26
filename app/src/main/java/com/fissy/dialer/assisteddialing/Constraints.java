@@ -17,9 +17,10 @@
 package com.fissy.dialer.assisteddialing;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
 import android.telephony.PhoneNumberUtils;
 import android.text.TextUtils;
+
+import androidx.annotation.NonNull;
 
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.logging.DialerImpression;

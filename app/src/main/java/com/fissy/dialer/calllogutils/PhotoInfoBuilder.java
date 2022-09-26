@@ -18,13 +18,13 @@ package com.fissy.dialer.calllogutils;
 
 import android.content.Context;
 import android.provider.CallLog.Calls;
+
 import androidx.core.os.BuildCompat;
 
 import com.fissy.dialer.NumberAttributes;
 import com.fissy.dialer.calllog.model.CoalescedRow;
 import com.fissy.dialer.glidephotomanager.PhotoInfo;
 import com.fissy.dialer.spam.Spam;
-import com.fissy.dialer.voicemail.model.VoicemailEntry;
 
 /**
  * Builds {@link PhotoInfo} from other data types.
@@ -46,17 +46,6 @@ public final class PhotoInfoBuilder {
                 .setIsRtt(
                         BuildCompat.isAtLeastP()
                                 && (coalescedRow.getFeatures() & Calls.FEATURES_RTT) == Calls.FEATURES_RTT);
-    }
-
-    /**
-     * Returns a {@link PhotoInfo.Builder} with info from {@link VoicemailEntry}.
-     */
-    public static PhotoInfo.Builder fromVoicemailEntry(VoicemailEntry voicemailEntry) {
-        return fromNumberAttributes(voicemailEntry.getNumberAttributes())
-                .setFormattedNumber(voicemailEntry.getFormattedNumber())
-                .setIsSpam(
-                        Spam.shouldShowAsSpam(
-                                voicemailEntry.getNumberAttributes().getIsSpam(), voicemailEntry.getCallType()));
     }
 
     /**

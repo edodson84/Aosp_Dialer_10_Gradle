@@ -21,9 +21,10 @@ import android.hardware.display.DisplayManager;
 import android.hardware.display.DisplayManager.DisplayListener;
 import android.os.PowerManager;
 import android.os.Trace;
-import androidx.annotation.NonNull;
 import android.telecom.CallAudioState;
 import android.view.Display;
+
+import androidx.annotation.NonNull;
 
 import com.android.incallui.InCallPresenter.InCallState;
 import com.android.incallui.InCallPresenter.InCallStateListener;

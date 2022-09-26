@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+
 import androidx.annotation.CheckResult;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.FloatRange;

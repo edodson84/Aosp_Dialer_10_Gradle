@@ -21,6 +21,7 @@ import android.content.CursorLoader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
+
 import androidx.annotation.NonNull;
 
 import com.android.contacts.common.extensions.PhoneDirectoryExtenderAccessor;

@@ -25,6 +25,7 @@ import android.os.RemoteException;
 import android.provider.CallLog;
 import android.provider.CallLog.Calls;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
+
 import androidx.annotation.VisibleForTesting;
 
 import com.fissy.dialer.DialerPhoneNumber;

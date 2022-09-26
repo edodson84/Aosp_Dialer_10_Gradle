@@ -17,9 +17,10 @@
 package com.fissy.dialer.phonelookup.composite;
 
 import android.content.Context;
+import android.telecom.Call;
+
 import androidx.annotation.MainThread;
 import androidx.annotation.VisibleForTesting;
-import android.telecom.Call;
 
 import com.fissy.dialer.DialerPhoneNumber;
 import com.fissy.dialer.calllog.CallLogState;

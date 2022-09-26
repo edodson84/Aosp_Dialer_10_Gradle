@@ -18,17 +18,10 @@ package com.android.incallui.incall.impl;
 
 import android.Manifest.permission;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
-import androidx.annotation.ColorInt;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.core.content.ContextCompat;
 import android.telecom.CallAudioState;
 import android.telephony.TelephonyManager;
 import android.transition.TransitionManager;
@@ -37,16 +30,22 @@ import android.view.View;
 import android.view.View.OnAttachStateChangeListener;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.accessibility.AccessibilityEvent;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.android.incallui.audioroute.AudioRouteSelectorDialogFragment;
 import com.android.incallui.audioroute.AudioRouteSelectorDialogFragment.AudioRouteSelectorPresenter;
 import com.android.incallui.contactgrid.ContactGridManager;
 import com.android.incallui.hold.OnHoldFragment;
+import com.android.incallui.incall.impl.ButtonController.CallRecordButtonController;
 import com.android.incallui.incall.impl.ButtonController.SpeakerButtonController;
 import com.android.incallui.incall.impl.ButtonController.UpgradeToRttButtonController;
 import com.android.incallui.incall.impl.InCallButtonGridFragment.OnButtonGridCreatedListener;
@@ -63,15 +62,18 @@ import com.android.incallui.incall.protocol.PrimaryCallState.ButtonState;
 import com.android.incallui.incall.protocol.PrimaryInfo;
 import com.android.incallui.incall.protocol.SecondaryInfo;
 import com.fissy.dialer.R;
+import com.fissy.dialer.app.settings.ThemeOptionsSettingsFragment;
+import com.fissy.dialer.binary.common.DialerApplication;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.FragmentUtils;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.logging.DialerImpression;
 import com.fissy.dialer.logging.Logger;
+import com.fissy.dialer.main.impl.MainActivity;
 import com.fissy.dialer.multimedia.MultimediaData;
 import com.fissy.dialer.strictmode.StrictModeUtils;
+import com.fissy.dialer.util.TransactionSafeActivity;
 import com.fissy.dialer.widget.LockableViewPager;
-import com.android.incallui.incall.impl.ButtonController.CallRecordButtonController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,6 +88,7 @@ public class InCallFragment extends Fragment
         AudioRouteSelectorPresenter,
         OnButtonGridCreatedListener {
 
+    private static final int REQUEST_CODE_CALL_RECORD_PERMISSION = 1000;
     private final List<ButtonController> buttonControllers = new ArrayList<>();
     // Add animation to educate users. If a call has enriched calling attachments then we'll
     // initially show the attachment page. After a delay seconds we'll animate to the button grid.
@@ -111,7 +114,6 @@ public class InCallFragment extends Fragment
     private int voiceNetworkType;
     private int phoneType;
     private boolean stateRestored;
-    private static final int REQUEST_CODE_CALL_RECORD_PERMISSION = 1000;
 
     private static boolean isSupportedButton(@InCallButtonIds int id) {
         return id == InCallButtonIds.BUTTON_AUDIO
@@ -164,13 +166,13 @@ public class InCallFragment extends Fragment
         contactGridManager =
                 new ContactGridManager(
                         view,
-                        (ImageView) view.findViewById(R.id.contactgrid_avatar),
+                        view.findViewById(R.id.contactgrid_avatar),
                         getResources().getDimensionPixelSize(R.dimen.incall_avatar_size),
                         true /* showAnonymousAvatar */);
         contactGridManager.onMultiWindowModeChanged(getActivity().isInMultiWindowMode());
 
-        paginator = (InCallPaginator) view.findViewById(R.id.incall_paginator);
-        pager = (LockableViewPager) view.findViewById(R.id.incall_pager);
+        paginator = view.findViewById(R.id.incall_paginator);
+        pager = view.findViewById(R.id.incall_pager);
         pager.setOnTouchListener(
                 (v, event) -> {
                     handler.removeCallbacks(pagerRunnable);
@@ -202,6 +204,10 @@ public class InCallFragment extends Fragment
                         if (topInset != container.getPaddingTop()) {
                             TransitionManager.beginDelayedTransition(((ViewGroup) container.getParent()));
                             container.setPadding(0, topInset, 0, bottomInset);
+                            ThemeOptionsSettingsFragment.ThemeButtonBehavior mThemeBehavior = ThemeOptionsSettingsFragment.getThemeButtonBehavior(MainActivity.themeprefs);
+                            if (!(mThemeBehavior == ThemeOptionsSettingsFragment.ThemeButtonBehavior.DARK)) {
+                                container.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+                            }
                         }
                     }
 
@@ -406,11 +412,7 @@ public class InCallFragment extends Fragment
             // Update the Android Button's state to isShowing.
             inCallButtonGridFragment.onInCallScreenDialpadVisibilityChange(isShowing);
         }
-        Activity activity = getActivity();
-        Window window = activity.getWindow();
-        window.setNavigationBarColor(
-                activity.getColor(
-                        isShowing ? android.R.color.background_dark : android.R.color.transparent));
+
     }
 
     @Override

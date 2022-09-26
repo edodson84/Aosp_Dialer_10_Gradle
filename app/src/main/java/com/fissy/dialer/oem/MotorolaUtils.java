@@ -18,8 +18,9 @@ package com.fissy.dialer.oem;
 import android.content.Context;
 import android.content.res.Resources;
 import android.provider.CallLog.Calls;
-import androidx.annotation.VisibleForTesting;
 import android.telephony.TelephonyManager;
+
+import androidx.annotation.VisibleForTesting;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.common.LogUtil;

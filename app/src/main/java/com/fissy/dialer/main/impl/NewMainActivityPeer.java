@@ -19,6 +19,7 @@ package com.fissy.dialer.main.impl;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -31,7 +32,6 @@ import com.fissy.dialer.main.MainActivityPeer;
 import com.fissy.dialer.main.impl.bottomnav.BottomNavBar;
 import com.fissy.dialer.main.impl.bottomnav.BottomNavBar.OnBottomNavTabSelectedListener;
 import com.fissy.dialer.main.impl.bottomnav.BottomNavBar.TabIndex;
-import com.fissy.dialer.voicemail.listui.NewVoicemailFragment;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.MoreExecutors;
 
@@ -103,7 +103,6 @@ public class NewMainActivityPeer implements MainActivityPeer {
 
         private static final String SPEED_DIAL_TAG = "speed_dial";
         private static final String CALL_LOG_TAG = "call_log";
-        private static final String VOICEMAIL_TAG = "voicemail";
 
         private final FragmentManager supportFragmentManager;
         private final Context appContext;
@@ -152,21 +151,6 @@ public class NewMainActivityPeer implements MainActivityPeer {
             // TODO(calderwoodra): Implement ContactsFragment when FragmentUtils#getParent works
         }
 
-        @Override
-        public void onVoicemailSelected() {
-            hideAllFragments();
-            NewVoicemailFragment fragment =
-                    (NewVoicemailFragment) supportFragmentManager.findFragmentByTag(VOICEMAIL_TAG);
-            if (fragment == null) {
-                supportFragmentManager
-                        .beginTransaction()
-                        .add(R.id.fragment_container, new NewVoicemailFragment(), VOICEMAIL_TAG)
-                        .commit();
-            } else {
-                supportFragmentManager.beginTransaction().show(fragment).commit();
-            }
-        }
-
         // TODO(calderwoodra): fix overlapping fragments issue
         private void hideAllFragments() {
             FragmentTransaction supportTransaction = supportFragmentManager.beginTransaction();
@@ -187,10 +171,6 @@ public class NewMainActivityPeer implements MainActivityPeer {
                             MoreExecutors.directExecutor());
                 }
                 supportTransaction.hide(callLogFragment);
-            }
-
-            if (supportFragmentManager.findFragmentByTag(VOICEMAIL_TAG) != null) {
-                supportTransaction.hide(supportFragmentManager.findFragmentByTag(VOICEMAIL_TAG));
             }
             supportTransaction.commit();
         }

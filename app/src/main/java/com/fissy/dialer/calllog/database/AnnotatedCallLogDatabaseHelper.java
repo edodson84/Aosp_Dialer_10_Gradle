@@ -20,6 +20,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.CallLog.Calls;
+
 import androidx.annotation.VisibleForTesting;
 
 import com.fissy.dialer.calllog.database.contract.AnnotatedCallLogContract.AnnotatedCallLog;
@@ -73,13 +74,8 @@ public class AnnotatedCallLogDatabaseHelper extends SQLiteOpenHelper {
                     + (AnnotatedCallLog.PHONE_ACCOUNT_COMPONENT_NAME + " text, ")
                     + (AnnotatedCallLog.PHONE_ACCOUNT_ID + " text, ")
                     + (AnnotatedCallLog.FEATURES + " integer, ")
-                    + (AnnotatedCallLog.TRANSCRIPTION + " integer, ")
-                    + (AnnotatedCallLog.VOICEMAIL_URI + " text, ")
                     + (AnnotatedCallLog.CALL_TYPE + " integer, ")
                     + (AnnotatedCallLog.NUMBER_ATTRIBUTES + " blob, ")
-                    + (AnnotatedCallLog.IS_VOICEMAIL_CALL + " integer, ")
-                    + (AnnotatedCallLog.VOICEMAIL_CALL_TAG + " text, ")
-                    + (AnnotatedCallLog.TRANSCRIPTION_STATE + " integer, ")
                     + (AnnotatedCallLog.CALL_MAPPING_ID + " text")
                     + ");";
     /**
@@ -160,32 +156,6 @@ public class AnnotatedCallLogDatabaseHelper extends SQLiteOpenHelper {
                         + AnnotatedCallLog.TIMESTAMP);
     }
 
-    private static void upgradeToV4(SQLiteDatabase db) {
-        // Starting from v4, we will enforce column constraints in the AnnotatedCallLogContentProvider
-        // instead of on the database level.
-        // The constraints are as follows (see AnnotatedCallLogConstraints for details).
-        //   IS_READ:           not null, must be 0 or 1;
-        //   NEW:               not null, must be 0 or 1;
-        //   IS_VOICEMAIL_CALL: not null, must be 0 or 1; and
-        //   CALL_TYPE:         not null, must be one of android.provider.CallLog.Calls#TYPE.
-        //
-        // There is no need to update the old schema as the constraints above are more strict than
-        // those in the old schema.
-        //
-        // Version 3 schema defaulted column IS_VOICEMAIL_CALL to 0 but we didn't update the schema in
-        // onUpgrade. As a result, null values can still be inserted if the user has an older version of
-        // the database. For version 4, we need to set all null values to 0.
-        db.execSQL(
-                "update "
-                        + AnnotatedCallLog.TABLE
-                        + " set "
-                        + AnnotatedCallLog.IS_VOICEMAIL_CALL
-                        + " = 0 "
-                        + "where "
-                        + AnnotatedCallLog.IS_VOICEMAIL_CALL
-                        + " is null");
-    }
-
     @Override
     public void onCreate(SQLiteDatabase db) {
         LogUtil.enterBlock("AnnotatedCallLogDatabaseHelper.onCreate");
@@ -205,12 +175,6 @@ public class AnnotatedCallLogDatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (oldVersion < 2) {
             upgradeToV2(db);
-        }
-
-        // Version 3 upgrade was buggy and didn't make any schema changes.
-        // So we go directly to version 4.
-        if (oldVersion < 4) {
-            upgradeToV4(db);
         }
     }
 

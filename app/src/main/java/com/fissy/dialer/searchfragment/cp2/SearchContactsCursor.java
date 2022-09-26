@@ -21,6 +21,7 @@ import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.database.MergeCursor;
 import android.provider.ContactsContract.Directory;
+
 import androidx.annotation.Nullable;
 
 import com.fissy.dialer.R;

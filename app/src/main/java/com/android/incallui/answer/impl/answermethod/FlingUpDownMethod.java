@@ -29,17 +29,6 @@ import android.graphics.PorterDuff.Mode;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Trace;
-import androidx.annotation.ColorInt;
-import androidx.annotation.FloatRange;
-import androidx.annotation.IntDef;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
-import androidx.core.graphics.ColorUtils;
-import androidx.interpolator.view.animation.FastOutLinearInInterpolator;
-import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
-import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
-import androidx.core.view.animation.PathInterpolatorCompat;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -53,11 +42,22 @@ import android.view.animation.Interpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.ColorInt;
+import androidx.annotation.FloatRange;
+import androidx.annotation.IntDef;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
+import androidx.core.graphics.ColorUtils;
+import androidx.core.view.animation.PathInterpolatorCompat;
+import androidx.interpolator.view.animation.FastOutLinearInInterpolator;
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
+import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
+
 import com.android.incallui.answer.impl.answermethod.FlingUpDownTouchHandler.OnProgressChangedListener;
 import com.android.incallui.answer.impl.classifier.FalsingManager;
 import com.android.incallui.answer.impl.hint.AnswerHint;
 import com.android.incallui.answer.impl.hint.AnswerHintFactory;
-import com.android.incallui.answer.impl.hint.PawImageLoaderImpl;
 import com.fissy.dialer.R;
 import com.fissy.dialer.common.DpUtil;
 import com.fissy.dialer.common.LogUtil;
@@ -222,7 +222,7 @@ public class FlingUpDownMethod extends AnswerMethod implements OnProgressChanged
         touchHandler = FlingUpDownTouchHandler.attach(view, this, falsingManager);
 
         answerHint =
-                new AnswerHintFactory(new PawImageLoaderImpl())
+                new AnswerHintFactory()
                         .create(getContext(), ANIMATE_DURATION_LONG_MILLIS, BOUNCE_ANIMATION_DELAY);
         answerHint.onCreateView(
                 layoutInflater,

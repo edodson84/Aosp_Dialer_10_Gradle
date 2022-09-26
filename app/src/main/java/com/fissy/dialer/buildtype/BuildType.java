@@ -31,6 +31,7 @@ public class BuildType {
 
     private static int cachedBuildType;
     private static boolean didInitializeBuildType;
+
     private BuildType() {
     }
 

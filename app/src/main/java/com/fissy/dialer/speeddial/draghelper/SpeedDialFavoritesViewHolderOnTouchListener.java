@@ -16,13 +16,14 @@
 
 package com.fissy.dialer.speeddial.draghelper;
 
-import androidx.recyclerview.widget.RecyclerView.ViewHolder;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import android.view.HapticFeedbackConstants;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewConfiguration;
+
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
 import com.fissy.dialer.common.Assert;
 

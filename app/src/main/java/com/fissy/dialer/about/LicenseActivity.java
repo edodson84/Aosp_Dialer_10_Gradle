@@ -17,12 +17,15 @@
 package com.fissy.dialer.about;
 
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.fissy.dialer.R;
+import com.fissy.dialer.app.settings.ThemeOptionsSettingsFragment;
+import com.fissy.dialer.main.impl.MainActivity;
 
 /**
  * Simple Activity that renders locally stored open source legal info in a text view.
@@ -33,6 +36,14 @@ public final class LicenseActivity extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle bundle) {
+        ThemeOptionsSettingsFragment.ThemeButtonBehavior mThemeBehavior = ThemeOptionsSettingsFragment.getThemeButtonBehavior(MainActivity.themeprefs);
+
+        if (mThemeBehavior == ThemeOptionsSettingsFragment.ThemeButtonBehavior.DARK) {
+            getTheme().applyStyle(R.style.DialerDark, true);
+        }
+        if (mThemeBehavior == ThemeOptionsSettingsFragment.ThemeButtonBehavior.LIGHT) {
+            getTheme().applyStyle(R.style.DialerLight, true);
+        }
         super.onCreate(bundle);
         setContentView(R.layout.license_scrollview);
 

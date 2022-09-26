@@ -16,10 +16,11 @@
 
 package com.android.incallui.video.impl;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.view.View;
 import android.view.View.OnClickListener;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.android.incallui.incall.protocol.InCallScreenDelegate;
 import com.android.incallui.incall.protocol.SecondaryInfo;

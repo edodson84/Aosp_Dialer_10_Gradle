@@ -16,8 +16,9 @@
 
 package com.fissy.dialer.util;
 
-import androidx.annotation.Nullable;
 import android.text.TextUtils;
+
+import androidx.annotation.Nullable;
 
 /**
  * Static utility methods for Strings.

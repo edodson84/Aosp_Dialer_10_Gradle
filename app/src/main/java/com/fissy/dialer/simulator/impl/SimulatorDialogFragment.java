@@ -19,9 +19,10 @@ package com.fissy.dialer.simulator.impl;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
-import androidx.fragment.app.DialogFragment;
 import android.telecom.TelecomManager;
 import android.widget.EditText;
+
+import androidx.fragment.app.DialogFragment;
 
 import com.fissy.dialer.R;
 

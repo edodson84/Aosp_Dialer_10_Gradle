@@ -18,12 +18,13 @@ package com.fissy.dialer.telecom;
 
 import android.content.Context;
 import android.net.Uri;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.WorkerThread;
 import android.telecom.Call;
 import android.telephony.PhoneNumberUtils;
 import android.text.TextUtils;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.WorkerThread;
 
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.location.GeoUtil;

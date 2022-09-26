@@ -17,10 +17,11 @@
 package com.fissy.dialer.simulator.impl;
 
 import android.content.Context;
-import androidx.appcompat.app.AppCompatActivity;
 import android.telecom.TelecomManager;
 import android.telecom.VideoProfile;
 import android.view.ActionProvider;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.fissy.dialer.common.concurrent.DialerExecutorComponent;
 import com.fissy.dialer.enrichedcall.simulator.EnrichedCallSimulatorActivity;
@@ -95,13 +96,9 @@ public class SimulatorMainPortal {
                         .setMethods(
                                 ImmutableMap.<String, Runnable>builder()
                                         .put("Populate database", () -> SimulatorUtils.populateDatabase(context))
-                                        .put("Populate voicemail", () -> SimulatorUtils.populateVoicemail(context))
                                         .put(
                                                 "Fast Populate database",
                                                 () -> SimulatorUtils.fastPopulateDatabase(context))
-                                        .put(
-                                                "Fast populate voicemail database",
-                                                () -> SimulatorUtils.populateVoicemailFast(context))
                                         .put("Clean database", () -> SimulatorUtils.cleanDatabase(context))
                                         .put("clear preferred SIM", () -> SimulatorUtils.clearPreferredSim(context))
                                         .put("Sync voicemail", () -> SimulatorUtils.syncVoicemail(context))
@@ -239,11 +236,6 @@ public class SimulatorMainPortal {
                                 .put(
                                         "Missed calls (few)",
                                         () -> new SimulatorMissedCallCreator(context).start(missedCallNum))
-                                .put(
-                                        "Voicemails",
-                                        () ->
-                                                SimulatorUtils.addVoicemailNotifications(
-                                                        context, SimulatorUtils.NOTIFICATION_COUNT))
                                 .build())
                 .build();
     }

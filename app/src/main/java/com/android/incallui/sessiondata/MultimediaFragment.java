@@ -20,10 +20,6 @@ import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
-import androidx.fragment.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +27,11 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
+import androidx.fragment.app.Fragment;
 
 import com.android.incallui.maps.MapsComponent;
 import com.bumptech.glide.Glide;
@@ -43,7 +44,6 @@ import com.fissy.dialer.R;
 import com.fissy.dialer.common.FragmentUtils;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.multimedia.MultimediaData;
-import com.fissy.dialer.theme.base.ThemeComponent;
 
 /**
  * Displays info from {@link MultimediaData MultimediaData}.
@@ -109,9 +109,6 @@ public class MultimediaFragment extends Fragment implements AvatarPresenter {
     @Override
     public View onCreateView(
             LayoutInflater layoutInflater, @Nullable ViewGroup viewGroup, @Nullable Bundle bundle) {
-        layoutInflater =
-                layoutInflater.cloneInContext(
-                        ThemeComponent.get(getContext()).theme().getThemedContext(getContext()));
 
         if (isSpam) {
             LogUtil.i("MultimediaFragment.onCreateView", "show spam layout");

@@ -27,7 +27,7 @@ import java.util.List;
  */
 public class DragDropController {
 
-    private final List<OnDragDropListener> onDragDropListeners = new ArrayList<OnDragDropListener>();
+    private final List<OnDragDropListener> onDragDropListeners = new ArrayList<>();
     private final DragItemContainer dragItemContainer;
     private final int[] locationOnScreen = new int[2];
 
@@ -79,10 +79,6 @@ public class DragDropController {
         if (!onDragDropListeners.contains(listener)) {
             onDragDropListeners.add(listener);
         }
-    }
-
-    public void removeOnDragDropListener(OnDragDropListener listener) {
-        onDragDropListeners.remove(listener);
     }
 
     /**

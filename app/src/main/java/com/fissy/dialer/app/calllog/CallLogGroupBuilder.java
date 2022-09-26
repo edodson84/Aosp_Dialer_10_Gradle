@@ -19,11 +19,11 @@ package com.fissy.dialer.app.calllog;
 import android.content.Context;
 import android.database.Cursor;
 import android.provider.CallLog.Calls;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
 import android.telephony.PhoneNumberUtils;
 import android.text.TextUtils;
-import android.text.format.Time;
+
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 
 import com.android.contacts.common.util.DateUtils;
 import com.fissy.dialer.calllogutils.CallbackActionHelper;
@@ -33,6 +33,7 @@ import com.fissy.dialer.inject.ApplicationContext;
 import com.fissy.dialer.phonenumbercache.CallLogQuery;
 import com.fissy.dialer.phonenumberutil.PhoneNumberHelper;
 
+import java.time.ZoneId;
 import java.util.Objects;
 
 /**
@@ -66,7 +67,7 @@ public class CallLogGroupBuilder {
     /**
      * Instance of the time object used for time calculations.
      */
-    private static final Time TIME = new Time();
+    private static final ZoneId TIME_ZONE = ZoneId.systemDefault();
 
     private final Context appContext;
     /**
@@ -267,7 +268,7 @@ public class CallLogGroupBuilder {
      * @return The date group the call belongs in.
      */
     private int getDayGroup(long date, long now) {
-        int days = DateUtils.getDayDifference(TIME, date, now);
+        int days = DateUtils.getDayDifference(TIME_ZONE, date, now);
 
         if (days == 0) {
             return DAY_GROUP_TODAY;

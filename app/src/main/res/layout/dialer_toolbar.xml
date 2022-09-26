@@ -9,19 +9,15 @@
 
         <TextView
             android:id="@id/title"
-            style="@style/Dialer.TextAppearance.Header2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="top"
-            android:textColor="?android:textColorPrimaryInverse"
             android:textSize="@dimen/toolbar_title_text_size" />
 
         <com.fissy.dialer.widget.BidiTextView
             android:id="@id/subtitle"
-            style="@style/Dialer.TextAppearance.Secondary.Ellipsize"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="?android:textColorPrimaryInverse"
             android:visibility="gone" />
     </LinearLayout>
 </merge>

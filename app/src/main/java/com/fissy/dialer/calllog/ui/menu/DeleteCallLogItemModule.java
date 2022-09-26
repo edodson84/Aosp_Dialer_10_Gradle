@@ -20,6 +20,7 @@ import android.Manifest.permission;
 import android.content.Context;
 import android.provider.CallLog;
 import android.provider.CallLog.Calls;
+
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresPermission;
 

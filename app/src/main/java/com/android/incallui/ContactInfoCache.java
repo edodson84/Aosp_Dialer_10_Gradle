@@ -27,6 +27,12 @@ import android.os.Trace;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.DisplayNameSources;
+import android.telecom.TelecomManager;
+import android.telephony.PhoneNumberUtils;
+import android.text.TextUtils;
+import android.util.ArrayMap;
+import android.util.ArraySet;
+
 import androidx.annotation.AnyThread;
 import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
@@ -34,11 +40,6 @@ import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
 import androidx.core.content.ContextCompat;
 import androidx.core.os.UserManagerCompat;
-import android.telecom.TelecomManager;
-import android.telephony.PhoneNumberUtils;
-import android.text.TextUtils;
-import android.util.ArrayMap;
-import android.util.ArraySet;
 
 import com.android.contacts.common.ContactsUtils;
 import com.android.incallui.CallerInfoAsyncQuery.OnQueryCompleteListener;
@@ -353,7 +354,7 @@ public class ContactInfoCache implements OnImageLoadCompleteListener {
         }
 
         Trace.beginSection("prepare query");
-        /**
+        /*
          * Performs a query for caller information. Save any immediate data we get from the query. An
          * asynchronous query may also be made for any data that we do not already have. Some queries,
          * such as those for voicemail and emergency call information, will not perform an additional

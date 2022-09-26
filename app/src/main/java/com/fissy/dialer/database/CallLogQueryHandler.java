@@ -30,16 +30,12 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.provider.CallLog.Calls;
-import android.provider.VoicemailContract.Status;
-import android.provider.VoicemailContract.Voicemails;
 
 import com.android.contacts.common.database.NoNullCursorAsyncQueryHandler;
-import com.android.voicemail.VoicemailComponent;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.phonenumbercache.CallLogQuery;
 import com.fissy.dialer.telecom.TelecomUtil;
 import com.fissy.dialer.util.PermissionsUtil;
-import com.fissy.dialer.voicemailstatus.VoicemailStatusQuery;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -65,14 +61,6 @@ public class CallLogQueryHandler extends NoNullCursorAsyncQueryHandler {
      * The token for the query to mark all missed calls as read after seeing the call log.
      */
     private static final int UPDATE_MARK_MISSED_CALL_AS_READ_TOKEN = 56;
-    /**
-     * The token for the query to fetch voicemail status messages.
-     */
-    private static final int QUERY_VOICEMAIL_STATUS_TOKEN = 57;
-    /**
-     * The token for the query to fetch the number of unread voicemails.
-     */
-    private static final int QUERY_VOICEMAIL_UNREAD_COUNT_TOKEN = 58;
     /**
      * The token for the query to fetch the number of missed calls.
      */
@@ -116,53 +104,6 @@ public class CallLogQueryHandler extends NoNullCursorAsyncQueryHandler {
         }
     }
 
-    public void fetchVoicemailStatus() {
-        StringBuilder where = new StringBuilder();
-        List<String> selectionArgs = new ArrayList<>();
-
-        VoicemailComponent.get(context)
-                .getVoicemailClient()
-                .appendOmtpVoicemailStatusSelectionClause(context, where, selectionArgs);
-
-        if (TelecomUtil.hasReadWriteVoicemailPermissions(context)) {
-            LogUtil.i("CallLogQueryHandler.fetchVoicemailStatus", "fetching voicemail status");
-            startQuery(
-                    QUERY_VOICEMAIL_STATUS_TOKEN,
-                    null,
-                    Status.CONTENT_URI,
-                    VoicemailStatusQuery.getProjection(),
-                    where.toString(),
-                    selectionArgs.toArray(new String[selectionArgs.size()]),
-                    null);
-        } else {
-            LogUtil.i(
-                    "CallLogQueryHandler.fetchVoicemailStatus",
-                    "fetching voicemail status failed due to permissions");
-        }
-    }
-
-    public void fetchVoicemailUnreadCount() {
-        if (TelecomUtil.hasReadWriteVoicemailPermissions(context)) {
-            // Only count voicemails that have not been read and have not been deleted.
-            StringBuilder where =
-                    new StringBuilder(Voicemails.IS_READ + "=0" + " AND " + Voicemails.DELETED + "=0 ");
-            List<String> selectionArgs = new ArrayList<>();
-
-            VoicemailComponent.get(context)
-                    .getVoicemailClient()
-                    .appendOmtpVoicemailSelectionClause(context, where, selectionArgs);
-
-            startQuery(
-                    QUERY_VOICEMAIL_UNREAD_COUNT_TOKEN,
-                    null,
-                    Voicemails.CONTENT_URI,
-                    new String[]{Voicemails._ID},
-                    where.toString(),
-                    selectionArgs.toArray(new String[selectionArgs.size()]),
-                    null);
-        }
-    }
-
     /**
      * Fetches the list of calls in the call log.
      */
@@ -174,9 +115,6 @@ public class CallLogQueryHandler extends NoNullCursorAsyncQueryHandler {
         where.append("(").append(Calls.TYPE).append(" != ?)");
         selectionArgs.add(Integer.toString(Calls.BLOCKED_TYPE));
 
-        // Ignore voicemails marked as deleted
-        where.append(" AND (").append(Voicemails.DELETED).append(" = 0)");
-
         if (newOnly) {
             where.append(" AND (").append(Calls.NEW).append(" = 1)");
         }
@@ -184,20 +122,11 @@ public class CallLogQueryHandler extends NoNullCursorAsyncQueryHandler {
         if (callType > CALL_TYPE_ALL) {
             where.append(" AND (").append(Calls.TYPE).append(" = ?)");
             selectionArgs.add(Integer.toString(callType));
-        } else {
-            where.append(" AND NOT ");
-            where.append("(" + Calls.TYPE + " = " + Calls.VOICEMAIL_TYPE + ")");
         }
 
         if (newerThan > 0) {
             where.append(" AND (").append(Calls.DATE).append(" > ?)");
             selectionArgs.add(Long.toString(newerThan));
-        }
-
-        if (callType == Calls.VOICEMAIL_TYPE) {
-            VoicemailComponent.get(context)
-                    .getVoicemailClient()
-                    .appendOmtpVoicemailSelectionClause(context, where, selectionArgs);
         } else {
             // Filter out all Duo entries other than video calls
             where
@@ -286,10 +215,6 @@ public class CallLogQueryHandler extends NoNullCursorAsyncQueryHandler {
                 if (updateAdapterData(cursor)) {
                     cursor = null;
                 }
-            } else if (token == QUERY_VOICEMAIL_STATUS_TOKEN) {
-                updateVoicemailStatus(cursor);
-            } else if (token == QUERY_VOICEMAIL_UNREAD_COUNT_TOKEN) {
-                updateVoicemailUnreadCount(cursor);
             } else if (token == QUERY_MISSED_CALLS_UNREAD_COUNT_TOKEN) {
                 updateMissedCallsUnreadCount(cursor);
             } else {
@@ -327,20 +252,6 @@ public class CallLogQueryHandler extends NoNullCursorAsyncQueryHandler {
                 + Calls.MISSED_TYPE;
     }
 
-    private void updateVoicemailStatus(Cursor statusCursor) {
-        final Listener listener = this.listener.get();
-        if (listener != null) {
-            listener.onVoicemailStatusFetched(statusCursor);
-        }
-    }
-
-    private void updateVoicemailUnreadCount(Cursor statusCursor) {
-        final Listener listener = this.listener.get();
-        if (listener != null) {
-            listener.onVoicemailUnreadCountFetched(statusCursor);
-        }
-    }
-
     private void updateMissedCallsUnreadCount(Cursor statusCursor) {
         final Listener listener = this.listener.get();
         if (listener != null) {
@@ -352,16 +263,6 @@ public class CallLogQueryHandler extends NoNullCursorAsyncQueryHandler {
      * Listener to completion of various queries.
      */
     public interface Listener {
-
-        /**
-         * Called when {@link CallLogQueryHandler#fetchVoicemailStatus()} completes.
-         */
-        void onVoicemailStatusFetched(Cursor statusCursor);
-
-        /**
-         * Called when {@link CallLogQueryHandler#fetchVoicemailUnreadCount()} completes.
-         */
-        void onVoicemailUnreadCountFetched(Cursor cursor);
 
         /**
          * Called when {@link CallLogQueryHandler#fetchMissedCallsUnreadCount()} completes.

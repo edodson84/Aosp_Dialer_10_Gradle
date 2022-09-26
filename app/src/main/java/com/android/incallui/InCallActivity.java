@@ -18,7 +18,6 @@ package com.android.incallui;
 
 import android.app.ActivityManager;
 import android.app.ActivityManager.AppTask;
-import android.app.ActivityManager.TaskDescription;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.KeyguardManager;
@@ -26,21 +25,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.GradientDrawable.Orientation;
 import android.os.Bundle;
 import android.os.Trace;
-import androidx.annotation.ColorInt;
-import androidx.annotation.FloatRange;
-import androidx.annotation.IntDef;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.core.content.res.ResourcesCompat;
-import androidx.core.graphics.ColorUtils;
 import android.telecom.Call;
 import android.telecom.CallAudioState;
 import android.telecom.PhoneAccountHandle;
@@ -54,6 +40,15 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.CheckBox;
 import android.widget.Toast;
+
+import androidx.annotation.IntDef;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.android.contacts.common.widget.SelectPhoneAccountDialogFragment;
 import com.android.incallui.answer.bindings.AnswerBindings;
@@ -88,6 +83,7 @@ import com.android.incallui.video.protocol.VideoCallScreenDelegateFactory;
 import com.fissy.dialer.R;
 import com.fissy.dialer.animation.AnimUtils;
 import com.fissy.dialer.animation.AnimationListenerAdapter;
+import com.fissy.dialer.app.settings.ThemeOptionsSettingsFragment;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.common.concurrent.DialerExecutorComponent;
@@ -96,6 +92,7 @@ import com.fissy.dialer.common.concurrent.UiListener;
 import com.fissy.dialer.configprovider.ConfigProviderComponent;
 import com.fissy.dialer.logging.Logger;
 import com.fissy.dialer.logging.ScreenEvent;
+import com.fissy.dialer.main.impl.MainActivity;
 import com.fissy.dialer.metrics.Metrics;
 import com.fissy.dialer.metrics.MetricsComponent;
 import com.fissy.dialer.preferredsim.PreferredAccountRecorder;
@@ -233,8 +230,15 @@ public class InCallActivity extends TransactionSafeFragmentActivity
     @Override
     protected void onCreate(Bundle bundle) {
         Trace.beginSection("InCallActivity.onCreate");
-        super.onCreate(bundle);
+        ThemeOptionsSettingsFragment.ThemeButtonBehavior mThemeBehavior = ThemeOptionsSettingsFragment.getThemeButtonBehavior(MainActivity.themeprefs);
 
+        if (mThemeBehavior == ThemeOptionsSettingsFragment.ThemeButtonBehavior.DARK) {
+            getTheme().applyStyle(R.style.DialerDark, true);
+        }
+        if (mThemeBehavior == ThemeOptionsSettingsFragment.ThemeButtonBehavior.LIGHT) {
+            getTheme().applyStyle(R.style.DialerLight, true);
+        }
+        super.onCreate(bundle);
         preferredAccountWorkerResultListener =
                 DialerExecutorComponent.get(this)
                         .createUiListener(getFragmentManager(), "preferredAccountWorkerResultListener");
@@ -499,10 +503,6 @@ public class InCallActivity extends TransactionSafeFragmentActivity
         Trace.beginSection("InCallActivity.onResume");
         super.onResume();
 
-        if (!InCallPresenter.getInstance().isReadyForTearDown()) {
-            updateTaskDescription();
-        }
-
         // If there is a pending request to show or hide the dialpad, handle that now.
         if (showDialpadRequest != DIALPAD_REQUEST_NONE) {
             if (showDialpadRequest == DIALPAD_REQUEST_SHOW) {
@@ -648,6 +648,7 @@ public class InCallActivity extends TransactionSafeFragmentActivity
 
     @Override
     protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
         LogUtil.enterBlock("InCallActivity.onNewIntent");
 
         // If the screen is off, we need to make sure it gets turned on for incoming calls.
@@ -907,78 +908,6 @@ public class InCallActivity extends TransactionSafeFragmentActivity
             return null;
         }
         return (DialpadFragment) fragmentManager.findFragmentByTag(Tags.DIALPAD_FRAGMENT);
-    }
-
-    public void onForegroundCallChanged(DialerCall newForegroundCall) {
-        updateTaskDescription();
-
-        if (newForegroundCall == null || !didShowAnswerScreen) {
-            LogUtil.v("InCallActivity.onForegroundCallChanged", "resetting background color");
-            updateWindowBackgroundColor(0 /* progress */);
-        }
-    }
-
-    private void updateTaskDescription() {
-        int color =
-                getResources().getBoolean(R.bool.is_layout_landscape)
-                        ? ResourcesCompat.getColor(
-                        getResources(), R.color.statusbar_background_color, getTheme())
-                        : InCallPresenter.getInstance().getThemeColorManager().getSecondaryColor();
-        setTaskDescription(
-                new TaskDescription(
-                        getResources().getString(R.string.notification_ongoing_call), null /* icon */, color));
-    }
-
-    public void updateWindowBackgroundColor(@FloatRange(from = -1f, to = 1.0f) float progress) {
-        ThemeColorManager themeColorManager = InCallPresenter.getInstance().getThemeColorManager();
-        @ColorInt int top;
-        @ColorInt int middle;
-        @ColorInt int bottom;
-        @ColorInt int gray = 0x66000000;
-
-        if (isInMultiWindowMode()) {
-            top = themeColorManager.getBackgroundColorSolid();
-            middle = themeColorManager.getBackgroundColorSolid();
-            bottom = themeColorManager.getBackgroundColorSolid();
-        } else {
-            top = themeColorManager.getBackgroundColorTop();
-            middle = themeColorManager.getBackgroundColorMiddle();
-            bottom = themeColorManager.getBackgroundColorBottom();
-        }
-
-        if (progress < 0) {
-            float correctedProgress = Math.abs(progress);
-            top = ColorUtils.blendARGB(top, gray, correctedProgress);
-            middle = ColorUtils.blendARGB(middle, gray, correctedProgress);
-            bottom = ColorUtils.blendARGB(bottom, gray, correctedProgress);
-        }
-
-        boolean backgroundDirty = false;
-        if (backgroundDrawable == null) {
-            backgroundDrawableColors = new int[]{top, middle, bottom};
-            backgroundDrawable = new GradientDrawable(Orientation.TOP_BOTTOM, backgroundDrawableColors);
-            backgroundDirty = true;
-        } else {
-            if (backgroundDrawableColors[0] != top) {
-                backgroundDrawableColors[0] = top;
-                backgroundDirty = true;
-            }
-            if (backgroundDrawableColors[1] != middle) {
-                backgroundDrawableColors[1] = middle;
-                backgroundDirty = true;
-            }
-            if (backgroundDrawableColors[2] != bottom) {
-                backgroundDrawableColors[2] = bottom;
-                backgroundDirty = true;
-            }
-            if (backgroundDirty) {
-                backgroundDrawable.setColors(backgroundDrawableColors);
-            }
-        }
-
-        if (backgroundDirty) {
-            getWindow().setBackgroundDrawable(backgroundDrawable);
-        }
     }
 
     public boolean isVisible() {

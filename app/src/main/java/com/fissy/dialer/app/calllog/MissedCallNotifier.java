@@ -26,13 +26,6 @@ import android.graphics.drawable.Icon;
 import android.net.Uri;
 import android.provider.CallLog.Calls;
 import android.service.notification.StatusBarNotification;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
-import androidx.annotation.WorkerThread;
-import androidx.core.os.BuildCompat;
-import androidx.core.os.UserManagerCompat;
-import androidx.core.util.Pair;
 import android.telecom.PhoneAccount;
 import android.telecom.PhoneAccountHandle;
 import android.telecom.TelecomManager;
@@ -42,8 +35,17 @@ import android.text.TextDirectionHeuristics;
 import android.text.TextUtils;
 import android.util.ArraySet;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
+import androidx.annotation.WorkerThread;
+import androidx.core.os.BuildCompat;
+import androidx.core.os.UserManagerCompat;
+import androidx.core.util.Pair;
+
 import com.android.contacts.common.ContactsUtils;
 import com.fissy.dialer.R;
+import com.fissy.dialer.ThemeUtils;
 import com.fissy.dialer.app.MainComponent;
 import com.fissy.dialer.app.calllog.CallLogNotificationsQueryHelper.NewCall;
 import com.fissy.dialer.app.contactinfo.ContactPhotoLoader;
@@ -52,7 +54,6 @@ import com.fissy.dialer.callintent.CallIntentBuilder;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.common.concurrent.DialerExecutor.Worker;
-import com.fissy.dialer.compat.android.provider.VoicemailCompat;
 import com.fissy.dialer.duo.DuoComponent;
 import com.fissy.dialer.enrichedcall.FuzzyPhoneNumberMatcher;
 import com.fissy.dialer.notification.DialerNotificationManager;
@@ -63,7 +64,6 @@ import com.fissy.dialer.notification.missedcalls.MissedCallNotificationTags;
 import com.fissy.dialer.phonenumbercache.ContactInfo;
 import com.fissy.dialer.phonenumberutil.PhoneNumberHelper;
 import com.fissy.dialer.precall.PreCall;
-import com.fissy.dialer.theme.base.ThemeComponent;
 import com.fissy.dialer.util.DialerUtils;
 import com.fissy.dialer.util.IntentUtil;
 
@@ -169,8 +169,7 @@ public class MissedCallNotifier implements Worker<Pair<Integer, String>, Void> {
                             null,
                             null,
                             null,
-                            System.currentTimeMillis(),
-                            VoicemailCompat.TRANSCRIPTION_NOT_STARTED);
+                            System.currentTimeMillis());
 
             // TODO: look up caller ID that is not in contacts.
             ContactInfo contactInfo =
@@ -222,9 +221,7 @@ public class MissedCallNotifier implements Worker<Pair<Integer, String>, Void> {
                 .setGroupSummary(useCallList)
                 .setOnlyAlertOnce(useCallList)
                 .setPublicVersion(publicSummaryBuilder.build());
-        if (BuildCompat.isAtLeastO()) {
-            groupSummary.setChannelId(NotificationChannelId.MISSED_CALL);
-        }
+        groupSummary.setChannelId(NotificationChannelId.MISSED_CALL);
 
         Notification notification = groupSummary.build();
         configureLedOnNotification(notification);
@@ -398,10 +395,11 @@ public class MissedCallNotifier implements Worker<Pair<Integer, String>, Void> {
     }
 
     private Notification.Builder createNotificationBuilder() {
+
         return new Notification.Builder(context)
                 .setGroup(MissedCallConstants.GROUP_KEY)
                 .setSmallIcon(android.R.drawable.stat_notify_missed_call)
-                .setColor(ThemeComponent.get(context).theme().getColorPrimary())
+                .setColor(ThemeUtils.resolveColor(context, android.R.attr.colorAccent))
                 .setAutoCancel(true)
                 .setOnlyAlertOnce(true)
                 .setShowWhen(true)
@@ -428,7 +426,6 @@ public class MissedCallNotifier implements Worker<Pair<Integer, String>, Void> {
      */
     @WorkerThread
     public void callBackFromMissedCall(String number, Uri callUri) {
-        closeSystemDialogs(context);
         CallLogNotificationsQueryHelper.markSingleMissedCallInCallLogAsRead(context, callUri);
         MissedCallNotificationCanceller.cancelSingle(context, callUri);
         DialerUtils.startActivityWithErrorToast(
@@ -443,7 +440,6 @@ public class MissedCallNotifier implements Worker<Pair<Integer, String>, Void> {
      * Trigger an intent to send an sms from a missed call number.
      */
     public void sendSmsFromMissedCall(String number, Uri callUri) {
-        closeSystemDialogs(context);
         CallLogNotificationsQueryHelper.markSingleMissedCallInCallLogAsRead(context, callUri);
         MissedCallNotificationCanceller.cancelSingle(context, callUri);
         DialerUtils.startActivityWithErrorToast(
@@ -500,12 +496,5 @@ public class MissedCallNotifier implements Worker<Pair<Integer, String>, Void> {
     private void configureLedOnNotification(Notification notification) {
         notification.flags |= Notification.FLAG_SHOW_LIGHTS;
         notification.defaults |= Notification.DEFAULT_LIGHTS;
-    }
-
-    /**
-     * Closes open system dialogs and the notification shade.
-     */
-    private void closeSystemDialogs(Context context) {
-        context.sendBroadcast(new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
     }
 }

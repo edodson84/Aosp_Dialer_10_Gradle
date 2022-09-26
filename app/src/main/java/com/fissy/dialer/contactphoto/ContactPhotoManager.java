@@ -23,11 +23,12 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.net.Uri.Builder;
-import androidx.annotation.VisibleForTesting;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.QuickContactBadge;
+
+import androidx.annotation.VisibleForTesting;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.common.LogUtil;

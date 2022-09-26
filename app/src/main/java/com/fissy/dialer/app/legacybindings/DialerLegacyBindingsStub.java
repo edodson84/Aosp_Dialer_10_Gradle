@@ -17,13 +17,13 @@
 package com.fissy.dialer.app.legacybindings;
 
 import android.app.Activity;
-import androidx.annotation.NonNull;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
 
 import com.fissy.dialer.app.calllog.CallLogAdapter;
 import com.fissy.dialer.app.calllog.calllogcache.CallLogCache;
 import com.fissy.dialer.app.contactinfo.ContactInfoCache;
-import com.fissy.dialer.app.voicemail.VoicemailPlaybackPresenter;
 import com.fissy.dialer.blocking.FilteredNumberAsyncQueryHandler;
 
 /**
@@ -40,7 +40,6 @@ public class DialerLegacyBindingsStub implements DialerLegacyBindings {
             CallLogAdapter.OnActionModeStateChangedListener actionModeStateChangedListener,
             CallLogCache callLogCache,
             ContactInfoCache contactInfoCache,
-            VoicemailPlaybackPresenter voicemailPlaybackPresenter,
             @NonNull FilteredNumberAsyncQueryHandler filteredNumberAsyncQueryHandler,
             int activityType) {
         return new CallLogAdapter(
@@ -51,7 +50,6 @@ public class DialerLegacyBindingsStub implements DialerLegacyBindings {
                 actionModeStateChangedListener,
                 callLogCache,
                 contactInfoCache,
-                voicemailPlaybackPresenter,
                 filteredNumberAsyncQueryHandler,
                 activityType);
     }

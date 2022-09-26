@@ -21,8 +21,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Trace;
 import android.provider.CallLog;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.telecom.PhoneAccountHandle;
 import android.telephony.PhoneNumberUtils;
 import android.telephony.SubscriptionInfo;
@@ -30,6 +28,9 @@ import android.telephony.TelephonyManager;
 import android.text.BidiFormatter;
 import android.text.TextDirectionHeuristics;
 import android.text.TextUtils;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.common.Assert;

@@ -17,9 +17,10 @@
 package com.fissy.dialer.widget;
 
 import android.content.Context;
-import androidx.viewpager.widget.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+
+import androidx.viewpager.widget.ViewPager;
 
 /**
  * {@link ViewPager} useful for disabled swiping between pages.

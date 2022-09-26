@@ -73,6 +73,7 @@ public final class PhoneLookupInfoConsolidator {
     private final Cp2ContactInfo firstDefaultCp2Contact;
     @Nullable
     private final Cp2ContactInfo firstExtendedCp2Contact;
+
     public PhoneLookupInfoConsolidator(PhoneLookupInfo phoneLookupInfo) {
         this.phoneLookupInfo = phoneLookupInfo;
 

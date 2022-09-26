@@ -19,14 +19,15 @@ package com.android.contacts.common.util;
 import android.content.Context;
 import android.content.res.Resources;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.telephony.PhoneNumberUtils;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.TtsSpan;
 import android.util.Patterns;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.common.LogUtil;

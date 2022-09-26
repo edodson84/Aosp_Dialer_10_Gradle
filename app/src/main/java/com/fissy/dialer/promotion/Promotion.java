@@ -18,7 +18,6 @@ package com.fissy.dialer.promotion;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.IntDef;
-
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.lang.annotation.Retention;

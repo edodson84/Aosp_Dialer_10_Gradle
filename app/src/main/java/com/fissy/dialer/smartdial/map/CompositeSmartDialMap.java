@@ -17,6 +17,7 @@
 package com.fissy.dialer.smartdial.map;
 
 import android.content.Context;
+
 import androidx.annotation.VisibleForTesting;
 import androidx.collection.SimpleArrayMap;
 

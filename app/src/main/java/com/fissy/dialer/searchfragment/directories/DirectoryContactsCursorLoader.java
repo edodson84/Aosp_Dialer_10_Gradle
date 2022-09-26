@@ -23,6 +23,7 @@ import android.database.MatrixCursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 

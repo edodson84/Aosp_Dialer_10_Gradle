@@ -20,12 +20,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import androidx.annotation.Nullable;
-import com.google.android.material.snackbar.BaseTransientBottomBar.BaseCallback;
-import com.google.android.material.snackbar.Snackbar;
 import android.telephony.TelephonyManager;
 import android.view.View;
 import android.view.View.OnClickListener;
+
+import androidx.annotation.Nullable;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.common.Assert;
@@ -41,6 +40,8 @@ import com.fissy.dialer.performancereport.PerformanceReport;
 import com.fissy.dialer.storage.StorageComponent;
 import com.fissy.dialer.util.DialerUtils;
 import com.fissy.dialer.util.IntentUtil;
+import com.google.android.material.snackbar.BaseTransientBottomBar.BaseCallback;
+import com.google.android.material.snackbar.Snackbar;
 
 /**
  * Helper class to handle all post call actions.

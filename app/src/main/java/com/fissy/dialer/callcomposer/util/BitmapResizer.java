@@ -18,6 +18,7 @@ package com.fissy.dialer.callcomposer.util;
 
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
+
 import androidx.annotation.VisibleForTesting;
 
 import com.fissy.dialer.common.Assert;

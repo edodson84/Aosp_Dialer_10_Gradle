@@ -27,12 +27,13 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.preference.PreferenceManager;
+import android.telephony.TelephonyManager;
+import android.text.TextUtils;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.core.os.UserManagerCompat;
-import android.telephony.TelephonyManager;
-import android.text.TextUtils;
 
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;

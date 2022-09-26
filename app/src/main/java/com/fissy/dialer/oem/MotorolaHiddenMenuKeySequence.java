@@ -22,6 +22,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
+
 import androidx.annotation.VisibleForTesting;
 
 import com.fissy.dialer.R;

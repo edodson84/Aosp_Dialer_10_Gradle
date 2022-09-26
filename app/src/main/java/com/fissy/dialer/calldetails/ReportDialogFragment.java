@@ -22,12 +22,13 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.core.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.core.util.Pair;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.common.LogUtil;
@@ -39,7 +40,6 @@ import com.fissy.dialer.logging.Logger;
 import com.fissy.dialer.phonenumbercache.CachedNumberLookupService;
 import com.fissy.dialer.phonenumbercache.CachedNumberLookupService.CachedContactInfo;
 import com.fissy.dialer.phonenumbercache.PhoneNumberCache;
-import com.fissy.dialer.theme.base.ThemeComponent;
 
 /**
  * Dialog for reporting an inaccurate caller id information.
@@ -63,7 +63,7 @@ public class ReportDialogFragment extends DialogFragment {
     }
 
     private static void onShow(Context context, AlertDialog dialog) {
-        int buttonTextColor = ThemeComponent.get(context).theme().getColorPrimary();
+        int buttonTextColor = android.R.attr.colorPrimary;
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(buttonTextColor);
         dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(buttonTextColor);
     }

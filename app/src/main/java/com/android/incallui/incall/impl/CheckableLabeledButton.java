@@ -21,13 +21,9 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.graphics.PorterDuff.Mode;
 import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
-import androidx.annotation.ColorInt;
-import androidx.annotation.DrawableRes;
-import androidx.annotation.StringRes;
 import android.text.TextUtils.TruncateAt;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -37,7 +33,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.ColorInt;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.StringRes;
+
 import com.fissy.dialer.R;
+import com.fissy.dialer.ThemeUtils;
 
 /**
  * A button to show on the incall screen
@@ -72,10 +73,8 @@ public class CheckableLabeledButton extends LinearLayout implements Checkable {
         CharSequence labelText;
         boolean enabled;
 
-        backgroundMore =
-                getResources().getDrawable(R.drawable.incall_button_background_more, context.getTheme());
-        background =
-                getResources().getDrawable(R.drawable.incall_button_background, context.getTheme());
+        backgroundMore = getResources().getDrawable(R.drawable.incall_button_background_more, context.getTheme());
+        background = getResources().getDrawable(R.drawable.incall_button_background, context.getTheme());
 
         TypedArray typedArray =
                 context.obtainStyledAttributes(attrs, R.styleable.CheckableLabeledButton);
@@ -98,12 +97,9 @@ public class CheckableLabeledButton extends LinearLayout implements Checkable {
         iconView.setLayoutParams(iconParams);
         iconView.setPadding(iconPadding, iconPadding, iconPadding, iconPadding);
         iconView.setImageDrawable(icon);
-        iconView.setImageTintMode(Mode.SRC_IN);
-        iconView.setImageTintList(
-                getResources().getColorStateList(R.color.incall_button_icon, context.getTheme()));
+        iconView.setImageTintList(ColorStateList.valueOf(ThemeUtils.resolveColor(getContext(), R.attr.colorPrimary)));
 
-        iconView.setBackground(
-                getResources().getDrawable(R.drawable.incall_button_background, context.getTheme()));
+        iconView.setBackground(getResources().getDrawable(R.drawable.incall_button_background, context.getTheme()));
         iconView.setDuplicateParentStateEnabled(true);
         iconView.setElevation(getResources().getDimension(R.dimen.incall_button_elevation));
         iconView.setStateListAnimator(

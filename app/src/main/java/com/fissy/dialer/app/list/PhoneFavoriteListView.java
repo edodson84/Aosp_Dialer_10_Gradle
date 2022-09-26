@@ -21,6 +21,12 @@ import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.DragEvent;
@@ -45,8 +51,8 @@ public class PhoneFavoriteListView extends GridView
     private static final int DRAG_SCROLL_PX_UNIT = 25;
     private static final float DRAG_SHADOW_ALPHA = 0.7f;
     /**
-     * {@link #topScrollBound} and {@link bottomScrollBound} will be offseted to the top / bottom by
-     * {@link #getHeight} * {@link #BOUND_GAP_RATIO} pixels.
+     * {@link #topScrollBound} andwill be offseted to the top / bottom by
+     * {@link #getHeight} * #BOUND_GAP_RATIO} pixels.
      */
     private static final float BOUND_GAP_RATIO = 0.2f;
     final int[] locationOnScreen = new int[2];
@@ -106,6 +112,19 @@ public class PhoneFavoriteListView extends GridView
         animationDuration = context.getResources().getInteger(R.integer.fade_duration);
         touchSlop = ViewConfiguration.get(context).getScaledPagingTouchSlop();
         dragDropController.addOnDragDropListener(this);
+    }
+
+    public static Bitmap getRoundedCornerBitmap(Bitmap bitmap, int roundPixelSize) {
+        Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(output);
+        final Paint paint = new Paint();
+        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+        final RectF rectF = new RectF(rect);
+        paint.setAntiAlias(true);
+        canvas.drawRoundRect(rectF, (float) roundPixelSize, (float) roundPixelSize, paint);
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(bitmap, rect, rect, paint);
+        return output;
     }
 
     @Override
@@ -242,9 +261,9 @@ public class PhoneFavoriteListView extends GridView
         dragShadowTop -= locationOnScreen[1];
 
         dragShadowOverlay.setImageBitmap(dragShadowBitmap);
+
         dragShadowOverlay.setVisibility(VISIBLE);
         dragShadowOverlay.setAlpha(DRAG_SHADOW_ALPHA);
-
         dragShadowOverlay.setX(dragShadowLeft);
         dragShadowOverlay.setY(dragShadowTop);
     }
@@ -287,6 +306,7 @@ public class PhoneFavoriteListView extends GridView
         if (cache != null) {
             try {
                 bitmap = cache.copy(Bitmap.Config.ARGB_8888, false);
+                bitmap = getRoundedCornerBitmap(bitmap, 50);
             } catch (final OutOfMemoryError e) {
                 LogUtil.w(LOG_TAG, "Failed to copy bitmap from Drawing cache", e);
                 bitmap = null;

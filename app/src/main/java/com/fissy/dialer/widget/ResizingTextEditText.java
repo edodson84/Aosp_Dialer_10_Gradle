@@ -19,7 +19,6 @@ package com.fissy.dialer.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
-import android.widget.EditText;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.util.ViewUtil;
@@ -27,7 +26,7 @@ import com.fissy.dialer.util.ViewUtil;
 /**
  * EditText which resizes dynamically with respect to text length.
  */
-public class ResizingTextEditText extends EditText {
+public class ResizingTextEditText extends androidx.appcompat.widget.AppCompatEditText {
 
     private final int originalTextSize;
     private final int minTextSize;

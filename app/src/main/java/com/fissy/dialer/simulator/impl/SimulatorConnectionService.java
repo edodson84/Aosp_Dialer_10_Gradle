@@ -18,7 +18,6 @@ package com.fissy.dialer.simulator.impl;
 
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
 import android.telecom.Connection;
 import android.telecom.ConnectionRequest;
 import android.telecom.ConnectionService;
@@ -27,6 +26,8 @@ import android.telecom.PhoneAccountHandle;
 import android.telecom.TelecomManager;
 import android.telephony.TelephonyManager;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;

@@ -20,8 +20,9 @@ import android.content.Context;
 import android.hardware.display.DisplayManager;
 import android.hardware.display.DisplayManager.DisplayListener;
 import android.os.PowerManager;
-import androidx.annotation.Nullable;
 import android.view.Display;
+
+import androidx.annotation.Nullable;
 
 import com.fissy.dialer.common.LogUtil;
 

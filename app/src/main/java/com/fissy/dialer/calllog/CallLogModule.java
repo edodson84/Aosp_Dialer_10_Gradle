@@ -21,7 +21,6 @@ import com.fissy.dialer.calllog.datasources.CallLogDataSource;
 import com.fissy.dialer.calllog.datasources.DataSources;
 import com.fissy.dialer.calllog.datasources.phonelookup.PhoneLookupDataSource;
 import com.fissy.dialer.calllog.datasources.systemcalllog.SystemCallLogDataSource;
-import com.fissy.dialer.calllog.datasources.voicemail.VoicemailDataSource;
 import com.fissy.dialer.inject.DialerVariant;
 import com.fissy.dialer.inject.InstallIn;
 import com.google.common.collect.ImmutableList;
@@ -39,11 +38,10 @@ public abstract class CallLogModule {
     @Provides
     static DataSources provideCallLogDataSources(
             SystemCallLogDataSource systemCallLogDataSource,
-            PhoneLookupDataSource phoneLookupDataSource,
-            VoicemailDataSource voicemailDataSource) {
+            PhoneLookupDataSource phoneLookupDataSource) {
         // System call log must be first, see getDataSourcesExcludingSystemCallLog below.
         ImmutableList<CallLogDataSource> allDataSources =
-                ImmutableList.of(systemCallLogDataSource, phoneLookupDataSource, voicemailDataSource);
+                ImmutableList.of(systemCallLogDataSource, phoneLookupDataSource);
         return new DataSources() {
             @Override
             public SystemCallLogDataSource getSystemCallLogDataSource() {

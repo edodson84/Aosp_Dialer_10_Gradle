@@ -16,8 +16,9 @@
 
 package com.fissy.dialer.activecalls;
 
-import androidx.annotation.Nullable;
 import android.telecom.PhoneAccountHandle;
+
+import androidx.annotation.Nullable;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Optional;

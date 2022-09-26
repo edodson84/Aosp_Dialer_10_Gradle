@@ -18,7 +18,6 @@ package com.android.incallui.contactgrid;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import androidx.annotation.Nullable;
 import android.telephony.PhoneNumberUtils;
 import android.text.BidiFormatter;
 import android.text.Spannable;
@@ -27,6 +26,8 @@ import android.text.Spanned;
 import android.text.TextDirectionHeuristics;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
+
+import androidx.annotation.Nullable;
 
 import com.android.incallui.call.state.DialerCallState;
 import com.android.incallui.incall.protocol.PrimaryCallState;

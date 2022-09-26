@@ -16,11 +16,12 @@
 
 package com.fissy.dialer.simulator;
 
+import android.view.ActionProvider;
+
 import androidx.annotation.IntDef;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringDef;
 import androidx.appcompat.app.AppCompatActivity;
-import android.view.ActionProvider;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -124,6 +125,7 @@ public interface Simulator {
          */
         @Nullable
         public final String data2;
+
         public Event(@Type int type) {
             this(type, null, null);
         }

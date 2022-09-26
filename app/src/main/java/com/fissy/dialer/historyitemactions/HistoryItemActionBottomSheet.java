@@ -19,10 +19,6 @@ package com.fissy.dialer.historyitemactions;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,11 +31,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.fissy.dialer.R;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.compat.android.support.design.bottomsheet.BottomSheetStateCompat;
-import com.fissy.dialer.theme.base.ThemeComponent;
 import com.fissy.dialer.widget.ContactPhotoView;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.common.collect.ImmutableSet;
 
 import java.util.List;
@@ -235,7 +235,7 @@ public class HistoryItemActionBottomSheet extends BottomSheetDialog implements O
         if (module.tintDrawable()) {
             ((ImageView) moduleView.findViewById(R.id.module_image))
                     .setImageTintList(
-                            ColorStateList.valueOf(ThemeComponent.get(getContext()).theme().getColorIcon()));
+                            ColorStateList.valueOf(android.R.attr.colorPrimary));
         }
         moduleView.setOnClickListener(this);
         moduleView.setTag(module);

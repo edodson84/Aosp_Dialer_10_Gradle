@@ -17,13 +17,14 @@
 package com.fissy.dialer.calldetails;
 
 import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import androidx.annotation.CallSuper;
 import androidx.annotation.MainThread;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.calldetails.CallDetailsEntries.CallDetailsEntry;
@@ -38,7 +39,6 @@ import com.fissy.dialer.callrecord.CallRecordingDataStore;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.duo.DuoComponent;
 import com.fissy.dialer.glidephotomanager.PhotoInfo;
-import com.fissy.dialer.callrecord.CallRecordingDataStore;
 
 /**
  * Contains common logic shared between {@link OldCallDetailsAdapter} and {@link

@@ -30,9 +30,6 @@ message PhotoInfo {
   // Whether a business icon should be displayed.
   optional bool is_business = 6;
 
-  // Whether a voicemail icon should be displayed.
-  optional bool is_voicemail = 7;
-
   // Whether a "blocked" icon should be displayed.
   optional bool is_blocked = 8;
 

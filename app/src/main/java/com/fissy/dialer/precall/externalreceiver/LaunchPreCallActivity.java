@@ -20,10 +20,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
 import android.telecom.PhoneAccountHandle;
 import android.telecom.TelecomManager;
 import android.telecom.VideoProfile;
+
+import androidx.annotation.Nullable;
 
 import com.fissy.dialer.callintent.CallInitiationType.Type;
 import com.fissy.dialer.callintent.CallIntentBuilder;
@@ -43,8 +44,6 @@ import com.google.common.collect.ImmutableList;
  * @see CallIntentBuilder
  */
 public class LaunchPreCallActivity extends Activity {
-
-    public static final String ACTION_LAUNCH_PRE_CALL = "com.fissy.dialer.LAUNCH_PRE_CALL";
 
     public static final String EXTRA_PHONE_ACCOUNT_HANDLE = "phone_account_handle";
 

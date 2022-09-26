@@ -19,6 +19,7 @@ package com.fissy.dialer.persistentlog;
 import android.content.Context;
 import android.os.Handler;
 import android.os.HandlerThread;
+
 import androidx.annotation.AnyThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;

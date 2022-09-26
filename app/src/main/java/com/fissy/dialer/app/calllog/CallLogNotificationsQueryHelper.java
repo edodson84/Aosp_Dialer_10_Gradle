@@ -26,19 +26,19 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.CallLog.Calls;
 import android.provider.VoicemailContract.Voicemails;
+import android.telephony.PhoneNumberUtils;
+import android.text.TextUtils;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.annotation.WorkerThread;
 import androidx.core.os.UserManagerCompat;
-import android.telephony.PhoneNumberUtils;
-import android.text.TextUtils;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.calllogutils.PhoneNumberDisplayUtil;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.common.database.Selection;
-import com.fissy.dialer.compat.android.provider.VoicemailCompat;
 import com.fissy.dialer.configprovider.ConfigProviderComponent;
 import com.fissy.dialer.location.GeoUtil;
 import com.fissy.dialer.phonenumbercache.ContactInfo;
@@ -290,7 +290,6 @@ public class CallLogNotificationsQueryHelper {
         public final String transcription;
         public final String countryIso;
         public final long dateMs;
-        public final int transcriptionState;
 
         public NewCall(
                 Uri callsUri,
@@ -301,8 +300,7 @@ public class CallLogNotificationsQueryHelper {
                 String accountId,
                 String transcription,
                 String countryIso,
-                long dateMs,
-                int transcriptionState) {
+                long dateMs) {
             this.callsUri = callsUri;
             this.voicemailUri = voicemailUri;
             this.number = number;
@@ -312,7 +310,6 @@ public class CallLogNotificationsQueryHelper {
             this.transcription = transcription;
             this.countryIso = countryIso;
             this.dateMs = dateMs;
-            this.transcriptionState = transcriptionState;
         }
     }
 
@@ -344,12 +341,10 @@ public class CallLogNotificationsQueryHelper {
         private static final int TRANSCRIPTION_COLUMN_INDEX = 6;
         private static final int COUNTRY_ISO_COLUMN_INDEX = 7;
         private static final int DATE_COLUMN_INDEX = 8;
-        private static final int TRANSCRIPTION_STATE_COLUMN_INDEX = 9;
 
         static {
             List<String> list = new ArrayList<>();
             list.addAll(Arrays.asList(PROJECTION));
-            list.add(VoicemailCompat.TRANSCRIPTION_STATE);
             PROJECTION_O = list.toArray(new String[list.size()]);
         }
 
@@ -476,10 +471,7 @@ public class CallLogNotificationsQueryHelper {
                     cursor.getString(PHONE_ACCOUNT_ID_COLUMN_INDEX),
                     cursor.getString(TRANSCRIPTION_COLUMN_INDEX),
                     cursor.getString(COUNTRY_ISO_COLUMN_INDEX),
-                    cursor.getLong(DATE_COLUMN_INDEX),
-                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
-                            ? cursor.getInt(TRANSCRIPTION_STATE_COLUMN_INDEX)
-                            : VoicemailCompat.TRANSCRIPTION_NOT_STARTED);
+                    cursor.getLong(DATE_COLUMN_INDEX));
         }
     }
 }

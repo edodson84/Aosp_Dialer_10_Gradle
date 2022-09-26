@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 /*
  * Copyright (C) 2019 The LineageOS Project
  *
@@ -29,7 +28,9 @@
          Penal Code, as of 2014:
            https://sherloc.unodc.org/res/cld/document/codi_penal_andorra_as_of_2014_html/Andorra_codi_penal_as_of_2014.pdf
     -->
-    <country iso="ad" allowed="false" />
+    <country
+        allowed="false"
+        iso="ad" />
 
     <!-- Enable recording for Albania:
          Relevant laws and/or legal precedents:
@@ -41,7 +42,9 @@
          Penal Code: (nonencrypted link)
            http://rai-see.org/wp-content/uploads/2015/08/Criminal-Code-11-06-2015-EN.pdf
     -->
-    <country iso="al" allowed="true" />
+    <country
+        allowed="true"
+        iso="al" />
 
     <!-- Enable recording for Armenia:
          The Armenian Criminal Code discusses the legality and punishment of call recordings, when
@@ -57,7 +60,9 @@
            https://fip.am/803
            https://fip.am/4500
     -->
-    <country iso="am" allowed="true" />
+    <country
+        allowed="true"
+        iso="am" />
 
     <!-- Enable recording for Argentina:
          Argentina follows the continental law system. If a law does not exist, which defines
@@ -71,7 +76,9 @@
          Example of usage of call recordings as legal evidence:
            https://www.scribd.com/document/326647534/H-P-C-F-s-recurso-de-casacion
     -->
-    <country iso="ar" allowed="true" />
+    <country
+        allowed="true"
+        iso="ar" />
 
     <!-- Enable recording for American Samoa:
          Federal Law 18 USC § 2511(2)(d) defines the recording of a call as legal when one party to
@@ -82,7 +89,9 @@
          U.S. Code: Title 18 - Crimes and Criminal Procedure:
            https://www.law.cornell.edu/uscode/text/18/2511
     -->
-    <country iso="as" allowed="true" />
+    <country
+        allowed="true"
+        iso="as" />
 
     <!-- Enable recording for Austria
          According to Article 93 (3) of Austrian Communications Law, known as TKG 2003
@@ -94,7 +103,9 @@
            https://www.jusline.at/gesetz/tkg/paragraf/93
            https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20002849
     -->
-    <country iso="at" allowed="true" />
+    <country
+        allowed="true"
+        iso="at" />
 
     <!-- Disable recording for Australia:
          Australian Capital Territory:
@@ -193,7 +204,9 @@
            in a more clear way or enough evidence is shown to substantiate how the courts interpret
            them when prosecuting private citizens, Australia shall not have call recording enabled.
     -->
-    <country iso="au" allowed="false" />
+    <country
+        allowed="false"
+        iso="au" />
 
     <!-- Enable recording for Bosnia and Herzegovina:
          Republika Srpska:
@@ -223,7 +236,9 @@
            different entities have over 15 police forces, each with its own jurisdiction.
            https://www.legislationline.org/documents/section/criminal-codes/country/40/Bosnia%20and%20Herzegovina/show
     -->
-    <country iso="ba" allowed="true" />
+    <country
+        allowed="true"
+        iso="ba" />
 
     <!-- Enable recording for Bangladesh:
            Based on the Evidence Act of 1872, audio recordings may be admissible as a form of
@@ -240,7 +255,9 @@
            Evidence Act of 1872:
              https://acc.portal.gov.bd/sites/default/files/files/acc.portal.gov.bd/law/7e753733_a368_471e_aef9_b4525cb5082c/The_Evidence_Act,_1872_(Act_No._I_of_1872).pdf
     -->
-    <country iso="bd" allowed="true" />
+    <country
+        allowed="true"
+        iso="bd" />
 
     <!-- Enable recording for Belgium:
          As stated in the official response below, Belgian law does not consider the recording of
@@ -255,7 +272,9 @@
          Official Response by Belgian Minister (QRVA 50 157, pages 20199-20202, 24/02/2003):
            https://www.lachambre.be/QRVA/pdf/50/50K0157.pdf
     -->
-    <country iso="be" allowed="true" />
+    <country
+        allowed="true"
+        iso="be" />
 
     <!-- Enable recording for Bulgaria:
          Article 32(2) of the Bulgarian Constitution states that it is an inviolable right for
@@ -277,7 +296,9 @@
          Example of lack of state prosecution:
            https://goo.gl/HQPUup
     -->
-    <country iso="bg" allowed="true" />
+    <country
+        allowed="true"
+        iso="bg" />
 
     <!-- Enable recording for Brazil:
          Call recording is not a criminal offense when it the recording is made by one of the two
@@ -297,7 +318,9 @@
            https://meusitejuridico.com.br/2018/04/02/stj-e-licita-gravacao-de-conversa-feita-pelo-destinatario-de-solicitacao-de-vantagem-indevida
            https://moisesandrade.jusbrasil.com.br/artigos/121944095/constitucionalidade-do-uso-da-gravacao-clandestina-como-meio-de-prova
     -->
-    <country iso="br" allowed="true" />
+    <country
+        allowed="true"
+        iso="br" />
 
     <!-- Enable recording for Belarus:
          Article 28 of the Constitution of Belarus covers the right to privacy. Article 179 of the
@@ -315,7 +338,9 @@
          Belarusian Criminal Code:
            https://etalonline.by/?type=text&regnum=HK9900275#load_text_none_1_
     -->
-    <country iso="by" allowed="true" />
+    <country
+        allowed="true"
+        iso="by" />
 
     <!-- Enable recording for Canada:
          Any intended recipient of a communication is entitled to record it, based on Section 184(2)
@@ -333,7 +358,9 @@
            https://lambertavocatinc.com/avocat-montreal/enregistrer-conversation-legal/
            https://www.avocat.qc.ca/affaires/iitelephone.htm
     -->
-    <country iso="ca" allowed="true" />
+    <country
+        allowed="true"
+        iso="ca" />
 
     <!-- Disable recording for Switzerland:
          According to Article 179 of the Swiss Criminal Code of 21 December 1937, it is a criminal
@@ -343,7 +370,9 @@
          Criminal Code:
            https://www.admin.ch/opc/en/classified-compilation/19370083/index.html#a179ter
     -->
-    <country iso="ch" allowed="false" />
+    <country
+        allowed="false"
+        iso="ch" />
 
     <!-- Enable recording for Chile:
          The Chilean law is considered a type of civil law, hence judges base their decisions on
@@ -357,7 +386,9 @@
          Article on one-party consent:
            https://radio.uchile.cl/2018/04/22/grabacion-es-aceptada-como-prueba-en-juicio-por-practicas-antisindicales/
     -->
-    <country iso="cl" allowed="true" />
+    <country
+        allowed="true"
+        iso="cl" />
 
     <!-- Enable recording for China:
          No clear definition exists on the matter of call recordings being made by a private
@@ -371,7 +402,9 @@
          Supreme People's Court Provisions on Evidence in Civil Procedures: (nonencrypted link)
            http://en.pkulaw.cn/display.aspx?cgid=38083&lib=law
     -->
-    <country iso="cn" allowed="true" />
+    <country
+        allowed="true"
+        iso="cn" />
 
     <!-- Enable recording for Costa Rica:
          One may record one's own calls, as long as they are calls between said person and only one
@@ -387,7 +420,9 @@
          Article:
            https://www.laprensalibre.cr/Noticias/detalle/75929/ojo-conversaciones-grabadas-pueden-usarse-como-prueba-en-juicio
     -->
-    <country iso="cr" allowed="true" />
+    <country
+        allowed="true"
+        iso="cr" />
 
     <!-- Enable recording for Cyprus:
          The Cypriot Penal Code does not explicitly cover the act of wiretapping or recording one's
@@ -400,7 +435,9 @@
          Penal Code: (nonencrypted link)
            http://www.cylaw.org/nomoi/enop/non-ind/0_154/index.html
     -->
-    <country iso="cy" allowed="true" />
+    <country
+        allowed="true"
+        iso="cy" />
 
     <!-- Enable recording for Czech Republic:
          Case Law File Number 21 502/2000 of the Supreme Court specifies that even when evidence is
@@ -411,7 +448,9 @@
          Constitutional Court Finding:
            https://nalus.usoud.cz/Search/GetText.aspx?sz=1-191-05_2
     -->
-    <country iso="cz" allowed="true" />
+    <country
+        allowed="true"
+        iso="cz" />
 
     <!-- Disable recording for Germany:
          According to Section 201 of the German Criminal Code - Violation of the privacy of the
@@ -444,7 +483,9 @@
          Explanation of lawful use of a recording in a legal dispute:
            https://www.anwalt.de/rechtstipps/gespraechsmitschnitte-als-beweismittel-ungeeignet_057458.html
     -->
-    <country iso="de" allowed="false" />
+    <country
+        allowed="false"
+        iso="de" />
 
     <!-- Enable recording for Denmark, Faroe Islands and Greeenland:
          Chapter 27, Article 263(3) of the Criminal Code of Denmark denotes that a person is liable
@@ -457,7 +498,9 @@
          Criminal Code:
            https://www.retsinformation.dk/Forms/r0710.aspx?id=164192#Kap27
     -->
-    <country iso="dk,fo,gl" allowed="true" />
+    <country
+        allowed="true"
+        iso="dk,fo,gl" />
 
     <!-- Enable recording for Estonia:
          Recording your calls for personal use is not a criminal offense. Sharing said calls with a
@@ -473,7 +516,9 @@
          Legal article:
            https://digi.geenius.ee/rubriik/uudis/millistel-juhtudel-tohib-eestis-telefonikone-salvestada-ja-selle-sisu-avaldada/
     -->
-    <country iso="ee" allowed="true" />
+    <country
+        allowed="true"
+        iso="ee" />
 
     <!-- Enable recording for Spain:
          Based on the decision of the Spanish Constitutional Tribunal of November the 29th, 1984, it
@@ -493,7 +538,9 @@
            https://www.fonvirtual.com/blog/la-grabacion-de-llamadas/
            https://www.legalisconsultores.es/2014/04/es-legal-realizar-grabaciones-su-aportacion-en-juicios/
     -->
-    <country iso="es" allowed="true" />
+    <country
+        allowed="true"
+        iso="es" />
 
     <!-- Enable recording for Finland:
          As a private citizen, one may record any call they participate in. There is no requirement
@@ -505,7 +552,9 @@
          Bureau of Data Ombudsman:
          https://web.archive.org/web/20180517050133/http://www.tietosuoja.fi/sv/index/useinkysyttya/puheluidennauhoittaminen.html
     -->
-    <country iso="fi" allowed="true" />
+    <country
+        allowed="true"
+        iso="fi" />
 
     <!-- Enable recording for France, Saint Barthélemy, French Guayana, Guadeloupe, Saint Martin,
                               Martinique, New Caledonia, French Polynesia, Saint Pierre & Miquelon,
@@ -528,7 +577,9 @@
          Legal article on recording in the workplace:
            https://www.cnil.fr/fr/lecoute-et-lenregistrement-des-appels-sur-le-lieu-de-travail
     -->
-    <country iso="fr,bl,gf,gp,mf,mq,nc,pf,pm,re,wf,yt" allowed="true" />
+    <country
+        allowed="true"
+        iso="fr,bl,gf,gp,mf,mq,nc,pf,pm,re,wf,yt" />
 
     <!-- Enable recording for United Kingdom:
          Recording one's own calls is not a criminal offence and is not prohibited. As long as the
@@ -544,7 +595,9 @@
            https://www.computertel.co.uk/article?ref=Call-Recording-Law-in-the-UK-2018-edition
            https://www.dma-law.co.uk/is-it-illegal-to-record-conversations/
     -->
-    <country iso="gb" allowed="true" />
+    <country
+        allowed="true"
+        iso="gb" />
 
     <!-- Enable recording for Georgia:
          The Constitution of Georgia, Chapter Two - Fundamental Human Rights, Article 15(2) states
@@ -567,7 +620,9 @@
          Criminal Code of Georgia:
            https://matsne.gov.ge/en/document/view/16426?publication=187&scroll=62067
     -->
-    <country iso="ge" allowed="true" />
+    <country
+        allowed="true"
+        iso="ge" />
 
     <!-- Enable recording for Greece:
          Section 2 of Article 370A of the Greek Penal Code bans it, subarticle 4 offers exceptions
@@ -581,7 +636,9 @@
          Legal discussion:
            https://uk.practicallaw.thomsonreuters.com/w-010-1738
     -->
-    <country iso="gr" allowed="true" />
+    <country
+        allowed="true"
+        iso="gr" />
 
     <!-- Enable recording for Croatia:
          Article 143 of the Croatian Criminal Code, Paragraph 1 notes that the recording of another
@@ -598,7 +655,9 @@
          Croatian Criminal Code:
            https://www.legislationline.org/documents/section/criminal-codes/country/37/Croatia/show
     -->
-    <country iso="hr" allowed="true" />
+    <country
+        allowed="true"
+        iso="hr" />
 
     <!-- Enable recording for Hungary:
          Sections 413 and 418 define the Breach of Trade and/or Business Secrecy as a criminal
@@ -616,7 +675,9 @@
          Hungarian Criminal Code:
            https://www.legislationline.org/documents/section/criminal-codes/country/25/Hungary/show
     -->
-    <country iso="hu" allowed="true" />
+    <country
+        allowed="true"
+        iso="hu" />
 
     <!-- Disable recording for Indonesia:
          Based on Article 26 of both Law Number 11 of 2008 and its revision, Law Number 19 of 2016,
@@ -632,7 +693,9 @@
          Law 19 of 2016:
            https://jdih.kominfo.go.id/produk_hukum/view/id/555/t/undangundang+nomor+19+tahun+2016+tanggal+25+november+2016
     -->
-    <country iso="id" allowed="false" />
+    <country
+        allowed="false"
+        iso="id" />
 
     <!-- Enable recording for Ireland:
          The Irish Constitution does not specifically state a right to privacy. Subsection (6) of
@@ -652,7 +715,9 @@
            https://www.mhc.ie/latest/insights/big-brother-is-watching-but-is-he-listening-too
            https://www.irishtimes.com/news/crime-and-law/q-a-what-are-the-legal-implications-1.1740070
     -->
-    <country iso="ie" allowed="true" />
+    <country
+        allowed="true"
+        iso="ie" />
 
     <!-- Enable recording for Israel and Palestine:
          Israeli law specifies that call recording is illegal and punishable when neither party in
@@ -675,8 +740,12 @@
            https://www.globes.co.il/news/article.aspx?did=1001066185
            https://www.ynet.co.il/articles/0,7340,L-3043583,00.html
     -->
-    <country iso="il" allowed="true" />
-    <country iso="ps" allowed="false" />
+    <country
+        allowed="true"
+        iso="il" />
+    <country
+        allowed="false"
+        iso="ps" />
 
     <!--Enable recording for India:
          No clear definition exists on the matter of call recordings being made by one side.
@@ -687,7 +756,9 @@
          Legal discussion:
            https://copyright.lawmatters.in/2012/02/recording-telephonic-conversations.html
     -->
-    <country iso="in" allowed="true" />
+    <country
+        allowed="true"
+        iso="in" />
 
     <!-- Disable recording for Iceland:
          According to the Electronic Communications Act, No. 81, recording one's own telephone
@@ -701,7 +772,9 @@
          Electronic Communications Act:
            https://www.government.is/Publications/Legislation/Lex/?newsid=86c9a6a9-fab5-11e7-9423-005056bc4d74
     -->
-    <country iso="is" allowed="false" />
+    <country
+        allowed="false"
+        iso="is" />
 
     <!-- Enable recording for Iran:
          Based on Article 25 of the Iranian Constitution, recording one's own calls, as a private
@@ -724,7 +797,9 @@
          Legal article (in Persian):
            https://www.irna.ir/news/83268974/%D8%B6%D8%A8%D8%B7-%D9%85%D9%83%D8%A7%D9%84%D9%85%D9%87-%D8%AA%D9%84%D9%81%D9%86%DB%8C-%D8%AC%D8%B1%D9%85-%D9%86%DB%8C%D8%B3%D8%AA
     -->
-    <country iso="ir" allowed="true" />
+    <country
+        allowed="true"
+        iso="ir" />
 
     <!-- Enable recording for Italy and Vatican City State:
          It is not illegal to record a conversation, as parties to calls automatically accept the
@@ -742,7 +817,9 @@
            https://www.altalex.com/index.php?idnot=53369
            https://web.archive.org/web/20161011100301/http://notizie.tiscali.it/socialnews/articoli/polimeni/13230/registrare-di-nascosto-per-la-cassazione-e-legale/
     -->
-    <country iso="it,va" allowed="true" />
+    <country
+        allowed="true"
+        iso="it,va" />
 
     <!-- Enable recording for Japan:
          Recording one's own calls is neither a criminal offense, nor illegal. Wiretapping and
@@ -775,7 +852,9 @@
          Legal discussion:
            https://blogs.yahoo.co.jp/unyieldingspirit2007/24529523.html
     -->
-    <country iso="jp" allowed="true" />
+    <country
+        allowed="true"
+        iso="jp" />
 
     <!-- Enable recording for South Korea:
          According to Article 3(1) of the Protection of Communications Secrets Act, it is forbidden
@@ -795,7 +874,9 @@
          Protection of Communications Secrets Act:
            https://elaw.klri.re.kr/kor_service/lawView.do?hseq=31731&lang=ENG
     -->
-    <country iso="kr" allowed="true" />
+    <country
+        allowed="true"
+        iso="kr" />
 
     <!-- Enable recording for Liechtenstein:
          Recording a call between an organization and an individual is illegal, when done without
@@ -813,7 +894,9 @@
          Constitution:
            https://www.regierung.li/media/medienarchiv/101_01_01_2012_en.pdf?t=2.
     -->
-    <country iso="li" allowed="true" />
+    <country
+        allowed="true"
+        iso="li" />
 
     <!-- Enable recording for Sri Lanka:
          Part IV/59 of the Sri Lankan Telecommunications Act defines the penalty for eavesdropping
@@ -829,7 +912,9 @@
          Article: (nonencrypted link)
            http://www.dailymirror.lk/article/PTL-tampered-with-phone-recording-system-ASG-135574.html
     -->
-    <country iso="lk" allowed="true" />
+    <country
+        allowed="true"
+        iso="lk" />
 
     <!-- Enable recording for Lithuania:
          Article 166 of the Lithuanian Criminal Code defines that violations of a person's
@@ -848,7 +933,9 @@
          Lithuanian Law on Electronic Communications:
             https://e-seimas.lrs.lt/portal/legalActPrint/lt?jfwid=-wd7z7kkgy&documentId=05cd4e020f0a11e7b6c9f69dc4ecf19f&category=TAD
     -->
-    <country iso="lt" allowed="true" />
+    <country
+        allowed="true"
+        iso="lt" />
 
     <!-- Enable recording for Luxembourg:
          The Luxembourgish Penal Code does not specifically cover the right to privacy and its
@@ -860,7 +947,9 @@
          Penal Code: (nonencrypted link)
            http://legilux.public.lu/eli/etat/leg/code/penal/20181101
     -->
-    <country iso="lu" allowed="true" />
+    <country
+        allowed="true"
+        iso="lu" />
 
     <!-- Enable recording for Latvia
          There is no clear definition of call recording by itself within the Criminal Law of Latvia.
@@ -882,7 +971,9 @@
          Legal consultation:
            https://lvportals.lv/e-konsultacijas/4460-sarunas-drikst-ierakstit-2014.
     -->
-    <country iso="lv" allowed="true" />
+    <country
+        allowed="true"
+        iso="lv" />
 
     <!-- Enable recording for Morocco:
          Call recording is not punishable as one side of a two-party conversation. Recordings are
@@ -896,7 +987,9 @@
          Moroccan Criminal Law:
            https://www.h24info.ma/maroc/la-loi-sur-la-protection-des-donnees-personnelles-entre-en-vigueur-le-13-septembre/
     -->
-    <country iso="ma" allowed="true" />
+    <country
+        allowed="true"
+        iso="ma" />
 
     <!-- Disable recording for Monaco:
          According to the Penal Code of Monaco, Article 308-2, a person may be punished with a
@@ -910,7 +1003,9 @@
          Penal Code:
            https://www.legimonaco.mc/305/legismclois.nsf/ViewCode!OpenView&Start=1&Count=300&RestrictToCategory=CODE%20P%C3%89NAL
     -->
-    <country iso="mc" allowed="false" />
+    <country
+        allowed="false"
+        iso="mc" />
 
     <!-- Enable recording for Moldova:
          Article 30 of the Constitution of Moldova ensures the privacy of correspondence. No
@@ -930,7 +1025,9 @@
          Legal discussion:
            https://jsa.md/2017/02/06/inregistrarea-convorbirilor-telefonice-cit-de-legala-este/
     -->
-    <country iso="md" allowed="true" />
+    <country
+        allowed="true"
+        iso="md" />
 
     <!-- Enable recording for Montenegro:
          Article 173 of the Criminal Code of Montenegro marks call recording as legal if the content
@@ -941,7 +1038,9 @@
          Criminal Code of Montenegro:
            https://www.pravda.gov.me/ResourceManager/FileDownload.aspx?rid=256001&rType=2&file=Krivi%C4%8Dni%20zakonik%20Crne%20Gore.pdf
     -->
-    <country iso="me" allowed="true" />
+    <country
+        allowed="true"
+        iso="me" />
 
     <!-- Enable recording for North Macedonia:
          As stated in the Macedonian Penal Code, if the recording is made available to a third party
@@ -952,7 +1051,9 @@
          North Macedonian Penal Code:
            https://www.wipo.int/edocs/lexdocs/laws/mk/mk/mk018mk.pdf
     -->
-    <country iso="mk" allowed="true" />
+    <country
+        allowed="true"
+        iso="mk" />
 
     <!-- Enable recording for Malta:
          Relevant laws and/or legal precedents:
@@ -974,7 +1075,9 @@
          Media and Defamation Act: (nonencrypted link)
            http://justiceservices.gov.mt/DownloadDocument.aspx?app=lp&itemid=29045&l=1
     -->
-    <country iso="mt" allowed="true" />
+    <country
+        allowed="true"
+        iso="mt" />
 
     <!-- Enable recording for Netherlands, Bonaire, Sint Eustatius, Saba, Sint Maarten, Curaçao,
                               Aruba:
@@ -987,7 +1090,9 @@
          Legal discussion:
            https://blog.wetrecht.nl/telefoongesprekken-opnemen-als-bewijs-kan-dat
     -->
-    <country iso="nl,bq,sx,cw,aw" allowed="true" />
+    <country
+        allowed="true"
+        iso="nl,bq,sx,cw,aw" />
 
     <!-- Enable recording for Norway:
          As a private citizen, one may record any call that they participate in. There is no
@@ -1004,7 +1109,9 @@
          Legal article:
            https://www.datatilsynet.no/regelverk-og-verktoy/veiledere/lydopptak/
     -->
-    <country iso="no" allowed="true" />
+    <country
+        allowed="true"
+        iso="no" />
 
     <!-- Enable recording for New Zealand:
          According to the Crimes Act of 1961, Public Act 216B, Articles 1 and 2(a), anyone is liable
@@ -1018,7 +1125,9 @@
          Crimes Act of 1961, Part 9A, Crimes against personal privacy: (nonencrypted link)
            http://www.legislation.govt.nz/act/public/1961/0043/latest/DLM327382.html#DLM329802
     -->
-    <country iso="nz" allowed="true" />
+    <country
+        allowed="true"
+        iso="nz" />
 
     <!-- Enable recording for Peru:
          The Peruvian Constitution states that people own their own voice and images. If said images
@@ -1038,7 +1147,9 @@
          Legality of voice recordings and images:
            https://commons.m.wikimedia.org/wiki/Special:MyLanguage/Commons:Country_specific_consent_requirements#Peru
     -->
-    <country iso="pe" allowed="true" />
+    <country
+        allowed="true"
+        iso="pe" />
 
     <!-- Enable recording for Poland:
          Article 267 of the Polish Penal Code defines call recording as legal for private citizens,
@@ -1051,7 +1162,9 @@
            https://www.alfatronik.com.pl/info/nagrywanie-rozmow-legalne/
            https://bezprawnik.pl/legalnosc-nagrywania-rozmowy/
     -->
-    <country iso="pl" allowed="true" />
+    <country
+        allowed="true"
+        iso="pl" />
 
     <!-- Disable recording for Puerto Rico:
          Title Thirty-three of the Penal Code of 2004, Subtitle 5, Special Provisions, Part I:
@@ -1066,7 +1179,9 @@
          33 L.P.R.A. § 4809. Recording of communications by a participant:
            https://bit.ly/2UqbrRC
     -->
-    <country iso="pr" allowed="false" />
+    <country
+        allowed="false"
+        iso="pr" />
 
     <!-- Disable recording for Portugal:
          Privacy is a fundamental right in Portuguese law, as it is defined in Articles 26(1) and 34
@@ -1108,7 +1223,9 @@
            http://www.dgsi.pt/jtrc.nsf/c3fb530030ea1c61802568d9005cd5bb/c5bb36d9a0470bdd80257b400048f9f2?OpenDocument
            http://www.dgsi.pt/jtrg.nsf/86c25a698e4e7cb7802579ec004d3832/ff947b8a3fda778780257c0000478b5a
     -->
-    <country iso="pt" allowed="false" />
+    <country
+        allowed="false"
+        iso="pt" />
 
     <!-- Enable recording for Romania:
          The Telecommunications Act (506/2004) states that the recording of a conversation by a
@@ -1128,7 +1245,9 @@
          Legal article:
            https://www.dsclex.ro/coduri/cciv2.htm
     -->
-    <country iso="ro" allowed="true" />
+    <country
+        allowed="true"
+        iso="ro" />
 
     <!-- Enable recording for Serbia:
          Article 143 of the Serbian Penal Code covers unauthorized wiretapping and recordings. While
@@ -1139,7 +1258,9 @@
          Serbian Penal Code:
            https://www.paragraf.rs/propisi/krivicni_zakonik.html
     -->
-    <country iso="rs" allowed="true" />
+    <country
+        allowed="true"
+        iso="rs" />
 
     <!-- Enable recording for Russia:
          Recording a phone call when not one of the two parties participating in said call is
@@ -1163,7 +1284,9 @@
          Civil Procedure Code of 2002, N 138-FZ:
            https://www.consultant.ru/document/cons_doc_LAW_39570/b48406042a309ee368f395fb6f3be1d43c7cbfc2/
     -->
-    <country iso="ru" allowed="true" />
+    <country
+        allowed="true"
+        iso="ru" />
 
     <!-- Enable recording for Sweden:
          According to the Swedish Penal Code (Brottsbalken), Chapter 4, 8–9 §§, it is illegal to
@@ -1176,7 +1299,9 @@
            https://lagen.nu/begrepp/Olovlig_avlyssning
            http://www.riksdagen.se/sv/dokument-lagar/dokument/svensk-forfattningssamling/brottsbalk-1962700_sfs-1962-700
     -->
-    <country iso="se" allowed="true" />
+    <country
+        allowed="true"
+        iso="se" />
 
     <!-- Enable recording for Singapore:
          Singaporean law does not recognize privacy as a right that can be infringed upon. A party
@@ -1196,7 +1321,9 @@
          Copyright Act, Revised Edition 2006:
            https://sso.agc.gov.sg/Act/CA1987
     -->
-    <country iso="sg" allowed="true" />
+    <country
+        allowed="true"
+        iso="sg" />
 
     <!-- Enable recording for Slovenia:
          Article 148 of the Slovenian Criminal Code covers the unlawful eavesdropping and sound
@@ -1214,7 +1341,9 @@
          Criminal Code:
            https://www.wipo.int/edocs/lexdocs/laws/en/si/si046en.pdf
     -->
-    <country iso="si" allowed="true" />
+    <country
+        allowed="true"
+        iso="si" />
 
     <!-- Enable recording for Slovakia:
          Sections 376 and 377 of the Slovakian Criminal Code cover breach of confidentiality of
@@ -1229,7 +1358,9 @@
          Slovakian Criminal Code:
            https://www.legislationline.org/documents/section/criminal-codes/country/4/Slovakia/show
     -->
-    <country iso="sk" allowed="true" />
+    <country
+        allowed="true"
+        iso="sk" />
 
     <!-- Enable recording for Turkey:
          Article 132 of Law 5237, the Turkish Penal Code, sets the punishment for violating the
@@ -1250,7 +1381,9 @@
          Turkish Penal Code:
            https://www.wipo.int/edocs/lexdocs/laws/en/tr/tr171en.pdf
     -->
-    <country iso="tr" allowed="true" />
+    <country
+        allowed="true"
+        iso="tr" />
 
     <!-- Enable recording for Ukraine:
          Sharing a call recording without consent is a punishable offense, and can not be used as
@@ -1273,7 +1406,9 @@
          Legal discussion:
            https://sklaw.com.ua/ua/news/345_pro_naslidki_zapisu_telefonnoi_rozmovi_rozpovila_advokat_ao_spenser
     -->
-    <country iso="ua" allowed="true" />
+    <country
+        allowed="true"
+        iso="ua" />
 
     <!-- Disable recording for United States of America, Guam, the Northern Mariana Islands, the
                                United States Virgin Islands, Puerto Rico:
@@ -1293,7 +1428,9 @@
          Two-party consent state laws:
            https://recordinglaw.com/party-two-party-consent-states/
     -->
-    <country iso="us,vi,gu" allowed="true" />
+    <country
+        allowed="true"
+        iso="us,vi,gu" />
 
     <!-- Enable recording for Kosovo:
          Article 36 of the Constitution of Kosovo defines the Right to Privacy. Article 202 of the
@@ -1323,7 +1460,9 @@
          Criminal Code of Kosovo:
            https://assembly-kosova.org/common/docs/ligjet/Criminal%20Code.pdf
     -->
-    <country iso="xk" allowed="true" />
+    <country
+        allowed="true"
+        iso="xk" />
 
     <!-- Enable recording for South Africa:
          Under the Regulation of Interception of Communications and Provision of
@@ -1336,6 +1475,8 @@
          Regulation of Interception of Communications Act of 2003:
            https://www.gov.za/sites/default/files/gcis_document/201409/a70-02.pdf
     -->
-    <country iso="za" allowed="true" />
+    <country
+        allowed="true"
+        iso="za" />
 
 </call-record-allowed-flags>

@@ -20,11 +20,12 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
-import androidx.annotation.Nullable;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewConfiguration;
+
+import androidx.annotation.Nullable;
 
 import com.android.incallui.answer.impl.utils.FlingAnimationUtils;
 import com.android.incallui.answer.impl.utils.Interpolators;

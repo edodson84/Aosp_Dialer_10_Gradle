@@ -26,9 +26,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build.VERSION_CODES;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.os.BuildCompat;
 import android.telecom.Call;
 import android.telecom.PhoneAccount;
 import android.telecom.VideoProfile;
@@ -36,6 +33,10 @@ import android.text.BidiFormatter;
 import android.text.TextDirectionHeuristics;
 import android.text.TextUtils;
 import android.util.ArrayMap;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.os.BuildCompat;
 
 import com.android.contacts.common.ContactsUtils;
 import com.android.contacts.common.compat.CallCompat;
@@ -45,13 +46,13 @@ import com.android.incallui.call.DialerCallDelegate;
 import com.android.incallui.call.ExternalCallList;
 import com.android.incallui.latencyreport.LatencyReport;
 import com.fissy.dialer.R;
+import com.fissy.dialer.ThemeUtils;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.contactphoto.BitmapUtil;
 import com.fissy.dialer.contacts.ContactsComponent;
 import com.fissy.dialer.notification.DialerNotificationManager;
 import com.fissy.dialer.notification.NotificationChannelId;
 import com.fissy.dialer.telecom.TelecomCallUtil;
-import com.fissy.dialer.theme.base.ThemeComponent;
 
 import java.util.Map;
 
@@ -265,7 +266,7 @@ public class ExternalCallNotifier implements ExternalCallList.ExternalCallListen
         builder.setSmallIcon(R.drawable.quantum_ic_call_white_24);
         builder.setContentTitle(info.getContentTitle());
         builder.setLargeIcon(info.getLargeIcon());
-        builder.setColor(ThemeComponent.get(context).theme().getColorPrimary());
+        builder.setColor(ThemeUtils.resolveColor(context, android.R.attr.colorAccent));
         builder.addPerson(info.getPersonReference());
         if (BuildCompat.isAtLeastO()) {
             builder.setChannelId(NotificationChannelId.DEFAULT);
@@ -301,10 +302,8 @@ public class ExternalCallNotifier implements ExternalCallList.ExternalCallListen
          */
         Notification.Builder publicBuilder = new Notification.Builder(context);
         publicBuilder.setSmallIcon(R.drawable.quantum_ic_call_white_24);
-        publicBuilder.setColor(ThemeComponent.get(context).theme().getColorPrimary());
-        if (BuildCompat.isAtLeastO()) {
-            publicBuilder.setChannelId(NotificationChannelId.DEFAULT);
-        }
+        publicBuilder.setColor(ThemeUtils.resolveColor(context, android.R.attr.colorAccent));
+        publicBuilder.setChannelId(NotificationChannelId.DEFAULT);
 
         builder.setPublicVersion(publicBuilder.build());
         Notification notification = builder.build();

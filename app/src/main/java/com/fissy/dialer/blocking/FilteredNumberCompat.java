@@ -25,10 +25,11 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.provider.BlockedNumberContract;
 import android.provider.BlockedNumberContract.BlockedNumbers;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
 import android.telecom.TelecomManager;
 import android.telephony.PhoneNumberUtils;
+
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.configprovider.ConfigProviderComponent;
@@ -50,7 +51,6 @@ import java.util.Objects;
  * referencing columns from either contract class in situations where both blocking solutions may be
  * used.
  */
-@Deprecated
 public class FilteredNumberCompat {
 
     @VisibleForTesting

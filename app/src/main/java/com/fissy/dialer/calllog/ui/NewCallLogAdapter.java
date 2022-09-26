@@ -17,12 +17,13 @@ package com.fissy.dialer.calllog.ui;
 
 import android.app.Activity;
 import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
+
 import androidx.annotation.IntDef;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
-import android.view.LayoutInflater;
-import android.view.ViewGroup;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.calllog.model.CoalescedRow;

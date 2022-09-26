@@ -25,7 +25,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
-import com.google.android.material.snackbar.Snackbar;
 import android.telephony.PhoneNumberUtils;
 import android.text.TextUtils;
 import android.view.View;
@@ -37,7 +36,7 @@ import com.fissy.dialer.blocking.FilteredNumberAsyncQueryHandler.OnBlockNumberLi
 import com.fissy.dialer.blocking.FilteredNumberAsyncQueryHandler.OnUnblockNumberListener;
 import com.fissy.dialer.logging.InteractionEvent;
 import com.fissy.dialer.logging.Logger;
-import com.fissy.dialer.voicemailstatus.VisualVoicemailEnabledChecker;
+import com.google.android.material.snackbar.Snackbar;
 
 /**
  * Fragment for confirming and enacting blocking/unblocking a number. Also invokes snackbar
@@ -57,7 +56,6 @@ public class BlockNumberDialogFragment extends DialogFragment {
     private String countryIso;
     private FilteredNumberAsyncQueryHandler handler;
     private View parentView;
-    private VisualVoicemailEnabledChecker voicemailEnabledChecker;
     private Callback callback;
 
     public static BlockNumberDialogFragment show(
@@ -122,7 +120,6 @@ public class BlockNumberDialogFragment extends DialogFragment {
         }
 
         handler = new FilteredNumberAsyncQueryHandler(getContext());
-        voicemailEnabledChecker = new VisualVoicemailEnabledChecker(getActivity(), null);
         // Choose not to update VoicemailEnabledChecker, as checks should already been done in
         // all current use cases.
         parentView = getActivity().findViewById(getArguments().getInt(ARG_PARENT_VIEW_ID));
@@ -144,8 +141,6 @@ public class BlockNumberDialogFragment extends DialogFragment {
             okText = getString(R.string.block_number_ok);
             if (FilteredNumberCompat.useNewFiltering(getContext())) {
                 message = getString(R.string.block_number_confirmation_message_new_filtering);
-            } else if (voicemailEnabledChecker.isVisualVoicemailEnabled()) {
-                message = getString(R.string.block_number_confirmation_message_vvm);
             } else {
                 message = getString(R.string.block_number_confirmation_message_no_vvm);
             }

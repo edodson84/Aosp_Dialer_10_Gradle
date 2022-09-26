@@ -17,6 +17,7 @@
 package com.fissy.dialer.preferredsim.suggestion;
 
 import android.content.Context;
+
 import androidx.annotation.WorkerThread;
 
 import com.fissy.dialer.common.Assert;

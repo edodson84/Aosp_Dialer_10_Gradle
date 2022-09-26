@@ -38,9 +38,6 @@ import android.provider.ContactsContract.CommonDataKinds.SipAddress;
 import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.Data;
 import android.provider.ContactsContract.RawContacts;
-import androidx.annotation.IntDef;
-import androidx.annotation.VisibleForTesting;
-import androidx.core.app.ActivityCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +45,10 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+
+import androidx.annotation.IntDef;
+import androidx.annotation.VisibleForTesting;
+import androidx.core.app.ActivityCompat;
 
 import com.android.contacts.common.Collapser;
 import com.android.contacts.common.Collapser.Collapsible;

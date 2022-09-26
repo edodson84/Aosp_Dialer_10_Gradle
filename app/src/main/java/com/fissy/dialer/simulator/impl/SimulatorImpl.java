@@ -16,8 +16,9 @@
 
 package com.fissy.dialer.simulator.impl;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.ActionProvider;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.fissy.dialer.buildtype.BuildType;
 import com.fissy.dialer.buildtype.BuildType.Type;

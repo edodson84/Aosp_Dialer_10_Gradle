@@ -27,13 +27,14 @@ import android.provider.CallLog;
 import android.provider.CallLog.Calls;
 import android.provider.VoicemailContract;
 import android.provider.VoicemailContract.Voicemails;
+import android.telephony.PhoneNumberUtils;
+import android.text.TextUtils;
+import android.util.ArraySet;
+
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.annotation.VisibleForTesting;
 import androidx.annotation.WorkerThread;
-import android.telephony.PhoneNumberUtils;
-import android.text.TextUtils;
-import android.util.ArraySet;
 
 import com.fissy.dialer.DialerPhoneNumber;
 import com.fissy.dialer.calllog.database.AnnotatedCallLogDatabaseHelper;
@@ -44,7 +45,6 @@ import com.fissy.dialer.calllog.observer.MarkDirtyObserver;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.common.concurrent.Annotations.BackgroundExecutor;
-import com.fissy.dialer.compat.android.provider.VoicemailCompat;
 import com.fissy.dialer.duo.Duo;
 import com.fissy.dialer.inject.ApplicationContext;
 import com.fissy.dialer.phonenumberproto.DialerPhoneNumberUtil;
@@ -100,7 +100,6 @@ public class SystemCallLogDataSource implements CallLogDataSource {
 
     static {
         List<String> projectionList = new ArrayList<>(Arrays.asList(PROJECTION_PRE_O));
-        projectionList.add(VoicemailCompat.TRANSCRIPTION_STATE);
         PROJECTION_O_AND_LATER = projectionList.toArray(new String[projectionList.size()]);
     }
 
@@ -472,12 +471,8 @@ public class SystemCallLogDataSource implements CallLogDataSource {
                 contentValues.put(AnnotatedCallLog.FEATURES, features);
                 contentValues.put(AnnotatedCallLog.DURATION, duration);
                 contentValues.put(AnnotatedCallLog.DATA_USAGE, dataUsage);
-                contentValues.put(AnnotatedCallLog.TRANSCRIPTION, transcription);
-                contentValues.put(AnnotatedCallLog.VOICEMAIL_URI, voicemailUri);
 
                 contentValues.put(AnnotatedCallLog.CALL_MAPPING_ID, String.valueOf(date));
-
-                setTranscriptionState(cursor, contentValues);
 
                 if (existingAnnotatedCallLogIds.contains(id)) {
                     mutations.update(id, contentValues);
@@ -506,14 +501,6 @@ public class SystemCallLogDataSource implements CallLogDataSource {
                 && ((features & Calls.FEATURES_VIDEO) != Calls.FEATURES_VIDEO);
     }
 
-    private void setTranscriptionState(Cursor cursor, ContentValues contentValues) {
-        if (VERSION.SDK_INT >= VERSION_CODES.O) {
-            int transcriptionStateColumn =
-                    cursor.getColumnIndexOrThrow(VoicemailCompat.TRANSCRIPTION_STATE);
-            int transcriptionState = cursor.getInt(transcriptionStateColumn);
-            contentValues.put(VoicemailCompat.TRANSCRIPTION_STATE, transcriptionState);
-        }
-    }
 
     private String[] getProjection() {
         if (VERSION.SDK_INT >= VERSION_CODES.O) {

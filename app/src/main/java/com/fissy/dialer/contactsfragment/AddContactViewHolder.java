@@ -17,9 +17,10 @@
 package com.fissy.dialer.contactsfragment;
 
 import android.content.Context;
-import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import android.view.View;
 import android.view.View.OnClickListener;
+
+import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.util.DialerUtils;

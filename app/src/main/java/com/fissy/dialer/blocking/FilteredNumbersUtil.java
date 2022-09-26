@@ -24,17 +24,19 @@ import android.os.AsyncTask;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.Contacts;
 import android.provider.Settings;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
-import androidx.core.os.BuildCompat;
-import androidx.core.os.UserManagerCompat;
 import android.telephony.PhoneNumberUtils;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
+import androidx.core.os.BuildCompat;
+import androidx.core.os.UserManagerCompat;
+
 import com.fissy.dialer.R;
 import com.fissy.dialer.blocking.FilteredNumberAsyncQueryHandler.OnHasBlockedNumbersListener;
 import com.fissy.dialer.common.LogUtil;
+import com.fissy.dialer.database.FilteredNumberContract;
 import com.fissy.dialer.logging.InteractionEvent;
 import com.fissy.dialer.logging.Logger;
 import com.fissy.dialer.notification.DialerNotificationManager;
@@ -323,6 +325,42 @@ public class FilteredNumbersUtil {
             return thresholdMs > 0 ? thresholdMs : RECENT_EMERGENCY_CALL_THRESHOLD_MS;
         } else {
             return RECENT_EMERGENCY_CALL_THRESHOLD_MS;
+        }
+    }
+
+    public static boolean shouldBlockVoicemail(
+            Context context, String number, String countryIso, long voicemailDateMs) {
+        final String normalizedNumber = PhoneNumberUtils.formatNumberToE164(number, countryIso);
+        if (TextUtils.isEmpty(normalizedNumber)) {
+            return false;
+        }
+
+        if (hasRecentEmergencyCall(context)) {
+            return false;
+        }
+
+        final Cursor cursor = context.getContentResolver().query(
+                FilteredNumberContract.FilteredNumber.CONTENT_URI,
+                new String[]{
+                        FilteredNumberContract.FilteredNumberColumns.CREATION_TIME
+                },
+                FilteredNumberContract.FilteredNumberColumns.NORMALIZED_NUMBER + "=?",
+                new String[]{normalizedNumber},
+                null);
+        if (cursor == null) {
+            return false;
+        }
+        try {
+            /*
+             * Block if number is found and it was added before this voicemail was received.
+             * The VVM's date is reported with precision to the minute, even though its
+             * magnitude is in milliseconds, so we perform the comparison in minutes.
+             */
+            return cursor.moveToFirst() &&
+                    TimeUnit.MINUTES.convert(voicemailDateMs, TimeUnit.MILLISECONDS) >=
+                            TimeUnit.MINUTES.convert(cursor.getLong(0), TimeUnit.MILLISECONDS);
+        } finally {
+            cursor.close();
         }
     }
 

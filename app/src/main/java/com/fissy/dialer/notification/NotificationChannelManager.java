@@ -16,17 +16,14 @@
 
 package com.fissy.dialer.notification;
 
-import android.annotation.TargetApi;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.media.AudioAttributes;
-import android.os.Build.VERSION_CODES;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.os.BuildCompat;
-import android.telecom.PhoneAccountHandle;
 import android.util.ArraySet;
+
+import androidx.annotation.NonNull;
+import androidx.core.os.BuildCompat;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.common.Assert;
@@ -37,7 +34,6 @@ import java.util.Set;
 /**
  * Creates all notification channels for Dialer.
  */
-@TargetApi(VERSION_CODES.O)
 public final class NotificationChannelManager {
 
     private NotificationChannelManager() {
@@ -92,15 +88,6 @@ public final class NotificationChannelManager {
         createOngoingCallChannel(context);
         createMissedCallChannel(context);
         createDefaultChannel(context);
-        VoicemailChannelUtils.createAllChannels(context);
-    }
-
-    @NonNull
-    public static String getVoicemailChannelId(
-            @NonNull Context context, @Nullable PhoneAccountHandle handle) {
-        Assert.checkArgument(BuildCompat.isAtLeastO());
-        Assert.isNotNull(context);
-        return VoicemailChannelUtils.getChannelId(context, handle);
     }
 
     private static Set<String> getAllExistingChannelIds(@NonNull Context context) {
@@ -118,7 +105,6 @@ public final class NotificationChannelManager {
         result.add(NotificationChannelId.ONGOING_CALL);
         result.add(NotificationChannelId.MISSED_CALL);
         result.add(NotificationChannelId.DEFAULT);
-        result.addAll(VoicemailChannelUtils.getAllChannelIds(context));
         return result;
     }
 
@@ -127,7 +113,7 @@ public final class NotificationChannelManager {
                 new NotificationChannel(
                         NotificationChannelId.INCOMING_CALL,
                         context.getText(R.string.notification_channel_incoming_call),
-                        NotificationManager.IMPORTANCE_MAX);
+                        NotificationManager.IMPORTANCE_HIGH);
         channel.setShowBadge(false);
         channel.enableLights(true);
         channel.enableVibration(false);

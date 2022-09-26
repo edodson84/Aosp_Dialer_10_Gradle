@@ -17,6 +17,7 @@
 package com.fissy.dialer.calllog;
 
 import android.content.SharedPreferences;
+
 import androidx.annotation.AnyThread;
 import androidx.annotation.VisibleForTesting;
 

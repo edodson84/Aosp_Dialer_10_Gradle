@@ -18,8 +18,9 @@ package com.fissy.dialer.calllogutils;
 
 import android.content.Context;
 import android.provider.CallLog.Calls;
-import androidx.annotation.IntDef;
 import android.text.TextUtils;
+
+import androidx.annotation.IntDef;
 
 import com.fissy.dialer.duo.DuoComponent;
 

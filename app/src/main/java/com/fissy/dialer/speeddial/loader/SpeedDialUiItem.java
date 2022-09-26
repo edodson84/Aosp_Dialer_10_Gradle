@@ -22,9 +22,10 @@ import android.os.Trace;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.Data;
-import androidx.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.ArraySet;
+
+import androidx.annotation.Nullable;
 
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.glidephotomanager.PhotoInfo;

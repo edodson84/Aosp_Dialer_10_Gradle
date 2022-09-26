@@ -21,10 +21,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
-import androidx.annotation.Nullable;
-import androidx.core.os.BuildCompat;
 import android.telecom.PhoneAccountHandle;
 import android.telephony.TelephonyManager;
+
+import androidx.annotation.Nullable;
+import androidx.core.os.BuildCompat;
 
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.telecom.TelecomUtil;

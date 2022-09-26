@@ -19,11 +19,10 @@ package com.android.incallui;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build.VERSION_CODES;
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import android.telecom.CallAudioState;
 import android.telecom.VideoProfile;
+
+import androidx.annotation.NonNull;
 
 import com.android.incallui.call.CallList;
 import com.android.incallui.call.DialerCall;
@@ -67,7 +66,6 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
     public static final String ACTION_ANSWER_SPEAKEASY_CALL =
             "com.android.incallui.ACTION_ANSWER_SPEAKEASY_CALL";
 
-    @RequiresApi(VERSION_CODES.N_MR1)
     public static final String ACTION_PULL_EXTERNAL_CALL =
             "com.android.incallui.ACTION_PULL_EXTERNAL_CALL";
 

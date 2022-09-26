@@ -26,11 +26,12 @@ import android.hardware.camera2.CameraManager;
 import android.hardware.camera2.CameraMetadata;
 import android.hardware.camera2.CaptureRequest;
 import android.hardware.camera2.params.StreamConfigurationMap;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.telecom.VideoProfile.CameraCapabilities;
 import android.util.Size;
 import android.view.Surface;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;

@@ -18,6 +18,7 @@ package com.fissy.dialer.calllog.observer;
 
 import android.database.ContentObserver;
 import android.net.Uri;
+
 import androidx.annotation.MainThread;
 import androidx.annotation.VisibleForTesting;
 

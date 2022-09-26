@@ -13,8 +13,7 @@
         android:id="@id/disambig_option_image"
         android:layout_width="24.0dip"
         android:layout_height="24.0dip"
-        android:layout_gravity="center_vertical"
-        android:tint="?colorIcon" />
+        android:layout_gravity="center_vertical" />
 
     <TextView
         android:id="@id/disambig_option_text"

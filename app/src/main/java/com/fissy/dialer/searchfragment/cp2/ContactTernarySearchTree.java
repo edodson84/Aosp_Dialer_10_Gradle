@@ -16,8 +16,9 @@
 
 package com.fissy.dialer.searchfragment.cp2;
 
-import androidx.collection.ArraySet;
 import android.text.TextUtils;
+
+import androidx.collection.ArraySet;
 
 import java.util.Set;
 

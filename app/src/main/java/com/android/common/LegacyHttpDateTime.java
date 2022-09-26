@@ -49,18 +49,18 @@ final class LegacyHttpDateTime {
      * Wdy, DD Mon YYYY HH:MM:SS
      * Wdy Mon (SP)D HH:MM:SS YYYY
      * Wdy Mon DD HH:MM:SS YYYY GMT
-     * 
+     *
      * HH can be H if the first digit is zero.
-     * 
+     *
      * Mon can be the full name of the month.
      */
     private static final String HTTP_DATE_RFC_REGEXP =
             "([0-9]{1,2})[- ]([A-Za-z]{3,9})[- ]([0-9]{2,4})[ ]"
-            + "([0-9]{1,2}:[0-9][0-9]:[0-9][0-9])";
+                    + "([0-9]{1,2}:[0-9][0-9]:[0-9][0-9])";
 
     private static final String HTTP_DATE_ANSIC_REGEXP =
             "[ ]([A-Za-z]{3,9})[ ]+([0-9]{1,2})[ ]"
-            + "([0-9]{1,2}:[0-9][0-9]:[0-9][0-9])[ ]([0-9]{2,4})";
+                    + "([0-9]{1,2}:[0-9][0-9]:[0-9][0-9])[ ]([0-9]{2,4})";
 
     /**
      * The compiled version of the HTTP-date regular expressions.
@@ -69,18 +69,6 @@ final class LegacyHttpDateTime {
             Pattern.compile(HTTP_DATE_RFC_REGEXP);
     private static final Pattern HTTP_DATE_ANSIC_PATTERN =
             Pattern.compile(HTTP_DATE_ANSIC_REGEXP);
-
-    private static class TimeOfDay {
-        TimeOfDay(int h, int m, int s) {
-            this.hour = h;
-            this.minute = m;
-            this.second = s;
-        }
-        
-        int hour;
-        int minute;
-        int second;
-    }
 
     public static long parse(String timeString)
             throws IllegalArgumentException {
@@ -194,12 +182,12 @@ final class LegacyHttpDateTime {
                     + (yearString.charAt(2) - '0');
             return year + 1900;
         } else if (yearString.length() == 4) {
-             return (yearString.charAt(0) - '0') * 1000
+            return (yearString.charAt(0) - '0') * 1000
                     + (yearString.charAt(1) - '0') * 100
                     + (yearString.charAt(2) - '0') * 10
                     + (yearString.charAt(3) - '0');
         } else {
-             return 1970;
+            return 1970;
         }
     }
 
@@ -211,15 +199,26 @@ final class LegacyHttpDateTime {
             hour = hour * 10 + (timeString.charAt(i++) - '0');
         // Skip ':'
         i++;
-        
+
         int minute = (timeString.charAt(i++) - '0') * 10
-                    + (timeString.charAt(i++) - '0');
+                + (timeString.charAt(i++) - '0');
         // Skip ':'
         i++;
-        
-        int second = (timeString.charAt(i++) - '0') * 10
-                  + (timeString.charAt(i++) - '0');
 
-        return new TimeOfDay(hour, minute, second);        
+        int second = (timeString.charAt(i++) - '0') * 10
+                + (timeString.charAt(i++) - '0');
+
+        return new TimeOfDay(hour, minute, second);
+    }
+
+    private static class TimeOfDay {
+        int hour;
+        int minute;
+        int second;
+        TimeOfDay(int h, int m, int s) {
+            this.hour = h;
+            this.minute = m;
+            this.second = s;
+        }
     }
 }

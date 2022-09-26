@@ -25,7 +25,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.fissy.dialer.R;
-import com.fissy.dialer.theme.base.ThemeComponent;
 
 public class ViewPagerTabStrip extends LinearLayout {
 
@@ -44,13 +43,11 @@ public class ViewPagerTabStrip extends LinearLayout {
         final Resources res = context.getResources();
 
         mSelectedUnderlineThickness = res.getDimensionPixelSize(R.dimen.tab_selected_underline_height);
-        int underlineColor = ThemeComponent.get(context).theme().getColorAccent();
-        int backgroundColor = ThemeComponent.get(context).theme().getColorPrimary();
 
         mSelectedUnderlinePaint = new Paint();
-        mSelectedUnderlinePaint.setColor(underlineColor);
+        mSelectedUnderlinePaint.setColor(android.R.attr.colorAccent);
 
-        setBackgroundColor(backgroundColor);
+        setBackgroundColor(android.R.attr.colorPrimary);
         setWillNotDraw(false);
     }
 

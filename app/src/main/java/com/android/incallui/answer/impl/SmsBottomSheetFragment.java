@@ -22,8 +22,6 @@ import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,11 +32,14 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+
 import com.android.incallui.incalluilock.InCallUiLock;
 import com.fissy.dialer.R;
 import com.fissy.dialer.common.DpUtil;
 import com.fissy.dialer.common.FragmentUtils;
 import com.fissy.dialer.common.LogUtil;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.ArrayList;
 import java.util.List;

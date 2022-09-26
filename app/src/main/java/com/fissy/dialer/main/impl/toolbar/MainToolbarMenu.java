@@ -17,11 +17,11 @@
 package com.fissy.dialer.main.impl.toolbar;
 
 import android.content.Context;
-import androidx.appcompat.app.AppCompatActivity;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.simulator.Simulator;
@@ -33,7 +33,7 @@ import com.fissy.dialer.simulator.SimulatorComponent;
 public final class MainToolbarMenu extends PopupMenu {
 
     public MainToolbarMenu(Context context, View anchor) {
-        super(context, anchor, Gravity.NO_GRAVITY, R.attr.actionOverflowMenuStyle, 0);
+        super(context, anchor);
     }
 
     public void showClearFrequents(boolean show) {

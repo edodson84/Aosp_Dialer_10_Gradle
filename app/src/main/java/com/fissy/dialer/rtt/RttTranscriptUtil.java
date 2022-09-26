@@ -19,6 +19,7 @@ package com.fissy.dialer.rtt;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+
 import androidx.annotation.WorkerThread;
 
 import com.fissy.dialer.common.Assert;

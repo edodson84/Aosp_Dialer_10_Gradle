@@ -17,14 +17,15 @@
 package com.fissy.dialer.speeddial;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.annotation.VisibleForTesting;
-import androidx.appcompat.widget.PopupMenu;
-import androidx.appcompat.widget.PopupMenu.OnMenuItemClickListener;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.appcompat.widget.PopupMenu.OnMenuItemClickListener;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.common.Assert;

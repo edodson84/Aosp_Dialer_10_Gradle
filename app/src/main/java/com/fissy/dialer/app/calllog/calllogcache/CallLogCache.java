@@ -17,10 +17,11 @@
 package com.fissy.dialer.app.calllog.calllogcache;
 
 import android.content.Context;
-import androidx.annotation.Nullable;
 import android.telecom.PhoneAccountHandle;
 import android.text.TextUtils;
 import android.util.ArrayMap;
+
+import androidx.annotation.Nullable;
 
 import com.fissy.dialer.app.calllog.CallLogAdapter;
 import com.fissy.dialer.calllogutils.PhoneAccountUtils;

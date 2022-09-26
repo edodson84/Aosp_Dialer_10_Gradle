@@ -21,6 +21,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.Directory;
+
 import androidx.annotation.VisibleForTesting;
 
 import com.fissy.dialer.DialerPhoneNumber;

@@ -1,22 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <bool name="abc_action_bar_embed_tabs">true</bool>
-    <bool name="abc_allow_stacked_button_bar">false</bool>
-    <bool name="abc_config_actionMenuItemAllCaps">true</bool>
-    <bool name="answer_important_call_allowed">false</bool>
+    <bool name="answer_important_call_allowed">true</bool>
     <bool name="config_display_order_user_changeable">true</bool>
     <bool name="config_editor_field_order_primary">true</bool>
     <bool name="config_sort_order_user_changeable">true</bool>
     <bool name="incall_dialpad_allowed">false</bool>
-    <bool name="is_layout_landscape">false</bool>
-    <bool name="motorola_disable_phone_number_formatting">false</bool>
-    <bool name="motorola_hidden_menu_enabled">false</bool>
-    <bool name="motorola_sprint_hd_codec">false</bool>
     <bool name="scale_height">false</bool>
     <bool name="scale_width">true</bool>
     <bool name="show_device_id_as_barcode">false</bool>
     <bool name="show_device_id_in_hex_and_decimal">false</bool>
     <bool name="show_toolbar">false</bool>
     <bool name="two_button_show_button_labels">false</bool>
+    <bool name="two_button_show">false</bool>
     <bool name="video_call_auto_fullscreen">true</bool>
 </resources>

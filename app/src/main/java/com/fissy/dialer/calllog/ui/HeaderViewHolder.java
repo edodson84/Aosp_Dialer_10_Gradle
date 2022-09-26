@@ -15,10 +15,11 @@
  */
 package com.fissy.dialer.calllog.ui;
 
-import androidx.annotation.StringRes;
-import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.annotation.StringRes;
+import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
 import com.fissy.dialer.R;
 

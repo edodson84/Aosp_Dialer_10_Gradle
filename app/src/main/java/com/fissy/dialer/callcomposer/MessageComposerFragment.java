@@ -17,7 +17,6 @@
 package com.fissy.dialer.callcomposer;
 
 import android.os.Bundle;
-import androidx.annotation.Nullable;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextUtils;
@@ -30,6 +29,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
+
+import androidx.annotation.Nullable;
 
 import com.fissy.dialer.R;
 

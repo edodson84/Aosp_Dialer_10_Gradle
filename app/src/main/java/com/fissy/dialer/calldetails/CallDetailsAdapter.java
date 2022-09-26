@@ -18,15 +18,15 @@ package com.fissy.dialer.calldetails;
 
 
 import android.content.Context;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.fissy.dialer.calldetails.CallDetailsEntryViewHolder.CallDetailsEntryListener;
 import com.fissy.dialer.calldetails.CallDetailsFooterViewHolder.DeleteCallDetailsListener;
 import com.fissy.dialer.calldetails.CallDetailsHeaderViewHolder.CallDetailsHeaderListener;
 import com.fissy.dialer.callrecord.CallRecordingDataStore;
 import com.fissy.dialer.glidephotomanager.PhotoInfo;
-import com.fissy.dialer.callrecord.CallRecordingDataStore;
 
 /**
  * A {@link RecyclerView.Adapter} for {@link CallDetailsActivity}.

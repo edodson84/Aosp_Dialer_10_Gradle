@@ -17,6 +17,7 @@
 package com.fissy.dialer.speeddial.draghelper;
 
 import android.content.Context;
+
 import androidx.recyclerview.widget.GridLayoutManager;
 
 /**

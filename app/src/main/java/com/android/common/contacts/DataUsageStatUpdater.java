@@ -30,24 +30,10 @@ import java.util.Collection;
 public class DataUsageStatUpdater {
     private static final String TAG = DataUsageStatUpdater.class.getSimpleName();
 
-    /**
-     * Copied from API in ICS (not available before it). You can use values here if you are sure
-     * it is supported by the device.
-     */
-    public static final class DataUsageFeedback {
-        static final Uri FEEDBACK_URI =
-            Uri.withAppendedPath(Data.CONTENT_URI, "usagefeedback");
-
-        static final String USAGE_TYPE = "type";
-        public static final String USAGE_TYPE_CALL = "call";
-        public static final String USAGE_TYPE_LONG_TEXT = "long_text";
-        public static final String USAGE_TYPE_SHORT_TEXT = "short_text";
-    }
-
     public DataUsageStatUpdater(Context context) {
     }
 
-    public boolean updateWithRfc822Address(Collection<CharSequence> texts){
+    public boolean updateWithRfc822Address(Collection<CharSequence> texts) {
         return false;
     }
 
@@ -57,5 +43,18 @@ public class DataUsageStatUpdater {
 
     public boolean updateWithPhoneNumber(Collection<String> numbers) {
         return false;
+    }
+
+    /**
+     * Copied from API in ICS (not available before it). You can use values here if you are sure
+     * it is supported by the device.
+     */
+    public static final class DataUsageFeedback {
+        public static final String USAGE_TYPE_CALL = "call";
+        public static final String USAGE_TYPE_LONG_TEXT = "long_text";
+        public static final String USAGE_TYPE_SHORT_TEXT = "short_text";
+        static final Uri FEEDBACK_URI =
+                Uri.withAppendedPath(Data.CONTENT_URI, "usagefeedback");
+        static final String USAGE_TYPE = "type";
     }
 }

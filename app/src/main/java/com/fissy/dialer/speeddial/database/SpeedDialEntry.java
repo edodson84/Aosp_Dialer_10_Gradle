@@ -17,6 +17,7 @@
 package com.fissy.dialer.speeddial.database;
 
 import android.provider.ContactsContract.CommonDataKinds.Phone;
+
 import androidx.annotation.IntDef;
 import androidx.annotation.Nullable;
 

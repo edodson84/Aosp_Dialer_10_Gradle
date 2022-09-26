@@ -23,11 +23,12 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabaseCorruptException;
 import android.net.Uri;
+import android.telephony.PhoneNumberUtils;
+import android.text.TextUtils;
+
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.core.os.UserManagerCompat;
-import android.telephony.PhoneNumberUtils;
-import android.text.TextUtils;
 
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;

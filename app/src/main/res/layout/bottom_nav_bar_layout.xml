@@ -26,11 +26,4 @@
         android:layout_width="0.0dip"
         android:layout_height="75dp"
         android:layout_weight="1.0" />
-
-    <include
-        android:id="@id/voicemail_tab"
-        layout="@layout/bottom_nav_item"
-        android:layout_width="0.0dip"
-        android:layout_height="75dp"
-        android:layout_weight="1.0" />
 </com.fissy.dialer.main.impl.bottomnav.BottomNavBar>

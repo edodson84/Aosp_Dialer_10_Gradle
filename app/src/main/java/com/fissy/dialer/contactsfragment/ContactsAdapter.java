@@ -20,12 +20,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract.Contacts;
-import androidx.annotation.IntDef;
-import androidx.collection.ArrayMap;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.IntDef;
+import androidx.collection.ArrayMap;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.common.Assert;
@@ -57,6 +58,7 @@ final class ContactsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private int[] counts = new int[0];
     // Cursor with list of contacts
     private Cursor cursor;
+
     ContactsAdapter(
             Context context, @Header int header, OnContactSelectedListener onContactSelectedListener) {
         this.context = context;

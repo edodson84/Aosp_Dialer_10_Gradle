@@ -22,6 +22,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.provider.CallLog;
+
 import androidx.core.content.ContextCompat;
 
 import com.fissy.dialer.common.LogUtil;

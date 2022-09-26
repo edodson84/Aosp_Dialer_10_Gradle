@@ -21,6 +21,7 @@ import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.Contacts;
+
 import androidx.annotation.VisibleForTesting;
 
 /**

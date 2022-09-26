@@ -16,9 +16,10 @@
 
 package com.fissy.dialer.glidephotomanager;
 
-import androidx.annotation.MainThread;
 import android.widget.ImageView;
 import android.widget.QuickContactBadge;
+
+import androidx.annotation.MainThread;
 
 /**
  * Class to load photo for call/contacts

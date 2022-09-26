@@ -16,8 +16,6 @@
 
 package com.android.common.contacts;
 
-import com.android.common.widget.CompositeCursorAdapter;
-
 import android.accounts.Account;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -39,6 +37,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+
+import com.android.common.widget.CompositeCursorAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,167 +89,10 @@ public abstract class BaseEmailAddressAdapter extends CompositeCursorAdapter imp
     private static final int MESSAGE_SEARCH_PENDING_DELAY = 1000;
 
     private static final int MESSAGE_SEARCH_PENDING = 1;
-
-    /**
-     * Model object for a {@link Directory} row. There is a partition in the
-     * {@link CompositeCursorAdapter} for every directory (except
-     * {@link Directory#LOCAL_INVISIBLE}.
-     */
-    public final static class DirectoryPartition extends CompositeCursorAdapter.Partition {
-        public long directoryId;
-        public String directoryType;
-        public String displayName;
-        public String accountName;
-        public String accountType;
-        public boolean loading;
-        public CharSequence constraint;
-        public DirectoryPartitionFilter filter;
-
-        public DirectoryPartition() {
-            super(false, false);
-        }
-    }
-
-    private static class EmailQuery {
-        public static final String[] PROJECTION = {
-            Contacts.DISPLAY_NAME,  // 0
-            Email.DATA              // 1
-        };
-
-        public static final int NAME = 0;
-        public static final int ADDRESS = 1;
-    }
-
-    private static class DirectoryListQuery {
-
-        // TODO: revert to references to the Directory class as soon as the
-        // issue with the dependency on SDK 8 is resolved
-        public static final Uri URI =
-                Uri.withAppendedPath(ContactsContract.AUTHORITY_URI, "directories");
-        private static final String DIRECTORY_ID = "_id";
-        private static final String DIRECTORY_ACCOUNT_NAME = "accountName";
-        private static final String DIRECTORY_ACCOUNT_TYPE = "accountType";
-        private static final String DIRECTORY_DISPLAY_NAME = "displayName";
-        private static final String DIRECTORY_PACKAGE_NAME = "packageName";
-        private static final String DIRECTORY_TYPE_RESOURCE_ID = "typeResourceId";
-
-        public static final String[] PROJECTION = {
-            DIRECTORY_ID,               // 0
-            DIRECTORY_ACCOUNT_NAME,     // 1
-            DIRECTORY_ACCOUNT_TYPE,     // 2
-            DIRECTORY_DISPLAY_NAME,     // 3
-            DIRECTORY_PACKAGE_NAME,     // 4
-            DIRECTORY_TYPE_RESOURCE_ID, // 5
-        };
-
-        public static final int ID = 0;
-        public static final int ACCOUNT_NAME = 1;
-        public static final int ACCOUNT_TYPE = 2;
-        public static final int DISPLAY_NAME = 3;
-        public static final int PACKAGE_NAME = 4;
-        public static final int TYPE_RESOURCE_ID = 5;
-    }
-
     /**
      * A fake column name that indicates a "Searching..." item in the list.
      */
     private static final String SEARCHING_CURSOR_MARKER = "searching";
-
-    /**
-     * An asynchronous filter used for loading two data sets: email rows from the local
-     * contact provider and the list of {@link Directory}'s.
-     */
-    private final class DefaultPartitionFilter extends Filter {
-
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            Cursor directoryCursor = null;
-            if (!mDirectoriesLoaded) {
-                directoryCursor = mContentResolver.query(
-                        DirectoryListQuery.URI, DirectoryListQuery.PROJECTION, null, null, null);
-                mDirectoriesLoaded = true;
-            }
-
-            FilterResults results = new FilterResults();
-            Cursor cursor = null;
-            if (!TextUtils.isEmpty(constraint)) {
-                Uri.Builder builder = Email.CONTENT_FILTER_URI.buildUpon()
-                        .appendPath(constraint.toString())
-                        .appendQueryParameter(LIMIT_PARAM_KEY,
-                                String.valueOf(mPreferredMaxResultCount));
-                if (mAccount != null) {
-                    builder.appendQueryParameter(PRIMARY_ACCOUNT_NAME, mAccount.name);
-                    builder.appendQueryParameter(PRIMARY_ACCOUNT_TYPE, mAccount.type);
-                }
-                Uri uri = builder.build();
-                cursor = mContentResolver.query(uri, EmailQuery.PROJECTION, null, null, null);
-                results.count = cursor.getCount();
-            }
-            results.values = new Cursor[] { directoryCursor, cursor };
-            return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            if (results.values != null) {
-                Cursor[] cursors = (Cursor[]) results.values;
-                onDirectoryLoadFinished(constraint, cursors[0], cursors[1]);
-            }
-            results.count = getCount();
-        }
-
-        @Override
-        public CharSequence convertResultToString(Object resultValue) {
-            return makeDisplayString((Cursor) resultValue);
-        }
-    }
-
-    /**
-     * An asynchronous filter that performs search in a particular directory.
-     */
-    private final class DirectoryPartitionFilter extends Filter {
-        private final int mPartitionIndex;
-        private final long mDirectoryId;
-        private int mLimit;
-
-        public DirectoryPartitionFilter(int partitionIndex, long directoryId) {
-            this.mPartitionIndex = partitionIndex;
-            this.mDirectoryId = directoryId;
-        }
-
-        public synchronized void setLimit(int limit) {
-            this.mLimit = limit;
-        }
-
-        public synchronized int getLimit() {
-            return this.mLimit;
-        }
-
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            FilterResults results = new FilterResults();
-            if (!TextUtils.isEmpty(constraint)) {
-                Uri uri = Email.CONTENT_FILTER_URI.buildUpon()
-                        .appendPath(constraint.toString())
-                        .appendQueryParameter(DIRECTORY_PARAM_KEY, String.valueOf(mDirectoryId))
-                        .appendQueryParameter(LIMIT_PARAM_KEY,
-                                String.valueOf(getLimit() + ALLOWANCE_FOR_DUPLICATES))
-                        .build();
-                Cursor cursor = mContentResolver.query(
-                        uri, EmailQuery.PROJECTION, null, null, null);
-                results.values = cursor;
-            }
-            return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            Cursor cursor = (Cursor) results.values;
-            onPartitionLoadFinished(constraint, mPartitionIndex, cursor);
-            results.count = getCount();
-        }
-    }
-
     protected final ContentResolver mContentResolver;
     private boolean mDirectoriesLoaded;
     private Account mAccount;
@@ -259,7 +102,6 @@ public abstract class BaseEmailAddressAdapter extends CompositeCursorAdapter imp
     public BaseEmailAddressAdapter(Context context) {
         this(context, DEFAULT_PREFERRED_MAX_RESULT_COUNT);
     }
-
     public BaseEmailAddressAdapter(Context context, int preferredMaxResultCount) {
         super(context);
         mContentResolver = context.getContentResolver();
@@ -291,7 +133,7 @@ public abstract class BaseEmailAddressAdapter extends CompositeCursorAdapter imp
      * Override to populate the autocomplete suggestion line item UI with data.
      */
     protected abstract void bindView(View view, String directoryType, String directoryName,
-            String displayName, String emailAddress);
+                                     String displayName, String emailAddress);
 
     /**
      * Override to create a view for a "Searching directory" line item, which is
@@ -306,14 +148,14 @@ public abstract class BaseEmailAddressAdapter extends CompositeCursorAdapter imp
 
     @Override
     protected int getItemViewType(int partitionIndex, int position) {
-        DirectoryPartition partition = (DirectoryPartition)getPartition(partitionIndex);
+        DirectoryPartition partition = (DirectoryPartition) getPartition(partitionIndex);
         return partition.loading ? 1 : 0;
     }
 
     @Override
     protected View newView(Context context, int partitionIndex, Cursor cursor,
-            int position, ViewGroup parent) {
-        DirectoryPartition partition = (DirectoryPartition)getPartition(partitionIndex);
+                           int position, ViewGroup parent) {
+        DirectoryPartition partition = (DirectoryPartition) getPartition(partitionIndex);
         if (partition.loading) {
             return inflateItemViewLoading(parent);
         } else {
@@ -323,7 +165,7 @@ public abstract class BaseEmailAddressAdapter extends CompositeCursorAdapter imp
 
     @Override
     protected void bindView(View v, int partition, Cursor cursor, int position) {
-        DirectoryPartition directoryPartition = (DirectoryPartition)getPartition(partition);
+        DirectoryPartition directoryPartition = (DirectoryPartition) getPartition(partition);
         String directoryType = directoryPartition.directoryType;
         String directoryName = directoryPartition.displayName;
         if (directoryPartition.loading) {
@@ -351,7 +193,7 @@ public abstract class BaseEmailAddressAdapter extends CompositeCursorAdapter imp
     }
 
     private boolean isLoading(int partitionIndex) {
-        return ((DirectoryPartition)getPartition(partitionIndex)).loading;
+        return ((DirectoryPartition) getPartition(partitionIndex)).loading;
     }
 
     @Override
@@ -594,9 +436,162 @@ public abstract class BaseEmailAddressAdapter extends CompositeCursorAdapter imp
         String displayName = cursor.getString(EmailQuery.NAME);
         String emailAddress = cursor.getString(EmailQuery.ADDRESS);
         if (TextUtils.isEmpty(displayName) || TextUtils.equals(displayName, emailAddress)) {
-             return emailAddress;
+            return emailAddress;
         } else {
             return new Rfc822Token(displayName, emailAddress, null).toString();
+        }
+    }
+
+    /**
+     * Model object for a {@link Directory} row. There is a partition in the
+     * {@link CompositeCursorAdapter} for every directory (except
+     * {@link Directory#LOCAL_INVISIBLE}.
+     */
+    public final static class DirectoryPartition extends CompositeCursorAdapter.Partition {
+        public long directoryId;
+        public String directoryType;
+        public String displayName;
+        public String accountName;
+        public String accountType;
+        public boolean loading;
+        public CharSequence constraint;
+        public DirectoryPartitionFilter filter;
+
+        public DirectoryPartition() {
+            super(false, false);
+        }
+    }
+
+    private static class EmailQuery {
+        public static final String[] PROJECTION = {
+                Contacts.DISPLAY_NAME,  // 0
+                Email.DATA              // 1
+        };
+
+        public static final int NAME = 0;
+        public static final int ADDRESS = 1;
+    }
+
+    private static class DirectoryListQuery {
+
+        // TODO: revert to references to the Directory class as soon as the
+        // issue with the dependency on SDK 8 is resolved
+        public static final Uri URI =
+                Uri.withAppendedPath(ContactsContract.AUTHORITY_URI, "directories");
+        public static final int ID = 0;
+        public static final int ACCOUNT_NAME = 1;
+        public static final int ACCOUNT_TYPE = 2;
+        public static final int DISPLAY_NAME = 3;
+        public static final int PACKAGE_NAME = 4;
+        public static final int TYPE_RESOURCE_ID = 5;
+        private static final String DIRECTORY_ID = "_id";
+        private static final String DIRECTORY_ACCOUNT_NAME = "accountName";
+        private static final String DIRECTORY_ACCOUNT_TYPE = "accountType";
+        private static final String DIRECTORY_DISPLAY_NAME = "displayName";
+        private static final String DIRECTORY_PACKAGE_NAME = "packageName";
+        private static final String DIRECTORY_TYPE_RESOURCE_ID = "typeResourceId";
+        public static final String[] PROJECTION = {
+                DIRECTORY_ID,               // 0
+                DIRECTORY_ACCOUNT_NAME,     // 1
+                DIRECTORY_ACCOUNT_TYPE,     // 2
+                DIRECTORY_DISPLAY_NAME,     // 3
+                DIRECTORY_PACKAGE_NAME,     // 4
+                DIRECTORY_TYPE_RESOURCE_ID, // 5
+        };
+    }
+
+    /**
+     * An asynchronous filter used for loading two data sets: email rows from the local
+     * contact provider and the list of {@link Directory}'s.
+     */
+    private final class DefaultPartitionFilter extends Filter {
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            Cursor directoryCursor = null;
+            if (!mDirectoriesLoaded) {
+                directoryCursor = mContentResolver.query(
+                        DirectoryListQuery.URI, DirectoryListQuery.PROJECTION, null, null, null);
+                mDirectoriesLoaded = true;
+            }
+
+            FilterResults results = new FilterResults();
+            Cursor cursor = null;
+            if (!TextUtils.isEmpty(constraint)) {
+                Uri.Builder builder = Email.CONTENT_FILTER_URI.buildUpon()
+                        .appendPath(constraint.toString())
+                        .appendQueryParameter(LIMIT_PARAM_KEY,
+                                String.valueOf(mPreferredMaxResultCount));
+                if (mAccount != null) {
+                    builder.appendQueryParameter(PRIMARY_ACCOUNT_NAME, mAccount.name);
+                    builder.appendQueryParameter(PRIMARY_ACCOUNT_TYPE, mAccount.type);
+                }
+                Uri uri = builder.build();
+                cursor = mContentResolver.query(uri, EmailQuery.PROJECTION, null, null, null);
+                results.count = cursor.getCount();
+            }
+            results.values = new Cursor[]{directoryCursor, cursor};
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            if (results.values != null) {
+                Cursor[] cursors = (Cursor[]) results.values;
+                onDirectoryLoadFinished(constraint, cursors[0], cursors[1]);
+            }
+            results.count = getCount();
+        }
+
+        @Override
+        public CharSequence convertResultToString(Object resultValue) {
+            return makeDisplayString((Cursor) resultValue);
+        }
+    }
+
+    /**
+     * An asynchronous filter that performs search in a particular directory.
+     */
+    private final class DirectoryPartitionFilter extends Filter {
+        private final int mPartitionIndex;
+        private final long mDirectoryId;
+        private int mLimit;
+
+        public DirectoryPartitionFilter(int partitionIndex, long directoryId) {
+            this.mPartitionIndex = partitionIndex;
+            this.mDirectoryId = directoryId;
+        }
+
+        public synchronized int getLimit() {
+            return this.mLimit;
+        }
+
+        public synchronized void setLimit(int limit) {
+            this.mLimit = limit;
+        }
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            FilterResults results = new FilterResults();
+            if (!TextUtils.isEmpty(constraint)) {
+                Uri uri = Email.CONTENT_FILTER_URI.buildUpon()
+                        .appendPath(constraint.toString())
+                        .appendQueryParameter(DIRECTORY_PARAM_KEY, String.valueOf(mDirectoryId))
+                        .appendQueryParameter(LIMIT_PARAM_KEY,
+                                String.valueOf(getLimit() + ALLOWANCE_FOR_DUPLICATES))
+                        .build();
+                Cursor cursor = mContentResolver.query(
+                        uri, EmailQuery.PROJECTION, null, null, null);
+                results.values = cursor;
+            }
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            Cursor cursor = (Cursor) results.values;
+            onPartitionLoadFinished(constraint, mPartitionIndex, cursor);
+            results.count = getCount();
         }
     }
 }

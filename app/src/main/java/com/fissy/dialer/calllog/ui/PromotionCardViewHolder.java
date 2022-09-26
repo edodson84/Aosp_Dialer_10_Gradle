@@ -16,12 +16,13 @@
 
 package com.fissy.dialer.calllog.ui;
 
-import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.promotion.Promotion;
@@ -33,6 +34,7 @@ public class PromotionCardViewHolder extends ViewHolder {
 
     private final Button okButton;
     private final Promotion promotion;
+
     PromotionCardViewHolder(View itemView, Promotion promotion) {
         super(itemView);
         this.promotion = promotion;

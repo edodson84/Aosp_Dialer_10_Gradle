@@ -18,14 +18,14 @@ package com.fissy.dialer.widget;
 
 import android.app.Activity;
 import android.content.Context;
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
-import androidx.appcompat.widget.Toolbar;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.appcompat.widget.Toolbar;
+
 import com.fissy.dialer.R;
-import com.fissy.dialer.theme.base.ThemeComponent;
 
 /**
  * Toolbar widget for Dialer.
@@ -38,12 +38,11 @@ public class DialerToolbar extends Toolbar {
     public DialerToolbar(Context context, @Nullable AttributeSet attributeSet) {
         super(context, attributeSet);
         inflate(context, R.layout.dialer_toolbar, this);
-        title = (TextView) findViewById(R.id.title);
-        subtitle = (BidiTextView) findViewById(R.id.subtitle);
+        title = findViewById(R.id.title);
+        subtitle = findViewById(R.id.subtitle);
 
         setElevation(getResources().getDimensionPixelSize(R.dimen.toolbar_elevation));
-        setBackgroundColor(ThemeComponent.get(context).theme().getColorPrimary());
-        setNavigationIcon(R.drawable.quantum_ic_close_white_24);
+        setNavigationIcon(R.drawable.quantum_ic_close_vd_theme_24);
         setNavigationContentDescription(R.string.toolbar_close);
         setNavigationOnClickListener(v -> ((Activity) context).finish());
         setPaddingRelative(

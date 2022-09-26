@@ -1,8 +1,9 @@
 package com.fissy.dialer.callintent;
 
 import android.net.Uri;
-import androidx.annotation.Nullable;
 import android.telecom.PhoneAccountHandle;
+
+import androidx.annotation.Nullable;
 
 import com.google.common.collect.ImmutableMap;
 

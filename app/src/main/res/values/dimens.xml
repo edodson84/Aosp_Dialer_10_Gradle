@@ -15,7 +15,7 @@
     <dimen name="dialpad_digits_adjustable_height">@dimen/dialpad_digits_height</dimen>
     <dimen name="dialpad_voicemail_icon_padding_top">2dp</dimen>
 
-
+    <dimen name="material_corner_radius">28.0dip</dimen>
     <dimen name="dialpad_key_margin_right">5dp</dimen>
     <!-- Right margins for specific keys to align them correctly -->
     <dimen name="dialpad_key_one_margin_right">3dp</dimen>
@@ -129,7 +129,7 @@
     <dimen name="contact_container_padding_top_start">12.0dip</dimen>
     <dimen name="contact_photo_size">48.0dip</dimen>
     <dimen name="contact_tile_divider_width">1.0dip</dimen>
-    <item name="contact_tile_height_to_width_ratio" type="dimen">76.0%</item>
+    <item name="contact_tile_height_to_width_ratio" type="fraction">76.0%</item>
     <dimen name="contact_tile_info_button_height_and_width">36.0dip</dimen>
     <dimen name="contact_tile_text_bottom_padding">9.0dip</dimen>
     <dimen name="contact_tile_text_side_padding">12.0dip</dimen>
@@ -227,7 +227,7 @@
     <dimen name="incall_window_margin_horizontal">24.0dip</dimen>
     <dimen name="launcher_shortcut_adaptive_icon_size">108.0dip</dimen>
     <dimen name="launcher_shortcut_icon_size">48.0dip</dimen>
-    <item name="letter_to_tile_ratio" type="dimen">66.99999%</item>
+    <item name="letter_to_tile_ratio" type="fraction">66.99999%</item>
     <dimen name="message_compose_item_text_size">16.0sp</dimen>
     <dimen name="message_compose_remaining_char_text_size">12.0sp</dimen>
     <dimen name="message_composer_divider_height">1.0dip</dimen>

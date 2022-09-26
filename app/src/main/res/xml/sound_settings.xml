@@ -19,41 +19,41 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <com.fissy.dialer.app.settings.DefaultRingtonePreference
-        android:key="@string/ringtone_preference_key"
-        android:title="@string/ringtone_title"
         android:dialogTitle="@string/ringtone_title"
+        android:key="@string/ringtone_preference_key"
         android:persistent="false"
-        android:ringtoneType="ringtone" />
+        android:ringtoneType="ringtone"
+        android:title="@string/ringtone_title" />
 
     <CheckBoxPreference
+        android:defaultValue="false"
         android:key="@string/vibrate_on_preference_key"
-        android:title="@string/vibrate_on_ring_title"
         android:persistent="false"
-        android:defaultValue="false" />
+        android:title="@string/vibrate_on_ring_title" />
 
     <CheckBoxPreference
+        android:defaultValue="true"
         android:key="@string/play_dtmf_preference_key"
-        android:title="@string/dtmf_tone_enable_title"
         android:persistent="false"
-        android:defaultValue="true" />
+        android:title="@string/dtmf_tone_enable_title" />
 
     <ListPreference
-        android:key="@string/dtmf_tone_length_preference_key"
-        android:title="@string/dtmf_tone_length_title"
         android:entries="@array/dtmf_tone_length_entries"
-        android:entryValues="@array/dtmf_tone_length_entry_values" />
+        android:entryValues="@array/dtmf_tone_length_entry_values"
+        android:key="@string/dtmf_tone_length_preference_key"
+        android:title="@string/dtmf_tone_length_title" />
 
     <PreferenceCategory
         android:key="@string/call_recording_category_key"
         android:title="@string/call_recording_category_title">
 
         <ListPreference
-            android:key="@string/call_recording_format_key"
-            android:title="@string/call_recording_format"
-            android:summary="%s"
+            android:defaultValue="0"
             android:entries="@array/call_recording_encoder_entries"
             android:entryValues="@array/call_recording_encoder_values"
-            android:defaultValue="0" />
+            android:key="@string/call_recording_format_key"
+            android:summary="%s"
+            android:title="@string/call_recording_format" />
 
     </PreferenceCategory>
 

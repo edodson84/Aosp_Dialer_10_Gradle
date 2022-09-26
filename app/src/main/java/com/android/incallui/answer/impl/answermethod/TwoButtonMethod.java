@@ -24,9 +24,6 @@ import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.os.Bundle;
-import androidx.annotation.FloatRange;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -34,6 +31,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.FloatRange;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.android.incallui.answer.impl.answermethod.FlingUpDownTouchHandler.OnProgressChangedListener;
 import com.android.incallui.util.AccessibilityUtil;
@@ -71,7 +72,7 @@ public class TwoButtonMethod extends AnswerMethod
     }
 
     @Override
-    public void onSaveInstanceState(Bundle bundle) {
+    public void onSaveInstanceState(@NonNull Bundle bundle) {
         super.onSaveInstanceState(bundle);
         bundle.putBoolean(STATE_INCOMING_WILL_DISCONNECT, incomingWillDisconnect);
         bundle.putCharSequence(STATE_HINT_TEXT, hintText);
@@ -83,7 +84,7 @@ public class TwoButtonMethod extends AnswerMethod
             LayoutInflater layoutInflater, @Nullable ViewGroup viewGroup, @Nullable Bundle bundle) {
         View view = layoutInflater.inflate(R.layout.two_button_method, viewGroup, false);
 
-        hintTextView = (TextView) view.findViewById(R.id.two_button_hint_text);
+        hintTextView = view.findViewById(R.id.two_button_hint_text);
         updateHintText();
 
         answerButton = view.findViewById(R.id.two_button_answer_button);

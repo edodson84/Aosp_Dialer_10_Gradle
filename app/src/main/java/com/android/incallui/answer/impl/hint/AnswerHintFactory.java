@@ -18,13 +18,12 @@ package com.android.incallui.answer.impl.hint;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
 import com.android.incallui.util.AccessibilityUtil;
-import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.configprovider.ConfigProviderComponent;
 import com.fissy.dialer.storage.StorageComponent;
@@ -49,11 +48,7 @@ public class AnswerHintFactory {
             "/hammerhead//bullhead//angler//shamu//gm4g//gm4g_s//AQ4501//gce_x86_phone//gm4gtkc_s/"
                     + "/Sparkle_V//Mi-498//AQ4502//imobileiq2//A65//H940//m8_google//m0xx//A10//ctih220/"
                     + "/Mi438S//bacon/";
-    private final PawImageLoader pawImageLoader;
 
-    public AnswerHintFactory(@NonNull PawImageLoader pawImageLoader) {
-        this.pawImageLoader = Assert.isNotNull(pawImageLoader);
-    }
 
     public static void increaseAnsweredCount(Context context) {
         SharedPreferences sharedPreferences = StorageComponent.get(context).unencryptedSharedPrefs();
@@ -68,9 +63,7 @@ public class AnswerHintFactory {
         }
         // Devices that has the legacy dialer installed are whitelisted as they are likely to go through
         // a UX change during updates.
-        if (!isDeviceWhitelisted(context, device)) {
-            return false;
-        }
+
 
         // If the user has gone through the process a few times we can assume they have learnt the
         // method.
@@ -107,13 +100,6 @@ public class AnswerHintFactory {
         if (shouldShowAnswerHint(context, Build.PRODUCT)) {
             return new DotAnswerHint(context, puckUpDuration, puckUpDelay);
         }
-
-        // Display the event answer hint if the payload is available.
-        Drawable eventPayload = pawImageLoader.loadPayload(context);
-        if (eventPayload != null) {
-            return new PawAnswerHint(context, eventPayload, puckUpDuration, puckUpDelay);
-        }
-
         return new EmptyAnswerHint();
     }
 }

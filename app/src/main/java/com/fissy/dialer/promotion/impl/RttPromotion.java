@@ -18,6 +18,7 @@ package com.fissy.dialer.promotion.impl;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
 import androidx.annotation.DrawableRes;
 
 import com.fissy.dialer.R;

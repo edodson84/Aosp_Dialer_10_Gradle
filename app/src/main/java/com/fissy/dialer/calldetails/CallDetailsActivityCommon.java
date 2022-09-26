@@ -24,18 +24,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.CallLog;
 import android.provider.CallLog.Calls;
+import android.view.View;
+
 import androidx.annotation.CallSuper;
 import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresPermission;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
-import android.view.View;
 
 import com.fissy.dialer.R;
+import com.fissy.dialer.app.settings.ThemeOptionsSettingsFragment;
 import com.fissy.dialer.assisteddialing.ui.AssistedDialingSettingActivity;
 import com.fissy.dialer.calldetails.CallDetailsEntries.CallDetailsEntry;
 import com.fissy.dialer.callintent.CallInitiationType;
@@ -56,18 +58,17 @@ import com.fissy.dialer.glidephotomanager.PhotoInfo;
 import com.fissy.dialer.logging.DialerImpression;
 import com.fissy.dialer.logging.Logger;
 import com.fissy.dialer.logging.UiAction;
+import com.fissy.dialer.main.impl.MainActivity;
 import com.fissy.dialer.performancereport.PerformanceReport;
 import com.fissy.dialer.postcall.PostCall;
 import com.fissy.dialer.precall.PreCall;
 import com.fissy.dialer.rtt.RttTranscriptActivity;
 import com.fissy.dialer.rtt.RttTranscriptUtil;
-import com.fissy.dialer.theme.base.ThemeComponent;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
-import com.fissy.dialer.callrecord.CallRecordingDataStore;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -127,8 +128,15 @@ abstract class CallDetailsActivityCommon extends AppCompatActivity {
     @Override
     @CallSuper
     protected void onCreate(Bundle savedInstanceState) {
+        ThemeOptionsSettingsFragment.ThemeButtonBehavior mThemeBehavior = ThemeOptionsSettingsFragment.getThemeButtonBehavior(MainActivity.themeprefs);
+
+        if (mThemeBehavior == ThemeOptionsSettingsFragment.ThemeButtonBehavior.DARK) {
+            getTheme().applyStyle(R.style.DialerDark, true);
+        }
+        if (mThemeBehavior == ThemeOptionsSettingsFragment.ThemeButtonBehavior.LIGHT) {
+            getTheme().applyStyle(R.style.DialerLight, true);
+        }
         super.onCreate(savedInstanceState);
-        setTheme(ThemeComponent.get(this).theme().getApplicationThemeRes());
         setContentView(R.layout.call_details_activity);
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.call_details);

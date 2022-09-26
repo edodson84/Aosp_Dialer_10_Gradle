@@ -16,8 +16,9 @@
 
 package com.fissy.dialer.enrichedcall.videoshare;
 
-import androidx.annotation.NonNull;
 import android.view.SurfaceView;
+
+import androidx.annotation.NonNull;
 
 /**
  * Holds state information and data about video share sessions.

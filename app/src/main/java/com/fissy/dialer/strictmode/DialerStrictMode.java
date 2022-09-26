@@ -17,6 +17,7 @@
 package com.fissy.dialer.strictmode;
 
 import android.app.Application;
+
 import androidx.annotation.MainThread;
 
 /**

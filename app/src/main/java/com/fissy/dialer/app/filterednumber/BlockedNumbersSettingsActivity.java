@@ -16,8 +16,9 @@
 package com.fissy.dialer.app.filterednumber;
 
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.MenuItem;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.logging.Logger;

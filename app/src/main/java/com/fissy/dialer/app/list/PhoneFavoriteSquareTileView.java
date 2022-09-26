@@ -20,7 +20,6 @@ import android.content.Context;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.QuickContact;
 import android.util.AttributeSet;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -45,7 +44,7 @@ public class PhoneFavoriteSquareTileView extends PhoneFavoriteTileView {
         super(context, attrs);
 
         heightToWidthRatio =
-                getResources().getFraction(R.dimen.contact_tile_height_to_width_ratio, 1, 1);
+                getResources().getFraction(R.fraction.contact_tile_height_to_width_ratio, 1, 1);
     }
 
     @Override
@@ -79,13 +78,10 @@ public class PhoneFavoriteSquareTileView extends PhoneFavoriteTileView {
         super.loadFromContact(entry);
         if (entry != null) {
             secondaryButton.setOnClickListener(
-                    new OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Logger.get(getContext())
-                                    .logInteraction(InteractionEvent.Type.SPEED_DIAL_OPEN_CONTACT_CARD);
-                            launchQuickContact();
-                        }
+                    v -> {
+                        Logger.get(getContext())
+                                .logInteraction(InteractionEvent.Type.SPEED_DIAL_OPEN_CONTACT_CARD);
+                        launchQuickContact();
                     });
         }
         contactEntry = entry;

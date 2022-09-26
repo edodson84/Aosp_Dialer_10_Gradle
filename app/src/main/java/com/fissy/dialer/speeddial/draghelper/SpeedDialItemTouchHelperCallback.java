@@ -18,11 +18,12 @@ package com.fissy.dialer.speeddial.draghelper;
 
 import android.content.Context;
 import android.graphics.Canvas;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
-import androidx.recyclerview.widget.ItemTouchHelper;
 
 import com.fissy.dialer.logging.DialerImpression;
 import com.fissy.dialer.logging.Logger;

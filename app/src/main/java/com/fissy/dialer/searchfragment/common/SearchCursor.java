@@ -17,6 +17,7 @@
 package com.fissy.dialer.searchfragment.common;
 
 import android.database.Cursor;
+
 import androidx.annotation.NonNull;
 
 /**

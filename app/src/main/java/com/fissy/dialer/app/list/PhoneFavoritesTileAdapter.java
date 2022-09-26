@@ -28,12 +28,13 @@ import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.PinnedPositions;
-import androidx.annotation.VisibleForTesting;
 import android.text.TextUtils;
 import android.util.LongSparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+
+import androidx.annotation.VisibleForTesting;
 
 import com.android.contacts.common.ContactTileLoaderFactory;
 import com.android.contacts.common.list.ContactEntry;

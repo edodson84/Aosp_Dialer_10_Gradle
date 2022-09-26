@@ -43,6 +43,5 @@
         android:background="?android:selectableItemBackgroundBorderless"
         android:contentDescription="@string/content_description_overflow"
         android:scaleType="center"
-        android:src="@drawable/quantum_ic_more_vert_white_24"
-        android:tint="?colorIcon" />
+        android:src="@drawable/quantum_ic_more_vert_white_24" />
 </RelativeLayout>

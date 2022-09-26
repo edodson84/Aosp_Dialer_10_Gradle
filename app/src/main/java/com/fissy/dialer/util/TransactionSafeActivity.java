@@ -15,15 +15,20 @@
  */
 package com.fissy.dialer.util;
 
+
 import android.app.Activity;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.fissy.dialer.R;
+import com.fissy.dialer.app.settings.ThemeOptionsSettingsFragment;
 
 /**
  * A common superclass that keeps track of whether an {@link Activity} has saved its state yet or
  * not.
  */
-public abstract class TransactionSafeActivity extends AppCompatActivity {
+public abstract class TransactionSafeActivity extends AppCompatActivity{
 
     private boolean isSafeToCommitTransactions;
 
@@ -51,13 +56,6 @@ public abstract class TransactionSafeActivity extends AppCompatActivity {
         isSafeToCommitTransactions = false;
     }
 
-    /**
-     * Returns true if it is safe to commit {@link FragmentTransaction}s at this time, based on
-     * whether {@link Activity#onSaveInstanceState} has been called or not.
-     *
-     * <p>Make sure that the current activity calls into {@link super.onSaveInstanceState(Bundle
-     * outState)} (if that method is overridden), so the flag is properly set.
-     */
     public boolean isSafeToCommitTransactions() {
         return isSafeToCommitTransactions;
     }

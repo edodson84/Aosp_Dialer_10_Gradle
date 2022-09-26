@@ -18,9 +18,10 @@ package com.fissy.dialer.app.calllog;
 
 import android.content.res.Resources;
 import android.provider.CallLog.Calls;
-import androidx.annotation.WorkerThread;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
+
+import androidx.annotation.WorkerThread;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.app.calllog.calllogcache.CallLogCache;

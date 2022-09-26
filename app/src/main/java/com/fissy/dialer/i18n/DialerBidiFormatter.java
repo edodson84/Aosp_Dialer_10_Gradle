@@ -16,12 +16,13 @@
 
 package com.fissy.dialer.i18n;
 
-import androidx.annotation.Nullable;
 import android.telephony.PhoneNumberUtils;
 import android.text.SpannableStringBuilder;
 import android.text.SpannedString;
 import android.text.TextUtils;
 import android.util.Patterns;
+
+import androidx.annotation.Nullable;
 
 import java.util.regex.Matcher;
 

@@ -16,10 +16,11 @@
 
 package com.fissy.dialer.common;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.telephony.PhoneNumberUtils;
 import android.text.TextUtils;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /**
  * Provides logging functions.

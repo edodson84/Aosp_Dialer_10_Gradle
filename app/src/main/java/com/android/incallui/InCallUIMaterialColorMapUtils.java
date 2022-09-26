@@ -23,7 +23,6 @@ import android.telecom.PhoneAccount;
 
 import com.android.contacts.common.util.MaterialColorMapUtils;
 import com.fissy.dialer.R;
-import com.fissy.dialer.theme.base.ThemeComponent;
 
 public class InCallUIMaterialColorMapUtils extends MaterialColorMapUtils {
 
@@ -45,8 +44,8 @@ public class InCallUIMaterialColorMapUtils extends MaterialColorMapUtils {
      */
     @SuppressWarnings("deprecation")
     public static MaterialPalette getDefaultPrimaryAndSecondaryColors(Context context) {
-        final int primaryColor = ThemeComponent.get(context).theme().getColorPrimary();
-        final int secondaryColor = ThemeComponent.get(context).theme().getColorPrimaryDark();
+        final int primaryColor = android.R.attr.colorPrimary;
+        final int secondaryColor = android.R.attr.colorPrimaryDark;
         return new MaterialPalette(primaryColor, secondaryColor);
     }
 

@@ -17,8 +17,9 @@
 package com.fissy.dialer.phonenumbercache;
 
 import android.net.Uri;
-import androidx.annotation.NonNull;
 import android.text.TextUtils;
+
+import androidx.annotation.NonNull;
 
 import com.android.contacts.common.ContactsUtils.UserType;
 import com.fissy.dialer.logging.ContactSource;

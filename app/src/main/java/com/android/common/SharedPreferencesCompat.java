@@ -27,6 +27,7 @@ import java.lang.reflect.Method;
  */
 public class SharedPreferencesCompat {
     private static Method sApplyMethod;  // final
+
     static {
         try {
             Class cls = SharedPreferences.Editor.class;

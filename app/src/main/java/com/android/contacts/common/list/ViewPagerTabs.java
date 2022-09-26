@@ -19,8 +19,6 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Outline;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -32,6 +30,9 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import com.fissy.dialer.R;
 
@@ -183,12 +184,7 @@ public class ViewPagerTabs extends HorizontalScrollView implements ViewPager.OnP
         }
 
         tabView.setOnClickListener(
-                new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mPager.setCurrentItem(getRtlPosition(position));
-                    }
-                });
+                v -> mPager.setCurrentItem(getRtlPosition(position)));
 
         tabView.setOnLongClickListener(new OnTabLongClickListener(position));
 

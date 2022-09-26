@@ -15,7 +15,42 @@
   -->
 <resources>
 
-    <style name="Theme.InCallScreen.ManageConference" parent="@style/Dialer.ThemeBase.ActionBar" />
+    <style name="Dialer" parent="@style/Theme.Material3.Dark">
+        <item name="android:textColorHighlight">@color/highlighted_text_material</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:alertDialogTheme">@style/AlertDialogTheme</item>
+        <item name="android:navigationBarColor">?android:colorBackground</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="colorPrimary">@color/md_theme_dark_primary</item>
+        <item name="android:colorControlActivated">@color/md_theme_dark_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_dark_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_dark_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_dark_onPrimaryContainer</item>
+        <item name="colorSecondary">@color/md_theme_dark_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_dark_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/md_theme_dark_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/md_theme_dark_onSecondaryContainer</item>
+        <item name="colorTertiary">@color/md_theme_dark_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_dark_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_dark_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_dark_onTertiaryContainer</item>
+        <item name="colorError">@color/md_theme_dark_error</item>
+        <item name="colorErrorContainer">@color/md_theme_dark_errorContainer</item>
+        <item name="colorOnError">@color/md_theme_dark_onError</item>
+        <item name="colorOnErrorContainer">@color/md_theme_dark_onErrorContainer</item>
+        <item name="android:colorBackground">@color/md_theme_dark_background</item>
+        <item name="colorOnBackground">@color/md_theme_dark_onBackground</item>
+        <item name="colorSurface">@color/md_theme_dark_surface</item>
+        <item name="colorOnSurface">@color/md_theme_dark_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_dark_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_dark_onSurfaceVariant</item>
+        <item name="colorOutline">@color/md_theme_dark_outline</item>
+        <item name="colorOnSurfaceInverse">@color/md_theme_dark_inverseOnSurface</item>
+        <item name="colorSurfaceInverse">@color/md_theme_dark_inverseSurface</item>
+        <item name="colorPrimaryInverse">@color/md_theme_dark_inversePrimary</item>
+    </style>
+
+    <style name="Theme.InCallScreen.ManageConference" parent="@style/Dialer" />
 
     <style name="daynight" parent="@style/Theme.Material3.Dark" />
 
@@ -25,28 +60,12 @@
     </style>
 
     <style name="MainActivityThemeBase" parent="@style/Dialer.ThemeBase.NoActionBar">
-        <item name="actionBarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
-        <item name="actionModeStyle">@style/MainActionModeStyle</item>
         <item name="dialpad_style">@style/Dialpad.Themed</item>
     </style>
 
-    <style name="Dialer" parent="@style/Theme.Material3.Dark">
-        <item name="android:textColorLink">@color/dialer_theme_color</item>
-        <item name="android:textAppearanceButton">@style/DialerButtonTextStyle</item>
-        <item name="android:alertDialogTheme">@style/AlertDialogTheme</item>
-        <item name="android:colorButtonNormal">?android:colorPrimary</item>
-        <item name="alertDialogTheme">@style/AlertDialogTheme</item>
-    </style>
-
     <style name="Theme.InCallScreen" parent="@style/Dialer.ThemeBase.NoActionBar">
-        <item name="android:windowBackground">@drawable/incall_background_gradient</item>
         <item name="android:windowAnimationStyle">@null</item>
         <item name="android:windowShowWallpaper">true</item>
-        <item name="android:colorPrimaryDark">@color/dialer_theme_color_dark</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">@android:color/transparent</item>
-        <item name="colorPrimaryDark">@color/dialer_theme_color_dark</item>
         <item name="dialpad_key_button_touch_tint">?colorPrimary20pct</item>
         <item name="dialpad_style">@style/InCallDialpad</item>
     </style>
@@ -96,29 +115,7 @@
         <item name="dialpad_key_numbers_size">@dimen/dialpad_key_numbers_default_size</item>
     </style>
 
-    <style name="Dialer.ThemeBase" parent="@style/Dialer">
-        <item name="android:colorBackground">@color/google_grey_900</item>
-        <item name="android:textColorPrimary">@color/dialer_dark_primary_text_color</item>
-        <item name="android:textColorSecondary">@color/dialer_dark_secondary_text_color</item>
-        <item name="android:textColorPrimaryInverse">@color/dialer_primary_text_color</item>
-        <item name="android:textColorSecondaryInverse">@color/dialer_secondary_text_color</item>
-        <item name="android:textColorHint">@color/google_grey_600</item>
-        <item name="android:colorPrimary">@color/dialer_dark_theme_color</item>
-        <item name="android:colorPrimaryDark">@color/dialer_dark_theme_color_dark</item>
-        <item name="android:colorAccent">@color/dialer_dark_secondary_color</item>
-        <item name="android:colorBackgroundFloating">@color/google_grey_800</item>
-        <item name="colorAccent">@color/dialer_dark_secondary_color</item>
-        <item name="colorControlActivated">?android:colorPrimary</item>
-        <item name="colorIcon">?android:textColorSecondary</item>
-        <item name="colorIconOnUnthemedDarkBackground">@android:color/white</item>
-        <item name="colorIconSecondary">?android:textColorSecondary</item>
-        <item name="colorPrimary">@color/dialer_dark_theme_color</item>
-        <item name="colorPrimary20pct">@color/dialer_dark_theme_color_20pct</item>
-        <item name="colorPrimaryDark">@color/dialer_dark_theme_color_dark</item>
-        <item name="colorTextOnUnthemedDarkBackground">@android:color/white</item>
-    </style>
-
-    <style name="Dialer.ThemeBase.NoActionBar" parent="@style/Dialer.ThemeBase">
+    <style name="Dialer.ThemeBase.NoActionBar" parent="@style/Dialer">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
@@ -153,18 +150,6 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:windowActivityTransitions">false</item>
-    </style>
-
-    <style name="SettingsStyle" parent="Dialer.ThemeBase.Dark.ActionBar">
-    </style>
-
-    <style name="Dialer.ThemeBase.Dark.ActionBar" parent="@style/Dialer.ThemeBase">
-        <item name="actionBarPopupTheme">@style/ThemeOverlay.AppCompat</item>
-        <item name="actionBarSize">@dimen/action_bar_height</item>
-        <item name="actionBarStyle">@style/DialerActionBarBaseStyle</item>
-        <item name="actionBarTheme">@style/DialerActionBarBaseTheme</item>
-        <item name="actionBarWidgetTheme">@null</item>
-        <item name="listChoiceBackgroundIndicator">@drawable/abc_list_selector_holo_dark</item>
     </style>
 
 </resources>

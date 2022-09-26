@@ -20,14 +20,15 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Trace;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
 import android.telecom.Call;
 import android.telecom.DisconnectCause;
 import android.telecom.PhoneAccount;
 import android.text.TextUtils;
 import android.util.ArrayMap;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 
 import com.android.incallui.call.state.DialerCallState;
 import com.android.incallui.latencyreport.LatencyReport;
@@ -88,12 +89,18 @@ public class CallList implements DialerCallDelegate {
             Collections.newSetFromMap(new ConcurrentHashMap<DialerCall, Boolean>(8, 0.9f, 1));
 
     private UiListener uiListeners;
+
     /**
      * USED ONLY FOR TESTING Testing-only constructor. Instance should only be acquired through
      * getRunningInstance().
      */
     @VisibleForTesting
     public CallList() {
+    }
+
+    @VisibleForTesting
+    public static void setCallListInstance(CallList callList) {
+        instance = callList;
     }    /**
      * Handles the timeout for destroying disconnected calls.
      */
@@ -112,11 +119,6 @@ public class CallList implements DialerCallDelegate {
                     }
                 }
             };
-
-    @VisibleForTesting
-    public static void setCallListInstance(CallList callList) {
-        instance = callList;
-    }
 
     /**
      * Static singleton accessor method.
@@ -920,6 +922,8 @@ public class CallList implements DialerCallDelegate {
             }
         }
     }
+
+
 
 
 }

@@ -16,9 +16,10 @@
 
 package com.fissy.dialer.commandline.impl;
 
+import android.text.TextUtils;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
-import android.text.TextUtils;
 
 import com.fissy.dialer.commandline.Arguments;
 import com.fissy.dialer.commandline.Command;

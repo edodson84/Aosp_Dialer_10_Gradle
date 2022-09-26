@@ -23,16 +23,19 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.telephony.SmsManager;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import android.telephony.SmsManager;
 
 import com.fissy.dialer.R;
+import com.fissy.dialer.app.settings.ThemeOptionsSettingsFragment;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.enrichedcall.EnrichedCallComponent;
 import com.fissy.dialer.enrichedcall.EnrichedCallManager;
+import com.fissy.dialer.main.impl.MainActivity;
 import com.fissy.dialer.util.PermissionsUtil;
 import com.fissy.dialer.widget.DialerToolbar;
 import com.fissy.dialer.widget.MessageFragment;
@@ -59,6 +62,14 @@ public class PostCallActivity extends AppCompatActivity implements MessageFragme
 
     @Override
     protected void onCreate(@Nullable Bundle bundle) {
+        ThemeOptionsSettingsFragment.ThemeButtonBehavior mThemeBehavior = ThemeOptionsSettingsFragment.getThemeButtonBehavior(MainActivity.themeprefs);
+
+        if (mThemeBehavior == ThemeOptionsSettingsFragment.ThemeButtonBehavior.DARK) {
+            getTheme().applyStyle(R.style.DialerDark, true);
+        }
+        if (mThemeBehavior == ThemeOptionsSettingsFragment.ThemeButtonBehavior.LIGHT) {
+            getTheme().applyStyle(R.style.DialerLight, true);
+        }
         super.onCreate(bundle);
         setContentView(R.layout.post_call_activity);
 

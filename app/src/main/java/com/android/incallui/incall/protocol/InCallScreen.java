@@ -16,9 +16,10 @@
 
 package com.android.incallui.incall.protocol;
 
+import android.view.accessibility.AccessibilityEvent;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import android.view.accessibility.AccessibilityEvent;
 
 /**
  * Interface for the call card module.

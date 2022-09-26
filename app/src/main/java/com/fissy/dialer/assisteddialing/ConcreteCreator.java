@@ -19,9 +19,10 @@ package com.fissy.dialer.assisteddialing;
 import android.content.Context;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import android.telephony.TelephonyManager;
+
 import androidx.annotation.NonNull;
 import androidx.core.os.UserManagerCompat;
-import android.telephony.TelephonyManager;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.common.LogUtil;

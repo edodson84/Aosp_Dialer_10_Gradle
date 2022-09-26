@@ -16,7 +16,6 @@
 
 package com.fissy.dialer.app.settings;
 
-import android.app.NotificationManager;
 import android.content.Context;
 import android.media.RingtoneManager;
 import android.os.Bundle;
@@ -32,17 +31,10 @@ import android.provider.Settings;
 import android.telephony.CarrierConfigManager;
 import android.telephony.TelephonyManager;
 import android.widget.Toast;
-import com.fissy.dialer.R;
-import com.android.phone.common.util.SettingsUtil;
-import com.fissy.dialer.callrecord.impl.CallRecorderService;
 
-import java.lang.Boolean;
-import java.lang.CharSequence;
-import java.lang.Object;
-import java.lang.Override;
-import java.lang.Runnable;
-import java.lang.String;
-import java.lang.Thread;
+import com.android.phone.common.util.SettingsUtil;
+import com.fissy.dialer.R;
+import com.fissy.dialer.callrecord.impl.CallRecorderService;
 
 public class SoundSettingsFragment extends PreferenceFragment
         implements Preference.OnPreferenceChangeListener {
@@ -62,17 +54,6 @@ public class SoundSettingsFragment extends PreferenceFragment
     private static final int MSG_UPDATE_RINGTONE_SUMMARY = 1;
 
     private Preference mRingtonePreference;
-    private CheckBoxPreference mVibrateWhenRinging;
-    private CheckBoxPreference mPlayDtmfTone;
-    private ListPreference mDtmfToneLength;
-
-    private final Runnable mRingtoneLookupRunnable = new Runnable() {
-        @Override
-        public void run() {
-            updateRingtonePreferenceSummary();
-        }
-    };
-
     private final Handler mRingtoneLookupComplete = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -83,6 +64,15 @@ public class SoundSettingsFragment extends PreferenceFragment
             }
         }
     };
+    private final Runnable mRingtoneLookupRunnable = new Runnable() {
+        @Override
+        public void run() {
+            updateRingtonePreferenceSummary();
+        }
+    };
+    private CheckBoxPreference mVibrateWhenRinging;
+    private CheckBoxPreference mPlayDtmfTone;
+    private ListPreference mDtmfToneLength;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -117,8 +107,8 @@ public class SoundSettingsFragment extends PreferenceFragment
             mDtmfToneLength.setOnPreferenceChangeListener(this);
             mDtmfToneLength.setValueIndex(
                     Settings.System.getInt(context.getContentResolver(),
-                        Settings.System.DTMF_TONE_TYPE_WHEN_DIALING,
-                        DTMF_TONE_TYPE_NORMAL));
+                            Settings.System.DTMF_TONE_TYPE_WHEN_DIALING,
+                            DTMF_TONE_TYPE_NORMAL));
         } else {
             getPreferenceScreen().removePreference(mDtmfToneLength);
             mDtmfToneLength = null;
@@ -152,7 +142,7 @@ public class SoundSettingsFragment extends PreferenceFragment
      * Supports onPreferenceChangeListener to look for preference changes.
      *
      * @param preference The preference to be changed
-     * @param objValue The value of the selection, NOT its localized display value.
+     * @param objValue   The value of the selection, NOT its localized display value.
      */
     @Override
     public boolean onPreferenceChange(Preference preference, Object objValue) {
@@ -211,7 +201,7 @@ public class SoundSettingsFragment extends PreferenceFragment
 
     /**
      * Obtain the value for "vibrate when ringing" setting. The default value is false.
-     *
+     * <p>
      * Watch out: if the setting is missing in the device, this will try obtaining the old
      * "vibrate on ring" setting from AudioManager, and save the previous setting to the new one.
      */

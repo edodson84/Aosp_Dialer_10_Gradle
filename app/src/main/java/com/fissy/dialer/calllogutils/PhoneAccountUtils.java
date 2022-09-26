@@ -17,9 +17,10 @@
 package com.fissy.dialer.calllogutils;
 
 import android.content.Context;
-import androidx.annotation.Nullable;
 import android.telecom.PhoneAccount;
 import android.telecom.PhoneAccountHandle;
+
+import androidx.annotation.Nullable;
 
 import com.fissy.dialer.telecom.TelecomUtil;
 

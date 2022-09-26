@@ -30,43 +30,12 @@ import java.util.ArrayList;
 public abstract class CompositeCursorAdapter extends BaseAdapter {
 
     private static final int INITIAL_CAPACITY = 2;
-
-    public static class Partition {
-        boolean showIfEmpty;
-        boolean hasHeader;
-
-        Cursor cursor;
-        int idColumnIndex;
-        int count;
-
-        public Partition(boolean showIfEmpty, boolean hasHeader) {
-            this.showIfEmpty = showIfEmpty;
-            this.hasHeader = hasHeader;
-        }
-
-        /**
-         * True if the directory should be shown even if no contacts are found.
-         */
-        public boolean getShowIfEmpty() {
-            return showIfEmpty;
-        }
-
-        public boolean getHasHeader() {
-            return hasHeader;
-        }
-
-        public boolean isEmpty() {
-            return count == 0;
-        }
-    }
-
     private final Context mContext;
     private ArrayList<Partition> mPartitions;
     private int mCount = 0;
     private boolean mCacheValid = true;
     private boolean mNotificationsEnabled = true;
     private boolean mNotificationNeeded;
-
     public CompositeCursorAdapter(Context context) {
         this(context, INITIAL_CAPACITY);
     }
@@ -116,7 +85,6 @@ public abstract class CompositeCursorAdapter extends BaseAdapter {
      */
     // TODO: Is this really what this is supposed to do? Just remove the cursors? Not close them?
     // Not remove the partitions themselves? Isn't this leaking?
-
     public void clearPartitions() {
         for (Partition partition : mPartitions) {
             partition.cursor = null;
@@ -293,7 +261,7 @@ public abstract class CompositeCursorAdapter extends BaseAdapter {
     /**
      * Returns the overall number of item view types across all partitions. An
      * implementation of this method needs to ensure that the returned count is
-     * consistent with the values returned by {@link #getItemViewType(int,int)}.
+     * consistent with the values returned by {@link #getItemViewType(int, int)}.
      */
     public int getItemViewTypeCount() {
         return 1;
@@ -312,7 +280,7 @@ public abstract class CompositeCursorAdapter extends BaseAdapter {
         ensureCacheValid();
         int start = 0;
         for (int i = 0, n = mPartitions.size(); i < n; i++) {
-            int end = start  + mPartitions.get(i).count;
+            int end = start + mPartitions.get(i).count;
             if (position >= start && position < end) {
                 int offset = position - start;
                 if (mPartitions.get(i).hasHeader) {
@@ -366,7 +334,7 @@ public abstract class CompositeCursorAdapter extends BaseAdapter {
      * Returns the header view for the specified partition, creating one if needed.
      */
     protected View getHeaderView(int partition, Cursor cursor, View convertView,
-            ViewGroup parent) {
+                                 ViewGroup parent) {
         View view = convertView != null
                 ? convertView
                 : newHeaderView(mContext, partition, cursor, parent);
@@ -378,7 +346,7 @@ public abstract class CompositeCursorAdapter extends BaseAdapter {
      * Creates the header view for the specified partition.
      */
     protected View newHeaderView(Context context, int partition, Cursor cursor,
-            ViewGroup parent) {
+                                 ViewGroup parent) {
         return null;
     }
 
@@ -392,7 +360,7 @@ public abstract class CompositeCursorAdapter extends BaseAdapter {
      * Returns an item view for the specified partition, creating one if needed.
      */
     protected View getView(int partition, Cursor cursor, int position, View convertView,
-            ViewGroup parent) {
+                           ViewGroup parent) {
         View view;
         if (convertView != null) {
             view = convertView;
@@ -408,7 +376,7 @@ public abstract class CompositeCursorAdapter extends BaseAdapter {
      * corresponds directly to the current cursor position.
      */
     protected abstract View newView(Context context, int partition, Cursor cursor, int position,
-            ViewGroup parent);
+                                    ViewGroup parent);
 
     /**
      * Binds an item view for the specified partition and position. Position
@@ -538,6 +506,35 @@ public abstract class CompositeCursorAdapter extends BaseAdapter {
             super.notifyDataSetChanged();
         } else {
             mNotificationNeeded = true;
+        }
+    }
+
+    public static class Partition {
+        boolean showIfEmpty;
+        boolean hasHeader;
+
+        Cursor cursor;
+        int idColumnIndex;
+        int count;
+
+        public Partition(boolean showIfEmpty, boolean hasHeader) {
+            this.showIfEmpty = showIfEmpty;
+            this.hasHeader = hasHeader;
+        }
+
+        /**
+         * True if the directory should be shown even if no contacts are found.
+         */
+        public boolean getShowIfEmpty() {
+            return showIfEmpty;
+        }
+
+        public boolean getHasHeader() {
+            return hasHeader;
+        }
+
+        public boolean isEmpty() {
+            return count == 0;
         }
     }
 }

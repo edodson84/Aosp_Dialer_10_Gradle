@@ -135,10 +135,6 @@
     <attr name="actionViewClass" format="string" />
     <attr name="activated_background" format="reference" />
     <attr name="activityChooserViewStyle" format="reference" />
-    <attr name="alertDialogButtonGroupStyle" format="reference" />
-    <attr name="alertDialogCenterButtons" format="boolean" />
-    <attr name="alertDialogStyle" format="reference" />
-    <attr name="alertDialogTheme" format="reference" />
     <attr name="allowStacking" format="boolean" />
     <attr name="alpha" format="float" />
     <attr name="arrowHeadLength" format="dimension" />
@@ -160,7 +156,6 @@
     <attr name="borderlessButtonStyle" format="reference" />
     <attr name="bottomAppBarStyle" format="reference" />
     <attr name="bottomNavigationStyle" format="reference" />
-    <attr name="bottomSheetDialogTheme" format="reference" />
     <attr name="bottomSheetStyle" format="reference" />
     <attr name="boxBackgroundColor" format="color" />
 
@@ -220,8 +215,6 @@
     <attr name="color" format="color" />
     <attr name="colorAccent" format="color" />
     <attr name="colorBackgroundFloating" format="color" />
-    <attr name="colorButtonNormal" format="color" />
-    <attr name="colorControlActivated" format="color" />
     <attr name="colorControlHighlight" format="color" />
     <attr name="colorControlNormal" format="color" />
     <attr name="colorError" format="reference|color" />
@@ -263,9 +256,6 @@
     <attr name="counterTextAppearance" format="reference" />
     <attr name="customNavigationLayout" format="reference" />
     <attr name="defaultQueryHint" format="string" />
-    <attr name="dialogCornerRadius" format="dimension" />
-    <attr name="dialogPreferredPadding" format="dimension" />
-    <attr name="dialogTheme" format="reference" />
     <attr name="dialpad_elevation" format="dimension" />
     <attr name="dialpad_end_key_spacing" format="dimension" />
     <attr name="dialpad_style" format="reference" />
@@ -359,7 +349,6 @@
     <attr name="layout_scrollInterpolator" format="reference" />
     <attr name="lineHeight" format="dimension" />
     <attr name="listChoiceBackgroundIndicator" format="reference" />
-    <attr name="listDividerAlertDialog" format="reference" />
     <attr name="listItemLayout" format="reference" />
     <attr name="listLayout" format="reference" />
     <attr name="listMenuViewStyle" format="reference" />
@@ -509,7 +498,6 @@
     <attr name="textAppearanceSmallPopupMenu" format="reference" />
     <attr name="textAppearanceSubtitle1" format="reference" />
     <attr name="textAppearanceSubtitle2" format="reference" />
-    <attr name="textColorAlertDialogListItem" format="reference|color" />
     <attr name="textColorSearchUrl" format="reference|color" />
     <attr name="textEndPadding" format="dimension" />
     <attr name="textInputStyle" format="reference" />
@@ -550,4 +538,7 @@
     <attr name="windowMinWidthMajor" format="dimension|fraction" />
     <attr name="windowMinWidthMinor" format="dimension|fraction" />
     <attr name="windowNoTitle" format="boolean" />
+    <declare-styleable name="darkmodeView">
+        <attr name="darkmode" format="boolean" />
+    </declare-styleable>
 </resources>

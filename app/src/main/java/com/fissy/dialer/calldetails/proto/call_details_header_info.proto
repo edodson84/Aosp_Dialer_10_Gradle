@@ -5,8 +5,8 @@ option java_multiple_files = true;
 option optimize_for = LITE_RUNTIME;
 
 
-import "java/com/fissy/dialer/phonenumberproto/dialer_phone_number.proto";
-import "java/com/fissy/dialer/glidephotomanager/photo_info.proto";
+import "com/fissy/dialer/phonenumberproto/dialer_phone_number.proto";
+import "com/fissy/dialer/glidephotomanager/photo_info.proto";
 
 package com.fissy.dialer.calldetails;
 

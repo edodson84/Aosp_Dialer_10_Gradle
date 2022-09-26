@@ -20,6 +20,7 @@ import android.content.Context;
 import android.database.ContentObserver;
 import android.os.Handler;
 import android.provider.CallLog;
+
 import androidx.annotation.NonNull;
 
 import com.fissy.dialer.common.LogUtil;
@@ -48,14 +49,7 @@ public class BlockedNumberContentObserver extends ContentObserver
     private final Handler handler;
     private final String number;
     private final long timeAddedMillis;
-    private final AsyncTaskExecutor asyncTaskExecutor = AsyncTaskExecutors.createThreadPoolExecutor();    private final Runnable timeoutRunnable =
-            new Runnable() {
-                @Override
-                public void run() {
-                    unregister();
-                }
-            };
-
+    private final AsyncTaskExecutor asyncTaskExecutor = AsyncTaskExecutors.createThreadPoolExecutor();
     /**
      * Creates the BlockedNumberContentObserver to delete the new {@link CallLog} entry from the given
      * blocked number.
@@ -70,7 +64,13 @@ public class BlockedNumberContentObserver extends ContentObserver
         this.handler = Objects.requireNonNull(handler);
         this.number = number;
         this.timeAddedMillis = timeAddedMillis;
-    }
+    }    private final Runnable timeoutRunnable =
+            new Runnable() {
+                @Override
+                public void run() {
+                    unregister();
+                }
+            };
 
     @Override
     public void onChange(boolean selfChange) {
@@ -110,6 +110,8 @@ public class BlockedNumberContentObserver extends ContentObserver
         handler.removeCallbacks(timeoutRunnable);
         context.getContentResolver().unregisterContentObserver(this);
     }
+
+
 
 
 }

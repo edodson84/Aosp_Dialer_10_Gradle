@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@id/favorite_remove_view"
     android:layout_width="fill_parent"
     android:layout_height="@dimen/expanded_search_bar_height"
@@ -17,14 +16,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8.0dip"
         android:layout_marginBottom="8.0dip"
-        android:src="@drawable/quantum_ic_close_vd_theme_24"
-        app:tint="?colorIconOnUnthemedDarkBackground" />
+        android:src="@drawable/quantum_ic_close_vd_theme_24" />
 
     <TextView
         android:id="@id/remove_view_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/speed_dial_remove_favorites"
-        android:textColor="?colorTextOnUnthemedDarkBackground"
         android:textSize="16.0sp" />
 </LinearLayout>

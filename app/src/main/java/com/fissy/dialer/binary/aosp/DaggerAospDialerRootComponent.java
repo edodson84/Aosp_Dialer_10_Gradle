@@ -21,10 +21,6 @@ import com.android.incallui.speakeasy.StubSpeakEasyModule_ProvideSpeakEasyChipFa
 import com.android.incallui.speakeasy.StubSpeakEasyModule_ProvideSpeakEasySettingsActivityFactory;
 import com.android.incallui.speakeasy.StubSpeakEasyModule_ProvideSpeakEasySettingsObjectFactory;
 import com.android.incallui.speakeasy.StubSpeakEasyModule_ProvideSpeakEasyTextResourceFactory;
-import com.android.voicemail.VoicemailClient;
-import com.android.voicemail.VoicemailComponent;
-import com.android.voicemail.impl.VoicemailModule;
-import com.android.voicemail.impl.VoicemailModule_ProvideVoicemailClientFactory;
 import com.fissy.dialer.activecalls.ActiveCalls;
 import com.fissy.dialer.activecalls.ActiveCallsComponent;
 import com.fissy.dialer.activecalls.impl.ActiveCallsImpl_Factory;
@@ -60,8 +56,6 @@ import com.fissy.dialer.calllog.datasources.phonelookup.PhoneLookupDataSource;
 import com.fissy.dialer.calllog.datasources.phonelookup.PhoneLookupDataSource_Factory;
 import com.fissy.dialer.calllog.datasources.systemcalllog.SystemCallLogDataSource;
 import com.fissy.dialer.calllog.datasources.systemcalllog.SystemCallLogDataSource_Factory;
-import com.fissy.dialer.calllog.datasources.voicemail.VoicemailDataSource;
-import com.fissy.dialer.calllog.datasources.voicemail.VoicemailDataSource_Factory;
 import com.fissy.dialer.calllog.notifier.RefreshAnnotatedCallLogNotifier;
 import com.fissy.dialer.calllog.notifier.RefreshAnnotatedCallLogNotifier_Factory;
 import com.fissy.dialer.calllog.observer.MarkDirtyObserver;
@@ -210,10 +204,6 @@ import com.fissy.dialer.storage.StorageModule_ProvideUnencryptedSharedPrefsFacto
 import com.fissy.dialer.strictmode.DialerStrictMode;
 import com.fissy.dialer.strictmode.StrictModeComponent;
 import com.fissy.dialer.strictmode.impl.SystemDialerStrictMode_Factory;
-import com.fissy.dialer.theme.base.Theme;
-import com.fissy.dialer.theme.base.ThemeComponent;
-import com.fissy.dialer.theme.base.impl.AospThemeModule;
-import com.fissy.dialer.theme.base.impl.AospThemeModule_ProvideThemeModuleFactory;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -301,8 +291,6 @@ public final class DaggerAospDialerRootComponent implements AospDialerRootCompon
 
     private Provider<PhoneLookupDataSource> phoneLookupDataSourceProvider;
 
-    private Provider<VoicemailDataSource> voicemailDataSourceProvider;
-
     private Provider<DataSources> provideCallLogDataSourcesProvider;
 
     private Provider<MutationApplier> mutationApplierProvider;
@@ -387,10 +375,6 @@ public final class DaggerAospDialerRootComponent implements AospDialerRootCompon
     private Provider<SimulatorConnectionsBank> bindsSimulatorConnectionsBankProvider;
 
     private Provider<DialerStrictMode> bindDialerStrictModeProvider;
-
-    private Provider<Theme> provideThemeModuleProvider;
-
-    private Provider<VoicemailClient> provideVoicemailClientProvider;
 
     private DaggerAospDialerRootComponent(Builder builder) {
         assert builder != null;
@@ -561,15 +545,10 @@ public final class DaggerAospDialerRootComponent implements AospDialerRootCompon
                         provideLightweightExecutorProvider,
                         phoneLookupHistoryDatabaseHelperProvider);
 
-        this.voicemailDataSourceProvider =
-                VoicemailDataSource_Factory.create(
-                        provideContextProvider, provideBackgroundExecutorProvider);
-
         this.provideCallLogDataSourcesProvider =
                 CallLogModule_ProvideCallLogDataSourcesFactory.create(
                         systemCallLogDataSourceProvider,
-                        phoneLookupDataSourceProvider,
-                        voicemailDataSourceProvider);
+                        phoneLookupDataSourceProvider);
 
         this.mutationApplierProvider =
                 MutationApplier_Factory.create(provideBackgroundExecutorProvider);
@@ -727,12 +706,6 @@ public final class DaggerAospDialerRootComponent implements AospDialerRootCompon
         this.bindDialerStrictModeProvider =
                 DoubleCheck.provider((Provider) SystemDialerStrictMode_Factory.create());
 
-        this.provideThemeModuleProvider =
-                AospThemeModule_ProvideThemeModuleFactory.create(provideContextProvider);
-
-        this.provideVoicemailClientProvider =
-                DoubleCheck.provider(
-                        VoicemailModule_ProvideVoicemailClientFactory.create(provideContextProvider));
     }
 
     @Override
@@ -885,16 +858,6 @@ public final class DaggerAospDialerRootComponent implements AospDialerRootCompon
         return new StrictModeComponentImpl();
     }
 
-    @Override
-    public ThemeComponent themeComponent() {
-        return new ThemeComponentImpl();
-    }
-
-    @Override
-    public VoicemailComponent voicemailComponent() {
-        return new VoicemailComponentImpl();
-    }
-
     public static final class Builder {
         private ContextModule contextModule;
 
@@ -949,23 +912,6 @@ public final class DaggerAospDialerRootComponent implements AospDialerRootCompon
             return this;
         }
 
-        /**
-         * @deprecated This module is declared, but an instance is not used in the component. This method is a no-op. For more, see https://google.github.io/dagger/unused-modules.
-         */
-        @Deprecated
-        public Builder aospThemeModule(AospThemeModule aospThemeModule) {
-            Preconditions.checkNotNull(aospThemeModule);
-            return this;
-        }
-
-        /**
-         * @deprecated This module is declared, but an instance is not used in the component. This method is a no-op. For more, see https://google.github.io/dagger/unused-modules.
-         */
-        @Deprecated
-        public Builder voicemailModule(VoicemailModule voicemailModule) {
-            Preconditions.checkNotNull(voicemailModule);
-            return this;
-        }
     }
 
     private final class ActiveCallsComponentImpl extends ActiveCallsComponent {
@@ -1516,26 +1462,6 @@ public final class DaggerAospDialerRootComponent implements AospDialerRootCompon
         @Override
         public DialerStrictMode getDialerStrictMode() {
             return DaggerAospDialerRootComponent.this.bindDialerStrictModeProvider.get();
-        }
-    }
-
-    private final class ThemeComponentImpl extends ThemeComponent {
-        private ThemeComponentImpl() {
-        }
-
-        @Override
-        public Theme theme() {
-            return DaggerAospDialerRootComponent.this.provideThemeModuleProvider.get();
-        }
-    }
-
-    private final class VoicemailComponentImpl extends VoicemailComponent {
-        private VoicemailComponentImpl() {
-        }
-
-        @Override
-        public VoicemailClient getVoicemailClient() {
-            return DaggerAospDialerRootComponent.this.provideVoicemailClientProvider.get();
         }
     }
 }

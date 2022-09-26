@@ -9,12 +9,12 @@
         android:topLeftRadius="30dp"
         android:topRightRadius="30dp" />
 
-    <solid android:color="@android:color/white"/>
+    <solid android:color="@android:color/white" />
 
     <padding
+        android:bottom="0dp"
         android:left="0dp"
-        android:top="4dp"
         android:right="0dp"
-        android:bottom="0dp" />
+        android:top="4dp" />
 
 </shape>

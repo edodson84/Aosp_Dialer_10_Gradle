@@ -23,9 +23,10 @@ import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.fragment.app.FragmentActivity;
 import android.telecom.CallAudioState;
 import android.telecom.TelecomManager;
+
+import androidx.fragment.app.FragmentActivity;
 
 import com.android.incallui.audiomode.AudioModeProvider;
 import com.android.incallui.call.state.DialerCallState;
@@ -41,9 +42,11 @@ import com.android.incallui.incall.protocol.InCallScreenDelegateFactory;
 import com.android.incallui.incall.protocol.PrimaryCallState;
 import com.android.incallui.incall.protocol.PrimaryInfo;
 import com.fissy.dialer.R;
+import com.fissy.dialer.app.settings.ThemeOptionsSettingsFragment;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.enrichedcall.EnrichedCallComponent;
 import com.fissy.dialer.enrichedcall.Session;
+import com.fissy.dialer.main.impl.MainActivity;
 import com.fissy.dialer.multimedia.MultimediaData;
 
 import java.io.FileNotFoundException;
@@ -118,6 +121,14 @@ public class CallPendingActivity extends FragmentActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ThemeOptionsSettingsFragment.ThemeButtonBehavior mThemeBehavior = ThemeOptionsSettingsFragment.getThemeButtonBehavior(MainActivity.themeprefs);
+
+        if (mThemeBehavior == ThemeOptionsSettingsFragment.ThemeButtonBehavior.DARK) {
+            getTheme().applyStyle(R.style.DialerDark, true);
+        }
+        if (mThemeBehavior == ThemeOptionsSettingsFragment.ThemeButtonBehavior.LIGHT) {
+            getTheme().applyStyle(R.style.DialerLight, true);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pending_incall_screen);
         registerReceiver(finishReceiver, new IntentFilter(ACTION_FINISH_BROADCAST));

@@ -28,11 +28,6 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.os.SystemClock;
 import android.os.Trace;
-import androidx.annotation.IntDef;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
-import androidx.core.os.BuildCompat;
 import android.telecom.Call;
 import android.telecom.Call.Details;
 import android.telecom.Call.RttCall;
@@ -48,6 +43,12 @@ import android.telecom.TelecomManager;
 import android.telecom.VideoProfile;
 import android.text.TextUtils;
 import android.widget.Toast;
+
+import androidx.annotation.IntDef;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
+import androidx.core.os.BuildCompat;
 
 import com.android.contacts.common.compat.CallCompat;
 import com.android.incallui.audiomode.AudioModeProvider;
@@ -275,6 +276,17 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
             default:
                 return DialerCallState.INVALID;
         }
+    }
+
+    public static boolean areSame(DialerCall call1, DialerCall call2) {
+        if (call1 == null && call2 == null) {
+            return true;
+        } else if (call1 == null || call2 == null) {
+            return false;
+        }
+
+        // otherwise compare call Ids
+        return call1.getId().equals(call2.getId());
     }    private final Call.Callback telecomCallCallback =
             new Call.Callback() {
                 @Override
@@ -428,17 +440,6 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
                     }
                 }
             };
-
-    public static boolean areSame(DialerCall call1, DialerCall call2) {
-        if (call1 == null && call2 == null) {
-            return true;
-        } else if (call1 == null || call2 == null) {
-            return false;
-        }
-
-        // otherwise compare call Ids
-        return call1.getId().equals(call2.getId());
-    }
 
     public static void clearRestrictedCount() {
         hiddenCounter = 0;
@@ -1978,6 +1979,8 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
             }
         }
     }
+
+
 
 
 }

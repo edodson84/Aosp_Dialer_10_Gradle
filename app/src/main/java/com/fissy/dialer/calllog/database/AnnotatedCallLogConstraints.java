@@ -18,6 +18,7 @@ package com.fissy.dialer.calllog.database;
 
 import android.content.ContentValues;
 import android.provider.CallLog.Calls;
+
 import androidx.annotation.IntDef;
 
 import com.fissy.dialer.calllog.database.contract.AnnotatedCallLogContract.AnnotatedCallLog;
@@ -42,7 +43,6 @@ final class AnnotatedCallLogConstraints {
     public static void check(ContentValues contentValues, @Operation int operationType) {
         checkBooleanColumn(AnnotatedCallLog.IS_READ, contentValues, operationType);
         checkBooleanColumn(AnnotatedCallLog.NEW, contentValues, operationType);
-        checkBooleanColumn(AnnotatedCallLog.IS_VOICEMAIL_CALL, contentValues, operationType);
         checkCallTypeColumn(contentValues, operationType);
     }
 

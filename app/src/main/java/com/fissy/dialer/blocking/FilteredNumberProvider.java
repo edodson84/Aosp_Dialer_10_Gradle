@@ -24,8 +24,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
-import androidx.annotation.VisibleForTesting;
 import android.text.TextUtils;
+
+import androidx.annotation.VisibleForTesting;
 
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.database.Database;
@@ -37,7 +38,6 @@ import com.fissy.dialer.location.GeoUtil;
 /**
  * Filtered number content provider.
  */
-@Deprecated
 public class FilteredNumberProvider extends ContentProvider {
 
     private static final int FILTERED_NUMBERS_TABLE = 1;

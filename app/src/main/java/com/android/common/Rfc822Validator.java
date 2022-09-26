@@ -31,23 +31,23 @@ import java.util.regex.Pattern;
  * and has the specified domain name added.  It is meant for use with
  * {@link Rfc822Token} and {@link Rfc822Tokenizer}.
  *
- * @deprecated In the future make sure we don't quietly alter the user's
- *             text in ways they did not intend.  Meanwhile, hide this
- *             class from the public API because it does not even have
- *             a full understanding of the syntax it claims to correct.
  * @hide
+ * @deprecated In the future make sure we don't quietly alter the user's
+ * text in ways they did not intend.  Meanwhile, hide this
+ * class from the public API because it does not even have
+ * a full understanding of the syntax it claims to correct.
  */
-@Deprecated
+
 public class Rfc822Validator implements AutoCompleteTextView.Validator {
     /**
      * Expression that matches the local part of an email address.
      * This expression does not follow the constraints of the RFC towards the dots, because the
      * de facto standard is to allow them anywhere.
-     *
+     * <p>
      * It is however a simplification and it will not validate the double-quote syntax.
      */
     private static final String EMAIL_ADDRESS_LOCALPART_REGEXP =
-        "((?!\\s)[\\.\\w!#$%&'*+\\-/=?^`{|}~\u0080-\uFFFE])+";
+            "((?!\\s)[\\.\\w!#$%&'*+\\-/=?^`{|}~\u0080-\uFFFE])+";
 
     /**
      * Alias of characters that can be used in IRI, as per RFC 3987.
@@ -59,20 +59,20 @@ public class Rfc822Validator implements AutoCompleteTextView.Validator {
      * Its total length must not exceed 63 octets, according to RFC 5890.
      */
     private static final String LABEL_REGEXP =
-        "([" + GOOD_IRI_CHAR + "][" + GOOD_IRI_CHAR + "\\-]{0,61})?[" + GOOD_IRI_CHAR + "]";
+            "([" + GOOD_IRI_CHAR + "][" + GOOD_IRI_CHAR + "\\-]{0,61})?[" + GOOD_IRI_CHAR + "]";
 
     /**
      * Expression that matches a domain name, including international domain names in Punycode or
      * Unicode.
      */
     private static final String DOMAIN_REGEXP =
-        "("+ LABEL_REGEXP + "\\.)+"                 // Subdomains and domain
-        // Top-level domain must be at least 2 chars
-        + "[" + GOOD_IRI_CHAR + "][" + GOOD_IRI_CHAR + "\\-]{0,61}[" + GOOD_IRI_CHAR + "]";
+            "(" + LABEL_REGEXP + "\\.)+"                 // Subdomains and domain
+                    // Top-level domain must be at least 2 chars
+                    + "[" + GOOD_IRI_CHAR + "][" + GOOD_IRI_CHAR + "\\-]{0,61}[" + GOOD_IRI_CHAR + "]";
 
     /**
      * Pattern for an email address.
-     *
+     * <p>
      * It is similar to {@link android.util.Patterns#EMAIL_ADDRESS}, but also accepts Unicode
      * characters.
      */
@@ -96,8 +96,8 @@ public class Rfc822Validator implements AutoCompleteTextView.Validator {
     public boolean isValid(CharSequence text) {
         Rfc822Token[] tokens = Rfc822Tokenizer.tokenize(text);
         return tokens.length == 1 &&
-               EMAIL_ADDRESS_PATTERN.
-                   matcher(tokens[0].getAddress()).matches();
+                EMAIL_ADDRESS_PATTERN.
+                        matcher(tokens[0].getAddress()).matches();
     }
 
     /**
@@ -106,7 +106,7 @@ public class Rfc822Validator implements AutoCompleteTextView.Validator {
      * tokens.
      *
      * @param remove true to remove tokens with the wrong format, false to
-     *            attempt to fix them
+     *               attempt to fix them
      */
     public void setRemoveInvalid(boolean remove) {
         mRemoveInvalid = remove;
@@ -134,8 +134,8 @@ public class Rfc822Validator implements AutoCompleteTextView.Validator {
             }
 
             if (c == '(' || c == ')' || c == '<' || c == '>' ||
-                c == '@' || c == ',' || c == ';' || c == ':' ||
-                c == '\\' || c == '"' || c == '[' || c == ']') {
+                    c == '@' || c == ',' || c == ';' || c == ':' ||
+                    c == '\\' || c == '"' || c == '[' || c == ']') {
                 continue;
             }
 

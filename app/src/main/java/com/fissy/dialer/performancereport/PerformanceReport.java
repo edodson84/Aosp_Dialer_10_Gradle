@@ -17,9 +17,10 @@
 package com.fissy.dialer.performancereport;
 
 import android.os.SystemClock;
+import android.widget.AbsListView;
+
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
-import android.widget.AbsListView;
 
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.logging.UiAction;

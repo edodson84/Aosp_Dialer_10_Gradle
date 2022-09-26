@@ -17,11 +17,12 @@
 package com.fissy.dialer.speeddial;
 
 import android.content.Context;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.common.Assert;

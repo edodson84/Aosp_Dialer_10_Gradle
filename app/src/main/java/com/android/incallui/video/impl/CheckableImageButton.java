@@ -38,6 +38,7 @@ public class CheckableImageButton extends ImageButton implements Checkable {
     private OnCheckedChangeListener onCheckedChangeListener;
     private CharSequence contentDescriptionChecked;
     private CharSequence contentDescriptionUnchecked;
+
     public CheckableImageButton(Context context) {
         this(context, null);
     }

@@ -21,8 +21,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.OperationApplicationException;
 import android.os.RemoteException;
-import androidx.annotation.WorkerThread;
 import android.text.TextUtils;
+
+import androidx.annotation.WorkerThread;
 
 import com.fissy.dialer.calllog.database.contract.AnnotatedCallLogContract;
 import com.fissy.dialer.calllog.database.contract.AnnotatedCallLogContract.AnnotatedCallLog;

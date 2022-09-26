@@ -21,10 +21,11 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.view.Surface;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 import androidx.annotation.WorkerThread;
-import android.view.Surface;
 
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;

@@ -15,6 +15,7 @@
  */
 
 package com.android.phone.common;
+
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Looper;
@@ -39,32 +40,10 @@ import android.provider.CallLog.Calls;
  *            });
  *  log.getLastOutgoingCall(lastCallArgs);
  * </pre>
- *
  */
 
 public class CallLogAsync {
     private static final String TAG = "CallLogAsync";
-
-    /**
-     * Parameter object to hold the args to get the last outgoing call
-     * from the call log DB.
-     */
-    public static class GetLastOutgoingCallArgs {
-        public GetLastOutgoingCallArgs(Context context,
-                                       OnLastOutgoingCallComplete callback) {
-            this.context = context;
-            this.callback = callback;
-        }
-        public final Context context;
-        public final OnLastOutgoingCallComplete callback;
-    }
-
-    /** Interface to retrieve the last dialed number asynchronously. */
-    public interface OnLastOutgoingCallComplete {
-        /** @param number The last dialed number or an empty string if
-         *                none exists yet. */
-        void lastOutgoingCall(String number);
-    }
 
     /**
      * CallLog.getLastOutgoingCall(...)
@@ -74,12 +53,44 @@ public class CallLogAsync {
         return new GetLastOutgoingCallTask(args.callback).execute(args);
     }
 
+    private void assertUiThread() {
+        if (!Looper.getMainLooper().equals(Looper.myLooper())) {
+            throw new RuntimeException("Not on the UI thread!");
+        }
+    }
+
+    /**
+     * Interface to retrieve the last dialed number asynchronously.
+     */
+    public interface OnLastOutgoingCallComplete {
+        /**
+         * @param number The last dialed number or an empty string if
+         *               none exists yet.
+         */
+        void lastOutgoingCall(String number);
+    }
+
+    /**
+     * Parameter object to hold the args to get the last outgoing call
+     * from the call log DB.
+     */
+    public static class GetLastOutgoingCallArgs {
+        public final Context context;
+        public final OnLastOutgoingCallComplete callback;
+        public GetLastOutgoingCallArgs(Context context,
+                                       OnLastOutgoingCallComplete callback) {
+            this.context = context;
+            this.callback = callback;
+        }
+    }
+
     /**
      * AsyncTask to get the last outgoing call from the DB.
      */
     private class GetLastOutgoingCallTask extends AsyncTask<GetLastOutgoingCallArgs, Void, String> {
         private final OnLastOutgoingCallComplete mCallback;
         private String mNumber;
+
         public GetLastOutgoingCallTask(OnLastOutgoingCallComplete callback) {
             mCallback = callback;
         }
@@ -105,12 +116,6 @@ public class CallLogAsync {
         protected void onPostExecute(String number) {
             assertUiThread();
             mCallback.lastOutgoingCall(number);
-        }
-    }
-
-    private void assertUiThread() {
-        if (!Looper.getMainLooper().equals(Looper.myLooper())) {
-            throw new RuntimeException("Not on the UI thread!");
         }
     }
 }

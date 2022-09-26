@@ -65,10 +65,9 @@
                         android:ellipsize="marquee"
                         android:fadingEdge="horizontal"
                         android:fadingEdgeLength="3.0dip"
-                        android:fontFamily="sans-serif-medium"
                         android:singleLine="true"
                         android:textAlignment="viewStart"
-                        android:textColor="?colorTextOnUnthemedDarkBackground"
+                        android:textColor="?colorOnPrimaryContainer"
                         android:textSize="15.0sp" />
 
                     <ImageView
@@ -88,10 +87,9 @@
                     android:fadingEdge="horizontal"
                     android:fadingEdgeLength="3.0dip"
                     android:fontFamily="sans-serif"
-                    android:gravity="center_vertical"
+                    android:gravity="start"
                     android:singleLine="true"
                     android:textAlignment="viewStart"
-                    android:textColor="?colorTextOnUnthemedDarkBackground"
                     android:textSize="11.0sp" />
             </LinearLayout>
 
@@ -99,7 +97,7 @@
                 android:id="@id/contact_tile_push_state"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:background="?android:selectableItemBackground"
+                android:background="@drawable/item_background_material_borderless_dark"
                 android:importantForAccessibility="no" />
 
             <FrameLayout

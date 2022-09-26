@@ -26,8 +26,8 @@ import android.content.Context;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.provider.CallLog.Calls;
+
 import androidx.annotation.Nullable;
-import com.google.android.material.snackbar.Snackbar;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.common.Assert;
@@ -37,6 +37,7 @@ import com.fissy.dialer.common.concurrent.DialerExecutorComponent;
 import com.fissy.dialer.enrichedcall.EnrichedCallComponent;
 import com.fissy.dialer.phonenumbercache.CachedNumberLookupService;
 import com.fissy.dialer.phonenumbercache.PhoneNumberCache;
+import com.google.android.material.snackbar.Snackbar;
 
 /**
  * Dialog that clears the call log after confirming with the user

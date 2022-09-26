@@ -20,6 +20,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.database.MergeCursor;
+
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 

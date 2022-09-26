@@ -71,7 +71,7 @@
                     android:paddingEnd="@dimen/blocked_number_container_padding"
                     android:paddingBottom="27.0dip"
                     android:text="@string/blocked_call_settings_import_description"
-                    android:textColor="?colorIcon"
+
                     android:textSize="@dimen/blocked_number_settings_description_text_size" />
 
                 <Button
@@ -128,8 +128,7 @@
                     android:layout_marginStart="@dimen/blocked_number_container_padding"
                     android:layout_marginEnd="@dimen/blocked_number_container_padding"
                     android:layout_marginBottom="@dimen/blocked_number_container_padding"
-                    android:text="@string/migrate_blocked_numbers_dialog_message"
-                    android:textColor="?colorIcon" />
+                    android:text="@string/migrate_blocked_numbers_dialog_message" />
 
                 <Button
                     android:id="@id/migrate_promo_allow_button"

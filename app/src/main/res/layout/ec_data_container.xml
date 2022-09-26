@@ -2,13 +2,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="@dimen/ec_container_height"
-    android:background="?selectableItemBackground"
     android:clickable="true"
     android:paddingStart="@dimen/call_entry_text_left_margin">
 
     <TextView
         android:id="@id/multimedia_details"
-        style="@style/Dialer.TextAppearance.Secondary.Ellipsize"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
@@ -36,11 +34,9 @@
 
         <TextView
             android:id="@id/multimedia_attachments_number"
-            style="@style/Dialer.TextAppearance.Header2"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:gravity="center"
-            android:textColor="?android:textColorPrimaryInverse"
             android:textSize="20.0sp"
             android:visibility="gone" />
     </FrameLayout>

@@ -22,15 +22,16 @@ import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import androidx.annotation.FloatRange;
-import androidx.annotation.IntDef;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewConfiguration;
+
+import androidx.annotation.FloatRange;
+import androidx.annotation.IntDef;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.android.incallui.answer.impl.classifier.FalsingManager;
 import com.android.incallui.answer.impl.utils.FlingAnimationUtils;
@@ -92,6 +93,7 @@ class FlingUpDownTouchHandler implements OnTouchListener {
     private float zeroY;
     private boolean touchAboveFalsingThreshold;
     private boolean touchUsesFalsing;
+
     private FlingUpDownTouchHandler(
             @NonNull View target,
             @NonNull OnProgressChangedListener listener,

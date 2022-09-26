@@ -28,11 +28,12 @@ import android.graphics.Paint.Align;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.telecom.TelecomManager;
+import android.text.TextUtils;
+
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import android.telecom.TelecomManager;
-import android.text.TextUtils;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.common.Assert;
@@ -51,14 +52,13 @@ public class LetterTileDrawable extends Drawable {
      */
     public static final int TYPE_PERSON = 1;
     public static final int TYPE_BUSINESS = 2;
-    public static final int TYPE_VOICEMAIL = 3;
     /**
      * A generic avatar that features the default icon, default color, and no letter. Useful for
      * situations where a contact is anonymous.
      */
-    public static final int TYPE_GENERIC_AVATAR = 4;
-    public static final int TYPE_SPAM = 5;
-    public static final int TYPE_CONFERENCE = 6;
+    public static final int TYPE_GENERIC_AVATAR = 3;
+    public static final int TYPE_SPAM = 4;
+    public static final int TYPE_CONFERENCE = 5;
     @ContactType
     public static final int TYPE_DEFAULT = TYPE_PERSON;
     /**
@@ -98,8 +98,6 @@ public class LetterTileDrawable extends Drawable {
     @NonNull
     private final Drawable defaultBusinessAvatar;
     @NonNull
-    private final Drawable defaultVoicemailAvatar;
-    @NonNull
     private final Drawable defaultSpamAvatar;
     @NonNull
     private final Drawable defaultConferenceAvatar;
@@ -111,16 +109,16 @@ public class LetterTileDrawable extends Drawable {
     private int color;
     private Character letter = null;
     private String displayName;
+
     public LetterTileDrawable(final Resources res) {
         colors = res.obtainTypedArray(R.array.letter_tile_colors);
         spamColor = res.getColor(R.color.spam_contact_background);
         defaultColor = res.getColor(R.color.letter_tile_default_color);
         tileFontColor = res.getColor(R.color.letter_tile_font_color);
-        letterToTileRatio = res.getFraction(R.dimen.letter_to_tile_ratio, 1, 1);
+        letterToTileRatio = res.getFraction(R.fraction.letter_to_tile_ratio, 1, 1);
         defaultPersonAvatar =
                 res.getDrawable(R.drawable.product_logo_avatar_anonymous_white_color_120, null);
         defaultBusinessAvatar = res.getDrawable(R.drawable.quantum_ic_business_vd_theme_24, null);
-        defaultVoicemailAvatar = res.getDrawable(R.drawable.quantum_ic_voicemail_vd_theme_24, null);
         defaultSpamAvatar = res.getDrawable(R.drawable.quantum_ic_report_vd_theme_24, null);
         defaultConferenceAvatar = res.getDrawable(R.drawable.quantum_ic_group_vd_theme_24, null);
 
@@ -148,9 +146,7 @@ public class LetterTileDrawable extends Drawable {
             boolean isBusiness,
             int numberPresentation,
             boolean isConference) {
-        if (isVoicemailNumber) {
-            return LetterTileDrawable.TYPE_VOICEMAIL;
-        } else if (isSpam) {
+        if (isSpam) {
             return LetterTileDrawable.TYPE_SPAM;
         } else if (isBusiness) {
             return LetterTileDrawable.TYPE_BUSINESS;
@@ -183,9 +179,6 @@ public class LetterTileDrawable extends Drawable {
             case TYPE_BUSINESS:
                 scale = VECTOR_ICON_SCALE;
                 return defaultBusinessAvatar;
-            case TYPE_VOICEMAIL:
-                scale = VECTOR_ICON_SCALE;
-                return defaultVoicemailAvatar;
             case TYPE_SPAM:
                 scale = VECTOR_ICON_SCALE;
                 return defaultSpamAvatar;
@@ -280,12 +273,6 @@ public class LetterTileDrawable extends Drawable {
     private int pickColor(final String identifier) {
         if (contactType == TYPE_SPAM) {
             return spamColor;
-        }
-
-        if (contactType == TYPE_VOICEMAIL
-                || contactType == TYPE_BUSINESS
-                || TextUtils.isEmpty(identifier)) {
-            return defaultColor;
         }
 
         // String.hashCode() implementation is not supposed to change across java versions, so
@@ -438,10 +425,10 @@ public class LetterTileDrawable extends Drawable {
     /**
      * ContactType indicates the avatar type of the contact. For a person or for the default when no
      * name is provided, it is {@link #TYPE_DEFAULT}, otherwise, for a business it is {@link
-     * #TYPE_BUSINESS}, and voicemail contacts should use {@link #TYPE_VOICEMAIL}.
+     * #TYPE_BUSINESS}
      */
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({TYPE_PERSON, TYPE_BUSINESS, TYPE_VOICEMAIL, TYPE_GENERIC_AVATAR, TYPE_SPAM})
+    @IntDef({TYPE_PERSON, TYPE_BUSINESS, TYPE_GENERIC_AVATAR, TYPE_CONFERENCE, TYPE_SPAM})
     public @interface ContactType {
     }
 

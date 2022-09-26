@@ -37,6 +37,7 @@ public class RenderOverlay extends FrameLayout {
     // reverse list of touch clients
     private final List<Renderer> touchClients;
     private final int[] position = new int[2];
+
     public RenderOverlay(Context context, AttributeSet attrs) {
         super(context, attrs);
         renderView = new RenderView(context);

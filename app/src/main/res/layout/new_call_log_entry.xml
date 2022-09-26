@@ -104,6 +104,5 @@
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:background="?android:selectableItemBackgroundBorderless"
-        android:scaleType="center"
-        android:tint="?colorIcon" />
+        android:scaleType="center" />
 </RelativeLayout>

@@ -19,9 +19,10 @@ package com.fissy.dialer.app.contactinfo;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.text.TextUtils;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
-import android.text.TextUtils;
 
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.logging.ContactSource.Type;

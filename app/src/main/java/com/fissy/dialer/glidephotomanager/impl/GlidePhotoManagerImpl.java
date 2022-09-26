@@ -22,12 +22,13 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.Data;
-import androidx.annotation.MainThread;
-import androidx.annotation.Nullable;
 import android.telecom.TelecomManager;
 import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.QuickContactBadge;
+
+import androidx.annotation.MainThread;
+import androidx.annotation.Nullable;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.common.Assert;

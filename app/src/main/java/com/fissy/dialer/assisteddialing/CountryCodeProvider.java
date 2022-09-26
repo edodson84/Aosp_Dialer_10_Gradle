@@ -16,9 +16,10 @@
 
 package com.fissy.dialer.assisteddialing;
 
-import androidx.annotation.VisibleForTesting;
 import android.text.TextUtils;
 import android.util.ArraySet;
+
+import androidx.annotation.VisibleForTesting;
 
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.configprovider.ConfigProvider;

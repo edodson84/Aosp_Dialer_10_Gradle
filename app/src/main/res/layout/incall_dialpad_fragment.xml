@@ -8,5 +8,10 @@
     android:clipToPadding="false"
     android:orientation="vertical">
 
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/shadow_length"
+        android:background="@drawable/shadow_fade_up" />
+
     <include layout="@layout/dialpad_view" />
 </view>

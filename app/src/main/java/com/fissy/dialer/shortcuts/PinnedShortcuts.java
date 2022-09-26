@@ -26,10 +26,11 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build.VERSION_CODES;
 import android.provider.ContactsContract.Contacts;
+import android.util.ArrayMap;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.WorkerThread;
 import androidx.core.content.ContextCompat;
-import android.util.ArrayMap;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.common.Assert;
@@ -59,6 +60,7 @@ final class PinnedShortcuts {
             };
     private final Context context;
     private final ShortcutInfoFactory shortcutInfoFactory;
+
     PinnedShortcuts(@NonNull Context context) {
         this.context = context;
         this.shortcutInfoFactory = new ShortcutInfoFactory(context, new IconFactory(context));

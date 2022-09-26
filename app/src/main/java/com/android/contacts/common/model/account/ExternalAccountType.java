@@ -27,10 +27,11 @@ import android.content.res.TypedArray;
 import android.content.res.XmlResourceParser;
 import android.provider.ContactsContract.CommonDataKinds.Photo;
 import android.provider.ContactsContract.CommonDataKinds.StructuredName;
-import androidx.annotation.VisibleForTesting;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Xml;
+
+import androidx.annotation.VisibleForTesting;
 
 import com.android.contacts.common.model.dataitem.DataKind;
 import com.fissy.dialer.R;

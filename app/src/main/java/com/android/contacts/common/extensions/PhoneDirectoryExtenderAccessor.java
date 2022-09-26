@@ -15,6 +15,7 @@
 package com.android.contacts.common.extensions;
 
 import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 

@@ -23,10 +23,11 @@ import android.content.pm.PackageManager;
 import android.content.pm.ShortcutInfo;
 import android.content.pm.ShortcutManager;
 import android.os.Build.VERSION_CODES;
+import android.util.ArrayMap;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.WorkerThread;
 import androidx.core.content.ContextCompat;
-import android.util.ArrayMap;
 
 import com.android.contacts.common.list.ContactEntry;
 import com.fissy.dialer.common.Assert;
@@ -67,6 +68,7 @@ final class DynamicShortcuts {
     private static final int MAX_DYNAMIC_SHORTCUTS = 3;
     private final Context context;
     private final ShortcutInfoFactory shortcutInfoFactory;
+
     DynamicShortcuts(@NonNull Context context, IconFactory iconFactory) {
         this.context = context;
         this.shortcutInfoFactory = new ShortcutInfoFactory(context, iconFactory);

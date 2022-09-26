@@ -18,11 +18,12 @@ package com.fissy.dialer.simulator.impl;
 
 import android.content.Context;
 import android.net.Uri;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.telecom.Connection;
 import android.telecom.VideoProfile;
 import android.view.Surface;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;

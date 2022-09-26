@@ -25,6 +25,33 @@ import java.util.Map;
  */
 public class ProjectionMap extends HashMap<String, String> {
 
+    private String[] mColumns;
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    /**
+     * Returns a sorted array of all column names in the projection map.
+     */
+    public String[] getColumnNames() {
+        return mColumns;
+    }
+
+    private void putColumn(String alias, String column) {
+        super.put(alias, column);
+    }
+
+    @Override
+    public String put(String key, String value) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void putAll(Map<? extends String, ? extends String> map) {
+        throw new UnsupportedOperationException();
+    }
+
     public static class Builder {
 
         private ProjectionMap mMap = new ProjectionMap();
@@ -61,32 +88,5 @@ public class ProjectionMap extends HashMap<String, String> {
             return mMap;
         }
 
-    }
-
-    private String[] mColumns;
-
-    public static Builder builder() {
-        return new Builder();
-    }
-
-    /**
-     * Returns a sorted array of all column names in the projection map.
-     */
-    public String[] getColumnNames() {
-        return mColumns;
-    }
-
-    private void putColumn(String alias, String column) {
-        super.put(alias, column);
-    }
-
-    @Override
-    public String put(String key, String value) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void putAll(Map<? extends String, ? extends String> map) {
-        throw new UnsupportedOperationException();
     }
 }

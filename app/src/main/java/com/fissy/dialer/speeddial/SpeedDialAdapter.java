@@ -17,18 +17,19 @@
 package com.fissy.dialer.speeddial;
 
 import android.content.Context;
-import androidx.annotation.IntDef;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.RecyclerView.ViewHolder;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import android.util.ArrayMap;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.view.animation.AnticipateInterpolator;
 import android.widget.FrameLayout;
+
+import androidx.annotation.IntDef;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.common.Assert;
@@ -77,6 +78,7 @@ public final class SpeedDialAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private ItemTouchHelper itemTouchHelper;
     private RemoveViewHolder removeViewHolder;
     private FavoritesViewHolder draggingFavoritesViewHolder;
+
     public SpeedDialAdapter(
             Context context,
             FavoriteContactsListener favoritesListener,
@@ -319,7 +321,7 @@ public final class SpeedDialAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({RowType.STARRED_HEADER, RowType.SUGGESTION_HEADER, RowType.STARRED, RowType.SUGGESTION})
+    @IntDef({RowType.STARRED_HEADER, RowType.SUGGESTION_HEADER, RowType.STARRED, RowType.SUGGESTION, RowType.REMOVE_VIEW})
     @interface RowType {
         int REMOVE_VIEW = 0;
         int STARRED_HEADER = 1;

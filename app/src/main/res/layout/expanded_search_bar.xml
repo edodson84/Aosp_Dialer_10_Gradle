@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@id/search_box_expanded"
     android:layout_width="fill_parent"
     android:layout_height="@dimen/expanded_search_bar_height"
@@ -14,8 +13,7 @@
         android:layout_marginStart="8.0dip"
         android:background="?selectableItemBackgroundBorderless"
         android:contentDescription="@string/action_menu_back_from_search"
-        android:src="@drawable/quantum_ic_arrow_back_vd_theme_24"
-        android:tint="?android:colorPrimary" />
+        android:src="@drawable/quantum_ic_arrow_back_vd_theme_24" />
 
     <EditText
         android:id="@id/search_view"
@@ -25,14 +23,11 @@
         android:layout_marginStart="8.0dip"
         android:layout_toStartOf="@id/search_clear_button"
         android:layout_toEndOf="@id/search_back_button"
-        android:background="@null"
         android:hint="@string/dialer_hint_find_contact"
         android:imeOptions="flagNoExtractUi"
         android:inputType="textFilter"
         android:maxLines="1"
         android:minHeight="48.0dip"
-        android:textColor="?android:textColorSecondary"
-        android:textColorHint="?android:textColorHint"
         android:textCursorDrawable="@drawable/custom_cursor"
         android:textSize="16.0sp" />
 
@@ -46,6 +41,5 @@
         android:contentDescription="@string/description_clear_search"
         android:scaleType="center"
         android:src="@drawable/quantum_ic_close_vd_theme_24"
-        android:visibility="gone"
-        app:tint="?colorIcon" />
+        android:visibility="gone" />
 </RelativeLayout>

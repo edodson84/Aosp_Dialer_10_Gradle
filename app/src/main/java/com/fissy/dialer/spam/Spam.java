@@ -19,6 +19,7 @@ package com.fissy.dialer.spam;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.provider.CallLog.Calls;
+
 import androidx.annotation.Nullable;
 
 import com.fissy.dialer.DialerPhoneNumber;

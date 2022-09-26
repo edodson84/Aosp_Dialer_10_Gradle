@@ -17,10 +17,11 @@
 package com.fissy.dialer.app.calllog;
 
 import android.content.Context;
+import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.view.View;
 
 import com.fissy.dialer.blocking.FilteredNumberAsyncQueryHandler;
 import com.fissy.dialer.blockreportspam.BlockReportSpamDialogs;

@@ -23,9 +23,10 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
+import android.text.TextUtils;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import android.text.TextUtils;
 
 import com.fissy.dialer.preferredsim.PreferredSimFallbackContract;
 import com.fissy.dialer.preferredsim.PreferredSimFallbackContract.PreferredSim;

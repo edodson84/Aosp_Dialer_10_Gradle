@@ -18,6 +18,7 @@ package com.android.contacts.common;
 
 import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.Directory;
+
 import androidx.annotation.IntDef;
 
 import java.lang.annotation.Retention;

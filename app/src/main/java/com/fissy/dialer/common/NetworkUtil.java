@@ -22,11 +22,12 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.telephony.TelephonyManager;
+import android.text.TextUtils;
+
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresPermission;
 import androidx.annotation.StringDef;
-import android.telephony.TelephonyManager;
-import android.text.TextUtils;
 
 import com.fissy.dialer.R;
 

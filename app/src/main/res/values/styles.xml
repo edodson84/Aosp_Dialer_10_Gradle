@@ -1,65 +1,216 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="DialpadBottomKeyNumberStyle" parent="DialpadKeyNumberStyle">
-        <item name="android:layout_marginBottom">@dimen/dialpad_zero_key_number_margin_bottom</item>
+
+    <style name="DialerLight" parent="@style/Theme.Material3.Light">
+        <item name="android:textColorHighlight">@color/highlighted_text_material</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:navigationBarColor">?android:colorBackground</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="colorPrimary">@color/md_theme_light_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_light_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_dark_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_dark_onPrimaryContainer</item>
+        <item name="colorSecondary">@color/md_theme_light_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_light_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/md_theme_light_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/md_theme_light_onSecondaryContainer</item>
+        <item name="colorTertiary">@color/md_theme_light_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_light_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_light_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_light_onTertiaryContainer</item>
+        <item name="colorError">@color/md_theme_light_error</item>
+        <item name="colorErrorContainer">@color/md_theme_light_errorContainer</item>
+        <item name="colorOnError">@color/md_theme_light_onError</item>
+        <item name="colorOnErrorContainer">@color/md_theme_light_onErrorContainer</item>
+        <item name="android:colorBackground">@color/md_theme_light_background</item>
+        <item name="colorOnBackground">@color/md_theme_light_onBackground</item>
+        <item name="colorSurface">@color/md_theme_light_surface</item>
+        <item name="colorOnSurface">@color/md_theme_light_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_light_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_light_onSurfaceVariant</item>
+        <item name="colorOutline">@color/md_theme_light_outline</item>
+        <item name="colorOnSurfaceInverse">@color/md_theme_light_inverseOnSurface</item>
+        <item name="colorSurfaceInverse">@color/md_theme_light_inverseSurface</item>
+        <item name="colorPrimaryInverse">@color/md_theme_light_inversePrimary</item>
+        <item name="android:alertDialogTheme">@style/AlertDialogTheme</item>
     </style>
 
-    <style name="Dialpad_Light">
-        <item name="dialpad_text_color">@color/dialpad_digits_text_color</item>
-        <item name="dialpad_text_color_primary">@color/dialpad_primary_text_color</item>
-        <item name="dialpad_text_color_secondary">@color/dialpad_secondary_text_color</item>
-        <item name="dialpad_icon_tint">@color/dialpad_icon_tint</item>
-        <item name="dialpad_voicemail_tint">@color/dialpad_voicemail_tint</item>
-        <item name="dialpad_background">@color/background_dialpad</item>
-        <item name="dialpad_separator_color">#e3e3e3</item>
-        <item name="dialpad_margin_style">@style/DialpadSpaceStyle</item>
-        <item name="dialpad_delete_padding">@dimen/dialpad_digits_padding</item>
+    <style name="Dialer.ThemeBase.NoActionBarLight" parent="@style/DialerLight">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="MainActivityTheme.Dark" parent="@style/MainActivityThemeBase.Dark">
+    <style name="MainActivityThemeLight" parent="@style/MainActivityThemeBaseLight">
         <item name="android:navigationBarColor">?android:colorBackgroundFloating</item>
         <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
-    <style name="MainActivityThemeBase.Dark" parent="@style/Dialer.Dark.ThemeBase.NoActionBar">
-        <item name="actionBarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
-        <item name="actionModeStyle">@style/MainActionModeStyle</item>
+    <style name="MainActivityThemeBaseLight" parent="@style/Dialer.ThemeBase.NoActionBarLight">
         <item name="dialpad_style">@style/Dialpad.Themed</item>
     </style>
 
-    <style name="Dialer.Dark" parent="@style/Theme.Material3.Dark">
-        <item name="android:textColorLink">@color/dialer_theme_color</item>
-        <item name="android:textAppearanceButton">@style/DialerButtonTextStyle</item>
+    <style name="DialerDark" parent="@style/Theme.Material3.Dark">
+        <item name="android:textColorHighlight">@color/highlighted_text_material</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:alertDialogTheme">@style/AlertDialogTheme</item>
-        <item name="android:colorButtonNormal">?android:colorPrimary</item>
-        <item name="alertDialogTheme">@style/AlertDialogTheme</item>
+        <item name="android:navigationBarColor">?android:colorBackground</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="colorPrimary">@color/md_theme_dark_primary</item>
+        <item name="android:colorControlActivated">@color/md_theme_dark_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_dark_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_dark_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_dark_onPrimaryContainer</item>
+        <item name="colorSecondary">@color/md_theme_dark_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_dark_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/md_theme_dark_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/md_theme_dark_onSecondaryContainer</item>
+        <item name="colorTertiary">@color/md_theme_dark_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_dark_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_dark_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_dark_onTertiaryContainer</item>
+        <item name="colorError">@color/md_theme_dark_error</item>
+        <item name="colorErrorContainer">@color/md_theme_dark_errorContainer</item>
+        <item name="colorOnError">@color/md_theme_dark_onError</item>
+        <item name="colorOnErrorContainer">@color/md_theme_dark_onErrorContainer</item>
+        <item name="android:colorBackground">@color/md_theme_dark_background</item>
+        <item name="colorOnBackground">@color/md_theme_dark_onBackground</item>
+        <item name="colorSurface">@color/md_theme_dark_surface</item>
+        <item name="colorOnSurface">@color/md_theme_dark_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_dark_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_dark_onSurfaceVariant</item>
+        <item name="colorOutline">@color/md_theme_dark_outline</item>
+        <item name="colorOnSurfaceInverse">@color/md_theme_dark_inverseOnSurface</item>
+        <item name="colorSurfaceInverse">@color/md_theme_dark_inverseSurface</item>
+        <item name="colorPrimaryInverse">@color/md_theme_dark_inversePrimary</item>
     </style>
-
-    <style name="Dialer.Dark.ThemeBase" parent="@style/Dialer.Dark">
-        <item name="android:colorBackground">@color/google_grey_900</item>
-        <item name="android:textColorPrimary">@color/dialer_dark_primary_text_color</item>
-        <item name="android:textColorSecondary">@color/dialer_dark_secondary_text_color</item>
-        <item name="android:textColorPrimaryInverse">@color/dialer_primary_text_color</item>
-        <item name="android:textColorSecondaryInverse">@color/dialer_secondary_text_color</item>
-        <item name="android:textColorHint">@color/google_grey_600</item>
-        <item name="android:colorPrimary">@color/dialer_dark_theme_color</item>
-        <item name="android:colorPrimaryDark">@color/dialer_dark_theme_color_dark</item>
-        <item name="android:colorAccent">@color/dialer_dark_secondary_color</item>
-        <item name="android:colorBackgroundFloating">@color/google_grey_800</item>
-        <item name="colorAccent">@color/dialer_dark_secondary_color</item>
-        <item name="colorControlActivated">?android:colorPrimary</item>
-        <item name="colorIcon">?android:textColorSecondary</item>
-        <item name="colorIconOnUnthemedDarkBackground">@android:color/white</item>
-        <item name="colorIconSecondary">?android:textColorSecondary</item>
-        <item name="colorPrimary">@color/dialer_dark_theme_color</item>
-        <item name="colorPrimary20pct">@color/dialer_dark_theme_color_20pct</item>
-        <item name="colorPrimaryDark">@color/dialer_dark_theme_color_dark</item>
-        <item name="colorTextOnUnthemedDarkBackground">@android:color/white</item>
-    </style>
-
-    <style name="Dialer.Dark.ThemeBase.NoActionBar" parent="@style/Dialer.Dark.ThemeBase">
+    <style name="Dialer.ThemeBase.NoActionBarDark" parent="@style/DialerDark">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="MainActivityThemeDark" parent="@style/MainActivityThemeBaseDark">
+        <item name="android:navigationBarColor">?android:colorBackgroundFloating</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="MainActivityThemeBaseDark" parent="@style/Dialer.ThemeBase.NoActionBarDark">
+        <item name="dialpad_style">@style/Dialpad.Themed</item>
+    </style>
+    <style name="TextAppearance.Title.Expanded" parent="@style/TextAppearance.Title">
+        <item name="android:textSize">36.0sp</item>
+    </style>
+
+    <style name="TextAppearance.Title" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textSize">22.0sp</item>
+    </style>
+
+    <style name="Dialer" parent="@style/Theme.Material3.Light">
+        <item name="android:textColorHighlight">@color/highlighted_text_material</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:navigationBarColor">?android:colorBackground</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="colorPrimary">@color/md_theme_light_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_light_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_dark_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_dark_onPrimaryContainer</item>
+        <item name="colorSecondary">@color/md_theme_light_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_light_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/md_theme_light_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/md_theme_light_onSecondaryContainer</item>
+        <item name="colorTertiary">@color/md_theme_light_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_light_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_light_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_light_onTertiaryContainer</item>
+        <item name="colorError">@color/md_theme_light_error</item>
+        <item name="colorErrorContainer">@color/md_theme_light_errorContainer</item>
+        <item name="colorOnError">@color/md_theme_light_onError</item>
+        <item name="colorOnErrorContainer">@color/md_theme_light_onErrorContainer</item>
+        <item name="android:colorBackground">@color/md_theme_light_background</item>
+        <item name="colorOnBackground">@color/md_theme_light_onBackground</item>
+        <item name="colorSurface">@color/md_theme_light_surface</item>
+        <item name="colorOnSurface">@color/md_theme_light_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_light_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_light_onSurfaceVariant</item>
+        <item name="colorOutline">@color/md_theme_light_outline</item>
+        <item name="colorOnSurfaceInverse">@color/md_theme_light_inverseOnSurface</item>
+        <item name="colorSurfaceInverse">@color/md_theme_light_inverseSurface</item>
+        <item name="colorPrimaryInverse">@color/md_theme_light_inversePrimary</item>
+        <item name="android:alertDialogTheme">@style/AlertDialogTheme</item>
+    </style>
+
+    <style name="Theme.InCallScreen" parent="@style/Dialer.ThemeBase.NoActionBar">
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:windowShowWallpaper">true</item>
+        <item name="dialpad_key_button_touch_tint">?colorPrimary20pct</item>
+        <item name="dialpad_style">@style/InCallDialpad</item>
+    </style>
+
+    <style name="Theme.InCallScreenLight" parent="@style/Dialer.ThemeBase.NoActionBarLight">
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:windowShowWallpaper">true</item>
+        <item name="dialpad_key_button_touch_tint">?colorPrimary20pct</item>
+        <item name="dialpad_style">@style/InCallDialpadLight</item>
+    </style>
+
+    <style name="Theme.InCallScreenDark" parent="@style/Dialer.ThemeBase.NoActionBarDark">
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:windowShowWallpaper">true</item>
+        <item name="dialpad_key_button_touch_tint">?colorPrimary20pct</item>
+        <item name="dialpad_style">@style/InCallDialpadDark</item>
+    </style>
+
+    <style name="InCallDialpadDark" parent="@style/Dialpad.ThemedDark">
+        <item name="dialpad_digits_adjustable_height">
+            @dimen/incall_dialpad_digits_adjustable_height
+        </item>
+        <item name="dialpad_digits_adjustable_text_size">
+            @dimen/incall_dialpad_digits_adjustable_text_size
+        </item>
+        <item name="dialpad_elevation">10.0dip</item>
+        <item name="dialpad_end_key_spacing">@dimen/incall_end_call_spacing</item>
+        <item name="dialpad_key_letters_size_for_dual_alphabets">
+            @dimen/incall_dialpad_key_letters_size_for_dual_alphabets
+        </item>
+        <item name="dialpad_key_letters_size_for_single_alphabet">
+            @dimen/incall_dialpad_key_letters_size_for_single_alphabet
+        </item>
+        <item name="dialpad_key_number_margin_bottom">
+            @dimen/incall_dialpad_key_number_margin_bottom
+        </item>
+        <item name="dialpad_key_numbers_size">@dimen/incall_dialpad_key_numbers_size</item>
+    </style>
+
+    <style name="Dialpad.ThemedDark" parent="@style/DialpadDark">
+        <item name="dialpad_background">?android:colorBackground</item>
+        <item name="dialpad_text_color">?android:textColorSecondary</item>
+        <item name="dialpad_text_color_primary">?android:colorPrimary</item>
+        <item name="dialpad_text_color_secondary">?android:textColorSecondary</item>
+    </style>
+
+    <style name="DialpadDark">
+        <item name="dialpad_digits_adjustable_height">@dimen/dialpad_digits_height</item>
+        <item name="dialpad_digits_adjustable_text_size">@dimen/dialpad_digits_text_size</item>
+        <item name="dialpad_elevation">0.0dip</item>
+        <item name="dialpad_end_key_spacing">@dimen/dialpad_bottom_space_height</item>
+        <item name="dialpad_key_letters_size_for_dual_alphabets">
+            @dimen/dialpad_key_letters_default_size_for_dual_alphabets
+        </item>
+        <item name="dialpad_key_letters_size_for_single_alphabet">
+            @dimen/dialpad_key_letters_default_size_for_single_alphabet
+        </item>
+        <item name="dialpad_key_number_margin_bottom">
+            @dimen/dialpad_key_number_default_margin_bottom
+        </item>
+        <item name="dialpad_key_numbers_size">@dimen/dialpad_key_numbers_default_size</item>
+    </style>
+
+    <style name="DialpadBottomKeyNumberStyle" parent="DialpadKeyNumberStyle">
+        <item name="android:layout_marginBottom">@dimen/dialpad_zero_key_number_margin_bottom</item>
     </style>
 
     <style name="ActionModeTitleTextStyle" parent="@style/TextAppearance.Material3.ActionBar.Title">
@@ -73,12 +224,6 @@
         <item name="android:windowAnimationStyle">@android:style/Animation</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
     </style>
-
-    <style name="AlertDialogTheme" parent="@style/MaterialAlertDialog.Material3">
-        <item name="android:colorAccent">@color/dialer_theme_color</item>
-        <item name="colorAccent">@color/dialer_theme_color</item>
-    </style>
-
 
     <style name="Answer.Button" parent="@style/Widget.Material3.Button">
         <item name="android:stateListAnimator">@animator/button_state</item>
@@ -150,7 +295,6 @@
     <style name="CallLogActionIconStyle">
         <item name="android:layout_width">@dimen/call_log_action_icon_dimen</item>
         <item name="android:layout_height">@dimen/call_log_action_icon_dimen</item>
-        <item name="android:tint">?colorIcon</item>
         <item name="android:importantForAccessibility">no</item>
         <item name="android:layout_marginStart">@dimen/call_log_action_icon_margin_start</item>
     </style>
@@ -194,13 +338,13 @@
         <item name="android:textColor">?android:textColorPrimary</item>
     </style>
 
-    <style name="Dialer" parent="@style/Theme.Material3.Light">
-        <item name="android:textColorLink">@color/dialer_theme_color</item>
-        <item name="android:textAppearanceButton">@style/DialerButtonTextStyle</item>
-        <item name="android:alertDialogTheme">@style/AlertDialogTheme</item>
-        <item name="android:colorButtonNormal">?android:colorPrimary</item>
-        <item name="alertDialogTheme">@style/AlertDialogTheme</item>
+
+    <style name="AlertDialogTheme" parent="@style/ThemeOverlay.Material3.Dialog.Alert">
+        <item name="android:background">@drawable/popup_background</item>
+        <item name="dialogCornerRadius">@dimen/material_corner_radius</item>
+        <item name="colorAccent">?android:colorPrimary</item>
     </style>
+
 
     <style name="Dialer.Incall.TextAppearance" parent="@android:style/TextAppearance.Material">
         <item name="android:textSize">18.0sp</item>
@@ -280,42 +424,7 @@
         <item name="android:fontFamily">sans-serif-regular</item>
     </style>
 
-    <style name="Dialer.ThemeBase" parent="@style/Dialer">
-        <item name="android:colorBackground">@color/dialer_background_color</item>
-        <item name="android:textColorPrimary">@color/dialer_primary_text_color</item>
-        <item name="android:textColorSecondary">@color/dialer_secondary_text_color</item>
-        <item name="android:textColorPrimaryInverse">@color/google_grey_300</item>
-        <item name="android:textColorSecondaryInverse">@color/google_grey_400</item>
-        <item name="android:textColorHint">@color/google_grey_600</item>
-        <item name="android:colorPrimary">@color/dialer_theme_color</item>
-        <item name="android:colorPrimaryDark">@color/dialer_theme_color_dark</item>
-        <item name="android:colorAccent">@color/dialer_secondary_color</item>
-        <item name="android:colorBackgroundFloating">@android:color/white</item>
-        <item name="colorAccent">@color/dialer_secondary_color</item>
-        <item name="colorControlActivated">?android:colorPrimary</item>
-        <item name="colorIcon">@color/google_grey_700</item>
-        <item name="colorIconOnUnthemedDarkBackground">@android:color/white</item>
-        <item name="colorIconSecondary">@color/google_grey_400</item>
-        <item name="colorMobileOriginatingChatBackground">@color/google_blue_100</item>
-        <item name="colorMobileOriginatingChatText">@color/google_blue_900</item>
-        <item name="colorMobileTerminatingChatBackground">@color/google_grey_100</item>
-        <item name="colorMobileTerminatingChatText">@color/google_grey_900</item>
-        <item name="colorPrimary">@color/dialer_theme_color</item>
-        <item name="colorPrimary20pct">@color/dialer_theme_color_20pct</item>
-        <item name="colorPrimaryDark">@color/dialer_theme_color_dark</item>
-        <item name="colorTextOnUnthemedDarkBackground">@android:color/white</item>
-    </style>
-
-    <style name="Dialer.ThemeBase.ActionBar" parent="@style/Dialer.ThemeBase">
-        <item name="actionBarPopupTheme">@style/ThemeOverlay.AppCompat.Light</item>
-        <item name="actionBarSize">@dimen/action_bar_height</item>
-        <item name="actionBarStyle">@style/DialerActionBarBaseStyle</item>
-        <item name="actionBarTheme">@style/DialerActionBarBaseTheme</item>
-        <item name="actionBarWidgetTheme">@null</item>
-        <item name="listChoiceBackgroundIndicator">@drawable/abc_list_selector_holo_dark</item>
-    </style>
-
-    <style name="Dialer.ThemeBase.NoActionBar" parent="@style/Dialer.ThemeBase">
+    <style name="Dialer.ThemeBase.NoActionBar" parent="@style/Dialer">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
@@ -376,6 +485,30 @@
         <item name="dialpad_text_color_secondary">?android:textColorSecondary</item>
     </style>
 
+    <style name="DialpadLight">
+        <item name="dialpad_digits_adjustable_height">@dimen/dialpad_digits_height</item>
+        <item name="dialpad_digits_adjustable_text_size">@dimen/dialpad_digits_text_size</item>
+        <item name="dialpad_elevation">0.0dip</item>
+        <item name="dialpad_end_key_spacing">@dimen/dialpad_bottom_space_height</item>
+        <item name="dialpad_key_letters_size_for_dual_alphabets">
+            @dimen/dialpad_key_letters_default_size_for_dual_alphabets
+        </item>
+        <item name="dialpad_key_letters_size_for_single_alphabet">
+            @dimen/dialpad_key_letters_default_size_for_single_alphabet
+        </item>
+        <item name="dialpad_key_number_margin_bottom">
+            @dimen/dialpad_key_number_default_margin_bottom
+        </item>
+        <item name="dialpad_key_numbers_size">@dimen/dialpad_key_numbers_default_size</item>
+    </style>
+
+    <style name="Dialpad.ThemedLight" parent="@style/DialpadLight">
+        <item name="dialpad_background">?android:colorBackgroundFloating</item>
+        <item name="dialpad_text_color">?android:textColorSecondary</item>
+        <item name="dialpad_text_color_primary">?android:colorPrimary</item>
+        <item name="dialpad_text_color_secondary">?android:textColorSecondary</item>
+    </style>
+
     <style name="DialpadContainer">
         <item name="android:layout_alignParentTop">true</item>
     </style>
@@ -391,7 +524,6 @@
     </style>
 
     <style name="DialpadKeyInternalLayoutStyle">
-        <item name="android:background">@drawable/btn_borderless_dialpad</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:orientation">vertical</item>
@@ -446,23 +578,6 @@
         <item name="android:layout_weight">1.0</item>
     </style>
 
-    <style name="DialtactsActionBarTabTextStyle" parent="@style/Widget.Material3.ActionBar.Solid">
-        <item name="android:textSize">@dimen/tab_text_size</item>
-        <item name="android:textColor">?colorTextOnUnthemedDarkBackground</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
-    </style>
-
-    <style name="DialtactsActionBarTitleText" parent="@android:style/TextAppearance.Material.Widget.ActionBar.Title">
-        <item name="android:textColor">?colorTextOnUnthemedDarkBackground</item>
-    </style>
-
-    <style name="DialtactsSearchBarThemeOverlay" parent="@style/ThemeOverlay.Material3.Light" />
-
-    <style name="DialtactsTheme" parent="@style/Dialer.ThemeBase.ActionBar">
-        <item name="android:navigationBarColor">?android:windowBackground</item>
-        <item name="android:windowLightNavigationBar">true</item>
-        <item name="android:navigationBarDividerColor">#ffe0e0e0</item>
-    </style>
 
     <style name="ErrorActionDeclineStyle">
         <item name="android:textSize">14.0sp</item>
@@ -535,6 +650,27 @@
         <item name="dialpad_key_numbers_size">@dimen/incall_dialpad_key_numbers_size</item>
     </style>
 
+    <style name="InCallDialpadLight" parent="@style/Dialpad.ThemedLight">
+        <item name="dialpad_digits_adjustable_height">
+            @dimen/incall_dialpad_digits_adjustable_height
+        </item>
+        <item name="dialpad_digits_adjustable_text_size">
+            @dimen/incall_dialpad_digits_adjustable_text_size
+        </item>
+        <item name="dialpad_elevation">10.0dip</item>
+        <item name="dialpad_end_key_spacing">@dimen/incall_end_call_spacing</item>
+        <item name="dialpad_key_letters_size_for_dual_alphabets">
+            @dimen/incall_dialpad_key_letters_size_for_dual_alphabets
+        </item>
+        <item name="dialpad_key_letters_size_for_single_alphabet">
+            @dimen/incall_dialpad_key_letters_size_for_single_alphabet
+        </item>
+        <item name="dialpad_key_number_margin_bottom">
+            @dimen/incall_dialpad_key_number_margin_bottom
+        </item>
+        <item name="dialpad_key_numbers_size">@dimen/incall_dialpad_key_numbers_size</item>
+    </style>
+
     <style name="Incall.Button.End" parent="@android:style/Widget.Material.Button">
         <item name="android:background">@drawable/incall_end_call_background</item>
         <item name="android:padding">8.0dip</item>
@@ -572,8 +708,6 @@
     </style>
 
     <style name="MainActivityThemeBase" parent="@style/Dialer.ThemeBase.NoActionBar">
-        <item name="actionBarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
-        <item name="actionModeStyle">@style/MainActionModeStyle</item>
         <item name="dialpad_style">@style/Dialpad.Themed</item>
     </style>
 
@@ -583,7 +717,6 @@
         <item name="android:background">?android:colorPrimary</item>
         <item name="android:height">@dimen/action_bar_height</item>
         <item name="android:displayOptions" />
-        <item name="android:titleTextStyle">@style/DialtactsActionBarTitleText</item>
         <item name="android:elevation">@dimen/action_bar_elevation</item>
         <item name="android:contentInsetStart">0.0dip</item>
         <item name="android:contentInsetEnd">0.0dip</item>
@@ -594,10 +727,9 @@
         <item name="elevation">@dimen/action_bar_elevation</item>
         <item name="height">@dimen/action_bar_height</item>
         <item name="icon">@android:color/transparent</item>
-        <item name="titleTextStyle">@style/DialtactsActionBarTitleText</item>
     </style>
 
-    <style name="ManageBlockedNumbersStyle" parent="@style/SettingsStyle">
+    <style name="ManageBlockedNumbersStyle" parent="@style/Dialer">
         <item name="android:actionBarStyle">@style/ManageBlockedNumbersActionBarStyle</item>
         <item name="android:windowActionBarOverlay">true</item>
         <item name="android:fastScrollTrackDrawable">@null</item>
@@ -664,13 +796,6 @@
         <item name="textAllCaps">false</item>
     </style>
 
-    <style name="SettingsStyle" parent="@style/Dialer.ThemeBase.ActionBar">
-        <item name="android:textColorPrimary">@color/settings_text_color_primary</item>
-        <item name="android:textColorSecondary">@color/settings_text_color_secondary</item>
-        <item name="android:windowBackground">?android:colorBackground</item>
-        <item name="android:colorAccent">?android:colorPrimary</item>
-    </style>
-
     <style name="TextActionStyle">
         <item name="android:textColor">?android:colorPrimary</item>
         <item name="android:gravity">end|center</item>
@@ -702,7 +827,6 @@
     </style>
 
 
-
     <style name="Theme.CallSubjectDialogTheme" parent="@style/Theme.Material3.Light.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
@@ -717,20 +841,7 @@
     </style>
 
 
-    <style name="Theme.InCallScreen" parent="@style/Dialer.ThemeBase.NoActionBar">
-        <item name="android:windowBackground">@drawable/incall_background_gradient</item>
-        <item name="android:windowAnimationStyle">@null</item>
-        <item name="android:windowShowWallpaper">true</item>
-        <item name="android:colorPrimaryDark">@color/dialer_theme_color_dark</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">@android:color/transparent</item>
-        <item name="colorPrimaryDark">@color/dialer_theme_color_dark</item>
-        <item name="dialpad_key_button_touch_tint">?colorPrimary20pct</item>
-        <item name="dialpad_style">@style/InCallDialpad</item>
-    </style>
-
-    <style name="Theme.InCallScreen.ManageConference" parent="@style/Dialer.ThemeBase.ActionBar" />
+    <style name="Theme.InCallScreen.ManageConference" parent="@style/Dialer" />
 
     <!-- TODO(a bug): investigate making this style's parent Dialer.ThemeBase.NoActionBar -->
     <style name="Theme.AppCompat.Translucent" parent="Theme.AppCompat.NoActionBar">

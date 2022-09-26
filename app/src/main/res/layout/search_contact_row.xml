@@ -47,7 +47,6 @@
         android:layout_alignParentEnd="true"
         android:padding="@dimen/call_to_action_padding"
         android:scaleType="center"
-        android:tint="?colorIcon"
         android:visibility="gone" />
 
     <ImageView
@@ -59,6 +58,5 @@
         android:padding="@dimen/call_to_action_padding"
         android:scaleType="centerInside"
         android:src="@drawable/ic_work_profile"
-        android:tint="?colorIcon"
         android:visibility="gone" />
 </RelativeLayout>

@@ -17,8 +17,9 @@
 package com.fissy.dialer.phonelookup;
 
 import android.content.Context;
-import androidx.annotation.MainThread;
 import android.telecom.Call;
+
+import androidx.annotation.MainThread;
 
 import com.fissy.dialer.DialerPhoneNumber;
 import com.fissy.dialer.common.concurrent.DialerExecutorComponent;

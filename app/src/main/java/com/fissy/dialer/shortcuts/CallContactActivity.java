@@ -16,11 +16,13 @@
 
 package com.fissy.dialer.shortcuts;
 
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.core.app.ActivityCompat;
 import android.widget.Toast;
+
+import androidx.core.app.ActivityCompat;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.callintent.CallInitiationType;
@@ -36,7 +38,7 @@ import com.fissy.dialer.util.TransactionSafeActivity;
 public class CallContactActivity extends TransactionSafeActivity
         implements PhoneNumberInteraction.DisambigDialogDismissedListener,
         PhoneNumberInteraction.InteractionErrorListener,
-        ActivityCompat.OnRequestPermissionsResultCallback {
+        ActivityCompat.OnRequestPermissionsResultCallback{
 
     private static final String CONTACT_URI_KEY = "uri_key";
 

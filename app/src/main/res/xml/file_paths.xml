@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <paths>
-    <cache-path name="my_cache"/>
+    <cache-path name="my_cache" />
     <files-path
         name="voicemails"
         path="voicemails/" />

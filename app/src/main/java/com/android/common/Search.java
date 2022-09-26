@@ -34,7 +34,7 @@ public class Search {
      * Key for the source identifier set by the application that launched a search intent.
      * The identifier is search-source specific string. It can be used
      * by the search provider to keep statistics of where searches are started from.
-     *
+     * <p>
      * The source identifier is stored in the {@link android.app.SearchManager#APP_DATA}
      * Bundle in {@link android.content.Intent#ACTION_SEARCH} and
      * {@link android.content.Intent#ACTION_WEB_SEARCH} intents.
@@ -47,18 +47,19 @@ public class Search {
      * System.currentTimeMillis()} (wall time in UTC) when an item was last
      * accessed within the results-providing application. If set, this may be
      * used to show more-recently-used items first.
-     *
+     * <p>
      * See {@code SearchManager.SUGGEST_COLUMN_LAST_ACCESS_HINT} in ICS.
      */
     public final static String SUGGEST_COLUMN_LAST_ACCESS_HINT = "suggest_last_access_hint";
 
-    private Search() { }   // don't instantiate
+    private Search() {
+    }   // don't instantiate
 
     /**
      * Gets a cursor with search suggestions.
      *
      * @param searchable Information about how to get the suggestions.
-     * @param query The search text entered (so far).
+     * @param query      The search text entered (so far).
      * @return a cursor with suggestions, or <code>null</null> the suggestion query failed.
      */
     public static Cursor getSuggestions(Context context, SearchableInfo searchable, String query) {
@@ -69,13 +70,13 @@ public class Search {
      * Gets a cursor with search suggestions.
      *
      * @param searchable Information about how to get the suggestions.
-     * @param query The search text entered (so far).
-     * @param limit The query limit to pass to the suggestion provider. This is advisory,
-     *        the returned cursor may contain more rows. Pass {@code -1} for no limit.
+     * @param query      The search text entered (so far).
+     * @param limit      The query limit to pass to the suggestion provider. This is advisory,
+     *                   the returned cursor may contain more rows. Pass {@code -1} for no limit.
      * @return a cursor with suggestions, or <code>null</null> the suggestion query failed.
      */
     public static Cursor getSuggestions(Context context, SearchableInfo searchable,
-            String query, int limit) {
+                                        String query, int limit) {
         if (searchable == null) {
             return null;
         }
@@ -105,7 +106,7 @@ public class Search {
         // inject query, either as selection args or inline
         String[] selArgs = null;
         if (selection != null) {
-            selArgs = new String[] { query };
+            selArgs = new String[]{query};
         } else {                    // no selection, use REST pattern
             uriBuilder.appendPath(query);
         }

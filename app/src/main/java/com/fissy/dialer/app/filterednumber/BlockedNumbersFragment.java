@@ -23,12 +23,13 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.blocking.BlockedNumbersMigrator;
@@ -39,16 +40,13 @@ import com.fissy.dialer.blocking.FilteredNumbersUtil.CheckForSendToVoicemailCont
 import com.fissy.dialer.blocking.FilteredNumbersUtil.ImportSendToVoicemailContactsListener;
 import com.fissy.dialer.database.FilteredNumberContract;
 import com.fissy.dialer.lettertile.LetterTileDrawable;
-import com.fissy.dialer.theme.base.ThemeComponent;
-import com.fissy.dialer.voicemailstatus.VisualVoicemailEnabledChecker;
 
 /**
  * TODO(calderwoodra): documentation
  */
 public class BlockedNumbersFragment extends ListFragment
         implements LoaderManager.LoaderCallbacks<Cursor>,
-        View.OnClickListener,
-        VisualVoicemailEnabledChecker.Callback {
+        View.OnClickListener {
 
     private static final char ADD_BLOCKED_NUMBER_ICON_LETTER = '+';
     protected View migratePromoView;
@@ -56,7 +54,6 @@ public class BlockedNumbersFragment extends ListFragment
     private TextView blockedNumbersText;
     private TextView footerText;
     private BlockedNumbersAdapter adapter;
-    private VisualVoicemailEnabledChecker voicemailEnabledChecker;
     private View importSettings;
     private View blockedNumbersDisabledForEmergency;
     private View blockedNumberListDivider;
@@ -77,7 +74,7 @@ public class BlockedNumbersFragment extends ListFragment
         //replace the icon for add number with LetterTileDrawable(), so it will have identical style
         LetterTileDrawable drawable = new LetterTileDrawable(getResources());
         drawable.setLetter(ADD_BLOCKED_NUMBER_ICON_LETTER);
-        drawable.setColor(ThemeComponent.get(getContext()).theme().getColorIcon());
+        drawable.setColor(android.R.attr.colorPrimary);
         drawable.setIsCircular(true);
 
         if (adapter == null) {
@@ -98,9 +95,6 @@ public class BlockedNumbersFragment extends ListFragment
         getListView().findViewById(R.id.view_numbers_button).setOnClickListener(this);
 
         footerText = (TextView) getActivity().findViewById(R.id.blocked_number_footer_textview);
-        voicemailEnabledChecker = new VisualVoicemailEnabledChecker(getContext(), this);
-        voicemailEnabledChecker.asyncUpdate();
-        updateActiveVoicemailProvider();
     }
 
     @Override
@@ -121,7 +115,7 @@ public class BlockedNumbersFragment extends ListFragment
 
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         ColorDrawable backgroundDrawable =
-                new ColorDrawable(ThemeComponent.get(getContext()).theme().getColorPrimary());
+                new ColorDrawable(android.R.attr.colorPrimary);
         actionBar.setBackgroundDrawable(backgroundDrawable);
         actionBar.setDisplayShowCustomEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -161,7 +155,6 @@ public class BlockedNumbersFragment extends ListFragment
             blockedNumbersDisabledForEmergency.setVisibility(View.GONE);
         }
 
-        voicemailEnabledChecker.asyncUpdate();
     }
 
     @Override
@@ -244,21 +237,6 @@ public class BlockedNumbersFragment extends ListFragment
         }
     }
 
-    @Override
-    public void onVisualVoicemailEnabledStatusChanged(boolean newStatus) {
-        updateActiveVoicemailProvider();
-    }
-
-    private void updateActiveVoicemailProvider() {
-        if (getActivity() == null || getActivity().isFinishing()) {
-            return;
-        }
-        if (voicemailEnabledChecker.isVisualVoicemailEnabled()) {
-            footerText.setText(R.string.block_number_footer_message_vvm);
-        } else {
-            footerText.setText(R.string.block_number_footer_message_no_vvm);
-        }
-    }
 
     void setBlockedNumbersMigratorForTest(BlockedNumbersMigrator blockedNumbersMigrator) {
         blockedNumbersMigratorForTest = blockedNumbersMigrator;

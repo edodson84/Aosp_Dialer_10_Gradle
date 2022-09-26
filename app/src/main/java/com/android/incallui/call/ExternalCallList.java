@@ -18,9 +18,10 @@ package com.android.incallui.call;
 
 import android.os.Handler;
 import android.os.Looper;
-import androidx.annotation.NonNull;
 import android.telecom.Call;
 import android.util.ArraySet;
+
+import androidx.annotation.NonNull;
 
 import com.android.contacts.common.compat.CallCompat;
 import com.fissy.dialer.common.Assert;
@@ -50,16 +51,7 @@ public class ExternalCallList {
         externalCalls.add(telecomCall);
         telecomCall.registerCallback(telecomCallCallback, new Handler(Looper.getMainLooper()));
         notifyExternalCallAdded(telecomCall);
-    }    /**
-     * Handles {@link android.telecom.Call.Callback} callbacks.
-     */
-    private final Call.Callback telecomCallCallback =
-            new Call.Callback() {
-                @Override
-                public void onDetailsChanged(Call call, Call.Details details) {
-                    notifyExternalCallUpdated(call);
-                }
-            };
+    }
 
     /**
      * Stops tracking an external call and notifies listeners of the removal of the call.
@@ -73,7 +65,16 @@ public class ExternalCallList {
         externalCalls.remove(telecomCall);
         telecomCall.unregisterCallback(telecomCallCallback);
         notifyExternalCallRemoved(telecomCall);
-    }
+    }    /**
+     * Handles {@link android.telecom.Call.Callback} callbacks.
+     */
+    private final Call.Callback telecomCallCallback =
+            new Call.Callback() {
+                @Override
+                public void onDetailsChanged(Call call, Call.Details details) {
+                    notifyExternalCallUpdated(call);
+                }
+            };
 
     /**
      * Adds a new listener to external call events.
@@ -150,6 +151,8 @@ public class ExternalCallList {
 
         void onExternalCallPulled(Call call);
     }
+
+
 
 
 }

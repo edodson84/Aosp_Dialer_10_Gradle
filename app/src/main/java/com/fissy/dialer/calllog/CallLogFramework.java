@@ -18,6 +18,7 @@ package com.fissy.dialer.calllog;
 
 import android.content.Context;
 import android.content.Intent;
+
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.fissy.dialer.calllog.datasources.CallLogDataSource;

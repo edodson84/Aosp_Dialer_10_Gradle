@@ -22,16 +22,16 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import androidx.appcompat.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.contacts.common.dialog.ClearFrequentsDialog;
 import com.fissy.dialer.R;
@@ -53,6 +53,7 @@ import com.fissy.dialer.searchfragment.list.NewSearchFragment;
 import com.fissy.dialer.searchfragment.list.NewSearchFragment.SearchFragmentListener;
 import com.fissy.dialer.smartdial.util.SmartDialNameMatcher;
 import com.fissy.dialer.util.TransactionSafeActivity;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.common.base.Optional;
 
 import java.util.ArrayList;

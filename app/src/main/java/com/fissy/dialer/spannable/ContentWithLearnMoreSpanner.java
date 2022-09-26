@@ -16,10 +16,11 @@
 package com.fissy.dialer.spannable;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.TypefaceSpan;
+
+import androidx.annotation.NonNull;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.common.Assert;

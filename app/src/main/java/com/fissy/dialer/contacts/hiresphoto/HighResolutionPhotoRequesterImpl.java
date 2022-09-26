@@ -24,6 +24,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.RawContacts;
+
 import androidx.annotation.VisibleForTesting;
 
 import com.fissy.dialer.common.LogUtil;
@@ -50,6 +51,7 @@ public class HighResolutionPhotoRequesterImpl implements HighResolutionPhotoRequ
                     "com.google.android.syncadapters.contacts.SyncHighResPhotoIntentService");
     private final Context appContext;
     private final ListeningExecutorService backgroundExecutor;
+
     @Inject
     HighResolutionPhotoRequesterImpl(
             @ApplicationContext Context appContext,

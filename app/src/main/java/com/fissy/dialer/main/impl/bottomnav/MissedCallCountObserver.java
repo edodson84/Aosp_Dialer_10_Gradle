@@ -21,6 +21,7 @@ import android.content.Context;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.provider.CallLog.Calls;
+
 import androidx.annotation.RequiresPermission;
 
 import com.fissy.dialer.common.concurrent.DialerExecutorComponent;

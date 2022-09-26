@@ -36,261 +36,260 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.InputStreamReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class LookupCache {
-  private static final String TAG = LookupCache.class.getSimpleName();
+    public static final String NAME = "Name";
+    public static final String TYPE = "Type";
+    public static final String LABEL = "Label";
+    public static final String NUMBER = "Number";
+    public static final String FORMATTED_NUMBER = "FormattedNumber";
+    public static final String NORMALIZED_NUMBER = "NormalizedNumber";
+    public static final String PHOTO_ID = "PhotoID";
+    public static final String LOOKUP_URI = "LookupURI";
+    private static final String TAG = LookupCache.class.getSimpleName();
 
-  public static final String NAME = "Name";
-  public static final String TYPE = "Type";
-  public static final String LABEL = "Label";
-  public static final String NUMBER = "Number";
-  public static final String FORMATTED_NUMBER = "FormattedNumber";
-  public static final String NORMALIZED_NUMBER = "NormalizedNumber";
-  public static final String PHOTO_ID = "PhotoID";
-  public static final String LOOKUP_URI = "LookupURI";
+    public static boolean hasCachedContact(Context context, String number) {
+        String normalizedNumber = formatE164(context, number);
+        if (normalizedNumber == null) {
+            return false;
+        }
 
-  public static boolean hasCachedContact(Context context, String number) {
-    String normalizedNumber = formatE164(context, number);
-    if (normalizedNumber == null) {
-        return false;
+        File file = getFilePath(context, normalizedNumber);
+        return file.exists();
     }
 
-    File file = getFilePath(context, normalizedNumber);
-    return file.exists();
-  }
+    public static void cacheContact(Context context, ContactInfo info) {
+        File file = getFilePath(context, info.normalizedNumber);
 
-  public static void cacheContact(Context context, ContactInfo info) {
-    File file = getFilePath(context, info.normalizedNumber);
+        if (file.exists()) {
+            file.delete();
+        }
 
-    if (file.exists()) {
-      file.delete();
-    }
+        FileOutputStream out = null;
+        JsonWriter writer = null;
 
-    FileOutputStream out = null;
-    JsonWriter writer = null;
+        try {
+            out = new FileOutputStream(file);
+            writer = new JsonWriter(new OutputStreamWriter(out, "UTF-8"));
+            writer.setIndent("  ");
+            List messages = new ArrayList();
 
-    try {
-      out = new FileOutputStream(file);
-      writer = new JsonWriter(new OutputStreamWriter(out, "UTF-8"));
-      writer.setIndent("  ");
-      List messages = new ArrayList();
+            writer.beginObject();
+            if (info.name != null) {
+                writer.name(NAME).value(info.name);
+            }
+            writer.name(TYPE).value(info.type);
+            if (info.label != null) {
+                writer.name(LABEL).value(info.label);
+            }
+            if (info.number != null) {
+                writer.name(NUMBER).value(info.number);
+            }
+            if (info.formattedNumber != null) {
+                writer.name(FORMATTED_NUMBER).value(info.formattedNumber);
+            }
+            if (info.normalizedNumber != null) {
+                writer.name(NORMALIZED_NUMBER).value(info.normalizedNumber);
+            }
+            writer.name(PHOTO_ID).value(info.photoId);
 
-      writer.beginObject();
-      if (info.name != null) {
-        writer.name(NAME).value(info.name);
-      }
-      writer.name(TYPE).value(info.type);
-      if (info.label != null) {
-        writer.name(LABEL).value(info.label);
-      }
-      if (info.number != null) {
-        writer.name(NUMBER).value(info.number);
-      }
-      if (info.formattedNumber != null) {
-          writer.name(FORMATTED_NUMBER).value(info.formattedNumber);
-      }
-      if (info.normalizedNumber != null) {
-          writer.name(NORMALIZED_NUMBER).value(info.normalizedNumber);
-      }
-      writer.name(PHOTO_ID).value(info.photoId);
-
-      if (info.lookupUri != null) {
-          writer.name(LOOKUP_URI).value(info.lookupUri.toString());
-      }
-
-      // We do not save the photo URI. If there's a cached image, that
-      // will be used when the contact is retrieved. Otherwise, photoUri
-      // will be set to null.
-
-      writer.endObject();
-    } catch (IOException e) {
-      e.printStackTrace();
-    } finally {
-      DialerUtils.closeQuietly(writer);
-      DialerUtils.closeQuietly(out);
-    }
-  }
-
-  public static ContactInfo getCachedContact(Context context, String number) {
-    String normalizedNumber = formatE164(context, number);
-    if (normalizedNumber == null) {
-      return null;
-    }
-
-    File file = getFilePath(context, normalizedNumber);
-    if (!file.exists()) {
-      // Whatever is calling this should probably check anyway
-      return null;
-    }
-
-    ContactInfo info = new ContactInfo();
-
-    FileInputStream in = null;
-    JsonReader reader = null;
-
-    try {
-      in = new FileInputStream(file);
-      reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
-
-      reader.beginObject();
-      while (reader.hasNext()) {
-        String name = reader.nextName();
-
-        if (NAME.equals(name)) {
-          info.name = reader.nextString();
-        } else if (TYPE.equals(name)) {
-          info.type = reader.nextInt();
-        } else if (LABEL.equals(name)) {
-          info.label = reader.nextString();
-        } else if (NUMBER.equals(name)) {
-          info.number = reader.nextString();
-        } else if (FORMATTED_NUMBER.equals(name)) {
-          info.formattedNumber = reader.nextString();
-        } else if (NORMALIZED_NUMBER.equals(name)) {
-          info.normalizedNumber = reader.nextString();
-        } else if (PHOTO_ID.equals(name)) {
-          info.photoId = reader.nextInt();
-        } else if (LOOKUP_URI.equals(name)) {
-          Uri lookupUri = Uri.parse(reader.nextString());
-
-          if (hasCachedImage(context, normalizedNumber)) {
-            // Insert cached photo URI
-            Uri image = Uri.withAppendedPath(LookupProvider.IMAGE_CACHE_URI,
-                Uri.encode(normalizedNumber));
-
-            String json = lookupUri.getEncodedFragment();
-            if (json != null) {
-              try {
-                JSONObject jsonObj = new JSONObject(json);
-                jsonObj.putOpt(Contacts.PHOTO_URI, image.toString());
-                lookupUri = lookupUri.buildUpon()
-                    .encodedFragment(jsonObj.toString())
-                    .build();
-              } catch (JSONException e) {
-                Log.e(TAG, "Failed to add image URI to json", e);
-              }
+            if (info.lookupUri != null) {
+                writer.name(LOOKUP_URI).value(info.lookupUri.toString());
             }
 
-            info.photoUri = image;
-          }
+            // We do not save the photo URI. If there's a cached image, that
+            // will be used when the contact is retrieved. Otherwise, photoUri
+            // will be set to null.
 
-          info.lookupUri = lookupUri;
+            writer.endObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            DialerUtils.closeQuietly(writer);
+            DialerUtils.closeQuietly(out);
         }
-      }
-      reader.endObject();
-    } catch (IOException e) {
-      e.printStackTrace();
-    } finally {
-      DialerUtils.closeQuietly(reader);
-      DialerUtils.closeQuietly(in);
     }
 
-    return info;
-  }
-
-  public static void deleteCachedContacts(Context context) {
-    File dir = new File(context.getCacheDir(), "lookup");
-    if (!dir.exists()) {
-      Log.v(TAG, "Lookup cache directory does not exist. Not clearing it.");
-      return;
-    }
-
-    if (!dir.isDirectory()) {
-      Log.e(TAG, "Path " + dir + " is not a directory");
-      return;
-    }
-
-    File[] files = dir.listFiles();
-    if (files != null) {
-      for (File file : files) {
-        if (file.isFile()) {
-          file.delete();
+    public static ContactInfo getCachedContact(Context context, String number) {
+        String normalizedNumber = formatE164(context, number);
+        if (normalizedNumber == null) {
+            return null;
         }
-      }
-    }
-  }
 
-  public static void deleteCachedContact(Context context, String normalizedNumber) {
-    File f = getFilePath(context, normalizedNumber);
-    if (f.exists()) {
-      f.delete();
-    }
+        File file = getFilePath(context, normalizedNumber);
+        if (!file.exists()) {
+            // Whatever is calling this should probably check anyway
+            return null;
+        }
 
-    f = getImagePath(context, normalizedNumber);
-    if (f.exists()) {
-      f.delete();
-    }
-  }
+        ContactInfo info = new ContactInfo();
 
-  public static boolean hasCachedImage(Context context, String number) {
-    String normalizedNumber = formatE164(context, number);
-    if (normalizedNumber == null) {
-      return false;
-    }
+        FileInputStream in = null;
+        JsonReader reader = null;
 
-    File file = getImagePath(context, normalizedNumber);
-    return file.exists();
-  }
+        try {
+            in = new FileInputStream(file);
+            reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
 
-  public static Uri cacheImage(Context context, String normalizedNumber, Bitmap bmp) {
-    // Compress the cached images to save space
-    if (bmp == null) {
-      Log.e(TAG, "Failed to cache image");
-      return null;
-    }
+            reader.beginObject();
+            while (reader.hasNext()) {
+                String name = reader.nextName();
 
-    File image = getImagePath(context, normalizedNumber);
-    FileOutputStream out = null;
+                if (NAME.equals(name)) {
+                    info.name = reader.nextString();
+                } else if (TYPE.equals(name)) {
+                    info.type = reader.nextInt();
+                } else if (LABEL.equals(name)) {
+                    info.label = reader.nextString();
+                } else if (NUMBER.equals(name)) {
+                    info.number = reader.nextString();
+                } else if (FORMATTED_NUMBER.equals(name)) {
+                    info.formattedNumber = reader.nextString();
+                } else if (NORMALIZED_NUMBER.equals(name)) {
+                    info.normalizedNumber = reader.nextString();
+                } else if (PHOTO_ID.equals(name)) {
+                    info.photoId = reader.nextInt();
+                } else if (LOOKUP_URI.equals(name)) {
+                    Uri lookupUri = Uri.parse(reader.nextString());
 
-    try {
-      out = new FileOutputStream(image);
-      bmp.compress(Bitmap.CompressFormat.WEBP, 100, out);
-      return Uri.fromFile(image);
-    } catch (Exception e) {
-      e.printStackTrace();
-    } finally {
-      DialerUtils.closeQuietly(out);
-    }
-    return null;
-  }
+                    if (hasCachedImage(context, normalizedNumber)) {
+                        // Insert cached photo URI
+                        Uri image = Uri.withAppendedPath(LookupProvider.IMAGE_CACHE_URI,
+                                Uri.encode(normalizedNumber));
 
-  public static Bitmap getCachedImage(Context context, String normalizedNumber) {
-    File image = getImagePath(context, normalizedNumber);
-    if (!image.exists()) {
-      return null;
-    }
+                        String json = lookupUri.getEncodedFragment();
+                        if (json != null) {
+                            try {
+                                JSONObject jsonObj = new JSONObject(json);
+                                jsonObj.putOpt(Contacts.PHOTO_URI, image.toString());
+                                lookupUri = lookupUri.buildUpon()
+                                        .encodedFragment(jsonObj.toString())
+                                        .build();
+                            } catch (JSONException e) {
+                                Log.e(TAG, "Failed to add image URI to json", e);
+                            }
+                        }
 
-    BitmapFactory.Options options = new BitmapFactory.Options();
-    options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-    return BitmapFactory.decodeFile(image.getPath(), options);
-  }
+                        info.photoUri = image;
+                    }
 
-  private static String formatE164(Context context, String number) {
-    TelephonyManager tm = context.getSystemService(TelephonyManager.class);
-    String countryIso = tm.getSimCountryIso().toUpperCase();
-    return PhoneNumberUtils.formatNumberToE164(number, countryIso);
-  }
+                    info.lookupUri = lookupUri;
+                }
+            }
+            reader.endObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            DialerUtils.closeQuietly(reader);
+            DialerUtils.closeQuietly(in);
+        }
 
-  private static File getFilePath(Context context, String normalizedNumber) {
-    File dir = new File(context.getCacheDir(), "lookup");
-    if (!dir.exists()) {
-      dir.mkdirs();
-    }
-
-    return new File(dir, normalizedNumber + ".json");
-  }
-
-  public static File getImagePath(Context context, String normalizedNumber) {
-    File dir = new File(context.getCacheDir(), "lookup");
-    if (!dir.exists()) {
-      dir.mkdirs();
+        return info;
     }
 
-    return new File(dir, normalizedNumber + ".webp");
-  }
+    public static void deleteCachedContacts(Context context) {
+        File dir = new File(context.getCacheDir(), "lookup");
+        if (!dir.exists()) {
+            Log.v(TAG, "Lookup cache directory does not exist. Not clearing it.");
+            return;
+        }
+
+        if (!dir.isDirectory()) {
+            Log.e(TAG, "Path " + dir + " is not a directory");
+            return;
+        }
+
+        File[] files = dir.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (file.isFile()) {
+                    file.delete();
+                }
+            }
+        }
+    }
+
+    public static void deleteCachedContact(Context context, String normalizedNumber) {
+        File f = getFilePath(context, normalizedNumber);
+        if (f.exists()) {
+            f.delete();
+        }
+
+        f = getImagePath(context, normalizedNumber);
+        if (f.exists()) {
+            f.delete();
+        }
+    }
+
+    public static boolean hasCachedImage(Context context, String number) {
+        String normalizedNumber = formatE164(context, number);
+        if (normalizedNumber == null) {
+            return false;
+        }
+
+        File file = getImagePath(context, normalizedNumber);
+        return file.exists();
+    }
+
+    public static Uri cacheImage(Context context, String normalizedNumber, Bitmap bmp) {
+        // Compress the cached images to save space
+        if (bmp == null) {
+            Log.e(TAG, "Failed to cache image");
+            return null;
+        }
+
+        File image = getImagePath(context, normalizedNumber);
+        FileOutputStream out = null;
+
+        try {
+            out = new FileOutputStream(image);
+            bmp.compress(Bitmap.CompressFormat.WEBP, 100, out);
+            return Uri.fromFile(image);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DialerUtils.closeQuietly(out);
+        }
+        return null;
+    }
+
+    public static Bitmap getCachedImage(Context context, String normalizedNumber) {
+        File image = getImagePath(context, normalizedNumber);
+        if (!image.exists()) {
+            return null;
+        }
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        return BitmapFactory.decodeFile(image.getPath(), options);
+    }
+
+    private static String formatE164(Context context, String number) {
+        TelephonyManager tm = context.getSystemService(TelephonyManager.class);
+        String countryIso = tm.getSimCountryIso().toUpperCase();
+        return PhoneNumberUtils.formatNumberToE164(number, countryIso);
+    }
+
+    private static File getFilePath(Context context, String normalizedNumber) {
+        File dir = new File(context.getCacheDir(), "lookup");
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+
+        return new File(dir, normalizedNumber + ".json");
+    }
+
+    public static File getImagePath(Context context, String normalizedNumber) {
+        File dir = new File(context.getCacheDir(), "lookup");
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+
+        return new File(dir, normalizedNumber + ".webp");
+    }
 }

@@ -26,17 +26,19 @@ import android.database.sqlite.SQLiteException;
 import android.graphics.drawable.Icon;
 import android.provider.CallLog;
 import android.provider.CallLog.Calls;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.os.BuildCompat;
 import android.telecom.DisconnectCause;
 import android.telephony.PhoneNumberUtils;
 import android.text.TextUtils;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.os.BuildCompat;
 
 import com.android.incallui.call.CallList;
 import com.android.incallui.call.DialerCall;
 import com.android.incallui.call.DialerCall.CallHistoryStatus;
 import com.fissy.dialer.R;
+import com.fissy.dialer.ThemeUtils;
 import com.fissy.dialer.blocking.FilteredNumberCompat;
 import com.fissy.dialer.blocking.FilteredNumbersUtil;
 import com.fissy.dialer.common.Assert;
@@ -52,7 +54,6 @@ import com.fissy.dialer.notification.NotificationChannelId;
 import com.fissy.dialer.phonenumberutil.PhoneNumberHelper;
 import com.fissy.dialer.spam.SpamComponent;
 import com.fissy.dialer.telecom.TelecomUtil;
-import com.fissy.dialer.theme.base.ThemeComponent;
 import com.fissy.dialer.util.PermissionsUtil;
 
 import java.util.Random;
@@ -227,7 +228,7 @@ public class SpamCallListListener implements CallList.Listener {
                                 createActivityPendingIntent(call, SpamNotificationActivity.ACTION_SHOW_DIALOG))
                         .setCategory(Notification.CATEGORY_STATUS)
                         .setPriority(Notification.PRIORITY_DEFAULT)
-                        .setColor(ThemeComponent.get(context).theme().getColorPrimary())
+                        .setColor(ThemeUtils.resolveColor(context, android.R.attr.colorAccent))
                         .setSmallIcon(R.drawable.quantum_ic_call_end_vd_theme_24)
                         .setGroup(GROUP_KEY);
         if (BuildCompat.isAtLeastO()) {

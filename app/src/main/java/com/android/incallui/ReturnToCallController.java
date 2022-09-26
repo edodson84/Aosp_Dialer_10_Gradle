@@ -22,10 +22,11 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.Icon;
 import android.provider.Settings;
-import androidx.annotation.NonNull;
-import androidx.annotation.VisibleForTesting;
 import android.telecom.CallAudioState;
 import android.text.TextUtils;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
 
 import com.android.bubble.Bubble;
 import com.android.bubble.BubbleComponent;
@@ -47,7 +48,6 @@ import com.fissy.dialer.configprovider.ConfigProviderComponent;
 import com.fissy.dialer.contacts.ContactsComponent;
 import com.fissy.dialer.lettertile.LetterTileDrawable;
 import com.fissy.dialer.telecom.TelecomUtil;
-import com.fissy.dialer.theme.base.ThemeComponent;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -294,7 +294,7 @@ public class ReturnToCallController implements InCallUiListener, Listener, Audio
 
     private BubbleInfo generateBubbleInfo() {
         return BubbleInfo.builder()
-                .setPrimaryColor(ThemeComponent.get(context).theme().getColorPrimary())
+                .setPrimaryColor(android.R.attr.colorPrimary)
                 .setPrimaryIcon(Icon.createWithResource(context, R.drawable.on_going_call))
                 .setStartingYPosition(
                         InCallPresenter.getInstance().shouldStartInBubbleMode()
@@ -308,7 +308,7 @@ public class ReturnToCallController implements InCallUiListener, Listener, Audio
 
     private BubbleInfo generateBubbleInfoForBackgroundCalling() {
         return BubbleInfo.builder()
-                .setPrimaryColor(ThemeComponent.get(context).theme().getColorPrimary())
+                .setPrimaryColor(android.R.attr.colorPrimary)
                 .setPrimaryIcon(Icon.createWithResource(context, R.drawable.on_going_call))
                 .setStartingYPosition(context.getResources().getDisplayMetrics().heightPixels / 2)
                 .setActions(generateActions())

@@ -29,10 +29,11 @@ import android.os.Message;
 import android.os.Trace;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.Directory;
+import android.text.TextUtils;
+
 import androidx.annotation.MainThread;
 import androidx.annotation.RequiresPermission;
 import androidx.annotation.WorkerThread;
-import android.text.TextUtils;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.phonenumbercache.CachedNumberLookupService;
@@ -67,6 +68,7 @@ public class CallerInfoAsyncQuery {
     private static final boolean ENABLE_UNKNOWN_NUMBER_GEO_DESCRIPTION = true;
     /* Directory lookup related code - START */
     private static final String[] DIRECTORY_PROJECTION = new String[]{Directory._ID};
+
     /**
      * Private constructor for factory methods.
      */

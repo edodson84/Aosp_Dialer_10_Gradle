@@ -17,6 +17,7 @@
 package com.fissy.dialer.shortcuts;
 
 import android.content.Context;
+
 import androidx.annotation.NonNull;
 
 import com.fissy.dialer.configprovider.ConfigProviderComponent;

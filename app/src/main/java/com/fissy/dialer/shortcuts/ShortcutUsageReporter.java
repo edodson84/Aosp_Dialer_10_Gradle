@@ -28,12 +28,13 @@ import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.PhoneLookup;
+import android.text.TextUtils;
+
 import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
 import androidx.core.content.ContextCompat;
-import android.text.TextUtils;
 
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;

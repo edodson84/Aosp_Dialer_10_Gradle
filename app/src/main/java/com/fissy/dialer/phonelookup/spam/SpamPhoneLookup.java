@@ -17,6 +17,7 @@
 package com.fissy.dialer.phonelookup.spam;
 
 import android.content.SharedPreferences;
+
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 

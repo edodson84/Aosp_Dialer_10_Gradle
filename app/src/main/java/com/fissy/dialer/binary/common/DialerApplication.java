@@ -17,10 +17,14 @@
 package com.fissy.dialer.binary.common;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Trace;
+
 import androidx.annotation.NonNull;
 import androidx.core.os.BuildCompat;
 
+import com.fissy.dialer.app.settings.ThemeOptionsSettingsFragment;
 import com.fissy.dialer.blocking.BlockedNumbersAutoMigrator;
 import com.fissy.dialer.blocking.FilteredNumberAsyncQueryHandler;
 import com.fissy.dialer.calllog.CallLogComponent;
@@ -47,6 +51,9 @@ public abstract class DialerApplication extends Application implements HasRootCo
         Trace.beginSection("DialerApplication.onCreate");
         StrictModeComponent.get(this).getDialerStrictMode().onApplicationCreate(this);
         super.onCreate();
+
+
+
         new BlockedNumbersAutoMigrator(
                 this.getApplicationContext(),
                 new FilteredNumberAsyncQueryHandler(this),

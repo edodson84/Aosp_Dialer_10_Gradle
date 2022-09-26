@@ -51,6 +51,7 @@ public class RemoveView extends FrameLayout {
 
     @Override
     protected void onFinishInflate() {
+        super.onFinishInflate();
         removeText = (TextView) findViewById(R.id.remove_view_text);
         removeIcon = (ImageView) findViewById(R.id.remove_view_icon);
         final Resources r = getResources();

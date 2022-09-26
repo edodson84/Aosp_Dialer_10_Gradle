@@ -18,8 +18,9 @@ package com.fissy.dialer.calldetails;
 
 
 import android.content.Context;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.fissy.dialer.calldetails.CallDetailsEntryViewHolder.CallDetailsEntryListener;
 import com.fissy.dialer.calldetails.CallDetailsFooterViewHolder.DeleteCallDetailsListener;
@@ -96,9 +97,6 @@ final class OldCallDetailsAdapter extends CallDetailsAdapterCommon {
                         .setName(contact.getNameOrNumber())
                         .setLookupUri(contact.getContactUri());
         switch (contact.getContactType()) {
-            case LetterTileDrawable.TYPE_VOICEMAIL:
-                builder.setIsVoicemail(true);
-                break;
             case LetterTileDrawable.TYPE_BUSINESS:
                 builder.setIsBusiness(true);
                 break;

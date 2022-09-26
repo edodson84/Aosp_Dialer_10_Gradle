@@ -17,6 +17,7 @@
 package com.fissy.dialer.metrics;
 
 import android.os.SystemClock;
+
 import androidx.annotation.IntDef;
 import androidx.annotation.VisibleForTesting;
 

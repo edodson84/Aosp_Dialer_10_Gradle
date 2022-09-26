@@ -7,9 +7,9 @@ option optimize_for = LITE_RUNTIME;
 
 package com.fissy.dialer.callintent;
 
-import "java/com/fissy/dialer/callintent/call_initiation_type.proto";
-import "java/com/fissy/dialer/callintent/speed_dial_contact_type.proto";
-import "java/com/fissy/dialer/logging/ui_action.proto";
+import "com/fissy/dialer/callintent/call_initiation_type.proto";
+import "com/fissy/dialer/callintent/speed_dial_contact_type.proto";
+import "com/fissy/dialer/logging/ui_action.proto";
 
 // Miscellaneous data that's included in a new outgoing call initiated by
 // Dialer. The system will pass this data to the InCallUi which can use it

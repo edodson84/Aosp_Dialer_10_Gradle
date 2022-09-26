@@ -16,9 +16,10 @@
 
 package com.fissy.dialer.speeddial;
 
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.view.View.OnClickListener;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * ViewHolder for headers in {@link SpeedDialFragment}.

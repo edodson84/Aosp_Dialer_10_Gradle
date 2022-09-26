@@ -17,11 +17,12 @@
 package com.fissy.dialer.widget;
 
 import android.content.Context;
-import androidx.annotation.Nullable;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import android.util.AttributeSet;
 
+import androidx.annotation.Nullable;
+
 import com.fissy.dialer.common.Assert;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
  * Since {@link FloatingActionButton} is possibly the worst widget supported by the framework, we

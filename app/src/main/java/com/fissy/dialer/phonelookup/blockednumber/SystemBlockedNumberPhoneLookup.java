@@ -19,9 +19,10 @@ package com.fissy.dialer.phonelookup.blockednumber;
 import android.content.Context;
 import android.database.Cursor;
 import android.provider.BlockedNumberContract.BlockedNumbers;
+import android.util.ArraySet;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.WorkerThread;
-import android.util.ArraySet;
 
 import com.fissy.dialer.DialerPhoneNumber;
 import com.fissy.dialer.blocking.FilteredNumberCompat;

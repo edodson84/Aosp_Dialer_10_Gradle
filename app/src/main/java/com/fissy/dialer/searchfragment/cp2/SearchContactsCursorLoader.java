@@ -24,9 +24,10 @@ import android.database.MergeCursor;
 import android.net.Uri;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.Directory;
+import android.text.TextUtils;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import android.text.TextUtils;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.common.LogUtil;

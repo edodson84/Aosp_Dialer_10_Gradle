@@ -18,7 +18,6 @@ package com.fissy.dialer.calldetails;
 
 import android.content.Context;
 import android.net.Uri;
-import androidx.recyclerview.widget.RecyclerView;
 import android.telecom.PhoneAccount;
 import android.text.TextUtils;
 import android.view.View;
@@ -27,6 +26,8 @@ import android.widget.ImageView;
 import android.widget.QuickContactBadge;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.calldetails.CallDetailsActivityCommon.AssistedDialingNumberParseWorker;

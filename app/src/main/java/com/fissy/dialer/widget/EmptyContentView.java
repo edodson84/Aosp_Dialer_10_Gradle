@@ -17,8 +17,6 @@
 package com.fissy.dialer.widget;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
-import androidx.annotation.StringRes;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,8 +24,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.StringRes;
+
 import com.fissy.dialer.R;
-import com.fissy.dialer.theme.base.ThemeComponent;
 
 public class EmptyContentView extends LinearLayout implements View.OnClickListener {
 
@@ -62,9 +61,6 @@ public class EmptyContentView extends LinearLayout implements View.OnClickListen
         descriptionView = (TextView) findViewById(R.id.empty_list_view_message);
         actionView = (TextView) findViewById(R.id.empty_list_view_action);
         actionView.setOnClickListener(this);
-
-        imageView.setImageTintList(
-                ColorStateList.valueOf(ThemeComponent.get(context).theme().getColorIconSecondary()));
     }
 
     public void setDescription(int resourceId) {

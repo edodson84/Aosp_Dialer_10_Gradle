@@ -30,8 +30,6 @@ import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Trace;
-import androidx.legacy.app.FragmentCompat;
-import androidx.collection.LongSparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +42,9 @@ import android.widget.FrameLayout;
 import android.widget.FrameLayout.LayoutParams;
 import android.widget.ImageView;
 import android.widget.ListView;
+
+import androidx.collection.LongSparseArray;
+import androidx.legacy.app.FragmentCompat;
 
 import com.android.contacts.common.ContactTileLoaderFactory;
 import com.android.contacts.common.list.ContactTileView;

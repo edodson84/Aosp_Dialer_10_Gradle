@@ -18,9 +18,6 @@ package com.fissy.dialer.calllog.ui;
 import android.app.Activity;
 import android.content.res.ColorStateList;
 import android.provider.CallLog.Calls;
-import androidx.annotation.ColorInt;
-import androidx.annotation.DrawableRes;
-import androidx.recyclerview.widget.RecyclerView;
 import android.telecom.PhoneAccount;
 import android.telecom.PhoneAccountHandle;
 import android.text.TextUtils;
@@ -30,6 +27,10 @@ import android.view.accessibility.AccessibilityNodeInfo;
 import android.view.accessibility.AccessibilityNodeInfo.AccessibilityAction;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.DrawableRes;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.calllog.model.CoalescedRow;
@@ -284,7 +285,7 @@ final class NewCallLogViewHolder extends RecyclerView.ViewHolder {
             phoneAccountColor =
                     activity
                             .getResources()
-                            .getColor(R.color.dialer_secondary_text_color, activity.getTheme());
+                            .getColor(R.color.dialer_secondary_text_color, null);
         }
 
         phoneAccountView.setText(phoneAccountLabel);

@@ -18,13 +18,14 @@ package com.fissy.dialer.duo;
 
 import android.content.Context;
 import android.content.Intent;
+import android.telecom.Call;
+import android.telecom.PhoneAccountHandle;
+
 import androidx.annotation.DrawableRes;
 import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
-import android.telecom.Call;
-import android.telecom.PhoneAccountHandle;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Optional;

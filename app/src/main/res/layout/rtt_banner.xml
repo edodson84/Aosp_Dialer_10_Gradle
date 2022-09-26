@@ -62,8 +62,7 @@
             android:contentDescription="@string/content_description_overflow"
             android:padding="@dimen/rtt_banner_button_padding"
             android:scaleType="fitXY"
-            android:src="@drawable/quantum_ic_more_vert_vd_theme_24"
-            android:tint="?colorIconOnUnthemedDarkBackground" />
+            android:src="@drawable/quantum_ic_more_vert_vd_theme_24" />
     </LinearLayout>
 
     <FrameLayout

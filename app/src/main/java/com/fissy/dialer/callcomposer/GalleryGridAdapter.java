@@ -20,12 +20,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.database.MergeCursor;
-import androidx.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
+
+import androidx.annotation.NonNull;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.common.Assert;

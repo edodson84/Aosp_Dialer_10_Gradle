@@ -22,11 +22,12 @@ import android.content.Context;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.os.RemoteException;
-import androidx.annotation.MainThread;
-import androidx.annotation.WorkerThread;
 import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.ArraySet;
+
+import androidx.annotation.MainThread;
+import androidx.annotation.WorkerThread;
 
 import com.fissy.dialer.DialerPhoneNumber;
 import com.fissy.dialer.calllog.database.contract.AnnotatedCallLogContract.AnnotatedCallLog;

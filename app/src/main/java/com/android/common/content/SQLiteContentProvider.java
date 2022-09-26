@@ -36,18 +36,15 @@ public abstract class SQLiteContentProvider extends ContentProvider
         implements SQLiteTransactionListener {
 
     private static final String TAG = "SQLiteContentProvider";
-
-    private SQLiteOpenHelper mOpenHelper;
-    private volatile boolean mNotifyChange;
-    protected SQLiteDatabase mDb;
-
-    private final ThreadLocal<Boolean> mApplyingBatch = new ThreadLocal<Boolean>();
     private static final int SLEEP_AFTER_YIELD_DELAY = 4000;
-
     /**
      * Maximum number of operations allowed in a batch between yield points.
      */
     private static final int MAX_OPERATIONS_PER_YIELD_POINT = 500;
+    private final ThreadLocal<Boolean> mApplyingBatch = new ThreadLocal<Boolean>();
+    protected SQLiteDatabase mDb;
+    private SQLiteOpenHelper mOpenHelper;
+    private volatile boolean mNotifyChange;
 
     /**
      * @return Number of operations that can be applied at once without a yield point.
@@ -74,7 +71,7 @@ public abstract class SQLiteContentProvider extends ContentProvider
      * The equivalent of the {@link #update} method, but invoked within a transaction.
      */
     protected abstract int updateInTransaction(Uri uri, ContentValues values, String selection,
-            String[] selectionArgs);
+                                               String[] selectionArgs);
 
     /**
      * The equivalent of the {@link #delete} method, but invoked within a transaction.

@@ -20,14 +20,15 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.annotation.IntDef;
-import androidx.annotation.NonNull;
 import android.telecom.Connection;
 import android.telecom.ConnectionRequest;
 import android.telecom.PhoneAccount;
 import android.telecom.PhoneAccountHandle;
 import android.telecom.TelecomManager;
 import android.telephony.TelephonyManager;
+
+import androidx.annotation.IntDef;
+import androidx.annotation.NonNull;
 
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
@@ -59,6 +60,7 @@ public class SimulatorSimCallManager {
     private static final String EXTRA_IS_SIMULATOR_CONNECTION = "is_simulator_connection";
     private static final String EXTRA_CONNECTION_TAG = "connection_tag";
     private static final String EXTRA_CONNECTION_CALL_TYPE = "connection_call_type";
+
     private SimulatorSimCallManager() {
     }
 

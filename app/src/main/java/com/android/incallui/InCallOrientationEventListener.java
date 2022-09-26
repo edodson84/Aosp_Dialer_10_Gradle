@@ -18,8 +18,9 @@ package com.android.incallui;
 
 import android.content.Context;
 import android.content.pm.ActivityInfo;
-import androidx.annotation.IntDef;
 import android.view.OrientationEventListener;
+
+import androidx.annotation.IntDef;
 
 import com.fissy.dialer.common.LogUtil;
 

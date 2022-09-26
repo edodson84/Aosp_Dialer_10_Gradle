@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="theme_options_title">Theme options</string>
+    <string name="theme_options_key">key_theme</string>
+    <string name="theme_default">0</string>
     <!-- Forward lookup -->
     <string name="nearby_places">Nearby places</string>
     <string name="people">People</string>
 
     <!-- Number lookup -->
-    <string name="lookup_settings_label">Phone number lookup</string>
+    <string name="lookup_settings_label">Forward lookup</string>
     <string name="enable_forward_lookup_title">Forward lookup</string>
     <string name="enable_forward_lookup_summary">Show nearby places when searching in the dialer</string>
     <string name="enable_people_lookup_title">People lookup</string>
@@ -36,7 +39,7 @@
     <string name="call_recording_failed_message">Failed to start call recording</string>
     <string name="call_recording_file_location">Saved call recording to <xliff:g id="filename">%s</xliff:g></string>
     <string name="onscreenCallRecordText">Record call</string>
-    <string name="onscreenCallRecordingText">Recording call - <xliff:g id="duration" example="00:10">%1$s</xliff:g></string>
+    <string name="onscreenCallRecordingText">Recording call - <xliff:g example="00:10" id="duration">%1$s</xliff:g></string>
     <string name="onscreenStopCallRecordText">Stop recording</string>
     <string name="recording_time_text">Recording</string>
     <string name="recording_warning_title">Enable call recording?</string>
@@ -534,7 +537,6 @@
     <string name="migrate_blocked_numbers_dialog_message">To better protect you, Phone needs to change how blocking works. Your blocked numbers will now stop both calls and texts and may be shared with other apps.</string>
     <string name="migrate_blocked_numbers_dialog_title">New, simplified blocking</string>
     <string name="missing_name">(No name)</string>
-    <string name="motorola_hidden_menu_intent">com.motorola.intent.action.LAUNCH_HIDDEN_MENU</string>
     <string name="mtrl_chip_close_icon_content_description">Remove %1$s</string>
     <string name="multiple_ec_data_deleted">Calls deleted. View and delete attachments shared during calls in Messages.</string>
     <string name="nameLabelsGroup">Name</string>

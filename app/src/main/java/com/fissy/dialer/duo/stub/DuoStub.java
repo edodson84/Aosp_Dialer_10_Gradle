@@ -18,13 +18,14 @@ package com.fissy.dialer.duo.stub;
 
 import android.content.Context;
 import android.content.Intent;
+import android.telecom.Call;
+import android.telecom.PhoneAccountHandle;
+
 import androidx.annotation.DrawableRes;
 import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
-import android.telecom.Call;
-import android.telecom.PhoneAccountHandle;
 
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.duo.Duo;

@@ -22,15 +22,16 @@ import android.hardware.Camera.CameraInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Looper;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
 import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.OrientationEventListener;
 import android.view.Surface;
 import android.view.View;
 import android.view.WindowManager;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 
 import com.fissy.dialer.callcomposer.camera.camerafocus.FocusOverlayManager;
 import com.fissy.dialer.callcomposer.camera.camerafocus.RenderOverlay;

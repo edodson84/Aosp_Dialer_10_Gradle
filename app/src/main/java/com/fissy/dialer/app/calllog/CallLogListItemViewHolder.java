@@ -22,16 +22,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.CallLog;
 import android.provider.CallLog.Calls;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
-import androidx.annotation.IntDef;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresPermission;
-import androidx.annotation.VisibleForTesting;
-import androidx.recyclerview.widget.RecyclerView;
 import android.telecom.PhoneAccount;
 import android.telecom.PhoneAccountHandle;
 import android.telecom.TelecomManager;
@@ -51,12 +45,16 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.IntDef;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresPermission;
+import androidx.annotation.VisibleForTesting;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.contacts.common.dialog.CallSubjectDialog;
 import com.fissy.dialer.R;
 import com.fissy.dialer.app.calllog.CallLogAdapter.OnActionModeStateChangedListener;
 import com.fissy.dialer.app.calllog.calllogcache.CallLogCache;
-import com.fissy.dialer.app.voicemail.VoicemailPlaybackLayout;
-import com.fissy.dialer.app.voicemail.VoicemailPlaybackPresenter;
 import com.fissy.dialer.blocking.BlockedNumbersMigrator;
 import com.fissy.dialer.blocking.FilteredNumberCompat;
 import com.fissy.dialer.blocking.FilteredNumbersUtil;
@@ -148,7 +146,6 @@ public final class CallLogListItemViewHolder extends RecyclerView.ViewHolder
     private final CallLogCache callLogCache;
     private final CallLogListItemHelper callLogListItemHelper;
     private final CachedNumberLookupService cachedNumberLookupService;
-    private final VoicemailPlaybackPresenter voicemailPlaybackPresenter;
     private final OnClickListener blockReportListener;
     @HostUi
     private final int hostUi;
@@ -166,7 +163,6 @@ public final class CallLogListItemViewHolder extends RecyclerView.ViewHolder
     /**
      * The button views below are assigned only when the action section is expanded.
      */
-    public VoicemailPlaybackLayout voicemailPlaybackView;
     public View callButtonView;
     public View videoCallButtonView;
     public View setUpVideoButtonView;
@@ -281,7 +277,6 @@ public final class CallLogListItemViewHolder extends RecyclerView.ViewHolder
             CallLogAdapter.OnActionModeStateChangedListener actionModeStateChangedListener,
             CallLogCache callLogCache,
             CallLogListItemHelper callLogListItemHelper,
-            VoicemailPlaybackPresenter voicemailPlaybackPresenter,
             View rootView,
             DialerQuickContactBadge dialerQuickContactView,
             View primaryActionView,
@@ -297,7 +292,6 @@ public final class CallLogListItemViewHolder extends RecyclerView.ViewHolder
         longPressListener = longClickListener;
         this.callLogCache = callLogCache;
         this.callLogListItemHelper = callLogListItemHelper;
-        this.voicemailPlaybackPresenter = voicemailPlaybackPresenter;
         this.blockReportListener = blockReportListener;
         cachedNumberLookupService = PhoneNumberCache.get(this.context).getCachedNumberLookupService();
 
@@ -324,35 +318,18 @@ public final class CallLogListItemViewHolder extends RecyclerView.ViewHolder
             Logger.get(this.context)
                     .logQuickContactOnTouch(
                             quickContactView, InteractionEvent.Type.OPEN_QUICK_CONTACT_FROM_CALL_HISTORY, true);
-        } else if (this.voicemailPlaybackPresenter == null) {
+        } else {
             hostUi = HostUi.CALL_LOG;
             Logger.get(this.context)
                     .logQuickContactOnTouch(
                             quickContactView, InteractionEvent.Type.OPEN_QUICK_CONTACT_FROM_CALL_LOG, true);
-        } else {
-            hostUi = HostUi.VOICEMAIL;
-            Logger.get(this.context)
-                    .logQuickContactOnTouch(
-                            quickContactView, InteractionEvent.Type.OPEN_QUICK_CONTACT_FROM_VOICEMAIL, false);
         }
 
         quickContactView.setOverlay(null);
         quickContactView.setPrioritizedMimeType(Phone.CONTENT_ITEM_TYPE);
         primaryActionButtonView.setOnClickListener(this);
         primaryActionView.setOnClickListener(this.expandCollapseListener);
-        if (this.voicemailPlaybackPresenter != null
-                && ConfigProviderComponent.get(this.context)
-                .getConfigProvider()
-                .getBoolean(
-                        CallLogAdapter.ENABLE_CALL_LOG_MULTI_SELECT,
-                        CallLogAdapter.ENABLE_CALL_LOG_MULTI_SELECT_FLAG)) {
-            primaryActionView.setOnLongClickListener(longPressListener);
-            quickContactView.setOnLongClickListener(longPressListener);
-            quickContactView.setMulitSelectListeners(
-                    this.expandCollapseListener, onActionModeStateChangedListener);
-        } else {
-            primaryActionView.setOnCreateContextMenuListener(this);
-        }
+        primaryActionView.setOnCreateContextMenuListener(this);
     }
 
     public static CallLogListItemViewHolder create(
@@ -363,8 +340,7 @@ public final class CallLogListItemViewHolder extends RecyclerView.ViewHolder
             View.OnLongClickListener longClickListener,
             CallLogAdapter.OnActionModeStateChangedListener actionModeStateChangeListener,
             CallLogCache callLogCache,
-            CallLogListItemHelper callLogListItemHelper,
-            VoicemailPlaybackPresenter voicemailPlaybackPresenter) {
+            CallLogListItemHelper callLogListItemHelper) {
 
         return new CallLogListItemViewHolder(
                 context,
@@ -374,7 +350,6 @@ public final class CallLogListItemViewHolder extends RecyclerView.ViewHolder
                 actionModeStateChangeListener,
                 callLogCache,
                 callLogListItemHelper,
-                voicemailPlaybackPresenter,
                 view,
                 view.findViewById(R.id.quick_contact_photo),
                 view.findViewById(R.id.primary_action_view),
@@ -385,13 +360,12 @@ public final class CallLogListItemViewHolder extends RecyclerView.ViewHolder
     }
 
     public static CallLogListItemViewHolder createForTest(Context context) {
-        return createForTest(context, null, null, new CallLogCache(context));
+        return createForTest(context, null, new CallLogCache(context));
     }
 
     public static CallLogListItemViewHolder createForTest(
             Context context,
             View.OnClickListener expandCollapseListener,
-            VoicemailPlaybackPresenter voicemailPlaybackPresenter,
             CallLogCache callLogCache) {
         Resources resources = context.getResources();
         PhoneCallDetailsHelper phoneCallDetailsHelper =
@@ -406,7 +380,6 @@ public final class CallLogListItemViewHolder extends RecyclerView.ViewHolder
                         null,
                         callLogCache,
                         new CallLogListItemHelper(phoneCallDetailsHelper, resources, callLogCache),
-                        voicemailPlaybackPresenter,
                         LayoutInflater.from(context).inflate(R.layout.call_log_list_item, null),
                         new DialerQuickContactBadge(context),
                         new View(context),
@@ -416,7 +389,6 @@ public final class CallLogListItemViewHolder extends RecyclerView.ViewHolder
                         new ImageView(context));
         viewHolder.detailsButtonView = new TextView(context);
         viewHolder.actionsView = new View(context);
-        viewHolder.voicemailPlaybackView = new VoicemailPlaybackLayout(context);
         viewHolder.workIconView = new ImageButton(context);
         viewHolder.checkBoxView = new ImageButton(context);
         return viewHolder;
@@ -499,10 +471,6 @@ public final class CallLogListItemViewHolder extends RecyclerView.ViewHolder
         ViewStub stub = (ViewStub) rootView.findViewById(R.id.call_log_entry_actions_stub);
         if (stub != null) {
             actionsView = stub.inflate();
-
-            voicemailPlaybackView =
-                    (VoicemailPlaybackLayout) actionsView.findViewById(R.id.voicemail_playback_layout);
-            voicemailPlaybackView.setViewHolder(this);
 
             callButtonView = actionsView.findViewById(R.id.call_action);
             callButtonView.setOnClickListener(this);
@@ -658,7 +626,6 @@ public final class CallLogListItemViewHolder extends RecyclerView.ViewHolder
             blockView.setVisibility(View.GONE);
             unblockView.setVisibility(View.GONE);
             reportNotSpamView.setVisibility(View.GONE);
-            voicemailPlaybackView.setVisibility(View.GONE);
 
             detailsButtonView.setVisibility(View.VISIBLE);
             detailsButtonView.setTag(
@@ -684,17 +651,6 @@ public final class CallLogListItemViewHolder extends RecyclerView.ViewHolder
             blockView.setVisibility(View.GONE);
             unblockView.setVisibility(View.GONE);
             reportNotSpamView.setVisibility(View.GONE);
-
-            voicemailPlaybackView.setVisibility(View.VISIBLE);
-            Uri uri = Uri.parse(voicemailUri);
-            voicemailPlaybackPresenter.setPlaybackView(
-                    voicemailPlaybackView,
-                    rowId,
-                    uri,
-                    voicemailPrimaryActionButtonClicked,
-                    sendVoicemailButtonView);
-            voicemailPrimaryActionButtonClicked = false;
-            CallLogAsyncTaskUtil.markVoicemailAsRead(context, uri);
             return;
         }
 
@@ -793,26 +749,6 @@ public final class CallLogListItemViewHolder extends RecyclerView.ViewHolder
             default:
                 callButtonView.setVisibility(View.GONE);
                 videoCallButtonView.setVisibility(View.GONE);
-        }
-
-        // For voicemail calls, show the voicemail playback layout; hide otherwise.
-        if (callType == Calls.VOICEMAIL_TYPE
-                && voicemailPlaybackPresenter != null
-                && !TextUtils.isEmpty(voicemailUri)) {
-            voicemailPlaybackView.setVisibility(View.VISIBLE);
-
-            Uri uri = Uri.parse(voicemailUri);
-            voicemailPlaybackPresenter.setPlaybackView(
-                    voicemailPlaybackView,
-                    rowId,
-                    uri,
-                    voicemailPrimaryActionButtonClicked,
-                    sendVoicemailButtonView);
-            voicemailPrimaryActionButtonClicked = false;
-            CallLogAsyncTaskUtil.markVoicemailAsRead(context, uri);
-        } else {
-            voicemailPlaybackView.setVisibility(View.GONE);
-            sendVoicemailButtonView.setVisibility(View.GONE);
         }
 
         if (callType == Calls.VOICEMAIL_TYPE) {
@@ -1073,12 +1009,6 @@ public final class CallLogListItemViewHolder extends RecyclerView.ViewHolder
             activity.startActivityForResult(
                     CallComposerActivity.newIntent(activity, buildContact()),
                     ActivityRequestCodes.DIALTACTS_CALL_COMPOSER);
-            return;
-        }
-
-        if (view.getId() == R.id.share_voicemail) {
-            Logger.get(context).logImpression(DialerImpression.Type.VVM_SHARE_PRESSED);
-            voicemailPlaybackPresenter.shareVoicemail();
             return;
         }
 

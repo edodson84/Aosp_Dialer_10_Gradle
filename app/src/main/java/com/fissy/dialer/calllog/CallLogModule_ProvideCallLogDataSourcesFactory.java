@@ -3,7 +3,6 @@ package com.fissy.dialer.calllog;
 import com.fissy.dialer.calllog.datasources.DataSources;
 import com.fissy.dialer.calllog.datasources.phonelookup.PhoneLookupDataSource;
 import com.fissy.dialer.calllog.datasources.systemcalllog.SystemCallLogDataSource;
-import com.fissy.dialer.calllog.datasources.voicemail.VoicemailDataSource;
 
 import javax.annotation.Generated;
 import javax.inject.Provider;
@@ -20,28 +19,21 @@ public final class CallLogModule_ProvideCallLogDataSourcesFactory implements Fac
 
     private final Provider<PhoneLookupDataSource> phoneLookupDataSourceProvider;
 
-    private final Provider<VoicemailDataSource> voicemailDataSourceProvider;
-
     public CallLogModule_ProvideCallLogDataSourcesFactory(
             Provider<SystemCallLogDataSource> systemCallLogDataSourceProvider,
-            Provider<PhoneLookupDataSource> phoneLookupDataSourceProvider,
-            Provider<VoicemailDataSource> voicemailDataSourceProvider) {
+            Provider<PhoneLookupDataSource> phoneLookupDataSourceProvider) {
         assert systemCallLogDataSourceProvider != null;
         this.systemCallLogDataSourceProvider = systemCallLogDataSourceProvider;
         assert phoneLookupDataSourceProvider != null;
         this.phoneLookupDataSourceProvider = phoneLookupDataSourceProvider;
-        assert voicemailDataSourceProvider != null;
-        this.voicemailDataSourceProvider = voicemailDataSourceProvider;
     }
 
     public static Factory<DataSources> create(
             Provider<SystemCallLogDataSource> systemCallLogDataSourceProvider,
-            Provider<PhoneLookupDataSource> phoneLookupDataSourceProvider,
-            Provider<VoicemailDataSource> voicemailDataSourceProvider) {
+            Provider<PhoneLookupDataSource> phoneLookupDataSourceProvider) {
         return new CallLogModule_ProvideCallLogDataSourcesFactory(
                 systemCallLogDataSourceProvider,
-                phoneLookupDataSourceProvider,
-                voicemailDataSourceProvider);
+                phoneLookupDataSourceProvider);
     }
 
     @Override
@@ -49,8 +41,7 @@ public final class CallLogModule_ProvideCallLogDataSourcesFactory implements Fac
         return Preconditions.checkNotNull(
                 CallLogModule.provideCallLogDataSources(
                         systemCallLogDataSourceProvider.get(),
-                        phoneLookupDataSourceProvider.get(),
-                        voicemailDataSourceProvider.get()),
+                        phoneLookupDataSourceProvider.get()),
                 "Cannot return null from a non-@Nullable @Provides method");
     }
 }

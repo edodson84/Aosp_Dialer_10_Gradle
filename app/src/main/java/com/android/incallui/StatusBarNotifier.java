@@ -43,13 +43,6 @@ import android.net.Uri;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.os.Trace;
-import androidx.annotation.ColorRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresPermission;
-import androidx.annotation.StringRes;
-import androidx.annotation.VisibleForTesting;
-import androidx.core.os.BuildCompat;
 import android.telecom.Call.Details;
 import android.telecom.CallAudioState;
 import android.telecom.PhoneAccount;
@@ -62,6 +55,13 @@ import android.text.Spanned;
 import android.text.TextDirectionHeuristics;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
+
+import androidx.annotation.ColorRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresPermission;
+import androidx.annotation.StringRes;
+import androidx.annotation.VisibleForTesting;
 
 import com.android.contacts.common.ContactsUtils;
 import com.android.contacts.common.ContactsUtils.UserType;
@@ -81,6 +81,7 @@ import com.android.incallui.ringtone.ToneGeneratorFactory;
 import com.android.incallui.speakeasy.SpeakEasyComponent;
 import com.android.incallui.videotech.utils.SessionModificationState;
 import com.fissy.dialer.R;
+import com.fissy.dialer.ThemeUtils;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.configprovider.ConfigProviderComponent;
@@ -93,7 +94,6 @@ import com.fissy.dialer.lettertile.LetterTileDrawable.ContactType;
 import com.fissy.dialer.multimedia.MultimediaData;
 import com.fissy.dialer.notification.NotificationChannelId;
 import com.fissy.dialer.oem.MotorolaUtils;
-import com.fissy.dialer.theme.base.ThemeComponent;
 import com.fissy.dialer.util.DrawableConverter;
 import com.google.common.base.Optional;
 
@@ -230,6 +230,7 @@ public class StatusBarNotifier
     }
 
     @Override
+    @RequiresPermission(Manifest.permission.READ_PHONE_STATE)
     public void onEnrichedCallStateChanged() {
         LogUtil.enterBlock("StatusBarNotifier.onEnrichedCallStateChanged");
         updateNotification();
@@ -331,7 +332,7 @@ public class StatusBarNotifier
         // Check if data has changed; if nothing is different, don't issue another notification.
         final int iconResId = getIconToDisplay(call);
         Bitmap largeIcon = getLargeIconToDisplay(context, contactInfo, call);
-        final CharSequence content = getContentString(call, contactInfo.userType);
+        final CharSequence content = getContentString(call, (int) contactInfo.userType);
         final String contentTitle = getContentTitle(contactInfo, call);
         Trace.endSection();
 
@@ -378,16 +379,15 @@ public class StatusBarNotifier
         if (largeIcon != null) {
             largeIcon = getRoundedIcon(largeIcon);
         }
-
         // This builder is used for the notification shown when the device is locked and the user
         // has set their notification settings to 'hide sensitive content'
         // {@see Notification.Builder#setPublicVersion}.
         Notification.Builder publicBuilder = new Notification.Builder(context);
         publicBuilder
                 .setSmallIcon(iconResId)
-                .setColor(ThemeComponent.get(context).theme().getColorPrimary())
+                .setColor(ThemeUtils.resolveColor(context, android.R.attr.colorAccent))
                 // Hide work call state for the lock screen notification
-                .setContentTitle(getContentString(call, ContactsUtils.USER_TYPE_CURRENT));
+                .setContentTitle(getContentString(call, (int) ContactsUtils.USER_TYPE_CURRENT));
         setNotificationWhen(call, callState, publicBuilder);
 
         // Builder for the notification shown when the device is unlocked or the user has set their
@@ -401,9 +401,7 @@ public class StatusBarNotifier
         LogUtil.i("StatusBarNotifier.buildAndSendNotification", "notificationType=" + notificationType);
         switch (notificationType) {
             case NOTIFICATION_INCOMING_CALL:
-                if (BuildCompat.isAtLeastO()) {
-                    builder.setChannelId(NotificationChannelId.INCOMING_CALL);
-                }
+                builder.setChannelId(NotificationChannelId.INCOMING_CALL);
                 // Set the intent as a full screen intent as well if a call is incoming
                 configureFullScreenIntent(builder, createLaunchPendingIntent(true /* isFullScreen */));
                 // Set the notification category and bump the priority for incoming calls
@@ -420,16 +418,12 @@ public class StatusBarNotifier
                 }
                 break;
             case NOTIFICATION_INCOMING_CALL_QUIET:
-                if (BuildCompat.isAtLeastO()) {
-                    builder.setChannelId(NotificationChannelId.ONGOING_CALL);
-                }
+                builder.setChannelId(NotificationChannelId.ONGOING_CALL);
                 break;
             case NOTIFICATION_IN_CALL:
-                if (BuildCompat.isAtLeastO()) {
-                    publicBuilder.setColorized(true);
-                    builder.setColorized(true);
-                    builder.setChannelId(NotificationChannelId.ONGOING_CALL);
-                }
+                publicBuilder.setColorized(true);
+                builder.setColorized(true);
+                builder.setChannelId(NotificationChannelId.ONGOING_CALL);
                 break;
             default:
                 break;
@@ -440,7 +434,7 @@ public class StatusBarNotifier
         builder.setSmallIcon(iconResId);
         builder.setContentTitle(contentTitle);
         builder.setLargeIcon(largeIcon);
-        builder.setColor(InCallPresenter.getInstance().getThemeColorManager().getPrimaryColor());
+        builder.setColor(ThemeUtils.resolveColor(context, android.R.attr.colorAccent));
 
         if (isVideoUpgradeRequest) {
             builder.setUsesChronometer(false);
@@ -1181,6 +1175,7 @@ public class StatusBarNotifier
          * bar notification as required.
          */
         @Override
+        @RequiresPermission(Manifest.permission.READ_PHONE_STATE)
         public void onDialerCallSessionModificationStateChange() {
             if (dialerCall.getVideoTech().getSessionModificationState()
                     == SessionModificationState.NO_REQUEST) {

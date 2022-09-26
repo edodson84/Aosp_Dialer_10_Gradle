@@ -30,26 +30,39 @@ import android.provider.SyncStateContract;
  * set of accounts.
  */
 public class SyncStateContentProviderHelper {
+    public static final String PATH = "syncstate";
     private static final String SELECT_BY_ACCOUNT =
             SyncStateContract.Columns.ACCOUNT_NAME + "=? AND "
                     + SyncStateContract.Columns.ACCOUNT_TYPE + "=?";
-
     private static final String SYNC_STATE_TABLE = "_sync_state";
     private static final String SYNC_STATE_META_TABLE = "_sync_state_metadata";
     private static final String SYNC_STATE_META_VERSION_COLUMN = "version";
-
-    private static long DB_VERSION = 1;
-
     private static final String[] ACCOUNT_PROJECTION =
             new String[]{SyncStateContract.Columns.ACCOUNT_NAME,
                     SyncStateContract.Columns.ACCOUNT_TYPE};
-
-    public static final String PATH = "syncstate";
-
     private static final String QUERY_COUNT_SYNC_STATE_ROWS =
             "SELECT count(*)"
                     + " FROM " + SYNC_STATE_TABLE
                     + " WHERE " + SyncStateContract.Columns._ID + "=?";
+    private static long DB_VERSION = 1;
+
+    /**
+     * Checks that value is present as at least one of the elements of the array.
+     *
+     * @param array the array to check in
+     * @param value the value to check for
+     * @return true if the value is present in the array
+     */
+    private static <T> boolean contains(T[] array, T value) {
+        for (T element : array) {
+            if (element == null) {
+                if (value == null) return true;
+            } else {
+                if (value != null && element.equals(value)) return true;
+            }
+        }
+        return false;
+    }
 
     public void createDatabase(SQLiteDatabase db) {
         db.execSQL("DROP TABLE IF EXISTS " + SYNC_STATE_TABLE);
@@ -79,7 +92,7 @@ public class SyncStateContentProviderHelper {
     }
 
     public Cursor query(SQLiteDatabase db, String[] projection,
-            String selection, String[] selectionArgs, String sortOrder) {
+                        String selection, String[] selectionArgs, String sortOrder) {
         return db.query(SYNC_STATE_TABLE, projection, selection, selectionArgs,
                 null, null, sortOrder);
     }
@@ -93,7 +106,7 @@ public class SyncStateContentProviderHelper {
     }
 
     public int update(SQLiteDatabase db, ContentValues values,
-            String selection, String[] selectionArgs) {
+                      String selection, String[] selectionArgs) {
         return db.update(SYNC_STATE_TABLE, values, selection, selectionArgs);
     }
 
@@ -103,8 +116,8 @@ public class SyncStateContentProviderHelper {
             return 0;
         }
         db.execSQL("UPDATE " + SYNC_STATE_TABLE
-                + " SET " + SyncStateContract.Columns.DATA + "=?"
-                + " WHERE " + SyncStateContract.Columns._ID + "=" + rowId,
+                        + " SET " + SyncStateContract.Columns.DATA + "=?"
+                        + " WHERE " + SyncStateContract.Columns._ID + "=" + rowId,
                 new Object[]{data});
         // assume a row was modified since we know it exists
         return 1;
@@ -125,22 +138,5 @@ public class SyncStateContentProviderHelper {
         } finally {
             c.close();
         }
-    }
-
-    /**
-     * Checks that value is present as at least one of the elements of the array.
-     * @param array the array to check in
-     * @param value the value to check for
-     * @return true if the value is present in the array
-     */
-    private static <T> boolean contains(T[] array, T value) {
-        for (T element : array) {
-            if (element == null) {
-                if (value == null) return true;
-            } else {
-                if (value != null && element.equals(value)) return true;
-            }
-        }
-        return false;
     }
 }

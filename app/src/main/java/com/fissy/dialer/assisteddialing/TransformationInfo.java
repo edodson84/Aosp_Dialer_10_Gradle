@@ -17,6 +17,7 @@
 package com.fissy.dialer.assisteddialing;
 
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 
 import com.google.auto.value.AutoValue;

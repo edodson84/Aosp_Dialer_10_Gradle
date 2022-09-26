@@ -17,9 +17,10 @@
 package com.fissy.dialer.contacts.displaypreference;
 
 import android.content.Context;
+import android.text.TextUtils;
+
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
-import android.text.TextUtils;
 
 import com.fissy.dialer.R;
 

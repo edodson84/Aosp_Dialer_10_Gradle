@@ -16,12 +16,13 @@
 
 package com.android.incallui.video.impl;
 
-import androidx.annotation.DrawableRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.StringRes;
 import android.telecom.CallAudioState;
 import android.view.View;
 import android.view.View.OnClickListener;
+
+import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 
 import com.android.incallui.incall.protocol.InCallButtonUiDelegate;
 import com.android.incallui.video.impl.CheckableImageButton.OnCheckedChangeListener;

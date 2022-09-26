@@ -7,9 +7,9 @@ option optimize_for = LITE_RUNTIME;
 
 package com.fissy.dialer.calllog.model;
 
-import "java/com/fissy/dialer/calllog/database/contract/coalesced_ids.proto";
-import "java/com/fissy/dialer/calllog/database/contract/number_attributes.proto";
-import "java/com/fissy/dialer/phonenumberproto/dialer_phone_number.proto";
+import "com/fissy/dialer/calllog/database/contract/coalesced_ids.proto";
+import "com/fissy/dialer/calllog/database/contract/number_attributes.proto";
+import "com/fissy/dialer/phonenumberproto/dialer_phone_number.proto";
 
 // Contains the contents of a row from the CoalescedAnnotatedCallLog.
 // Next ID: 17
@@ -52,12 +52,6 @@ message CoalescedRow {
 
   // Value in column CoalescedAnnotatedCallLog.NUMBER_ATTRIBUTES
   optional com.fissy.dialer.NumberAttributes number_attributes = 13;
-
-  // Value in column CoalescedAnnotatedCallLog.IS_VOICEMAIL_CALL
-  optional bool is_voicemail_call = 14;
-
-  // Value in column CoalescedAnnotatedCallLog.VOICEMAIL_CALL_TAG
-  optional string voicemail_call_tag = 15;
 
   // Value in column CoalescedAnnotatedCallLog.COALESCED_IDS
   optional com.fissy.dialer.CoalescedIds coalesced_ids = 16;

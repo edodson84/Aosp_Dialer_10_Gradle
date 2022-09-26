@@ -18,9 +18,10 @@ package com.fissy.dialer.backup;
 import android.app.backup.BackupDataInput;
 import android.app.backup.BackupDataOutput;
 import android.os.ParcelFileDescriptor;
+import android.util.ArrayMap;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
-import android.util.ArrayMap;
 
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;

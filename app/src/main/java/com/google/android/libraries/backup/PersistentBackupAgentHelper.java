@@ -7,8 +7,9 @@ import android.app.backup.SharedPreferencesBackupHelper;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.ParcelFileDescriptor;
-import androidx.annotation.VisibleForTesting;
 import android.util.Log;
+
+import androidx.annotation.VisibleForTesting;
 
 import java.io.File;
 import java.io.IOException;

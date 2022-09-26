@@ -18,14 +18,13 @@ package com.fissy.dialer.app.list;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.view.ViewGroup;
+
 import androidx.annotation.IntDef;
 import androidx.legacy.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
 
-import android.view.ViewGroup;
-
 import com.fissy.dialer.app.calllog.CallLogFragment;
-import com.fissy.dialer.app.calllog.VisualVoicemailCallLogFragment;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.contactsfragment.ContactsFragment;
@@ -47,23 +46,18 @@ public class DialtactsPagerAdapter extends FragmentPagerAdapter {
     public static final int TAB_INDEX_SPEED_DIAL = 0;
     public static final int TAB_INDEX_HISTORY = 1;
     public static final int TAB_INDEX_ALL_CONTACTS = 2;
-    public static final int TAB_INDEX_VOICEMAIL = 3;
     public static final int TAB_COUNT_DEFAULT = 3;
-    public static final int TAB_COUNT_WITH_VOICEMAIL = 4;
     private final List<Fragment> fragments = new ArrayList<>();
     private final String[] tabTitles;
     private OldSpeedDialFragment oldSpeedDialFragment;
     private CallLogFragment callLogFragment;
     private ContactsFragment contactsFragment;
-    private CallLogFragment voicemailFragment;
-    private boolean hasActiveVoicemailProvider;
 
     public DialtactsPagerAdapter(
-            FragmentManager fm, String[] tabTitles, boolean hasVoicemailProvider) {
+            FragmentManager fm, String[] tabTitles) {
         super(fm);
         this.tabTitles = tabTitles;
-        hasActiveVoicemailProvider = hasVoicemailProvider;
-        fragments.addAll(Collections.nCopies(TAB_COUNT_WITH_VOICEMAIL, null));
+        fragments.addAll(Collections.nCopies(TAB_COUNT_DEFAULT, null));
     }
 
     @Override
@@ -90,15 +84,6 @@ public class DialtactsPagerAdapter extends FragmentPagerAdapter {
                     contactsFragment = ContactsFragment.newInstance(Header.ADD_CONTACT);
                 }
                 return contactsFragment;
-            case TAB_INDEX_VOICEMAIL:
-                if (voicemailFragment == null) {
-                    voicemailFragment = new VisualVoicemailCallLogFragment();
-                    LogUtil.v(
-                            "ViewPagerAdapter.getItem",
-                            "new VisualVoicemailCallLogFragment: %s",
-                            voicemailFragment);
-                }
-                return voicemailFragment;
             default:
                 throw Assert.createIllegalStateFailException("No fragment at position " + position);
         }
@@ -117,9 +102,6 @@ public class DialtactsPagerAdapter extends FragmentPagerAdapter {
             callLogFragment = (CallLogFragment) fragment;
         } else if (fragment instanceof ContactsFragment) {
             contactsFragment = (ContactsFragment) fragment;
-        } else if (fragment instanceof CallLogFragment && position == TAB_INDEX_VOICEMAIL) {
-            voicemailFragment = (CallLogFragment) fragment;
-            LogUtil.v("ViewPagerAdapter.instantiateItem", voicemailFragment.toString());
         }
         fragments.set(position, fragment);
         return fragment;
@@ -134,14 +116,12 @@ public class DialtactsPagerAdapter extends FragmentPagerAdapter {
      */
     @Override
     public int getItemPosition(Object object) {
-        return !hasActiveVoicemailProvider && fragments.indexOf(object) == TAB_INDEX_VOICEMAIL
-                ? POSITION_NONE
-                : POSITION_UNCHANGED;
+        return POSITION_UNCHANGED;
     }
 
     @Override
     public int getCount() {
-        return hasActiveVoicemailProvider ? TAB_COUNT_WITH_VOICEMAIL : TAB_COUNT_DEFAULT;
+        return TAB_COUNT_DEFAULT;
     }
 
     @Override
@@ -156,26 +136,11 @@ public class DialtactsPagerAdapter extends FragmentPagerAdapter {
         return position;
     }
 
-    public void removeVoicemailFragment(FragmentManager manager) {
-        if (voicemailFragment != null) {
-            manager.beginTransaction().remove(voicemailFragment).commitAllowingStateLoss();
-            voicemailFragment = null;
-        }
-    }
-
-    public boolean hasActiveVoicemailProvider() {
-        return hasActiveVoicemailProvider;
-    }
-
-    public void setHasActiveVoicemailProvider(boolean hasActiveVoicemailProvider) {
-        this.hasActiveVoicemailProvider = hasActiveVoicemailProvider;
-    }
-
     /**
      * IntDef for indices of ViewPager tabs.
      */
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({TAB_INDEX_SPEED_DIAL, TAB_INDEX_HISTORY, TAB_INDEX_ALL_CONTACTS, TAB_INDEX_VOICEMAIL})
+    @IntDef({TAB_INDEX_SPEED_DIAL, TAB_INDEX_HISTORY, TAB_INDEX_ALL_CONTACTS})
     public @interface TabIndex {
     }
 }

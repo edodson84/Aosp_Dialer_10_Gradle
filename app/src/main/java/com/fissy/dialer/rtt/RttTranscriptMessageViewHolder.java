@@ -18,7 +18,6 @@ package com.fissy.dialer.rtt;
 
 import android.content.Context;
 import android.content.res.Resources;
-import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import android.text.format.DateUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -26,6 +25,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.glidephotomanager.GlidePhotoManagerComponent;

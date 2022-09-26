@@ -17,8 +17,8 @@
 package com.android.common;
 
 import android.text.InputFilter;
-import android.text.Spanned;
 import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 
 /**
  * Implements special address cleanup rules:
@@ -31,10 +31,10 @@ import android.text.SpannableStringBuilder;
 public class Rfc822InputFilter implements InputFilter {
 
     public CharSequence filter(CharSequence source, int start, int end, Spanned dest,
-        int dstart, int dend) {
+                               int dstart, int dend) {
 
         // quick check - did they enter a single space?
-        if (end-start != 1 || source.charAt(start) != ' ') {
+        if (end - start != 1 || source.charAt(start) != ' ') {
             return null;
         }
 

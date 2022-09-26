@@ -19,6 +19,7 @@ package com.fissy.dialer.protos;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 
 import com.fissy.dialer.common.Assert;

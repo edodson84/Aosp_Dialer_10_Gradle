@@ -17,6 +17,7 @@
 package com.fissy.dialer.enrichedcall.stub;
 
 import android.content.BroadcastReceiver.PendingResult;
+
 import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

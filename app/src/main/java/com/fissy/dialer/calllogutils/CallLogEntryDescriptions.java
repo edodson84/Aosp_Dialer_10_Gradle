@@ -18,10 +18,11 @@ package com.fissy.dialer.calllogutils;
 
 import android.content.Context;
 import android.provider.CallLog.Calls;
-import androidx.annotation.PluralsRes;
 import android.telecom.PhoneAccountHandle;
 import android.telephony.PhoneNumberUtils;
 import android.text.TextUtils;
+
+import androidx.annotation.PluralsRes;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.calllog.model.CoalescedRow;

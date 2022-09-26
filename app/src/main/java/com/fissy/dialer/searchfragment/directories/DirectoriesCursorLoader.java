@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.CursorLoader;
 import android.database.Cursor;
 import android.provider.ContactsContract;
+
 import androidx.annotation.Nullable;
 
 import com.fissy.dialer.common.LogUtil;

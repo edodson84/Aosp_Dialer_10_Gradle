@@ -17,6 +17,7 @@
 package com.fissy.dialer.metrics;
 
 import android.app.Application;
+
 import androidx.annotation.Nullable;
 
 /**

@@ -17,6 +17,7 @@
 package com.fissy.dialer.searchfragment.cp2;
 
 import android.database.Cursor;
+
 import androidx.annotation.Nullable;
 
 import com.fissy.dialer.searchfragment.common.Projections;

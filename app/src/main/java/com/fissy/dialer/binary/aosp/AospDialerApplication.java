@@ -27,14 +27,11 @@ import com.android.contacts.common.extensions.PhoneDirectoryExtenderFactory;
 import com.android.incallui.bindings.InCallUiBindings;
 import com.android.incallui.bindings.InCallUiBindingsFactory;
 import com.android.incallui.bindings.InCallUiBindingsStub;
-import com.android.incallui.bindings.PhoneNumberService;
 import com.fissy.dialer.binary.common.DialerApplication;
 import com.fissy.dialer.inject.ContextModule;
 import com.fissy.dialer.lookup.LookupCacheService;
 import com.fissy.dialer.lookup.LookupProvider;
 import com.fissy.dialer.lookup.LookupSettings;
-import com.fissy.dialer.lookup.ReverseLookupService;
-import com.fissy.dialer.phonenumbercache.CachedNumberLookupService;
 import com.fissy.dialer.phonenumbercache.PhoneNumberCacheBindings;
 import com.fissy.dialer.phonenumbercache.PhoneNumberCacheBindingsFactory;
 
@@ -54,13 +51,13 @@ public class AospDialerApplication extends DialerApplication implements
         return DaggerAospDialerRootComponent.builder().contextModule(new ContextModule(this)).build();
     }
 
+    @NonNull
     @Override
     public PhoneDirectoryExtender newPhoneDirectoryExtender() {
         return new PhoneDirectoryExtender() {
             @Override
             public boolean isEnabled(Context context) {
-                return LookupSettings.isForwardLookupEnabled(AospDialerApplication.this)
-                        || LookupSettings.isPeopleLookupEnabled(AospDialerApplication.this);
+                return LookupSettings.isForwardLookupEnabled(AospDialerApplication.this);
             }
 
             @Override
@@ -73,23 +70,11 @@ public class AospDialerApplication extends DialerApplication implements
 
     @Override
     public InCallUiBindings newInCallUiBindings() {
-        return new InCallUiBindingsStub() {
-            @Override
-            @Nullable
-            public PhoneNumberService newPhoneNumberService(Context context) {
-                return new ReverseLookupService(context);
-            }
-        };
+        return new InCallUiBindingsStub();
     }
 
     @Override
     public PhoneNumberCacheBindings newPhoneNumberCacheBindings() {
-        return new PhoneNumberCacheBindings() {
-            @Override
-            @Nullable
-            public CachedNumberLookupService getCachedNumberLookupService() {
-                return new LookupCacheService();
-            }
-        };
+        return LookupCacheService::new;
     }
 }

@@ -22,13 +22,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.CallLog.Calls;
-import androidx.annotation.ColorInt;
-import androidx.annotation.NonNull;
-import androidx.appcompat.widget.PopupMenu;
-import androidx.core.content.ContextCompat;
-import androidx.core.os.BuildCompat;
-import androidx.recyclerview.widget.RecyclerView.ViewHolder;
-
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
@@ -39,6 +32,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.core.content.ContextCompat;
+import androidx.core.os.BuildCompat;
+import androidx.recyclerview.widget.RecyclerView.ViewHolder;
+
 import com.fissy.dialer.R;
 import com.fissy.dialer.calldetails.CallDetailsEntries.CallDetailsEntry;
 import com.fissy.dialer.calllogutils.CallLogDates;
@@ -46,6 +46,7 @@ import com.fissy.dialer.calllogutils.CallLogDurations;
 import com.fissy.dialer.calllogutils.CallTypeHelper;
 import com.fissy.dialer.calllogutils.CallTypeIconsView;
 import com.fissy.dialer.callrecord.CallRecording;
+import com.fissy.dialer.callrecord.CallRecordingDataStore;
 import com.fissy.dialer.callrecord.impl.CallRecorderService;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.enrichedcall.historyquery.proto.HistoryResult;
@@ -54,10 +55,6 @@ import com.fissy.dialer.glidephotomanager.PhotoInfo;
 import com.fissy.dialer.oem.MotorolaUtils;
 import com.fissy.dialer.util.DialerUtils;
 import com.fissy.dialer.util.IntentUtil;
-
-import com.fissy.dialer.callrecord.CallRecording;
-import com.fissy.dialer.callrecord.CallRecordingDataStore;
-import com.fissy.dialer.callrecord.impl.CallRecorderService;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -76,7 +73,6 @@ public class CallDetailsEntryViewHolder extends ViewHolder {
     private final TextView callDuration;
     private final View multimediaImageContainer;
     private final View multimediaDetailsContainer;
-    private final View multimediaDivider;
     private final TextView multimediaDetails;
     private final TextView postCallNote;
     private final TextView rttTranscript;
@@ -99,7 +95,6 @@ public class CallDetailsEntryViewHolder extends ViewHolder {
         playbackButton = (TextView) container.findViewById(R.id.play_recordings);
         multimediaImageContainer = container.findViewById(R.id.multimedia_image_container);
         multimediaDetailsContainer = container.findViewById(R.id.ec_container);
-        multimediaDivider = container.findViewById(R.id.divider);
         multimediaDetails = (TextView) container.findViewById(R.id.multimedia_details);
         postCallNote = (TextView) container.findViewById(R.id.post_call_note);
         multimediaImage = (ImageView) container.findViewById(R.id.multimedia_image);
@@ -217,7 +212,6 @@ public class CallDetailsEntryViewHolder extends ViewHolder {
     }
 
     private void setMultimediaDetails(String number, CallDetailsEntry entry, boolean showDivider) {
-        multimediaDivider.setVisibility(showDivider ? View.VISIBLE : View.GONE);
         if (entry.getHistoryResultsList().isEmpty()) {
             LogUtil.i("CallDetailsEntryViewHolder.setMultimediaDetails", "no data, hiding UI");
             multimediaDetailsContainer.setVisibility(View.GONE);

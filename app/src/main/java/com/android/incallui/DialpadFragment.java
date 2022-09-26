@@ -21,7 +21,6 @@ import android.os.Bundle;
 import android.telephony.PhoneNumberUtils;
 import android.util.ArrayMap;
 import android.util.AttributeSet;
-import android.view.ContextThemeWrapper;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +29,6 @@ import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.android.incallui.DialpadPresenter.DialpadUi;
 import com.android.incallui.baseui.BaseFragment;
@@ -172,24 +170,7 @@ public class DialpadFragment extends BaseFragment<DialpadPresenter, DialpadUi>
     @Override
     public void onResume() {
         super.onResume();
-        updateColors();
         endCallSpace.setVisibility(shouldShowEndCallSpace ? View.VISIBLE : View.GONE);
-    }
-
-    public void updateColors() {
-        int textColor = InCallPresenter.getInstance().getThemeColorManager().getPrimaryColor();
-
-        if (currentTextColor == textColor) {
-            return;
-        }
-
-        DialpadKeyButton dialpadKey;
-        for (int i = 0; i < buttonIds.length; i++) {
-            dialpadKey = (DialpadKeyButton) dialpadView.findViewById(buttonIds[i]);
-            ((TextView) dialpadKey.findViewById(R.id.dialpad_key_number)).setTextColor(textColor);
-        }
-
-        currentTextColor = textColor;
     }
 
     @Override

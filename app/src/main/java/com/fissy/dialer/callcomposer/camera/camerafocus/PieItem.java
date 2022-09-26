@@ -45,6 +45,7 @@ public class PieItem {
     private Path path;
     private OnClickListener onClickListener;
     private float alpha;
+
     public PieItem(Drawable drawable, int level) {
         this.drawable = drawable;
         this.level = level;

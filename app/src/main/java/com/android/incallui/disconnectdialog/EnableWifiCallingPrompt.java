@@ -21,9 +21,10 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
-import androidx.annotation.NonNull;
 import android.telecom.DisconnectCause;
 import android.util.Pair;
+
+import androidx.annotation.NonNull;
 
 import com.android.incallui.call.DialerCall;
 import com.fissy.dialer.R;

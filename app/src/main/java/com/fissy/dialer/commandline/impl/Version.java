@@ -19,6 +19,7 @@ package com.fissy.dialer.commandline.impl;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+
 import androidx.annotation.NonNull;
 
 import com.fissy.dialer.commandline.Arguments;

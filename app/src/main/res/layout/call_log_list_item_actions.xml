@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@id/call_log_action_container"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
@@ -8,15 +9,9 @@
     android:orientation="vertical"
     android:visibility="visible">
 
-    <com.fissy.dialer.app.voicemail.VoicemailPlaybackLayout
-        android:id="@id/voicemail_playback_layout"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
-
     <View
         android:layout_width="fill_parent"
-        android:layout_height="1.0dip"
-        android:background="@color/dialer_divider_line_color" />
+        android:layout_height="1.0dip" />
 
     <LinearLayout
         android:id="@id/call_action"
@@ -24,7 +19,8 @@
 
         <ImageView
             style="@style/CallLogActionIconStyle"
-            android:src="@drawable/quantum_ic_call_white_24" />
+            android:src="@drawable/quantum_ic_call_white_24"
+            app:tint="?colorPrimary" />
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -49,7 +45,8 @@
 
         <ImageView
             style="@style/CallLogActionIconStyle"
-            android:src="@drawable/quantum_ic_videocam_vd_white_24" />
+            android:src="@drawable/quantum_ic_videocam_vd_white_24"
+            app:tint="?colorPrimary" />
 
         <TextView
             style="@style/CallLogActionTextStyle"
@@ -62,7 +59,8 @@
 
         <ImageView
             style="@style/CallLogActionIconStyle"
-            android:src="@drawable/quantum_ic_videocam_vd_white_24" />
+            android:src="@drawable/quantum_ic_videocam_vd_white_24"
+            app:tint="?colorPrimary" />
 
         <TextView
             style="@style/CallLogActionTextStyle"
@@ -75,7 +73,8 @@
 
         <ImageView
             style="@style/CallLogActionIconStyle"
-            android:src="@drawable/quantum_ic_videocam_vd_white_24" />
+            android:src="@drawable/quantum_ic_videocam_vd_white_24"
+            app:tint="?colorPrimary" />
 
         <TextView
             style="@style/CallLogActionTextStyle"
@@ -88,7 +87,8 @@
 
         <ImageView
             style="@style/CallLogActionIconStyle"
-            android:src="@drawable/quantum_ic_person_add_white_24" />
+            android:src="@drawable/quantum_ic_person_add_white_24"
+            app:tint="?colorPrimary" />
 
         <TextView
             style="@style/CallLogActionTextStyle"
@@ -101,7 +101,8 @@
 
         <ImageView
             style="@style/CallLogActionIconStyle"
-            android:src="@drawable/quantum_ic_person_white_24" />
+            android:src="@drawable/quantum_ic_person_white_24"
+            app:tint="?colorPrimary" />
 
         <TextView
             style="@style/CallLogActionTextStyle"
@@ -114,7 +115,8 @@
 
         <ImageView
             style="@style/CallLogActionIconStyle"
-            android:src="@drawable/quantum_ic_message_white_24" />
+            android:src="@drawable/quantum_ic_message_white_24"
+            app:tint="?colorPrimary" />
 
         <TextView
             style="@style/CallLogActionTextStyle"
@@ -127,7 +129,8 @@
 
         <ImageView
             style="@style/CallLogActionIconStyle"
-            android:src="@drawable/ic_call_note_white_24dp" />
+            android:src="@drawable/ic_call_note_white_24dp"
+            app:tint="?colorPrimary" />
 
         <TextView
             style="@style/CallLogActionTextStyle"
@@ -140,7 +143,8 @@
 
         <ImageView
             style="@style/CallLogActionIconStyle"
-            android:src="@drawable/ic_phone_attach" />
+            android:src="@drawable/ic_phone_attach"
+            app:tint="?colorPrimary" />
 
         <TextView
             style="@style/CallLogActionTextStyle"
@@ -154,7 +158,8 @@
 
         <ImageView
             style="@style/CallLogActionIconStyle"
-            android:src="@drawable/ic_not_spam" />
+            android:src="@drawable/ic_not_spam"
+            app:tint="?colorPrimary" />
 
         <TextView
             style="@style/CallLogActionTextStyle"
@@ -168,7 +173,8 @@
 
         <ImageView
             style="@style/CallLogActionIconStyle"
-            android:src="@drawable/quantum_ic_block_white_24" />
+            android:src="@drawable/quantum_ic_block_white_24"
+            app:tint="?colorPrimary" />
 
         <TextView
             style="@style/CallLogActionTextStyle"
@@ -182,7 +188,8 @@
 
         <ImageView
             style="@style/CallLogActionIconStyle"
-            android:src="@drawable/quantum_ic_block_white_24" />
+            android:src="@drawable/quantum_ic_block_white_24"
+            app:tint="?colorPrimary" />
 
         <TextView
             style="@style/CallLogActionTextStyle"
@@ -196,7 +203,8 @@
 
         <ImageView
             style="@style/CallLogActionIconStyle"
-            android:src="@drawable/ic_unblock" />
+            android:src="@drawable/ic_unblock"
+            app:tint="?colorPrimary" />
 
         <TextView
             style="@style/CallLogActionTextStyle"
@@ -209,7 +217,8 @@
 
         <ImageView
             style="@style/CallLogActionIconStyle"
-            android:src="@drawable/quantum_ic_info_outline_white_24" />
+            android:src="@drawable/quantum_ic_info_outline_white_24"
+            app:tint="?colorPrimary" />
 
         <TextView
             style="@style/CallLogActionTextStyle"
@@ -223,7 +232,8 @@
 
         <ImageView
             style="@style/CallLogActionIconStyle"
-            android:src="@drawable/quantum_ic_send_white_24" />
+            android:src="@drawable/quantum_ic_send_white_24"
+            app:tint="?colorPrimary" />
 
         <TextView
             style="@style/CallLogActionTextStyle"

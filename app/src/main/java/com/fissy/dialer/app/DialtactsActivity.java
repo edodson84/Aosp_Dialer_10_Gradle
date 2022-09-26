@@ -22,6 +22,7 @@ import android.app.KeyguardManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
@@ -33,15 +34,6 @@ import android.os.Trace;
 import android.provider.CallLog.Calls;
 import android.provider.ContactsContract.QuickContact;
 import android.speech.RecognizerIntent;
-import androidx.annotation.NonNull;
-import androidx.annotation.VisibleForTesting;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton.OnVisibilityChangedListener;
-import com.google.android.material.snackbar.Snackbar;
-import androidx.core.app.ActivityCompat;
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.ActionBar;
 import android.telecom.PhoneAccount;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -64,6 +56,13 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
+import androidx.appcompat.app.ActionBar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.viewpager.widget.ViewPager;
+
 import com.android.contacts.common.dialog.ClearFrequentsDialog;
 import com.android.contacts.common.list.OnPhoneNumberPickerActionListener;
 import com.fissy.dialer.R;
@@ -72,7 +71,6 @@ import com.fissy.dialer.animation.AnimationListenerAdapter;
 import com.fissy.dialer.app.calllog.CallLogActivity;
 import com.fissy.dialer.app.calllog.CallLogAdapter;
 import com.fissy.dialer.app.calllog.CallLogFragment;
-import com.fissy.dialer.app.calllog.CallLogNotificationsService;
 import com.fissy.dialer.app.calllog.IntentProvider;
 import com.fissy.dialer.app.list.DialtactsPagerAdapter;
 import com.fissy.dialer.app.list.DialtactsPagerAdapter.TabIndex;
@@ -83,6 +81,7 @@ import com.fissy.dialer.app.list.OnDragDropListener;
 import com.fissy.dialer.app.list.OnListFragmentScrolledListener;
 import com.fissy.dialer.app.list.PhoneFavoriteSquareTileView;
 import com.fissy.dialer.app.settings.DialerSettingsActivity;
+import com.fissy.dialer.app.settings.ThemeOptionsSettingsFragment;
 import com.fissy.dialer.app.widget.ActionBarController;
 import com.fissy.dialer.app.widget.SearchEditTextLayout;
 import com.fissy.dialer.callcomposer.CallComposerActivity;
@@ -108,11 +107,11 @@ import com.fissy.dialer.duo.DuoComponent;
 import com.fissy.dialer.i18n.LocaleUtils;
 import com.fissy.dialer.interactions.PhoneNumberInteraction;
 import com.fissy.dialer.interactions.PhoneNumberInteraction.InteractionErrorCode;
-import com.fissy.dialer.logging.DialerImpression;
 import com.fissy.dialer.logging.InteractionEvent;
 import com.fissy.dialer.logging.Logger;
 import com.fissy.dialer.logging.ScreenEvent;
 import com.fissy.dialer.logging.UiAction;
+import com.fissy.dialer.main.impl.MainActivity;
 import com.fissy.dialer.metrics.Metrics;
 import com.fissy.dialer.metrics.MetricsComponent;
 import com.fissy.dialer.performancereport.PerformanceReport;
@@ -133,6 +132,9 @@ import com.fissy.dialer.util.TouchPointManager;
 import com.fissy.dialer.util.TransactionSafeActivity;
 import com.fissy.dialer.util.ViewUtil;
 import com.fissy.dialer.widget.FloatingActionButtonController;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton.OnVisibilityChangedListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.common.base.Optional;
 
 import java.util.ArrayList;
@@ -164,14 +166,14 @@ public class DialtactsActivity extends TransactionSafeActivity
         ActivityCompat.OnRequestPermissionsResultCallback,
         DialpadListener,
         SearchFragmentListener,
-        OnContactSelectedListener {
+        OnContactSelectedListener,
+        SharedPreferences.OnSharedPreferenceChangeListener{
 
     public static final boolean DEBUG = false;
     @VisibleForTesting
     public static final String TAG_DIALPAD_FRAGMENT = "dialpad";
     @VisibleForTesting
     public static final String EXTRA_SHOW_TAB = "EXTRA_SHOW_TAB";
-    public static final String EXTRA_CLEAR_NEW_VOICEMAILS = "EXTRA_CLEAR_NEW_VOICEMAILS";
     private static final String ACTION_SHOW_TAB = "ACTION_SHOW_TAB";
     private static final String KEY_LAST_TAB = "last_tab";
     private static final String TAG = "DialtactsActivity";
@@ -356,31 +358,6 @@ public class DialtactsActivity extends TransactionSafeActivity
      */
     private String voiceSearchQuery;
 
-    /**
-     * @param tab the TAB_INDEX_* constant in {@link ListsFragment}
-     * @return A intent that will open the DialtactsActivity into the specified tab. The intent for
-     * each tab will be unique.
-     */
-    public static Intent getShowTabIntent(Context context, int tab) {
-        Intent intent = new Intent(context, DialtactsActivity.class);
-        intent.setAction(ACTION_SHOW_TAB);
-        intent.putExtra(DialtactsActivity.EXTRA_SHOW_TAB, tab);
-        intent.setData(
-                new Uri.Builder()
-                        .scheme("intent")
-                        .authority(context.getPackageName())
-                        .appendPath(TAG)
-                        .appendQueryParameter(DialtactsActivity.EXTRA_SHOW_TAB, String.valueOf(tab))
-                        .build());
-
-        return intent;
-    }
-
-    @VisibleForTesting
-    static void setVoiceSearchEnabledForTest(Optional<Boolean> enabled) {
-        voiceSearchEnabledForTest = enabled;
-    }
-
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {
@@ -394,7 +371,6 @@ public class DialtactsActivity extends TransactionSafeActivity
         Trace.beginSection(TAG + " onCreate");
         LogUtil.enterBlock("DialtactsActivity.onCreate");
         super.onCreate(savedInstanceState);
-
         firstLaunch = true;
         isLastTabEnabled =
                 ConfigProviderComponent.get(this).getConfigProvider().getBoolean("last_tab_enabled", false);
@@ -405,13 +381,11 @@ public class DialtactsActivity extends TransactionSafeActivity
         Trace.beginSection(TAG + " setContentView");
         setContentView(R.layout.dialtacts_activity);
         Trace.endSection();
-        getWindow().setBackgroundDrawable(null);
 
         Trace.beginSection(TAG + " setup Views");
         final ActionBar actionBar = getActionBarSafely();
         actionBar.setCustomView(R.layout.search_edittext);
         actionBar.setDisplayShowCustomEnabled(true);
-        actionBar.setBackgroundDrawable(null);
 
         searchEditTextLayout = actionBar.getCustomView().findViewById(R.id.search_view_container);
 
@@ -586,12 +560,7 @@ public class DialtactsActivity extends TransactionSafeActivity
                 // Externally specified extras take precedence to EXTRA_SHOW_TAB, which is only
                 // used internally.
                 final Bundle extras = getIntent().getExtras();
-                if (extras != null && extras.getInt(Calls.EXTRA_CALL_TYPE_FILTER) == Calls.VOICEMAIL_TYPE) {
-                    listsFragment.showTab(DialtactsPagerAdapter.TAB_INDEX_VOICEMAIL);
-                    Logger.get(this).logImpression(DialerImpression.Type.VVM_NOTIFICATION_CLICKED);
-                } else {
-                    listsFragment.showTab(DialtactsPagerAdapter.TAB_INDEX_HISTORY);
-                }
+                listsFragment.showTab(DialtactsPagerAdapter.TAB_INDEX_HISTORY);
             } else if (getIntent().hasExtra(EXTRA_SHOW_TAB)) {
                 int index =
                         getIntent().getIntExtra(EXTRA_SHOW_TAB, DialtactsPagerAdapter.TAB_INDEX_SPEED_DIAL);
@@ -602,11 +571,6 @@ public class DialtactsActivity extends TransactionSafeActivity
                     exitSearchUi();
                     listsFragment.showTab(index);
                 }
-            }
-
-            if (getIntent().getBooleanExtra(EXTRA_CLEAR_NEW_VOICEMAILS, false)) {
-                LogUtil.i("DialtactsActivity.onResume", "clearing all new voicemails");
-                CallLogNotificationsService.markAllNewVoicemailsAsOld(this);
             }
             // add 1 sec delay to get memory snapshot so that dialer wont react slowly on resume.
             ThreadUtil.postDelayedOnUiThread(
@@ -1113,6 +1077,7 @@ public class DialtactsActivity extends TransactionSafeActivity
 
     @Override
     public void onNewIntent(Intent newIntent) {
+        super.onNewIntent(newIntent);
         LogUtil.enterBlock("DialtactsActivity.onNewIntent");
         setIntent(newIntent);
         firstLaunch = true;
@@ -1222,7 +1187,7 @@ public class DialtactsActivity extends TransactionSafeActivity
                             floatingActionButtonController.scaleIn();
                         }
                     });
-        } else if (!floatingActionButtonController.isVisible() && listsFragment.shouldShowFab()) {
+        } else if (!floatingActionButtonController.isVisible()) {
             onPageScrolled(listsFragment.getCurrentTabIndex(), 0 /* offset */, 0 /* pixelOffset */);
             ThreadUtil.getUiThreadHandler()
                     .postDelayed(() -> floatingActionButtonController.scaleIn(), FAB_SCALE_IN_DELAY_MS);
@@ -1574,6 +1539,7 @@ public class DialtactsActivity extends TransactionSafeActivity
             int requestCode, String[] permissions, int[] grantResults) {
         // This should never happen; it should be impossible to start an interaction without the
         // contacts permission from the Dialtacts activity.
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         Assert.fail(
                 String.format(
                         Locale.US,
@@ -1625,6 +1591,11 @@ public class DialtactsActivity extends TransactionSafeActivity
         return ConfigProviderComponent.get(this)
                 .getConfigProvider()
                 .getBoolean("enable_new_favorites_tab", false);
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+
     }
 
     /**

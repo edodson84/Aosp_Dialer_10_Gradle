@@ -52,7 +52,6 @@ public abstract class PhoneFavoriteTileView extends ContactTileView {
     // Constant to pass to the drag event so that the drag action only happens when a phone favorite
     // tile is long pressed.
     static final String DRAG_PHONE_FAVORITE_TILE = "PHONE_FAVORITE_TILE";
-    private static final String TAG = PhoneFavoriteTileView.class.getSimpleName();
     // These parameters instruct the photo manager to display the default image/letter at 70% of
     // its normal size, and vertically offset upwards 12% towards the top of the letter tile, to
     // make room for the contact name and number label at the bottom of the image.
@@ -101,20 +100,18 @@ public abstract class PhoneFavoriteTileView extends ContactTileView {
         phoneNumberString = null;
         isPinned = (entry.pinned != PinnedPositions.UNPINNED);
         isStarred = entry.isFavorite;
-        if (entry != null) {
-            sendViewNotification(getContext(), entry.lookupUri);
-            // Grab the phone-number to call directly. See {@link onClick()}.
-            phoneNumberString = entry.phoneNumber;
+        sendViewNotification(getContext(), entry.lookupUri);
+        // Grab the phone-number to call directly. See {@link onClick()}.
+        phoneNumberString = entry.phoneNumber;
 
-            // If this is a blank entry, don't show anything. For this to truly look like an empty row
-            // the entire ContactTileRow needs to be hidden.
-            if (entry == ContactEntry.BLANK_ENTRY) {
-                setVisibility(View.INVISIBLE);
-            } else {
-                final ImageView starIcon = (ImageView) findViewById(R.id.contact_star_icon);
-                starIcon.setVisibility(entry.isFavorite ? View.VISIBLE : View.GONE);
-                setVisibility(View.VISIBLE);
-            }
+        // If this is a blank entry, don't show anything. For this to truly look like an empty row
+        // the entire ContactTileRow needs to be hidden.
+        if (entry == ContactEntry.BLANK_ENTRY) {
+            setVisibility(View.INVISIBLE);
+        } else {
+            final ImageView starIcon = (ImageView) findViewById(R.id.contact_star_icon);
+            starIcon.setVisibility(entry.isFavorite ? View.VISIBLE : View.GONE);
+            setVisibility(View.VISIBLE);
         }
     }
 
@@ -125,44 +122,41 @@ public abstract class PhoneFavoriteTileView extends ContactTileView {
 
     @Override
     protected OnClickListener createClickListener() {
-        return new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mListener == null) {
-                    return;
-                }
+        return v -> {
+            if (mListener == null) {
+                return;
+            }
 
-                CallSpecificAppData.Builder callSpecificAppData =
-                        CallSpecificAppData.newBuilder()
-                                .setAllowAssistedDialing(true)
-                                .setCallInitiationType(CallInitiationType.Type.SPEED_DIAL)
-                                .setSpeedDialContactPosition(position);
-                if (isStarred) {
-                    callSpecificAppData.addSpeedDialContactType(SpeedDialContactType.Type.STARRED_CONTACT);
-                } else {
-                    callSpecificAppData.addSpeedDialContactType(SpeedDialContactType.Type.FREQUENT_CONTACT);
-                }
-                if (isPinned) {
-                    callSpecificAppData.addSpeedDialContactType(SpeedDialContactType.Type.PINNED_CONTACT);
-                }
+            CallSpecificAppData.Builder callSpecificAppData =
+                    CallSpecificAppData.newBuilder()
+                            .setAllowAssistedDialing(true)
+                            .setCallInitiationType(CallInitiationType.Type.SPEED_DIAL)
+                            .setSpeedDialContactPosition(position);
+            if (isStarred) {
+                callSpecificAppData.addSpeedDialContactType(SpeedDialContactType.Type.STARRED_CONTACT);
+            } else {
+                callSpecificAppData.addSpeedDialContactType(SpeedDialContactType.Type.FREQUENT_CONTACT);
+            }
+            if (isPinned) {
+                callSpecificAppData.addSpeedDialContactType(SpeedDialContactType.Type.PINNED_CONTACT);
+            }
 
-                if (TextUtils.isEmpty(phoneNumberString)) {
-                    // Don't set performance report now, since user may spend some time on picking a number
+            if (TextUtils.isEmpty(phoneNumberString)) {
+                // Don't set performance report now, since user may spend some time on picking a number
 
-                    // Copy "superclass" implementation
-                    Logger.get(getContext())
-                            .logInteraction(InteractionEvent.Type.SPEED_DIAL_CLICK_CONTACT_WITH_AMBIGUOUS_NUMBER);
-                    mListener.onContactSelected(
-                            getLookupUri(),
-                            MoreContactUtils.getTargetRectFromView(PhoneFavoriteTileView.this),
-                            callSpecificAppData.build());
-                } else {
-                    // When you tap a frequently-called contact, you want to
-                    // call them at the number that you usually talk to them
-                    // at (i.e. the one displayed in the UI), regardless of
-                    // whether that's their default number.
-                    mListener.onCallNumberDirectly(phoneNumberString, callSpecificAppData.build());
-                }
+                // Copy "superclass" implementation
+                Logger.get(getContext())
+                        .logInteraction(InteractionEvent.Type.SPEED_DIAL_CLICK_CONTACT_WITH_AMBIGUOUS_NUMBER);
+                mListener.onContactSelected(
+                        getLookupUri(),
+                        MoreContactUtils.getTargetRectFromView(PhoneFavoriteTileView.this),
+                        callSpecificAppData.build());
+            } else {
+                // When you tap a frequently-called contact, you want to
+                // call them at the number that you usually talk to them
+                // at (i.e. the one displayed in the UI), regardless of
+                // whether that's their default number.
+                mListener.onCallNumberDirectly(phoneNumberString, callSpecificAppData.build());
             }
         };
     }

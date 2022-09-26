@@ -25,9 +25,6 @@ import android.content.res.ColorStateList;
 import android.graphics.PorterDuff.Mode;
 import android.os.Bundle;
 import android.provider.Settings;
-import androidx.annotation.Nullable;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import androidx.core.os.BuildCompat;
 import android.telecom.CallAudioState;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +32,9 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.core.os.BuildCompat;
 
 import com.android.incallui.call.CallList;
 import com.android.incallui.call.DialerCall;
@@ -44,7 +44,7 @@ import com.fissy.dialer.common.FragmentUtils;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.logging.DialerImpression;
 import com.fissy.dialer.logging.Logger;
-import com.fissy.dialer.theme.base.ThemeComponent;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -153,13 +153,12 @@ public class AudioRouteSelectorDialogFragment extends BottomSheetDialogFragment 
             final int itemRoute,
             CallAudioState audioState,
             DialerImpression.Type impressionType) {
-        int selectedColor = ThemeComponent.get(getContext()).theme().getColorPrimary();
         if ((audioState.getSupportedRouteMask() & itemRoute) == 0) {
             item.setVisibility(View.GONE);
         } else if (audioState.getRoute() == itemRoute) {
             item.setSelected(true);
-            item.setTextColor(selectedColor);
-            item.setCompoundDrawableTintList(ColorStateList.valueOf(selectedColor));
+            item.setTextColor(android.R.attr.colorPrimary);
+            item.setCompoundDrawableTintList(ColorStateList.valueOf(android.R.attr.colorPrimary));
             item.setCompoundDrawableTintMode(Mode.SRC_ATOP);
         }
         item.setOnClickListener(
@@ -173,14 +172,13 @@ public class AudioRouteSelectorDialogFragment extends BottomSheetDialogFragment 
     }
 
     private TextView createBluetoothItem(BluetoothDevice bluetoothDevice, boolean selected) {
-        int selectedColor = ThemeComponent.get(getContext()).theme().getColorPrimary();
         TextView textView =
                 (TextView) getLayoutInflater().inflate(R.layout.audioroute_item, null, false);
         textView.setText(getAliasName(bluetoothDevice));
         if (selected) {
             textView.setSelected(true);
-            textView.setTextColor(selectedColor);
-            textView.setCompoundDrawableTintList(ColorStateList.valueOf(selectedColor));
+            textView.setTextColor(android.R.attr.colorPrimary);
+            textView.setCompoundDrawableTintList(ColorStateList.valueOf(android.R.attr.colorPrimary));
             textView.setCompoundDrawableTintMode(Mode.SRC_ATOP);
         }
         textView.setOnClickListener(

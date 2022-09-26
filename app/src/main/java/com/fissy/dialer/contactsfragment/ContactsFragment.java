@@ -28,6 +28,13 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnScrollChangeListener;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import androidx.annotation.IntDef;
 import androidx.annotation.Nullable;
 import androidx.legacy.app.FragmentCompat;
@@ -35,12 +42,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.Recycler;
 import androidx.recyclerview.widget.RecyclerView.State;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.View.OnScrollChangeListener;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.common.Assert;

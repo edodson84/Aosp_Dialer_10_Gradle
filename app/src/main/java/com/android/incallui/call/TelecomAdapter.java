@@ -22,9 +22,10 @@ import android.bluetooth.BluetoothDevice;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Looper;
+import android.telecom.InCallService;
+
 import androidx.annotation.MainThread;
 import androidx.annotation.VisibleForTesting;
-import android.telecom.InCallService;
 
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;

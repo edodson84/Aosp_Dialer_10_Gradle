@@ -18,7 +18,6 @@ package com.android.incallui;
 
 import android.content.Context;
 import android.net.Uri;
-import androidx.collection.ArrayMap;
 import android.telephony.PhoneNumberUtils;
 import android.text.BidiFormatter;
 import android.text.TextDirectionHeuristics;
@@ -32,6 +31,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.collection.ArrayMap;
 
 import com.android.incallui.ContactInfoCache.ContactCacheEntry;
 import com.android.incallui.call.CallList;

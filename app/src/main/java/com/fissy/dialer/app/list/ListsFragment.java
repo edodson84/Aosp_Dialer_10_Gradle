@@ -20,24 +20,21 @@ import static androidx.viewpager.widget.ViewPager.SCROLL_STATE_SETTLING;
 
 import android.app.Fragment;
 import android.content.SharedPreferences;
-import android.database.ContentObserver;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Trace;
 import android.preference.PreferenceManager;
-import android.provider.VoicemailContract;
-import androidx.viewpager.widget.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.viewpager.widget.ViewPager.OnPageChangeListener;
 
 import com.android.contacts.common.list.ViewPagerTabs;
 import com.fissy.dialer.R;
 import com.fissy.dialer.app.calllog.CallLogFragment;
 import com.fissy.dialer.app.calllog.CallLogFragment.CallLogFragmentListener;
 import com.fissy.dialer.app.calllog.CallLogNotificationsService;
-import com.fissy.dialer.app.calllog.VisualVoicemailCallLogFragment;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.database.CallLogQueryHandler;
 import com.fissy.dialer.database.CallLogQueryHandler.Listener;
@@ -46,11 +43,6 @@ import com.fissy.dialer.logging.Logger;
 import com.fissy.dialer.logging.ScreenEvent;
 import com.fissy.dialer.logging.UiAction;
 import com.fissy.dialer.performancereport.PerformanceReport;
-import com.fissy.dialer.util.PermissionsUtil;
-import com.fissy.dialer.voicemail.listui.error.VoicemailStatusCorruptionHandler;
-import com.fissy.dialer.voicemail.listui.error.VoicemailStatusCorruptionHandler.Source;
-import com.fissy.dialer.voicemailstatus.VisualVoicemailEnabledChecker;
-import com.fissy.dialer.voicemailstatus.VoicemailStatusHelper;
 
 import java.util.ArrayList;
 
@@ -67,9 +59,9 @@ public class ListsFragment extends Fragment
     private static final String TAG = "ListsFragment";
     private final ArrayList<OnPageChangeListener> onPageChangeListeners = new ArrayList<>();
     private final DialerImpression.Type[] swipeImpressionList =
-            new DialerImpression.Type[DialtactsPagerAdapter.TAB_COUNT_WITH_VOICEMAIL];
+            new DialerImpression.Type[DialtactsPagerAdapter.TAB_COUNT_DEFAULT];
     private final DialerImpression.Type[] clickImpressionList =
-            new DialerImpression.Type[DialtactsPagerAdapter.TAB_COUNT_WITH_VOICEMAIL];
+            new DialerImpression.Type[DialtactsPagerAdapter.TAB_COUNT_DEFAULT];
     private DialerViewPager viewPager;
     private ViewPagerTabs viewPagerTabs;
     private DialtactsPagerAdapter adapter;
@@ -77,22 +69,12 @@ public class ListsFragment extends Fragment
     private View removeViewContent;
     private Fragment currentPage;
     private SharedPreferences prefs;
-    private boolean hasFetchedVoicemailStatus;
-    private boolean showVoicemailTabAfterVoicemailStatusIsFetched;
     /**
      * The position of the currently selected tab.
      */
     private int tabIndex = DialtactsPagerAdapter.TAB_INDEX_SPEED_DIAL;
     private boolean paused;
     private CallLogQueryHandler callLogQueryHandler;
-    private final ContentObserver voicemailStatusObserver =
-            new ContentObserver(new Handler()) {
-                @Override
-                public void onChange(boolean selfChange) {
-                    super.onChange(selfChange);
-                    callLogQueryHandler.fetchVoicemailStatus();
-                }
-            };
     private UiAction.Type[] actionTypeList;
     // Only for detecting page selected by swiping or clicking.
     private boolean onPageScrolledBeforeScrollStateSettling;
@@ -118,10 +100,8 @@ public class ListsFragment extends Fragment
             sendScreenViewForCurrentPosition();
         }
 
-        // Fetch voicemail status to determine if we should show the voicemail tab.
         callLogQueryHandler =
                 new CallLogQueryHandler(getActivity(), getActivity().getContentResolver(), this);
-        callLogQueryHandler.fetchVoicemailStatus();
         callLogQueryHandler.fetchMissedCallsUnreadCount();
         Trace.endSection();
         currentPage = adapter.getItem(viewPager.getCurrentItem());
@@ -151,14 +131,12 @@ public class ListsFragment extends Fragment
         Trace.endSection();
         Trace.beginSection(TAG + " setup views");
 
-        actionTypeList = new UiAction.Type[DialtactsPagerAdapter.TAB_COUNT_WITH_VOICEMAIL];
+        actionTypeList = new UiAction.Type[DialtactsPagerAdapter.TAB_COUNT_DEFAULT];
         actionTypeList[DialtactsPagerAdapter.TAB_INDEX_SPEED_DIAL] =
                 UiAction.Type.CHANGE_TAB_TO_FAVORITE;
         actionTypeList[DialtactsPagerAdapter.TAB_INDEX_HISTORY] = UiAction.Type.CHANGE_TAB_TO_CALL_LOG;
         actionTypeList[DialtactsPagerAdapter.TAB_INDEX_ALL_CONTACTS] =
                 UiAction.Type.CHANGE_TAB_TO_CONTACTS;
-        actionTypeList[DialtactsPagerAdapter.TAB_INDEX_VOICEMAIL] =
-                UiAction.Type.CHANGE_TAB_TO_VOICEMAIL;
 
         swipeImpressionList[DialtactsPagerAdapter.TAB_INDEX_SPEED_DIAL] =
                 DialerImpression.Type.SWITCH_TAB_TO_FAVORITE_BY_SWIPE;
@@ -166,8 +144,6 @@ public class ListsFragment extends Fragment
                 DialerImpression.Type.SWITCH_TAB_TO_CALL_LOG_BY_SWIPE;
         swipeImpressionList[DialtactsPagerAdapter.TAB_INDEX_ALL_CONTACTS] =
                 DialerImpression.Type.SWITCH_TAB_TO_CONTACTS_BY_SWIPE;
-        swipeImpressionList[DialtactsPagerAdapter.TAB_INDEX_VOICEMAIL] =
-                DialerImpression.Type.SWITCH_TAB_TO_VOICEMAIL_BY_SWIPE;
 
         clickImpressionList[DialtactsPagerAdapter.TAB_INDEX_SPEED_DIAL] =
                 DialerImpression.Type.SWITCH_TAB_TO_FAVORITE_BY_CLICK;
@@ -175,33 +151,21 @@ public class ListsFragment extends Fragment
                 DialerImpression.Type.SWITCH_TAB_TO_CALL_LOG_BY_CLICK;
         clickImpressionList[DialtactsPagerAdapter.TAB_INDEX_ALL_CONTACTS] =
                 DialerImpression.Type.SWITCH_TAB_TO_CONTACTS_BY_CLICK;
-        clickImpressionList[DialtactsPagerAdapter.TAB_INDEX_VOICEMAIL] =
-                DialerImpression.Type.SWITCH_TAB_TO_VOICEMAIL_BY_CLICK;
 
-        String[] tabTitles = new String[DialtactsPagerAdapter.TAB_COUNT_WITH_VOICEMAIL];
+        String[] tabTitles = new String[DialtactsPagerAdapter.TAB_COUNT_DEFAULT];
         tabTitles[DialtactsPagerAdapter.TAB_INDEX_SPEED_DIAL] =
                 getResources().getString(R.string.tab_speed_dial);
         tabTitles[DialtactsPagerAdapter.TAB_INDEX_HISTORY] =
                 getResources().getString(R.string.tab_history);
         tabTitles[DialtactsPagerAdapter.TAB_INDEX_ALL_CONTACTS] =
                 getResources().getString(R.string.tab_all_contacts);
-        tabTitles[DialtactsPagerAdapter.TAB_INDEX_VOICEMAIL] =
-                getResources().getString(R.string.tab_voicemail);
 
-        int[] tabIcons = new int[DialtactsPagerAdapter.TAB_COUNT_WITH_VOICEMAIL];
+        int[] tabIcons = new int[DialtactsPagerAdapter.TAB_COUNT_DEFAULT];
         tabIcons[DialtactsPagerAdapter.TAB_INDEX_SPEED_DIAL] = R.drawable.quantum_ic_grade_white_24;
         tabIcons[DialtactsPagerAdapter.TAB_INDEX_HISTORY] = R.drawable.quantum_ic_schedule_white_24;
         tabIcons[DialtactsPagerAdapter.TAB_INDEX_ALL_CONTACTS] = R.drawable.quantum_ic_people_white_24;
-        tabIcons[DialtactsPagerAdapter.TAB_INDEX_VOICEMAIL] = R.drawable.quantum_ic_voicemail_white_24;
 
         viewPager = (DialerViewPager) parentView.findViewById(R.id.lists_pager);
-        adapter =
-                new DialtactsPagerAdapter(
-                        getChildFragmentManager(),
-                        tabTitles,
-                        prefs.getBoolean(
-                                VisualVoicemailEnabledChecker.PREF_KEY_HAS_ACTIVE_VOICEMAIL_PROVIDER, false));
-        viewPager.setAdapter(adapter);
 
         // This is deliberate. See cl/172018946 for the app startup implications of using 1 here
         // versus loading more fragments upfront.
@@ -217,16 +181,6 @@ public class ListsFragment extends Fragment
         removeView = (RemoveView) parentView.findViewById(R.id.remove_view);
         removeViewContent = parentView.findViewById(R.id.remove_view_content);
 
-        if (PermissionsUtil.hasReadVoicemailPermissions(getContext())
-                && PermissionsUtil.hasAddVoicemailPermissions(getContext())) {
-            getActivity()
-                    .getContentResolver()
-                    .registerContentObserver(
-                            VoicemailContract.Status.CONTENT_URI, true, voicemailStatusObserver);
-        } else {
-            LogUtil.w("ListsFragment.onCreateView", "no voicemail read permissions");
-        }
-
         Trace.endSection();
         Trace.endSection();
         return parentView;
@@ -234,7 +188,6 @@ public class ListsFragment extends Fragment
 
     @Override
     public void onDestroy() {
-        getActivity().getContentResolver().unregisterContentObserver(voicemailStatusObserver);
         super.onDestroy();
     }
 
@@ -250,16 +203,7 @@ public class ListsFragment extends Fragment
      * voicemail tab after the voicemail status has been fetched.
      */
     public void showTab(int index) {
-        if (index == DialtactsPagerAdapter.TAB_INDEX_VOICEMAIL) {
-            if (adapter.hasActiveVoicemailProvider()) {
-                viewPager.setCurrentItem(adapter.getRtlPosition(DialtactsPagerAdapter.TAB_INDEX_VOICEMAIL));
-            } else if (!hasFetchedVoicemailStatus) {
-                // Try to show the voicemail tab after the voicemail status returns.
-                showVoicemailTabAfterVoicemailStatusIsFetched = true;
-            }
-        } else if (index < getTabCount()) {
-            viewPager.setCurrentItem(adapter.getRtlPosition(index));
-        }
+        viewPager.setCurrentItem(adapter.getRtlPosition(index));
     }
 
     @Override
@@ -294,9 +238,6 @@ public class ListsFragment extends Fragment
         LogUtil.i("ListsFragment.onPageSelected", "position: %d", position);
         tabIndex = adapter.getRtlPosition(position);
 
-        // Show the tab which has been selected instead.
-        showVoicemailTabAfterVoicemailStatusIsFetched = false;
-
         final int count = onPageChangeListeners.size();
         for (int i = 0; i < count; i++) {
             onPageChangeListeners.get(i).onPageSelected(position);
@@ -322,67 +263,6 @@ public class ListsFragment extends Fragment
         for (int i = 0; i < count; i++) {
             onPageChangeListeners.get(i).onPageScrollStateChanged(state);
         }
-    }
-
-    @Override
-    public void onVoicemailStatusFetched(Cursor statusCursor) {
-        hasFetchedVoicemailStatus = true;
-
-        if (getActivity() == null || paused) {
-            return;
-        }
-
-        VoicemailStatusCorruptionHandler.maybeFixVoicemailStatus(
-                getContext(), statusCursor, Source.Activity);
-
-        // Update hasActiveVoicemailProvider, which controls the number of tabs displayed.
-        boolean hasActiveVoicemailProvider =
-                VoicemailStatusHelper.getNumberActivityVoicemailSources(statusCursor) > 0;
-        if (hasActiveVoicemailProvider != adapter.hasActiveVoicemailProvider()) {
-            adapter.setHasActiveVoicemailProvider(hasActiveVoicemailProvider);
-            adapter.notifyDataSetChanged();
-
-            if (hasActiveVoicemailProvider) {
-                Logger.get(getContext()).logImpression(DialerImpression.Type.VVM_TAB_VISIBLE);
-                viewPagerTabs.updateTab(DialtactsPagerAdapter.TAB_INDEX_VOICEMAIL);
-            } else {
-                viewPagerTabs.removeTab(DialtactsPagerAdapter.TAB_INDEX_VOICEMAIL);
-                adapter.removeVoicemailFragment(getChildFragmentManager());
-            }
-
-            prefs
-                    .edit()
-                    .putBoolean(
-                            VisualVoicemailEnabledChecker.PREF_KEY_HAS_ACTIVE_VOICEMAIL_PROVIDER,
-                            hasActiveVoicemailProvider)
-                    .apply();
-        }
-
-        if (hasActiveVoicemailProvider) {
-            callLogQueryHandler.fetchVoicemailUnreadCount();
-        }
-
-        if (adapter.hasActiveVoicemailProvider() && showVoicemailTabAfterVoicemailStatusIsFetched) {
-            showVoicemailTabAfterVoicemailStatusIsFetched = false;
-            showTab(DialtactsPagerAdapter.TAB_INDEX_VOICEMAIL);
-        }
-    }
-
-    @Override
-    public void onVoicemailUnreadCountFetched(Cursor cursor) {
-        if (getActivity() == null || getActivity().isFinishing() || cursor == null) {
-            return;
-        }
-
-        int count = 0;
-        try {
-            count = cursor.getCount();
-        } finally {
-            cursor.close();
-        }
-
-        viewPagerTabs.setUnreadCount(count, DialtactsPagerAdapter.TAB_INDEX_VOICEMAIL);
-        viewPagerTabs.updateTab(DialtactsPagerAdapter.TAB_INDEX_VOICEMAIL);
     }
 
     @Override
@@ -412,19 +292,11 @@ public class ListsFragment extends Fragment
         return tabIndex;
     }
 
-    public boolean shouldShowFab() {
-        // If the VVM TOS is visible, don't show the fab
-        return !(currentPage instanceof VisualVoicemailCallLogFragment)
-                || !((VisualVoicemailCallLogFragment) currentPage).isModalAlertVisible();
-    }
 
     @Override
     public void updateTabUnreadCounts() {
         if (callLogQueryHandler != null) {
             callLogQueryHandler.fetchMissedCallsUnreadCount();
-            if (adapter.hasActiveVoicemailProvider()) {
-                callLogQueryHandler.fetchVoicemailUnreadCount();
-            }
         }
     }
 
@@ -480,9 +352,6 @@ public class ListsFragment extends Fragment
                 break;
             case DialtactsPagerAdapter.TAB_INDEX_ALL_CONTACTS:
                 screenType = ScreenEvent.Type.ALL_CONTACTS;
-                break;
-            case DialtactsPagerAdapter.TAB_INDEX_VOICEMAIL:
-                screenType = ScreenEvent.Type.VOICEMAIL_LOG;
                 break;
             default:
                 return;

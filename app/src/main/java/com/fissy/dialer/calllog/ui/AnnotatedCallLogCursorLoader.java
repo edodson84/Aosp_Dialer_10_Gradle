@@ -18,6 +18,7 @@ package com.fissy.dialer.calllog.ui;
 
 import android.content.Context;
 import android.provider.CallLog.Calls;
+
 import androidx.loader.content.CursorLoader;
 
 import com.fissy.dialer.calllog.database.contract.AnnotatedCallLogContract.AnnotatedCallLog;

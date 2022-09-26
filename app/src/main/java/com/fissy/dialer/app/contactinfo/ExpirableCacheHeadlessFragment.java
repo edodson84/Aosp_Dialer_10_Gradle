@@ -17,10 +17,11 @@
 package com.fissy.dialer.app.contactinfo;
 
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.fissy.dialer.phonenumbercache.ContactInfo;
 import com.fissy.dialer.util.ExpirableCache;

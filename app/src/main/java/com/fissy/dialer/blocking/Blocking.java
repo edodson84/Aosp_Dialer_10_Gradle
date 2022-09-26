@@ -26,9 +26,10 @@ import android.database.Cursor;
 import android.os.RemoteException;
 import android.provider.BlockedNumberContract;
 import android.provider.BlockedNumberContract.BlockedNumbers;
-import androidx.annotation.Nullable;
 import android.telephony.PhoneNumberUtils;
 import android.util.ArrayMap;
+
+import androidx.annotation.Nullable;
 
 import com.fissy.dialer.common.concurrent.DialerExecutorComponent;
 import com.fissy.dialer.common.database.Selection;

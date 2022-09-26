@@ -38,6 +38,7 @@ public class RttCheckableButton extends Button implements Checkable {
     private OnCheckedChangeListener onCheckedChangeListener;
     private CharSequence contentDescriptionChecked;
     private CharSequence contentDescriptionUnchecked;
+
     public RttCheckableButton(Context context) {
         this(context, null);
     }

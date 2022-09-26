@@ -17,6 +17,7 @@
 package com.fissy.dialer.precall;
 
 import android.app.Activity;
+
 import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;

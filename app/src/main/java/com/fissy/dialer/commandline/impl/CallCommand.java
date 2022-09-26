@@ -18,10 +18,11 @@ package com.fissy.dialer.commandline.impl;
 
 import android.content.Context;
 import android.content.Intent;
-import androidx.annotation.NonNull;
 import android.telecom.PhoneAccount;
 import android.telecom.PhoneAccountHandle;
 import android.telecom.TelecomManager;
+
+import androidx.annotation.NonNull;
 
 import com.fissy.dialer.buildtype.BuildType;
 import com.fissy.dialer.buildtype.BuildType.Type;

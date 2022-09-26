@@ -17,8 +17,9 @@
 package com.fissy.dialer.simulator;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
 import android.telecom.Connection;
+
+import androidx.annotation.NonNull;
 
 import com.fissy.dialer.simulator.Simulator.ConferenceType;
 

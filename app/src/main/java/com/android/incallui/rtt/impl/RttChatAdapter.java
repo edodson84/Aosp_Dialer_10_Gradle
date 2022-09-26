@@ -18,14 +18,15 @@ package com.android.incallui.rtt.impl;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import androidx.annotation.IntDef;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.IntDef;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
 import com.android.incallui.rtt.protocol.RttChatMessage;
 import com.fissy.dialer.R;
@@ -50,6 +51,7 @@ public class RttChatAdapter extends RecyclerView.Adapter<ViewHolder> {
     private List<RttChatMessage> rttMessages = new ArrayList<>();
     private int lastIndexOfLocalMessage = -1;
     private boolean shouldShowAdvisory;
+
     RttChatAdapter(Context context, MessageListener listener) {
         this.context = context;
         this.messageListener = listener;

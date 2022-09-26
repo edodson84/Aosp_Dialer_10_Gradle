@@ -19,6 +19,7 @@ package com.fissy.dialer.calllog.notifier;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.fissy.dialer.calllog.constants.IntentNames;

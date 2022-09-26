@@ -20,8 +20,6 @@ import android.content.Context;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
 import android.os.SystemClock;
-import androidx.annotation.Nullable;
-import androidx.core.view.ViewCompat;
 import android.telephony.PhoneNumberUtils;
 import android.text.BidiFormatter;
 import android.text.TextDirectionHeuristics;
@@ -33,6 +31,9 @@ import android.widget.ImageView;
 import android.widget.Space;
 import android.widget.TextView;
 import android.widget.ViewAnimator;
+
+import androidx.annotation.Nullable;
+import androidx.core.view.ViewCompat;
 
 import com.android.incallui.incall.protocol.ContactPhotoType;
 import com.android.incallui.incall.protocol.PrimaryCallState;

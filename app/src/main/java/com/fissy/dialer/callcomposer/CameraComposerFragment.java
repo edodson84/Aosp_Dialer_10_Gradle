@@ -24,8 +24,6 @@ import android.hardware.Camera.CameraInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -39,6 +37,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.fissy.dialer.R;
 import com.fissy.dialer.callcomposer.camera.CameraManager;
 import com.fissy.dialer.callcomposer.camera.CameraManager.CameraManagerListener;
@@ -50,7 +51,6 @@ import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.logging.DialerImpression;
 import com.fissy.dialer.logging.Logger;
-import com.fissy.dialer.theme.base.ThemeComponent;
 import com.fissy.dialer.util.PermissionsUtil;
 
 /**
@@ -119,7 +119,7 @@ public class CameraComposerFragment extends CallComposerFragment
             allowPermission.setOnClickListener(this);
             permissionText.setText(R.string.camera_permission_text);
             permissionImage.setImageResource(R.drawable.quantum_ic_camera_alt_white_48);
-            permissionImage.setColorFilter(ThemeComponent.get(getContext()).theme().getColorPrimary());
+            permissionImage.setColorFilter(android.R.attr.colorPrimary);
             permissionView.setVisibility(View.VISIBLE);
         } else {
             if (bundle != null) {

@@ -16,10 +16,11 @@
 
 package com.fissy.dialer.enrichedcall.simulator;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.fissy.dialer.R;
 

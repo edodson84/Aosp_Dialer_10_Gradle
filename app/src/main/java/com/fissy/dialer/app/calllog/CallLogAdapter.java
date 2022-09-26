@@ -18,27 +18,14 @@ package com.fissy.dialer.app.calllog;
 
 import android.app.Activity;
 import android.content.ContentUris;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build.VERSION;
-import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.os.Trace;
 import android.provider.CallLog;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
-import androidx.annotation.MainThread;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
-import androidx.annotation.WorkerThread;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import android.telecom.PhoneAccountHandle;
 import android.telephony.PhoneNumberUtils;
 import android.text.TextUtils;
@@ -53,14 +40,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.MainThread;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
+import androidx.annotation.WorkerThread;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView.ViewHolder;
+
 import com.android.contacts.common.ContactsUtils;
 import com.fissy.dialer.R;
 import com.fissy.dialer.app.calllog.CallLogFragment.CallLogFragmentListener;
 import com.fissy.dialer.app.calllog.CallLogGroupBuilder.GroupCreator;
 import com.fissy.dialer.app.calllog.calllogcache.CallLogCache;
 import com.fissy.dialer.app.contactinfo.ContactInfoCache;
-import com.fissy.dialer.app.voicemail.VoicemailPlaybackPresenter;
-import com.fissy.dialer.app.voicemail.VoicemailPlaybackPresenter.OnVoicemailDeletedListener;
 import com.fissy.dialer.blocking.FilteredNumberAsyncQueryHandler;
 import com.fissy.dialer.calldetails.CallDetailsEntries;
 import com.fissy.dialer.calldetails.CallDetailsEntries.CallDetailsEntry;
@@ -71,7 +65,6 @@ import com.fissy.dialer.common.FragmentUtils.FragmentUtilListener;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.common.concurrent.AsyncTaskExecutor;
 import com.fissy.dialer.common.concurrent.AsyncTaskExecutors;
-import com.fissy.dialer.compat.android.provider.VoicemailCompat;
 import com.fissy.dialer.configprovider.ConfigProviderComponent;
 import com.fissy.dialer.contacts.ContactsComponent;
 import com.fissy.dialer.duo.Duo;
@@ -109,7 +102,7 @@ import java.util.concurrent.ConcurrentMap;
  * Adapter class to fill in data for the Call Log.
  */
 public class CallLogAdapter extends GroupingListAdapter
-        implements GroupCreator, OnVoicemailDeletedListener, DuoListener {
+        implements GroupCreator, DuoListener {
 
     // Types of activities the call log adapter is used for
     public static final int ACTIVITY_TYPE_CALL_LOG = 1;
@@ -127,7 +120,6 @@ public class CallLogAdapter extends GroupingListAdapter
     private static final String KEY_EXPANDED_ROW_ID = "expanded_row_id";
     private static final String KEY_ACTION_MODE = "action_mode_selected_items";
     protected final Activity activity;
-    protected final VoicemailPlaybackPresenter voicemailPlaybackPresenter;
     /**
      * Cache for repeated requests to Telecom/Telephony.
      */
@@ -172,10 +164,6 @@ public class CallLogAdapter extends GroupingListAdapter
     /**
      * Holds a list of URIs that are pending deletion or undo. If the activity ends before the undo
      * timeout, all of the pending URIs will be deleted.
-     *
-     * <p>TODO(twyen): move this and OnVoicemailDeletedListener to somewhere like {@link
-     * VisualVoicemailCallLogFragment}. The CallLogAdapter does not need to know about what to do with
-     * hidden item or what to hide.
      */
     @NonNull
     private final Set<Uri> hiddenItemUris = new ArraySet<>();
@@ -230,19 +218,11 @@ public class CallLogAdapter extends GroupingListAdapter
                     return false; // Return false if nothing is done
                 }
 
-                // Called when the user selects a contextual menu item
                 @Override
                 public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-                    if (item.getItemId() == R.id.action_bar_delete_menu_item) {
-                        Logger.get(activity).logImpression(DialerImpression.Type.MULTISELECT_TAP_DELETE_ICON);
-                        if (selectedItems.size() > 0) {
-                            showDeleteSelectedItemsDialog();
-                        }
-                        return true;
-                    } else {
-                        return false;
-                    }
+                    return false;
                 }
+
 
                 // Called when the user exits the action mode
                 @Override
@@ -305,11 +285,6 @@ public class CallLogAdapter extends GroupingListAdapter
                         return;
                     }
 
-                    if (voicemailPlaybackPresenter != null) {
-                        // Always reset the voicemail playback state on expand or collapse.
-                        voicemailPlaybackPresenter.resetAll();
-                    }
-
                     // If enriched call capabilities were unknown on the initial load,
                     // viewHolder.isCallComposerCapable may be unset. Check here if we have the capabilities
                     // as a last attempt at getting them before showing the expanded view to the user
@@ -368,8 +343,7 @@ public class CallLogAdapter extends GroupingListAdapter
                 public boolean onLongClick(View v) {
                     if (ConfigProviderComponent.get(v.getContext())
                             .getConfigProvider()
-                            .getBoolean(ENABLE_CALL_LOG_MULTI_SELECT, ENABLE_CALL_LOG_MULTI_SELECT_FLAG)
-                            && voicemailPlaybackPresenter != null) {
+                            .getBoolean(ENABLE_CALL_LOG_MULTI_SELECT, ENABLE_CALL_LOG_MULTI_SELECT_FLAG)) {
                         if (v.getId() == R.id.primary_action_view || v.getId() == R.id.quick_contact_photo) {
                             if (actionMode == null) {
                                 Logger.get(activity)
@@ -400,7 +374,6 @@ public class CallLogAdapter extends GroupingListAdapter
             OnActionModeStateChangedListener actionModeStateChangedListener,
             CallLogCache callLogCache,
             ContactInfoCache contactInfoCache,
-            VoicemailPlaybackPresenter voicemailPlaybackPresenter,
             @NonNull FilteredNumberAsyncQueryHandler filteredNumberAsyncQueryHandler,
             int activityType) {
         super();
@@ -409,10 +382,6 @@ public class CallLogAdapter extends GroupingListAdapter
         this.callFetcher = callFetcher;
         this.actionModeStateChangedListener = actionModeStateChangedListener;
         this.multiSelectRemoveView = multiSelectRemoveView;
-        this.voicemailPlaybackPresenter = voicemailPlaybackPresenter;
-        if (this.voicemailPlaybackPresenter != null) {
-            this.voicemailPlaybackPresenter.setOnVoicemailDeletedListener(this);
-        }
 
         this.activityType = activityType;
 
@@ -481,67 +450,6 @@ public class CallLogAdapter extends GroupingListAdapter
         }
         cursor.moveToPosition(position);
         return callTypes;
-    }
-
-    private void showDeleteSelectedItemsDialog() {
-        SparseArray<String> voicemailsToDeleteOnConfirmation = selectedItems.clone();
-        new AlertDialog.Builder(activity)
-                .setCancelable(true)
-                .setTitle(
-                        activity
-                                .getResources()
-                                .getQuantityString(
-                                        R.plurals.delete_voicemails_confirmation_dialog_title, selectedItems.size()))
-                .setPositiveButton(
-                        R.string.voicemailMultiSelectDeleteConfirm,
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(final DialogInterface dialog, final int button) {
-                                LogUtil.i(
-                                        "CallLogAdapter.showDeleteSelectedItemsDialog",
-                                        "onClick, these items to delete " + voicemailsToDeleteOnConfirmation);
-                                deleteSelectedItems(voicemailsToDeleteOnConfirmation);
-                                actionMode.finish();
-                                dialog.cancel();
-                                Logger.get(activity)
-                                        .logImpression(
-                                                DialerImpression.Type.MULTISELECT_DELETE_ENTRY_VIA_CONFIRMATION_DIALOG);
-                            }
-                        })
-                .setOnCancelListener(
-                        new OnCancelListener() {
-                            @Override
-                            public void onCancel(DialogInterface dialogInterface) {
-                                Logger.get(activity)
-                                        .logImpression(
-                                                DialerImpression.Type
-                                                        .MULTISELECT_CANCEL_CONFIRMATION_DIALOG_VIA_CANCEL_TOUCH);
-                                dialogInterface.cancel();
-                            }
-                        })
-                .setNegativeButton(
-                        R.string.voicemailMultiSelectDeleteCancel,
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(final DialogInterface dialog, final int button) {
-                                Logger.get(activity)
-                                        .logImpression(
-                                                DialerImpression.Type
-                                                        .MULTISELECT_CANCEL_CONFIRMATION_DIALOG_VIA_CANCEL_BUTTON);
-                                dialog.cancel();
-                            }
-                        })
-                .show();
-        Logger.get(activity)
-                .logImpression(DialerImpression.Type.MULTISELECT_DISPLAY_DELETE_CONFIRMATION_DIALOG);
-    }
-
-    private void deleteSelectedItems(SparseArray<String> voicemailsToDelete) {
-        for (int i = 0; i < voicemailsToDelete.size(); i++) {
-            String voicemailUri = voicemailsToDelete.get(voicemailsToDelete.keyAt(i));
-            LogUtil.i("CallLogAdapter.deleteSelectedItems", "deleting uri:" + voicemailUri);
-            CallLogAsyncTaskUtil.deleteVoicemail(activity, Uri.parse(voicemailUri), null);
-        }
     }
 
     @VisibleForTesting
@@ -721,9 +629,6 @@ public class CallLogAdapter extends GroupingListAdapter
 
         getDuo().unregisterListener(this);
         pauseCache();
-        for (Uri uri : hiddenItemUris) {
-            CallLogAsyncTaskUtil.deleteVoicemail(activity, uri, null);
-        }
     }
 
     public void onStop() {
@@ -771,8 +676,7 @@ public class CallLogAdapter extends GroupingListAdapter
                         longPressListener,
                         actionModeStateChangedListener,
                         callLogCache,
-                        callLogListItemHelper,
-                        voicemailPlaybackPresenter);
+                        callLogListItemHelper);
 
         viewHolder.callLogEntryView.setTag(viewHolder);
 
@@ -979,10 +883,6 @@ public class CallLogAdapter extends GroupingListAdapter
         final String viaNumber = cursor.getString(CallLogQuery.VIA_NUMBER);
         final int numberPresentation = cursor.getInt(CallLogQuery.NUMBER_PRESENTATION);
         final ContactInfo cachedContactInfo = ContactInfoHelper.getContactInfo(cursor);
-        final int transcriptionState =
-                (VERSION.SDK_INT >= VERSION_CODES.O)
-                        ? cursor.getInt(CallLogQuery.TRANSCRIPTION_STATE)
-                        : VoicemailCompat.TRANSCRIPTION_NOT_STARTED;
         final PhoneCallDetails details =
                 new PhoneCallDetails(number, numberPresentation, postDialDigits);
         details.viaNumber = viaNumber;
@@ -991,8 +891,6 @@ public class CallLogAdapter extends GroupingListAdapter
         details.duration = cursor.getLong(CallLogQuery.DURATION);
         details.features = getCallFeatures(cursor, count);
         details.geocode = cursor.getString(CallLogQuery.GEOCODED_LOCATION);
-        details.transcription = cursor.getString(CallLogQuery.TRANSCRIPTION);
-        details.transcriptionState = transcriptionState;
         details.callTypes = getCallTypes(cursor, count);
 
         details.accountComponentName = cursor.getString(CallLogQuery.ACCOUNT_COMPONENT_NAME);
@@ -1231,17 +1129,6 @@ public class CallLogAdapter extends GroupingListAdapter
      * clicks delete on a second item before the first item's undo option has expired, the first item
      * is immediately deleted so that only one item can be "undoed" at a time.
      */
-    @Override
-    public void onVoicemailDeleted(CallLogListItemViewHolder viewHolder, Uri uri) {
-        hiddenRowIds.add(viewHolder.rowId);
-        // Save the new hidden item uri in case the activity is suspend before the undo has timed out.
-        hiddenItemUris.add(uri);
-
-        collapseExpandedCard();
-        notifyItemChanged(viewHolder.getAdapterPosition());
-        // The next item might have to update its day group label
-        notifyItemChanged(viewHolder.getAdapterPosition() + 1);
-    }
 
     private void collapseExpandedCard() {
         currentlyExpandedRowId = NO_EXPANDED_LIST_ITEM;
@@ -1258,23 +1145,10 @@ public class CallLogAdapter extends GroupingListAdapter
     /**
      * When the user clicks "undo", the hidden item is unhidden.
      */
-    @Override
-    public void onVoicemailDeleteUndo(long rowId, int adapterPosition, Uri uri) {
-        hiddenItemUris.remove(uri);
-        hiddenRowIds.remove(rowId);
-        notifyItemChanged(adapterPosition);
-        // The next item might have to update its day group label
-        notifyItemChanged(adapterPosition + 1);
-    }
 
     /**
      * This callback signifies that a database deletion has completed.
      */
-    @Override
-    public void onVoicemailDeletedInDatabase(long rowId, Uri uri) {
-        hiddenItemUris.remove(uri);
-    }
-
     /**
      * Retrieves the day group of the previous call in the call log. Used to determine if the day
      * group has changed and to trigger display of the day group text.

@@ -16,8 +16,9 @@
 
 package com.fissy.dialer.app.contactinfo;
 
-import androidx.annotation.IntDef;
 import android.text.TextUtils;
+
+import androidx.annotation.IntDef;
 
 import com.fissy.dialer.phonenumbercache.ContactInfo;
 

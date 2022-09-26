@@ -17,8 +17,13 @@
 package com.fissy.dialer.assisteddialing.ui;
 
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.MenuItem;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.fissy.dialer.R;
+import com.fissy.dialer.app.settings.ThemeOptionsSettingsFragment;
+import com.fissy.dialer.main.impl.MainActivity;
 
 /**
  * The Settings Activity for Assisted Dialing.
@@ -27,6 +32,14 @@ public class AssistedDialingSettingActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle bundle) {
+        ThemeOptionsSettingsFragment.ThemeButtonBehavior mThemeBehavior = ThemeOptionsSettingsFragment.getThemeButtonBehavior(MainActivity.themeprefs);
+
+        if (mThemeBehavior == ThemeOptionsSettingsFragment.ThemeButtonBehavior.DARK) {
+            getTheme().applyStyle(R.style.DialerDark, true);
+        }
+        if (mThemeBehavior == ThemeOptionsSettingsFragment.ThemeButtonBehavior.LIGHT) {
+            getTheme().applyStyle(R.style.DialerLight, true);
+        }
         super.onCreate(bundle);
 
         getFragmentManager()

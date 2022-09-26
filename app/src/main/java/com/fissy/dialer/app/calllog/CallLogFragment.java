@@ -23,28 +23,33 @@ import android.app.Fragment;
 import android.app.KeyguardManager;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.ContentObserver;
 import android.database.Cursor;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.CallLog;
 import android.provider.CallLog.Calls;
 import android.provider.ContactsContract;
-import androidx.annotation.CallSuper;
-import androidx.annotation.Nullable;
-import androidx.legacy.app.FragmentCompat;
-import androidx.legacy.app.FragmentCompat.OnRequestPermissionsResultCallback;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.CallSuper;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.legacy.app.FragmentCompat.OnRequestPermissionsResultCallback;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.app.Bindings;
@@ -54,7 +59,6 @@ import com.fissy.dialer.app.calllog.calllogcache.CallLogCache;
 import com.fissy.dialer.app.contactinfo.ContactInfoCache;
 import com.fissy.dialer.app.contactinfo.ContactInfoCache.OnContactInfoChangedListener;
 import com.fissy.dialer.app.contactinfo.ExpirableCacheHeadlessFragment;
-import com.fissy.dialer.app.voicemail.VoicemailPlaybackPresenter;
 import com.fissy.dialer.blocking.FilteredNumberAsyncQueryHandler;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.FragmentUtils;
@@ -74,8 +78,6 @@ import com.fissy.dialer.phonenumbercache.ContactInfoHelper;
 import com.fissy.dialer.util.PermissionsUtil;
 import com.fissy.dialer.widget.EmptyContentView;
 import com.fissy.dialer.widget.EmptyContentView.OnEmptyViewActionButtonClickedListener;
-
-import java.util.Arrays;
 
 /**
  * Displays a list of call log entries. To filter for a particular kind of call (all, missed or
@@ -147,7 +149,8 @@ public class CallLogFragment extends Fragment
      * True if this instance of the CallLogFragment shown in the CallLogActivity.
      */
     private boolean isCallLogActivity = false;
-    private boolean selectAllMode;    private final Handler displayUpdateHandler =
+    private boolean selectAllMode;
+    private ViewGroup modalAlertView;    private final Handler displayUpdateHandler =
             new Handler() {
                 @Override
                 public void handleMessage(Message msg) {
@@ -161,7 +164,6 @@ public class CallLogFragment extends Fragment
                     }
                 }
             };
-    private ViewGroup modalAlertView;
     public CallLogFragment() {
         this(CallLogQueryHandler.CALL_TYPE_ALL, NO_LOG_LIMIT);
     }
@@ -282,14 +284,6 @@ public class CallLogFragment extends Fragment
     }
 
     @Override
-    public void onVoicemailStatusFetched(Cursor statusCursor) {
-    }
-
-    @Override
-    public void onVoicemailUnreadCountFetched(Cursor cursor) {
-    }
-
-    @Override
     public void onMissedCallsUnreadCountFetched(Cursor cursor) {
     }
 
@@ -300,8 +294,75 @@ public class CallLogFragment extends Fragment
         return view;
     }
 
+    private String concatCallIds(long[] callIds) {
+        if (callIds == null || callIds.length == 0) {
+            return null;
+        }
+
+        StringBuilder str = new StringBuilder();
+        for (long callId : callIds) {
+            if (str.length() != 0) {
+                str.append(",");
+            }
+            str.append(callId);
+        }
+
+        return str.toString();
+    }
+
     protected void setupView(View view) {
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(50, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder holder, int direction) {
+                if (holder instanceof CallLogListItemViewHolder) {
+                    CallLogListItemViewHolder viewHolder = ((CallLogListItemViewHolder) holder);
+                    if (direction == ItemTouchHelper.LEFT) {
+                        getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms", viewHolder.number, null)));
+                        adapter.notifyItemChanged(holder.getAdapterPosition());
+                    } else {
+                        //TODO: Make it thread safe
+                        getContext()
+                                .getContentResolver()
+                                .delete(
+                                        CallLog.Calls.CONTENT_URI,
+                                        CallLog.Calls._ID + " IN (" + concatCallIds(viewHolder.callIds) + ")" /* where */,
+                                        null /* selectionArgs */);
+                    }
+                }
+            }
+
+            @Override
+            public void onChildDraw(Canvas canvas, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+                    boolean isTowardsRight = dX > 0;
+                    Drawable icon = isTowardsRight ? ContextCompat.getDrawable(recyclerView.getContext(), R.drawable.quantum_ic_delete_vd_theme_24) : ContextCompat.getDrawable(recyclerView.getContext(), R.drawable.quantum_ic_message_vd_theme_24);
+                    int iconHorizontalMargin = 20;
+                    int halfIconSize = icon.getIntrinsicHeight() / 2;
+                    int top = viewHolder.itemView.getTop() + ((viewHolder.itemView.getBottom() - viewHolder.itemView.getTop()) / 2 - halfIconSize);
+                    if (dX > 0) { // Right swipe
+                        canvas.clipRect(viewHolder.itemView.getLeft(), viewHolder.itemView.getTop(), viewHolder.itemView.getLeft() + (int) dX, viewHolder.itemView.getBottom());
+                        icon.setBounds(viewHolder.itemView.getLeft() + iconHorizontalMargin, top, viewHolder.itemView.getLeft() + iconHorizontalMargin + icon.getIntrinsicWidth(), top + icon.getIntrinsicHeight()
+                        );
+                    } else if (dX < 0) { // Left swipe
+                        canvas.clipRect(viewHolder.itemView.getRight() + (int) dX, viewHolder.itemView.getTop(), viewHolder.itemView.getRight(), viewHolder.itemView.getBottom());
+                        int imgLeft = viewHolder.itemView.getRight() - iconHorizontalMargin - halfIconSize * 2;
+                        icon.setBounds(imgLeft, top, viewHolder.itemView.getRight() - iconHorizontalMargin, top + icon.getIntrinsicHeight());
+                    }
+                    icon.draw(canvas);
+                }
+                super.onChildDraw(canvas, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+            }
+        };
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
         if (ConfigProviderComponent.get(getContext())
                 .getConfigProvider()
                 .getBoolean("is_call_log_item_anim_null", false)) {
@@ -355,7 +416,6 @@ public class CallLogFragment extends Fragment
                                         this, CallLogAdapter.OnActionModeStateChangedListener.class),
                                 new CallLogCache(getActivity()),
                                 contactInfoCache,
-                                getVoicemailPlaybackPresenter(),
                                 new FilteredNumberAsyncQueryHandler(getActivity()),
                                 activityType);
         recyclerView.setAdapter(adapter);
@@ -363,11 +423,6 @@ public class CallLogFragment extends Fragment
             recyclerView.addOnScrollListener(adapter.getOnScrollListener());
         }
         fetchCalls();
-    }
-
-    @Nullable
-    protected VoicemailPlaybackPresenter getVoicemailPlaybackPresenter() {
-        return null;
     }
 
     @Override
@@ -568,7 +623,6 @@ public class CallLogFragment extends Fragment
             adapter.setLoading(true);
 
             fetchCalls();
-            callLogQueryHandler.fetchVoicemailStatus();
             callLogQueryHandler.fetchMissedCallsUnreadCount();
             refreshDataRequired = false;
         } else {
@@ -583,16 +637,7 @@ public class CallLogFragment extends Fragment
         if (activity == null) {
             return;
         }
-
-        String[] deniedPermissions =
-                PermissionsUtil.getPermissionsCurrentlyDenied(
-                        getContext(), PermissionsUtil.allPhoneGroupPermissionsUsedInDialer);
-        if (deniedPermissions.length > 0) {
-            LogUtil.i(
-                    "CallLogFragment.onEmptyViewActionButtonClicked",
-                    "Requesting permissions: " + Arrays.toString(deniedPermissions));
-            FragmentCompat.requestPermissions(this, deniedPermissions, PHONE_PERMISSIONS_REQUEST_CODE);
-        } else if (!isCallLogActivity) {
+        if (!isCallLogActivity) {
             LogUtil.i("CallLogFragment.onEmptyViewActionButtonClicked", "showing dialpad");
             // Show dialpad if we are not in the call log activity.
             FragmentUtils.getParentUnsafe(this, HostInterface.class).showDialpad();
@@ -773,6 +818,8 @@ public class CallLogFragment extends Fragment
             refreshDataRequired = true;
         }
     }
+
+
 
 
 }

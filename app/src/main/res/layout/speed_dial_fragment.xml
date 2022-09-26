@@ -8,8 +8,6 @@
         android:id="@id/contact_tile_frame"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
         android:paddingStart="@dimen/favorites_row_start_padding"
         android:paddingEnd="@dimen/favorites_row_end_padding">
 

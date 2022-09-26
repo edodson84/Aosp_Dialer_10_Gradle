@@ -19,6 +19,7 @@ package com.fissy.dialer.persistentlog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+
 import androidx.annotation.AnyThread;
 import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
@@ -66,6 +67,7 @@ final class PersistentLogFileHandler {
     private SharedPreferences sharedPreferences;
     private File outputFile;
     private Context context;
+
     @MainThread
     PersistentLogFileHandler(String subfolder, int fileSizeLimit, int fileCountLimit) {
         this.subfolder = subfolder;

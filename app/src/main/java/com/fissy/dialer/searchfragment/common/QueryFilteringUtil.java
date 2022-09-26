@@ -17,10 +17,11 @@
 package com.fissy.dialer.searchfragment.common;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.collection.SimpleArrayMap;
 import android.telephony.PhoneNumberUtils;
 import android.text.TextUtils;
+
+import androidx.annotation.NonNull;
+import androidx.collection.SimpleArrayMap;
 
 import com.fissy.dialer.dialpadview.DialpadCharMappings;
 

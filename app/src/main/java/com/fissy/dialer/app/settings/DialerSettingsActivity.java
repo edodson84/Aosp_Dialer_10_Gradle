@@ -19,21 +19,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.Build.VERSION;
-import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.os.UserManager;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
-import androidx.annotation.Nullable;
-import android.telecom.PhoneAccount;
-import android.telecom.PhoneAccountHandle;
 import android.telecom.TelecomManager;
 import android.telephony.TelephonyManager;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.android.voicemail.VoicemailClient;
+
 import com.fissy.dialer.R;
 import com.fissy.dialer.about.AboutPhoneFragment;
 import com.fissy.dialer.assisteddialing.ConcreteCreator;
@@ -42,9 +37,8 @@ import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.compat.telephony.TelephonyManagerCompat;
 import com.fissy.dialer.configprovider.ConfigProviderComponent;
 import com.fissy.dialer.lookup.LookupSettingsFragment;
+import com.fissy.dialer.main.impl.MainActivity;
 import com.fissy.dialer.proguard.UsedByReflection;
-import com.fissy.dialer.util.PermissionsUtil;
-import com.fissy.dialer.voicemail.settings.VoicemailSettingsFragment;
 
 import java.util.List;
 
@@ -62,6 +56,14 @@ public class DialerSettingsActivity extends AppCompatPreferenceActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         LogUtil.enterBlock("DialerSettingsActivity.onCreate");
+        ThemeOptionsSettingsFragment.ThemeButtonBehavior mThemeBehavior = ThemeOptionsSettingsFragment.getThemeButtonBehavior(MainActivity.themeprefs);
+
+        if (mThemeBehavior == ThemeOptionsSettingsFragment.ThemeButtonBehavior.DARK) {
+            getTheme().applyStyle(R.style.DialerDark, true);
+        }
+        if (mThemeBehavior == ThemeOptionsSettingsFragment.ThemeButtonBehavior.LIGHT) {
+            getTheme().applyStyle(R.style.DialerLight, true);
+        }
         super.onCreate(savedInstanceState);
         preferences = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
 
@@ -97,6 +99,11 @@ public class DialerSettingsActivity extends AppCompatPreferenceActivity {
     public void onBuildHeaders(List<Header> target) {
         // Keep a reference to the list of headers (since PreferenceActivity.getHeaders() is @Hide)
         headers = target;
+
+        Header themeHeader = new Header();
+        themeHeader.titleRes = R.string.theme_options_title;
+        themeHeader.fragment = ThemeOptionsSettingsFragment.class.getName();
+        target.add(themeHeader);
 
         if (showDisplayOptions()) {
             Header displayOptionsHeader = new Header();
@@ -154,8 +161,6 @@ public class DialerSettingsActivity extends AppCompatPreferenceActivity {
             migrationStatusOnBuildHeaders = FilteredNumberCompat.hasMigratedToNewBlocking(this);
         }
 
-        addVoicemailSettings(target, isPrimaryUser);
-
         if (isPrimaryUser
                 && (TelephonyManagerCompat.isTtyModeSupported(telephonyManager)
                 || TelephonyManagerCompat.isHearingAidCompatibilitySupported(telephonyManager))) {
@@ -189,80 +194,6 @@ public class DialerSettingsActivity extends AppCompatPreferenceActivity {
             aboutPhoneHeader.fragment = AboutPhoneFragment.class.getName();
             target.add(aboutPhoneHeader);
         }
-    }
-
-    private void addVoicemailSettings(List<Header> target, boolean isPrimaryUser) {
-        if (!isPrimaryUser) {
-            LogUtil.i("DialerSettingsActivity.addVoicemailSettings", "user not primary user");
-            return;
-        }
-        if (VERSION.SDK_INT < VERSION_CODES.O) {
-            LogUtil.i(
-                    "DialerSettingsActivity.addVoicemailSettings",
-                    "Dialer voicemail settings not supported by system");
-            return;
-        }
-
-        if (!PermissionsUtil.hasReadPhoneStatePermissions(this)) {
-            LogUtil.i("DialerSettingsActivity.addVoicemailSettings", "Missing READ_PHONE_STATE");
-            return;
-        }
-
-        LogUtil.i("DialerSettingsActivity.addVoicemailSettings", "adding voicemail settings");
-        Header voicemailSettings = new Header();
-        voicemailSettings.titleRes = R.string.voicemail_settings_label;
-        PhoneAccountHandle soleAccount = getSoleSimAccount();
-        if (soleAccount == null) {
-            LogUtil.i(
-                    "DialerSettingsActivity.addVoicemailSettings", "showing multi-SIM voicemail settings");
-            voicemailSettings.fragment = PhoneAccountSelectionFragment.class.getName();
-            Bundle bundle = new Bundle();
-            bundle.putString(
-                    PhoneAccountSelectionFragment.PARAM_TARGET_FRAGMENT,
-                    VoicemailSettingsFragment.class.getName());
-            bundle.putString(
-                    PhoneAccountSelectionFragment.PARAM_PHONE_ACCOUNT_HANDLE_KEY,
-                    VoicemailClient.PARAM_PHONE_ACCOUNT_HANDLE);
-            bundle.putBundle(PhoneAccountSelectionFragment.PARAM_ARGUMENTS, new Bundle());
-            bundle.putInt(
-                    PhoneAccountSelectionFragment.PARAM_TARGET_TITLE_RES, R.string.voicemail_settings_label);
-            voicemailSettings.fragmentArguments = bundle;
-            target.add(voicemailSettings);
-        } else {
-            LogUtil.i(
-                    "DialerSettingsActivity.addVoicemailSettings", "showing single-SIM voicemail settings");
-            voicemailSettings.fragment = VoicemailSettingsFragment.class.getName();
-            Bundle bundle = new Bundle();
-            bundle.putParcelable(VoicemailClient.PARAM_PHONE_ACCOUNT_HANDLE, soleAccount);
-            voicemailSettings.fragmentArguments = bundle;
-            target.add(voicemailSettings);
-        }
-    }
-
-    /**
-     * @return the only SIM phone account, or {@code null} if there are none or more than one. Note:
-     * having a empty SIM slot still count as a PhoneAccountHandle that is "invalid", and
-     * voicemail settings should still be available for it.
-     */
-    @Nullable
-    private PhoneAccountHandle getSoleSimAccount() {
-        TelecomManager telecomManager = getSystemService(TelecomManager.class);
-        PhoneAccountHandle result = null;
-        for (PhoneAccountHandle phoneAccountHandle : telecomManager.getCallCapablePhoneAccounts()) {
-            PhoneAccount phoneAccount = telecomManager.getPhoneAccount(phoneAccountHandle);
-            if (phoneAccount == null) {
-                continue;
-            }
-            if (phoneAccount.hasCapabilities(PhoneAccount.CAPABILITY_SIM_SUBSCRIPTION)) {
-                LogUtil.i(
-                        "DialerSettingsActivity.getSoleSimAccount", phoneAccountHandle + " is a SIM account");
-                if (result != null) {
-                    return null;
-                }
-                result = phoneAccountHandle;
-            }
-        }
-        return result;
     }
 
     /**

@@ -3,45 +3,114 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Fissy/.gradle/caches/transforms-3/23d28a548e4ca00336944fa0ea8a2ee5/transformed/material-1.6.1/res/drawable-v23/m3_appbar_background.xml" value="0.1105" />
+        <entry key="..\:/Users/Fissy/.gradle/caches/transforms-3/6f710856c8149502997788876f63074c/transformed/appcompat-1.2.0/res/layout-v26/abc_screen_toolbar.xml" value="0.15729166666666666" />
+        <entry key="..\:/Users/Fissy/.gradle/caches/transforms-3/6f710856c8149502997788876f63074c/transformed/appcompat-1.2.0/res/layout/abc_screen_content_include.xml" value="0.15729166666666666" />
+        <entry key="..\:/Users/Fissy/.gradle/caches/transforms-3/6f710856c8149502997788876f63074c/transformed/appcompat-1.2.0/res/layout/select_dialog_singlechoice_material.xml" value="0.20260416666666667" />
         <entry key="..\:/Users/Fissy/AppData/Local/Android/Sdk/platforms/android-31/data/res/drawable/btn_borderless_material.xml" value="0.162" />
         <entry key="..\:/Users/Fissy/AppData/Local/Android/Sdk/platforms/android-31/data/res/drawable/btn_default_mtrl_shape.xml" value="0.162" />
+        <entry key="..\:/Users/Fissy/AppData/Local/Android/Sdk/platforms/android-32/data/res/drawable/btn_radio_on_mtrl.xml" value="0.14" />
+        <entry key="..\:/Users/Fissy/AppData/Local/Android/Sdk/platforms/android-32/data/res/drawable/item_background_material.xml" value="0.244" />
+        <entry key="..\:/Users/Fissy/AppData/Local/Android/Sdk/platforms/android-32/data/res/drawable/popup_background_material.xml" value="0.1105" />
+        <entry key="..\:/Users/Fissy/AppData/Local/Android/Sdk/platforms/android-32/data/res/layout/preference_widget_switch.xml" value="0.24479166666666666" />
+        <entry key="..\:/Users/Fissy/AppData/Local/Android/Sdk/platforms/android-32/data/res/layout/select_dialog_item_material.xml" value="0.18541666666666667" />
+        <entry key="..\:/Users/Fissy/AppData/Local/Android/Sdk/platforms/android-32/data/res/layout/select_dialog_singlechoice.xml" value="0.20260416666666667" />
+        <entry key="..\:/Users/Fissy/AppData/Local/Android/Sdk/platforms/android-32/data/res/layout/select_dialog_singlechoice_material.xml" value="0.20260416666666667" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable-anydpi/design_ic_visibility_off.xml" value="0.1665" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/answer_answer_background.xml" value="0.202" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/answer_data_background.xml" value="0.202" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/answer_decline_background.xml" value="0.244" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/back_arrow.xml" value="0.244" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/btn_borderless_dialpad.xml" value="0.162" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/btn_check_anim.xml" value="0.2325" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/btn_dialpad_key.xml" value="0.162" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/button_background.xml" value="0.162" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/circular_background.xml" value="0.244" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/comms_logo_business_color_24.xml" value="0.132" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/contact_photo_badge_background.xml" value="0.244" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/context_menu_contact_icon.xml" value="0.1665" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/custom_cursor.xml" value="0.223" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/design_bottom_navigation_item_background.xml" value="0.223" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/design_snackbar_background.xml" value="0.223" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/dial_button_background.xml" value="0.202" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/dialog_background_material.xml" value="0.1445" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/edit-24px.xml" value="0.1935" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/empty_call_log.xml" value="0.2325" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/empty_contacts.xml" value="0.2325" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/empty_speed_dial.xml" value="0.2325" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/fast_scroller_scroll_bar.xml" value="0.162" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/favorite_icon.xml" value="0.2225" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/gallery_grid_checkbox_background.xml" value="0.202" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/ic_addcall_white.xml" value="0.1655" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/ic_block_grey_48dp.xml" value="0.1665" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/ic_call_note_white_24dp.xml" value="0.1665" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/ic_edit.xml" value="0.244" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/ic_pause.xml" value="0.1" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/ic_play_arrow.xml" value="0.1" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/ic_voicemail_seek_handle_disabled.xml" value="0.162" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/incall_button_background.xml" value="0.2095" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/incall_button_background_checked.xml" value="0.2095" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/incall_button_background_more.xml" value="0.244" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/incall_button_background_unchecked.xml" value="0.2095" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/input_bubble_background.xml" value="0.1665" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/item_background_material_borderless_dark.xml" value="0.1665" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/message_bubble.xml" value="0.1665" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/mtrl_snackbar_background.xml" value="0.1665" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/notification_action_background.xml" value="0.2325" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/notification_badge.xml" value="0.1665" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/notification_bg.xml" value="0.2325" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/notification_bg_low.xml" value="0.2325" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/notification_icon_background.xml" value="0.2325" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/notification_tile_bg.xml" value="0.2325" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/on_going_call.xml" value="0.1445" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/oval_ripple.xml" value="0.1665" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/overflow_menu_background.xml" value="0.2235" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/popup_background.xml" value="0.2325" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/quantum_gm_ic_radio_button_unchecked_vd_theme_24.xml" value="0.2325" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/quantum_ic_business_vd_theme_24.xml" value="0.132" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/quantum_ic_close_vd_theme_24.xml" value="0.1665" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/quantum_ic_content_copy_vd_theme_24.xml" value="0.1935" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/quantum_ic_delete_vd_theme_24.xml" value="0.1665" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/quantum_ic_done_vd_theme_24.xml" value="0.1435" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/quantum_ic_edit.xml" value="0.1415" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/quantum_ic_message_vd_theme_24.xml" value="0.132" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/quantum_ic_report_vd_theme_24.xml" value="0.244" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/recording_playback_button.xml" value="0.162" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/rounded_corner.xml" value="0.223" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/search_bar_background.xml" value="0.1665" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/search_bar_background_rounded_corners.xml" value="0.162" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/seekbar_drawable.xml" value="0.244" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/selectableitembackgroundrounded.xml" value="0.244" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/selector_checkbox_material.xml" value="0.2325" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/selector_checkbox_selected.xml" value="0.2325" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/shadow_fade_up.xml" value="0.244" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/start_recording_drawable.xml" value="0.202" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/switch_thumb.xml" value="0.244" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/drawable/switch_track.xml" value="0.244" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout-land/dialpad_fragment.xml" value="0.12760416666666666" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout-land/dialpad_key_one.xml" value="0.1" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/blocked_number_header.xml" value="0.15729166666666666" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/blocked_number_item.xml" value="0.15729166666666666" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/bottom_nav_bar_layout.xml" value="0.31435897435897436" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/bottom_nav_item.xml" value="0.3265625" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/call_details_activity.xml" value="0.15260416666666668" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/call_details_entry.xml" value="0.31435897435897436" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/call_details_footer.xml" value="0.3202247191011236" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/call_log_activity.xml" value="0.3265625" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/call_log_fragment.xml" value="0.32153846153846155" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/call_log_list_item.xml" value="0.15260416666666668" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/call_log_list_item_actions.xml" value="0.15729166666666666" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/caller_id_report_dialog.xml" value="0.15729166666666666" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/caller_in_conference.xml" value="0.15729166666666666" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/contact_container.xml" value="0.15260416666666668" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/contact_layout.xml" value="0.31435897435897436" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/contact_photo_view.xml" value="0.31435897435897436" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/default_account_checkbox.xml" value="0.31435897435897436" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/device_number_row.xml" value="0.20208333333333334" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/dialer_toolbar.xml" value="0.15729166666666666" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/dialog_call_subject.xml" value="0.31435897435897436" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/dialog_deviceids.xml" value="0.3265625" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/dialoglayout.xml" value="0.3265625" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/dialpad.xml" value="0.15260416666666668" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/dialpad_fragment.xml" value="0.15260416666666668" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/dialpad_key.xml" value="0.15260416666666668" />
@@ -50,48 +119,72 @@
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/dialpad_key_zero.xml" value="0.15260416666666668" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/dialpad_view.xml" value="0.15260416666666668" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/dialpad_view_unthemed.xml" value="0.15260416666666668" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/dialtacts_activity.xml" value="0.13333333333333333" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/disambig_dialog_layout.xml" value="0.3265625" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/disambig_option_layout.xml" value="0.10555555555555556" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/divider_layout.xml" value="0.3265625" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/dot_hint.xml" value="0.31435897435897436" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/ec_data_container.xml" value="0.31435897435897436" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/empty_content_view_dialpad_search.xml" value="0.3265625" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/enriched_call_simulator_activity.xml" value="0.15260416666666668" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/expanded_search_bar.xml" value="0.31435897435897436" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/favorite_item_layout.xml" value="0.31435897435897436" />
-        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/favorite_remove_view_layout.xml" value="0.15260416666666668" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/favorite_remove_view_layout.xml" value="0.33" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/frag_incall_voice.xml" value="0.31435897435897436" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/frag_videocall.xml" value="0.10555555555555556" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/frag_videocall_surfaceview.xml" value="0.10555555555555556" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/fragment_avatar.xml" value="0.15260416666666668" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/fragment_contacts.xml" value="0.31435897435897436" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/fragment_incoming_call.xml" value="0.3265625" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/fragment_search.xml" value="0.15729166666666666" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/fragment_spam.xml" value="0.10555555555555556" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/fragment_speed_dial.xml" value="0.215625" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/gallery_grid_item_view.xml" value="0.13333333333333333" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/header.xml" value="0.31435897435897436" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/header_layout.xml" value="0.3265625" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/incall_button_grid.xml" value="0.15260416666666668" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/incall_dialpad_fragment.xml" value="0.31435897435897436" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/incall_screen.xml" value="0.31435897435897436" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/keyguard_preview.xml" value="0.31435897435897436" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/license.xml" value="0.15260416666666668" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/lists_fragment.xml" value="0.20260416666666667" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/location_permission_row.xml" value="0.31435897435897436" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/main_activity.xml" value="0.31435897435897436" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/module_layout.xml" value="0.31435897435897436" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/new_call_log_entry.xml" value="0.10555555555555556" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/new_voicemail_call_log_fragment.xml" value="0.15260416666666668" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/new_voicemail_entry.xml" value="0.15260416666666668" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/paw_hint.xml" value="0.215625" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/permission_view.xml" value="0.31435897435897436" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/phone_favorite_tile_view.xml" value="0.33" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/rtt_banner.xml" value="0.10555555555555556" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/search_bar_expanded.xml" value="0.3265625" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/search_contact_row.xml" value="0.15729166666666666" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/search_edittext.xml" value="0.15729166666666666" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/selectable_text_view.xml" value="0.32153846153846155" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/set_primary_checkbox.xml" value="0.31435897435897436" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/speed_dial_fragment.xml" value="0.215625" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/speed_dial_header_layout.xml" value="0.215625" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/suggestion_row_layout.xml" value="0.10555555555555556" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/toolbar.xml" value="0.1638888888888889" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/toolbar_layout.xml" value="0.31435897435897436" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/two_button_method.xml" value="0.1" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/unread_count_tab.xml" value="0.31435897435897436" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/voicemail_playback_layout.xml" value="0.10555555555555556" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/layout/voicemail_tos_fragment.xml" value="0.15260416666666668" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/menu/actionbar_delete.xml" value="0.3265625" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/menu/call_log_options.xml" value="0.15260416666666668" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/menu/dialpad_options.xml" value="0.1638888888888889" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/menu/dialtacts_options.xml" value="0.3265625" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/menu/main_menu.xml" value="0.15260416666666668" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/menu/starred_contact_context_menu.xml" value="0.3265625" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/xml/about_phone_fragment.xml" value="0.3265625" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/xml/assisted_dialing_setting.xml" value="0.31927083333333334" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/xml/display_options_settings.xml" value="0.15260416666666668" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/xml/lookup_settings.xml" value="0.37256719184430026" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/xml/sound_settings.xml" value="0.15260416666666668" />
         <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/xml/voicemail_settings.xml" value="0.15260416666666668" />
-        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/xml/vvm_config_override.xml" value="0.15260416666666668" />
+        <entry key="..\:/Users/Fissy/Desktop/apktool/Dialer_Support-master/app/src/main/res/xml/vvm_config_override.xml" value="0.5" />
       </map>
     </option>
   </component>

@@ -48,6 +48,5 @@
         android:background="?android:selectableItemBackgroundBorderless"
         android:contentDescription="@string/description_blocked_number_list_delete"
         android:scaleType="center"
-        android:src="@drawable/ic_remove"
-        android:tint="?colorIcon" />
+        android:src="@drawable/ic_remove" />
 </LinearLayout>

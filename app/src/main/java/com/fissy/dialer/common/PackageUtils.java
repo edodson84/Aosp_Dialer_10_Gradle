@@ -19,6 +19,7 @@ package com.fissy.dialer.common;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+
 import androidx.annotation.NonNull;
 
 /**

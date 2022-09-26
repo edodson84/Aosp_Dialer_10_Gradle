@@ -17,8 +17,9 @@
 package com.fissy.dialer.main.impl.toolbar;
 
 import android.app.Activity;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.MenuItem;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Useful callback for {@link SearchBarView} listeners.

@@ -46,6 +46,7 @@ public final class ScheduledJobIds {
     // Job Ids from 10_000 to 10_100 should be reserved for proto upload jobs.
     public static final int PROTO_UPLOAD_JOB_MIN_ID = 10_000;
     public static final int PROTO_UPLOAD_JOB_MAX_ID = 10_100;
+
     /**
      * Spam job type including all spam job IDs.
      */

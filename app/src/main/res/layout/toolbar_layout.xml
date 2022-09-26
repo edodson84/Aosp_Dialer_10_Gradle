@@ -24,7 +24,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:background="?android:selectableItemBackground"
+                android:background="@drawable/item_background_material_borderless_dark"
                 android:gravity="center_vertical">
 
                 <ImageView
@@ -35,8 +35,7 @@
                     android:layout_marginStart="8.0dip"
                     android:importantForAccessibility="no"
                     android:scaleType="center"
-                    android:src="@drawable/quantum_ic_search_vd_theme_24"
-                    app:tint="?colorIcon" />
+                    android:src="@drawable/quantum_ic_search_vd_theme_24" />
 
                 <TextView
                     android:id="@id/search_box_start_search"
@@ -58,8 +57,7 @@
                     android:background="?android:selectableItemBackgroundBorderless"
                     android:contentDescription="@string/description_start_voice_search"
                     android:scaleType="center"
-                    android:src="@drawable/quantum_ic_mic_vd_theme_24"
-                    app:tint="?colorIcon" />
+                    android:src="@drawable/quantum_ic_mic_vd_theme_24" />
 
                 <ImageButton
                     android:id="@id/main_options_menu_button"
@@ -69,8 +67,7 @@
                     android:background="?android:selectableItemBackgroundBorderless"
                     android:contentDescription="@string/action_menu_overflow_description"
                     android:scaleType="center"
-                    android:src="@drawable/quantum_ic_more_vert_vd_theme_24"
-                    android:tint="?colorIcon" />
+                    android:src="@drawable/quantum_ic_more_vert_vd_theme_24" />
             </RelativeLayout>
 
             <include layout="@layout/expanded_search_bar" />
@@ -89,7 +86,7 @@
                 android:id="@id/remove_view_content"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:background="?android:colorPrimary"
+                android:background="@drawable/search_bar_background_rounded_corners"
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:visibility="gone">
@@ -100,15 +97,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8.0dip"
                     android:layout_marginBottom="8.0dip"
-                    android:src="@drawable/quantum_ic_close_vd_theme_24"
-                    app:tint="?colorIconOnUnthemedDarkBackground" />
+                    android:src="@drawable/quantum_ic_close_vd_theme_24" />
 
                 <TextView
                     android:id="@id/remove_view_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/main_remove_contact"
-                    android:textColor="?colorTextOnUnthemedDarkBackground"
                     android:textSize="16.0sp" />
             </LinearLayout>
         </com.fissy.dialer.app.list.RemoveView>

@@ -44,10 +44,6 @@ import android.provider.Contacts.People;
 import android.provider.Contacts.Phones;
 import android.provider.Contacts.PhonesColumns;
 import android.provider.Settings;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import android.telecom.PhoneAccount;
 import android.telecom.PhoneAccountHandle;
 import android.telephony.PhoneNumberFormattingTextWatcher;
@@ -78,6 +74,10 @@ import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
+
 import com.android.contacts.common.dialog.CallSubjectDialog;
 import com.android.contacts.common.util.StopWatch;
 import com.fissy.dialer.R;
@@ -103,6 +103,7 @@ import com.fissy.dialer.util.CallUtil;
 import com.fissy.dialer.util.PermissionsUtil;
 import com.fissy.dialer.util.ViewUtil;
 import com.fissy.dialer.widget.FloatingActionButtonController;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.common.base.Ascii;
 import com.google.common.base.Optional;
 
@@ -1101,8 +1102,8 @@ public class DialpadFragment extends Fragment
                     // Voicemail is unavailable maybe because Airplane mode is turned on.
                     // Check the current status and show the most appropriate error message.
                     final boolean isAirplaneModeOn =
-                            Settings.System.getInt(
-                                    getActivity().getContentResolver(), Settings.System.AIRPLANE_MODE_ON, 0)
+                            Settings.Global.getInt(
+                                    getActivity().getContentResolver(), Settings.Global.AIRPLANE_MODE_ON, 0)
                                     != 0;
                     if (isAirplaneModeOn) {
                         DialogFragment dialogFragment =

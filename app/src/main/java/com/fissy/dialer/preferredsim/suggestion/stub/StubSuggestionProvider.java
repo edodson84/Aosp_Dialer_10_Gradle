@@ -17,9 +17,10 @@
 package com.fissy.dialer.preferredsim.suggestion.stub;
 
 import android.content.Context;
+import android.telecom.PhoneAccountHandle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.WorkerThread;
-import android.telecom.PhoneAccountHandle;
 
 import com.fissy.dialer.preferredsim.suggestion.SuggestionProvider;
 import com.google.common.base.Optional;

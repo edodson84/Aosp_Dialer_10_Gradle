@@ -15,9 +15,10 @@
  */
 package com.android.contacts.common.compat.telecom;
 
-import androidx.annotation.Nullable;
 import android.telecom.PhoneAccountHandle;
 import android.telecom.TelecomManager;
+
+import androidx.annotation.Nullable;
 
 import java.lang.reflect.Field;
 

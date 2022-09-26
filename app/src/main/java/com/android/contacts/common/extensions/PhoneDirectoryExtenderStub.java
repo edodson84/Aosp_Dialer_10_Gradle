@@ -16,6 +16,7 @@ package com.android.contacts.common.extensions;
 
 import android.content.Context;
 import android.net.Uri;
+
 import androidx.annotation.Nullable;
 
 /**

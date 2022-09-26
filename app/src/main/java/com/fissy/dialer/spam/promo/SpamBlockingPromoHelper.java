@@ -23,13 +23,13 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface.OnDismissListener;
 import android.graphics.drawable.Icon;
-import com.google.android.material.snackbar.Snackbar;
-import androidx.fragment.app.FragmentManager;
-import androidx.core.os.BuildCompat;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.fragment.app.FragmentManager;
+
 import com.fissy.dialer.R;
+import com.fissy.dialer.ThemeUtils;
 import com.fissy.dialer.configprovider.ConfigProviderComponent;
 import com.fissy.dialer.logging.DialerImpression;
 import com.fissy.dialer.logging.Logger;
@@ -38,7 +38,7 @@ import com.fissy.dialer.notification.NotificationChannelId;
 import com.fissy.dialer.spam.SpamSettings;
 import com.fissy.dialer.spam.promo.SpamBlockingPromoDialogFragment.OnEnableListener;
 import com.fissy.dialer.storage.StorageComponent;
-import com.fissy.dialer.theme.base.ThemeComponent;
+import com.google.android.material.snackbar.Snackbar;
 
 /**
  * Helper class for showing spam blocking on-boarding promotions.
@@ -136,7 +136,7 @@ public class SpamBlockingPromoHelper {
                         R.string.spam_blocking_setting_prompt,
                         v -> context.startActivity(spamSettings.getSpamBlockingSettingIntent(context)))
                 .setActionTextColor(
-                        context.getResources().getColor(R.color.dialer_snackbar_action_text_color))
+                        context.getResources().getColor(R.color.dialer_snackbar_action_text_color, null))
                 .show();
     }
 
@@ -188,7 +188,7 @@ public class SpamBlockingPromoHelper {
                         .setContentIntent(contentIntent)
                         .setCategory(Notification.CATEGORY_STATUS)
                         .setPriority(Notification.PRIORITY_DEFAULT)
-                        .setColor(ThemeComponent.get(context).theme().getColorPrimary())
+                        .setColor(ThemeUtils.resolveColor(context, android.R.attr.colorAccent))
                         .setSmallIcon(R.drawable.quantum_ic_call_vd_theme_24)
                         .setLargeIcon(Icon.createWithResource(context, R.drawable.spam_blocking_promo_icon))
                         .setContentText(context.getString(R.string.spam_blocking_promo_text))
@@ -203,9 +203,9 @@ public class SpamBlockingPromoHelper {
                                         .build())
                         .setContentTitle(context.getString(R.string.spam_blocking_promo_title));
 
-        if (BuildCompat.isAtLeastO()) {
-            builder.setChannelId(NotificationChannelId.DEFAULT);
-        }
+
+        builder.setChannelId(NotificationChannelId.DEFAULT);
+
         return builder.build();
     }
 }

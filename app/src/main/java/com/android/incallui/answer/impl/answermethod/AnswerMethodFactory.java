@@ -17,22 +17,24 @@
 package com.android.incallui.answer.impl.answermethod;
 
 import android.app.Activity;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.fragment.app.Fragment;
 
 import com.android.incallui.util.AccessibilityUtil;
+import com.fissy.dialer.R;
 import com.fissy.dialer.common.LogUtil;
 
 /**
  * Creates the appropriate {@link AnswerMethod} for the circumstances.
  */
 public class AnswerMethodFactory {
-    private static boolean shouldUseTwoButtonMethodForTesting;
 
     @NonNull
     public static AnswerMethod createAnswerMethod(@NonNull Activity activity) {
+
         if (needTwoButton(activity)) {
             return new TwoButtonMethod();
         } else {
@@ -50,13 +52,9 @@ public class AnswerMethodFactory {
         return !(answerMethod instanceof TwoButtonMethod) && needTwoButton(answerMethod.getActivity());
     }
 
-    @VisibleForTesting
-    public static void setShouldUseTwoButtonMethodForTesting(boolean shouldUse) {
-        shouldUseTwoButtonMethodForTesting = shouldUse;
-    }
 
     private static boolean needTwoButton(@NonNull Activity activity) {
-        if (shouldUseTwoButtonMethodForTesting) {
+        if (activity.getResources().getBoolean(R.bool.two_button_show)) {
             LogUtil.i("AnswerMethodFactory.needTwoButton", "enabled for testing");
             return true;
         }

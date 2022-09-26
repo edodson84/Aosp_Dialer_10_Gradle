@@ -33,6 +33,7 @@ public class CallLogModalAlertManager implements AlertManager {
     private final ViewGroup parent;
     private final ViewGroup container;
     private final LayoutInflater inflater;
+
     public CallLogModalAlertManager(LayoutInflater inflater, ViewGroup parent, Listener listener) {
         this.inflater = inflater;
         this.parent = parent;

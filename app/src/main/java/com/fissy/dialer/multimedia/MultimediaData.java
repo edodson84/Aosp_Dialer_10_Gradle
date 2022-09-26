@@ -18,9 +18,10 @@ package com.fissy.dialer.multimedia;
 
 import android.location.Location;
 import android.net.Uri;
+import android.text.TextUtils;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import android.text.TextUtils;
 
 import com.fissy.dialer.common.LogUtil;
 import com.google.auto.value.AutoValue;

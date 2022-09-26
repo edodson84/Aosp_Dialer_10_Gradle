@@ -19,8 +19,9 @@ package com.fissy.dialer.precall.impl;
 import android.app.Activity;
 import android.app.KeyguardManager;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
 import android.view.WindowManager.LayoutParams;
+
+import androidx.annotation.Nullable;
 
 /**
  * A transparent activity to host dialogs for {@link PreCallCoordinatorImpl}

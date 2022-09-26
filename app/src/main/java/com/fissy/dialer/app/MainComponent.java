@@ -49,15 +49,6 @@ public class MainComponent {
         return intent;
     }
 
-    public static Intent getShowVoicemailIntent(Context context) {
-        Intent intent = new Intent();
-        intent.setComponent(new ComponentName(context, getComponentName()));
-        intent.setAction("ACTION_SHOW_TAB");
-        intent.putExtra("EXTRA_SHOW_TAB", 3);
-        intent.putExtra(EXTRA_CLEAR_NEW_VOICEMAILS, true);
-        return intent;
-    }
-
     private static String getComponentName() {
         return "com.fissy.dialer.app.DialtactsActivity";
     }

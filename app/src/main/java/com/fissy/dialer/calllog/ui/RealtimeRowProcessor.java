@@ -19,9 +19,10 @@ package com.fissy.dialer.calllog.ui;
 import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.content.Context;
+import android.util.ArrayMap;
+
 import androidx.annotation.MainThread;
 import androidx.annotation.VisibleForTesting;
-import android.util.ArrayMap;
 
 import com.fissy.dialer.DialerPhoneNumber;
 import com.fissy.dialer.calllog.model.CoalescedRow;

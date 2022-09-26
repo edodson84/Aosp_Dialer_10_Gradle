@@ -20,7 +20,6 @@ import com.android.bubble.BubbleComponent;
 import com.android.incallui.calllocation.CallLocationComponent;
 import com.android.incallui.maps.MapsComponent;
 import com.android.incallui.speakeasy.SpeakEasyComponent;
-import com.android.voicemail.VoicemailComponent;
 import com.fissy.dialer.activecalls.ActiveCallsComponent;
 import com.fissy.dialer.calllog.CallLogComponent;
 import com.fissy.dialer.calllog.config.CallLogConfigComponent;
@@ -47,7 +46,6 @@ import com.fissy.dialer.spam.SpamComponent;
 import com.fissy.dialer.speeddial.loader.UiItemLoaderComponent;
 import com.fissy.dialer.storage.StorageComponent;
 import com.fissy.dialer.strictmode.StrictModeComponent;
-import com.fissy.dialer.theme.base.ThemeComponent;
 
 /**
  * Base class for the core application-wide component. All variants of the Dialer app should extend
@@ -83,7 +81,5 @@ public interface BaseDialerRootComponent
         SpamComponent.HasComponent,
         SpeakEasyComponent.HasComponent,
         StorageComponent.HasComponent,
-        StrictModeComponent.HasComponent,
-        ThemeComponent.HasComponent,
-        VoicemailComponent.HasComponent {
+        StrictModeComponent.HasComponent {
 }

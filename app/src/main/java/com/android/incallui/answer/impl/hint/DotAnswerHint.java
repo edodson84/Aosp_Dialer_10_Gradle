@@ -21,8 +21,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
-import androidx.annotation.DimenRes;
-import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +28,9 @@ import android.view.ViewGroup;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.TextView;
+
+import androidx.annotation.DimenRes;
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 
 import com.fissy.dialer.R;
 

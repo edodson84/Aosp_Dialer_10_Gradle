@@ -26,11 +26,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.provider.Settings;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.loader.app.LoaderManager.LoaderCallbacks;
-import androidx.loader.content.CursorLoader;
-import androidx.loader.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -39,13 +34,18 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.loader.app.LoaderManager.LoaderCallbacks;
+import androidx.loader.content.CursorLoader;
+import androidx.loader.content.Loader;
+
 import com.fissy.dialer.R;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.common.concurrent.DialerExecutor;
 import com.fissy.dialer.common.concurrent.DialerExecutorComponent;
 import com.fissy.dialer.logging.DialerImpression;
 import com.fissy.dialer.logging.Logger;
-import com.fissy.dialer.theme.base.ThemeComponent;
 import com.fissy.dialer.util.PermissionsUtil;
 
 import java.util.ArrayList;
@@ -97,7 +97,7 @@ public class GalleryComposerFragment extends CallComposerFragment
             allowPermission.setOnClickListener(this);
             permissionText.setText(R.string.gallery_permission_text);
             permissionImage.setImageResource(R.drawable.quantum_ic_photo_white_48);
-            permissionImage.setColorFilter(ThemeComponent.get(getContext()).theme().getColorPrimary());
+            permissionImage.setColorFilter(android.R.attr.colorPrimary);
             permissionView.setVisibility(View.VISIBLE);
         } else {
             if (bundle != null) {

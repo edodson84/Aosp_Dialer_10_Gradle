@@ -3,12 +3,10 @@
     android:id="@id/calllog_frame"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="?android:colorBackground"
     android:orientation="vertical">
 
     <com.android.contacts.common.list.ViewPagerTabs
         android:id="@id/viewpager_header"
-        style="@style/DialtactsActionBarTabTextStyle"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/tab_height"
         android:layout_gravity="top"

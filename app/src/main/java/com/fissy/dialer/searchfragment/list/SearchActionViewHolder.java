@@ -18,14 +18,15 @@ package com.fissy.dialer.searchfragment.list;
 
 import android.content.Context;
 import android.content.Intent;
-import androidx.annotation.IntDef;
-import androidx.annotation.StringRes;
-import androidx.annotation.VisibleForTesting;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.IntDef;
+import androidx.annotation.StringRes;
+import androidx.annotation.VisibleForTesting;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.common.Assert;
@@ -51,6 +52,7 @@ final class SearchActionViewHolder extends RecyclerView.ViewHolder implements On
     int action;
     private int position;
     private String query;
+
     SearchActionViewHolder(View view, RowClickListener listener) {
         super(view);
         context = view.getContext();

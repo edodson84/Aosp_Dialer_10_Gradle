@@ -16,11 +16,12 @@
 
 package com.fissy.dialer.phonenumberproto;
 
+import android.telephony.PhoneNumberUtils;
+import android.text.TextUtils;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
-import android.telephony.PhoneNumberUtils;
-import android.text.TextUtils;
 
 import com.fissy.dialer.DialerPhoneNumber;
 import com.fissy.dialer.common.Assert;

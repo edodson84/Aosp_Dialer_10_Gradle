@@ -18,22 +18,22 @@ package com.fissy.dialer.main.impl.bottomnav;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
-import androidx.annotation.DrawableRes;
-import androidx.annotation.Nullable;
-import androidx.annotation.Px;
-import androidx.annotation.StringRes;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.DrawableRes;
+import androidx.annotation.Nullable;
+import androidx.annotation.Px;
+import androidx.annotation.StringRes;
+
 import com.fissy.dialer.R;
+import com.fissy.dialer.ThemeUtils;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.configprovider.ConfigProviderComponent;
-import com.fissy.dialer.theme.base.ThemeComponent;
 
 /**
  * Navigation item in a bottom nav.
@@ -54,17 +54,21 @@ public final class BottomNavItem extends LinearLayout {
         image = findViewById(R.id.bottom_nav_item_image);
         text = findViewById(R.id.bottom_nav_item_text);
         notificationBadge = findViewById(R.id.notification_badge);
+
     }
 
     @Override
     public void setSelected(boolean selected) {
         super.setSelected(selected);
-        int colorId = ThemeComponent.get(getContext()).theme().getColorPrimary();
-        if (selected){
-            image.setBackgroundTintList(ColorStateList.valueOf(colorId));
+        if (selected) {
+            image.setBackgroundTintList(ColorStateList.valueOf(ThemeUtils.resolveColor(getContext(), R.attr.colorPrimary)));
+            image.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.white, null)));
+            text.setTextColor(ColorStateList.valueOf(ThemeUtils.resolveColor(getContext(), R.attr.colorPrimary)));
+        } else {
+            image.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(android.R.color.transparent, null)));
+            image.setImageTintList(ColorStateList.valueOf(ThemeUtils.resolveColor(getContext(), android.R.attr.colorControlNormal)));
+            text.setTextColor(ColorStateList.valueOf(ThemeUtils.resolveColor(getContext(), android.R.attr.colorControlNormal)));
         }
-        else{
-            image.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(android.R.color.transparent)));}
     }
 
     void setup(@StringRes int stringRes, @DrawableRes int drawableRes) {

@@ -18,6 +18,7 @@ package com.android.incallui.incall.protocol;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import androidx.annotation.Nullable;
 
 import com.fissy.dialer.common.LogUtil;

@@ -16,7 +16,6 @@
 
 package com.android.contacts.common.model;
 
-import android.content.AsyncTaskLoader;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -36,6 +35,8 @@ import android.provider.ContactsContract.Directory;
 import android.provider.ContactsContract.Groups;
 import android.provider.ContactsContract.RawContacts;
 import android.text.TextUtils;
+
+import androidx.loader.content.AsyncTaskLoader;
 
 import com.android.contacts.common.GroupMetaData;
 import com.android.contacts.common.model.account.AccountType;
@@ -78,7 +79,7 @@ public class ContactLoader extends AsyncTaskLoader<Contact> {
     private static final String TAG = ContactLoader.class.getSimpleName();
 
     /**
-     * A short-lived cache that can be set by {@link #cacheResult()}
+     * A short-lived cache that can be set by cacheResult()
      */
     private static Contact sCachedResult = null;
 
@@ -131,12 +132,12 @@ public class ContactLoader extends AsyncTaskLoader<Contact> {
         final JSONObject json = new JSONObject(jsonString);
 
         final long directoryId =
-                Long.valueOf(uri.getQueryParameter(ContactsContract.DIRECTORY_PARAM_KEY));
+                Long.parseLong(uri.getQueryParameter(ContactsContract.DIRECTORY_PARAM_KEY));
 
         final String displayName = json.optString(Contacts.DISPLAY_NAME);
         final String altDisplayName = json.optString(Contacts.DISPLAY_NAME_ALTERNATIVE, displayName);
         final int displayNameSource = json.getInt(Contacts.DISPLAY_NAME_SOURCE);
-        final String photoUri = json.optString(Contacts.PHOTO_URI, null);
+        final String photoUri = json.optString(Contacts.PHOTO_URI, Contacts.PHOTO_URI);
         final Contact contact =
                 new Contact(
                         uri,
@@ -158,24 +159,15 @@ public class ContactLoader extends AsyncTaskLoader<Contact> {
                         null /* customRingtone */,
                         false /* isUserProfile */);
 
-        final String accountName = json.optString(RawContacts.ACCOUNT_NAME, null);
+        final String accountName = json.optString(RawContacts.ACCOUNT_NAME, RawContacts.ACCOUNT_NAME);
         final String directoryName = uri.getQueryParameter(Directory.DISPLAY_NAME);
-        if (accountName != null) {
-            final String accountType = json.getString(RawContacts.ACCOUNT_TYPE);
-            contact.setDirectoryMetaData(
-                    directoryName,
-                    null,
-                    accountName,
-                    accountType,
-                    json.optInt(Directory.EXPORT_SUPPORT, Directory.EXPORT_SUPPORT_SAME_ACCOUNT_ONLY));
-        } else {
-            contact.setDirectoryMetaData(
-                    directoryName,
-                    null,
-                    null,
-                    null,
-                    json.optInt(Directory.EXPORT_SUPPORT, Directory.EXPORT_SUPPORT_ANY_ACCOUNT));
-        }
+        final String accountType = json.getString(RawContacts.ACCOUNT_TYPE);
+        contact.setDirectoryMetaData(
+                directoryName,
+                null,
+                accountName,
+                accountType,
+                json.optInt(Directory.EXPORT_SUPPORT, Directory.EXPORT_SUPPORT_SAME_ACCOUNT_ONLY));
 
         final ContentValues values = new ContentValues();
         values.put(Data._ID, -1);
@@ -183,7 +175,7 @@ public class ContactLoader extends AsyncTaskLoader<Contact> {
         final RawContact rawContact = new RawContact(values);
 
         final JSONObject items = json.getJSONObject(Contacts.CONTENT_ITEM_TYPE);
-        final Iterator keys = items.keys();
+        final Iterator<String> keys = items.keys();
         while (keys.hasNext()) {
             final String mimetype = (String) keys.next();
 
@@ -210,7 +202,7 @@ public class ContactLoader extends AsyncTaskLoader<Contact> {
         itemValues.put(Data.MIMETYPE, mimetype);
         itemValues.put(Data._ID, -1);
 
-        final Iterator iterator = item.keys();
+        final Iterator<String> iterator = item.keys();
         while (iterator.hasNext()) {
             String name = (String) iterator.next();
             final Object o = item.get(name);
@@ -299,7 +291,7 @@ public class ContactLoader extends AsyncTaskLoader<Contact> {
             long currentRawContactId = -1;
             RawContact rawContact = null;
             ImmutableList.Builder<RawContact> rawContactsBuilder =
-                    new ImmutableList.Builder<RawContact>();
+                    new ImmutableList.Builder<>();
             do {
                 long rawContactId = cursor.getLong(ContactQuery.RAW_CONTACT_ID);
                 if (rawContactId != currentRawContactId) {
@@ -311,6 +303,7 @@ public class ContactLoader extends AsyncTaskLoader<Contact> {
                 }
                 if (!cursor.isNull(ContactQuery.DATA_ID)) {
                     ContentValues data = loadDataValues(cursor);
+                    assert rawContact != null;
                     rawContact.addDataItemValues(data);
                 }
             } while (cursor.moveToNext());
@@ -393,11 +386,11 @@ public class ContactLoader extends AsyncTaskLoader<Contact> {
     }
 
     /**
-     * Sets the "invitable" account types to {@link Contact#mInvitableAccountTypes}.
+     * Sets the "invitable" account types to {mInvitableAccountTypes}.
      */
     private void loadInvitableAccountTypes(Contact contactData) {
         final ImmutableList.Builder<AccountType> resultListBuilder =
-                new ImmutableList.Builder<AccountType>();
+                new ImmutableList.Builder<>();
         if (!contactData.isUserProfile()) {
             Map<AccountTypeWithDataSet, AccountType> invitables =
                     AccountTypeManager.getInstance(getContext()).getUsableInvitableAccountTypes();
@@ -557,6 +550,8 @@ public class ContactLoader extends AsyncTaskLoader<Contact> {
                 break;
             default:
                 throw new IllegalStateException("Invalid or unhandled data type");
+            case Cursor.FIELD_TYPE_FLOAT:
+                break;
         }
     }
 
@@ -608,7 +603,7 @@ public class ContactLoader extends AsyncTaskLoader<Contact> {
      */
     private void loadGroupMetaData(Contact result) {
         StringBuilder selection = new StringBuilder();
-        ArrayList<String> selectionArgs = new ArrayList<String>();
+        ArrayList<String> selectionArgs = new ArrayList<>();
         final HashSet<AccountKey> accountsSeen = new HashSet<>();
         for (RawContact rawContact : result.getRawContacts()) {
             final String accountName = rawContact.getAccountName();
@@ -634,7 +629,7 @@ public class ContactLoader extends AsyncTaskLoader<Contact> {
             }
         }
         final ImmutableList.Builder<GroupMetaData> groupListBuilder =
-                new ImmutableList.Builder<GroupMetaData>();
+                new ImmutableList.Builder<>();
         final Cursor cursor =
                 getContext()
                         .getContentResolver()
@@ -810,10 +805,6 @@ public class ContactLoader extends AsyncTaskLoader<Contact> {
         public static final int PHOTO_ID = 6;
         public static final int STARRED = 7;
         public static final int CONTACT_PRESENCE = 8;
-        public static final int CONTACT_STATUS = 9;
-        public static final int CONTACT_STATUS_TIMESTAMP = 10;
-        public static final int CONTACT_STATUS_RES_PACKAGE = 11;
-        public static final int CONTACT_STATUS_LABEL = 12;
         public static final int CONTACT_ID = 13;
         public static final int RAW_CONTACT_ID = 14;
         public static final int ACCOUNT_NAME = 15;
@@ -855,10 +846,6 @@ public class ContactLoader extends AsyncTaskLoader<Contact> {
         public static final int PRESENCE = 51;
         public static final int CHAT_CAPABILITY = 52;
         public static final int STATUS = 53;
-        public static final int STATUS_RES_PACKAGE = 54;
-        public static final int STATUS_ICON = 55;
-        public static final int STATUS_LABEL = 56;
-        public static final int STATUS_TIMESTAMP = 57;
         public static final int PHOTO_URI = 58;
         public static final int SEND_TO_VOICEMAIL = 59;
         public static final int CUSTOM_RINGTONE = 60;
@@ -938,7 +925,7 @@ public class ContactLoader extends AsyncTaskLoader<Contact> {
         static {
             List<String> projectionList = Lists.newArrayList(COLUMNS_INTERNAL);
             projectionList.add(Data.CARRIER_PRESENCE);
-            COLUMNS = projectionList.toArray(new String[projectionList.size()]);
+            COLUMNS = projectionList.toArray(new String[0]);
         }
     }
 

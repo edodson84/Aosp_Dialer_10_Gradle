@@ -33,7 +33,6 @@ import com.fissy.dialer.callrecord.CallRecordingDataStore;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.enrichedcall.EnrichedCallComponent;
 import com.fissy.dialer.protos.ProtoParsers;
-import com.fissy.dialer.callrecord.CallRecordingDataStore;
 
 /**
  * Displays the details of a specific call log entry.

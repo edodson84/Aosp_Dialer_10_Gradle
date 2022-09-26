@@ -16,8 +16,9 @@
 
 package com.android.incallui.sessiondata;
 
-import androidx.annotation.Nullable;
 import android.widget.ImageView;
+
+import androidx.annotation.Nullable;
 
 /**
  * Interface for interacting with Fragments that can be put in the data container

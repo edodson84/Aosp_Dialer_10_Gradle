@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.fissy.dialer"
-    android:compileSdkVersion="29"
-    android:compileSdkVersionCodename="10">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.CAPTURE_AUDIO_OUTPUT" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
@@ -14,39 +11,27 @@
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.GET_ACCOUNTS_PRIVILEGED" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
+    <uses-permission android:name="android.permission.MANAGE_OUTGOING_CALLS" />
     <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <uses-permission android:name="android.permission.MODIFY_PHONE_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
-    <uses-permission android:name="com.android.voicemail.permission.ADD_VOICEMAIL" />
-    <uses-permission android:name="com.android.voicemail.permission.WRITE_VOICEMAIL" />
-    <uses-permission android:name="com.android.voicemail.permission.READ_VOICEMAIL" />
-    <uses-permission android:name="android.permission.ALLOW_ANY_CODEC_FOR_PLAYBACK" />
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.BROADCAST_STICKY" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.CONNECTIVITY_USE_RESTRICTED_NETWORKS" />
     <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
-    <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE" />
-    <uses-permission android:name="android.permission.CONTROL_INCALL_EXPERIENCE" />
-    <uses-permission android:name="android.permission.STATUS_BAR" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.STOP_APP_SWITCHES" />
     <uses-permission android:name="com.sec.android.provider.badge.permission.READ" />
     <uses-permission android:name="com.sec.android.provider.badge.permission.WRITE" />
     <uses-permission android:name="com.htc.launcher.permission.READ_SETTINGS" />
@@ -61,24 +46,19 @@
     <uses-permission android:name="android.permission.READ_APP_BADGE" />
     <uses-permission android:name="com.oppo.launcher.permission.READ_SETTINGS" />
     <uses-permission android:name="com.oppo.launcher.permission.WRITE_SETTINGS" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
-    <meta-data
-        android:name="com.google.android.backup.api_key"
-        android:value="AEdPqrEAAAAIn3-Y3JKit1mrzfvcdbVhUiJn2ICtKfhGYLy0Bg" />
-
     <uses-permission android:name="com.cequint.ecid.CALLER_ID_LOOKUP" />
     <uses-permission android:name="com.motorola.incallui.permission.INCOMING_CALL_VISIBILITY_CHANGED" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission
+        android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
 
     <uses-feature
         android:name="android.hardware.camera.any"
         android:required="false" />
-
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
     <application
         android:name="com.fissy.dialer.binary.aosp.AospDialerApplication"
         android:extractNativeLibs="false"
@@ -93,6 +73,7 @@
 
         <activity
             android:name="com.android.contacts.common.dialog.CallSubjectDialog"
+            android:exported="true"
             android:theme="@style/Theme.CallSubjectDialogTheme"
             android:windowSoftInputMode="adjustResize|stateVisible">
             <intent-filter>
@@ -103,12 +84,12 @@
             android:name="com.fissy.dialer.about.LicenseMenuActivity"
             android:exported="true"
             android:label="@string/licenseActivityLabel"
-            android:theme="@style/daynight" />
+            android:theme="@style/Dialer" />
         <activity
             android:name="com.fissy.dialer.about.LicenseActivity"
             android:exported="false"
             android:label="@string/licenseActivityLabel"
-            android:theme="@style/daynight" />
+            android:theme="@style/Dialer" />
         <activity
             android:name="com.fissy.dialer.app.filterednumber.BlockedNumbersSettingsActivity"
             android:exported="false"
@@ -123,25 +104,8 @@
         <activity
             android:name="com.fissy.dialer.app.calllog.CallLogActivity"
             android:label="@string/call_log_activity_title"
-            android:theme="@style/DialtactsTheme" />
+            android:theme="@style/Dialer" />
 
-        <receiver android:name="com.fissy.dialer.app.calllog.CallLogReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.NEW_VOICEMAIL" />
-
-                <data
-                    android:host="com.android.voicemail"
-                    android:mimeType="vnd.android.cursor.item/voicemail"
-                    android:scheme="content" />
-                <data
-                    android:host="com.android.voicemail"
-                    android:mimeType="vnd.android.cursor.dir/voicemails"
-                    android:scheme="content" />
-            </intent-filter>
-            <intent-filter android:priority="100">
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
         <activity
             android:name="com.fissy.dialer.app.calllog.CallLogNotificationsActivity"
             android:theme="@style/Theme.AppCompat.Translucent" />
@@ -150,9 +114,6 @@
             android:name="com.fissy.dialer.app.calllog.CallLogNotificationsService"
             android:directBootAware="true"
             android:exported="false" />
-        <service
-            android:name="com.fissy.dialer.app.calllog.VoicemailNotificationJobService"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <service
             android:name="com.fissy.dialer.callrecord.impl.CallRecorderService"
@@ -160,19 +121,10 @@
 
         <receiver
             android:name="com.fissy.dialer.app.calllog.MissedCallNotificationReceiver"
-            android:directBootAware="true">
+            android:directBootAware="true"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.telecom.action.SHOW_MISSED_CALLS_NOTIFICATION" />
-            </intent-filter>
-        </receiver>
-        <receiver
-            android:name="com.fissy.dialer.app.voicemail.LegacyVoicemailNotificationReceiver"
-            android:directBootAware="true">
-            <intent-filter>
-                <action android:name="android.telephony.action.SHOW_VOICEMAIL_NOTIFICATION" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="com.android.voicemail.VoicemailClient.ACTION_SHOW_LEGACY_VOICEMAIL" />
             </intent-filter>
         </receiver>
         <receiver
@@ -194,10 +146,10 @@
 
         <activity
             android:name="com.fissy.dialer.app.settings.DialerSettingsActivity"
-            android:exported="false"
+            android:exported="true"
             android:label="@string/dialer_settings_label"
             android:parentActivityName="com.fissy.dialer.main.impl.MainActivity"
-            android:theme="@style/SettingsStyle">
+            android:theme="@style/Dialer">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -208,7 +160,7 @@
             android:name="com.fissy.dialer.assisteddialing.ui.AssistedDialingSettingActivity"
             android:label="@string/assisted_dialing_setting_title"
             android:parentActivityName="com.fissy.dialer.app.settings.DialerSettingsActivity"
-            android:theme="@style/SettingsStyle">
+            android:theme="@style/Dialer">
             <intent-filter>
                 <action android:name="com.fissy.dialer.app.settings.SHOW_ASSISTED_DIALING_SETTINGS" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -229,11 +181,13 @@
         <activity
             android:name="com.fissy.dialer.calldetails.OldCallDetailsActivity"
             android:exported="false"
-            android:label="@string/call_details" />
+            android:label="@string/call_details"
+            android:theme="@style/Dialer" />
         <activity
             android:name="com.fissy.dialer.calldetails.CallDetailsActivity"
             android:exported="false"
-            android:label="@string/call_details" />
+            android:label="@string/call_details"
+            android:theme="@style/Dialer" />
 
         <service
             android:name="com.fissy.dialer.calllog.config.CallLogConfigImpl$PollingJob"
@@ -355,7 +309,7 @@
         <activity
             android:name="com.fissy.dialer.postcall.PostCallActivity"
             android:exported="false"
-            android:theme="@style/daynight"
+            android:theme="@style/Dialer"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="com.fissy.dialer.precall.externalreceiver.LaunchPreCallActivity"
@@ -428,29 +382,6 @@
             android:value="true" />
 
         <activity
-            android:name="com.fissy.dialer.voicemail.settings.VoicemailChangePinActivity"
-            android:exported="false"
-            android:label="@string/voicemail_change_pin_preference_title"
-            android:parentActivityName="com.fissy.dialer.app.settings.DialerSettingsActivity"
-            android:theme="@style/SettingsStyle"
-            android:windowSoftInputMode="adjustResize|stateVisible">
-            <intent-filter>
-                <action android:name="com.fissy.dialer.action.CHANGE_PIN" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="com.fissy.dialer.voicemail.settings.RecordVoicemailGreetingActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/voicemail_change_greeting_preference_title"
-            android:parentActivityName="com.fissy.dialer.app.settings.DialerSettingsActivity"
-            android:theme="@style/SettingsStyle" />
-        <activity
-            android:name="com.fissy.dialer.voicemail.settings.CurrentVoicemailGreetingActivity"
-            android:exported="true"
-            android:label="@string/voicemail_change_greeting_preference_title"
-            android:parentActivityName="com.fissy.dialer.app.settings.DialerSettingsActivity" />
-        <activity
             android:name="com.android.incallui.InCallActivity"
             android:directBootAware="true"
             android:excludeFromRecents="true"
@@ -515,12 +446,6 @@
         <receiver
             android:name="com.android.incallui.ReturnToCallActionReceiver"
             android:exported="false" />
-        <receiver android:name="com.android.incallui.answer.impl.hint.PawSecretCodeListener">
-            <intent-filter>
-                <action android:name="android.provider.Telephony.SECRET_CODE" />
-                <data android:scheme="android_secret_code" />
-            </intent-filter>
-        </receiver>
 
         <activity
             android:name="com.android.incallui.callpending.CallPendingActivity"
@@ -550,132 +475,6 @@
             android:noHistory="true"
             android:theme="@style/Theme.Incall.DialogHolder" />
 
-        <receiver
-            android:name="com.android.voicemail.VoicemailSecretCodeReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.provider.Telephony.SECRET_CODE" />
-                <data android:scheme="android_secret_code" />
-            </intent-filter>
-        </receiver>
-        <receiver
-            android:name="com.android.voicemail.VoicemailPowerCycleReceiver"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.ACTION_SHUTDOWN" />
-            </intent-filter>
-        </receiver>
-        <receiver
-            android:name="com.android.voicemail.impl.sms.OmtpMessageReceiver"
-            android:directBootAware="true"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.android.vociemailomtp.sms.sms_received" />
-            </intent-filter>
-        </receiver>
-        <receiver
-            android:name="com.android.voicemail.impl.VoicemailClientReceiver"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.android.voicemail.VoicemailClient.ACTION_UPLOAD" />
-            </intent-filter>
-        </receiver>
-        <receiver
-            android:name="com.android.voicemail.impl.fetch.FetchVoicemailReceiver"
-            android:exported="true"
-            android:permission="com.android.voicemail.permission.READ_VOICEMAIL">
-            <intent-filter>
-                <action android:name="android.intent.action.FETCH_VOICEMAIL" />
-                <data
-                    android:host="com.android.voicemail"
-                    android:mimeType="vnd.android.cursor.item/voicemail"
-                    android:scheme="content" />
-            </intent-filter>
-        </receiver>
-        <receiver
-            android:name="com.android.voicemail.impl.sync.OmtpVvmSyncReceiver"
-            android:exported="true"
-            android:permission="com.android.voicemail.permission.READ_VOICEMAIL">
-            <intent-filter>
-                <action android:name="android.provider.action.SYNC_VOICEMAIL" />
-            </intent-filter>
-        </receiver>
-        <receiver
-            android:name="com.android.voicemail.impl.sync.VoicemailProviderChangeReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.PROVIDER_CHANGED" />
-                <data
-                    android:host="com.android.voicemail"
-                    android:mimeType="vnd.android.cursor.dir/voicemails"
-                    android:scheme="content" />
-            </intent-filter>
-        </receiver>
-        <receiver
-            android:name="com.android.voicemail.impl.scheduling.TaskReceiver"
-            android:exported="false" />
-
-        <service
-            android:name="com.android.voicemail.impl.scheduling.TaskSchedulerJobService"
-            android:exported="false"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
-        <service
-            android:name="com.android.voicemail.impl.StatusCheckJobService"
-            android:exported="false"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
-        <service
-            android:name="com.android.voicemail.impl.DeviceProvisionedJobService"
-            android:exported="false"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
-        <service
-            android:name="com.android.voicemail.impl.transcribe.TranscriptionService"
-            android:exported="false"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
-        <service
-            android:name="com.android.voicemail.impl.transcribe.TranscriptionBackfillService"
-            android:exported="false"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
-        <service
-            android:name="com.android.voicemail.impl.transcribe.TranscriptionRatingService"
-            android:exported="false"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
-        <service
-            android:name="com.android.voicemail.impl.OmtpService"
-            android:directBootAware="true"
-            android:exported="true"
-            android:permission="android.permission.BIND_VISUAL_VOICEMAIL_SERVICE">
-            <intent-filter>
-                <action android:name="android.telephony.VisualVoicemailService" />
-            </intent-filter>
-        </service>
-
-        <receiver
-            android:name="com.android.voicemail.impl.PackageReplacedReceiver"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
-            </intent-filter>
-        </receiver>
-        <receiver
-            android:name="com.android.voicemail.impl.CarrierVvmPackageInstalledReceiver"
-            android:exported="true"
-            android:permission="android.permission.BIND_VISUAL_VOICEMAIL_SERVICE">
-            <intent-filter>
-                <action android:name="com.android.internal.telephony.CARRIER_VVM_PACKAGE_INSTALLED" />
-            </intent-filter>
-        </receiver>
-        <receiver
-            android:name="com.android.voicemail.impl.transcribe.GetTranscriptReceiver"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.android.voicemail.impl.transcribe.GetTranscriptReceiver.POLL_ALARM" />
-            </intent-filter>
-        </receiver>
-
-        <activity
-            android:name="com.android.voicemail.impl.configui.VoicemailSecretCodeActivity"
-            android:exported="false" />
         <provider
             android:name="com.fissy.dialer.lookup.LookupProvider"
             android:authorities="com.fissy.dialer.lookup"

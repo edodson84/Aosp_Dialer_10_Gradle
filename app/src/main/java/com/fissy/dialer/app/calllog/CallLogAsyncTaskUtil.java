@@ -18,17 +18,12 @@ package com.fissy.dialer.app.calllog;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.CallLog;
-import android.provider.VoicemailContract.Voicemails;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.text.TextUtils;
 
-import com.android.voicemail.VoicemailClient;
-import com.fissy.dialer.common.LogUtil;
+import androidx.annotation.NonNull;
+
 import com.fissy.dialer.common.concurrent.AsyncTaskExecutor;
 import com.fissy.dialer.common.concurrent.AsyncTaskExecutors;
 import com.fissy.dialer.util.PermissionsUtil;
@@ -43,70 +38,6 @@ public class CallLogAsyncTaskUtil {
 
     private static void initTaskExecutor() {
         asyncTaskExecutor = AsyncTaskExecutors.createThreadPoolExecutor();
-    }
-
-    public static void markVoicemailAsRead(
-            @NonNull final Context context, @NonNull final Uri voicemailUri) {
-        LogUtil.enterBlock("CallLogAsyncTaskUtil.markVoicemailAsRead, voicemailUri: " + voicemailUri);
-        if (asyncTaskExecutor == null) {
-            initTaskExecutor();
-        }
-
-        asyncTaskExecutor.submit(
-                Tasks.MARK_VOICEMAIL_READ,
-                new AsyncTask<Void, Void, Void>() {
-                    @Override
-                    public Void doInBackground(Void... params) {
-                        ContentValues values = new ContentValues();
-                        values.put(Voicemails.IS_READ, true);
-                        // "External" changes to the database will be automatically marked as dirty, but this
-                        // voicemail might be from dialer so it need to be marked manually.
-                        values.put(Voicemails.DIRTY, 1);
-                        if (context
-                                .getContentResolver()
-                                .update(voicemailUri, values, Voicemails.IS_READ + " = 0", null)
-                                > 0) {
-                            uploadVoicemailLocalChangesToServer(context);
-                            CallLogNotificationsService.markAllNewVoicemailsAsOld(context);
-                        }
-                        return null;
-                    }
-                });
-    }
-
-    public static void deleteVoicemail(
-            @NonNull final Context context,
-            final Uri voicemailUri,
-            @Nullable final CallLogAsyncTaskListener callLogAsyncTaskListener) {
-        if (asyncTaskExecutor == null) {
-            initTaskExecutor();
-        }
-
-        asyncTaskExecutor.submit(
-                Tasks.DELETE_VOICEMAIL,
-                new AsyncTask<Void, Void, Void>() {
-                    @Override
-                    public Void doInBackground(Void... params) {
-                        deleteVoicemailSynchronous(context, voicemailUri);
-                        return null;
-                    }
-
-                    @Override
-                    public void onPostExecute(Void result) {
-                        if (callLogAsyncTaskListener != null) {
-                            callLogAsyncTaskListener.onDeleteVoicemail();
-                        }
-                    }
-                });
-    }
-
-    public static void deleteVoicemailSynchronous(Context context, Uri voicemailUri) {
-        ContentValues values = new ContentValues();
-        values.put(Voicemails.DELETED, "1");
-        context.getContentResolver().update(voicemailUri, values, null, null);
-        // TODO(a bug): check which source package is changed. Don't need
-        // to upload changes on foreign voicemails, they will get a PROVIDER_CHANGED
-        uploadVoicemailLocalChangesToServer(context);
     }
 
     public static void markCallAsRead(@NonNull final Context context, @NonNull final long[] callIds) {
@@ -144,12 +75,6 @@ public class CallLogAsyncTaskUtil {
                         return null;
                     }
                 });
-    }
-
-    private static void uploadVoicemailLocalChangesToServer(Context context) {
-        Intent intent = new Intent(VoicemailClient.ACTION_UPLOAD);
-        intent.setPackage(context.getPackageName());
-        context.sendBroadcast(intent);
     }
 
     /**

@@ -21,8 +21,8 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-import com.fissy.dialer.R;
 import com.android.phone.common.util.ViewUtil;
+import com.fissy.dialer.R;
 
 /**
  * TextView which resizes dynamically with respect to text length.

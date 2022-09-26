@@ -21,9 +21,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.ContactsContract;
-import androidx.annotation.Nullable;
 import android.telecom.PhoneAccountHandle;
 import android.telephony.TelephonyManager;
+
+import androidx.annotation.Nullable;
 
 import com.android.contacts.common.model.Contact;
 import com.android.contacts.common.model.ContactLoader;

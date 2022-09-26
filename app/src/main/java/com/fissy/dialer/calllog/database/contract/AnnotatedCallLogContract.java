@@ -17,10 +17,8 @@
 package com.fissy.dialer.calllog.database.contract;
 
 import android.net.Uri;
-import android.os.Build;
 import android.provider.BaseColumns;
 
-import com.fissy.dialer.compat.android.provider.VoicemailCompat;
 import com.fissy.dialer.constants.Constants;
 
 /**
@@ -138,24 +136,6 @@ public class AnnotatedCallLogContract {
          */
         public static final String NUMBER_ATTRIBUTES = "number_attributes";
 
-        /**
-         * Whether the call is to the voicemail inbox.
-         *
-         * <p>TYPE: INTEGER (boolean)
-         *
-         * @see android.telecom.TelecomManager#isVoiceMailNumber(android.telecom.PhoneAccountHandle,
-         * String)
-         */
-        public static final String IS_VOICEMAIL_CALL = "is_voicemail_call";
-
-        /**
-         * The "name" of the voicemail inbox. This is provided by the SIM to show as the caller ID
-         *
-         * <p>TYPE: TEXT
-         *
-         * @see android.telephony.TelephonyManager#getVoiceMailAlphaTag()
-         */
-        public static final String VOICEMAIL_CALL_TAG = "voicemail_call_tag";
 
         /**
          * Copied from {@link android.provider.CallLog.Calls#TYPE}.
@@ -177,29 +157,6 @@ public class AnnotatedCallLogContract {
          * <p>TYPE: INTEGER (long)
          */
         public static final String DURATION = "duration";
-
-        /**
-         * See {@link android.provider.CallLog.Calls#TRANSCRIPTION}.
-         *
-         * <p>TYPE: TEXT
-         */
-        public static final String TRANSCRIPTION = "transcription";
-
-        /**
-         * See {@link VoicemailCompat#TRANSCRIPTION_STATE}
-         *
-         * <p>Only populated in {@link Build.VERSION_CODES#O} and above
-         *
-         * <p>TYPE: INTEGER
-         */
-        public static final String TRANSCRIPTION_STATE = "transcription_state";
-
-        /**
-         * See {@link android.provider.CallLog.Calls#VOICEMAIL_URI}.
-         *
-         * <p>TYPE: TEXT
-         */
-        public static final String VOICEMAIL_URI = "voicemail_uri";
 
         /**
          * An unique id to associate this call log row to a {@link android.telecom.Call}.

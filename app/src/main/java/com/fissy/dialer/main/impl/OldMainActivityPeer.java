@@ -26,27 +26,13 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.database.ContentObserver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.CallLog.Calls;
 import android.provider.ContactsContract.QuickContact;
-import android.provider.VoicemailContract;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import androidx.core.content.ContextCompat;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import android.telecom.PhoneAccount;
-import android.telecom.PhoneAccountHandle;
 import android.telephony.TelephonyManager;
-import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.view.ActionMode;
 import android.view.DragEvent;
@@ -55,8 +41,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import com.android.contacts.common.list.OnPhoneNumberPickerActionListener;
-import com.android.voicemail.VoicemailComponent;
 import com.fissy.dialer.R;
 import com.fissy.dialer.animation.AnimUtils;
 import com.fissy.dialer.app.MainComponent;
@@ -65,7 +57,6 @@ import com.fissy.dialer.app.calllog.CallLogFragment;
 import com.fissy.dialer.app.calllog.CallLogFragment.CallLogFragmentListener;
 import com.fissy.dialer.app.calllog.CallLogNotificationsService;
 import com.fissy.dialer.app.calllog.IntentProvider;
-import com.fissy.dialer.app.calllog.VisualVoicemailCallLogFragment;
 import com.fissy.dialer.app.list.DragDropController;
 import com.fissy.dialer.app.list.OldSpeedDialFragment;
 import com.fissy.dialer.app.list.OnDragDropListener;
@@ -120,21 +111,16 @@ import com.fissy.dialer.smartdial.util.SmartDialPrefix;
 import com.fissy.dialer.speeddial.SpeedDialFragment;
 import com.fissy.dialer.storage.StorageComponent;
 import com.fissy.dialer.telecom.TelecomUtil;
-import com.fissy.dialer.theme.base.Theme;
-import com.fissy.dialer.theme.base.ThemeComponent;
 import com.fissy.dialer.util.DialerUtils;
 import com.fissy.dialer.util.PermissionsUtil;
 import com.fissy.dialer.util.TransactionSafeActivity;
-import com.fissy.dialer.voicemail.listui.NewVoicemailFragment;
-import com.fissy.dialer.voicemail.listui.error.VoicemailStatusCorruptionHandler;
-import com.fissy.dialer.voicemail.listui.error.VoicemailStatusCorruptionHandler.Source;
-import com.fissy.dialer.voicemailstatus.VisualVoicemailEnabledChecker;
-import com.fissy.dialer.voicemailstatus.VoicemailStatusHelper;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.MoreExecutors;
 
-import java.util.Locale;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
@@ -228,66 +214,6 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
         return intent.getIntExtra(EXTRA_SHOW_TAB, -1);
     }
 
-    /**
-     * Check and return whether the voicemail tab should be shown or not. This includes the following
-     * criteria under which we show the voicemail tab:
-     * <li>The voicemail number exists (e.g we are able to dial into listen to voicemail or press and
-     * hold 1) (TODO (uabdullah): Handle this case properly)
-     * <li>Visual voicemail is enabled from the settings tab
-     * <li>Visual voicemail carrier is supported by dialer
-     * <li>There is no voicemail carrier app installed.
-     *
-     * @param context
-     * @return return if voicemail tab should be shown or not depending on what the voicemail state is
-     * for the carrier.
-     */
-    private static boolean canVoicemailTabBeShown(Context context) {
-        PhoneAccountHandle defaultUserSelectedAccount =
-                TelecomUtil.getDefaultOutgoingPhoneAccount(context, PhoneAccount.SCHEME_VOICEMAIL);
-
-        if (!isVoicemailAvailable(context, defaultUserSelectedAccount)) {
-            LogUtil.i("OldMainActivityPeer.canVoicemailTabBeShown", "Voicemail is not available");
-            return false;
-        }
-
-        if (VoicemailComponent.get(context)
-                .getVoicemailClient()
-                .isVoicemailEnabled(context, defaultUserSelectedAccount)) {
-            LogUtil.i("OldMainActivityPeer.canVoicemailTabBeShown", "Voicemail is enabled");
-            return true;
-        }
-        LogUtil.i("OldMainActivityPeer.canVoicemailTabBeShown", "returning false");
-        return false;
-    }
-
-    /**
-     * Check if voicemail is enabled/accessible.
-     *
-     * @return true if voicemail is enabled and accessible. Note that this can be false "temporarily"
-     * after the app boot e.g if the sim isn't fully recognized. TODO(uabdullah): Possibly add a
-     * listener of some kind to detect when a sim is recognized. TODO(uabdullah): Move this to a
-     * utility class or wrap it all in a static inner class.
-     */
-    @SuppressLint("MissingPermission")
-    private static boolean isVoicemailAvailable(
-            Context context, PhoneAccountHandle defaultUserSelectedAccount) {
-
-        if (!PermissionsUtil.hasReadPhoneStatePermissions(context)) {
-            LogUtil.i(
-                    "OldMainActivityPeer.isVoicemailAvailable",
-                    "No read phone permisison or not the default dialer.");
-            return false;
-        }
-
-        if (defaultUserSelectedAccount == null) {
-            // In a single-SIM phone, there is no default outgoing phone account selected by
-            // the user, so just call TelephonyManager#getVoicemailNumber directly.
-            return !TextUtils.isEmpty(getTelephonyManager(context).getVoiceMailNumber());
-        } else {
-            return !TextUtils.isEmpty(
-                    TelecomUtil.getVoicemailNumber(context, defaultUserSelectedAccount));
-        }
-    }
 
     private static TelephonyManager getTelephonyManager(Context context) {
         return context.getSystemService(TelephonyManager.class);
@@ -307,19 +233,7 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
      * should be called before {@link AppCompatActivity#setContentView(int)}.
      */
     private void setTheme() {
-        @Theme.Type int theme = ThemeComponent.get(activity).theme().getTheme();
-        switch (theme) {
-            case Theme.DARK:
-                activity.setTheme(R.style.MainActivityTheme_Dark);
-                break;
-            case Theme.LIGHT:
-            case Theme.LIGHT_M2:
-                activity.setTheme(R.style.MainActivityTheme);
-                break;
-            case Theme.UNKNOWN:
-            default:
-                throw new IllegalArgumentException("Invalid theme.");
-        }
+
     }
 
     private void initUiListeners() {
@@ -364,9 +278,6 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
                         fab,
                         bottomSheet);
         bottomNav.addOnTabSelectedListener(bottomNavTabListener);
-        // TODO(uabdullah): Handle case of when a sim is inserted/removed while the activity is open.
-        boolean showVoicemailTab = canVoicemailTabBeShown(activity);
-        bottomNav.showVoicemail(showVoicemailTab);
 
         missedCallCountObserver =
                 new MissedCallCountObserver(
@@ -408,7 +319,7 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
                         activity.findViewById(R.id.coordinator_layout),
                         activity.findViewById(R.id.fragment_container));
 
-        lastTabController = new LastTabController(activity, bottomNav, showVoicemailTab);
+        lastTabController = new LastTabController(activity, bottomNav);
 
         // Restore our view state if needed, else initialize as if the app opened for the first time
         if (savedInstanceState != null) {
@@ -436,14 +347,8 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
         @TabIndex int tabToSelect;
         if (Calls.CONTENT_TYPE.equals(intent.getType())) {
             Bundle extras = intent.getExtras();
-            if (extras != null && extras.getInt(Calls.EXTRA_CALL_TYPE_FILTER) == Calls.VOICEMAIL_TYPE) {
-                LogUtil.i("OldMainActivityPeer.onHandleIntent", "Voicemail content type intent");
-                tabToSelect = TabIndex.VOICEMAIL;
-                Logger.get(activity).logImpression(DialerImpression.Type.VVM_NOTIFICATION_CLICKED);
-            } else {
-                LogUtil.i("OldMainActivityPeer.onHandleIntent", "Call log content type intent");
-                tabToSelect = TabIndex.CALL_LOG;
-            }
+            LogUtil.i("OldMainActivityPeer.onHandleIntent", "Call log content type intent");
+            tabToSelect = TabIndex.CALL_LOG;
 
         } else if (isShowTabIntent(intent)) {
             LogUtil.i("OldMainActivityPeer.onHandleIntent", "Show tab intent");
@@ -478,8 +383,6 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
             Logger.get(activity).logImpression(DialerImpression.Type.MAIN_OPEN_WITH_TAB_CALL_LOG);
         } else if (tab == TabIndex.CONTACTS) {
             Logger.get(activity).logImpression(DialerImpression.Type.MAIN_OPEN_WITH_TAB_CONTACTS);
-        } else if (tab == TabIndex.VOICEMAIL) {
-            Logger.get(activity).logImpression(DialerImpression.Type.MAIN_OPEN_WITH_TAB_VOICEMAIL);
         } else {
             throw new IllegalStateException("Invalid tab: " + tab);
         }
@@ -922,18 +825,6 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
         private final BottomNavBar bottomNavBar;
         private final Toolbar toolbar;
         private final MainBottomNavBarBottomNavTabListener bottomNavTabListener;
-        private final ContentObserver voicemailStatusObserver =
-                new ContentObserver(new Handler()) {
-                    @Override
-                    public void onChange(boolean selfChange) {
-                        LogUtil.i(
-                                "MainCallLogFragmentListener",
-                                "voicemailStatusObserver.onChange selfChange:%b",
-                                selfChange);
-                        super.onChange(selfChange);
-                        callLogQueryHandler.fetchVoicemailStatus();
-                    }
-                };
         private @TabIndex
         int currentTab = TabIndex.SPEED_DIAL;
         private long timeSelected = -1;
@@ -952,79 +843,15 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
             this.bottomNavTabListener = bottomNavTabListener;
         }
 
-        private void registerVoicemailStatusContentObserver(Context context) {
-            LogUtil.enterBlock("MainCallLogFragmentListener.registerVoicemailStatusContentObserver");
-            if (PermissionsUtil.hasReadVoicemailPermissions(context)
-                    && PermissionsUtil.hasAddVoicemailPermissions(context)) {
-                LogUtil.i("MainCallLogFragmentListener.registerVoicemailStatusContentObserver", "register");
-                context
-                        .getContentResolver()
-                        .registerContentObserver(
-                                VoicemailContract.Status.CONTENT_URI, true, voicemailStatusObserver);
-            } else {
-                LogUtil.w(
-                        "MainCallLogFragmentListener.registerVoicemailStatusContentObserver",
-                        "no voicemail read/add permissions");
-            }
-        }
-
         @Override
         public void updateTabUnreadCounts() {
             callLogQueryHandler.fetchMissedCallsUnreadCount();
-            callLogQueryHandler.fetchVoicemailUnreadCount();
         }
 
         @Override
         public void showMultiSelectRemoveView(boolean show) {
             bottomNavBar.setVisibility(show ? View.GONE : View.VISIBLE);
             toolbar.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
-
-        @Override
-        public void onVoicemailStatusFetched(Cursor statusCursor) {
-            LogUtil.i("OldMainActivityPeer.MainCallLogFragmentListener", "onVoicemailStatusFetched");
-            VoicemailStatusCorruptionHandler.maybeFixVoicemailStatus(
-                    context, statusCursor, Source.Activity);
-
-            // Update hasActiveVoicemailProvider, which controls the number of tabs displayed.
-            int numberOfActiveVoicemailSources =
-                    VoicemailStatusHelper.getNumberActivityVoicemailSources(statusCursor);
-
-            boolean hasActiveVoicemailProvider = numberOfActiveVoicemailSources > 0;
-            LogUtil.i(
-                    "OldMainActivityPeer.onVoicemailStatusFetched",
-                    String.format(
-                            Locale.US,
-                            "hasActiveVoicemailProvider:%b, number of active voicemail sources:%d",
-                            hasActiveVoicemailProvider,
-                            numberOfActiveVoicemailSources));
-
-            if (hasActiveVoicemailProvider) {
-                Logger.get(context).logImpression(DialerImpression.Type.MAIN_VVM_TAB_VISIBLE);
-                bottomNavBar.showVoicemail(true);
-                callLogQueryHandler.fetchVoicemailUnreadCount();
-            } else {
-                bottomNavBar.showVoicemail(false);
-            }
-
-            StorageComponent.get(context)
-                    .unencryptedSharedPrefs()
-                    .edit()
-                    .putBoolean(
-                            VisualVoicemailEnabledChecker.PREF_KEY_HAS_ACTIVE_VOICEMAIL_PROVIDER,
-                            hasActiveVoicemailProvider)
-                    .apply();
-
-            // TODO(uabdullah): Check if we need to force move to the VM tab (e.g in the event of
-            // clicking a vm notification and a status wasn't yet fetched).
-        }
-
-        @Override
-        public void onVoicemailUnreadCountFetched(Cursor cursor) {
-            if (activityIsAlive) {
-                bottomNavBar.setNotificationCount(TabIndex.VOICEMAIL, cursor.getCount());
-            }
-            cursor.close();
         }
 
         @Override
@@ -1056,11 +883,6 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
             setCurrentTab(TabIndex.CONTACTS);
         }
 
-        @Override
-        public void onVoicemailSelected() {
-            setCurrentTab(TabIndex.VOICEMAIL);
-        }
-
         private void markMissedCallsAsReadAndRemoveNotification() {
             if (bottomNavTabListener.newCallLogFragmentActive()) {
                 Futures.addCallback(
@@ -1084,9 +906,6 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
         public void onActivityResume() {
             LogUtil.enterBlock("MainCallLogFragmentListener.onActivityResume");
             activityIsAlive = true;
-            registerVoicemailStatusContentObserver(context);
-            // TODO(a bug): Don't use callLogQueryHandler
-            callLogQueryHandler.fetchVoicemailStatus();
 
             if (!bottomNavTabListener.newCallLogFragmentActive()) {
                 callLogQueryHandler.fetchMissedCallsUnreadCount();
@@ -1096,10 +915,9 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
         }
 
         /**
-         * Should be called when {@link AppCompatActivity#onStop()} is called.
+         * Should be called is called.
          */
         public void onActivityStop(boolean changingConfigurations, boolean keyguardLocked) {
-            context.getContentResolver().unregisterContentObserver(voicemailStatusObserver);
             activityIsAlive = false;
             // The new call log fragment handles this on its own.
             if (!bottomNavTabListener.newCallLogFragmentActive()
@@ -1336,7 +1154,7 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
         private final View bottomSheet;
 
         @TabIndex
-        private int selectedTab = -1;
+        private int selectedTab = TabIndex.NO_TAB;
 
         private MainBottomNavBarBottomNavTabListener(
                 TransactionSafeActivity activity,
@@ -1450,15 +1268,6 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
                     supportFragmentManager.findFragmentByTag(VOICEMAIL_TAG);
             if (supportFragment != null) {
                 supportFragmentManager.beginTransaction().remove(supportFragment).commitAllowingStateLoss();
-                // If the NewVoicemailFragment was showing, immediately show the old voicemail fragment
-                // instead.
-                if (selectedTab == TabIndex.VOICEMAIL) {
-                    LogUtil.i(
-                            "MainBottomNavBarBottomNavTabListener.disableNewVoicemailFragment", "showing old");
-                    Fragment fragment = fragmentManager.findFragmentByTag(VOICEMAIL_TAG);
-                    showFragment(
-                            fragment == null ? new VisualVoicemailCallLogFragment() : fragment, VOICEMAIL_TAG);
-                }
             }
         }
 
@@ -1515,32 +1324,6 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
             fab.show();
         }
 
-        @Override
-        public void onVoicemailSelected() {
-            LogUtil.enterBlock("MainBottomNavBarBottomNavTabListener.onVoicemailSelected");
-            if (selectedTab == TabIndex.VOICEMAIL) {
-                return;
-            }
-            Logger.get(activity).logScreenView(ScreenEvent.Type.MAIN_VOICEMAIL, activity);
-            selectedTab = TabIndex.VOICEMAIL;
-
-            if (CallLogConfigComponent.get(activity).callLogConfig().isNewVoicemailFragmentEnabled()) {
-                androidx.fragment.app.Fragment supportFragment =
-                        supportFragmentManager.findFragmentByTag(VOICEMAIL_TAG);
-                showSupportFragment(
-                        supportFragment == null ? new NewVoicemailFragment() : supportFragment, VOICEMAIL_TAG);
-            } else {
-                VisualVoicemailCallLogFragment fragment =
-                        (VisualVoicemailCallLogFragment) fragmentManager.findFragmentByTag(VOICEMAIL_TAG);
-                if (fragment == null) {
-                    fragment = new VisualVoicemailCallLogFragment();
-                }
-                showFragment(fragment, VOICEMAIL_TAG);
-                fragment.setUserVisibleHint(true);
-                fragment.onVisible();
-            }
-        }
-
         private void showFragment(@NonNull Fragment fragment, String tag) {
             showFragment(fragment, null, tag);
         }
@@ -1564,13 +1347,11 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
             Fragment oldSpeedDial = fragmentManager.findFragmentByTag(SPEED_DIAL_TAG);
             Fragment oldCallLog = fragmentManager.findFragmentByTag(CALL_LOG_TAG);
             Fragment contacts = fragmentManager.findFragmentByTag(CONTACTS_TAG);
-            Fragment oldVoicemail = fragmentManager.findFragmentByTag(VOICEMAIL_TAG);
 
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             boolean fragmentShown = showIfEqualElseHide(transaction, fragment, oldSpeedDial);
             fragmentShown |= showIfEqualElseHide(transaction, fragment, oldCallLog);
             fragmentShown |= showIfEqualElseHide(transaction, fragment, contacts);
-            fragmentShown |= showIfEqualElseHide(transaction, fragment, oldVoicemail);
 
             if (!fragmentShown && fragment != null) {
                 LogUtil.i(
@@ -1627,10 +1408,6 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
                 transaction.show(fragment1);
                 shown = true;
             } else if (fragment2 != null) {
-                if (fragment2 instanceof VisualVoicemailCallLogFragment) {
-                    fragment2.setUserVisibleHint(false);
-                    ((VisualVoicemailCallLogFragment) fragment2).onNotVisible();
-                }
                 transaction.hide(fragment2);
             }
             return shown;
@@ -1660,12 +1437,10 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
 
         private final Context context;
         private final BottomNavBar bottomNavBar;
-        private final boolean canShowVoicemailTab;
 
-        LastTabController(Context context, BottomNavBar bottomNavBar, boolean canShowVoicemailTab) {
+        LastTabController(Context context, BottomNavBar bottomNavBar) {
             this.context = context;
             this.bottomNavBar = bottomNavBar;
-            this.canShowVoicemailTab = canShowVoicemailTab;
         }
 
         /**
@@ -1680,11 +1455,6 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
                     StorageComponent.get(context)
                             .unencryptedSharedPrefs()
                             .getInt(KEY_LAST_TAB, TabIndex.SPEED_DIAL);
-
-            // If the voicemail tab cannot be shown, default to showing speed dial
-            if (tabIndex == TabIndex.VOICEMAIL && !canShowVoicemailTab) {
-                tabIndex = TabIndex.SPEED_DIAL;
-            }
 
             return tabIndex;
         }

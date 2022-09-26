@@ -18,10 +18,11 @@ package com.fissy.dialer.calllog.database;
 import android.database.Cursor;
 import android.database.StaleDataException;
 import android.provider.CallLog.Calls;
-import androidx.annotation.NonNull;
-import androidx.annotation.WorkerThread;
 import android.telecom.PhoneAccountHandle;
 import android.text.TextUtils;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.WorkerThread;
 
 import com.fissy.dialer.CoalescedIds;
 import com.fissy.dialer.DialerPhoneNumber;
@@ -179,8 +180,6 @@ public class Coalescer {
         private final int phoneAccountIdColumn;
         private final int featuresColumn;
         private final int numberAttributesColumn;
-        private final int isVoicemailCallColumn;
-        private final int voicemailCallTagColumn;
         private final int callTypeColumn;
 
         // DialerPhoneNumberUtil will be created lazily as its instantiation is expensive.
@@ -205,10 +204,6 @@ public class Coalescer {
             featuresColumn = annotatedCallLogRow.getColumnIndexOrThrow(AnnotatedCallLog.FEATURES);
             numberAttributesColumn =
                     annotatedCallLogRow.getColumnIndexOrThrow(AnnotatedCallLog.NUMBER_ATTRIBUTES);
-            isVoicemailCallColumn =
-                    annotatedCallLogRow.getColumnIndexOrThrow(AnnotatedCallLog.IS_VOICEMAIL_CALL);
-            voicemailCallTagColumn =
-                    annotatedCallLogRow.getColumnIndexOrThrow(AnnotatedCallLog.VOICEMAIL_CALL_TAG);
             callTypeColumn = annotatedCallLogRow.getColumnIndexOrThrow(AnnotatedCallLog.CALL_TYPE);
         }
 
@@ -256,7 +251,6 @@ public class Coalescer {
                     .setNumberPresentation(annotatedCallLogRow.getInt(numberPresentationColumn))
                     .setIsRead(annotatedCallLogRow.getInt(isReadColumn) == 1)
                     .setIsNew(annotatedCallLogRow.getInt(isNewColumn) == 1)
-                    .setIsVoicemailCall(annotatedCallLogRow.getInt(isVoicemailCallColumn) == 1)
                     .setCallType(annotatedCallLogRow.getInt(callTypeColumn));
 
             // Two different DialerPhoneNumbers could be combined if they are different but considered
@@ -294,11 +288,6 @@ public class Coalescer {
                         NumberAttributes.parseFrom(annotatedCallLogRow.getBlob(numberAttributesColumn)));
             } catch (InvalidProtocolBufferException e) {
                 throw Assert.createAssertionFailException("Unable to parse NumberAttributes bytes", e);
-            }
-
-            String voicemailCallTag = annotatedCallLogRow.getString(voicemailCallTagColumn);
-            if (!TextUtils.isEmpty(voicemailCallTag)) {
-                coalescedRowBuilder.setVoicemailCallTag(voicemailCallTag);
             }
 
             coalescedIdsBuilder.addCoalescedId(annotatedCallLogRow.getInt(idColumn));

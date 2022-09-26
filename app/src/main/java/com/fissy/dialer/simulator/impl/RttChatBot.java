@@ -20,8 +20,9 @@ import android.annotation.TargetApi;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
-import androidx.annotation.MainThread;
 import android.telecom.Connection.RttTextStream;
+
+import androidx.annotation.MainThread;
 
 import com.android.incallui.rtt.protocol.Constants;
 import com.fissy.dialer.common.Assert;
@@ -52,6 +53,7 @@ class RttChatBot {
             };
     private final MessageHandler messageHandler;
     private final HandlerThread handlerThread;
+
     RttChatBot(RttTextStream rttTextStream) {
         handlerThread = new HandlerThread("RttChatBot");
         handlerThread.start();

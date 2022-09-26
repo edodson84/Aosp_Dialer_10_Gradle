@@ -21,6 +21,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.net.Uri;
 import android.provider.CallLog.Calls;
+
 import androidx.core.os.UserManagerCompat;
 
 import com.fissy.dialer.common.LogUtil;

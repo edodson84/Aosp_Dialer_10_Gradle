@@ -24,10 +24,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.CallLog;
 import android.provider.ContactsContract;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentActivity;
-import androidx.appcompat.app.AlertDialog;
 import android.telephony.PhoneNumberUtils;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.FragmentActivity;
 
 import com.android.incallui.call.DialerCall;
 import com.fissy.dialer.R;
