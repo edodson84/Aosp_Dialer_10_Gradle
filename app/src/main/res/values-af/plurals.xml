@@ -24,14 +24,6 @@
         <item quantity="other">sekondes</item>
         <item quantity="one">sekonde</item>
     </plurals>
-    <plurals name="delete_voicemails_confirmation_dialog_title">
-        <item quantity="other">&lt;b>Vee hierdie stemboodskappe uit? &lt;/b></item>
-        <item quantity="one">&lt;b>Vee hierdie stemboodskap uit? &lt;/b></item>
-    </plurals>
-    <plurals name="notification_voicemail_title">
-        <item quantity="other">%1$d Stemboodskappe</item>
-        <item quantity="one">Stemboodskap</item>
-    </plurals>
     <plurals name="tab_title_with_unread_items">
         <item quantity="other">%1$s-oortjie %2$d ongelese items.</item>
         <item quantity="one">%1$s-oortjie %2$d ongelese item.</item>

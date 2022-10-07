@@ -18,6 +18,7 @@ package com.fissy.dialer.app.calllog;
 
 import static android.Manifest.permission.READ_CALL_LOG;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.KeyguardManager;
@@ -59,6 +60,7 @@ import com.fissy.dialer.app.calllog.calllogcache.CallLogCache;
 import com.fissy.dialer.app.contactinfo.ContactInfoCache;
 import com.fissy.dialer.app.contactinfo.ContactInfoCache.OnContactInfoChangedListener;
 import com.fissy.dialer.app.contactinfo.ExpirableCacheHeadlessFragment;
+import com.fissy.dialer.app.settings.ThemeOptionsSettingsFragment;
 import com.fissy.dialer.blocking.FilteredNumberAsyncQueryHandler;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.FragmentUtils;
@@ -69,6 +71,7 @@ import com.fissy.dialer.database.CallLogQueryHandler.Listener;
 import com.fissy.dialer.location.GeoUtil;
 import com.fissy.dialer.logging.DialerImpression;
 import com.fissy.dialer.logging.Logger;
+import com.fissy.dialer.main.impl.MainActivity;
 import com.fissy.dialer.metrics.Metrics;
 import com.fissy.dialer.metrics.MetricsComponent;
 import com.fissy.dialer.metrics.jank.RecyclerViewJankLogger;
@@ -150,23 +153,22 @@ public class CallLogFragment extends Fragment
      */
     private boolean isCallLogActivity = false;
     private boolean selectAllMode;
-    private ViewGroup modalAlertView;    private final Handler displayUpdateHandler =
+    private ViewGroup modalAlertView;
+    public CallLogFragment() {
+        this(CallLogQueryHandler.CALL_TYPE_ALL, NO_LOG_LIMIT);
+    }    @SuppressLint("HandlerLeak")
+    private final Handler displayUpdateHandler =
             new Handler() {
                 @Override
                 public void handleMessage(Message msg) {
-                    switch (msg.what) {
-                        case EVENT_UPDATE_DISPLAY:
-                            refreshData();
-                            rescheduleDisplayUpdate();
-                            break;
-                        default:
-                            throw Assert.createAssertionFailException("Invalid message: " + msg);
+                    if (msg.what == EVENT_UPDATE_DISPLAY) {
+                        refreshData();
+                        rescheduleDisplayUpdate();
+                    } else {
+                        throw Assert.createAssertionFailException("Invalid message: " + msg);
                     }
                 }
             };
-    public CallLogFragment() {
-        this(CallLogQueryHandler.CALL_TYPE_ALL, NO_LOG_LIMIT);
-    }
 
     public CallLogFragment(int filterType) {
         this(filterType, NO_LOG_LIMIT);
@@ -206,9 +208,11 @@ public class CallLogFragment extends Fragment
         this.dateLimit = dateLimit;
     }
 
+
     @Override
     public void onCreate(Bundle state) {
         LogUtil.enterBlock("CallLogFragment.onCreate");
+
         super.onCreate(state);
         refreshDataRequired = true;
         if (state != null) {

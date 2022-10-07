@@ -59,6 +59,7 @@ import com.fissy.dialer.logging.DialerImpression;
 import com.fissy.dialer.logging.Logger;
 import com.fissy.dialer.logging.UiAction;
 import com.fissy.dialer.main.impl.MainActivity;
+import com.fissy.dialer.main.impl.MainActivityPeer;
 import com.fissy.dialer.performancereport.PerformanceReport;
 import com.fissy.dialer.postcall.PostCall;
 import com.fissy.dialer.precall.PreCall;
@@ -128,7 +129,7 @@ abstract class CallDetailsActivityCommon extends AppCompatActivity {
     @Override
     @CallSuper
     protected void onCreate(Bundle savedInstanceState) {
-        ThemeOptionsSettingsFragment.ThemeButtonBehavior mThemeBehavior = ThemeOptionsSettingsFragment.getThemeButtonBehavior(MainActivity.themeprefs);
+        ThemeOptionsSettingsFragment.ThemeButtonBehavior mThemeBehavior = ThemeOptionsSettingsFragment.getThemeButtonBehavior(MainActivityPeer.themeprefs);
 
         if (mThemeBehavior == ThemeOptionsSettingsFragment.ThemeButtonBehavior.DARK) {
             getTheme().applyStyle(R.style.DialerDark, true);

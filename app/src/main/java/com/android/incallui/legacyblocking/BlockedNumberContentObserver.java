@@ -50,6 +50,7 @@ public class BlockedNumberContentObserver extends ContentObserver
     private final String number;
     private final long timeAddedMillis;
     private final AsyncTaskExecutor asyncTaskExecutor = AsyncTaskExecutors.createThreadPoolExecutor();
+
     /**
      * Creates the BlockedNumberContentObserver to delete the new {@link CallLog} entry from the given
      * blocked number.
@@ -64,13 +65,7 @@ public class BlockedNumberContentObserver extends ContentObserver
         this.handler = Objects.requireNonNull(handler);
         this.number = number;
         this.timeAddedMillis = timeAddedMillis;
-    }    private final Runnable timeoutRunnable =
-            new Runnable() {
-                @Override
-                public void run() {
-                    unregister();
-                }
-            };
+    }
 
     @Override
     public void onChange(boolean selfChange) {
@@ -80,7 +75,13 @@ public class BlockedNumberContentObserver extends ContentObserver
         asyncTaskExecutor.submit(
                 DeleteBlockedCallTask.IDENTIFIER,
                 new DeleteBlockedCallTask(context, this, number, timeAddedMillis));
-    }
+    }    private final Runnable timeoutRunnable =
+            new Runnable() {
+                @Override
+                public void run() {
+                    unregister();
+                }
+            };
 
     @Override
     public void onDeleteBlockedCallTaskComplete(boolean didFindEntry) {

@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Colors for the dialpad -->
-    <color name="background_dialpad">#fcfcfc</color>
-    <color name="dialpad_primary_text_color">@color/dialer_theme_color</color>
-    <color name="dialpad_secondary_text_color">#737373</color>
-    <color name="dialpad_digits_text_color">#333</color>
-    <color name="dialpad_icon_tint">#b3b3b3</color>
-    <color name="dialpad_voicemail_tint">#919191</color>
-    <color name="call_record_playback_icon_color">#8a000000</color>
     <color name="DO_NOT_USE_OR_I_WILL_BREAK_YOU_text_span_tertiary_button">#ff1a73e8</color>
     <color name="background_item_grey_pressed">#ffe0e0e0</color>
     <color name="blocked_contact_background">#ffa52714</color>
@@ -24,48 +17,21 @@
     <color name="compose_and_call_background">#ff00bc35</color>
     <color name="conference_call_manager_caller_name_text_color">#ff4d4d4d</color>
     <color name="conference_call_manager_secondary_text_color">#ff999999</color>
-    <color name="dialer_background_color">#fffafafa</color>
     <color name="dialer_call_green">#ff00c853</color>
-    <color name="dialer_dark_secondary_color">#ff5195ea</color>
-    <color name="dialer_dark_theme_color">#ff5195ea</color>
-    <color name="dialer_dark_theme_color_20pct">#335195ea</color>
-    <color name="dialer_dark_theme_color_dark">#ff2374ce</color>
     <color name="dialer_divider_line_color">#ffd8d8d8</color>
     <color name="dialer_end_call_button_color">#ffbd2a2a</color>
     <color name="dialer_link_color">#ff2a56c6</color>
     <color name="dialer_red">#ffc53929</color>
     <color name="white">#ffffffff</color>
-    <color name="dialer_secondary_color">#fff50057</color>
     <color name="dialer_snackbar_action_text_color">#ff4285f4</color>
-    <color name="dialer_theme_color">#ff2a56c6</color>
-    <color name="dialer_theme_color_20pct">#332a56c6</color>
-    <color name="dialer_theme_color_dark">#ff1c3aa9</color>
     <color name="feature_icon_read_color">#ff9e9e9e</color>
     <color name="feature_icon_unread_color">#ff474747</color>
     <color name="gallery_item_image_color">#ff607d8b</color>
-    <color name="google_blue_100">#ffd2e3fc</color>
-    <color name="google_blue_50">#ffe8f0fe</color>
-    <color name="google_blue_500">#ff4285f4</color>
-    <color name="google_blue_900">#ff174ea6</color>
-    <color name="google_grey_100">#fff1f3f4</color>
-    <color name="google_grey_300">#ffdadce0</color>
     <color name="google_grey_400">#ffbdc1c6</color>
-    <color name="google_grey_600">#ff80868b</color>
     <color name="google_grey_700">#ff5f6368</color>
-    <color name="google_grey_800">#ff3c4043</color>
-    <color name="google_grey_900">#ff202124</color>
     <color name="highlighted_text_material_dark">#6680cbc4</color>
     <color name="highlighted_text_material_light">#66009688</color>
-    <color name="incall_background_gradient_bottom">#cc229feb</color>
-    <color name="incall_background_gradient_middle">#e91141bb</color>
-    <color name="incall_background_gradient_spam_bottom">#b8e55135</color>
-    <color name="incall_background_gradient_spam_middle">#d6c01111</color>
-    <color name="incall_background_gradient_spam_top">#e5a30b0b</color>
-    <color name="incall_background_gradient_top">#e91141bb</color>
-    <color name="incall_background_multiwindow">#e91141bb</color>
-    <color name="incall_background_multiwindow_spam">#e9c22e2e</color>
     <color name="incall_call_spam_background_color">@color/blocked_contact_background</color>
-    <color name="incall_dialpad_background">#ffffffff</color>
     <color name="incoming_answer_icon">#ff00c853</color>
     <color name="letter_tile_default_color">#ffcccccc</color>
     <color name="letter_tile_font_color">#ffffffff</color>
@@ -87,14 +53,10 @@
     <color name="rtt_transcript_primary_color">#ff37474f</color>
     <color name="rtt_transcript_primary_color_dark">#ff263238</color>
     <color name="spam_contact_background">#ffa52714</color>
-    <color name="statusbar_background_color">@android:color/transparent</color>
     <color name="videocall_overlay_background_color">#7e000000</color>
-    <color name="voicemail_icon_disabled_tint">#80000000</color>
 
     <color name="md_theme_light_primary">#2A56C6</color>
     <color name="md_theme_light_onPrimary">#FFFFFF</color>
-    <color name="md_theme_light_primaryContainer">#DBE1FF</color>
-    <color name="md_theme_light_onPrimaryContainer">#00174C</color>
     <color name="md_theme_light_secondary">#595E72</color>
     <color name="md_theme_light_onSecondary">#FFFFFF</color>
     <color name="md_theme_light_secondaryContainer">#DDE1F9</color>
@@ -117,9 +79,6 @@
     <color name="md_theme_light_inverseOnSurface">#F2F0F4</color>
     <color name="md_theme_light_inverseSurface">#303034</color>
     <color name="md_theme_light_inversePrimary">#B5C4FF</color>
-    <color name="md_theme_light_shadow">#000000</color>
-    <color name="md_theme_light_surfaceTint">#2A56C6</color>
-    <color name="md_theme_light_surfaceTintColor">#2A56C6</color>
     <color name="md_theme_dark_primary">#2A56C6</color>
     <color name="md_theme_dark_onPrimary">#00297A</color>
     <color name="md_theme_dark_primaryContainer">#003DAB</color>
@@ -146,7 +105,4 @@
     <color name="md_theme_dark_inverseOnSurface">#1B1B1F</color>
     <color name="md_theme_dark_inverseSurface">#E4E2E6</color>
     <color name="md_theme_dark_inversePrimary">#2A56C6</color>
-    <color name="md_theme_dark_shadow">#000000</color>
-    <color name="md_theme_dark_surfaceTint">#B5C4FF</color>
-    <color name="md_theme_dark_surfaceTintColor">#B5C4FF</color>
 </resources>

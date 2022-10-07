@@ -51,30 +51,27 @@ public abstract class ContactTileView extends FrameLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        mName = (BidiTextView) findViewById(R.id.contact_tile_name);
-        mPhoto = (ImageView) findViewById(R.id.contact_tile_image);
+        mName = findViewById(R.id.contact_tile_name);
+        mPhoto = findViewById(R.id.contact_tile_image);
 
         OnClickListener listener = createClickListener();
         setOnClickListener(listener);
     }
 
     protected OnClickListener createClickListener() {
-        return new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mListener == null) {
-                    return;
-                }
-                CallSpecificAppData callSpecificAppData =
-                        CallSpecificAppData.newBuilder()
-                                .setCallInitiationType(CallInitiationType.Type.SPEED_DIAL)
-                                .setAllowAssistedDialing(true)
-                                .build();
-                mListener.onContactSelected(
-                        getLookupUri(),
-                        MoreContactUtils.getTargetRectFromView(ContactTileView.this),
-                        callSpecificAppData);
+        return v -> {
+            if (mListener == null) {
+                return;
             }
+            CallSpecificAppData callSpecificAppData =
+                    CallSpecificAppData.newBuilder()
+                            .setCallInitiationType(CallInitiationType.Type.SPEED_DIAL)
+                            .setAllowAssistedDialing(true)
+                            .build();
+            mListener.onContactSelected(
+                    getLookupUri(),
+                    MoreContactUtils.getTargetRectFromView(ContactTileView.this),
+                    callSpecificAppData);
         };
     }
 

@@ -24,14 +24,6 @@
         <item quantity="other">sekúndur</item>
         <item quantity="one">sekúnda</item>
     </plurals>
-    <plurals name="delete_voicemails_confirmation_dialog_title">
-        <item quantity="other">&lt;b>Eyða þessum talhólfsskilaboðum? &lt;/b></item>
-        <item quantity="one">&lt;b>Eyða þessum talhólfsskilaboðum? &lt;/b></item>
-    </plurals>
-    <plurals name="notification_voicemail_title">
-        <item quantity="other">%1$d talhólfsskilaboð</item>
-        <item quantity="one">%1$d talhólfsskilaboð</item>
-    </plurals>
     <plurals name="tab_title_with_unread_items">
         <item quantity="other">Flipinn %1$s. %2$d ólesin atriði.</item>
         <item quantity="one">Flipinn %1$s. %2$d ólesið atriði.</item>

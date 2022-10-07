@@ -24,14 +24,6 @@
         <item quantity="other">δευτερόλεπτα</item>
         <item quantity="one">δευτερόλεπτο</item>
     </plurals>
-    <plurals name="delete_voicemails_confirmation_dialog_title">
-        <item quantity="other">&lt;b>Διαγραφή αυτών των μηνυμάτων αυτόματου τηλεφωνητή; &lt;/b></item>
-        <item quantity="one">&lt;b>Διαγραφή αυτού του μηνύματος αυτόματου τηλεφωνητή; &lt;/b></item>
-    </plurals>
-    <plurals name="notification_voicemail_title">
-        <item quantity="other">%1$d Μηνύματα αυτόμ. τηλεφωνητή</item>
-        <item quantity="one">Μήνυμα αυτόματου τηλεφωνητή</item>
-    </plurals>
     <plurals name="tab_title_with_unread_items">
         <item quantity="other">Καρτέλα %1$s. %2$d μη αναγνωσμένα στοιχεία.</item>
         <item quantity="one">Καρτέλα %1$s. %2$d μη αναγνωσμένο στοιχείο.</item>

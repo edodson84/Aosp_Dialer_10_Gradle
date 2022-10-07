@@ -30,16 +30,6 @@
         <item quantity="one">secundă</item>
         <item quantity="few">secunde</item>
     </plurals>
-    <plurals name="delete_voicemails_confirmation_dialog_title">
-        <item quantity="other">&lt;b>Ștergeți aceste mesaje vocale? &lt;/b></item>
-        <item quantity="one">&lt;b>Ștergeți acest mesaj vocal? &lt;/b></item>
-        <item quantity="few">&lt;b>Ștergeți aceste mesaje vocale? &lt;/b></item>
-    </plurals>
-    <plurals name="notification_voicemail_title">
-        <item quantity="other">%1$d de mesaje vocale</item>
-        <item quantity="one">Mesaj vocal</item>
-        <item quantity="few">%1$d mesaje vocale</item>
-    </plurals>
     <plurals name="tab_title_with_unread_items">
         <item quantity="other">Fila %1$s. %2$d de elemente necitite.</item>
         <item quantity="one">Fila %1$s. %2$d element necitit.</item>

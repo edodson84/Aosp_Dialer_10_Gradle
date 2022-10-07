@@ -19,13 +19,18 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.provider.CallLog;
 import android.provider.CallLog.Calls;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.HorizontalScrollView;
+import android.widget.LinearLayout;
 
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.ActionBar;
@@ -34,16 +39,17 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.android.contacts.common.list.ViewPagerTabs;
 import com.fissy.dialer.R;
+import com.fissy.dialer.ThemeUtils;
 import com.fissy.dialer.app.settings.ThemeOptionsSettingsFragment;
 import com.fissy.dialer.calldetails.OldCallDetailsActivity;
 import com.fissy.dialer.common.Assert;
-import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.constants.ActivityRequestCodes;
 import com.fissy.dialer.database.CallLogQueryHandler;
 import com.fissy.dialer.logging.Logger;
 import com.fissy.dialer.logging.ScreenEvent;
 import com.fissy.dialer.logging.UiAction;
 import com.fissy.dialer.main.impl.MainActivity;
+import com.fissy.dialer.main.impl.MainActivityPeer;
 import com.fissy.dialer.performancereport.PerformanceReport;
 import com.fissy.dialer.postcall.PostCall;
 import com.fissy.dialer.util.TransactionSafeActivity;
@@ -60,8 +66,9 @@ public class CallLogActivity extends TransactionSafeActivity
     @VisibleForTesting
     static final int TAB_INDEX_ALL = 0;
     @VisibleForTesting
-    static final int TAB_INDEX_MISSED = 1;
-    private static final int TAB_INDEX_COUNT = 2;
+    static final int TAB_INDEX_MISSED = 2;
+    static final int TAB_INDEX_DIVIDER = 1;
+    private static final int TAB_INDEX_COUNT = 3;
     private ViewPager viewPager;
     private ViewPagerTabs viewPagerTabs;
     private ViewPagerAdapter viewPagerAdapter;
@@ -74,7 +81,7 @@ public class CallLogActivity extends TransactionSafeActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        ThemeOptionsSettingsFragment.ThemeButtonBehavior mThemeBehavior = ThemeOptionsSettingsFragment.getThemeButtonBehavior(MainActivity.themeprefs);
+        ThemeOptionsSettingsFragment.ThemeButtonBehavior mThemeBehavior = ThemeOptionsSettingsFragment.getThemeButtonBehavior(MainActivityPeer.themeprefs);
 
         if (mThemeBehavior == ThemeOptionsSettingsFragment.ThemeButtonBehavior.DARK) {
             getTheme().applyStyle(R.style.DialerDark, true);
@@ -104,16 +111,17 @@ public class CallLogActivity extends TransactionSafeActivity
 
         tabTitles = new String[TAB_INDEX_COUNT];
         tabTitles[0] = getString(R.string.call_log_all_title);
-        tabTitles[1] = getString(R.string.call_log_missed_title);
+        tabTitles[1] = "|";
+        tabTitles[2] = getString(R.string.call_log_missed_title);
 
-        viewPager = (ViewPager) findViewById(R.id.call_log_pager);
+        viewPager = findViewById(R.id.call_log_pager);
 
         viewPagerAdapter = new ViewPagerAdapter(getFragmentManager());
         viewPager.setAdapter(viewPagerAdapter);
         viewPager.setOffscreenPageLimit(1);
         viewPager.setOnPageChangeListener(this);
 
-        viewPagerTabs = (ViewPagerTabs) findViewById(R.id.viewpager_header);
+        viewPagerTabs = findViewById(R.id.viewpager_header);
 
         viewPagerTabs.setViewPager(viewPager);
         viewPager.setCurrentItem(startingTab);
@@ -223,6 +231,7 @@ public class CallLogActivity extends TransactionSafeActivity
         }
         switch (getRtlPosition(position)) {
             case TAB_INDEX_ALL:
+            case TAB_INDEX_DIVIDER:
                 if (allCallsFragment != null) {
                     allCallsFragment.markMissedCallsAsReadAndRemoveNotifications();
                 }
@@ -284,6 +293,7 @@ public class CallLogActivity extends TransactionSafeActivity
         public Fragment getItem(int position) {
             switch (getRtlPosition(position)) {
                 case TAB_INDEX_ALL:
+                case TAB_INDEX_DIVIDER:
                     return new CallLogFragment(
                             CallLogQueryHandler.CALL_TYPE_ALL, true /* isCallLogActivity */);
                 case TAB_INDEX_MISSED:
@@ -298,6 +308,7 @@ public class CallLogActivity extends TransactionSafeActivity
             final CallLogFragment fragment = (CallLogFragment) super.instantiateItem(container, position);
             switch (getRtlPosition(position)) {
                 case TAB_INDEX_ALL:
+                case TAB_INDEX_DIVIDER:
                     allCallsFragment = fragment;
                     break;
                 case TAB_INDEX_MISSED:

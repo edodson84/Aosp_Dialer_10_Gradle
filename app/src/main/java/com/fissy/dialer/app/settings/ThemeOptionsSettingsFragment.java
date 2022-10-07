@@ -21,34 +21,49 @@ import static com.fissy.dialer.app.settings.ThemeOptionsSettingsFragment.ThemeBu
 import static com.fissy.dialer.app.settings.ThemeOptionsSettingsFragment.ThemeButtonBehavior.LIGHT;
 import static com.fissy.dialer.app.settings.ThemeOptionsSettingsFragment.ThemeButtonBehavior.SYSTEM;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
-import android.telecom.PhoneAccount;
-import android.telecom.TelecomManager;
-import android.telephony.SubscriptionInfo;
-import android.telephony.TelephonyManager;
-import android.util.Log;
 
 import com.fissy.dialer.R;
-import com.fissy.dialer.app.DialtactsActivity;
-import com.fissy.dialer.binary.common.DialerApplication;
-import com.fissy.dialer.logging.DialerImpression;
-import com.fissy.dialer.logging.Logger;
+import com.fissy.dialer.app.calllog.CallLogFragment;
 import com.fissy.dialer.main.impl.MainActivity;
-import com.fissy.dialer.telecom.TelecomUtil;
-import com.google.common.base.Optional;
 
 public class ThemeOptionsSettingsFragment extends PreferenceFragment
         implements Preference.OnPreferenceChangeListener {
 
+    public static final String KEY_THEME = "key_theme";
+    public static final String SYSTEM_THEME_BEHAVIOR = "0";
+    public static final String THEME_BEHAVIOR_DARK = "1";
+    public static final String THEME_BEHAVIOR_LIGHT = "2";
     private static final String SHARED_PREFERENCES_NAME = "theme_settings";
     ListPreference theme;
+
+    public static void settheme(Context context, String value) {
+        getSharedPreferences(context).edit().putString(KEY_THEME, value).commit();
+    }
+
+    public static SharedPreferences getSharedPreferences(Context context) {
+        return context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+    }
+
+    public static ThemeButtonBehavior getThemeButtonBehavior(SharedPreferences prefs) {
+        final String value = prefs.getString(KEY_THEME, SYSTEM_THEME_BEHAVIOR);
+        switch (value) {
+            case SYSTEM_THEME_BEHAVIOR:
+                return SYSTEM;
+            case THEME_BEHAVIOR_DARK:
+                return DARK;
+            case THEME_BEHAVIOR_LIGHT:
+                return LIGHT;
+            default:
+                throw new IllegalArgumentException("Unknown theme button behavior: " + value);
+        }
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,39 +84,14 @@ public class ThemeOptionsSettingsFragment extends PreferenceFragment
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         Context context = getContext();
-    if (preference == theme) {
-        settheme(context, newValue.toString());
-        MainActivity.main.recreate();
-        getActivity().recreate();
-    }
+        if (preference == theme) {
+            settheme(context, newValue.toString());
+            MainActivity.main.recreate();
+            getActivity().recreate();
+        }
         return true;
     }
 
-    public static void settheme(Context context, String value) {
-        getSharedPreferences(context).edit().putString(KEY_THEME, value).commit();
-    }
-
-    public static SharedPreferences getSharedPreferences(Context context) {
-        return context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
-    }
-
-    public static final String KEY_THEME = "key_theme";
-    public static final String SYSTEM_THEME_BEHAVIOR = "0";
-    public static final String THEME_BEHAVIOR_DARK = "1";
-    public static final String THEME_BEHAVIOR_LIGHT = "2";
     public enum ThemeButtonBehavior {SYSTEM, DARK, LIGHT}
-    public static ThemeButtonBehavior getThemeButtonBehavior(SharedPreferences prefs) {
-        final String value = prefs.getString(KEY_THEME, SYSTEM_THEME_BEHAVIOR);
-        switch (value) {
-            case SYSTEM_THEME_BEHAVIOR:
-                return SYSTEM;
-            case THEME_BEHAVIOR_DARK:
-                return DARK;
-            case THEME_BEHAVIOR_LIGHT:
-                return LIGHT;
-            default:
-                throw new IllegalArgumentException("Unknown theme button behavior: " + value);
-        }
-    }
 
 }

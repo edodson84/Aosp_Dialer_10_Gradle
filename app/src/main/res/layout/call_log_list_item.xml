@@ -16,7 +16,7 @@
         android:paddingTop="@dimen/call_log_day_group_padding_top"
         android:paddingBottom="@dimen/call_log_day_group_padding_bottom" />
 
-    <FrameLayout
+    <com.google.android.material.card.MaterialCardView
         android:id="@id/call_log_row"
         style="@style/CallLogCardStyle">
 
@@ -206,5 +206,5 @@
                 android:inflatedId="@id/call_log_entry_actions"
                 android:layout="@layout/call_log_list_item_actions" />
         </LinearLayout>
-    </FrameLayout>
+    </com.google.android.material.card.MaterialCardView>
 </LinearLayout>

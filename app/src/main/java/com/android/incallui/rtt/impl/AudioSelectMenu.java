@@ -40,7 +40,6 @@ public class AudioSelectMenu extends PopupWindow {
             Context context,
             InCallButtonUiDelegate inCallButtonUiDelegate,
             OnButtonClickListener onButtonClickListener) {
-        super(context, null, 0, R.style.OverflowMenu);
         this.inCallButtonUiDelegate = inCallButtonUiDelegate;
         this.onButtonClickListener = onButtonClickListener;
         View view = View.inflate(context, R.layout.audio_route, null);

@@ -451,7 +451,7 @@ public class RttChatFragment extends Fragment
                 transaction.remove(oldBanner);
             }
         }
-        transaction.setCustomAnimations(R.anim.abc_slide_in_top, R.anim.abc_slide_out_top);
+        transaction.setCustomAnimations(androidx.appcompat.R.anim.abc_slide_in_top, androidx.appcompat.R.anim.abc_slide_out_top);
         transaction.commitNowAllowingStateLoss();
         overflowMenu.enableSwitchToSecondaryButton(secondaryInfo.shouldShow());
     }

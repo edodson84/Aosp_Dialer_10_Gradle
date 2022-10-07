@@ -36,6 +36,7 @@ public abstract class CompositeCursorAdapter extends BaseAdapter {
     private boolean mCacheValid = true;
     private boolean mNotificationsEnabled = true;
     private boolean mNotificationNeeded;
+
     public CompositeCursorAdapter(Context context) {
         this(context, INITIAL_CAPACITY);
     }

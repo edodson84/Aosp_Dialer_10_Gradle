@@ -36,6 +36,7 @@ import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.enrichedcall.EnrichedCallComponent;
 import com.fissy.dialer.enrichedcall.EnrichedCallManager;
 import com.fissy.dialer.main.impl.MainActivity;
+import com.fissy.dialer.main.impl.MainActivityPeer;
 import com.fissy.dialer.util.PermissionsUtil;
 import com.fissy.dialer.widget.DialerToolbar;
 import com.fissy.dialer.widget.MessageFragment;
@@ -62,7 +63,7 @@ public class PostCallActivity extends AppCompatActivity implements MessageFragme
 
     @Override
     protected void onCreate(@Nullable Bundle bundle) {
-        ThemeOptionsSettingsFragment.ThemeButtonBehavior mThemeBehavior = ThemeOptionsSettingsFragment.getThemeButtonBehavior(MainActivity.themeprefs);
+        ThemeOptionsSettingsFragment.ThemeButtonBehavior mThemeBehavior = ThemeOptionsSettingsFragment.getThemeButtonBehavior(MainActivityPeer.themeprefs);
 
         if (mThemeBehavior == ThemeOptionsSettingsFragment.ThemeButtonBehavior.DARK) {
             getTheme().applyStyle(R.style.DialerDark, true);

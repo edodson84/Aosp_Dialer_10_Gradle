@@ -69,15 +69,15 @@ public final class PhoneCallDetailsViews {
      */
     public static PhoneCallDetailsViews fromView(View view) {
         return new PhoneCallDetailsViews(
-                (BidiTextView) view.findViewById(R.id.name),
+                view.findViewById(R.id.name),
                 view.findViewById(R.id.call_type),
-                (CallTypeIconsView) view.findViewById(R.id.call_type_icons),
-                (TextView) view.findViewById(R.id.call_location_and_date),
+                view.findViewById(R.id.call_type_icons),
+                view.findViewById(R.id.call_location_and_date),
                 view.findViewById(R.id.transcription),
-                (TextView) view.findViewById(R.id.voicemail_transcription),
-                (TextView) view.findViewById(R.id.voicemail_transcription_branding),
+                view.findViewById(R.id.voicemail_transcription),
+                view.findViewById(R.id.voicemail_transcription_branding),
                 view.findViewById(R.id.voicemail_transcription_rating),
-                (TextView) view.findViewById(R.id.call_account_label));
+                view.findViewById(R.id.call_account_label));
     }
 
     public static PhoneCallDetailsViews createForTest(Context context) {

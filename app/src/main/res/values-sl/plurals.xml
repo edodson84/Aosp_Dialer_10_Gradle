@@ -36,18 +36,6 @@
         <item quantity="two">sekunde</item>
         <item quantity="few">sekunde</item>
     </plurals>
-    <plurals name="delete_voicemails_confirmation_dialog_title">
-        <item quantity="other">&lt;b>Želite izbrisati ta sporočila v odzivniku? &lt;/b></item>
-        <item quantity="one">&lt;b>Želite izbrisati ta sporočila v odzivniku? &lt;/b></item>
-        <item quantity="two">&lt;b>Želite izbrisati ta sporočila v odzivniku? &lt;/b></item>
-        <item quantity="few">&lt;b>Želite izbrisati ta sporočila v odzivniku? &lt;/b></item>
-    </plurals>
-    <plurals name="notification_voicemail_title">
-        <item quantity="other">%1$d sporočil v odzivniku</item>
-        <item quantity="one">%1$d sporočilo v odzivniku</item>
-        <item quantity="two">%1$d sporočili v odzivniku</item>
-        <item quantity="few">%1$d sporočila v odzivniku</item>
-    </plurals>
     <plurals name="tab_title_with_unread_items">
         <item quantity="other">Zavihek »%1$s«. %2$d neprebranih elementov.</item>
         <item quantity="one">Zavihek »%1$s«. %2$d neprebran element.</item>

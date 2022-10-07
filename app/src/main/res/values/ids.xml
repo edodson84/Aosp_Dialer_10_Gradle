@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="bottom_nav_item_button" type="id" />
     <item name="accessibility_action_answer" type="id" />
     <item name="accessibility_action_decline" type="id" />
     <item name="account_filter_header" type="id" />
@@ -119,7 +118,6 @@
     <item name="camera_view" type="id" />
     <item name="cancel_action" type="id" />
     <item name="cancel_button" type="id" />
-    <item name="change_greeting_button" type="id" />
     <item name="character_limit" type="id" />
     <item name="checkbox" type="id" />
     <item name="chronometer" type="id" />
@@ -185,8 +183,6 @@
     <item name="count" type="id" />
     <item name="count_and_send_container" type="id" />
     <item name="create_new_contact_action" type="id" />
-    <item name="current_voicemail_greeting_recording_display" type="id" />
-    <item name="current_voicemail_greeting_recording_title_textview" type="id" />
     <item name="custom" type="id" />
     <item name="customPanel" type="id" />
     <item name="custom_message" type="id" />
@@ -199,7 +195,6 @@
     <item name="deleteButton" type="id" />
     <item name="delete_all" type="id" />
     <item name="delete_button" type="id" />
-    <item name="delete_voicemail" type="id" />
     <item name="design_bottom_sheet" type="id" />
     <item name="design_menu_item_action_area" type="id" />
     <item name="design_menu_item_action_area_stub" type="id" />
@@ -248,7 +243,6 @@
     <item name="edit_query" type="id" />
     <item name="edittext_container" type="id" />
     <item name="eight" type="id" />
-    <item name="empty_content_view" type="id" />
     <item name="empty_list_view" type="id" />
     <item name="empty_list_view_action" type="id" />
     <item name="empty_list_view_image" type="id" />
@@ -256,11 +250,6 @@
     <item name="empty_view" type="id" />
     <item name="end_call_space" type="id" />
     <item name="end_padder" type="id" />
-    <item name="errorText" type="id" />
-    <item name="error_card" type="id" />
-    <item name="error_card_content" type="id" />
-    <item name="error_card_details" type="id" />
-    <item name="error_card_header" type="id" />
     <item name="expand_activities_button" type="id" />
     <item name="expanded_menu" type="id" />
     <item name="fab" type="id" />
@@ -283,9 +272,7 @@
     <item name="hd_enabled" type="id" />
     <item name="hd_icon" type="id" />
     <item name="header" type="id" />
-    <item name="headerText" type="id" />
     <item name="hint" type="id" />
-    <item name="hintText" type="id" />
     <item name="hint_container" type="id" />
     <item name="history_actions_scroll_view" type="id" />
     <item name="history_button" type="id" />
@@ -338,14 +325,12 @@
     <item name="invite_video_action" type="id" />
     <item name="item_touch_helper_previous_elevation" type="id" />
     <item name="label" type="id" />
-    <item name="largeLabel" type="id" />
     <item name="license" type="id" />
     <item name="license_activity_scrollview" type="id" />
     <item name="license_activity_textview" type="id" />
     <item name="license_list" type="id" />
     <item name="line1" type="id" />
     <item name="line3" type="id" />
-    <item name="linearLayout" type="id" />
     <item name="list_card" type="id" />
     <item name="list_item" type="id" />
     <item name="lists_frame" type="id" />
@@ -364,7 +349,6 @@
     <item name="menu_2s_pause" type="id" />
     <item name="menu_add_call" type="id" />
     <item name="menu_add_wait" type="id" />
-    <item name="menu_button" type="id" />
     <item name="menu_call_history" type="id" />
     <item name="menu_call_settings" type="id" />
     <item name="menu_call_with_note" type="id" />
@@ -407,11 +391,6 @@
     <item name="new_call_log_promotion_card_ok" type="id" />
     <item name="new_call_log_promotion_card_title" type="id" />
     <item name="new_call_log_recycler_view" type="id" />
-    <item name="new_voicemail_call_log_recycler_view" type="id" />
-    <item name="new_voicemail_frame_layout" type="id" />
-    <item name="new_voicemail_header_text" type="id" />
-    <item name="new_voicemail_media_player" type="id" />
-    <item name="next_button" type="id" />
     <item name="nine" type="id" />
     <item name="notification_background" type="id" />
     <item name="notification_badge" type="id" />
@@ -425,41 +404,24 @@
     <item name="parentPanel" type="id" />
     <item name="parent_matrix" type="id" />
     <item name="participantList" type="id" />
-    <item name="pauseButton" type="id" />
-    <item name="paw_image" type="id" />
     <item name="permission_icon" type="id" />
     <item name="permission_image" type="id" />
     <item name="permission_text" type="id" />
     <item name="permission_view" type="id" />
-    <item name="phoneButton" type="id" />
     <item name="phone_account" type="id" />
     <item name="phone_number" type="id" />
     <item name="phone_type" type="id" />
     <item name="photo" type="id" />
     <item name="pill_stroke" type="id" />
-    <item name="pin_entry" type="id" />
-    <item name="playButton" type="id" />
-    <item name="play_button" type="id" />
-    <item name="play_icon" type="id" />
-    <item name="playback_position_text" type="id" />
-    <item name="playback_progress_text_view" type="id" />
-    <item name="playback_seek" type="id" />
-    <item name="playback_seek_total_duration" type="id" />
-    <item name="playback_speakerphone" type="id" />
-    <item name="playback_start_stop" type="id" />
-    <item name="playback_state_text" type="id" />
     <item name="post_call_note" type="id" />
     <item name="pound" type="id" />
     <item name="preview_image_view" type="id" />
     <item name="primary" type="id" />
-    <item name="primary_action" type="id" />
     <item name="primary_action_button" type="id" />
-    <item name="primary_action_raised" type="id" />
     <item name="primary_action_view" type="id" />
     <item name="primary_text" type="id" />
     <item name="progress_circular" type="id" />
     <item name="progress_horizontal" type="id" />
-    <item name="promo_card" type="id" />
     <item name="promotion_bottom_sheet" type="id" />
     <item name="promotion_details" type="id" />
     <item name="promotion_icon" type="id" />
@@ -469,10 +431,7 @@
     <item name="quick_contact_photo" type="id" />
     <item name="radio" type="id" />
     <item name="rate_container" type="id" />
-    <item name="record_button" type="id" />
-    <item name="record_icon" type="id" />
     <item name="recycler_view" type="id" />
-    <item name="redo_button" type="id" />
     <item name="refresh" type="id" />
     <item name="remaining_characters" type="id" />
     <item name="remember_this_choice_checkbox" type="id" />
@@ -504,10 +463,7 @@
     <item name="rtt_status_banner" type="id" />
     <item name="rtt_timer" type="id" />
     <item name="rtt_transcript" type="id" />
-    <item name="save_button" type="id" />
-    <item name="save_image_matrix" type="id" />
     <item name="save_non_transition_alpha" type="id" />
-    <item name="save_scale_type" type="id" />
     <item name="scrollIndicatorDown" type="id" />
     <item name="scrollIndicatorUp" type="id" />
     <item name="scrollView" type="id" />
@@ -534,8 +490,6 @@
     <item name="search_view_container" type="id" />
     <item name="search_voice_btn" type="id" />
     <item name="secondary" type="id" />
-    <item name="secondary_action" type="id" />
-    <item name="secondary_action_raised" type="id" />
     <item name="secondary_text" type="id" />
     <item name="select_all_view_icon" type="id" />
     <item name="select_all_view_text" type="id" />
@@ -557,13 +511,11 @@
     <item name="share_voicemail" type="id" />
     <item name="shortcut" type="id" />
     <item name="six" type="id" />
-    <item name="smallLabel" type="id" />
     <item name="snackbar_action" type="id" />
     <item name="snackbar_text" type="id" />
     <item name="spacer" type="id" />
     <item name="spam_image" type="id" />
     <item name="spam_text" type="id" />
-    <item name="speakerButton" type="id" />
     <item name="speed_dial_add_button" type="id" />
     <item name="speed_dial_empty_content_view" type="id" />
     <item name="speed_dial_header_text" type="id" />
@@ -586,8 +538,6 @@
     <item name="text2" type="id" />
     <item name="textSpacerNoButtons" type="id" />
     <item name="textSpacerNoTitle" type="id" />
-    <item name="textView" type="id" />
-    <item name="text_input_password_toggle" type="id" />
     <item name="textinput_counter" type="id" />
     <item name="textinput_error" type="id" />
     <item name="textinput_helper_text" type="id" />
@@ -599,13 +549,8 @@
     <item name="toolbar" type="id" />
     <item name="toolbar_shadow" type="id" />
     <item name="topPanel" type="id" />
-    <item name="tos_message_details" type="id" />
-    <item name="tos_message_title" type="id" />
-    <item name="total_duration_text" type="id" />
     <item name="touch_outside" type="id" />
     <item name="transcription" type="id" />
-    <item name="transcription_branding" type="id" />
-    <item name="transcription_text" type="id" />
     <item name="transition_current_scene" type="id" />
     <item name="transition_layout_save" type="id" />
     <item name="transition_position" type="id" />
@@ -651,21 +596,6 @@
     <item name="visible" type="id" />
     <item name="voice_call_container" type="id" />
     <item name="voice_search_button" type="id" />
-    <item name="voicemail_alert_button" type="id" />
-    <item name="voicemail_alert_content" type="id" />
-    <item name="voicemail_alert_details" type="id" />
-    <item name="voicemail_alert_header" type="id" />
-    <item name="voicemail_alert_icon" type="id" />
-    <item name="voicemail_alert_primary_button" type="id" />
-    <item name="voicemail_alert_secondary_button" type="id" />
-    <item name="voicemail_image" type="id" />
-    <item name="voicemail_playback_layout" type="id" />
-    <item name="voicemail_promo_card_icon" type="id" />
-    <item name="voicemail_tab" type="id" />
-    <item name="voicemail_tos_button" type="id" />
-    <item name="voicemail_tos_button_accept" type="id" />
-    <item name="voicemail_tos_button_decline" type="id" />
-    <item name="voicemail_tos_message" type="id" />
     <item name="voicemail_transcription" type="id" />
     <item name="voicemail_transcription_branding" type="id" />
     <item name="voicemail_transcription_rating" type="id" />

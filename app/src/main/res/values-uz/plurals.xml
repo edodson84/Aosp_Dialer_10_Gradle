@@ -24,14 +24,6 @@
         <item quantity="other">soniya</item>
         <item quantity="one">soniya</item>
     </plurals>
-    <plurals name="delete_voicemails_confirmation_dialog_title">
-        <item quantity="other">&lt;b>Bu ovozli xabarlar o‘chirib tashlansinmi? &lt;/b></item>
-        <item quantity="one">&lt;b>Bu ovozli xabar o‘chirib tashlansinmi? &lt;/b></item>
-    </plurals>
-    <plurals name="notification_voicemail_title">
-        <item quantity="other">%1$d ta ovozli xabar</item>
-        <item quantity="one">Ovozli xabar</item>
-    </plurals>
     <plurals name="tab_title_with_unread_items">
         <item quantity="other">%1$s ichki oynasi. %2$d ta o‘qilmagan narsa.</item>
         <item quantity="one">%1$s ichki oynasi. %2$d ta o‘qilmagan narsa.</item>

@@ -102,6 +102,7 @@ public abstract class BaseEmailAddressAdapter extends CompositeCursorAdapter imp
     public BaseEmailAddressAdapter(Context context) {
         this(context, DEFAULT_PREFERRED_MAX_RESULT_COUNT);
     }
+
     public BaseEmailAddressAdapter(Context context, int preferredMaxResultCount) {
         super(context);
         mContentResolver = context.getContentResolver();

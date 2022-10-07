@@ -20,24 +20,18 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.TypedArray;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.app.settings.ThemeOptionsSettingsFragment;
-import com.fissy.dialer.binary.common.DialerApplication;
 import com.fissy.dialer.blockreportspam.ShowBlockReportSpamDialogReceiver;
-import com.fissy.dialer.calllog.config.CallLogConfigComponent;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.interactions.PhoneNumberInteraction.DisambigDialogDismissedListener;
 import com.fissy.dialer.interactions.PhoneNumberInteraction.InteractionErrorCode;
 import com.fissy.dialer.interactions.PhoneNumberInteraction.InteractionErrorListener;
-import com.fissy.dialer.lookup.LookupSettings;
-import com.fissy.dialer.main.MainActivityPeer;
 import com.fissy.dialer.util.TransactionSafeActivity;
 
 /**
@@ -45,13 +39,15 @@ import com.fissy.dialer.util.TransactionSafeActivity;
  */
 // TODO(calderwoodra): Do not extend TransactionSafeActivity after new SpeedDial is launched
 public class MainActivity extends TransactionSafeActivity
-        implements MainActivityPeer.PeerSupplier,
+        implements com.fissy.dialer.main.MainActivityPeer.PeerSupplier,
         // TODO(calderwoodra): remove these 2 interfaces when we migrate to new speed dial fragment
         InteractionErrorListener,
-        DisambigDialogDismissedListener{
+        DisambigDialogDismissedListener {
 
 
-    private MainActivityPeer activePeer;
+
+    public static Activity main;
+    private com.fissy.dialer.main.MainActivityPeer activePeer;
     /**
      * {@link android.content.BroadcastReceiver} that shows a dialog to block a number and/or report
      * it as spam when notified.
@@ -73,24 +69,8 @@ public class MainActivity extends TransactionSafeActivity
                 .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     }
 
-    public static SharedPreferences themeprefs;
-    public static Activity main;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        final Context applicationContext = getApplicationContext();
-        themeprefs = ThemeOptionsSettingsFragment.getSharedPreferences(applicationContext);
-        ThemeOptionsSettingsFragment.ThemeButtonBehavior mThemeBehavior = ThemeOptionsSettingsFragment.getThemeButtonBehavior(themeprefs);
-
-        if (mThemeBehavior == ThemeOptionsSettingsFragment.ThemeButtonBehavior.DARK) {
-            LogUtil.enterBlock("MainActivity.dark");
-            getTheme().applyStyle(R.style.MainActivityThemeDark, true);
-        }
-        if (mThemeBehavior == ThemeOptionsSettingsFragment.ThemeButtonBehavior.LIGHT) {
-            LogUtil.enterBlock("MainActivity.light");
-            getTheme().applyStyle(R.style.MainActivityThemeLight, true);
-        }
-
         super.onCreate(savedInstanceState);
         main = MainActivity.this;
         LogUtil.enterBlock("MainActivity.onCreate");
@@ -102,12 +82,8 @@ public class MainActivity extends TransactionSafeActivity
                 new ShowBlockReportSpamDialogReceiver(getSupportFragmentManager());
     }
 
-    protected MainActivityPeer getNewPeer() {
-        if (CallLogConfigComponent.get(this).callLogConfig().isNewPeerEnabled()) {
-            return new NewMainActivityPeer(this);
-        } else {
-            return new OldMainActivityPeer(this);
-        }
+    protected com.fissy.dialer.main.MainActivityPeer getNewPeer() {
+            return new MainActivityPeer(this);
     }
 
     @Override
@@ -190,7 +166,7 @@ public class MainActivity extends TransactionSafeActivity
     }
 
     @Override
-    public MainActivityPeer getPeer() {
+    public com.fissy.dialer.main.MainActivityPeer getPeer() {
         return activePeer;
     }
 

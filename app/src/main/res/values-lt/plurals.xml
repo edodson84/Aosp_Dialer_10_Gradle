@@ -36,18 +36,6 @@
         <item quantity="few">sekundės</item>
         <item quantity="many">sekundės</item>
     </plurals>
-    <plurals name="delete_voicemails_confirmation_dialog_title">
-        <item quantity="other">&lt;b>Ištrinti šiuos balso pašto pranešimus? &lt;/b></item>
-        <item quantity="one">&lt;b>Ištrinti šiuos balso pašto pranešimus? &lt;/b></item>
-        <item quantity="few">&lt;b>Ištrinti šiuos balso pašto pranešimus? &lt;/b></item>
-        <item quantity="many">&lt;b>Ištrinti šiuos balso pašto pranešimus? &lt;/b></item>
-    </plurals>
-    <plurals name="notification_voicemail_title">
-        <item quantity="other">%1$d balso pašto pranešimų</item>
-        <item quantity="one">%1$d balso pašto pranešimas</item>
-        <item quantity="few">%1$d balso pašto pranešimai</item>
-        <item quantity="many">%1$d balso pašto pranešimo</item>
-    </plurals>
     <plurals name="tab_title_with_unread_items">
         <item quantity="other">Skirtukas „%1$s“. %2$d neskaitytų elementų.</item>
         <item quantity="one">Skirtukas „%1$s“. %2$d neskaitytas elementas.</item>

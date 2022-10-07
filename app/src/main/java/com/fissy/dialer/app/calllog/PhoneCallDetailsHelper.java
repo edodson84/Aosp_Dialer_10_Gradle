@@ -55,9 +55,6 @@ public class PhoneCallDetailsHelper {
      */
     private static final int MAX_CALL_TYPE_ICONS = 3;
 
-    private static final String PREF_VOICEMAIL_DONATION_PROMO_SHOWN_KEY =
-            "pref_voicemail_donation_promo_shown_key";
-
     private final Context context;
     private final Resources resources;
     private final CallLogCache callLogCache;
@@ -119,12 +116,8 @@ public class PhoneCallDetailsHelper {
         // Display up to a given number of icons.
         views.callTypeIcons.clear();
         int count = details.callTypes.length;
-        boolean isVoicemail = false;
         for (int index = 0; index < count && index < MAX_CALL_TYPE_ICONS; ++index) {
             views.callTypeIcons.add(details.callTypes[index]);
-            if (index == 0) {
-                isVoicemail = details.callTypes[index] == Calls.VOICEMAIL_TYPE;
-            }
         }
 
         // Show the video icon if the call had video enabled.
@@ -151,7 +144,6 @@ public class PhoneCallDetailsHelper {
             callCount = null;
         }
 
-        // Set the call count, location, date and if voicemail, set the duration.
         setDetailText(views, callCount, details);
 
         // Set the account label if it exists.
@@ -184,13 +176,7 @@ public class PhoneCallDetailsHelper {
         // Bold if not read
         Typeface typeface = details.isRead ? Typeface.SANS_SERIF : Typeface.DEFAULT_BOLD;
         views.nameView.setTypeface(typeface);
-        views.voicemailTranscriptionView.setTypeface(typeface);
-        views.voicemailTranscriptionBrandingView.setTypeface(typeface);
         views.callLocationAndDate.setTypeface(typeface);
-        views.callLocationAndDate.setTextColor(
-                details.isRead
-                        ? android.R.attr.textColorSecondary
-                        : android.R.attr.textColorPrimary);
     }
 
     private void setNameView(PhoneCallDetailsViews views, PhoneCallDetails details) {
@@ -214,13 +200,6 @@ public class PhoneCallDetailsHelper {
     }
 
 
-    private SpannableString getVoicemailDonationPromoContent() {
-        return new ContentWithLearnMoreSpanner(context)
-                .create(
-                        context.getString(R.string.voicemail_donation_promo_content),
-                        context.getString(R.string.voicemail_donation_promo_learn_more_url));
-    }
-
     /**
      * Builds a string containing the call location and date. For voicemail logs only the call date is
      * returned because location information is displayed in the call action button
@@ -231,7 +210,6 @@ public class PhoneCallDetailsHelper {
     public CharSequence getCallLocationAndDate(PhoneCallDetails details) {
         descriptionItems.clear();
 
-        if (details.callTypes[0] != Calls.VOICEMAIL_TYPE) {
             // Get type of call (ie mobile, home, etc) if known, or the caller's location.
             CharSequence callTypeOrLocation = getCallTypeOrLocation(details);
 
@@ -240,7 +218,6 @@ public class PhoneCallDetailsHelper {
             if (!TextUtils.isEmpty(callTypeOrLocation)) {
                 descriptionItems.add(callTypeOrLocation);
             }
-        }
 
         // The date of this call
         descriptionItems.add(getCallDate(details));
@@ -267,8 +244,7 @@ public class PhoneCallDetailsHelper {
         CharSequence numberFormattedLabel = null;
         // Only show a label if the number is shown and it is not a SIP address.
         if (!TextUtils.isEmpty(details.number)
-                && !PhoneNumberHelper.isUriNumber(details.number.toString())
-                && !callLogCache.isVoicemailNumber(details.accountHandle, details.number)) {
+                && !PhoneNumberHelper.isUriNumber(details.number.toString())) {
 
             if (shouldShowLocation(details)) {
                 numberFormattedLabel = details.geocode;
@@ -287,22 +263,13 @@ public class PhoneCallDetailsHelper {
         return numberFormattedLabel;
     }
 
-    public void setPhoneTypeLabelForTest(CharSequence phoneTypeLabel) {
-        this.phoneTypeLabelForTest = phoneTypeLabel;
-    }
-
     /**
      * Get the call date/time of the call. For the call log this is relative to the current time. e.g.
-     * 3 minutes ago. For voicemail, see {@link #getGranularDateTime(PhoneCallDetails)}
      *
      * @param details Call details to use.
      * @return String representing when the call occurred.
      */
     public CharSequence getCallDate(PhoneCallDetails details) {
-        if (details.callTypes[0] == Calls.VOICEMAIL_TYPE) {
-            return getGranularDateTime(details);
-        }
-
         return DateUtils.getRelativeTimeSpanString(
                 details.date,
                 getCurrentTimeMillis(),
@@ -322,44 +289,11 @@ public class PhoneCallDetailsHelper {
      * @param details Call details to use
      * @return String representing when the call occurred
      */
-    public CharSequence getGranularDateTime(PhoneCallDetails details) {
-        return resources.getString(
-                R.string.voicemailCallLogDateTimeFormat,
-                getGranularDate(details.date),
-                DateUtils.formatDateTime(context, details.date, DateUtils.FORMAT_SHOW_TIME));
-    }
 
-    /**
-     * Get the granular version of the call date. See {@link #getGranularDateTime(PhoneCallDetails)}
-     */
-    private String getGranularDate(long date) {
-        if (DateUtils.isToday(date)) {
-            return resources.getString(R.string.voicemailCallLogToday);
-        }
-        return DateUtils.formatDateTime(
-                context,
-                date,
-                DateUtils.FORMAT_SHOW_DATE
-                        | DateUtils.FORMAT_ABBREV_MONTH
-                        | (shouldShowYear(date) ? DateUtils.FORMAT_SHOW_YEAR : DateUtils.FORMAT_NO_YEAR));
-    }
-
-    /**
-     * Determines whether the year should be shown for the given date
-     *
-     * @return {@code true} if date is within the current year, {@code false} otherwise
-     */
-    private boolean shouldShowYear(long date) {
-        calendar.setTimeInMillis(getCurrentTimeMillis());
-        int currentYear = calendar.get(Calendar.YEAR);
-        calendar.setTimeInMillis(date);
-        return currentYear != calendar.get(Calendar.YEAR);
-    }
 
     /**
      * Returns the current time in milliseconds since the epoch.
      *
-     * <p>It can be injected in tests using {@link #setCurrentTimeForTest(long)}.
      */
     private long getCurrentTimeMillis() {
         if (currentTimeMillisForTest == null) {
@@ -383,23 +317,6 @@ public class PhoneCallDetailsHelper {
             text = dateText;
         }
 
-        if (details.callTypes[0] == Calls.VOICEMAIL_TYPE && details.duration > 0) {
-            views.callLocationAndDate.setText(
-                    resources.getString(
-                            R.string.voicemailCallLogDateTimeFormatWithDuration,
-                            text,
-                            getVoicemailDuration(details)));
-        } else {
             views.callLocationAndDate.setText(text);
-        }
-    }
-
-    private String getVoicemailDuration(PhoneCallDetails details) {
-        long minutes = TimeUnit.SECONDS.toMinutes(details.duration);
-        long seconds = details.duration - TimeUnit.MINUTES.toSeconds(minutes);
-        if (minutes > 99) {
-            minutes = 99;
-        }
-        return resources.getString(R.string.voicemailDurationFormat, minutes, seconds);
     }
 }

@@ -16,7 +16,6 @@
 
 package com.fissy.dialer.shortcuts;
 
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -38,7 +37,7 @@ import com.fissy.dialer.util.TransactionSafeActivity;
 public class CallContactActivity extends TransactionSafeActivity
         implements PhoneNumberInteraction.DisambigDialogDismissedListener,
         PhoneNumberInteraction.InteractionErrorListener,
-        ActivityCompat.OnRequestPermissionsResultCallback{
+        ActivityCompat.OnRequestPermissionsResultCallback {
 
     private static final String CONTACT_URI_KEY = "uri_key";
 
@@ -131,6 +130,7 @@ public class CallContactActivity extends TransactionSafeActivity
     @Override
     public void onRequestPermissionsResult(
             int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case PhoneNumberInteraction.REQUEST_READ_CONTACTS:
             case PhoneNumberInteraction.REQUEST_CALL_PHONE: {

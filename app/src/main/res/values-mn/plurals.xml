@@ -24,14 +24,6 @@
         <item quantity="other">секунд</item>
         <item quantity="one">секунд</item>
     </plurals>
-    <plurals name="delete_voicemails_confirmation_dialog_title">
-        <item quantity="other">&lt;b>Эдгээр дуут шууданг устгах уу? &lt;/b></item>
-        <item quantity="one">&lt;b>Энэ дуут шууданг устгах уу? &lt;/b></item>
-    </plurals>
-    <plurals name="notification_voicemail_title">
-        <item quantity="other">%1$d Дуут шуудан</item>
-        <item quantity="one">Дуут шуудан</item>
-    </plurals>
     <plurals name="tab_title_with_unread_items">
         <item quantity="other">%1$s таб. %2$d уншаагүй зүйл.</item>
         <item quantity="one">%1$s таб. %2$d уншаагүй зүйл.</item>

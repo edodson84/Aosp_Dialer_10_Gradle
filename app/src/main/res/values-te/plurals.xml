@@ -24,14 +24,6 @@
         <item quantity="other">సెకన్లు</item>
         <item quantity="one">సెకను</item>
     </plurals>
-    <plurals name="delete_voicemails_confirmation_dialog_title">
-        <item quantity="other">&lt;b>ఈ వాయిస్ మెయిల్‌లను తొలగించాలా? &lt;/b></item>
-        <item quantity="one">&lt;b>ఈ వాయిస్ మెయిల్‌ను తొలగించాలా? &lt;/b></item>
-    </plurals>
-    <plurals name="notification_voicemail_title">
-        <item quantity="other">%1$d వాయిస్ మెయిల్‌లు</item>
-        <item quantity="one">వాయిస్ మెయిల్</item>
-    </plurals>
     <plurals name="tab_title_with_unread_items">
         <item quantity="other">%1$s ట్యాబ్. %2$d చదవని అంశాలు.</item>
         <item quantity="one">%1$s ట్యాబ్. %2$d చదవని అంశం.</item>

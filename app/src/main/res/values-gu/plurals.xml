@@ -24,14 +24,6 @@
         <item quantity="other">સેકન્ડ</item>
         <item quantity="one">સેકન્ડ</item>
     </plurals>
-    <plurals name="delete_voicemails_confirmation_dialog_title">
-        <item quantity="other">&lt;b>આ વૉઇસમેઇલ કાઢી નાખીએ? &lt;/b></item>
-        <item quantity="one">&lt;b>આ વૉઇસમેઇલ કાઢી નાખીએ? &lt;/b></item>
-    </plurals>
-    <plurals name="notification_voicemail_title">
-        <item quantity="other">%1$d વૉઇસમેઇલ્સ</item>
-        <item quantity="one">%1$d વૉઇસમેઇલ્સ</item>
-    </plurals>
     <plurals name="tab_title_with_unread_items">
         <item quantity="other">%1$s ટૅબ. %2$d વાંચ્યા વગરની આઇટમ.</item>
         <item quantity="one">%1$s ટૅબ. %2$d વાંચ્યા વગરની આઇટમ.</item>

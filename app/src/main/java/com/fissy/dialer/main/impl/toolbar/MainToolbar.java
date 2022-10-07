@@ -16,6 +16,7 @@
 
 package com.fissy.dialer.main.impl.toolbar;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MenuItem;

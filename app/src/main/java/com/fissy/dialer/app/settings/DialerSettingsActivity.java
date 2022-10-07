@@ -28,7 +28,6 @@ import android.telephony.TelephonyManager;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-
 import com.fissy.dialer.R;
 import com.fissy.dialer.about.AboutPhoneFragment;
 import com.fissy.dialer.assisteddialing.ConcreteCreator;
@@ -38,6 +37,7 @@ import com.fissy.dialer.compat.telephony.TelephonyManagerCompat;
 import com.fissy.dialer.configprovider.ConfigProviderComponent;
 import com.fissy.dialer.lookup.LookupSettingsFragment;
 import com.fissy.dialer.main.impl.MainActivity;
+import com.fissy.dialer.main.impl.MainActivityPeer;
 import com.fissy.dialer.proguard.UsedByReflection;
 
 import java.util.List;
@@ -56,7 +56,7 @@ public class DialerSettingsActivity extends AppCompatPreferenceActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         LogUtil.enterBlock("DialerSettingsActivity.onCreate");
-        ThemeOptionsSettingsFragment.ThemeButtonBehavior mThemeBehavior = ThemeOptionsSettingsFragment.getThemeButtonBehavior(MainActivity.themeprefs);
+        ThemeOptionsSettingsFragment.ThemeButtonBehavior mThemeBehavior = ThemeOptionsSettingsFragment.getThemeButtonBehavior(MainActivityPeer.themeprefs);
 
         if (mThemeBehavior == ThemeOptionsSettingsFragment.ThemeButtonBehavior.DARK) {
             getTheme().applyStyle(R.style.DialerDark, true);

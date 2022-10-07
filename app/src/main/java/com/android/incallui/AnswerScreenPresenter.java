@@ -225,13 +225,12 @@ public class AnswerScreenPresenter
 
     @Override
     public void updateWindowBackgroundColor(@FloatRange(from = -1f, to = 1.0f) float progress) {
-        InCallActivity activity = (InCallActivity) answerScreen.getAnswerScreenFragment().getActivity();
+        answerScreen.getAnswerScreenFragment().getActivity();
 
     }
 
     private boolean isSmsResponseAllowed(DialerCall call) {
-        return UserManagerCompat.isUserUnlocked(context)
-                && call.can(android.telecom.Call.Details.CAPABILITY_RESPOND_VIA_TEXT);
+        return call.can(android.telecom.Call.Details.CAPABILITY_RESPOND_VIA_TEXT);
     }
 
     private void addTimeoutCheck() {

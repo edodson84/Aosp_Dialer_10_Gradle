@@ -77,6 +77,7 @@ public class CallLogAsync {
     public static class GetLastOutgoingCallArgs {
         public final Context context;
         public final OnLastOutgoingCallComplete callback;
+
         public GetLastOutgoingCallArgs(Context context,
                                        OnLastOutgoingCallComplete callback) {
             this.context = context;

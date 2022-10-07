@@ -101,6 +101,13 @@ public class CallList implements DialerCallDelegate {
     @VisibleForTesting
     public static void setCallListInstance(CallList callList) {
         instance = callList;
+    }
+
+    /**
+     * Static singleton accessor method.
+     */
+    public static CallList getInstance() {
+        return instance;
     }    /**
      * Handles the timeout for destroying disconnected calls.
      */
@@ -119,13 +126,6 @@ public class CallList implements DialerCallDelegate {
                     }
                 }
             };
-
-    /**
-     * Static singleton accessor method.
-     */
-    public static CallList getInstance() {
-        return instance;
-    }
 
     public void onCallAdded(
             final Context context, final android.telecom.Call telecomCall, LatencyReport latencyReport) {

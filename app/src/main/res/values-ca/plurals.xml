@@ -24,14 +24,6 @@
         <item quantity="other">segons</item>
         <item quantity="one">segon</item>
     </plurals>
-    <plurals name="delete_voicemails_confirmation_dialog_title">
-        <item quantity="other">&lt;b>Vols suprimir aquests missatges de veu? &lt;/b></item>
-        <item quantity="one">&lt;b>Vols suprimir aquest missatge de veu? &lt;/b></item>
-    </plurals>
-    <plurals name="notification_voicemail_title">
-        <item quantity="other">%1$d bústies de veu</item>
-        <item quantity="one">Bústia de veu</item>
-    </plurals>
     <plurals name="tab_title_with_unread_items">
         <item quantity="other">Pestanya %1$s: %2$d elements no llegits</item>
         <item quantity="one">Pestanya %1$s: %2$d element no llegit</item>

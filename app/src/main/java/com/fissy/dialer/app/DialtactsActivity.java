@@ -81,7 +81,6 @@ import com.fissy.dialer.app.list.OnDragDropListener;
 import com.fissy.dialer.app.list.OnListFragmentScrolledListener;
 import com.fissy.dialer.app.list.PhoneFavoriteSquareTileView;
 import com.fissy.dialer.app.settings.DialerSettingsActivity;
-import com.fissy.dialer.app.settings.ThemeOptionsSettingsFragment;
 import com.fissy.dialer.app.widget.ActionBarController;
 import com.fissy.dialer.app.widget.SearchEditTextLayout;
 import com.fissy.dialer.callcomposer.CallComposerActivity;
@@ -111,7 +110,6 @@ import com.fissy.dialer.logging.InteractionEvent;
 import com.fissy.dialer.logging.Logger;
 import com.fissy.dialer.logging.ScreenEvent;
 import com.fissy.dialer.logging.UiAction;
-import com.fissy.dialer.main.impl.MainActivity;
 import com.fissy.dialer.metrics.Metrics;
 import com.fissy.dialer.metrics.MetricsComponent;
 import com.fissy.dialer.performancereport.PerformanceReport;
@@ -167,7 +165,7 @@ public class DialtactsActivity extends TransactionSafeActivity
         DialpadListener,
         SearchFragmentListener,
         OnContactSelectedListener,
-        SharedPreferences.OnSharedPreferenceChangeListener{
+        SharedPreferences.OnSharedPreferenceChangeListener {
 
     public static final boolean DEBUG = false;
     @VisibleForTesting

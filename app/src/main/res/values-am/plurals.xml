@@ -24,14 +24,6 @@
         <item quantity="other">ሰከንዶች</item>
         <item quantity="one">ሰከንዶች</item>
     </plurals>
-    <plurals name="delete_voicemails_confirmation_dialog_title">
-        <item quantity="other">&lt;b>እነዚህ የድምፅ መልዕክቶች ይሰረዙ? &lt;/b></item>
-        <item quantity="one">&lt;b>እነዚህ የድምፅ መልዕክቶች ይሰረዙ? &lt;/b></item>
-    </plurals>
-    <plurals name="notification_voicemail_title">
-        <item quantity="other">%1$d የድምፅ መልዕክቶች</item>
-        <item quantity="one">%1$d የድምፅ መልዕክቶች</item>
-    </plurals>
     <plurals name="tab_title_with_unread_items">
         <item quantity="other">የ%1$s ትር። %2$d ያልተነበቡ ንጥሎች።</item>
         <item quantity="one">የ%1$s ትር። %2$d ያልተነበቡ ንጥሎች።</item>

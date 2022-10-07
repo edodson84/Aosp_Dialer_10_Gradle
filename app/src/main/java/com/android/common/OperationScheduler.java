@@ -35,6 +35,7 @@ import java.util.TreeMap;
 public class OperationScheduler {
     private static final String PREFIX = "OperationScheduler_";
     private final SharedPreferences mStorage;
+
     /**
      * Initialize the scheduler state.
      *

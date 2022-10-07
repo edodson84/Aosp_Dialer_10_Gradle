@@ -5,19 +5,11 @@
     <string name="theme_default">0</string>
     <!-- Forward lookup -->
     <string name="nearby_places">Nearby places</string>
-    <string name="people">People</string>
 
     <!-- Number lookup -->
     <string name="lookup_settings_label">Forward lookup</string>
     <string name="enable_forward_lookup_title">Forward lookup</string>
     <string name="enable_forward_lookup_summary">Show nearby places when searching in the dialer</string>
-    <string name="enable_people_lookup_title">People lookup</string>
-    <string name="enable_people_lookup_summary">Show online results for people when searching in the dialer</string>
-    <string name="enable_reverse_lookup_title">Reverse lookup</string>
-    <string name="enable_reverse_lookup_summary">Look up information about the person or place for unknown numbers on incoming calls</string>
-    <string name="forward_lookup_provider_title">Forward lookup provider</string>
-    <string name="people_lookup_provider_title">People lookup provider</string>
-    <string name="reverse_lookup_provider_title">Reverse lookup provider</string>
 
     <!-- Disclaimer -->
     <string name="lookup_disclaimer">Lookups may send queries over a secure protocol (https) to remote websites to gather information. The query may include the other party\'s phone number or the search query</string>
@@ -41,7 +33,6 @@
     <string name="onscreenCallRecordText">Record call</string>
     <string name="onscreenCallRecordingText">Recording call - <xliff:g example="00:10" id="duration">%1$s</xliff:g></string>
     <string name="onscreenStopCallRecordText">Stop recording</string>
-    <string name="recording_time_text">Recording</string>
     <string name="recording_warning_title">Enable call recording?</string>
     <string name="recording_warning_text">Notice: You are responsible for compliance with any laws, regulations and rules that apply to the use of call recording functionality and the use or distribution of those recordings.</string>
     <string name="call_recording_category_key" translatable="false">call_recording_category</string>
@@ -91,12 +82,6 @@
     <string name="a11y_new_call_log_entry_tap_action">expand menu</string>
     <string name="a11y_new_call_log_entry_video_call">make a video call to ^1</string>
     <string name="a11y_new_call_log_entry_voice_call">call ^1</string>
-    <string name="a11y_voicemail_entry_call">Call number</string>
-    <string name="a11y_voicemail_entry_delete">Delete</string>
-    <string name="a11y_voicemail_entry_expand_menu">Expand menu for this voicemail entry</string>
-    <string name="a11y_voicemail_entry_pause">Pause</string>
-    <string name="a11y_voicemail_entry_play">Play</string>
-    <string name="a11y_voicemail_entry_speaker">Speaker</string>
     <string name="about_phone_label">About</string>
     <string name="accessibility_settings_title">Accessibility</string>
     <string name="account_phone">Device-only, unsynced</string>
@@ -138,10 +123,8 @@
     <string name="block_number_alert_details">%1$s This call will be reported as spam.</string>
     <string name="block_number_confirmation_message_new_filtering">You will no longer receive calls or texts from this number.</string>
     <string name="block_number_confirmation_message_no_vvm">Calls from this number will be blocked, but the caller may still be able to leave you voicemails.</string>
-    <string name="block_number_confirmation_message_vvm">Calls from this number will be blocked and voicemails will be automatically deleted.</string>
     <string name="block_number_confirmation_title">Block %1$s?</string>
     <string name="block_number_failed_toast">Problem blocking this number</string>
-    <string name="block_number_footer_message_no_vvm">Calls from these numbers will be blocked, but they may still be able to leave you voicemails.</string>
     <string name="block_number_footer_message_vvm">Calls from these numbers will be blocked and voicemails will be automatically deleted.</string>
     <string name="block_number_ok">BLOCK</string>
     <string name="block_report_number_alert_details">You will no longer receive calls from this number.</string>
@@ -154,7 +137,6 @@
     <string name="blocked_numbers_disabled_emergency_header_label">Call blocking temporarily off</string>
     <string name="bottom_nav_count_99_plus">99+</string>
     <string name="bottom_nav_count_9_plus">9+</string>
-    <string name="bottom_sheet_behavior">android.support.design.widget.BottomSheetBehavior</string>
     <string name="bubble_return_to_call">Back to call</string>
     <string name="build_version_key">build_version</string>
     <string name="build_version_label">Build version</string>
@@ -221,7 +203,6 @@
     <string name="call_log_item_count_and_date">(%1$d) %2$s</string>
     <string name="call_log_missed_empty">You have no missed calls.</string>
     <string name="call_log_missed_title">Missed</string>
-    <string name="call_log_trash_voicemail">Delete voicemail</string>
     <string name="call_log_via_number">via %1$s</string>
     <string name="call_log_via_number_phone_account">%1$s via %2$s</string>
     <string name="call_log_voicemail_empty">Your voicemail inbox is empty.</string>
@@ -245,19 +226,6 @@
     <string name="camera_media_failure">"Couldn't load camera image"</string>
     <string name="camera_permission_text">To take a photo, give access to Camera</string>
     <string name="camera_privacy_text">Camera permission enabled</string>
-    <string name="change_greeting_text">Tap to Record</string>
-    <string name="change_pin_cancel_label">Cancel</string>
-    <string name="change_pin_confirm_pin_header">Confirm your PIN</string>
-    <string name="change_pin_confirm_pins_dont_match">"PINs don't match"</string>
-    <string name="change_pin_continue_label">Continue</string>
-    <string name="change_pin_enter_new_pin_header">Set a new PIN</string>
-    <string name="change_pin_enter_new_pin_hint">PIN must be %1$d-%2$d digits.</string>
-    <string name="change_pin_enter_old_pin_header">Confirm your old PIN</string>
-    <string name="change_pin_enter_old_pin_hint">Enter your voicemail PIN to continue.</string>
-    <string name="change_pin_ok_label">Ok</string>
-    <string name="change_pin_succeeded">Voicemail PIN updated</string>
-    <string name="change_pin_system_error">Unable to set PIN</string>
-    <string name="change_pin_title">Change Voicemail PIN</string>
     <string name="character_counter_content_description">Character limit exceeded %1$d of %2$d</string>
     <string name="character_counter_pattern">%1$d / %2$d</string>
     <string name="chat">Chat</string>
@@ -280,9 +248,6 @@
     <string name="conference_call_name">Conference call</string>
     <string name="conference_caller_disconnect_content_description">End call</string>
     <string name="config_prohibited_phone_number_regexp" />
-    <string name="confirm_disable_voicemail_accept_dialog_label">TURN OFF</string>
-    <string name="confirm_disable_voicemail_dialog_message">This will delete any voicemail and Google transcripts stored within this app. Your carrier may keep its own copies.</string>
-    <string name="confirm_disable_voicemail_dialog_title">Turn off visual voicemail</string>
     <string name="contact_grid_callback_number">"This phone's number: %1$s"</string>
     <string name="contact_grid_incoming_suspected_spam">Suspected spam caller</string>
     <string name="contact_grid_incoming_via_template">Call via %s from</string>
@@ -300,8 +265,6 @@
     <string name="content_description_rtt_check_button">Go ahead</string>
     <string name="copy_number">Copy number</string>
     <string name="copy_transcript_text">Copy transcription</string>
-    <string name="current_voicemail_greeting_record_instruction">Record a greeting</string>
-    <string name="current_voicemail_greeting_recording_title">My voicemail greeting</string>
     <string name="custom_message_hint">Write a custom message</string>
     <string name="dec">DEC:</string>
     <string name="default_notification_description">Default sound (%1$s)</string>
@@ -334,8 +297,6 @@
     <string name="description_num_calls">%1$s calls.</string>
     <string name="description_outgoing_call">Call to ^1, ^2, ^3, ^4.</string>
     <string name="description_phone_account">on ^1</string>
-    <string name="description_playback_seek">Seek playback position</string>
-    <string name="description_playback_speakerphone">Switch on or off speakerphone</string>
     <string name="description_quick_contact_for">Quick contact for %1$s</string>
     <string name="description_rating_bad">Dislike</string>
     <string name="description_rating_good">Like</string>
@@ -362,22 +323,6 @@
     <string name="dialer_shortcut_contact_not_found_or_has_no_number">Contact no longer available.</string>
     <string name="dialer_shortcut_disabled_message">Shortcut not working. Drag to remove.</string>
     <string name="dialer_shortcut_no_permissions">Cannot call without permissions.</string>
-    <string name="dialer_terms_and_conditions_1.0">See and listen to your messages, without having to call voicemail. Transcripts of your voicemail are provided by Google’s free transcription service. You can turn either off in Settings any time. %s</string>
-    <string name="dialer_terms_and_conditions_accept_english">Turn On</string>
-    <string name="dialer_terms_and_conditions_accept_spanish">Aceptar</string>
-    <string name="dialer_terms_and_conditions_decline_dialog_downgrade">Disable</string>
-    <string name="dialer_terms_and_conditions_decline_dialog_message">Visual voicemail will be disabled if you turn off visual voicemail.</string>
-    <string name="dialer_terms_and_conditions_decline_english">No Thanks</string>
-    <string name="dialer_terms_and_conditions_decline_spanish">Rechazar</string>
-    <string name="dialer_terms_and_conditions_existing_user">Transcripts of your voicemail are now provided by Google’s free transcription service. You can turn this off in Settings any time. %s</string>
-    <string name="dialer_terms_and_conditions_existing_user_ack">Ok, got it</string>
-    <string name="dialer_terms_and_conditions_existing_user_decline">No Thanks</string>
-    <string name="dialer_terms_and_conditions_existing_user_title">New! Read your voicemail</string>
-    <string name="dialer_terms_and_conditions_for_verizon_1.0">See and listen to your messages, without having to call voicemail.</string>
-    <string name="dialer_terms_and_conditions_learn_more">Learn more</string>
-    <string name="dialer_terms_and_conditions_learn_more_url">https://support.google.com/phoneapp/answer/2811844?hl=en%26ref_topic=7539039</string>
-    <string name="dialer_terms_and_conditions_message">%s</string>
-    <string name="dialer_terms_and_conditions_title">Turn on visual voicemail</string>
     <string name="dialer_useDtmfDialpad">Use touch-tone keypad</string>
     <string name="dialog_continue">Continue</string>
     <string name="dialog_phone_call_prohibited_message">"Can't call this number"</string>
@@ -407,7 +352,6 @@
     <string name="display_options_view_names_as">Name format</string>
     <string name="display_options_view_names_as_key">android.contacts.DISPLAY_ORDER</string>
     <string name="do_not_show_again">Do not show again</string>
-    <string name="donation_learn_more_url">https://support.google.com/phoneapp/answer/2811844#voicemail_transcript</string>
     <string name="duo_disclosure_details">Google Duo video calling lets you chat with friends and family face-to-face. Data charges may apply. %1$s</string>
     <string name="duo_disclosure_title">Make video calls with Duo</string>
     <string name="ec_data_deleted">Call deleted. View and delete attachments shared during this call in Messages.</string>
@@ -419,11 +363,8 @@
     <string name="email_other">Email</string>
     <string name="email_work">Email work</string>
     <string name="emergency_number">Emergency number</string>
-    <string name="empty_voicemail_tab_text">Your voicemail inbox is empty.</string>
     <string name="enriched_call_simulator_activity">Enriched Call Simulator Activity</string>
     <string name="eventLabelsGroup">Special date</string>
-    <string name="event_activated">🐈🐕</string>
-    <string name="event_deactivated">Pet mode off</string>
     <string name="fab_transformation_scrim_behavior">android.support.design.transformation.FabTransformationScrimBehavior</string>
     <string name="fab_transformation_sheet_behavior">android.support.design.transformation.FabTransformationSheetBehavior</string>
     <string name="favorites_header">Favorites</string>
@@ -563,9 +504,6 @@
     <string name="new_call_log_secondary_spam">Spam</string>
     <string name="new_call_log_unknown">Unknown</string>
     <string name="new_permission_no_search">To search your contacts, turn on the Contacts permissions.</string>
-    <string name="new_voicemail_header_older">Older</string>
-    <string name="new_voicemail_header_today">Today</string>
-    <string name="new_voicemail_header_yesterday">Yesterday</string>
     <string name="nicknameLabelsGroup">Nickname</string>
     <string name="non_spam_notification_title">Know %1$s?</string>
     <string name="not_spam">Not spam</string>
@@ -582,7 +520,6 @@
     <string name="notification_channel_misc">Default</string>
     <string name="notification_channel_missed_call">Missed calls</string>
     <string name="notification_channel_ongoing_call">Ongoing calls</string>
-    <string name="notification_channel_voicemail">Voicemails</string>
     <string name="notification_dialing">Dialing</string>
     <string name="notification_external_call">Ongoing call on another device</string>
     <string name="notification_external_video_call">Ongoing video call on another device</string>
@@ -606,7 +543,6 @@
     <string name="notification_missedCallsMsg">%d missed calls</string>
     <string name="notification_missedCallsTitle">Missed calls</string>
     <string name="notification_missedWorkCallTitle">Missed work call</string>
-    <string name="notification_new_voicemail_ticker">New voicemail from %1$s</string>
     <string name="notification_on_hold">On hold</string>
     <string name="notification_ongoing_call">Ongoing call</string>
     <string name="notification_ongoing_call_wifi_template">Ongoing %1$s</string>
@@ -616,9 +552,6 @@
     <string name="notification_requesting_video_call">Incoming video request</string>
     <string name="notification_take_call">Take Call</string>
     <string name="notification_take_video_call">Take Video Call</string>
-    <string name="notification_voicemail_callers_list">%1$s, %2$s</string>
-    <string name="notification_voicemail_no_vm_number">Voicemail number unknown</string>
-    <string name="notification_voicemail_text_format">Dial %s</string>
     <string name="nui_simulator_submenu_label">Simulator</string>
     <string name="ok_got_it">OK, got it</string>
     <string name="old_block_number_confirmation_title">Block%1$s?</string>
@@ -670,7 +603,6 @@
     <string name="private_num_verizon">Restricted</string>
     <string name="quick_question">Quick question…</string>
     <string name="received_a_photo">Received a photo</string>
-    <string name="redo_button_text">Try Again</string>
     <string name="refresh">refresh</string>
     <string name="relationLabelsGroup">Relationship</string>
     <string name="remove_contact">Remove</string>
@@ -697,8 +629,6 @@
     <string name="rtt_transcript_advisory">The other party can see you typing. Transcripts are stored on your device in the call history.</string>
     <string name="rtt_transcript_link">See transcript</string>
     <string name="rtt_transcript_not_available">Transcript available only for calls with messaging</string>
-    <string name="save_button_text">Save</string>
-    <string name="search_font_family">sans-serif</string>
     <string name="search_location_permission">To get contact information for places near you, allow access to your location.</string>
     <string name="search_menu_title">Search</string>
     <string name="search_shortcut_add_to_contact">Add to a contact</string>
@@ -745,7 +675,6 @@
     <string name="snackbar_number_blocked">%1$s blocked</string>
     <string name="snackbar_number_unblocked">%1$sunblocked</string>
     <string name="snackbar_undo">UNDO</string>
-    <string name="snackbar_voicemail_deleted">Voicemail deleted</string>
     <string name="sounds_and_vibration_title">Sounds and vibration</string>
     <string name="spam_blocking_promo_action_dismiss">Dismiss</string>
     <string name="spam_blocking_promo_action_filter_spam">Filter Spam</string>
@@ -833,16 +762,12 @@
     <string name="tab_title_call_history">Recents</string>
     <string name="tab_title_contacts">Contacts</string>
     <string name="tab_title_speed_dial">Favorites</string>
-    <string name="tab_title_voicemail">Voicemail</string>
-    <string name="tab_voicemail">Voicemail</string>
-    <string name="terms_and_conditions_decline_dialog_title">Disable visual voicemail?</string>
     <string name="terms_of_service_key">terms_of_service</string>
     <string name="terms_of_service_label">Terms of service</string>
     <string name="terms_of_service_url">http://www.google.com/policies/terms</string>
     <string name="toast_cannot_write_system_settings">Phone app does not have permission to write to system settings.</string>
     <string name="toast_text_copied">Text copied</string>
     <string name="toolbar_close">Close</string>
-    <string name="transcription_learn_more_url">https://support.google.com/phoneapp/answer/2811844?hl=en%26ref_topic=7539039</string>
     <string name="type_answered_elsewhere">Call answered on another device</string>
     <string name="type_blocked">Blocked call</string>
     <string name="type_incoming">Incoming call</string>
@@ -866,43 +791,6 @@
     <string name="unknown">Unknown</string>
     <string name="unknown_counter">%1$s %2$d</string>
     <string name="urgent">Urgent! Please pick up!</string>
-    <string name="verizon_domestic_customer_support_display_number">(800) 922–0204</string>
-    <string name="verizon_domestic_customer_support_number">+18009220204</string>
-    <string name="verizon_terms_and_conditions_1.1_english">"Visual Voice Mail (VVM) is a service that provides access to voice mail messages directly on the device, without the need to call *86. This service requires traditional Voice Mail but does not support all traditional Voice Mail features, which you can access by dialing *86 from your handset. Use of this feature will be billed on a per-megabyte basis, or according to any data package you have. Mobile to mobile minutes do not apply. Standard rates apply to any calls, emails or messages initiated from Visual Voice Mail.
- 
- You may disable VVM in settings. This will revert you to basic voice mail. In some cases you may need to call customer care to cancel and if you cancel Visual Voice Mail you may lose all stored voice mails and information.
- 
- For the Premium Visual Voice Mail service, some voice messages may not be completely transcribed; incomplete messages will end with [...]. Only the first 45 seconds of each voice message will be transcribed, so for longer messages, you will need to listen to the voice message itself. Any profane or offensive language also will not be transcribed and will appear as [...] in the transcription.
- 
- Speech recordings may be collected and stored for a period of 30 days, solely for the purpose of testing and improving transcription technology and performance, subject to the Verizon Wireless Privacy Policy, which can be found at %s
- 
- You understand that by selecting ACCEPT, your messages will be stored and anyone in possession of this device will have access to your voice mail. You further understand that your voice mail messages may be stored in electronic format on this device. To limit unauthorized access to your voice mail, you should consider locking your phone when not in use. Not available in all areas or over Wi‑Fi.
- 
- If you do not accept all of these terms and conditions, do not use Visual Voice Mail."</string>
-    <string name="verizon_terms_and_conditions_1.1_spanish">"El buzón de voz visual (VVM) es un servicio que permite acceder a los mensajes del buzón de voz directamente en el dispositivo, sin necesidad de llamar al *86. Este servicio requiere el buzón de voz tradicional, pero no admite todas las funciones del buzón de voz tradicional, a las que se puede acceder marcando *86 en el teléfono. El uso de esta función se factura por megabyte o conforme a cualquier paquete de datos que tenga. No se aplican los minutos de un dispositivo móvil a otro. Se aplican tarifas estándar a todos los correos electrónicos, las llamadas o los mensajes originados en el buzón de voz visual.
- 
- Puede inhabilitar el VVM en la configuración. Esto le permite volver al buzón de voz básico. En algunos casos, es posible que deba llamar al servicio de atención al cliente para cancelar el buzón de voz visual. Si lo cancela, puede perder la información y los mensajes de voz almacenados.
- 
- En el caso del servicio de buzón de voz visual premium, es posible que algunos mensajes no se transcriban totalmente; los mensajes incompletos finalizan con […]. Solo se transcriben los primeros 45 segundos de cada mensaje de voz, por lo que debe escuchar los mensajes de voz más largos. Tampoco se transcribe ninguna palabra ofensiva o profana; aparece como […] en la transcripción.
- 
- Es posible que reunamos y almacenemos grabaciones de voz durante 30 días, con el único fin de probar y mejorar el rendimiento y la tecnología de la transcripción, sujeto a la Política de privacidad de Verizon Wireless, disponible en %s
- 
- Entiende que, al seleccionar ACEPTAR, sus mensajes se almacenarán, y cualquier persona que disponga de este dispositivo tendrá acceso al buzón de voz. Entiende, además, que los mensajes de voz pueden almacenarse en formato electrónico en este dispositivo. Para limitar el acceso no autorizado al buzón de voz, debe considerar el bloqueo del teléfono cuando no está en uso. No está disponible en todas las áreas ni mediante Wi‑Fi.
- 
- Si no acepta todos estos términos y condiciones, no use el buzón de voz visual."</string>
-    <string name="verizon_terms_and_conditions_accept_english">Turn On</string>
-    <string name="verizon_terms_and_conditions_accept_spanish">Aceptar</string>
-    <string name="verizon_terms_and_conditions_decline_dialog_downgrade">Disable</string>
-    <string name="verizon_terms_and_conditions_decline_dialog_message">Visual voicemail will be disabled if the terms and conditions are declined.</string>
-    <string name="verizon_terms_and_conditions_decline_english">No Thanks</string>
-    <string name="verizon_terms_and_conditions_decline_set_pin_dialog_message">Voicemail will only be accessible by calling *86. Set a new voicemail PIN to proceed.</string>
-    <string name="verizon_terms_and_conditions_decline_set_pin_dialog_set_pin">Set PIN</string>
-    <string name="verizon_terms_and_conditions_decline_spanish">Rechazar</string>
-    <string name="verizon_terms_and_conditions_message">"%1$s By turning on visual voicemail you agree to the Verizon Wireless terms and conditions:
-
-%2$s"</string>
-    <string name="verizon_terms_and_conditions_policy_url">http://www.verizon.com/about/privacy/policy/</string>
-    <string name="verizon_terms_and_conditions_title">Turn on visual voicemail</string>
     <string name="video_call">Video call</string>
     <string name="video_call_lte_to_wifi_failed_do_not_show">Do not show this again</string>
     <string name="video_call_lte_to_wifi_failed_message">Video call will remain on the mobile network. Standard data charges may apply.</string>
@@ -919,13 +807,6 @@
     <string name="view">View</string>
     <string name="view_conversation">View</string>
     <string name="view_updates_from_group">View updates</string>
-    <string name="vm_change_pin_error_invalid">The new PIN contains invalid characters.</string>
-    <string name="vm_change_pin_error_mismatch">The old PIN does not match.</string>
-    <string name="vm_change_pin_error_system_error">Unable to change PIN</string>
-    <string name="vm_change_pin_error_too_long">The new PIN is too long.</string>
-    <string name="vm_change_pin_error_too_short">The new PIN is too short.</string>
-    <string name="vm_change_pin_error_too_weak">The new PIN is too weak. A strong password should not have continuous sequence or repeated digits.</string>
-    <string name="vm_change_pin_progress_message">Please wait.</string>
     <string name="voice_call">Voice call</string>
     <string name="voice_search_not_available">Voice search not available</string>
     <string name="voicemail">Voicemail</string>
@@ -934,139 +815,10 @@
     <string name="voicemailCallLogToday">@string/call_log_header_today</string>
     <string name="voicemailDurationFormat">%1$02d:%2$02d</string>
     <string name="voicemailMultiSelectActionBarTitle">%1$s selected</string>
-    <string name="voicemailMultiSelectDeleteCancel">Cancel</string>
-    <string name="voicemailMultiSelectDeleteConfirm">Delete</string>
-    <string name="voicemail_action_call_customer_support">Call Customer Support</string>
-    <string name="voicemail_action_call_voicemail">Call Voicemail</string>
-    <string name="voicemail_action_dimiss">No Thanks</string>
-    <string name="voicemail_action_retry">Try Again</string>
-    <string name="voicemail_action_set_pin">Set PIN</string>
-    <string name="voicemail_action_sync">Sync</string>
-    <string name="voicemail_action_turn_archive_on">Turn on</string>
-    <string name="voicemail_action_turn_off_airplane_mode">Airplane Mode Settings</string>
-    <string name="voicemail_activating_summary_info">Activating voicemail</string>
-    <string name="voicemail_advanced_settings_key">voicemail_advanced_settings_key</string>
-    <string name="voicemail_advanced_settings_title">Advanced Settings</string>
-    <string name="voicemail_change_greeting_key">voicemail_change_greeting_key</string>
-    <string name="voicemail_change_greeting_preference_title">Voicemail greeting</string>
-    <string name="voicemail_change_pin_key">voicemail_change_pin_key</string>
-    <string name="voicemail_change_pin_preference_summary_disable">Visual voicemail must be enabled to change PIN</string>
-    <string name="voicemail_change_pin_preference_summary_not_activated">Visual voicemail is not activated yet, please try again later</string>
-    <string name="voicemail_change_pin_preference_title">Change PIN</string>
-    <string name="voicemail_donate_preference_summary_info">Let Google review your voicemail messages to improve transcription accuracy. Your voicemail messages are stored anonymously. %1$s</string>
     <string name="voicemail_donation_promo_content">"Let Google review this and future voicemail messages with transcripts. They'll be stored anonymously. Change Settings any time. %1$s"</string>
     <string name="voicemail_donation_promo_learn_more_url">https://support.google.com/phoneapp/answer/2811844?hl=en%26ref_topic=7539039</string>
-    <string name="voicemail_donation_promo_opt_in">"Yes, I'm in"</string>
-    <string name="voicemail_donation_promo_opt_out">No thanks</string>
-    <string name="voicemail_donation_promo_title">Help improve transcription accuracy?</string>
-    <string name="voicemail_entry_unknown">Unknown</string>
-    <string name="voicemail_error_activating_message">You might not receive voicemail notifications until visual voicemail is fully activated. Call voicemail to retrieve new messages until voicemail is fully activated.</string>
-    <string name="voicemail_error_activating_title">Activating visual voicemail</string>
-    <string name="voicemail_error_activation_failed_message">You can still call to check voicemail.</string>
-    <string name="voicemail_error_activation_failed_title">"Can't activate visual voicemail"</string>
-    <string name="voicemail_error_bad_config_message">You can still call to check voicemail.</string>
-    <string name="voicemail_error_bad_config_title">"Can't update visual voicemail"</string>
-    <string name="voicemail_error_communication_message">You can still call to check voicemail.</string>
-    <string name="voicemail_error_communication_title">"Can't update visual voicemail"</string>
-    <string name="voicemail_error_inbox_almost_full_turn_archive_on_message">Your mailbox is almost full. To free up space, turn on extra storage so Google can manage and backup your voicemail messages.</string>
-    <string name="voicemail_error_inbox_almost_full_turn_archive_on_title">Turn on extra storage and backup</string>
-    <string name="voicemail_error_inbox_full_message">Your inbox is full. Try deleting some messages to receive new voicemail.</string>
-    <string name="voicemail_error_inbox_full_title">"Can't receive new voicemails"</string>
-    <string name="voicemail_error_inbox_full_turn_archive_on_message">Your mailbox is full. To free up space, turn on extra storage so Google can manage and backup your voicemail messages.</string>
-    <string name="voicemail_error_inbox_full_turn_archive_on_title">Turn on extra storage and backup</string>
-    <string name="voicemail_error_inbox_near_full_message">"You won't be able to receive new voicemail if your inbox is full."</string>
-    <string name="voicemail_error_inbox_near_full_title">Inbox almost full</string>
-    <string name="voicemail_error_no_data_cellular_required_message">Try again when your mobile data connection is better. You can still call to check voicemail.</string>
-    <string name="voicemail_error_no_data_message">Try again when your Wi‑Fi or mobile data connection is better. You can still call to check voicemail.</string>
-    <string name="voicemail_error_no_data_title">"Can't update visual voicemail"</string>
-    <string name="voicemail_error_no_signal_airplane_mode_message">"You won't be notified for new voicemails. Turn off airplane mode to sync your voicemail."</string>
-    <string name="voicemail_error_no_signal_cellular_required_message">Your phone needs a mobile data connection to check voicemail.</string>
-    <string name="voicemail_error_no_signal_message">"You won't be notified for new voicemails. If you're on Wi‑Fi, you can check for voicemail by syncing now."</string>
-    <string name="voicemail_error_no_signal_title">No connection</string>
-    <string name="voicemail_error_not_activate_no_signal_airplane_mode_message">Turn off airplane mode and try again.</string>
-    <string name="voicemail_error_not_activate_no_signal_message">Make sure your phone has a mobile network connection and try again.</string>
-    <string name="voicemail_error_not_activate_no_signal_title">"Can't activate visual voicemail"</string>
-    <string name="voicemail_error_pin_not_set_message">"You'll need a voicemail PIN anytime you call to access your voicemail."</string>
-    <string name="voicemail_error_pin_not_set_title">Set your voicemail PIN</string>
-    <string name="voicemail_error_server_connection_message">You can still call to check voicemail.</string>
-    <string name="voicemail_error_server_connection_title">"Can't update visual voicemail"</string>
-    <string name="voicemail_error_server_message">You can still call to check voicemail.</string>
-    <string name="voicemail_error_server_title">"Can't update visual voicemail"</string>
-    <string name="voicemail_fetching_content">Loading voicemail…</string>
-    <string name="voicemail_fetching_timout">"Couldn't load voicemail"</string>
-    <string name="voicemail_media_player_inital_start_position">00:00</string>
-    <string name="voicemail_media_player_state">Loading Voicemail</string>
-    <string name="voicemail_notifications_key">voicemail_notification_key</string>
-    <string name="voicemail_notifications_preference_title">Notifications</string>
-    <string name="voicemail_play_start_pause">Start or pause playback.</string>
-    <string name="voicemail_playback_error">"Couldn't play voicemail"</string>
-    <string name="voicemail_set_pin_preference_title">Set PIN</string>
-    <string name="voicemail_settings_label">Voicemail</string>
-    <string name="voicemail_settings_title">Voicemail</string>
-    <string name="voicemail_speaker_off">Turn speaker off.</string>
-    <string name="voicemail_speaker_on">Turn speaker on.</string>
     <string name="voicemail_string">Voicemail</string>
-    <string name="voicemail_transcription_branding_text">Transcribed by Google</string>
-    <string name="voicemail_transcription_failed">Transcript not available.</string>
-    <string name="voicemail_transcription_failed_language_not_supported">Transcript not available. Language not supported.</string>
-    <string name="voicemail_transcription_failed_no_speech">Transcript not available. No speech detected.</string>
-    <string name="voicemail_transcription_in_progress">Transcribing…</string>
-    <string name="voicemail_transcription_preference_summary_info">"Get transcripts of your voicemail using Google's transcription service. %1$s"</string>
     <string name="voicemail_transcription_rating">Rate transcription quality</string>
-    <string name="voicemail_transcription_rating_thanks">Thanks for your feedback</string>
-    <string name="voicemail_visual_voicemail_archive_key">archive_is_enabled</string>
-    <string name="voicemail_visual_voicemail_auto_archive_switch_title">Extra backup and storage</string>
-    <string name="voicemail_visual_voicemail_donation_key">donate_voicemails</string>
-    <string name="voicemail_visual_voicemail_donation_switch_title">Voicemail transcription analysis</string>
-    <string name="voicemail_visual_voicemail_key">voicemail_visual_voicemail_key</string>
-    <string name="voicemail_visual_voicemail_switch_title">Visual voicemail</string>
-    <string name="voicemail_visual_voicemail_transcription_key">transcribe_voicemails</string>
-    <string name="voicemail_visual_voicemail_transcription_switch_title">Voicemail transcription</string>
-    <string name="vvm3_error_imap_error_message">Please contact Customer Service at %1$s and tell them the error code is 9999.</string>
-    <string name="vvm3_error_imap_error_title">Something Went Wrong</string>
-    <string name="vvm3_error_imap_getquota_error_message">Please contact Customer Service at %1$s and tell them the error code is 9997.</string>
-    <string name="vvm3_error_imap_getquota_error_title">Something Went Wrong</string>
-    <string name="vvm3_error_imap_select_error_message">Please contact Customer Service at %1$s and tell them the error code is 9989.</string>
-    <string name="vvm3_error_imap_select_error_title">Something Went Wrong</string>
-    <string name="vvm3_error_invalid_password_message">Please contact Customer Service at %1$s and tell them the error code is 9993.</string>
-    <string name="vvm3_error_invalid_password_title">Something Went Wrong</string>
-    <string name="vvm3_error_mailbox_not_initialized_message">To complete visual voicemail setup, please contact Customer Service at %1$s and tell them the error code is 9994.</string>
-    <string name="vvm3_error_mailbox_not_initialized_title">Visual voicemail</string>
-    <string name="vvm3_error_service_not_activated_message">To activate visual voicemail, please contact Customer Service at %1$s and tell them the error code is 9996.</string>
-    <string name="vvm3_error_service_not_activated_title">Visual voicemail</string>
-    <string name="vvm3_error_service_not_provisioned_message">To complete visual voicemail setup, please contact Customer Service at %1$s and tell them the error code is 9995.</string>
-    <string name="vvm3_error_service_not_provisioned_title">Visual voicemail</string>
-    <string name="vvm3_error_spg_dns_failure_message">Sorry, we ran into a problem. Please try again later. If there is still a problem, please contact Customer Service at %1$s and tell them the error code is 9003.</string>
-    <string name="vvm3_error_spg_dns_failure_title">Something Went Wrong</string>
-    <string name="vvm3_error_spg_no_cellular_message">"Sorry, we're having trouble connecting to your voice mailbox. If you're in an area with poor signal strength, wait until you have a strong signal and try again. If there is still a problem, please contact Customer Service at %1$s and tell them the error code is 9006."</string>
-    <string name="vvm3_error_spg_no_cellular_title">"Can't Connect to Your Voice Mailbox"</string>
-    <string name="vvm3_error_status_sms_timeout_message">"Sorry, we're having trouble setting up your service. Please try again later. If there is still a problem, please contact Customer Service at %1$s and tell them the error code is 9009."</string>
-    <string name="vvm3_error_status_sms_timeout_title">Something Went Wrong</string>
-    <string name="vvm3_error_subscriber_blocked_message">"Sorry, we're not able to connect to your voice mailbox at this time. Please try again later. If there is still a problem, please contact Customer Service at %1$s and tell them the error code is 9990."</string>
-    <string name="vvm3_error_subscriber_blocked_title">"Can't Connect to Your Voice Mailbox"</string>
-    <string name="vvm3_error_subscriber_unknown_message">Please contact Customer Service at %1$s to activate visual voicemail.</string>
-    <string name="vvm3_error_subscriber_unknown_title">Visual voicemail is disabled</string>
-    <string name="vvm3_error_unknown_device_message">Visual voicemail cannot be used on this device. Please contact Customer Service at %1$s and tell them the error code is 9992.</string>
-    <string name="vvm3_error_unknown_device_title">Voicemail</string>
-    <string name="vvm3_error_unknown_user_message">Voicemail is not set up on your account. Please contact Customer Service at %1$s and tell them the error code is 9991.</string>
-    <string name="vvm3_error_unknown_user_title">Set Up Voicemail</string>
-    <string name="vvm3_error_user_blocked_message">To complete visual voicemail setup, please contact Customer Service at %1$s and tell them the error code is 9998.</string>
-    <string name="vvm3_error_user_blocked_title">Something Went Wrong</string>
-    <string name="vvm3_error_vmg_dns_failure_message">Sorry, we ran into a problem. Please try again later. If there is still a problem, please contact Customer Service at %1$s and tell them the error code is 9002.</string>
-    <string name="vvm3_error_vmg_dns_failure_title">Something Went Wrong</string>
-    <string name="vvm3_error_vmg_no_cellular_message">"Sorry, we're having trouble connecting to your voice mailbox. If you're in an area with poor signal strength, wait until you have a strong signal and try again. If there is still a problem, please contact Customer Service at %1$s and tell them the error code is 9005."</string>
-    <string name="vvm3_error_vmg_no_cellular_title">"Can't Connect to Your Voice Mailbox"</string>
-    <string name="vvm3_error_vmg_timeout_message">Sorry, we ran into a problem. Please try again later. If there is still a problem, please contact Customer Service at %1$s and tell them the error code is 9008.</string>
-    <string name="vvm3_error_vmg_timeout_title">Something Went Wrong</string>
-    <string name="vvm3_error_vms_dns_failure_message">Sorry, we ran into a problem. Please try again later. If there is still a problem, please contact Customer Service at %1$s and tell them the error code is 9001.</string>
-    <string name="vvm3_error_vms_dns_failure_title">Something Went Wrong</string>
-    <string name="vvm3_error_vms_no_cellular_message">"Sorry, we're having trouble connecting to your voice mailbox. If you're in an area with poor signal strength, wait until you have a strong signal and try again. If there is still a problem, please contact Customer Service at %1$s and tell them the error code is 9004."</string>
-    <string name="vvm3_error_vms_no_cellular_title">"Can't Connect to Your Voice Mailbox"</string>
-    <string name="vvm3_error_vms_timeout_message">Sorry, we ran into a problem. Please try again later. If there is still a problem, please contact Customer Service at %1$s and tell them the error code is 9007.</string>
-    <string name="vvm3_error_vms_timeout_title">Something Went Wrong</string>
-    <string name="vvm_config_override_enabled_key">vvm_config_override_enabled</string>
-    <string name="vvm_config_override_load_current_key">vvm_config_override_load_current</string>
-    <string name="vvm_unsupported_message_format">Unsupported message type, call %s to listen.</string>
     <string name="wait_prompt_str">"Send the following tones?
 "</string>
     <string name="want_to_chat">Want to chat?</string>

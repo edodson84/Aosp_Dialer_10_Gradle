@@ -71,6 +71,7 @@ public class DragDropController {
         }
 
         for (int i = 0; i < onDragDropListeners.size(); i++) {
+            final PhoneFavoriteSquareTileView view = dragItemContainer.getViewForLocation(x, y);
             onDragDropListeners.get(i).onDragFinished(x, y);
         }
     }

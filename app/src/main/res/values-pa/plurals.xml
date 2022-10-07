@@ -24,14 +24,6 @@
         <item quantity="other">ਸਕਿੰਟ</item>
         <item quantity="one">ਸਕਿੰਟ</item>
     </plurals>
-    <plurals name="delete_voicemails_confirmation_dialog_title">
-        <item quantity="other">&lt;b>ਕੀ ਇਹਨਾਂ ਵੌਇਸਮੇਲਾਂ ਨੂੰ ਮਿਟਾਉਣਾ ਹੈ? &lt;/b></item>
-        <item quantity="one">&lt;b>ਕੀ ਇਸ ਵੌਇਸਮੇਲ ਨੂੰ ਮਿਟਾਉਣਾ ਹੈ? &lt;/b></item>
-    </plurals>
-    <plurals name="notification_voicemail_title">
-        <item quantity="other">%1$d ਵੌਇਸਮੇਲਾਂ</item>
-        <item quantity="one">%1$d ਵੌਇਸਮੇਲਾਂ</item>
-    </plurals>
     <plurals name="tab_title_with_unread_items">
         <item quantity="other">%1$s ਟੈਬ। %2$d ਅਣ-ਪੜ੍ਹੀਆਂ ਆਈਟਮਾਂ।</item>
         <item quantity="one">%1$s ਟੈਬ। %2$d ਅਣ-ਪੜ੍ਹੀਆਂ ਆਈਟਮਾਂ।</item>

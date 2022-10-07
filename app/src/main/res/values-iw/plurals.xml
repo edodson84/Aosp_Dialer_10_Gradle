@@ -36,18 +36,6 @@
         <item quantity="two">שניות</item>
         <item quantity="many">שניות</item>
     </plurals>
-    <plurals name="delete_voicemails_confirmation_dialog_title">
-        <item quantity="other">&lt;b>האם למחוק את ההודעות הקוליות האלה? &lt;/b></item>
-        <item quantity="one">&lt;b>האם למחוק את ההודעה הקולית הזו? &lt;/b></item>
-        <item quantity="two">&lt;b>האם למחוק את ההודעות הקוליות האלה? &lt;/b></item>
-        <item quantity="many">&lt;b>האם למחוק את ההודעות הקוליות האלה? &lt;/b></item>
-    </plurals>
-    <plurals name="notification_voicemail_title">
-        <item quantity="other">%1$d הודעות דואר קולי</item>
-        <item quantity="one">הודעת דואר קולי</item>
-        <item quantity="two">%1$d הודעות דואר קולי</item>
-        <item quantity="many">%1$d הודעות דואר קולי</item>
-    </plurals>
     <plurals name="tab_title_with_unread_items">
         <item quantity="other">הכרטיסייה %1$s. %2$d פריטים שלא נקראו.</item>
         <item quantity="one">הכרטיסייה %1$s. %2$d פריט שלא נקרא.</item>

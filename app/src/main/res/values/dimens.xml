@@ -1,25 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Text dimensions for dialpad keys -->
-    <dimen name="dialpad_key_numbers_size">@dimen/dialpad_key_numbers_default_size</dimen>
-    <dimen name="dialpad_key_letters_size">12sp</dimen>
-    <dimen name="dialpad_key_number_margin_bottom">@dimen/dialpad_key_number_default_margin_bottom
-    </dimen>
     <!-- Zero key should have less space between self and text because "+" is smaller -->
-    <dimen name="dialpad_zero_key_number_margin_bottom">
-        @dimen/dialpad_zero_key_number_default_margin_bottom
-    </dimen>
-    <dimen name="dialpad_zero_key_number_default_margin_bottom">1dp</dimen>
     <!-- Provide adjustable dimensions so that different apps can use different dialpad sizes. -->
-    <dimen name="dialpad_digits_adjustable_text_size">@dimen/dialpad_digits_text_size</dimen>
-    <dimen name="dialpad_digits_adjustable_height">@dimen/dialpad_digits_height</dimen>
-    <dimen name="dialpad_voicemail_icon_padding_top">2dp</dimen>
 
     <dimen name="material_corner_radius">28.0dip</dimen>
     <dimen name="dialpad_key_margin_right">5dp</dimen>
     <!-- Right margins for specific keys to align them correctly -->
-    <dimen name="dialpad_key_one_margin_right">3dp</dimen>
-    <dimen name="dialpad_key_text_width">35dp</dimen>
     <dimen name="dialpad_key_number_width">20sp</dimen>
     <dimen name="action_bar_elevation">3.0dip</dimen>
     <dimen name="action_bar_height">56.0dip</dimen>
@@ -30,8 +17,6 @@
     <dimen name="ad_icon_margin_top_offset">2.0dip</dimen>
     <dimen name="ad_icon_size">18.0dip</dimen>
     <dimen name="ad_text_margin_start">8.0dip</dimen>
-    <dimen name="alert_action_between_padding">11.0dip</dimen>
-    <dimen name="alert_main_padding">24.0dip</dimen>
     <dimen name="allow_permission_text_size">16.0sp</dimen>
     <item name="alpha_enabled" type="dimen">1.0</item>
     <item name="alpha_hiden" type="dimen">0.54</item>
@@ -111,7 +96,6 @@
     <dimen name="cardview_compat_inset_shadow">1.0dip</dimen>
     <dimen name="cardview_default_elevation">2.0dip</dimen>
     <dimen name="cardview_default_radius">2.0dip</dimen>
-    <dimen name="center_icon_radius">48.0dip</dimen>
     <dimen name="collapsed_search_bar_height">48.0dip</dimen>
     <dimen name="compat_button_inset_horizontal_material">4.0dip</dimen>
     <dimen name="compat_button_inset_vertical_material">6.0dip</dimen>
@@ -128,7 +112,6 @@
     <dimen name="contact_container_padding_bottom_end">8.0dip</dimen>
     <dimen name="contact_container_padding_top_start">12.0dip</dimen>
     <dimen name="contact_photo_size">48.0dip</dimen>
-    <dimen name="contact_tile_divider_width">1.0dip</dimen>
     <item name="contact_tile_height_to_width_ratio" type="fraction">76.0%</item>
     <dimen name="contact_tile_info_button_height_and_width">36.0dip</dimen>
     <dimen name="contact_tile_text_bottom_padding">9.0dip</dimen>
@@ -305,7 +288,6 @@
     <dimen name="tab_elevation">0.0dip</dimen>
     <dimen name="tab_height">48.0dip</dimen>
     <dimen name="tab_selected_underline_height">2.0dip</dimen>
-    <dimen name="tab_text_size">14.0sp</dimen>
     <dimen name="tab_unread_count_background_radius">2.0dip</dimen>
     <dimen name="tab_unread_count_background_size">16.0dip</dimen>
     <dimen name="tab_unread_count_margin_left">0.0dip</dimen>
@@ -319,7 +301,6 @@
     <dimen name="toolbar_elevation">4.0dip</dimen>
     <dimen name="toolbar_end_padding">4.0dip</dimen>
     <dimen name="toolbar_title_text_size">20.0sp</dimen>
-    <dimen name="track_width">15.0dip</dimen>
     <dimen name="two_button_bottom_padding">24.0dip</dimen>
     <dimen name="two_button_button_size">48.0dip</dimen>
     <dimen name="two_button_label_padding">8.0dip</dimen>
@@ -334,19 +315,4 @@
     <dimen name="videocall_preview_margin_end">24.0dip</dimen>
     <dimen name="videocall_preview_margin_start">24.0dip</dimen>
     <dimen name="videocall_preview_width">72.0dip</dimen>
-    <dimen name="voicemail_duration_size">14.0sp</dimen>
-    <dimen name="voicemail_media_player_height">56.0dip</dimen>
-    <dimen name="voicemail_media_player_padding_top">20.0dip</dimen>
-    <dimen name="voicemail_media_player_width">0.0dip</dimen>
-    <dimen name="voicemail_playback_state_text_size">14.0sp</dimen>
-    <dimen name="voicemail_playback_top_padding">12.0dip</dimen>
-    <dimen name="voicemail_promo_card_action_between_padding">11.0dip</dimen>
-    <dimen name="voicemail_promo_card_action_end_padding">4.0dip</dimen>
-    <dimen name="voicemail_promo_card_action_vertical_padding">4.0dip</dimen>
-    <dimen name="voicemail_promo_card_icon_size">24.0dip</dimen>
-    <dimen name="voicemail_promo_card_line_spacing">4.0dip</dimen>
-    <dimen name="voicemail_promo_card_main_padding">24.0dip</dimen>
-    <dimen name="voicemail_promo_card_title_padding">12.0dip</dimen>
-    <dimen name="voicemail_tos_image_size">280.0dip</dimen>
-    <dimen name="voicemail_transcription_text_size">14.0sp</dimen>
 </resources>

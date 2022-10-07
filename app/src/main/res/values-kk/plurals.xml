@@ -24,14 +24,6 @@
         <item quantity="other">секунд</item>
         <item quantity="one">секунд</item>
     </plurals>
-    <plurals name="delete_voicemails_confirmation_dialog_title">
-        <item quantity="other">&lt;b>Осы дауыстық хабарларды жою қажет пе? &lt;/b></item>
-        <item quantity="one">&lt;b>Осы дауыстық хабарды жою қажет пе? &lt;/b></item>
-    </plurals>
-    <plurals name="notification_voicemail_title">
-        <item quantity="other">%1$d дауыстық хабар</item>
-        <item quantity="one">Дауыстық хабар</item>
-    </plurals>
     <plurals name="tab_title_with_unread_items">
         <item quantity="other">%1$s қойындысы. %2$d оқылмаған элемент.</item>
         <item quantity="one">%1$s қойындысы. %2$d оқылмаған элемент.</item>

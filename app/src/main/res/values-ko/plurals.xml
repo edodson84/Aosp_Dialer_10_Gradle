@@ -24,14 +24,6 @@
         <item quantity="other">초</item>
         <item quantity="one">초</item>
     </plurals>
-    <plurals name="delete_voicemails_confirmation_dialog_title">
-        <item quantity="other">&lt;b>이 음성사서함을 삭제하시겠습니까? &lt;/b></item>
-        <item quantity="one">&lt;b>이 음성사서함을 삭제하시겠습니까? &lt;/b></item>
-    </plurals>
-    <plurals name="notification_voicemail_title">
-        <item quantity="other">음성메일 %1$d개</item>
-        <item quantity="one">음성메일</item>
-    </plurals>
     <plurals name="tab_title_with_unread_items">
         <item quantity="other">%1$s 탭. 읽지 않은 항목 %2$d개</item>
         <item quantity="one">%1$s 탭. 읽지 않은 항목 %2$d개</item>

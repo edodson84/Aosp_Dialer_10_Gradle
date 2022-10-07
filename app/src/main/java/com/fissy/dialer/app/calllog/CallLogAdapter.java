@@ -16,6 +16,7 @@
 
 package com.fissy.dialer.app.calllog;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ContentUris;
 import android.content.res.Resources;
@@ -810,7 +811,7 @@ public class CallLogAdapter extends GroupingListAdapter
         // attempt to set the field properly in that case
         viewHolder.isCallComposerCapable = isCallComposerCapable(viewHolder.number);
         viewHolder.setDetailedPhoneDetails(callDetailsEntries);
-        final AsyncTask<Void, Void, Boolean> loadDataTask =
+        @SuppressLint("StaticFieldLeak") final AsyncTask<Void, Void, Boolean> loadDataTask =
                 new AsyncTask<Void, Void, Boolean>() {
                     @Override
                     protected Boolean doInBackground(Void... params) {

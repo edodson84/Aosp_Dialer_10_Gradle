@@ -36,18 +36,6 @@
         <item quantity="few">секунды</item>
         <item quantity="many">секунд</item>
     </plurals>
-    <plurals name="delete_voicemails_confirmation_dialog_title">
-        <item quantity="other">&lt;b>Выдаліць гэтыя паведамленні галасавой пошты? &lt;/b></item>
-        <item quantity="one">&lt;b>Выдаліць гэтыя паведамленні галасавой пошты? &lt;/b></item>
-        <item quantity="few">&lt;b>Выдаліць гэтыя паведамленні галасавой пошты? &lt;/b></item>
-        <item quantity="many">&lt;b>Выдаліць гэтыя паведамленні галасавой пошты? &lt;/b></item>
-    </plurals>
-    <plurals name="notification_voicemail_title">
-        <item quantity="other">%1$d Паведамлення галасавой пошты</item>
-        <item quantity="one">%1$d Паведамленне галасавой пошты</item>
-        <item quantity="few">%1$d Паведамленні галасавой пошты</item>
-        <item quantity="many">%1$d Паведамленняў галасавой пошты</item>
-    </plurals>
     <plurals name="tab_title_with_unread_items">
         <item quantity="other">Укладка %1$s. %2$d непрачытанага элемента.</item>
         <item quantity="one">Укладка %1$s. %2$d непрачытаны элемент.</item>

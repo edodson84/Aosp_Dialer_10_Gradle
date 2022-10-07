@@ -26,6 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.fissy.dialer.R;
 import com.fissy.dialer.app.settings.ThemeOptionsSettingsFragment;
 import com.fissy.dialer.main.impl.MainActivity;
+import com.fissy.dialer.main.impl.MainActivityPeer;
 
 /**
  * Simple Activity that renders locally stored open source legal info in a text view.
@@ -36,7 +37,7 @@ public final class LicenseActivity extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle bundle) {
-        ThemeOptionsSettingsFragment.ThemeButtonBehavior mThemeBehavior = ThemeOptionsSettingsFragment.getThemeButtonBehavior(MainActivity.themeprefs);
+        ThemeOptionsSettingsFragment.ThemeButtonBehavior mThemeBehavior = ThemeOptionsSettingsFragment.getThemeButtonBehavior(MainActivityPeer.themeprefs);
 
         if (mThemeBehavior == ThemeOptionsSettingsFragment.ThemeButtonBehavior.DARK) {
             getTheme().applyStyle(R.style.DialerDark, true);

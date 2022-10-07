@@ -44,8 +44,7 @@ public interface OnDragDropListener {
     /**
      * Called when a drag is completed (whether by dropping it somewhere or simply by dragging the
      * contact off the screen)
-     *
-     * @param x X-coordinate of the drag event
+     *  @param x X-coordinate of the drag event
      * @param y Y-coordinate of the drag event
      */
     void onDragFinished(int x, int y);

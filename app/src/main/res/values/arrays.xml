@@ -10,41 +10,7 @@
         <item>1</item>
         <item>2</item>
     </string-array>
-    <string-array name="forward_lookup_providers" translatable="false">
-        <item>Google</item>
-        <item>OpenStreetMap</item>
-    </string-array>
 
-    <string-array name="forward_lookup_provider_names" translatable="false">
-        <item>Google</item>
-        <item>OpenStreetMap</item>
-    </string-array>
-
-    <string-array name="people_lookup_providers" translatable="false">
-        <item>Auskunft</item>
-    </string-array>
-
-    <string-array name="people_lookup_provider_names" translatable="false">
-        <item>Auskunft (AT)</item>
-    </string-array>
-
-    <string-array name="reverse_lookup_providers" translatable="false">
-        <item>Auskunft</item>
-        <item>DasTelefonbuch</item>
-        <item>OpenCnam</item>
-        <item>YellowPages</item>
-        <item>YellowPages_CA</item>
-        <item>ZabaSearch</item>
-    </string-array>
-
-    <string-array name="reverse_lookup_provider_names" translatable="false">
-        <item>Auskunft (AT)</item>
-        <item>Das Telefonbuch (DE)</item>
-        <item>OpenCnam (US)</item>
-        <item>YellowPages (US)</item>
-        <item>YellowPages (CA)</item>
-        <item>ZabaSearch (US)</item>
-    </string-array>
     <string-array name="call_recording_encoder_entries" translatable="false">
         <item>@string/wb_amr_format</item>
         <item>@string/aac_format</item>

@@ -24,14 +24,6 @@
         <item quantity="other">sekunder</item>
         <item quantity="one">sekund</item>
     </plurals>
-    <plurals name="delete_voicemails_confirmation_dialog_title">
-        <item quantity="other">&lt;b>Vil du slette disse talemeldingene? &lt;/b></item>
-        <item quantity="one">&lt;b>Vil du slette denne talemeldingen? &lt;/b></item>
-    </plurals>
-    <plurals name="notification_voicemail_title">
-        <item quantity="other">%1$d talemeldinger</item>
-        <item quantity="one">talemelding</item>
-    </plurals>
     <plurals name="tab_title_with_unread_items">
         <item quantity="other">%1$s-fanen. %2$d uleste elementer.</item>
         <item quantity="one">%1$s-fanen. %2$d ulest element.</item>

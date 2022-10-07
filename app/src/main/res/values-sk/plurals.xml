@@ -36,18 +36,6 @@
         <item quantity="few">sekundy</item>
         <item quantity="many">sekundy</item>
     </plurals>
-    <plurals name="delete_voicemails_confirmation_dialog_title">
-        <item quantity="other">&lt;b>Chcete odstrániť tieto hlasové správy? &lt;/b></item>
-        <item quantity="one">&lt;b>Chcete odstrániť túto hlasovú správu? &lt;/b></item>
-        <item quantity="few">&lt;b>Chcete odstrániť tieto hlasové správy? &lt;/b></item>
-        <item quantity="many">&lt;b>Chcete odstrániť tieto hlasové správy? &lt;/b></item>
-    </plurals>
-    <plurals name="notification_voicemail_title">
-        <item quantity="other">%1$d odkazov v hlasovej schránke</item>
-        <item quantity="one">Odkaz v hlasovej schránke</item>
-        <item quantity="few">%1$d odkazy v hlasovej schránke</item>
-        <item quantity="many">%1$d odkazu v hlasovej schránke</item>
-    </plurals>
     <plurals name="tab_title_with_unread_items">
         <item quantity="other">Karta %1$s. %2$d neprečítaných položiek.</item>
         <item quantity="one">Karta %1$s. %2$d neprečítaná položka.</item>

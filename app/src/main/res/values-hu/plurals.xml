@@ -24,14 +24,6 @@
         <item quantity="other">másodperc</item>
         <item quantity="one">másodperc</item>
     </plurals>
-    <plurals name="delete_voicemails_confirmation_dialog_title">
-        <item quantity="other">&lt;b>Törli ezeket a hangpostaüzeneteket? &lt;/b></item>
-        <item quantity="one">&lt;b>Törli ezt a hangpostaüzenetet? &lt;/b></item>
-    </plurals>
-    <plurals name="notification_voicemail_title">
-        <item quantity="other">%1$d hangpostaüzenet</item>
-        <item quantity="one">Hangpostaüzenet</item>
-    </plurals>
     <plurals name="tab_title_with_unread_items">
         <item quantity="other">%1$s lap. %2$d olvasatlan elem.</item>
         <item quantity="one">%1$s lap. %2$d olvasatlan elem.</item>

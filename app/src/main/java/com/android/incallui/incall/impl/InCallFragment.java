@@ -20,6 +20,7 @@ import android.Manifest.permission;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.os.Handler;
 import android.telecom.CallAudioState;
@@ -63,16 +64,15 @@ import com.android.incallui.incall.protocol.PrimaryInfo;
 import com.android.incallui.incall.protocol.SecondaryInfo;
 import com.fissy.dialer.R;
 import com.fissy.dialer.app.settings.ThemeOptionsSettingsFragment;
-import com.fissy.dialer.binary.common.DialerApplication;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.FragmentUtils;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.logging.DialerImpression;
 import com.fissy.dialer.logging.Logger;
 import com.fissy.dialer.main.impl.MainActivity;
+import com.fissy.dialer.main.impl.MainActivityPeer;
 import com.fissy.dialer.multimedia.MultimediaData;
 import com.fissy.dialer.strictmode.StrictModeUtils;
-import com.fissy.dialer.util.TransactionSafeActivity;
 import com.fissy.dialer.widget.LockableViewPager;
 
 import java.util.ArrayList;
@@ -204,8 +204,12 @@ public class InCallFragment extends Fragment
                         if (topInset != container.getPaddingTop()) {
                             TransitionManager.beginDelayedTransition(((ViewGroup) container.getParent()));
                             container.setPadding(0, topInset, 0, bottomInset);
-                            ThemeOptionsSettingsFragment.ThemeButtonBehavior mThemeBehavior = ThemeOptionsSettingsFragment.getThemeButtonBehavior(MainActivity.themeprefs);
-                            if (!(mThemeBehavior == ThemeOptionsSettingsFragment.ThemeButtonBehavior.DARK)) {
+                            TypedArray typedArray =
+                                    MainActivity.main.getTheme().obtainStyledAttributes(R.styleable.darkmodeView);
+                            boolean darkmode = typedArray.getBoolean(R.styleable.darkmodeView_darkmode, false);
+                            typedArray.recycle();
+                            ThemeOptionsSettingsFragment.ThemeButtonBehavior mThemeBehavior = ThemeOptionsSettingsFragment.getThemeButtonBehavior(MainActivityPeer.themeprefs);
+                            if (mThemeBehavior == ThemeOptionsSettingsFragment.ThemeButtonBehavior.LIGHT || !darkmode) {
                                 container.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
                             }
                         }
@@ -347,7 +351,7 @@ public class InCallFragment extends Fragment
                 transaction.remove(oldBanner);
             }
         }
-        transaction.setCustomAnimations(R.anim.abc_slide_in_top, R.anim.abc_slide_out_top);
+        transaction.setCustomAnimations(androidx.appcompat.R.anim.abc_slide_in_top, androidx.appcompat.R.anim.abc_slide_out_top);
         transaction.commitNowAllowingStateLoss();
     }
 

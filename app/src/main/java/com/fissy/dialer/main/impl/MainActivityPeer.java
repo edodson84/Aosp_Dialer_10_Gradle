@@ -26,6 +26,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -63,13 +64,13 @@ import com.fissy.dialer.app.list.OnDragDropListener;
 import com.fissy.dialer.app.list.OnListFragmentScrolledListener;
 import com.fissy.dialer.app.list.PhoneFavoriteSquareTileView;
 import com.fissy.dialer.app.list.RemoveView;
+import com.fissy.dialer.app.settings.ThemeOptionsSettingsFragment;
 import com.fissy.dialer.callcomposer.CallComposerActivity;
 import com.fissy.dialer.calldetails.OldCallDetailsActivity;
 import com.fissy.dialer.callintent.CallIntentBuilder;
 import com.fissy.dialer.callintent.CallSpecificAppData;
 import com.fissy.dialer.calllog.CallLogComponent;
 import com.fissy.dialer.calllog.config.CallLogConfigComponent;
-import com.fissy.dialer.calllog.ui.NewCallLogFragment;
 import com.fissy.dialer.common.FragmentUtils.FragmentUtilListener;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.common.concurrent.DefaultFutureCallback;
@@ -93,7 +94,6 @@ import com.fissy.dialer.interactions.PhoneNumberInteraction;
 import com.fissy.dialer.logging.DialerImpression;
 import com.fissy.dialer.logging.Logger;
 import com.fissy.dialer.logging.ScreenEvent;
-import com.fissy.dialer.main.MainActivityPeer;
 import com.fissy.dialer.main.impl.bottomnav.BottomNavBar;
 import com.fissy.dialer.main.impl.bottomnav.BottomNavBar.OnBottomNavTabSelectedListener;
 import com.fissy.dialer.main.impl.bottomnav.BottomNavBar.TabIndex;
@@ -125,11 +125,11 @@ import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 /**
- * OldMainActivityPeer which implements all of the old fragments we know and love <3
+ * MainActivityPeer which implements all of the old fragments we know and love <3
  *
  * <p>TODO(calderwoodra): Deprecate this class when we launch NewmainActivityPeer.
  */
-public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListener {
+public class MainActivityPeer implements com.fissy.dialer.main.MainActivityPeer, FragmentUtilListener {
 
     private static final String KEY_SAVED_LANGUAGE_CODE = "saved_language_code";
     private static final String KEY_CURRENT_TAB = "current_tab";
@@ -193,16 +193,8 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
     private UiListener<Integer> missedCallObserverUiListener;
     private View bottomSheet;
 
-    public OldMainActivityPeer(TransactionSafeActivity activity) {
+    public MainActivityPeer(TransactionSafeActivity activity) {
         this.activity = activity;
-    }
-
-    public static Intent getShowTabIntent(Context context, @TabIndex int tabIndex) {
-        Intent intent = new Intent(context, MainActivity.class);
-        intent.setAction(ACTION_SHOW_TAB);
-        intent.putExtra(EXTRA_SHOW_TAB, tabIndex);
-        // TODO(calderwoodra): Do we need to set some URI data here
-        return intent;
     }
 
     static boolean isShowTabIntent(Intent intent) {
@@ -219,10 +211,23 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
         return context.getSystemService(TelephonyManager.class);
     }
 
+    public static SharedPreferences themeprefs;
     @Override
     public void onActivityCreate(Bundle savedInstanceState) {
-        LogUtil.enterBlock("OldMainActivityPeer.onActivityCreate");
-        setTheme();
+        LogUtil.enterBlock("MainActivityPeer.onActivityCreate");
+        themeprefs = ThemeOptionsSettingsFragment.getSharedPreferences(activity);
+        ThemeOptionsSettingsFragment.ThemeButtonBehavior mThemeBehavior = ThemeOptionsSettingsFragment.getThemeButtonBehavior(themeprefs);
+
+        if (mThemeBehavior == ThemeOptionsSettingsFragment.ThemeButtonBehavior.DARK) {
+            LogUtil.enterBlock("MainActivity.dark");
+            activity.getTheme().applyStyle(R.style.MainActivityThemeDark, true);
+        }
+        if (mThemeBehavior == ThemeOptionsSettingsFragment.ThemeButtonBehavior.LIGHT) {
+            LogUtil.enterBlock("MainActivity.light");
+            activity.getTheme().applyStyle(R.style.MainActivityThemeLight, true);
+        }
+
+
         activity.setContentView(R.layout.main_activity);
         initUiListeners();
         initLayout(savedInstanceState);
@@ -232,9 +237,7 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
     /**
      * should be called before {@link AppCompatActivity#setContentView(int)}.
      */
-    private void setTheme() {
 
-    }
 
     private void initUiListeners() {
         getLastOutgoingCallListener =
@@ -260,7 +263,7 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
                     Logger.get(activity).logImpression(DialerImpression.Type.MAIN_CLICK_FAB_TO_OPEN_DIALPAD);
                     searchController.showDialpad(true);
                     if (callLogAdapterOnActionModeStateChangedListener.isEnabled) {
-                        LogUtil.i("OldMainActivityPeer.onFabClicked", "closing multiselect");
+                        LogUtil.i("MainActivityPeer.onFabClicked", "closing multiselect");
                         callLogAdapterOnActionModeStateChangedListener.actionMode.finish();
                     }
                 });
@@ -333,7 +336,7 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
 
     @Override
     public void onNewIntent(Intent intent) {
-        LogUtil.enterBlock("OldMainActivityPeer.onNewIntent");
+        LogUtil.enterBlock("MainActivityPeer.onNewIntent");
         onHandleIntent(intent);
     }
 
@@ -347,28 +350,28 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
         @TabIndex int tabToSelect;
         if (Calls.CONTENT_TYPE.equals(intent.getType())) {
             Bundle extras = intent.getExtras();
-            LogUtil.i("OldMainActivityPeer.onHandleIntent", "Call log content type intent");
+            LogUtil.i("MainActivityPeer.onHandleIntent", "Call log content type intent");
             tabToSelect = TabIndex.CALL_LOG;
 
         } else if (isShowTabIntent(intent)) {
-            LogUtil.i("OldMainActivityPeer.onHandleIntent", "Show tab intent");
+            LogUtil.i("MainActivityPeer.onHandleIntent", "Show tab intent");
             tabToSelect = getTabFromIntent(intent);
         } else {
-            LogUtil.i("OldMainActivityPeer.onHandleIntent", "Show last tab");
+            LogUtil.i("MainActivityPeer.onHandleIntent", "Show last tab");
             tabToSelect = lastTabController.getLastTab();
         }
         logImpressionForSelectedTab(tabToSelect);
         bottomNav.selectTab(tabToSelect);
 
         if (isDialOrAddCallIntent(intent)) {
-            LogUtil.i("OldMainActivityPeer.onHandleIntent", "Dial or add call intent");
+            LogUtil.i("MainActivityPeer.onHandleIntent", "Dial or add call intent");
             // Dialpad will grab the intent and populate the number
             searchController.showDialpadFromNewIntent();
             Logger.get(activity).logImpression(DialerImpression.Type.MAIN_OPEN_WITH_DIALPAD);
         }
 
         if (intent.getBooleanExtra(MainComponent.EXTRA_CLEAR_NEW_VOICEMAILS, false)) {
-            LogUtil.i("OldMainActivityPeer.onHandleIntent", "clearing all new voicemails");
+            LogUtil.i("MainActivityPeer.onHandleIntent", "clearing all new voicemails");
             CallLogNotificationsService.markAllNewVoicemailsAsOld(activity);
         }
     }
@@ -515,7 +518,7 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         LogUtil.i(
-                "OldMainActivityPeer.onActivityResult",
+                "MainActivityPeer.onActivityResult",
                 "requestCode:%d, resultCode:%d",
                 requestCode,
                 resultCode);
@@ -524,14 +527,14 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
         } else if (requestCode == ActivityRequestCodes.DIALTACTS_CALL_COMPOSER) {
             if (resultCode == AppCompatActivity.RESULT_FIRST_USER) {
                 LogUtil.i(
-                        "OldMainActivityPeer.onActivityResult", "returned from call composer, error occurred");
+                        "MainActivityPeer.onActivityResult", "returned from call composer, error occurred");
                 String message =
                         activity.getString(
                                 R.string.call_composer_connection_failed,
                                 data.getStringExtra(CallComposerActivity.KEY_CONTACT_NAME));
                 Snackbar.make(snackbarContainer, message, Snackbar.LENGTH_LONG).show();
             } else {
-                LogUtil.i("OldMainActivityPeer.onActivityResult", "returned from call composer, no error");
+                LogUtil.i("MainActivityPeer.onActivityResult", "returned from call composer, no error");
             }
 
         } else if (requestCode == ActivityRequestCodes.DIALTACTS_CALL_DETAILS) {
@@ -560,13 +563,13 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
             DuoComponent.get(activity).getDuo().reloadReachability(activity);
 
         } else {
-            LogUtil.e("OldMainActivityPeer.onActivityResult", "Unknown request code: " + requestCode);
+            LogUtil.e("MainActivityPeer.onActivityResult", "Unknown request code: " + requestCode);
         }
     }
 
     @Override
     public boolean onBackPressed() {
-        LogUtil.enterBlock("OldMainActivityPeer.onBackPressed");
+        LogUtil.enterBlock("MainActivityPeer.onBackPressed");
         return searchController.onBackPressed();
     }
 
@@ -1231,16 +1234,8 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
             }
             Logger.get(activity).logScreenView(ScreenEvent.Type.MAIN_CALL_LOG, activity);
             selectedTab = TabIndex.CALL_LOG;
-
-            if (CallLogConfigComponent.get(activity).callLogConfig().isNewCallLogFragmentEnabled()) {
-                androidx.fragment.app.Fragment supportFragment =
-                        supportFragmentManager.findFragmentByTag(CALL_LOG_TAG);
-                showSupportFragment(
-                        supportFragment == null ? new NewCallLogFragment() : supportFragment, CALL_LOG_TAG);
-            } else {
-                Fragment fragment = fragmentManager.findFragmentByTag(CALL_LOG_TAG);
-                showFragment(fragment == null ? new CallLogFragment() : fragment, CALL_LOG_TAG);
-            }
+            Fragment fragment = fragmentManager.findFragmentByTag(CALL_LOG_TAG);
+            showFragment(fragment == null ? new CallLogFragment() : fragment, CALL_LOG_TAG);
             fab.show();
             showPromotionBottomSheet(activity, bottomSheet);
         }

@@ -24,14 +24,6 @@
         <item quantity="other">စက္ကန့်</item>
         <item quantity="one">စက္ကန့်</item>
     </plurals>
-    <plurals name="delete_voicemails_confirmation_dialog_title">
-        <item quantity="other">&lt;b>ဤအသံမေးလ်များကို ဖျက်မလား။ &lt;/b></item>
-        <item quantity="one">&lt;b>ဤအသံမေးလ်ကို ဖျက်မလား။ &lt;/b></item>
-    </plurals>
-    <plurals name="notification_voicemail_title">
-        <item quantity="other">%1$d အသံမေးလ်များ</item>
-        <item quantity="one">အသံမေးလ်</item>
-    </plurals>
     <plurals name="tab_title_with_unread_items">
         <item quantity="other">%1$s တဘ်။ မဖတ်ရသေးသည့် အရာ %2$d ခု။</item>
         <item quantity="one">%1$s တဘ်။ မဖတ်ရသေးသည့် အရာ %2$d ခု။</item>

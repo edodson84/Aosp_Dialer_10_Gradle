@@ -36,10 +36,12 @@ import android.text.BidiFormatter;
 import android.text.TextDirectionHeuristics;
 import android.text.TextUtils;
 import android.view.ContextMenu;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewStub;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -49,12 +51,16 @@ import androidx.annotation.IntDef;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresPermission;
 import androidx.annotation.VisibleForTesting;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.contacts.common.dialog.CallSubjectDialog;
 import com.fissy.dialer.R;
+import com.fissy.dialer.ThemeUtils;
 import com.fissy.dialer.app.calllog.CallLogAdapter.OnActionModeStateChangedListener;
 import com.fissy.dialer.app.calllog.calllogcache.CallLogCache;
+import com.fissy.dialer.app.settings.ThemeOptionsSettingsFragment;
 import com.fissy.dialer.blocking.BlockedNumbersMigrator;
 import com.fissy.dialer.blocking.FilteredNumberCompat;
 import com.fissy.dialer.blocking.FilteredNumbersUtil;
@@ -83,6 +89,7 @@ import com.fissy.dialer.logging.InteractionEvent;
 import com.fissy.dialer.logging.Logger;
 import com.fissy.dialer.logging.ScreenEvent;
 import com.fissy.dialer.logging.UiAction;
+import com.fissy.dialer.main.impl.MainActivity;
 import com.fissy.dialer.performancereport.PerformanceReport;
 import com.fissy.dialer.phonenumbercache.CachedNumberLookupService;
 import com.fissy.dialer.phonenumbercache.ContactInfo;
@@ -107,7 +114,7 @@ import java.lang.ref.WeakReference;
 public final class CallLogListItemViewHolder extends RecyclerView.ViewHolder
         implements View.OnClickListener,
         MenuItem.OnMenuItemClickListener,
-        View.OnCreateContextMenuListener {
+        View.OnCreateContextMenuListener{
 
     private static final String TASK_DELETE = "task_delete";
 
@@ -306,8 +313,8 @@ public final class CallLogListItemViewHolder extends RecyclerView.ViewHolder
         this.callLogEntryView = callLogEntryView;
         this.dayGroupHeader = dayGroupHeader;
         this.primaryActionButtonView = primaryActionButtonView;
-        this.workIconView = (ImageView) rootView.findViewById(R.id.work_profile_icon);
-        this.checkBoxView = (ImageView) rootView.findViewById(R.id.quick_contact_checkbox);
+        this.workIconView = rootView.findViewById(R.id.work_profile_icon);
+        this.checkBoxView = rootView.findViewById(R.id.quick_contact_checkbox);
 
         // Set text height to false on the TextViews so they don't have extra padding.
         phoneCallDetailsViews.nameView.setElegantTextHeight(false);
@@ -428,23 +435,13 @@ public final class CallLogListItemViewHolder extends RecyclerView.ViewHolder
             Logger.get(context)
                     .logImpression(DialerImpression.Type.CALL_LOG_CONTEXT_MENU_BLOCK_REPORT_SPAM);
             maybeShowBlockNumberMigrationDialog(
-                    new BlockedNumbersMigrator.Listener() {
-                        @Override
-                        public void onComplete() {
-                            blockReportListener.onBlockReportSpam(
-                                    displayNumber, number, countryIso, callType, info.sourceType);
-                        }
-                    });
+                    () -> blockReportListener.onBlockReportSpam(
+                            displayNumber, number, countryIso, callType, info.sourceType));
         } else if (resId == R.id.context_menu_block) {
             Logger.get(context).logImpression(DialerImpression.Type.CALL_LOG_CONTEXT_MENU_BLOCK_NUMBER);
             maybeShowBlockNumberMigrationDialog(
-                    new BlockedNumbersMigrator.Listener() {
-                        @Override
-                        public void onComplete() {
-                            blockReportListener.onBlock(
-                                    displayNumber, number, countryIso, callType, info.sourceType);
-                        }
-                    });
+                    () -> blockReportListener.onBlock(
+                            displayNumber, number, countryIso, callType, info.sourceType));
         } else if (resId == R.id.context_menu_unblock) {
             Logger.get(context).logImpression(DialerImpression.Type.CALL_LOG_CONTEXT_MENU_UNBLOCK_NUMBER);
             blockReportListener.onUnblock(
@@ -468,7 +465,7 @@ public final class CallLogListItemViewHolder extends RecyclerView.ViewHolder
      * necessary.
      */
     public void inflateActionViewStub() {
-        ViewStub stub = (ViewStub) rootView.findViewById(R.id.call_log_entry_actions_stub);
+        ViewStub stub = rootView.findViewById(R.id.call_log_entry_actions_stub);
         if (stub != null) {
             actionsView = stub.inflate();
 
@@ -655,7 +652,7 @@ public final class CallLogListItemViewHolder extends RecyclerView.ViewHolder
         }
 
         TextView callTypeOrLocationView =
-                ((TextView) callButtonView.findViewById(R.id.call_type_or_location_text));
+                callButtonView.findViewById(R.id.call_type_or_location_text);
 
         if (canPlaceCallToNumber) {
             if (canSupportAssistedDialing()) {
@@ -675,7 +672,7 @@ public final class CallLogListItemViewHolder extends RecyclerView.ViewHolder
                                     context.getString(R.string.call_log_action_call),
                                     nameOrNumber == null ? "" : nameOrNumber));
 
-            if (callType == Calls.VOICEMAIL_TYPE && !TextUtils.isEmpty(callTypeOrLocation)) {
+            if (!TextUtils.isEmpty(callTypeOrLocation)) {
                 callTypeOrLocationView.setText(callTypeOrLocation);
                 callTypeOrLocationView.setVisibility(View.VISIBLE);
             }
@@ -1153,31 +1150,21 @@ public final class CallLogListItemViewHolder extends RecyclerView.ViewHolder
         }
     }
 
-    @VisibleForTesting
-    public CallDetailsEntries getDetailedPhoneDetails() {
-        return callDetailsEntries;
-    }
-
     public void setDetailedPhoneDetails(CallDetailsEntries callDetailsEntries) {
         this.callDetailsEntries = callDetailsEntries;
     }
 
     @Override
-    public void onCreateContextMenu(
-            final ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        PopupMenu popup = new PopupMenu(context, v);
         if (TextUtils.isEmpty(number)) {
             return;
         }
+        popup.getMenu().add(
+                PhoneNumberUtils.createTtsSpannable(
+                        BidiFormatter.getInstance().unicodeWrap(number, TextDirectionHeuristics.LTR)));
 
-        if (callType == CallLog.Calls.VOICEMAIL_TYPE) {
-            menu.setHeaderTitle(context.getResources().getText(R.string.voicemail));
-        } else {
-            menu.setHeaderTitle(
-                    PhoneNumberUtils.createTtsSpannable(
-                            BidiFormatter.getInstance().unicodeWrap(number, TextDirectionHeuristics.LTR)));
-        }
-
-        menu.add(
+        popup.getMenu().add(
                         ContextMenu.NONE,
                         R.id.context_menu_copy_to_clipboard,
                         ContextMenu.NONE,
@@ -1192,7 +1179,7 @@ public final class CallLogListItemViewHolder extends RecyclerView.ViewHolder
         if (PhoneNumberHelper.canPlaceCallsTo(number, numberPresentation)
                 && !callLogCache.isVoicemailNumber(accountHandle, number)
                 && !PhoneNumberHelper.isSipNumber(number)) {
-            menu.add(
+            popup.getMenu().add(
                             ContextMenu.NONE,
                             R.id.context_menu_edit_before_call,
                             ContextMenu.NONE,
@@ -1200,26 +1187,13 @@ public final class CallLogListItemViewHolder extends RecyclerView.ViewHolder
                     .setOnMenuItemClickListener(this);
         }
 
-        if (callType == CallLog.Calls.VOICEMAIL_TYPE
-                && phoneCallDetailsViews.voicemailTranscriptionView.length() > 0) {
-            menu.add(
-                            ContextMenu.NONE,
-                            R.id.context_menu_copy_transcript_to_clipboard,
-                            ContextMenu.NONE,
-                            R.string.copy_transcript_text)
-                    .setOnMenuItemClickListener(this);
-        }
-
         String e164Number = PhoneNumberUtils.formatNumberToE164(number, countryIso);
-        boolean isVoicemailNumber = callLogCache.isVoicemailNumber(accountHandle, number);
         boolean canPlaceCallToNumber = PhoneNumberHelper.canPlaceCallsTo(number, numberPresentation);
-        if (canPlaceCallToNumber
-                && !isVoicemailNumber
-                && FilteredNumbersUtil.canBlockNumber(context, e164Number, number)
+        if (canPlaceCallToNumber && FilteredNumbersUtil.canBlockNumber(context, e164Number, number)
                 && FilteredNumberCompat.canAttemptBlockOperations(context)) {
             boolean isBlocked = blockId != null;
             if (isBlocked) {
-                menu.add(
+                popup.getMenu().add(
                                 ContextMenu.NONE,
                                 R.id.context_menu_unblock,
                                 ContextMenu.NONE,
@@ -1228,20 +1202,20 @@ public final class CallLogListItemViewHolder extends RecyclerView.ViewHolder
             } else {
                 if (isSpamFeatureEnabled) {
                     if (isSpam) {
-                        menu.add(
+                        popup.getMenu().add(
                                         ContextMenu.NONE,
                                         R.id.context_menu_report_not_spam,
                                         ContextMenu.NONE,
                                         R.string.call_log_action_remove_spam)
                                 .setOnMenuItemClickListener(this);
-                        menu.add(
+                        popup.getMenu().add(
                                         ContextMenu.NONE,
                                         R.id.context_menu_block,
                                         ContextMenu.NONE,
                                         R.string.call_log_action_block_number)
                                 .setOnMenuItemClickListener(this);
                     } else {
-                        menu.add(
+                        popup.getMenu().add(
                                         ContextMenu.NONE,
                                         R.id.context_menu_block_report_spam,
                                         ContextMenu.NONE,
@@ -1249,7 +1223,7 @@ public final class CallLogListItemViewHolder extends RecyclerView.ViewHolder
                                 .setOnMenuItemClickListener(this);
                     }
                 } else {
-                    menu.add(
+                    popup.getMenu().add(
                                     ContextMenu.NONE,
                                     R.id.context_menu_block,
                                     ContextMenu.NONE,
@@ -1260,10 +1234,10 @@ public final class CallLogListItemViewHolder extends RecyclerView.ViewHolder
         }
 
         if (callType != CallLog.Calls.VOICEMAIL_TYPE) {
-            menu.add(ContextMenu.NONE, R.id.context_menu_delete, ContextMenu.NONE, R.string.delete)
+            popup.getMenu().add(ContextMenu.NONE, R.id.context_menu_delete, ContextMenu.NONE, R.string.delete)
                     .setOnMenuItemClickListener(this);
         }
-
+        popup.show();
         Logger.get(context).logScreenView(ScreenEvent.Type.CALL_LOG_CONTEXT_MENU, (Activity) context);
     }
 

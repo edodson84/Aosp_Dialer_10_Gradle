@@ -18,6 +18,7 @@ package com.fissy.dialer.lookup.google;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.TypedArray;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
@@ -25,13 +26,13 @@ import android.provider.ContactsContract.CommonDataKinds.StructuredPostal;
 import android.text.Html;
 import android.util.Log;
 
+import com.fissy.dialer.R;
 import com.fissy.dialer.app.settings.ThemeOptionsSettingsFragment;
-import com.fissy.dialer.binary.common.DialerApplication;
 import com.fissy.dialer.lookup.ContactBuilder;
 import com.fissy.dialer.lookup.LookupUtils;
 import com.fissy.dialer.main.impl.MainActivity;
+import com.fissy.dialer.main.impl.MainActivityPeer;
 import com.fissy.dialer.phonenumbercache.ContactInfo;
-import com.fissy.dialer.util.TransactionSafeActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -173,9 +174,20 @@ public abstract class GoogleForwardLookup {
 
                 String profileUrl = params.optString(RESULT_WEBSITE, RESULT_WEBSITE);
 
-                ThemeOptionsSettingsFragment.ThemeButtonBehavior mThemeBehavior = ThemeOptionsSettingsFragment.getThemeButtonBehavior(MainActivity.themeprefs);
+                TypedArray typedArray =
+                        MainActivity.main.getTheme().obtainStyledAttributes(R.styleable.darkmodeView);
+               boolean darkmode = typedArray.getBoolean(R.styleable.darkmodeView_darkmode, false);
+                typedArray.recycle();
 
-                String photoUri = params.optString(RESULT_PHOTO_URI, mThemeBehavior == ThemeOptionsSettingsFragment.ThemeButtonBehavior.DARK ? ContactBuilder.PHOTO_URI_BUSINESS_DARK : ContactBuilder.PHOTO_URI_BUSINESS);
+                ThemeOptionsSettingsFragment.ThemeButtonBehavior mThemeBehavior = ThemeOptionsSettingsFragment.getThemeButtonBehavior(MainActivityPeer.themeprefs);
+                String business;
+                if (mThemeBehavior == ThemeOptionsSettingsFragment.ThemeButtonBehavior.DARK || darkmode) {
+                    business = ContactBuilder.PHOTO_URI_BUSINESS_DARK;
+                }
+                else{
+                    business = ContactBuilder.PHOTO_URI_BUSINESS;
+                }
+                String photoUri = params.optString(RESULT_PHOTO_URI, business);
 
                 ContactBuilder.Address a = new ContactBuilder.Address();
                 a.formattedAddress = address;

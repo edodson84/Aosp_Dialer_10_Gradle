@@ -30,16 +30,6 @@
         <item quantity="one">sekunda</item>
         <item quantity="few">sekunde</item>
     </plurals>
-    <plurals name="delete_voicemails_confirmation_dialog_title">
-        <item quantity="other">&lt;b>Izbrisati ove govorne poruke? &lt;/b></item>
-        <item quantity="one">&lt;b>Izbrisati ove govorne poruke? &lt;/b></item>
-        <item quantity="few">&lt;b>Izbrisati ove govorne poruke? &lt;/b></item>
-    </plurals>
-    <plurals name="notification_voicemail_title">
-        <item quantity="other">%1$d Poruka govorne pošte</item>
-        <item quantity="one">%1$d Poruka govorne pošte</item>
-        <item quantity="few">%1$d Poruke govorne pošte</item>
-    </plurals>
     <plurals name="tab_title_with_unread_items">
         <item quantity="other">Kartica %1$s. %2$d nepročitanih stavki.</item>
         <item quantity="one">Kartica %1$s. %2$d nepročitana stavka.</item>

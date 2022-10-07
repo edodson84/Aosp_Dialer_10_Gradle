@@ -24,14 +24,6 @@
         <item quantity="other">секунди</item>
         <item quantity="one">секунди</item>
     </plurals>
-    <plurals name="delete_voicemails_confirmation_dialog_title">
-        <item quantity="other">&lt;b>Да се избришат говорните пораки? &lt;/b></item>
-        <item quantity="one">&lt;b>Да се избришат говорните пораки? &lt;/b></item>
-    </plurals>
-    <plurals name="notification_voicemail_title">
-        <item quantity="other">%1$d говорни пораки</item>
-        <item quantity="one">%1$d говорна порака</item>
-    </plurals>
     <plurals name="tab_title_with_unread_items">
         <item quantity="other">Картичка %1$s. %2$d непрочитани ставки.</item>
         <item quantity="one">Картичка %1$s. %2$d непрочитана ставка.</item>

@@ -18,8 +18,8 @@ android {
         applicationId "com.fissy.dialer"
         minSdk 28
         targetSdk 29
-        versionCode 3
-        versionName '3.0'
+        versionCode 4
+        versionName '4.0'
         signingConfig signingConfigs.debug
     }
 

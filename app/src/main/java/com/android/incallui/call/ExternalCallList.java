@@ -65,6 +65,13 @@ public class ExternalCallList {
         externalCalls.remove(telecomCall);
         telecomCall.unregisterCallback(telecomCallCallback);
         notifyExternalCallRemoved(telecomCall);
+    }
+
+    /**
+     * Adds a new listener to external call events.
+     */
+    public void addExternalCallListener(@NonNull ExternalCallListener listener) {
+        externalCallListeners.add(listener);
     }    /**
      * Handles {@link android.telecom.Call.Callback} callbacks.
      */
@@ -75,13 +82,6 @@ public class ExternalCallList {
                     notifyExternalCallUpdated(call);
                 }
             };
-
-    /**
-     * Adds a new listener to external call events.
-     */
-    public void addExternalCallListener(@NonNull ExternalCallListener listener) {
-        externalCallListeners.add(listener);
-    }
 
     /**
      * Removes a listener to external call events.

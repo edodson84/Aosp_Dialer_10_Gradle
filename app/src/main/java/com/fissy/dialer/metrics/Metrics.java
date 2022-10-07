@@ -33,7 +33,7 @@ public interface Metrics {
     String ON_CALL_ADDED_TO_ON_INCALL_UI_SHOWN_OUTGOING =
             "CallList.onCallAdded_To_InCallActivity.onCreate_Outgoing";
     String DIALTACTS_ON_RESUME_MEMORY_EVENT_NAME = "GoogleDialtactsActivity.onResume";
-    String OLD_MAIN_ACTIVITY_PEER_ON_RESUME_MEMORY_EVENT_NAME = "OldMainActivityPeer.onResume";
+    String OLD_MAIN_ACTIVITY_PEER_ON_RESUME_MEMORY_EVENT_NAME = "MainActivityPeer.onResume";
     String INCALL_ACTIVITY_ON_RESUME_MEMORY_EVENT_NAME = "IncallActivity.OnResume";
     String INCALL_ACTIVITY_ON_STOP_MEMORY_EVENT_NAME = "IncallActivity.OnStop";
     String OLD_CALL_LOG_JANK_EVENT_NAME = "OldCallLog.Jank";

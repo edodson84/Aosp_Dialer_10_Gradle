@@ -215,6 +215,7 @@ final class LegacyHttpDateTime {
         int hour;
         int minute;
         int second;
+
         TimeOfDay(int h, int m, int s) {
             this.hour = h;
             this.minute = m;

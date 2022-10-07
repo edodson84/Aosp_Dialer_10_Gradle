@@ -24,14 +24,6 @@
         <item quantity="other">detik</item>
         <item quantity="one">detik</item>
     </plurals>
-    <plurals name="delete_voicemails_confirmation_dialog_title">
-        <item quantity="other">&lt;b>Hapus pesan suara ini? &lt;/b></item>
-        <item quantity="one">&lt;b>Hapus pesan suara ini? &lt;/b></item>
-    </plurals>
-    <plurals name="notification_voicemail_title">
-        <item quantity="other">%1$d Pesan suara</item>
-        <item quantity="one">Pesan suara</item>
-    </plurals>
     <plurals name="tab_title_with_unread_items">
         <item quantity="other">Tab %1$s. %2$d item belum dibaca.</item>
         <item quantity="one">Tab %1$s. %2$d item belum dibaca.</item>

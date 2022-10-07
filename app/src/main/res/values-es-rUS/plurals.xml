@@ -24,14 +24,6 @@
         <item quantity="other">segundos</item>
         <item quantity="one">segundo</item>
     </plurals>
-    <plurals name="delete_voicemails_confirmation_dialog_title">
-        <item quantity="other">&lt;b>¿Deseas borrar estos mensajes de voz? &lt;/b></item>
-        <item quantity="one">&lt;b>¿Deseas borrar este mensaje de voz? &lt;/b></item>
-    </plurals>
-    <plurals name="notification_voicemail_title">
-        <item quantity="other">%1$d correos de voz</item>
-        <item quantity="one">correo de voz</item>
-    </plurals>
     <plurals name="tab_title_with_unread_items">
         <item quantity="other">Pestaña %1$s. %2$d elementos no leídos.</item>
         <item quantity="one">Pestaña %1$s. %2$d elemento no leído.</item>

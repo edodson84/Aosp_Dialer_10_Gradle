@@ -287,6 +287,10 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
 
         // otherwise compare call Ids
         return call1.getId().equals(call2.getId());
+    }
+
+    public static void clearRestrictedCount() {
+        hiddenCounter = 0;
     }    private final Call.Callback telecomCallCallback =
             new Call.Callback() {
                 @Override
@@ -440,10 +444,6 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
                     }
                 }
             };
-
-    public static void clearRestrictedCount() {
-        hiddenCounter = 0;
-    }
 
     public RttTranscript getRttTranscript() {
         return rttTranscript;

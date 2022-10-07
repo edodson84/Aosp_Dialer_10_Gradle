@@ -373,12 +373,7 @@ public class AnswerFragment extends Fragment
         secondaryBehavior.applyToView(secondaryButton);
 
         secondaryButton.setOnClickListener(
-                new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        performSecondaryButtonAction();
-                    }
-                });
+                v -> performSecondaryButtonAction());
         secondaryButton.setClickable(AccessibilityUtil.isAccessibilityEnabled(getContext()));
         secondaryButton.setFocusable(AccessibilityUtil.isAccessibilityEnabled(getContext()));
         secondaryButton.setAccessibilityDelegate(accessibilityDelegate);

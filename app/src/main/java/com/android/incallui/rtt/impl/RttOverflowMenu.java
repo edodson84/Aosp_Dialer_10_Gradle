@@ -46,7 +46,6 @@ public class RttOverflowMenu extends PopupWindow implements OnCheckedChangeListe
             Context context,
             InCallButtonUiDelegate inCallButtonUiDelegate,
             InCallScreenDelegate inCallScreenDelegate) {
-        super(context, null, 0, R.style.OverflowMenu);
         this.inCallButtonUiDelegate = inCallButtonUiDelegate;
         this.inCallScreenDelegate = inCallScreenDelegate;
         View view = View.inflate(context, R.layout.overflow_menu, null);
