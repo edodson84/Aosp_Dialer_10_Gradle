@@ -22,7 +22,8 @@
                 android:id="@id/contact_tile_image"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"
+                android:contentDescription="TODO" />
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -76,7 +77,8 @@
                         android:layout_height="@dimen/favorites_star_icon_size"
                         android:layout_marginStart="3.0dip"
                         android:src="@drawable/ic_star"
-                        android:visibility="gone" />
+                        android:visibility="gone"
+                        android:contentDescription="TODO" />
                 </LinearLayout>
 
                 <TextView

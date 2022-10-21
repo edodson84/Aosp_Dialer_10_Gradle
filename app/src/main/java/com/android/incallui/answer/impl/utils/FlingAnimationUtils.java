@@ -215,9 +215,7 @@ public class FlingAnimationUtils {
             durationSeconds = maxLengthSeconds;
             VelocityInterpolator velocityInterpolator =
                     new VelocityInterpolator(durationSeconds, velAbs, diff);
-            InterpolatorInterpolator superInterpolator =
-                    new InterpolatorInterpolator(velocityInterpolator, mLinearOutFasterIn, linearOutSlowIn);
-            animatorProperties.interpolator = superInterpolator;
+            animatorProperties.interpolator = new InterpolatorInterpolator(velocityInterpolator, mLinearOutFasterIn, linearOutSlowIn);
         } else {
 
             // Just use a normal interpolator which doesn't take the velocity into account.

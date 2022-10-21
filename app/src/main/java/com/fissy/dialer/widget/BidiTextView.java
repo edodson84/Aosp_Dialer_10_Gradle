@@ -23,11 +23,12 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 import com.fissy.dialer.i18n.DialerBidiFormatter;
+import com.google.android.material.textview.MaterialTextView;
 
 /**
  * A {@link TextView} that applies bidirectional formatting to its text.
  */
-public final class BidiTextView extends androidx.appcompat.widget.AppCompatTextView {
+public final class BidiTextView extends MaterialTextView {
 
     public BidiTextView(Context context) {
         super(context);

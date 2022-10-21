@@ -17,9 +17,6 @@
     <string name="a11y_new_call_log_entry_full_description_with_phone_account_info">^1, ^2, ^3.</string>
     <string name="a11y_new_call_log_entry_full_description_without_phone_account_info">^1, ^2.</string>
     <string name="a11y_new_call_log_entry_phone_account">^1, numeriu ^2</string>
-    <string name="a11y_new_call_log_entry_tap_action">expand menu</string>
-    <string name="a11y_new_call_log_entry_video_call">make a video call to ^1</string>
-    <string name="a11y_new_call_log_entry_voice_call">call ^1</string>
     <string name="abc_action_bar_home_description">Eiti į pagrindinį puslapį</string>
     <string name="abc_action_bar_up_description">Eiti į viršų</string>
     <string name="abc_action_menu_overflow_description">Daugiau parinkčių</string>
@@ -38,7 +35,7 @@
     <string name="abc_menu_space_shortcut_label">tarpo klavišas</string>
     <string name="abc_menu_sym_shortcut_label">„Sym“ +</string>
     <string name="abc_prepend_shortcut_label">„Menu“ +</string>
-    <string name="abc_search_hint">Ieškoti...</string>
+    <string name="abc_search_hint">Ieškoti…</string>
     <string name="abc_searchview_description_clear">Išvalyti užklausą</string>
     <string name="abc_searchview_description_query">Paieškos užklausa</string>
     <string name="abc_searchview_description_search">Paieška</string>
@@ -47,7 +44,6 @@
     <string name="abc_shareactionprovider_share_with">Bendrinti naudojant</string>
     <string name="abc_shareactionprovider_share_with_application">Bendrinti naudojant programą „%s“</string>
     <string name="abc_toolbar_collapse_description">Sutraukti</string>
-    <string name="about_phone_label">Apie</string>
     <string name="accessibility_settings_title">Pritaikymas neįgaliesiems</string>
     <string name="account_phone">Tik įrenginys, nesinchronizuojama</string>
     <string name="action_copy_number_text">Kopijuoti numerį</string>
@@ -98,7 +94,6 @@
     <string name="blocked_numbers_disabled_emergency_desc">Skambučių blokavimo funkcija buvo išjungta, nes iš šio telefono buvote susisiekę su pagalbos tarnybomis per pastarąsias 48 val. Ši funkcija bus automatiškai įgalinta iš naujo, kai 48 val. laikotarpis pasibaigs.</string>
     <string name="blocked_numbers_disabled_emergency_header_label">Skamb. blokavimo funkcija laikinai išj.</string>
     <string name="bubble_return_to_call">Atgal į skambutį</string>
-    <string name="build_version_label">Versija</string>
     <string name="call">Skambinti</string>
     <string name="callFailed_simError">Nėra SIM kortelės arba įvyko SIM kortelės klaida</string>
     <string name="call_assistant">Skambinti %s</string>
@@ -108,7 +103,7 @@
     <string name="call_car">Skambinti automobilio telefono numeriu</string>
     <string name="call_company_main">Skambinti pagrindinio įmonės telefono numeriu</string>
     <string name="call_composer_connection_failed">%1$s yra neprisijungęs (-usi) ir su juo (ja) negalima susisiekti</string>
-    <string name="call_composer_image_uploading">Siunčiamas vaizdas...</string>
+    <string name="call_composer_image_uploading">Siunčiamas vaizdas…</string>
     <string name="call_custom">Skambinti %s</string>
     <string name="call_details">Išsami skambučio informacija</string>
     <string name="call_details_copy_number">Kopijuoti numerį</string>
@@ -173,7 +168,7 @@
     <string name="call_pager">Skambinti pranešimų gaviklio numeriu</string>
     <string name="call_radio">Skambinti radijo telefono numeriu</string>
     <string name="call_settings_label">Skambučiai</string>
-    <string name="call_subject_hint">Įveskite užrašą, kurį galima išsiųsti skambinant...</string>
+    <string name="call_subject_hint">Įveskite užrašą, kurį galima išsiųsti skambinant…</string>
     <string name="call_subject_limit">%1$s / %2$s</string>
     <string name="call_subject_type_and_number">%1$s %2$s</string>
     <string name="call_telex">Skambinti telekso numeriu</string>
@@ -198,7 +193,7 @@
     <string name="child_number">naudojant %s</string>
     <string name="clearCallLogConfirmation">Bus ištrinti visi skambučiai iš istorijos</string>
     <string name="clearCallLogConfirmation_title">Išvalyti skambučių istoriją?</string>
-    <string name="clearCallLogProgress_title">Išvaloma skambučių istorija...</string>
+    <string name="clearCallLogProgress_title">Išvaloma skambučių istorija…</string>
     <string name="clearFrequentsConfirmation">Išvalysite dažniausių kontaktų sąrašą Kontaktų ir Telefono programose, o el. pašto programoms reikės iš naujo gauti adresavimo nuostatas.</string>
     <string name="clearFrequentsConfirmation_title">Išvalyti dažniausius kontaktus?</string>
     <string name="clearFrequentsProgress_title">Valomi dažniausi kontaktai…</string>
@@ -220,7 +215,6 @@
     <string name="content_description_rtt_chat_avatar">Pseudoportretas</string>
     <string name="content_description_rtt_check_button">Pirmyn</string>
     <string name="copy_number">Kopijuoti numerį</string>
-    <string name="copy_transcript_text">Kopijuoti transkribuotą tekstą</string>
     <string name="custom_message_hint">Parašykite tinkintą praneš.</string>
     <string name="default_notification_description">Numatytasis garsas (%1$s)</string>
     <string name="delete">Ištrinti</string>
@@ -389,7 +383,6 @@
     <string name="label_sip_address">SIP</string>
     <string name="launcherActivityLabel">Telefonas</string>
     <string name="launcherDialpadActivityLabel">Telefono klaviatūra</string>
-    <string name="licenseActivityLabel">Atvirojo šaltinio licencijos</string>
     <string name="listAllContactsInAccount">%s kontaktai</string>
     <string name="listCustomView">Kontaktai tinkintame rodinyje</string>
     <string name="listSingleContact">Vienas kontaktas</string>
@@ -431,10 +424,6 @@
     <string name="network_name_wifi">Wi-Fi</string>
     <string name="new_call_log_carrier_video">Operatoriaus vaizdo skambučiai</string>
     <string name="new_call_log_duo_video">„Duo“ vaizdo skambučiai</string>
-    <string name="new_call_log_header_older">Senesni</string>
-    <string name="new_call_log_header_today">Šiandien</string>
-    <string name="new_call_log_header_yesterday">Vakar</string>
-    <string name="new_call_log_permission_no_calllog">Jei norite peržiūrėti skambučių žurnalą, įjunkite Telefono programos leidimą.</string>
     <string name="new_call_log_secondary_blocked">Užblokuota</string>
     <string name="new_call_log_secondary_spam">Šlamštas</string>
     <string name="new_call_log_unknown">Nežinoma</string>
@@ -490,7 +479,6 @@
     <string name="ok_got_it">Gerai, supratau</string>
     <string name="old_block_number_confirmation_title">Blokuoti numerį %1$s?</string>
     <string name="old_call_subject_type_and_number">%1$s %2$s</string>
-    <string name="open_source_license_detail_label">Išsami atvirojo šaltinio programinės įrangos licencijos informacija</string>
     <string name="organizationLabelsGroup">Organizacija</string>
     <string name="outgoing_wps_warning">Pradėjus WPS skambutį bus atjungtas dabartinis skambutis.</string>
     <string name="pause_prompt_no">Ne</string>
@@ -524,7 +512,6 @@
     <string name="pre_call_select_phone_account_hint_intra_carrier">Naud. to paties operatoriaus paslaugomis</string>
     <string name="pre_call_select_phone_account_hint_other_sim_in_use">Nepasiekiama naudojant %1$s</string>
     <string name="pre_call_select_phone_account_remember">Atsiminti šį pasirinkimą</string>
-    <string name="privacy_policy_label">Privatumo politika</string>
     <string name="private_num_non_verizon">Privatus numeris</string>
     <string name="private_num_verizon">Apriboti</string>
     <string name="quick_question">Trumpas klausimas…</string>
@@ -571,7 +558,7 @@
     <string name="set_default_account">Visada naudoti tai skambučiams</string>
     <string name="settings">Nustatymai</string>
     <string name="share_and_call">Bendrinti ir skambinti</string>
-    <string name="simContacts_emptyLoading">Įkeliama iš SIM kortelės...</string>
+    <string name="simContacts_emptyLoading">Įkeliama iš SIM kortelės…</string>
     <string name="simContacts_title">SIM kortelės kontaktai</string>
     <string name="simulator_submenu_label">Simuliatorius</string>
     <string name="sms">teksto pranešimas</string>
@@ -646,7 +633,6 @@
     <string name="tab_title">Skirtukas „%1$s“.</string>
     <string name="tab_title_call_history">Sk. istor.</string>
     <string name="tab_title_speed_dial">Sp. rink.</string>
-    <string name="terms_of_service_label">Paslaugų teikimo sąlygos</string>
     <string name="toast_cannot_write_system_settings">Telefono programa neturi leidimo keisti sistemos nustatymų.</string>
     <string name="toast_text_copied">Tekstas nukopijuotas</string>
     <string name="toolbar_close">Uždaryti</string>
@@ -691,13 +677,7 @@
     <string name="view_updates_from_group">Peržiūrėti naujinius</string>
     <string name="voice_call">Balso skambutis</string>
     <string name="voice_search_not_available">Paieška balsu nepasiekiama</string>
-    <string name="voicemail">Balso paštas</string>
-    <string name="voicemailCallLogDateTimeFormat">%1$s, %2$s</string>
-    <string name="voicemailCallLogDateTimeFormatWithDuration">%1$s • %2$s</string>
-    <string name="voicemailCallLogToday">@string/call_log_header_today</string>
-    <string name="voicemailDurationFormat">%1$02d:%2$02d</string>
     <string name="voicemailMultiSelectActionBarTitle">Pasirinkta: %1$s</string>
-    <string name="voicemail_donation_promo_content">Leiskite „Google“ peržiūrėti šį ir būsimus balso pašto pranešimus su nuorašais. Jie bus saugomi anonimiškai. Nustatymus galite pakeisti bet kuriuo metu. %1$s</string>
     <string name="voicemail_string">Balso paštas</string>
     <string name="voicemail_transcription_rating">Įvertinkite nuorašo kokybę</string>
     <string name="wait_prompt_str">"Siųsti šiuo tonus?

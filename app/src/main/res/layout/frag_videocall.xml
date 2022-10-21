@@ -20,7 +20,8 @@
         android:layout_height="fill_parent"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:scaleType="fitCenter" />
+        android:scaleType="fitCenter"
+        android:contentDescription="TODO" />
 
     <TextView
         android:id="@id/videocall_remote_video_off"
@@ -62,7 +63,8 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="@dimen/videocall_preview_margin_start"
         android:layout_marginBottom="@dimen/videocall_preview_margin_bottom"
-        android:scaleType="center" />
+        android:scaleType="center"
+        android:contentDescription="TODO" />
 
     <View
         android:id="@id/videocall_green_screen_background"
@@ -76,9 +78,9 @@
         android:id="@id/videocall_video_preview_off_overlay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/videocall_video_preview"
+        android:layout_alignStart="@id/videocall_video_preview"
         android:layout_alignTop="@id/videocall_video_preview"
-        android:layout_alignRight="@id/videocall_video_preview"
+        android:layout_alignEnd="@id/videocall_video_preview"
         android:layout_alignBottom="@id/videocall_video_preview"
         android:importantForAccessibility="no"
         android:scaleType="center"
@@ -90,7 +92,7 @@
         android:id="@id/videocall_video_preview_mute_overlay"
         android:layout_width="32.0dip"
         android:layout_height="32.0dip"
-        android:layout_alignRight="@id/videocall_video_preview"
+        android:layout_alignEnd="@id/videocall_video_preview"
         android:layout_alignBottom="@id/videocall_video_preview"
         android:background="@drawable/videocall_background_circle_white"
         android:contentDescription="@string/incall_content_description_muted"

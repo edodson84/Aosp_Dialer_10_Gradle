@@ -234,7 +234,7 @@ public abstract class TelecomUtil {
         }
         Pair<PhoneAccountHandle, String> cacheKey = new Pair<>(accountHandle, number);
         if (isVoicemailNumberCache.containsKey(cacheKey)) {
-            return isVoicemailNumberCache.get(cacheKey);
+            return Boolean.TRUE.equals(isVoicemailNumberCache.get(cacheKey));
         }
         boolean result = false;
         if (hasReadPhoneStatePermission(context)) {
@@ -358,11 +358,7 @@ public abstract class TelecomUtil {
                 // Dialer is launched.
                 // Instead, Dialer should use TelecomManager#isInManagedCall, which only returns true if the
                 // device is in a managed call which Dialer would know about.
-                if (VERSION.SDK_INT >= VERSION_CODES.O) {
-                    return getTelecomManager(context).isInManagedCall();
-                } else {
-                    return getTelecomManager(context).isInCall();
-                }
+                return getTelecomManager(context).isInManagedCall();
             }
             return false;
         }

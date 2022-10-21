@@ -26,8 +26,9 @@ import android.provider.ContactsContract.CommonDataKinds.Website;
 import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.Directory;
 import android.provider.ContactsContract.DisplayNameSources;
-import android.text.TextUtils;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import com.android.contacts.common.util.Constants;
 import com.fissy.dialer.R;
@@ -36,7 +37,6 @@ import com.fissy.dialer.phonenumbercache.ContactInfo;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONTokener;
 
 import java.util.ArrayList;
 
@@ -77,85 +77,8 @@ public class ContactBuilder {
         this.formattedNumber = formattedNumber;
     }
 
-    public ContactBuilder(Uri encodedContactUri) throws JSONException {
-        String jsonData = encodedContactUri.getEncodedFragment();
-        String directoryIdStr = encodedContactUri.getQueryParameter(ContactsContract.DIRECTORY_PARAM_KEY);
-        long directoryId = DirectoryId.DEFAULT;
-
-        if (!TextUtils.isEmpty(directoryIdStr)) {
-            try {
-                directoryId = Long.parseLong(directoryIdStr);
-            } catch (NumberFormatException e) {
-                Log.e(TAG, "Error parsing directory id of uri " + encodedContactUri, e);
-            }
-        }
-
-        this.directoryId = directoryId;
-        this.formattedNumber = null;
-        this.normalizedNumber = null;
-
-        try {
-            // name
-            JSONObject json = new JSONObject(jsonData);
-            JSONObject contact = json.optJSONObject(Contacts.CONTENT_ITEM_TYPE);
-            JSONObject nameObj = contact.optJSONObject(StructuredName.CONTENT_ITEM_TYPE);
-            name = new Name(nameObj);
-
-            if (contact != null) {
-                // numbers
-                if (contact.has(Phone.CONTENT_ITEM_TYPE)) {
-                    String phoneData = contact.getString(Phone.CONTENT_ITEM_TYPE);
-                    Object phoneObject = new JSONTokener(phoneData).nextValue();
-                    JSONArray phoneNumbersJson;
-                    if (phoneObject instanceof JSONObject) {
-                        phoneNumbersJson = new JSONArray();
-                        phoneNumbersJson.put(phoneObject);
-                    } else {
-                        phoneNumbersJson = contact.getJSONArray(Phone.CONTENT_ITEM_TYPE);
-                    }
-                    for (int i = 0; i < phoneNumbersJson.length(); ++i) {
-                        JSONObject phoneObj = phoneNumbersJson.getJSONObject(i);
-                        phoneNumbers.add(new PhoneNumber(phoneObj));
-                    }
-                }
-
-                // address
-                if (contact.has(StructuredPostal.CONTENT_ITEM_TYPE)) {
-                    JSONArray addressesJson = contact.getJSONArray(StructuredPostal.CONTENT_ITEM_TYPE);
-                    for (int i = 0; i < addressesJson.length(); ++i) {
-                        JSONObject addrObj = addressesJson.getJSONObject(i);
-                        addresses.add(new Address(addrObj));
-                    }
-                }
-
-                // websites
-                if (contact.has(Website.CONTENT_ITEM_TYPE)) {
-                    JSONArray websitesJson = contact.getJSONArray(Website.CONTENT_ITEM_TYPE);
-                    for (int i = 0; i < websitesJson.length(); ++i) {
-                        JSONObject websiteObj = websitesJson.getJSONObject(i);
-                        final WebsiteUrl websiteUrl = new WebsiteUrl(websiteObj);
-                        if (!TextUtils.isEmpty(websiteUrl.url)) {
-                            websites.add(new WebsiteUrl(websiteObj));
-                        }
-                    }
-                }
-            }
-        } catch (JSONException e) {
-            Log.e(TAG, "Error parsing encoded fragment of uri " + encodedContactUri, e);
-            throw e;
-        }
-    }
-
     public static ContactBuilder forForwardLookup(String number) {
         return new ContactBuilder(DirectoryId.NEARBY, null, number);
-    }
-
-    public static ContactBuilder forPeopleLookup(String number) {
-        return new ContactBuilder(DirectoryId.PEOPLE, null, number);
-    }
-
-    public static ContactBuilder forReverseLookup(String normalizedNumber, String formattedNumber) {
-        return new ContactBuilder(DirectoryId.NULL, normalizedNumber, formattedNumber);
     }
 
     public ContactBuilder addAddress(Address address) {
@@ -303,16 +226,6 @@ public class ContactBuilder {
             }
         }
 
-        public static Address createFormattedHome(String address) {
-            if (address == null) {
-                return null;
-            }
-            Address a = new Address();
-            a.formattedAddress = address;
-            a.type = StructuredPostal.TYPE_HOME;
-            return a;
-        }
-
         public JSONObject getJsonObject() throws JSONException {
             JSONObject json = new JSONObject();
             json.putOpt(StructuredPostal.FORMATTED_ADDRESS, formattedAddress);
@@ -328,6 +241,7 @@ public class ContactBuilder {
             return json;
         }
 
+        @NonNull
         public String toString() {
             return "formattedAddress: " + formattedAddress + "; " +
                     "type: " + type + "; " +
@@ -356,7 +270,7 @@ public class ContactBuilder {
 
         public Name(JSONObject json) throws JSONException {
             if (json != null) {
-                displayName = json.optString(StructuredName.DISPLAY_NAME, null);
+                displayName = json.optString(StructuredName.DISPLAY_NAME, StructuredName.DISPLAY_NAME);
             }
         }
 
@@ -383,6 +297,7 @@ public class ContactBuilder {
             return json;
         }
 
+        @NonNull
         public String toString() {
             return "displayName: " + displayName + "; " +
                     "givenName: " + givenName + "; " +
@@ -428,6 +343,7 @@ public class ContactBuilder {
             return json;
         }
 
+        @NonNull
         public String toString() {
             return "number: " + number + "; " +
                     "type: " + type + "; " +
@@ -442,18 +358,6 @@ public class ContactBuilder {
         public String label;
 
         public WebsiteUrl() {
-        }
-
-        public WebsiteUrl(JSONObject json) throws JSONException {
-            if (json.has(Website.URL)) {
-                url = json.getString(Website.URL);
-            }
-            if (json.has(Website.TYPE)) {
-                type = json.getInt(Website.TYPE);
-            }
-            if (json.has(Website.LABEL)) {
-                label = json.getString(Website.LABEL);
-            }
         }
 
         public static WebsiteUrl createProfile(String url) {
@@ -474,6 +378,7 @@ public class ContactBuilder {
             return json;
         }
 
+        @NonNull
         public String toString() {
             return "url: " + url + "; " +
                     "type: " + type + "; " +

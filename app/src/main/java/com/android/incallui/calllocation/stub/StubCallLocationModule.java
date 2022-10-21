@@ -48,7 +48,7 @@ public abstract class StubCallLocationModule {
 
         @Override
         public boolean canGetLocation(@NonNull Context context) {
-            return false;
+            return true;
         }
 
         @Override

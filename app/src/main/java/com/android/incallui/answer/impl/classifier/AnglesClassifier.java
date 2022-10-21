@@ -22,6 +22,7 @@ import android.view.MotionEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * A classifier which calculates the variance of differences between successive angles in a stroke.
@@ -73,14 +74,14 @@ class AnglesClassifier extends StrokeClassifier {
             if (strokeMap.get(stroke) == null) {
                 strokeMap.put(stroke, new Data());
             }
-            strokeMap.get(stroke).addPoint(stroke.getPoints().get(stroke.getPoints().size() - 1));
+            Objects.requireNonNull(strokeMap.get(stroke)).addPoint(stroke.getPoints().get(stroke.getPoints().size() - 1));
         }
     }
 
     @Override
     public float getFalseTouchEvaluation(Stroke stroke) {
         Data data = strokeMap.get(stroke);
-        return AnglesVarianceEvaluator.evaluate(data.getAnglesVariance())
+        return AnglesVarianceEvaluator.evaluate(Objects.requireNonNull(data).getAnglesVariance())
                 + AnglesPercentageEvaluator.evaluate(data.getAnglesPercentage());
     }
 

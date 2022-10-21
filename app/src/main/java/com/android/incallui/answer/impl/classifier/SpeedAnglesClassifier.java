@@ -22,6 +22,7 @@ import android.view.MotionEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * A classifier which for each point from a stroke, it creates a point on plane with coordinates
@@ -63,7 +64,7 @@ class SpeedAnglesClassifier extends StrokeClassifier {
             if (action != MotionEvent.ACTION_UP
                     && action != MotionEvent.ACTION_CANCEL
                     && !(action == MotionEvent.ACTION_POINTER_UP && i == event.getActionIndex())) {
-                strokeMap.get(stroke).addPoint(stroke.getPoints().get(stroke.getPoints().size() - 1));
+                Objects.requireNonNull(strokeMap.get(stroke)).addPoint(stroke.getPoints().get(stroke.getPoints().size() - 1));
             }
         }
     }
@@ -71,7 +72,7 @@ class SpeedAnglesClassifier extends StrokeClassifier {
     @Override
     public float getFalseTouchEvaluation(Stroke stroke) {
         Data data = strokeMap.get(stroke);
-        return SpeedVarianceEvaluator.evaluate(data.getAnglesVariance())
+        return SpeedVarianceEvaluator.evaluate(Objects.requireNonNull(data).getAnglesVariance())
                 + SpeedAnglesPercentageEvaluator.evaluate(data.getAnglesPercentage());
     }
 

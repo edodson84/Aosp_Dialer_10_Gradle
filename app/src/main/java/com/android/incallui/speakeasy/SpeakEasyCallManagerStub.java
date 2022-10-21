@@ -44,7 +44,7 @@ public class SpeakEasyCallManagerStub implements SpeakEasyCallManager {
      */
     @Override
     @Nullable
-    public Optional<Fragment> getSpeakEasyFragment(DialerCall call) {
+    public Optional<Fragment> getSpeakEasyFragment(@NonNull DialerCall call) {
         return Optional.empty();
     }
 
@@ -52,7 +52,7 @@ public class SpeakEasyCallManagerStub implements SpeakEasyCallManager {
      * Always inert in the stub.
      */
     @Override
-    public void onCallRemoved(DialerCall call) {
+    public void onCallRemoved(@NonNull DialerCall call) {
     }
 
     @Override

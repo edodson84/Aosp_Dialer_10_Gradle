@@ -208,12 +208,12 @@ public class PhoneCallDetails {
     }
 
     public boolean hasIncomingCalls() {
-        for (int i = 0; i < callTypes.length; i++) {
-            if (callTypes[i] == CallLog.Calls.INCOMING_TYPE
-                    || callTypes[i] == CallLog.Calls.MISSED_TYPE
-                    || callTypes[i] == CallLog.Calls.VOICEMAIL_TYPE
-                    || callTypes[i] == CallLog.Calls.REJECTED_TYPE
-                    || callTypes[i] == CallLog.Calls.BLOCKED_TYPE) {
+        for (int callType : callTypes) {
+            if (callType == Calls.INCOMING_TYPE
+                    || callType == Calls.MISSED_TYPE
+                    || callType == Calls.VOICEMAIL_TYPE
+                    || callType == Calls.REJECTED_TYPE
+                    || callType == Calls.BLOCKED_TYPE) {
                 return true;
             }
         }

@@ -19,6 +19,8 @@ package com.fissy.dialer.precall.impl;
 import android.content.Context;
 import android.content.Intent;
 
+import androidx.annotation.NonNull;
+
 import com.fissy.dialer.callintent.CallIntentBuilder;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.common.concurrent.Annotations.Ui;
@@ -33,6 +35,8 @@ import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListeningExecutorService;
+
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -76,7 +80,7 @@ public class DuoAction implements PreCallAction {
                 new FutureCallback<ImmutableMap<String, ReachabilityData>>() {
                     @Override
                     public void onSuccess(ImmutableMap<String, ReachabilityData> result) {
-                        if (!result.containsKey(number) || !result.get(number).videoCallable()) {
+                        if (!result.containsKey(number) || !Objects.requireNonNull(result.get(number)).videoCallable()) {
                             LogUtil.w(
                                     "DuoAction.runWithUi",
                                     number + " number no longer duo reachable, falling back to carrier video call");
@@ -86,7 +90,7 @@ public class DuoAction implements PreCallAction {
                     }
 
                     @Override
-                    public void onFailure(Throwable throwable) {
+                    public void onFailure(@NonNull Throwable throwable) {
                         LogUtil.e("DuoAction.runWithUi", "reachability query failed", throwable);
                         coordinator.getBuilder().setIsDuoCall(false);
                         pendingAction.finish();

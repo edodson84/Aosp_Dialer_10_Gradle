@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="?android:colorBackground">
@@ -42,7 +43,8 @@
             android:textColor="?android:textColorPrimary"
             android:textColorHint="?android:textColorHint"
             android:textCursorDrawable="@drawable/edittext_custom_cursor"
-            android:textSize="@dimen/message_item_text_size" />
+            android:textSize="@dimen/message_item_text_size"
+            android:autofillHints="" />
 
         <LinearLayout
             android:id="@id/count_and_send_container"
@@ -60,8 +62,9 @@
                 android:layout_height="wrap_content"
                 android:background="?android:selectableItemBackgroundBorderless"
                 android:src="@drawable/quantum_ic_send_white_24"
-                android:tint="@color/dialer_tint_state"
-                android:visibility="gone" />
+                android:visibility="gone"
+                app:tint="@color/dialer_tint_state"
+                android:contentDescription="TODO" />
 
             <TextView
                 android:id="@id/remaining_characters"

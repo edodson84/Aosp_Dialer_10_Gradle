@@ -198,7 +198,7 @@ public class ContactsAsyncHelper {
             Bitmap orgBitmap = ((BitmapDrawable) photo).getBitmap();
             int orgWidth = orgBitmap.getWidth();
             int orgHeight = orgBitmap.getHeight();
-            int longerEdge = orgWidth > orgHeight ? orgWidth : orgHeight;
+            int longerEdge = Math.max(orgWidth, orgHeight);
             // We want downscaled one only when the original icon is too big.
             if (longerEdge > iconSize) {
                 float ratio = ((float) longerEdge) / iconSize;

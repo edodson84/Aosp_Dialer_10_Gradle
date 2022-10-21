@@ -7,7 +7,7 @@
     android:paddingTop="16.0dip"
     android:paddingEnd="@dimen/answer_message_margin_start_end">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@id/answer_message_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,5 +34,6 @@
         android:layout_width="@dimen/answer_message_avatar_size"
         android:layout_height="@dimen/answer_message_avatar_size"
         android:layout_centerHorizontal="true"
-        android:elevation="@dimen/answer_avatar_elevation" />
+        android:elevation="@dimen/answer_avatar_elevation"
+        android:contentDescription="TODO" />
 </RelativeLayout>

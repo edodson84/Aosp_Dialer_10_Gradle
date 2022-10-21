@@ -78,31 +78,42 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
         LogUtil.i("NotificationBroadcastReceiver.onReceive", "Broadcast from Notification: " + action);
 
         // TODO: Commands of this nature should exist in the CallList.
-        if (action.equals(ACTION_ANSWER_VIDEO_INCOMING_CALL)) {
-            answerIncomingCall(VideoProfile.STATE_BIDIRECTIONAL, context);
-        } else if (action.equals(ACTION_ANSWER_VOICE_INCOMING_CALL)) {
-            answerIncomingCall(VideoProfile.STATE_AUDIO_ONLY, context);
-        } else if (action.equals(ACTION_ANSWER_SPEAKEASY_CALL)) {
-            markIncomingCallAsSpeakeasyCall();
-            answerIncomingCall(VideoProfile.STATE_AUDIO_ONLY, context);
-        } else if (action.equals(ACTION_DECLINE_INCOMING_CALL)) {
-            Logger.get(context)
-                    .logImpression(DialerImpression.Type.REJECT_INCOMING_CALL_FROM_NOTIFICATION);
-            declineIncomingCall();
-        } else if (action.equals(ACTION_HANG_UP_ONGOING_CALL)) {
-            hangUpOngoingCall();
-        } else if (action.equals(ACTION_ACCEPT_VIDEO_UPGRADE_REQUEST)) {
-            acceptUpgradeRequest(context);
-        } else if (action.equals(ACTION_DECLINE_VIDEO_UPGRADE_REQUEST)) {
-            declineUpgradeRequest();
-        } else if (action.equals(ACTION_PULL_EXTERNAL_CALL)) {
-            context.sendBroadcast(new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
-            int notificationId = intent.getIntExtra(EXTRA_NOTIFICATION_ID, -1);
-            InCallPresenter.getInstance().getExternalCallNotifier().pullExternalCall(notificationId);
-        } else if (action.equals(ACTION_TURN_ON_SPEAKER)) {
-            TelecomAdapter.getInstance().setAudioRoute(CallAudioState.ROUTE_SPEAKER);
-        } else if (action.equals(ACTION_TURN_OFF_SPEAKER)) {
-            TelecomAdapter.getInstance().setAudioRoute(CallAudioState.ROUTE_WIRED_OR_EARPIECE);
+        switch (action) {
+            case ACTION_ANSWER_VIDEO_INCOMING_CALL:
+                answerIncomingCall(VideoProfile.STATE_BIDIRECTIONAL, context);
+                break;
+            case ACTION_ANSWER_VOICE_INCOMING_CALL:
+                answerIncomingCall(VideoProfile.STATE_AUDIO_ONLY, context);
+                break;
+            case ACTION_ANSWER_SPEAKEASY_CALL:
+                markIncomingCallAsSpeakeasyCall();
+                answerIncomingCall(VideoProfile.STATE_AUDIO_ONLY, context);
+                break;
+            case ACTION_DECLINE_INCOMING_CALL:
+                Logger.get(context)
+                        .logImpression(DialerImpression.Type.REJECT_INCOMING_CALL_FROM_NOTIFICATION);
+                declineIncomingCall();
+                break;
+            case ACTION_HANG_UP_ONGOING_CALL:
+                hangUpOngoingCall();
+                break;
+            case ACTION_ACCEPT_VIDEO_UPGRADE_REQUEST:
+                acceptUpgradeRequest(context);
+                break;
+            case ACTION_DECLINE_VIDEO_UPGRADE_REQUEST:
+                declineUpgradeRequest();
+                break;
+            case ACTION_PULL_EXTERNAL_CALL:
+                context.sendBroadcast(new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
+                int notificationId = intent.getIntExtra(EXTRA_NOTIFICATION_ID, -1);
+                InCallPresenter.getInstance().getExternalCallNotifier().pullExternalCall(notificationId);
+                break;
+            case ACTION_TURN_ON_SPEAKER:
+                TelecomAdapter.getInstance().setAudioRoute(CallAudioState.ROUTE_SPEAKER);
+                break;
+            case ACTION_TURN_OFF_SPEAKER:
+                TelecomAdapter.getInstance().setAudioRoute(CallAudioState.ROUTE_WIRED_OR_EARPIECE);
+                break;
         }
     }
 
@@ -191,7 +202,7 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
                             }
 
                             @Override
-                            public void onFailure(Throwable t) {
+                            public void onFailure(@NonNull Throwable t) {
                                 answerIncomingCallCallback(call, videoState);
                                 // TODO(erfanian): Enumerate all error states and specify recovery strategies.
                                 throw new RuntimeException("Failed to successfully complete pre call tasks.", t);

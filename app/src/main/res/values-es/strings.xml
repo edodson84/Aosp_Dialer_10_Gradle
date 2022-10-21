@@ -17,9 +17,6 @@
     <string name="a11y_new_call_log_entry_full_description_with_phone_account_info">^1, ^2, ^3.</string>
     <string name="a11y_new_call_log_entry_full_description_without_phone_account_info">^1, ^2.</string>
     <string name="a11y_new_call_log_entry_phone_account">en ^1, a través del ^2</string>
-    <string name="a11y_new_call_log_entry_tap_action">expand menu</string>
-    <string name="a11y_new_call_log_entry_video_call">make a video call to ^1</string>
-    <string name="a11y_new_call_log_entry_voice_call">call ^1</string>
     <string name="abc_action_bar_home_description">Ir a la pantalla de inicio</string>
     <string name="abc_action_bar_up_description">Desplazarse hacia arriba</string>
     <string name="abc_action_menu_overflow_description">Más opciones</string>
@@ -47,7 +44,6 @@
     <string name="abc_shareactionprovider_share_with">Compartir con</string>
     <string name="abc_shareactionprovider_share_with_application">Compartir con %s</string>
     <string name="abc_toolbar_collapse_description">Contraer</string>
-    <string name="about_phone_label">Información</string>
     <string name="accessibility_settings_title">Accesibilidad</string>
     <string name="account_phone">Solo está en el dispositivo, no se sincroniza</string>
     <string name="action_copy_number_text">Copiar número</string>
@@ -98,7 +94,6 @@
     <string name="blocked_numbers_disabled_emergency_desc">Se ha inhabilitado el bloqueo de llamadas porque te has puesto en contacto con los servicios de emergencia desde este teléfono en las últimas 48 horas. Se volverá a habilitar automáticamente cuando finalice este periodo de tiempo.</string>
     <string name="blocked_numbers_disabled_emergency_header_label">Bloqueo de llamadas desactivado temporalmente</string>
     <string name="bubble_return_to_call">Volver a la llamada</string>
-    <string name="build_version_label">Versión de la compilación</string>
     <string name="call">Llamar</string>
     <string name="callFailed_simError">No hay tarjeta SIM o se ha producido un error relacionado con la misma.</string>
     <string name="call_assistant">Llamar al %s</string>
@@ -173,7 +168,7 @@
     <string name="call_pager">Llamar al busca</string>
     <string name="call_radio">Llamar a la radio</string>
     <string name="call_settings_label">Llamadas</string>
-    <string name="call_subject_hint">Escribe una nota para enviarla con la llamada...</string>
+    <string name="call_subject_hint">Escribe una nota para enviarla con la llamada…</string>
     <string name="call_subject_limit">%1$s/%2$s</string>
     <string name="call_subject_type_and_number">%1$s %2$s</string>
     <string name="call_telex">Llamar al télex</string>
@@ -220,7 +215,6 @@
     <string name="content_description_rtt_chat_avatar">Avatar</string>
     <string name="content_description_rtt_check_button">Enviar</string>
     <string name="copy_number">Copiar número</string>
-    <string name="copy_transcript_text">Copiar transcripción</string>
     <string name="custom_message_hint">Mensaje personalizado</string>
     <string name="default_notification_description">Sonido predeterminado (%1$s)</string>
     <string name="delete">Eliminar</string>
@@ -389,7 +383,6 @@
     <string name="label_sip_address">SIP</string>
     <string name="launcherActivityLabel">Teléfono</string>
     <string name="launcherDialpadActivityLabel">Teclado del teléfono</string>
-    <string name="licenseActivityLabel">Licencias de software libre</string>
     <string name="listAllContactsInAccount">Contactos en %s</string>
     <string name="listCustomView">Contactos en vista personalizada</string>
     <string name="listSingleContact">Contacto único</string>
@@ -431,10 +424,6 @@
     <string name="network_name_wifi">Wi-Fi</string>
     <string name="new_call_log_carrier_video">Vídeo a través del operador</string>
     <string name="new_call_log_duo_video">Vídeo a través de Duo</string>
-    <string name="new_call_log_header_older">Anteriores</string>
-    <string name="new_call_log_header_today">Hoy</string>
-    <string name="new_call_log_header_yesterday">Ayer</string>
-    <string name="new_call_log_permission_no_calllog">Para ver el registro de llamadas, habilita el permiso de teléfono.</string>
     <string name="new_call_log_secondary_blocked">Bloqueado</string>
     <string name="new_call_log_secondary_spam">Spam</string>
     <string name="new_call_log_unknown">Desconocido</string>
@@ -490,7 +479,6 @@
     <string name="ok_got_it">Entendido</string>
     <string name="old_block_number_confirmation_title">¿Quieres bloquear el %1$s?</string>
     <string name="old_call_subject_type_and_number">%1$s %2$s</string>
-    <string name="open_source_license_detail_label">Detalles de las licencias de software libre</string>
     <string name="organizationLabelsGroup">Organización</string>
     <string name="outgoing_wps_warning">Al hacer una llamada WPS, se finalizará tu llamada actual.</string>
     <string name="pause_prompt_no">No</string>
@@ -524,7 +512,6 @@
     <string name="pre_call_select_phone_account_hint_intra_carrier">Usa el mismo operador</string>
     <string name="pre_call_select_phone_account_hint_other_sim_in_use">No disponible mientras se use %1$s</string>
     <string name="pre_call_select_phone_account_remember">Recordar esta opción</string>
-    <string name="privacy_policy_label">Política de privacidad</string>
     <string name="private_num_non_verizon">Número privado</string>
     <string name="private_num_verizon">Restringidas</string>
     <string name="quick_question">Una pregunta rápida…</string>
@@ -646,7 +633,6 @@
     <string name="tab_title">Pestaña %1$s.</string>
     <string name="tab_title_call_history">Historial</string>
     <string name="tab_title_speed_dial">Marcación</string>
-    <string name="terms_of_service_label">Condiciones de servicio</string>
     <string name="toast_cannot_write_system_settings">La aplicación Teléfono no tiene permiso para editar los ajustes del sistema.</string>
     <string name="toast_text_copied">Se ha copiado el texto</string>
     <string name="toolbar_close">Cerrar</string>
@@ -691,13 +677,7 @@
     <string name="view_updates_from_group">Ver actualizaciones</string>
     <string name="voice_call">Llamada de voz</string>
     <string name="voice_search_not_available">La búsqueda por voz no está disponible</string>
-    <string name="voicemail">Buzón de voz</string>
-    <string name="voicemailCallLogDateTimeFormat">%1$s a las %2$s</string>
-    <string name="voicemailCallLogDateTimeFormatWithDuration">%1$s • %2$s</string>
-    <string name="voicemailCallLogToday">@string/call_log_header_today</string>
-    <string name="voicemailDurationFormat">%1$02d:%2$02d</string>
     <string name="voicemailMultiSelectActionBarTitle">Se han seleccionado %1$s</string>
-    <string name="voicemail_donation_promo_content">Deja que Google revise este y otros mensajes del buzón de voz que recibas mediante transcripciones. Se guardarán de manera anónima. Puedes cambiar esta opción en Ajustes cuando quieras. %1$s</string>
     <string name="voicemail_string">Buzón de voz</string>
     <string name="voicemail_transcription_rating">Valora la calidad de transcripción</string>
     <string name="wait_prompt_str">"¿Quieres enviar los siguientes tonos?

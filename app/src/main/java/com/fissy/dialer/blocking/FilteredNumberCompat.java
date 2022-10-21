@@ -193,7 +193,7 @@ public class FilteredNumberCompat {
                 filtered.add(column);
             }
         }
-        return filtered.toArray(new String[filtered.size()]);
+        return filtered.toArray(new String[0]);
     }
 
     /**
@@ -236,9 +236,9 @@ public class FilteredNumberCompat {
                     "maybeShowBlockNumberMigrationDialog - showing migration dialog");
             MigrateBlockedNumbersDialogFragment.newInstance(new BlockedNumbersMigrator(context), listener)
                     .show(fragmentManager, "MigrateBlockedNumbers");
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
     private static boolean shouldShowMigrationDialog(Context context) {

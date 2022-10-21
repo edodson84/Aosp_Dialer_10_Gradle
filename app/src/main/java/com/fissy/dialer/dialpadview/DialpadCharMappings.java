@@ -58,9 +58,7 @@ public class DialpadCharMappings {
     /**
      * Returns the character-key map of the provided ISO 639-2 language code.
      *
-     * <p>Note: this method is for implementations of {@link
-     * com.fissy.dialer.smartdial.map.SmartDialMap} only. {@link #getCharToKeyMap(Context)} should
-     * be used for all other purposes.
+
      *
      * <p>It is the caller's responsibility to ensure the language code is valid and a character
      * mapping is defined for that language. Otherwise, an exception will be thrown.

@@ -18,6 +18,7 @@ package com.fissy.dialer.callcomposer;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
@@ -34,7 +35,7 @@ public abstract class CallComposerFragment extends Fragment {
     protected static final int STORAGE_PERMISSION = 2;
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         if (FragmentUtils.getParent(this, CallComposerListener.class) == null) {
             LogUtil.e(

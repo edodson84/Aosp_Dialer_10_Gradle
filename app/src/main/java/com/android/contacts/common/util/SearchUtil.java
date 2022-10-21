@@ -16,6 +16,7 @@
 
 package com.android.contacts.common.util;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
 /**
@@ -192,6 +193,7 @@ public class SearchUtil {
         public int startIndex = -1;
         public String line;
 
+        @NonNull
         @Override
         public String toString() {
             return "MatchedLine{" + "line='" + line + '\'' + ", startIndex=" + startIndex + '}';

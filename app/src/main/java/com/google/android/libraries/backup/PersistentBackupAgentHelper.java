@@ -70,12 +70,12 @@ public abstract class PersistentBackupAgentHelper extends BackupAgentHelper {
         } else if (value instanceof String) {
             editor.putString(key, (String) value);
         } else if (value instanceof Set) {
-            for (Object object : (Set) value) {
+            for (Object object : (Set<String>) value) {
                 if (!(object instanceof String)) {
                     // If a new type of shared preference set is added in the future, it can't be correctly
                     // restored on this version.
                     Log.w(TAG, "Skipping restore of key " + key + " because its value is a set containing"
-                            + " an object of type " + (value == null ? null : value.getClass()) + ".");
+                            + " an object of type " + value.getClass() + ".");
                     return;
                 }
             }
@@ -85,7 +85,6 @@ public abstract class PersistentBackupAgentHelper extends BackupAgentHelper {
             // on this version.
             Log.w(TAG, "Skipping restore of key " + key + " because its value is the unrecognized type "
                     + (value == null ? null : value.getClass()) + ".");
-            return;
         }
     }
 
@@ -99,9 +98,9 @@ public abstract class PersistentBackupAgentHelper extends BackupAgentHelper {
      * </ul>
      */
     public static boolean isSupportedSharedPreferencesName(String fileName) {
-        return !fileName.contains(File.separator)
-                && !fileName.contains(BACKUP_DELIMITER) // Same as File.separator. Better safe than sorry.
-                && !RESERVED_SHARED_PREFERENCES.equals(fileName);
+        return fileName.contains(File.separator)
+                || fileName.contains(BACKUP_DELIMITER) // Same as File.separator. Better safe than sorry.
+                || RESERVED_SHARED_PREFERENCES.equals(fileName);
     }
 
     @Override
@@ -150,7 +149,7 @@ public abstract class PersistentBackupAgentHelper extends BackupAgentHelper {
      */
     private void writeToBackupFile(
             String srcFileName, Editor editor, BackupKeyPredicate backupKeyPredicate) {
-        if (!isSupportedSharedPreferencesName(srcFileName)) {
+        if (isSupportedSharedPreferencesName(srcFileName)) {
             throw new IllegalArgumentException(
                     "Unsupported shared preferences file name \"" + srcFileName + "\"");
         }
@@ -198,7 +197,7 @@ public abstract class PersistentBackupAgentHelper extends BackupAgentHelper {
             String preferenceKey = backupKey.substring(backupDelimiterIndex + 1);
             Editor editor = editors.get(fileName);
             if (editor == null) {
-                if (!isSupportedSharedPreferencesName(fileName)) {
+                if (isSupportedSharedPreferencesName(fileName)) {
                     Log.w(TAG, "Skipping unsupported shared preferences file name \"" + fileName + "\"");
                     continue;
                 }

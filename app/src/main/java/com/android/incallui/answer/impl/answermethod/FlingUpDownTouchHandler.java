@@ -382,12 +382,7 @@ class FlingUpDownTouchHandler implements OnTouchListener {
     private ValueAnimator createProgressAnimator(float targetProgress) {
         ValueAnimator animator = ValueAnimator.ofFloat(currentProgress, targetProgress);
         animator.addUpdateListener(
-                new AnimatorUpdateListener() {
-                    @Override
-                    public void onAnimationUpdate(ValueAnimator animation) {
-                        setCurrentProgress((Float) animation.getAnimatedValue());
-                    }
-                });
+                animation -> setCurrentProgress((Float) animation.getAnimatedValue()));
         return animator;
     }
 

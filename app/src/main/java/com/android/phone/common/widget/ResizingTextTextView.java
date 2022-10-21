@@ -19,15 +19,15 @@ package com.android.phone.common.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
-import android.widget.TextView;
 
 import com.android.phone.common.util.ViewUtil;
 import com.fissy.dialer.R;
+import com.google.android.material.textview.MaterialTextView;
 
 /**
  * TextView which resizes dynamically with respect to text length.
  */
-public class ResizingTextTextView extends TextView {
+public class ResizingTextTextView extends MaterialTextView {
     private final int mOriginalTextSize;
     private final int mMinTextSize;
 

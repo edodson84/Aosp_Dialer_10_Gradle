@@ -13,9 +13,9 @@
         <FrameLayout
             android:layout_width="@dimen/dialpad_key_number_width"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dialpad_key_margin_right">
+            android:layout_marginEnd="@dimen/dialpad_key_margin_right">
 
-            <com.fissy.dialer.dialpadview.DialpadTextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@id/dialpad_key_number"
                 style="@style/DialpadKeyNumberStyle" />
         </FrameLayout>
@@ -29,7 +29,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/dialpad_voicemail_icon_size"
                 android:scaleType="fitCenter"
-                android:src="@drawable/quantum_ic_voicemail_white_24" />
+                android:src="@drawable/quantum_ic_voicemail_white_24"
+                android:contentDescription="TODO" />
         </LinearLayout>
 
         <View

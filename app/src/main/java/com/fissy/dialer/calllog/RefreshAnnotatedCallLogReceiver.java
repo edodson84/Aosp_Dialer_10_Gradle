@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.fissy.dialer.calllog.RefreshAnnotatedCallLogWorker.RefreshResult;
@@ -145,7 +146,7 @@ public final class RefreshAnnotatedCallLogReceiver extends BroadcastReceiver {
                                 }
 
                                 @Override
-                                public void onFailure(Throwable throwable) {
+                                public void onFailure(@NonNull Throwable throwable) {
                                     ThreadUtil.getUiThreadHandler()
                                             .post(
                                                     () -> {

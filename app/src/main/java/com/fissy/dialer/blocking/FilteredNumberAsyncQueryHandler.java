@@ -41,7 +41,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * TODO(calderwoodra): documentation
  */
-@Deprecated
+
 public class FilteredNumberAsyncQueryHandler extends AsyncQueryHandler {
 
     public static final int INVALID_ID = -1;

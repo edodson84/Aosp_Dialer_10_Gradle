@@ -44,7 +44,7 @@ public class SyncStateContentProviderHelper {
             "SELECT count(*)"
                     + " FROM " + SYNC_STATE_TABLE
                     + " WHERE " + SyncStateContract.Columns._ID + "=?";
-    private static long DB_VERSION = 1;
+    private static final long DB_VERSION = 1;
 
     /**
      * Checks that value is present as at least one of the elements of the array.
@@ -58,7 +58,7 @@ public class SyncStateContentProviderHelper {
             if (element == null) {
                 if (value == null) return true;
             } else {
-                if (value != null && element.equals(value)) return true;
+                if (element.equals(value)) return true;
             }
         }
         return false;
@@ -124,8 +124,7 @@ public class SyncStateContentProviderHelper {
     }
 
     public void onAccountsChanged(SQLiteDatabase db, Account[] accounts) {
-        Cursor c = db.query(SYNC_STATE_TABLE, ACCOUNT_PROJECTION, null, null, null, null, null);
-        try {
+        try (Cursor c = db.query(SYNC_STATE_TABLE, ACCOUNT_PROJECTION, null, null, null, null, null)) {
             while (c.moveToNext()) {
                 final String accountName = c.getString(0);
                 final String accountType = c.getString(1);
@@ -135,8 +134,6 @@ public class SyncStateContentProviderHelper {
                             new String[]{accountName, accountType});
                 }
             }
-        } finally {
-            c.close();
         }
     }
 }

@@ -28,6 +28,7 @@ import androidx.annotation.Nullable;
 
 import com.fissy.dialer.common.LogUtil;
 
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -67,7 +68,7 @@ public class QueryBoldingUtil {
         }
 
         if (!QueryFilteringUtil.nameMatchesT9Query(query, name, context)) {
-            Pattern pattern = Pattern.compile("(^|\\s)" + Pattern.quote(query.toLowerCase()));
+            Pattern pattern = Pattern.compile("(^|\\s)" + Pattern.quote(Objects.requireNonNull(query).toLowerCase()));
             Matcher matcher = pattern.matcher(name.toLowerCase());
             if (matcher.find()) {
                 // query matches the start of a name (i.e. "jo" -> "Jessica [Jo]nes")
@@ -81,7 +82,7 @@ public class QueryBoldingUtil {
         int indexOfT9Match = QueryFilteringUtil.getIndexOfT9Substring(query, name, context);
         if (indexOfT9Match != -1) {
             // query matches the start of a T9 name (i.e. 75 -> "Jessica [Jo]nes")
-            int numBolded = query.length();
+            int numBolded = Objects.requireNonNull(query).length();
 
             // Bold an extra character for each non-letter
             for (int i = indexOfT9Match; i <= indexOfT9Match + numBolded && i < name.length(); i++) {
@@ -136,7 +137,7 @@ public class QueryBoldingUtil {
             return number;
         }
 
-        int index = QueryFilteringUtil.indexOfQueryNonDigitsIgnored(query, number);
+        int index = QueryFilteringUtil.indexOfQueryNonDigitsIgnored(Objects.requireNonNull(query), number);
         int boldedCharacters = query.length();
 
         for (char c : query.toCharArray()) {

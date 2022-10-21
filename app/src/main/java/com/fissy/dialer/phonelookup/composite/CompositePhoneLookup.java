@@ -20,6 +20,7 @@ import android.content.Context;
 import android.telecom.Call;
 
 import androidx.annotation.MainThread;
+import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
 import com.fissy.dialer.DialerPhoneNumber;
@@ -167,6 +168,7 @@ public final class CompositePhoneLookup {
      * Delegates to sub-lookups' {@link PhoneLookup#isDirty(ImmutableSet)} completing when the first
      * sub-lookup which returns true completes.
      */
+    @NonNull
     public ListenableFuture<Boolean> isDirty(ImmutableSet<DialerPhoneNumber> phoneNumbers) {
         List<ListenableFuture<Boolean>> futures = new ArrayList<>();
         for (PhoneLookup<?> phoneLookup : phoneLookups) {
@@ -190,6 +192,7 @@ public final class CompositePhoneLookup {
      * <p>Note: If any of the dependent lookups fails, the returned future will also fail. If any of
      * the dependent lookups does not complete, the returned future will also not complete.
      */
+    @NonNull
     @SuppressWarnings("unchecked")
     public ListenableFuture<ImmutableMap<DialerPhoneNumber, PhoneLookupInfo>> getMostRecentInfo(
             ImmutableMap<DialerPhoneNumber, PhoneLookupInfo> existingInfoMap) {

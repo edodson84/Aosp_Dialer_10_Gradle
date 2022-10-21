@@ -24,6 +24,8 @@ import android.os.Parcelable;
 import android.provider.ContactsContract.RawContacts;
 import android.text.TextUtils;
 
+import androidx.annotation.NonNull;
+
 /**
  * Contact list filter parameters.
  */
@@ -138,7 +140,7 @@ public final class ContactListFilter implements Comparable<ContactListFilter>, P
         return new ContactListFilter(filterType, accountType, accountName, dataSet, null);
     }
 
-    public static final String filterTypeToString(int filterType) {
+    public static String filterTypeToString(int filterType) {
         switch (filterType) {
             case FILTER_TYPE_DEFAULT:
                 return "FILTER_TYPE_DEFAULT";
@@ -166,6 +168,7 @@ public final class ContactListFilter implements Comparable<ContactListFilter>, P
         return filterType == FILTER_TYPE_ACCOUNT;
     }
 
+    @NonNull
     @Override
     public String toString() {
         switch (filterType) {
@@ -290,14 +293,11 @@ public final class ContactListFilter implements Comparable<ContactListFilter>, P
 
     public String toDebugString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("[filter type: " + filterType + " (" + filterTypeToString(filterType) + ")");
+        builder.append("[filter type: ").append(filterType).append(" (").append(filterTypeToString(filterType)).append(")");
         if (filterType == FILTER_TYPE_ACCOUNT) {
-            builder
-                    .append(", accountType: " + accountType)
-                    .append(", accountName: " + accountName)
-                    .append(", dataSet: " + dataSet);
+            builder.append(", accountType: ").append(accountType).append(", accountName: ").append(accountName).append(", dataSet: ").append(dataSet);
         }
-        builder.append(", icon: " + icon + "]");
+        builder.append(", icon: ").append(icon).append("]");
         return builder.toString();
     }
 }

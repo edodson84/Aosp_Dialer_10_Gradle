@@ -65,7 +65,7 @@ public abstract class GroupingListAdapter extends BaseAdapter {
             notifyDataSetInvalidated();
         }
     };
-    private Context mContext;
+    private final Context mContext;
     private Cursor mCursor;
     /**
      * Count of list items.
@@ -81,14 +81,14 @@ public abstract class GroupingListAdapter extends BaseAdapter {
      * and whether they are expanded.
      */
     private long[] mGroupMetadata;
-    private SparseIntArray mPositionCache = new SparseIntArray();
+    private final SparseIntArray mPositionCache = new SparseIntArray();
     private int mLastCachedListPosition;
     private int mLastCachedCursorPosition;
     private int mLastCachedGroup;
     /**
      * A reusable temporary instance of PositionMetadata
      */
-    private PositionMetadata mPositionMetadata = new PositionMetadata();
+    private final PositionMetadata mPositionMetadata = new PositionMetadata();
 
     public GroupingListAdapter(Context context) {
         mContext = context;

@@ -32,6 +32,7 @@ import com.google.auto.value.AutoValue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -140,7 +141,7 @@ public final class CallLogPopulator {
                     .applyBatch(
                             CallLog.AUTHORITY,
                             new ArrayList<>(
-                                    Arrays.asList(ContentProviderOperation.newDelete(Calls.CONTENT_URI).build())));
+                                    Collections.singletonList(ContentProviderOperation.newDelete(Calls.CONTENT_URI).build())));
         } catch (RemoteException | OperationApplicationException e) {
             Assert.fail("failed to delete call log: " + e);
         }

@@ -41,6 +41,7 @@ class SessionsAdapter extends RecyclerView.Adapter<SessionViewHolder> {
         this.sessionStrings = Assert.isNotNull(sessionStrings);
     }
 
+    @NonNull
     @Override
     public SessionViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());

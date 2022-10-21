@@ -24,6 +24,8 @@ import androidx.collection.SimpleArrayMap;
 import com.fissy.dialer.i18n.LocaleUtils;
 import com.google.common.base.Optional;
 
+import java.util.Objects;
+
 /**
  * A utility class that combines the functionality of two implementations of {@link SmartDialMap} so
  * that we support smart dial for dual alphabets.
@@ -162,7 +164,7 @@ public class CompositeSmartDialMap {
     static Optional<SmartDialMap> getExtraMap(Context context) {
         String languageCode = LocaleUtils.getLocale(context).getISO3Language();
         return EXTRA_MAPS.containsKey(languageCode)
-                ? Optional.of(EXTRA_MAPS.get(languageCode))
+                ? Optional.of(Objects.requireNonNull(EXTRA_MAPS.get(languageCode)))
                 : Optional.absent();
     }
 }

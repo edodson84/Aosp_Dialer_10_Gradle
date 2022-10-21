@@ -17,9 +17,6 @@
     <string name="a11y_new_call_log_entry_full_description_with_phone_account_info">^1, ^2, ^3.</string>
     <string name="a11y_new_call_log_entry_full_description_without_phone_account_info">^1, ^2.</string>
     <string name="a11y_new_call_log_entry_phone_account">^1, ^2 raqami orqali</string>
-    <string name="a11y_new_call_log_entry_tap_action">expand menu</string>
-    <string name="a11y_new_call_log_entry_video_call">make a video call to ^1</string>
-    <string name="a11y_new_call_log_entry_voice_call">call ^1</string>
     <string name="abc_action_bar_home_description">Boshiga o‘tish</string>
     <string name="abc_action_bar_up_description">Yuqoriga o‘tish</string>
     <string name="abc_action_menu_overflow_description">Boshqa parametrlar</string>
@@ -47,7 +44,6 @@
     <string name="abc_shareactionprovider_share_with">Ruxsat berish</string>
     <string name="abc_shareactionprovider_share_with_application">%s orqali ulashish</string>
     <string name="abc_toolbar_collapse_description">Yig‘ish</string>
-    <string name="about_phone_label">Ilova haqida</string>
     <string name="accessibility_settings_title">Maxsus imkoniyatlar</string>
     <string name="account_phone">Faqat qurilmalarda, sinxronlanmaydi</string>
     <string name="action_copy_number_text">Raqamdan nusxa olish</string>
@@ -98,7 +94,6 @@
     <string name="blocked_numbers_disabled_emergency_desc">Oxirgi 48 soat ichida ushbu telefon orqali favqulodda xizmatlar bilan bog‘lanilganligi uchun qo‘ng‘iroqlarni bloklash o‘chirib qo‘yildi. 48 soatlik muddat tugagandan so‘ng bu avtomatik qayta yoqiladi.</string>
     <string name="blocked_numbers_disabled_emergency_header_label">Qo‘ng‘iroqlarni bloklash o‘chirilgan</string>
     <string name="bubble_return_to_call">Chaqiruvga qaytish</string>
-    <string name="build_version_label">Yig‘ma versiyasi</string>
     <string name="call">Telefon</string>
     <string name="callFailed_simError">SIM karta yo‘q yoki SIM kartada xato</string>
     <string name="call_assistant">Qo‘ng‘iroq: %s</string>
@@ -173,7 +168,7 @@
     <string name="call_pager">Peyjerga qo‘ng‘iroq qilish</string>
     <string name="call_radio">Radio telefon raqamiga qo‘ng‘iroq qilish</string>
     <string name="call_settings_label">Chaqiruvlar</string>
-    <string name="call_subject_hint">Qo‘ng‘iroqqa qo‘shib yuborish uchun izoh yozing ...</string>
+    <string name="call_subject_hint">Qo‘ng‘iroqqa qo‘shib yuborish uchun izoh yozing …</string>
     <string name="call_subject_limit">%1$s / %2$s</string>
     <string name="call_subject_type_and_number">%1$s %2$s</string>
     <string name="call_telex">Teleks telefon raqamiga qo‘ng‘iroq qilish</string>
@@ -220,7 +215,6 @@
     <string name="content_description_rtt_chat_avatar">Avatar</string>
     <string name="content_description_rtt_check_button">Davom etish</string>
     <string name="copy_number">Raqamni nusxalash</string>
-    <string name="copy_transcript_text">Transkripsiyadan nusxa olish</string>
     <string name="custom_message_hint">Boshqa xabar yozing</string>
     <string name="default_notification_description">Standart ovoz (%1$s)</string>
     <string name="delete">O‘chirib tashlash</string>
@@ -389,7 +383,6 @@
     <string name="label_sip_address">SIP</string>
     <string name="launcherActivityLabel">Telefon</string>
     <string name="launcherDialpadActivityLabel">Telefon klaviaturasi</string>
-    <string name="licenseActivityLabel">Ochiq kodli DT litsenziyalari</string>
     <string name="listAllContactsInAccount">%sdagi kontaktlar</string>
     <string name="listCustomView">Filtrlangan kontaktlar</string>
     <string name="listSingleContact">Bitta kontakt</string>
@@ -431,10 +424,6 @@
     <string name="network_name_wifi">WI-FI</string>
     <string name="new_call_log_carrier_video">Operator orqali video chaqiruv</string>
     <string name="new_call_log_duo_video">Duo orqali video chaqiruv</string>
-    <string name="new_call_log_header_older">Eskiroq</string>
-    <string name="new_call_log_header_today">Bugun</string>
-    <string name="new_call_log_header_yesterday">Kecha</string>
-    <string name="new_call_log_permission_no_calllog">Chaqiruvlar jurnalini ko‘rish uchun ilovaga Telefon ruxsatnomasini bering.</string>
     <string name="new_call_log_secondary_blocked">Bloklanganlar</string>
     <string name="new_call_log_secondary_spam">Spam</string>
     <string name="new_call_log_unknown">Noma’lum raqam</string>
@@ -490,7 +479,6 @@
     <string name="ok_got_it">OK</string>
     <string name="old_block_number_confirmation_title">%1$s bloklansinmi?</string>
     <string name="old_call_subject_type_and_number">%1$s %2$s</string>
-    <string name="open_source_license_detail_label">Ochiq kodli DT litsenziyalari haqida ma’lumot</string>
     <string name="organizationLabelsGroup">Tashkilot</string>
     <string name="outgoing_wps_warning">WPS-chaqiruv boshlab yuborilsa, hozirgi qo‘ng‘iroq tugatiladi.</string>
     <string name="pause_prompt_no">Yo‘q</string>
@@ -524,7 +512,6 @@
     <string name="pre_call_select_phone_account_hint_intra_carrier">Shu aloqa operatori</string>
     <string name="pre_call_select_phone_account_hint_other_sim_in_use">%1$s ishlatilayotgan vaqtda bu amalni bajarish imkonsiz</string>
     <string name="pre_call_select_phone_account_remember">Shu tanlov eslab qolinsin</string>
-    <string name="privacy_policy_label">Maxfiylik siyosati</string>
     <string name="private_num_non_verizon">Maxfiy raqam</string>
     <string name="private_num_verizon">Cheklangan</string>
     <string name="quick_question">Bir kichik savol…</string>
@@ -646,7 +633,6 @@
     <string name="tab_title">%1$s ichki oynasi.</string>
     <string name="tab_title_call_history">Tarix</string>
     <string name="tab_title_speed_dial">Tez. ter.</string>
-    <string name="terms_of_service_label">Foydalanish shartlari</string>
     <string name="toast_cannot_write_system_settings">Telefon ilovasida tizim sozlamalarini o‘zgartirish uchun ruxsat yo‘q.</string>
     <string name="toast_text_copied">Matn nusxalandi</string>
     <string name="toolbar_close">Yopish</string>
@@ -691,13 +677,7 @@
     <string name="view_updates_from_group">Yangilanishlarni ko‘rish</string>
     <string name="voice_call">Ovozli chaqiruv qilish</string>
     <string name="voice_search_not_available">Ovozli qidiruv mavjud emas</string>
-    <string name="voicemail">Ovozli pochta</string>
-    <string name="voicemailCallLogDateTimeFormat">%1$s, %2$s</string>
-    <string name="voicemailCallLogDateTimeFormatWithDuration">%1$s • %2$s</string>
-    <string name="voicemailCallLogToday">@string/call_log_header_today</string>
-    <string name="voicemailDurationFormat">%1$02d:%2$02d</string>
     <string name="voicemailMultiSelectActionBarTitle">Tanlandi: %1$s</string>
-    <string name="voicemail_donation_promo_content">Google kompaniyasiga ushbu va kelgusi ovozli xabarlaringizni tekshirishiga va ularning transkripsiyalarini tahlil qilishiga ruxsat bering. Xabarlar anonim tarzda saqlanadi. Bu parametrni xohlagan vaqtda Sozlamalardan o‘zgartirish mumkin. %1$s</string>
     <string name="voicemail_string">Ovozli pochta</string>
     <string name="voicemail_transcription_rating">Transkripsiya sifatini baholang</string>
     <string name="wait_prompt_str">"Ushbu tovushlar jo‘natilsinmi?

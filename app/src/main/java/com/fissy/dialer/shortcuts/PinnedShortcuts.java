@@ -51,7 +51,7 @@ import java.util.Map;
  * still up to date (e.g. photo and name). We also check to see if the contact has been deleted from
  * the user's contacts, and if so, we disable the pinned shortcut.
  */
-@TargetApi(VERSION_CODES.N_MR1) // Shortcuts introduced in N MR1
+ // Shortcuts introduced in N MR1
 final class PinnedShortcuts {
 
     private static final String[] PROJECTION =

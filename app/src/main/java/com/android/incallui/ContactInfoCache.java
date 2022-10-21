@@ -516,7 +516,7 @@ public class ContactInfoCache implements OnImageLoadCompleteListener {
         CallerInfoQueryToken myCookie = (CallerInfoQueryToken) cookie;
         final String callId = myCookie.callId;
         final int queryId = myCookie.queryId;
-        if (!isWaitingForThisQuery(callId, queryId)) {
+        if (isWaitingForThisQuery(callId, queryId)) {
             return;
         }
         loadImage(photo, photoIcon, cookie);
@@ -565,7 +565,7 @@ public class ContactInfoCache implements OnImageLoadCompleteListener {
         CallerInfoQueryToken myCookie = (CallerInfoQueryToken) cookie;
         final String callId = myCookie.callId;
         final int queryId = myCookie.queryId;
-        if (!isWaitingForThisQuery(callId, queryId)) {
+        if (isWaitingForThisQuery(callId, queryId)) {
             return;
         }
         sendImageNotifications(callId, infoMap.get(callId));
@@ -680,11 +680,11 @@ public class ContactInfoCache implements OnImageLoadCompleteListener {
             // This might happen if lookup on background thread comes back before the initial entry is
             // created.
             Log.d(TAG, "Cached entry is null.");
-            return true;
+            return false;
         } else {
             int waitingQueryId = existingCacheEntry.queryId;
             Log.d(TAG, "waitingQueryId = " + waitingQueryId + "; queryId = " + queryId);
-            return waitingQueryId == queryId;
+            return waitingQueryId != queryId;
         }
     }
 
@@ -791,6 +791,7 @@ public class ContactInfoCache implements OnImageLoadCompleteListener {
             return contactLookupResult == ContactLookupResult.Type.LOCAL_CONTACT;
         }
 
+        @NonNull
         @Override
         public String toString() {
             return "ContactCacheEntry{"
@@ -871,7 +872,7 @@ public class ContactInfoCache implements OnImageLoadCompleteListener {
         public void onDataLoaded(int token, Object cookie, CallerInfo ci) {
             Assert.isWorkerThread();
             DialerCallCookieWrapper cw = (DialerCallCookieWrapper) cookie;
-            if (!isWaitingForThisQuery(cw.callId, queryToken.queryId)) {
+            if (isWaitingForThisQuery(cw.callId, queryToken.queryId)) {
                 return;
             }
             long start = SystemClock.uptimeMillis();
@@ -887,7 +888,7 @@ public class ContactInfoCache implements OnImageLoadCompleteListener {
             Assert.isMainThread();
             DialerCallCookieWrapper cw = (DialerCallCookieWrapper) cookie;
             String callId = cw.callId;
-            if (!isWaitingForThisQuery(cw.callId, queryToken.queryId)) {
+            if (isWaitingForThisQuery(cw.callId, queryToken.queryId)) {
                 Trace.endSection();
                 return;
             }
@@ -938,7 +939,7 @@ public class ContactInfoCache implements OnImageLoadCompleteListener {
         @Override
         public void onPhoneNumberInfoComplete(final PhoneNumberService.PhoneNumberInfo info) {
             Log.d(TAG, "PhoneNumberServiceListener.onPhoneNumberInfoComplete");
-            if (!isWaitingForThisQuery(callId, queryIdOfRemoteLookup)) {
+            if (isWaitingForThisQuery(callId, queryIdOfRemoteLookup)) {
                 return;
             }
 

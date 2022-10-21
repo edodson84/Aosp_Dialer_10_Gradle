@@ -34,9 +34,6 @@ public abstract class Constants {
     private static Constants instance;
     private static boolean didInitializeInstance;
 
-    protected Constants() {
-    }
-
     @NonNull
     public static synchronized Constants get() {
         if (!didInitializeInstance) {

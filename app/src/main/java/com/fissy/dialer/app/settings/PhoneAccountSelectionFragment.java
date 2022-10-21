@@ -16,8 +16,10 @@
 
 package com.fissy.dialer.app.settings;
 
+import android.Manifest;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.Icon;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -29,6 +31,7 @@ import android.telecom.PhoneAccountHandle;
 import android.telecom.TelecomManager;
 
 import androidx.annotation.VisibleForTesting;
+import androidx.core.app.ActivityCompat;
 
 import java.util.List;
 
@@ -84,6 +87,16 @@ public class PhoneAccountSelectionFragment extends PreferenceFragment {
 
         TelecomManager telecomManager = getContext().getSystemService(TelecomManager.class);
 
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         List<PhoneAccountHandle> accountHandles = telecomManager.getCallCapablePhoneAccounts();
 
         Context context = getActivity();

@@ -65,7 +65,7 @@ public class ExchangeAccountType extends BaseAccountType {
             addDataKindNote(context);
             addDataKindEvent(context);
             addDataKindWebsite(context);
-            addDataKindGroupMembership(context);
+            addDataKindGroupMembership();
 
             mIsInitialized = true;
         } catch (DefinitionException e) {
@@ -80,7 +80,7 @@ public class ExchangeAccountType extends BaseAccountType {
     }
 
     @Override
-    protected DataKind addDataKindStructuredName(Context context) throws DefinitionException {
+    protected void addDataKindStructuredName(Context context) throws DefinitionException {
         DataKind kind =
                 addKind(
                         new DataKind(
@@ -110,11 +110,10 @@ public class ExchangeAccountType extends BaseAccountType {
                 new EditField(
                         StructuredName.PHONETIC_GIVEN_NAME, R.string.name_phonetic_given, FLAGS_PHONETIC));
 
-        return kind;
     }
 
     @Override
-    protected DataKind addDataKindDisplayName(Context context) throws DefinitionException {
+    protected void addDataKindDisplayName(Context context) throws DefinitionException {
         DataKind kind =
                 addKind(
                         new DataKind(
@@ -152,11 +151,10 @@ public class ExchangeAccountType extends BaseAccountType {
                 new EditField(StructuredName.SUFFIX, R.string.name_suffix, FLAGS_PERSON_NAME)
                         .setOptional(true));
 
-        return kind;
     }
 
     @Override
-    protected DataKind addDataKindPhoneticName(Context context) throws DefinitionException {
+    protected void addDataKindPhoneticName(Context context) throws DefinitionException {
         DataKind kind =
                 addKind(
                         new DataKind(
@@ -177,7 +175,6 @@ public class ExchangeAccountType extends BaseAccountType {
                 new EditField(
                         StructuredName.PHONETIC_GIVEN_NAME, R.string.name_phonetic_given, FLAGS_PHONETIC));
 
-        return kind;
     }
 
     @Override

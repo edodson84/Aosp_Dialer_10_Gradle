@@ -156,7 +156,7 @@ public class CallLogQueryHandler extends NoNullCursorAsyncQueryHandler {
                 uri,
                 CallLogQuery.getProjection(),
                 selection,
-                selectionArgs.toArray(new String[selectionArgs.size()]),
+                selectionArgs.toArray(new String[0]),
                 Calls.DEFAULT_SORT_ORDER);
     }
 

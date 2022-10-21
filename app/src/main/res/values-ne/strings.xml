@@ -17,9 +17,6 @@
     <string name="a11y_new_call_log_entry_full_description_with_phone_account_info">^1, ^2, ^3।</string>
     <string name="a11y_new_call_log_entry_full_description_without_phone_account_info">^1, ^2।</string>
     <string name="a11y_new_call_log_entry_phone_account">^1 मा, ^2 मार्फत</string>
-    <string name="a11y_new_call_log_entry_tap_action">expand menu</string>
-    <string name="a11y_new_call_log_entry_video_call">make a video call to ^1</string>
-    <string name="a11y_new_call_log_entry_voice_call">call ^1</string>
     <string name="abc_action_bar_home_description">गृह खोज्नुहोस्</string>
     <string name="abc_action_bar_up_description">माथि खोज्नुहोस्</string>
     <string name="abc_action_menu_overflow_description">थप विकल्पहरू</string>
@@ -38,16 +35,15 @@
     <string name="abc_menu_space_shortcut_label">space</string>
     <string name="abc_menu_sym_shortcut_label">Sym+</string>
     <string name="abc_prepend_shortcut_label">Menu+</string>
-    <string name="abc_search_hint">खोज्नुहोस्...</string>
+    <string name="abc_search_hint">खोज्नुहोस्…</string>
     <string name="abc_searchview_description_clear">प्रश्‍न हटाउनुहोस्</string>
     <string name="abc_searchview_description_query">जिज्ञासाको खोज गर्नुहोस्</string>
     <string name="abc_searchview_description_search">खोज्नुहोस्</string>
     <string name="abc_searchview_description_submit">जिज्ञासा पेस गर्नुहोस्</string>
     <string name="abc_searchview_description_voice">भ्वाइस खोजी</string>
-    <string name="abc_shareactionprovider_share_with">साझेदारी गर्नुहोस्...</string>
+    <string name="abc_shareactionprovider_share_with">साझेदारी गर्नुहोस्…</string>
     <string name="abc_shareactionprovider_share_with_application">%s सँग आदान प्रदान गर्नुहोस्</string>
     <string name="abc_toolbar_collapse_description">संक्षिप्त पार्नुहोस्</string>
-    <string name="about_phone_label">बारेमा</string>
     <string name="accessibility_settings_title">पहुँचता</string>
     <string name="account_phone">यन्त्रमा-मात्र, सिङ्क नभएको</string>
     <string name="action_copy_number_text">नम्बर प्रतिलिपि गर्नुहोस्</string>
@@ -98,7 +94,6 @@
     <string name="blocked_numbers_disabled_emergency_desc">कल अवरुद्ध अस्थायी रुपमा असक्षम गरिएको छ किनभने तपाईँले अन्तिम ४८ घन्टा भित्र यस फोनबाट आपत्कालीन सेवाहरू सम्पर्क गर्नुभयो। एकपटक ४८ घन्टा अवधि समाप्त भएपछि यो स्वचालित रूपले पुनः सक्रिय हुनेछ।</string>
     <string name="blocked_numbers_disabled_emergency_header_label">कल अवरुद्ध अस्थायी रुपमा निष्क्रिय</string>
     <string name="bubble_return_to_call">कलमा फर्कनुहोस्</string>
-    <string name="build_version_label">बिल्ड संस्करण</string>
     <string name="call">कल गर्नुहोस्</string>
     <string name="callFailed_simError">SIM छैन वा SIM त्रुटि</string>
     <string name="call_assistant">%s लाई कल गर्नुहोस्</string>
@@ -198,10 +193,10 @@
     <string name="child_number">%s बाट</string>
     <string name="clearCallLogConfirmation">यस कार्यले तपाईँको इतिहासबाट सबै कल मेट्नेछ</string>
     <string name="clearCallLogConfirmation_title">कल इतिहास मेटाउने हो?</string>
-    <string name="clearCallLogProgress_title">कल इतिहास हाटउँदै...</string>
+    <string name="clearCallLogProgress_title">कल इतिहास हाटउँदै…</string>
     <string name="clearFrequentsConfirmation">तपाईंले सम्पर्कहरू र फोन अनुप्रयोगहरूमा बारम्बार सम्पर्क गरेको सूची खाली गर्नुहुनेछ र स्क्रयाचबाट तपाईंको ठेगाना प्राथमिकताहरू सिक्नको लागि इमेल अनुप्रयोगहरूलाई दबाब दिनुहुनेछ।</string>
     <string name="clearFrequentsConfirmation_title">प्रायः सम्पर्क भएकालाई हटाउने?</string>
-    <string name="clearFrequentsProgress_title">बारम्बार सम्पर्क गरिएकाहरूलाई मेटाउँदै ...</string>
+    <string name="clearFrequentsProgress_title">बारम्बार सम्पर्क गरिएकाहरूलाई मेटाउँदै …</string>
     <string name="conference_call_name">सम्मेलन कल</string>
     <string name="conference_caller_disconnect_content_description">कल अन्त्य गर्नुहोस्</string>
     <string name="contact_grid_callback_number">यस फोनको नम्बर: %1$s</string>
@@ -220,7 +215,6 @@
     <string name="content_description_rtt_chat_avatar">अवतार</string>
     <string name="content_description_rtt_check_button">अगाडि बढ्नुहोस्</string>
     <string name="copy_number">नम्बरको प्रतिलिपि गर्नुहोस्</string>
-    <string name="copy_transcript_text">ट्रान्सक्रिप्शनको प्रतिलिपि बनाउँनुहोस्</string>
     <string name="custom_message_hint">आफू अनुकूल सन्देश लेख्‍ने</string>
     <string name="default_notification_description">पूर्वनिर्धारित ध्वनि ( %1$s )</string>
     <string name="delete">मेट्नुहोस्</string>
@@ -389,7 +383,6 @@
     <string name="label_sip_address">SIP</string>
     <string name="launcherActivityLabel">फोन</string>
     <string name="launcherDialpadActivityLabel">फोनको किप्याड</string>
-    <string name="licenseActivityLabel">खुला स्रोतका इजाजतपत्रहरू</string>
     <string name="listAllContactsInAccount">%sमा सम्पर्कहरू</string>
     <string name="listCustomView">कस्टम दृश्यमा रहेका सम्पर्कहरू</string>
     <string name="listSingleContact">एकल सम्पर्क</string>
@@ -431,10 +424,6 @@
     <string name="network_name_wifi">Wifi</string>
     <string name="new_call_log_carrier_video">सेवा प्रदायकको भिडियो कल</string>
     <string name="new_call_log_duo_video">Duo को भिडियो कल</string>
-    <string name="new_call_log_header_older">अझ पुरानो</string>
-    <string name="new_call_log_header_today">आज</string>
-    <string name="new_call_log_header_yesterday">हिजो</string>
-    <string name="new_call_log_permission_no_calllog">आफ्नो कल लग हेर्न, फोन अनुमति सक्रिय गर्नुहोस्।</string>
     <string name="new_call_log_secondary_blocked">रोक लगाइएको नम्बर</string>
     <string name="new_call_log_secondary_spam">स्प्याम</string>
     <string name="new_call_log_unknown">अज्ञात</string>
@@ -490,7 +479,6 @@
     <string name="ok_got_it">ठिक छ, बुझेँ</string>
     <string name="old_block_number_confirmation_title">%1$s माथि रोक लगाउने हो?</string>
     <string name="old_call_subject_type_and_number">%1$s %2$s</string>
-    <string name="open_source_license_detail_label">खुला स्रोतका सफ्टवेयरका इजाजतपत्र सम्बन्धी विवरणहरू</string>
     <string name="organizationLabelsGroup">संगठन</string>
     <string name="outgoing_wps_warning">WPS कल गर्नुले तपाईंको जारी कललाई विच्छेद गर्ने छ।</string>
     <string name="pause_prompt_no">होइन</string>
@@ -524,7 +512,6 @@
     <string name="pre_call_select_phone_account_hint_intra_carrier">उही सेवा प्रदायक प्रयोग गर्दछ</string>
     <string name="pre_call_select_phone_account_hint_other_sim_in_use">%1$s प्रयोग भइरहेको अवस्थामा उपलब्ध हुँदैन</string>
     <string name="pre_call_select_phone_account_remember">यो रोजाइ याद राख्नुहोला</string>
-    <string name="privacy_policy_label">गोपनीयता नीति</string>
     <string name="private_num_non_verizon">निजी नम्बर</string>
     <string name="private_num_verizon">प्रतिबन्धित</string>
     <string name="quick_question">द्रुत प्रश्नहरू…</string>
@@ -646,7 +633,6 @@
     <string name="tab_title">%1$s ट्याब।</string>
     <string name="tab_title_call_history">कल इतिहास</string>
     <string name="tab_title_speed_dial">स्पिड डायल</string>
-    <string name="terms_of_service_label">सेवाका सर्तहरू</string>
     <string name="toast_cannot_write_system_settings">प्रणाली सेटिङहरूमा लेख्न फोन अनुप्रयोगसँग अनुमति छैन।</string>
     <string name="toast_text_copied">पाठ प्रतिलिपि गरियो</string>
     <string name="toolbar_close">बन्द गर्नुहोस्</string>
@@ -691,13 +677,7 @@
     <string name="view_updates_from_group">अद्यावधिकहरू अवलोकन गर्नुहोस्</string>
     <string name="voice_call">भ्वाइस कल</string>
     <string name="voice_search_not_available">आवाज खोजी उपलब्ध छैन</string>
-    <string name="voicemail">भ्वाइसमेल</string>
-    <string name="voicemailCallLogDateTimeFormat">%1$s मा %2$s</string>
-    <string name="voicemailCallLogDateTimeFormatWithDuration">%1$s • %2$s</string>
-    <string name="voicemailCallLogToday">@string/call_log_header_today</string>
-    <string name="voicemailDurationFormat">%1$02d:%2$02d</string>
     <string name="voicemailMultiSelectActionBarTitle">%1$s चयन गरियो</string>
-    <string name="voicemail_donation_promo_content">Google लाई यो र भविष्यका भ्वाइस मेलका ट्रान्स्क्रिप्टहरूसहितका सन्देशहरूलाई समीक्षा गर्न दिनुहोस्। ती सन्देशहरूलाई अज्ञात रूपमा भण्डारण गरिने छ। सेटिङहरू जुनसुकै बेला परिवर्तन गर्नुहोस्।%1$s</string>
     <string name="voicemail_string">भ्वाइस मेल</string>
     <string name="voicemail_transcription_rating">ट्रान्सक्रिप्सनको गुणस्तर मूल्याङ्कन गर्नु…</string>
     <string name="wait_prompt_str">"निम्न टोनहरू पठाउने?

@@ -38,6 +38,8 @@ import com.fissy.dialer.R;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
 
+import java.util.Objects;
+
 /**
  * Gets the content of the top row. For example:
  *
@@ -55,7 +57,7 @@ public class TopRow {
     }
 
     public static Info getInfo(Context context, PrimaryCallState state, PrimaryInfo primaryInfo) {
-        CharSequence label = null;
+        CharSequence label;
         Drawable icon = state.connectionIcon();
         boolean labelIsSingleLine = true;
 
@@ -146,7 +148,7 @@ public class TopRow {
                 context.getString(R.string.contact_grid_incoming_via_template, state.connectionLabel());
         Spannable spannable = new SpannableString(label);
 
-        int start = label.indexOf(state.connectionLabel());
+        int start = label.indexOf(Objects.requireNonNull(state.connectionLabel()));
         int end = start + state.connectionLabel().length();
         spannable.setSpan(
                 new ForegroundColorSpan(state.primaryColor()),
@@ -158,18 +160,10 @@ public class TopRow {
 
     private static CharSequence getLabelForIncomingVideo(
             Context context, @SessionModificationState int sessionModificationState, boolean isWifi) {
-        if (sessionModificationState == SessionModificationState.RECEIVED_UPGRADE_TO_VIDEO_REQUEST) {
-            if (isWifi) {
-                return context.getString(R.string.contact_grid_incoming_wifi_video_call);
-            } else {
-                return context.getString(R.string.contact_grid_incoming_video_call);
-            }
+        if (isWifi) {
+            return context.getString(R.string.contact_grid_incoming_wifi_video_call);
         } else {
-            if (isWifi) {
-                return context.getString(R.string.contact_grid_incoming_wifi_video_call);
-            } else {
-                return context.getString(R.string.contact_grid_incoming_video_call);
-            }
+            return context.getString(R.string.contact_grid_incoming_video_call);
         }
     }
 
@@ -257,7 +251,10 @@ public class TopRow {
             default:
                 Assert.fail();
                 return null;
+            case SessionModificationState.WAITING_FOR_RESPONSE:
+                break;
         }
+        return null;
     }
 
     private static boolean isAccount(PrimaryCallState state) {

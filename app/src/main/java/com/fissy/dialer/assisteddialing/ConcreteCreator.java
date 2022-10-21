@@ -55,16 +55,6 @@ public final class ConcreteCreator {
 
         ConfigProvider configProvider = ConfigProviderComponent.get(context).getConfigProvider();
 
-        if (telephonyManager == null) {
-            LogUtil.i(
-                    "ConcreteCreator.createNewAssistedDialingMediator", "provided TelephonyManager was null");
-            throw new NullPointerException("Provided TelephonyManager was null");
-        }
-        if (context == null) {
-            LogUtil.i("ConcreteCreator.createNewAssistedDialingMediator", "provided context was null");
-            throw new NullPointerException("Provided context was null");
-        }
-
         if (!UserManagerCompat.isUserUnlocked(context)) {
             // To avoid any issues reading preferences, we disable the feature when the user is in a
             // locked state.
@@ -100,10 +90,6 @@ public final class ConcreteCreator {
      * Returns a boolean indicating whether or not the assisted dialing feature is enabled.
      */
     public static boolean isAssistedDialingEnabled(@NonNull ConfigProvider configProvider) {
-        if (configProvider == null) {
-            LogUtil.i("ConcreteCreator.isAssistedDialingEnabled", "provided configProvider was null");
-            throw new NullPointerException("Provided configProvider was null");
-        }
 
         return Build.VERSION.SDK_INT <= BUILD_CODE_CEILING
                 && configProvider.getBoolean("assisted_dialing_enabled", false);

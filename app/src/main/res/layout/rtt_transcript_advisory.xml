@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -11,8 +12,9 @@
         android:layout_height="16.0dip"
         android:layout_gravity="center_horizontal"
         android:src="@drawable/quantum_ic_question_answer_vd_theme_24"
-        android:tint="#deffffff"
-        android:tintMode="src_in" />
+        android:tintMode="src_in"
+        app:tint="#deffffff"
+        android:contentDescription="TODO" />
 
     <TextView
         android:layout_width="fill_parent"

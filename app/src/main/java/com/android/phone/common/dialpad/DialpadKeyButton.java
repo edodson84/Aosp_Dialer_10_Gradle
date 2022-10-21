@@ -57,7 +57,7 @@ public class DialpadKeyButton extends FrameLayout {
     /**
      * Bounds used to filter HOVER_EXIT events.
      */
-    private RectF mHoverBounds = new RectF();
+    private final RectF mHoverBounds = new RectF();
 
     /**
      * Whether this view is currently in the long-hover state.
@@ -167,12 +167,9 @@ public class DialpadKeyButton extends FrameLayout {
                     mWasLongClickable = isLongClickable();
                     if (mWasLongClickable && mLongHoverContentDesc != null) {
                         if (mLongHoverRunnable == null) {
-                            mLongHoverRunnable = new Runnable() {
-                                @Override
-                                public void run() {
-                                    setLongHovered(true);
-                                    announceForAccessibility(mLongHoverContentDesc);
-                                }
+                            mLongHoverRunnable = () -> {
+                                setLongHovered(true);
+                                announceForAccessibility(mLongHoverContentDesc);
                             };
                         }
                         postDelayed(mLongHoverRunnable, LONG_HOVER_TIMEOUT);
@@ -245,6 +242,6 @@ public class DialpadKeyButton extends FrameLayout {
     }
 
     public interface OnPressedListener {
-        public void onPressed(View view, boolean pressed);
+        void onPressed(View view, boolean pressed);
     }
 }

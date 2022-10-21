@@ -19,15 +19,16 @@ package com.fissy.dialer.app.calllog;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
-import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.provider.CallLog.Calls;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.common.Assert;
@@ -38,6 +39,8 @@ import com.fissy.dialer.enrichedcall.EnrichedCallComponent;
 import com.fissy.dialer.phonenumbercache.CachedNumberLookupService;
 import com.fissy.dialer.phonenumbercache.PhoneNumberCache;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.Objects;
 
 /**
  * Dialog that clears the call log after confirming with the user
@@ -60,16 +63,17 @@ public class ClearCallLogDialog extends DialogFragment {
         super.onCreate(savedInstanceState);
 
         clearCallLogTask =
-                DialerExecutorComponent.get(getContext())
+                DialerExecutorComponent.get(Objects.requireNonNull(getContext()))
                         .dialerExecutorFactory()
                         .createUiTaskBuilder(
-                                getFragmentManager(),
+                                Objects.requireNonNull(getFragmentManager()),
                                 "clearCallLogTask",
-                                new ClearCallLogWorker(getActivity().getApplicationContext()))
+                                new ClearCallLogWorker(Objects.requireNonNull(getActivity()).getApplicationContext()))
                         .onSuccess(this::onSuccess)
                         .build();
     }
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         OnClickListener okListener =

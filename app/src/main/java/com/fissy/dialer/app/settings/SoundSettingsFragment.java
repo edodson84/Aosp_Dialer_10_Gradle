@@ -16,10 +16,13 @@
 
 package com.fissy.dialer.app.settings;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.media.RingtoneManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.os.Vibrator;
 import android.preference.CheckBoxPreference;
@@ -31,6 +34,8 @@ import android.provider.Settings;
 import android.telephony.CarrierConfigManager;
 import android.telephony.TelephonyManager;
 import android.widget.Toast;
+
+import androidx.core.app.ActivityCompat;
 
 import com.android.phone.common.util.SettingsUtil;
 import com.fissy.dialer.R;
@@ -54,22 +59,15 @@ public class SoundSettingsFragment extends PreferenceFragment
     private static final int MSG_UPDATE_RINGTONE_SUMMARY = 1;
 
     private Preference mRingtonePreference;
-    private final Handler mRingtoneLookupComplete = new Handler() {
+    private final Handler mRingtoneLookupComplete = new Handler(Looper.myLooper()) {
         @Override
         public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case MSG_UPDATE_RINGTONE_SUMMARY:
-                    mRingtonePreference.setSummary((CharSequence) msg.obj);
-                    break;
+            if (msg.what == MSG_UPDATE_RINGTONE_SUMMARY) {
+                mRingtonePreference.setSummary((CharSequence) msg.obj);
             }
         }
     };
-    private final Runnable mRingtoneLookupRunnable = new Runnable() {
-        @Override
-        public void run() {
-            updateRingtonePreferenceSummary();
-        }
-    };
+    private final Runnable mRingtoneLookupRunnable = this::updateRingtonePreferenceSummary;
     private CheckBoxPreference mVibrateWhenRinging;
     private CheckBoxPreference mPlayDtmfTone;
     private ListPreference mDtmfToneLength;
@@ -233,6 +231,16 @@ public class SoundSettingsFragment extends PreferenceFragment
     private boolean shouldHideCarrierSettings() {
         CarrierConfigManager configManager = (CarrierConfigManager) getActivity().getSystemService(
                 Context.CARRIER_CONFIG_SERVICE);
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return false;
+        }
         return configManager.getConfig().getBoolean(
                 CarrierConfigManager.KEY_HIDE_CARRIER_NETWORK_SETTINGS_BOOL);
     }

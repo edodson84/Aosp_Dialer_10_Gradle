@@ -115,7 +115,7 @@ final class ContactFilterCursor implements Cursor {
         }
 
         // Sort the contacts back into the exact same order they were inside of {@code cursor}
-        Collections.sort(coalescedContacts, (o1, o2) -> compare(contactIdsToPosition, o1, o2));
+        coalescedContacts.sort((o1, o2) -> compare(contactIdsToPosition, o1, o2));
         MatrixCursor newCursor = new MatrixCursor(Projections.CP2_PROJECTION, coalescedContacts.size());
         for (Cp2Contact contact : coalescedContacts) {
             newCursor.addRow(contact.toCursorRow());
@@ -273,7 +273,7 @@ final class ContactFilterCursor implements Cursor {
         if (TextUtils.isEmpty(phrase)) {
             return;
         }
-        String initials = "";
+        StringBuilder initials = new StringBuilder();
         phrase = phrase.toLowerCase(Locale.getDefault());
         existingMatches.add(phrase);
         for (String name : phrase.split("\\s")) {
@@ -282,9 +282,9 @@ final class ContactFilterCursor implements Cursor {
             }
             existingMatches.add(name);
             existingMatches.add(QueryFilteringUtil.getT9Representation(name, context));
-            initials += name.charAt(0);
+            initials.append(name.charAt(0));
         }
-        existingMatches.add(QueryFilteringUtil.getT9Representation(initials, context));
+        existingMatches.add(QueryFilteringUtil.getT9Representation(initials.toString(), context));
     }
 
     /**
@@ -294,7 +294,7 @@ final class ContactFilterCursor implements Cursor {
      *
      * <ul>
      *   <li>A phone number
-     *   <li>A T9 representation of a name (matches {@link QueryFilteringUtil#T9_PATTERN}).
+
      *   <li>A name
      * </ul>
      *

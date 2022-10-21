@@ -140,7 +140,7 @@ final class AutoValue_BubbleInfo_Action extends BubbleInfo.Action {
         }
 
         @Override
-        public BubbleInfo.Action.Builder setName(CharSequence name) {
+        public BubbleInfo.Action.Builder setName(@NonNull CharSequence name) {
             if (name == null) {
                 throw new NullPointerException("Null name");
             }
@@ -149,7 +149,7 @@ final class AutoValue_BubbleInfo_Action extends BubbleInfo.Action {
         }
 
         @Override
-        public BubbleInfo.Action.Builder setIntent(PendingIntent intent) {
+        public BubbleInfo.Action.Builder setIntent(@NonNull PendingIntent intent) {
             if (intent == null) {
                 throw new NullPointerException("Null intent");
             }

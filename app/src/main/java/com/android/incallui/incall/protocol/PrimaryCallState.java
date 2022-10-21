@@ -22,6 +22,7 @@ import android.text.TextUtils;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.IntDef;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.android.incallui.call.state.DialerCallState;
@@ -133,6 +134,7 @@ public abstract class PrimaryCallState {
     @Nullable
     public abstract TransformationInfo assistedDialingExtras();
 
+    @NonNull
     @Override
     public String toString() {
         return String.format(

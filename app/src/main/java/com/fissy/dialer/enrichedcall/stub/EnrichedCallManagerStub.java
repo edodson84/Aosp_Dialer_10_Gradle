@@ -192,7 +192,7 @@ public final class EnrichedCallManagerStub implements EnrichedCallManager {
     }
 
     @Override
-    public long startVideoShareSession(String number) {
+    public long startVideoShareSession(@NonNull String number) {
         return Session.NO_SESSION_ID;
     }
 

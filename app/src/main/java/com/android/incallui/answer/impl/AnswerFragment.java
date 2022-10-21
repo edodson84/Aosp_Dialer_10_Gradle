@@ -313,12 +313,9 @@ public class AnswerFragment extends Fragment
                 .animate()
                 .alpha(0)
                 .withEndAction(
-                        new Runnable() {
-                            @Override
-                            public void run() {
-                                affordanceHolderLayout.reset(false);
-                                secondaryButton.animate().alpha(1);
-                            }
+                        () -> {
+                            affordanceHolderLayout.reset(false);
+                            secondaryButton.animate().alpha(1);
                         });
     }
 
@@ -338,12 +335,12 @@ public class AnswerFragment extends Fragment
     @Override
     @NonNull
     public String getCallId() {
-        return Assert.isNotNull(getArguments().getString(ARG_CALL_ID));
+        return Assert.isNotNull(requireArguments().getString(ARG_CALL_ID));
     }
 
     @Override
     public boolean isVideoUpgradeRequest() {
-        return getArguments().getBoolean(ARG_IS_VIDEO_UPGRADE_REQUEST);
+        return requireArguments().getBoolean(ARG_IS_VIDEO_UPGRADE_REQUEST);
     }
 
     @Override
@@ -354,7 +351,7 @@ public class AnswerFragment extends Fragment
             LogUtil.i("AnswerFragment.setTextResponses", "no text responses, hiding secondary button");
             this.textResponses = null;
             secondaryButton.setVisibility(View.INVISIBLE);
-        } else if (getActivity().isInMultiWindowMode()) {
+        } else if (requireActivity().isInMultiWindowMode()) {
             LogUtil.i("AnswerFragment.setTextResponses", "in multiwindow, hiding secondary button");
             this.textResponses = null;
             secondaryButton.setVisibility(View.INVISIBLE);
@@ -374,8 +371,8 @@ public class AnswerFragment extends Fragment
 
         secondaryButton.setOnClickListener(
                 v -> performSecondaryButtonAction());
-        secondaryButton.setClickable(AccessibilityUtil.isAccessibilityEnabled(getContext()));
-        secondaryButton.setFocusable(AccessibilityUtil.isAccessibilityEnabled(getContext()));
+        secondaryButton.setClickable(AccessibilityUtil.isAccessibilityEnabled(requireContext()));
+        secondaryButton.setFocusable(AccessibilityUtil.isAccessibilityEnabled(requireContext()));
         secondaryButton.setAccessibilityDelegate(accessibilityDelegate);
 
         if (isVideoUpgradeRequest()) {
@@ -387,8 +384,8 @@ public class AnswerFragment extends Fragment
         answerAndReleaseBehavior = SecondaryBehavior.ANSWER_AND_RELEASE;
         answerAndReleaseBehavior.applyToView(answerAndReleaseButton);
 
-        answerAndReleaseButton.setClickable(AccessibilityUtil.isAccessibilityEnabled(getContext()));
-        answerAndReleaseButton.setFocusable(AccessibilityUtil.isAccessibilityEnabled(getContext()));
+        answerAndReleaseButton.setClickable(AccessibilityUtil.isAccessibilityEnabled(requireContext()));
+        answerAndReleaseButton.setFocusable(AccessibilityUtil.isAccessibilityEnabled(requireContext()));
         answerAndReleaseButton.setAccessibilityDelegate(accessibilityDelegate);
 
         if (allowAnswerAndRelease()) {
@@ -399,12 +396,7 @@ public class AnswerFragment extends Fragment
             answerScreenDelegate.onAnswerAndReleaseButtonDisabled();
         }
         answerAndReleaseButton.setOnClickListener(
-                new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        performAnswerAndReleaseButtonAction();
-                    }
-                });
+                v -> performAnswerAndReleaseButtonAction());
     }
 
     /**
@@ -419,7 +411,7 @@ public class AnswerFragment extends Fragment
         chipContainer.setVisibility(View.VISIBLE);
 
         @SpeakEasyChipResourceId
-        Optional<Integer> chipLayoutOptional = SpeakEasyComponent.get(getContext()).speakEasyChip();
+        Optional<Integer> chipLayoutOptional = SpeakEasyComponent.get(requireContext()).speakEasyChip();
         if (chipLayoutOptional.isPresent()) {
 
             LinearLayout chipLayout =
@@ -433,16 +425,16 @@ public class AnswerFragment extends Fragment
 
     @Override
     public boolean allowAnswerAndRelease() {
-        return getArguments().getBoolean(ARG_ALLOW_ANSWER_AND_RELEASE);
+        return requireArguments().getBoolean(ARG_ALLOW_ANSWER_AND_RELEASE);
     }
 
     @Override
     public boolean allowSpeakEasy() {
-        return getArguments().getBoolean(ARG_ALLOW_SPEAK_EASY);
+        return requireArguments().getBoolean(ARG_ALLOW_SPEAK_EASY);
     }
 
     private boolean hasCallOnHold() {
-        return getArguments().getBoolean(ARG_HAS_CALL_ON_HOLD);
+        return requireArguments().getBoolean(ARG_HAS_CALL_ON_HOLD);
     }
 
     @Override
@@ -485,7 +477,7 @@ public class AnswerFragment extends Fragment
         } else if (isShowing && locationUi == null) {
             // Hide the location fragment
             Fragment fragment = getChildFragmentManager().findFragmentById(R.id.incall_location_holder);
-            getChildFragmentManager().beginTransaction().remove(fragment).commitAllowingStateLoss();
+            getChildFragmentManager().beginTransaction().remove(Objects.requireNonNull(fragment)).commitAllowingStateLoss();
         }
     }
 
@@ -500,7 +492,7 @@ public class AnswerFragment extends Fragment
     }
 
     @Override
-    public void setPrimary(PrimaryInfo primaryInfo) {
+    public void setPrimary(@NonNull PrimaryInfo primaryInfo) {
         LogUtil.i("AnswerFragment.setPrimary", primaryInfo.toString());
         this.primaryInfo = primaryInfo;
         updatePrimaryUI();
@@ -583,7 +575,7 @@ public class AnswerFragment extends Fragment
     }
 
     private boolean canShowMap() {
-        return MapsComponent.get(getContext()).getMaps().isAvailable();
+        return MapsComponent.get(requireContext()).getMaps().isAvailable();
     }
 
     @Override
@@ -622,7 +614,7 @@ public class AnswerFragment extends Fragment
     public void dispatchPopulateAccessibilityEvent(AccessibilityEvent event) {
         contactGridManager.dispatchPopulateAccessibilityEvent(event);
         // Add prompt of how to accept/decline call with swipe gesture.
-        if (AccessibilityUtil.isTouchExplorationEnabled(getContext())) {
+        if (AccessibilityUtil.isTouchExplorationEnabled(requireContext())) {
             event
                     .getText()
                     .add(getResources().getString(R.string.a11y_incoming_call_swipe_gesture_prompt));
@@ -661,7 +653,7 @@ public class AnswerFragment extends Fragment
             LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Trace.beginSection("AnswerFragment.onCreateView");
         Bundle arguments = getArguments();
-        Assert.checkState(arguments.containsKey(ARG_CALL_ID));
+        Assert.checkState(Objects.requireNonNull(arguments).containsKey(ARG_CALL_ID));
         Assert.checkState(arguments.containsKey(ARG_IS_RTT_CALL));
         Assert.checkState(arguments.containsKey(ARG_IS_VIDEO_CALL));
         Assert.checkState(arguments.containsKey(ARG_IS_VIDEO_UPGRADE_REQUEST));
@@ -682,21 +674,18 @@ public class AnswerFragment extends Fragment
         importanceBadge
                 .getViewTreeObserver()
                 .addOnGlobalLayoutListener(
-                        new OnGlobalLayoutListener() {
-                            @Override
-                            public void onGlobalLayout() {
-                                int leftRightPadding = importanceBadge.getHeight() / 2;
-                                importanceBadge.setPadding(
-                                        leftRightPadding,
-                                        importanceBadge.getPaddingTop(),
-                                        leftRightPadding,
-                                        importanceBadge.getPaddingBottom());
-                            }
+                        () -> {
+                            int leftRightPadding = importanceBadge.getHeight() / 2;
+                            importanceBadge.setPadding(
+                                    leftRightPadding,
+                                    importanceBadge.getPaddingTop(),
+                                    leftRightPadding,
+                                    importanceBadge.getPaddingBottom());
                         });
         updateImportanceBadgeVisibility();
 
         contactGridManager = new ContactGridManager(view, null, 0, false /* showAnonymousAvatar */);
-        boolean isInMultiWindowMode = getActivity().isInMultiWindowMode();
+        boolean isInMultiWindowMode = requireActivity().isInMultiWindowMode();
         contactGridManager.onMultiWindowModeChanged(isInMultiWindowMode);
 
         Fragment answerMethod =
@@ -727,7 +716,7 @@ public class AnswerFragment extends Fragment
         }
         view.setSystemUiVisibility(flags);
         if (isVideoCall() || isVideoUpgradeRequest()) {
-            if (VideoUtils.hasCameraPermissionAndShownPrivacyToast(getContext())) {
+            if (VideoUtils.hasCameraPermissionAndShownPrivacyToast(requireContext())) {
                 if (isSelfManagedCamera()) {
                     answerVideoCallScreen = new SelfManagedAnswerVideoCallScreen(getCallId(), this, view);
                 } else {
@@ -743,13 +732,13 @@ public class AnswerFragment extends Fragment
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         FragmentUtils.checkParent(this, InCallScreenDelegateFactory.class);
     }
 
     @Override
-    public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         Trace.beginSection("AnswerFragment.onViewCreated");
         super.onViewCreated(view, savedInstanceState);
         createInCallScreenDelegate();
@@ -818,7 +807,7 @@ public class AnswerFragment extends Fragment
     }
 
     @Override
-    public void onSaveInstanceState(Bundle bundle) {
+    public void onSaveInstanceState( @NonNull Bundle bundle) {
         super.onSaveInstanceState(bundle);
         bundle.putBoolean(STATE_HAS_ANIMATED_ENTRY, hasAnimatedEntry);
     }
@@ -840,16 +829,16 @@ public class AnswerFragment extends Fragment
 
     @Override
     public boolean isRttCall() {
-        return getArguments().getBoolean(ARG_IS_RTT_CALL);
+        return requireArguments().getBoolean(ARG_IS_RTT_CALL);
     }
 
     @Override
     public boolean isVideoCall() {
-        return getArguments().getBoolean(ARG_IS_VIDEO_CALL);
+        return requireArguments().getBoolean(ARG_IS_VIDEO_CALL);
     }
 
     public boolean isSelfManagedCamera() {
-        return getArguments().getBoolean(ARG_IS_SELF_MANAGED_CAMERA);
+        return requireArguments().getBoolean(ARG_IS_SELF_MANAGED_CAMERA);
     }
 
     @Override
@@ -989,12 +978,9 @@ public class AnswerFragment extends Fragment
                 .animate()
                 .alpha(0)
                 .withEndAction(
-                        new Runnable() {
-                            @Override
-                            public void run() {
-                                affordanceHolderLayout.reset(false);
-                                secondaryButton.animate().alpha(1);
-                            }
+                        () -> {
+                            affordanceHolderLayout.reset(false);
+                            secondaryButton.animate().alpha(1);
                         });
 
         TelecomUtil.silenceRinger(getContext());
@@ -1006,18 +992,12 @@ public class AnswerFragment extends Fragment
     }
 
     @Override
-    @TargetApi(VERSION_CODES.O)
     public void smsSelected(@Nullable CharSequence text) {
         LogUtil.i("AnswerFragment.smsSelected", null);
         textResponsesFragment = null;
 
         if (text == null) {
-            if (VERSION.SDK_INT < VERSION_CODES.O) {
-                LogUtil.i("AnswerFragment.smsSelected", "below O, showing dialog directly");
-                showCustomSmsDialog();
-                return;
-            }
-            if (!getContext().getSystemService(KeyguardManager.class).isKeyguardLocked()) {
+            if (!requireContext().getSystemService(KeyguardManager.class).isKeyguardLocked()) {
                 LogUtil.i("AnswerFragment.smsSelected", "not locked, showing dialog directly");
                 showCustomSmsDialog();
                 return;
@@ -1169,7 +1149,7 @@ public class AnswerFragment extends Fragment
         @StringRes
         public final int hintText;
         @DrawableRes
-        public int icon;
+        public final int icon;
 
         SecondaryBehavior(
                 @DrawableRes int icon,
@@ -1205,7 +1185,7 @@ public class AnswerFragment extends Fragment
         }
 
         @Override
-        public void onViewCreated(View view, @Nullable Bundle bundle) {
+        public void onViewCreated( @NonNull View view, @Nullable Bundle bundle) {
             super.onViewCreated(view, bundle);
             avatarImageView = ((ImageView) view.findViewById(R.id.contactgrid_avatar));
             FragmentUtils.getParentUnsafe(this, MultimediaFragment.Holder.class).updateAvatar(this);

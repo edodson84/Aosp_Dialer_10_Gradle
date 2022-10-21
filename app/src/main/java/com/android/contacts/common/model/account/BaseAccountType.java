@@ -38,6 +38,8 @@ import android.util.ArrayMap;
 import android.util.AttributeSet;
 import android.view.inputmethod.EditorInfo;
 
+import androidx.annotation.NonNull;
+
 import com.android.contacts.common.model.dataitem.DataKind;
 import com.android.contacts.common.util.CommonDateUtils;
 import com.android.contacts.common.util.ContactDisplayUtils;
@@ -56,25 +58,22 @@ import java.util.Map;
 public abstract class BaseAccountType extends AccountType {
 
     public static final StringInflater ORGANIZATION_BODY_INFLATER =
-            new StringInflater() {
-                @Override
-                public CharSequence inflateUsing(Context context, ContentValues values) {
-                    final CharSequence companyValue =
-                            values.containsKey(Organization.COMPANY)
-                                    ? values.getAsString(Organization.COMPANY)
-                                    : null;
-                    final CharSequence titleValue =
-                            values.containsKey(Organization.TITLE)
-                                    ? values.getAsString(Organization.TITLE)
-                                    : null;
+            (context, values) -> {
+                final CharSequence companyValue =
+                        values.containsKey(Organization.COMPANY)
+                                ? values.getAsString(Organization.COMPANY)
+                                : null;
+                final CharSequence titleValue =
+                        values.containsKey(Organization.TITLE)
+                                ? values.getAsString(Organization.TITLE)
+                                : null;
 
-                    if (companyValue != null && titleValue != null) {
-                        return companyValue + ": " + titleValue;
-                    } else if (companyValue == null) {
-                        return titleValue;
-                    } else {
-                        return companyValue;
-                    }
+                if (companyValue != null && titleValue != null) {
+                    return companyValue + ": " + titleValue;
+                } else if (companyValue == null) {
+                    return titleValue;
+                } else {
+                    return companyValue;
                 }
             };
     protected static final int FLAGS_PHONE = EditorInfo.TYPE_CLASS_PHONE;
@@ -147,19 +146,20 @@ public abstract class BaseAccountType extends AccountType {
     }
 
     // Utility methods to keep code shorter.
-    private static boolean getAttr(AttributeSet attrs, String attribute, boolean defaultValue) {
-        return attrs.getAttributeBooleanValue(null, attribute, defaultValue);
+    private static boolean getAttrb(AttributeSet attrs, String attribute) {
+        return attrs.getAttributeBooleanValue(null, attribute, false);
     }
 
-    private static int getAttr(AttributeSet attrs, String attribute, int defaultValue) {
-        return attrs.getAttributeIntValue(null, attribute, defaultValue);
+
+    private static int getAttr(AttributeSet attrs) {
+        return attrs.getAttributeIntValue(null, Attr.MAX_OCCURRENCE, -1);
     }
 
     private static String getAttr(AttributeSet attrs, String attribute) {
         return attrs.getAttributeValue(null, attribute);
     }
 
-    protected DataKind addDataKindStructuredName(Context context) throws DefinitionException {
+    protected void addDataKindStructuredName(Context context) throws DefinitionException {
         DataKind kind =
                 addKind(
                         new DataKind(
@@ -196,10 +196,9 @@ public abstract class BaseAccountType extends AccountType {
                 new EditField(
                         StructuredName.PHONETIC_GIVEN_NAME, R.string.name_phonetic_given, FLAGS_PHONETIC));
 
-        return kind;
     }
 
-    protected DataKind addDataKindDisplayName(Context context) throws DefinitionException {
+    protected void addDataKindDisplayName(Context context) throws DefinitionException {
         DataKind kind =
                 addKind(
                         new DataKind(
@@ -253,10 +252,9 @@ public abstract class BaseAccountType extends AccountType {
                             .setLongForm(true));
         }
 
-        return kind;
     }
 
-    protected DataKind addDataKindPhoneticName(Context context) throws DefinitionException {
+    protected void addDataKindPhoneticName(Context context) throws DefinitionException {
         DataKind kind =
                 addKind(
                         new DataKind(
@@ -285,7 +283,6 @@ public abstract class BaseAccountType extends AccountType {
                         StructuredName.PHONETIC_GIVEN_NAME, R.string.name_phonetic_given, FLAGS_PHONETIC)
                         .setLongForm(true));
 
-        return kind;
     }
 
     protected DataKind addDataKindNickname(Context context) throws DefinitionException {
@@ -486,7 +483,7 @@ public abstract class BaseAccountType extends AccountType {
         return kind;
     }
 
-    protected DataKind addDataKindSipAddress(Context context) throws DefinitionException {
+    protected void addDataKindSipAddress() throws DefinitionException {
         DataKind kind =
                 addKind(
                         new DataKind(
@@ -502,10 +499,9 @@ public abstract class BaseAccountType extends AccountType {
                 new EditField(SipAddress.SIP_ADDRESS, R.string.label_sip_address, FLAGS_SIP_ADDRESS));
         kind.typeOverallMax = 1;
 
-        return kind;
     }
 
-    protected DataKind addDataKindGroupMembership(Context context) throws DefinitionException {
+    protected void addDataKindGroupMembership() throws DefinitionException {
         DataKind kind =
                 addKind(
                         new DataKind(
@@ -520,7 +516,6 @@ public abstract class BaseAccountType extends AccountType {
 
         kind.maxLinesForDisplay = MAX_LINES_FOR_GROUP;
 
-        return kind;
     }
 
     @Override
@@ -628,6 +623,8 @@ public abstract class BaseAccountType extends AccountType {
             }
         }
 
+
+        @NonNull
         @Override
         public String toString() {
             return this.getClass().getSimpleName()
@@ -637,9 +634,6 @@ public abstract class BaseAccountType extends AccountType {
                     + mColumnName;
         }
 
-        public String getColumnNameForTest() {
-            return mColumnName;
-        }
     }
 
     public abstract static class CommonInflater implements StringInflater {
@@ -676,6 +670,8 @@ public abstract class BaseAccountType extends AccountType {
             return getTypeLabel(context.getResources(), type, label);
         }
 
+
+        @NonNull
         @Override
         public String toString() {
             return this.getClass().getSimpleName();
@@ -800,8 +796,6 @@ public abstract class BaseAccountType extends AccountType {
                     return R.string.chat_icq;
                 case Im.PROTOCOL_JABBER:
                     return R.string.chat_jabber;
-                case Im.PROTOCOL_NETMEETING:
-                    return R.string.chat;
                 default:
                     return R.string.chat;
             }
@@ -871,7 +865,6 @@ public abstract class BaseAccountType extends AccountType {
          * Creates a new {@link DataKind}, and also parses the child Type tags in the DataKind tag.
          */
         protected final DataKind newDataKind(
-                Context context,
                 XmlPullParser parser,
                 AttributeSet attrs,
                 boolean isPseudo,
@@ -894,7 +887,7 @@ public abstract class BaseAccountType extends AccountType {
             // Get more information from the tag...
             // A pseudo data kind doesn't have corresponding tag the XML, so we skip this.
             if (!isPseudo) {
-                kind.typeOverallMax = getAttr(attrs, Attr.MAX_OCCURRENCE, -1);
+                kind.typeOverallMax = getAttr(attrs);
 
                 // Process "Type" tags.
                 // If a kind has the type column, contacts.xml must have at least one type
@@ -961,7 +954,7 @@ public abstract class BaseAccountType extends AccountType {
                 throw new DefinitionException(
                         "Undefined type '" + typeName + "' for data kind '" + kind.mimeType + "'");
             }
-            et.specificMax = getAttr(attrs, Attr.MAX_OCCURRENCE, -1);
+            et.specificMax = getAttr(attrs);
 
             return et;
         }
@@ -1010,15 +1003,15 @@ public abstract class BaseAccountType extends AccountType {
             final boolean displayOrderPrimary =
                     context.getResources().getBoolean(R.bool.config_editor_field_order_primary);
 
-            final boolean supportsDisplayName = getAttr(attrs, "supportsDisplayName", false);
-            final boolean supportsPrefix = getAttr(attrs, "supportsPrefix", false);
-            final boolean supportsMiddleName = getAttr(attrs, "supportsMiddleName", false);
-            final boolean supportsSuffix = getAttr(attrs, "supportsSuffix", false);
+            final boolean supportsDisplayName = getAttrb(attrs, "supportsDisplayName");
+            final boolean supportsPrefix = getAttrb(attrs, "supportsPrefix");
+            final boolean supportsMiddleName = getAttrb(attrs, "supportsMiddleName");
+            final boolean supportsSuffix = getAttrb(attrs, "supportsSuffix");
             final boolean supportsPhoneticFamilyName =
-                    getAttr(attrs, "supportsPhoneticFamilyName", false);
+                    getAttrb(attrs, "supportsPhoneticFamilyName");
             final boolean supportsPhoneticMiddleName =
-                    getAttr(attrs, "supportsPhoneticMiddleName", false);
-            final boolean supportsPhoneticGivenName = getAttr(attrs, "supportsPhoneticGivenName", false);
+                    getAttrb(attrs, "supportsPhoneticMiddleName");
+            final boolean supportsPhoneticGivenName = getAttrb(attrs, "supportsPhoneticGivenName");
 
             // For now, every things must be supported.
             checkAttributeTrue(supportsDisplayName, "supportsDisplayName");
@@ -1034,7 +1027,6 @@ public abstract class BaseAccountType extends AccountType {
             // Structured name
             final DataKind ks =
                     newDataKind(
-                            context,
                             parser,
                             attrs,
                             false,
@@ -1083,7 +1075,6 @@ public abstract class BaseAccountType extends AccountType {
             // Display name
             final DataKind kd =
                     newDataKind(
-                            context,
                             parser,
                             attrs,
                             true,
@@ -1137,7 +1128,6 @@ public abstract class BaseAccountType extends AccountType {
             // Phonetic name
             final DataKind kp =
                     newDataKind(
-                            context,
                             parser,
                             attrs,
                             true,
@@ -1187,7 +1177,6 @@ public abstract class BaseAccountType extends AccountType {
                 throws DefinitionException, XmlPullParserException, IOException {
             final DataKind kind =
                     newDataKind(
-                            context,
                             parser,
                             attrs,
                             false,
@@ -1230,7 +1219,6 @@ public abstract class BaseAccountType extends AccountType {
                 throws DefinitionException, XmlPullParserException, IOException {
             final DataKind kind =
                     newDataKind(
-                            context,
                             parser,
                             attrs,
                             false,
@@ -1335,7 +1323,6 @@ public abstract class BaseAccountType extends AccountType {
                 throws DefinitionException, XmlPullParserException, IOException {
             final DataKind kind =
                     newDataKind(
-                            context,
                             parser,
                             attrs,
                             false,
@@ -1386,7 +1373,6 @@ public abstract class BaseAccountType extends AccountType {
                 throws DefinitionException, XmlPullParserException, IOException {
             final DataKind kind =
                     newDataKind(
-                            context,
                             parser,
                             attrs,
                             false,
@@ -1397,7 +1383,7 @@ public abstract class BaseAccountType extends AccountType {
                             new PostalActionInflater(),
                             new SimpleInflater(StructuredPostal.FORMATTED_ADDRESS));
 
-            if (getAttr(attrs, "needsStructured", false)) {
+            if (getAttrb(attrs, "needsStructured")) {
                 if (Locale.JAPANESE.getLanguage().equals(Locale.getDefault().getLanguage())) {
                     // Japanese order
                     kind.fieldList.add(
@@ -1475,7 +1461,6 @@ public abstract class BaseAccountType extends AccountType {
 
             final DataKind kind =
                     newDataKind(
-                            context,
                             parser,
                             attrs,
                             false,
@@ -1543,7 +1528,6 @@ public abstract class BaseAccountType extends AccountType {
                 throws DefinitionException, XmlPullParserException, IOException {
             final DataKind kind =
                     newDataKind(
-                            context,
                             parser,
                             attrs,
                             false,
@@ -1579,7 +1563,6 @@ public abstract class BaseAccountType extends AccountType {
                 throws DefinitionException, XmlPullParserException, IOException {
             final DataKind kind =
                     newDataKind(
-                            context,
                             parser,
                             attrs,
                             false,
@@ -1613,7 +1596,6 @@ public abstract class BaseAccountType extends AccountType {
                 throws DefinitionException, XmlPullParserException, IOException {
             final DataKind kind =
                     newDataKind(
-                            context,
                             parser,
                             attrs,
                             false,
@@ -1647,7 +1629,6 @@ public abstract class BaseAccountType extends AccountType {
                 throws DefinitionException, XmlPullParserException, IOException {
             final DataKind kind =
                     newDataKind(
-                            context,
                             parser,
                             attrs,
                             false,
@@ -1681,7 +1662,6 @@ public abstract class BaseAccountType extends AccountType {
                 throws DefinitionException, XmlPullParserException, IOException {
             final DataKind kind =
                     newDataKind(
-                            context,
                             parser,
                             attrs,
                             false,
@@ -1715,7 +1695,6 @@ public abstract class BaseAccountType extends AccountType {
                 throws DefinitionException, XmlPullParserException, IOException {
             final DataKind kind =
                     newDataKind(
-                            context,
                             parser,
                             attrs,
                             false,
@@ -1754,7 +1733,6 @@ public abstract class BaseAccountType extends AccountType {
                 throws DefinitionException, XmlPullParserException, IOException {
             final DataKind kind =
                     newDataKind(
-                            context,
                             parser,
                             attrs,
                             false,
@@ -1767,7 +1745,7 @@ public abstract class BaseAccountType extends AccountType {
 
             kind.fieldList.add(new EditField(Event.DATA, R.string.eventLabelsGroup, FLAGS_EVENT));
 
-            if (getAttr(attrs, Attr.DATE_WITH_TIME, false)) {
+            if (getAttrb(attrs, Attr.DATE_WITH_TIME)) {
                 kind.dateFormatWithoutYear = CommonDateUtils.NO_YEAR_DATE_AND_TIME_FORMAT;
                 kind.dateFormatWithYear = CommonDateUtils.DATE_AND_TIME_FORMAT;
             } else {
@@ -1782,7 +1760,7 @@ public abstract class BaseAccountType extends AccountType {
 
         @Override
         protected EditType buildEditTypeForTypeTag(AttributeSet attrs, String type) {
-            final boolean yo = getAttr(attrs, Attr.YEAR_OPTIONAL, false);
+            final boolean yo = getAttrb(attrs, Attr.YEAR_OPTIONAL);
 
             if ("birthday".equals(type)) {
                 return buildEventType(Event.TYPE_BIRTHDAY, yo).setSpecificMax(1);
@@ -1820,7 +1798,6 @@ public abstract class BaseAccountType extends AccountType {
                 throws DefinitionException, XmlPullParserException, IOException {
             final DataKind kind =
                     newDataKind(
-                            context,
                             parser,
                             attrs,
                             false,

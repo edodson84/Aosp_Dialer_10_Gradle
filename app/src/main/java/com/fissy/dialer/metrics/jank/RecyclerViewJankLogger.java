@@ -16,6 +16,7 @@
 
 package com.fissy.dialer.metrics.jank;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.OnScrollListener;
 
@@ -37,7 +38,7 @@ public final class RecyclerViewJankLogger extends OnScrollListener {
     }
 
     @Override
-    public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+    public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
         if (!isScrolling && newState == RecyclerView.SCROLL_STATE_DRAGGING) {
             isScrolling = true;
             metrics.startJankRecorder(eventName);

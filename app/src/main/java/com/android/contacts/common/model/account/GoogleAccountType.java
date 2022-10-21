@@ -64,8 +64,8 @@ public class GoogleAccountType extends BaseAccountType {
             addDataKindPhoto(context);
             addDataKindNote(context);
             addDataKindWebsite(context);
-            addDataKindSipAddress(context);
-            addDataKindGroupMembership(context);
+            addDataKindSipAddress();
+            addDataKindGroupMembership();
             addDataKindRelation(context);
             addDataKindEvent(context);
 

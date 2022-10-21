@@ -21,7 +21,7 @@ import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.database.MergeCursor;
 
-import androidx.annotation.Nullable;
+import androidx.annotation.NonNull;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.searchfragment.common.SearchCursor;
@@ -57,7 +57,7 @@ final class NearbyPlacesCursor extends MergeCursor implements SearchCursor {
     }
 
     @Override
-    public boolean updateQuery(@Nullable String query) {
+    public boolean updateQuery(@NonNull String query) {
         // When the query changes, a new network request is made for nearby places. Meaning this cursor
         // will be closed and another created, so return false.
         return false;

@@ -17,9 +17,6 @@
     <string name="a11y_new_call_log_entry_full_description_with_phone_account_info">^1, ^2, ^3.</string>
     <string name="a11y_new_call_log_entry_full_description_without_phone_account_info">^1, ^2.</string>
     <string name="a11y_new_call_log_entry_phone_account">op ^1, via ^2</string>
-    <string name="a11y_new_call_log_entry_tap_action">expand menu</string>
-    <string name="a11y_new_call_log_entry_video_call">make a video call to ^1</string>
-    <string name="a11y_new_call_log_entry_voice_call">call ^1</string>
     <string name="abc_action_bar_home_description">Navigeren naar startpositie</string>
     <string name="abc_action_bar_up_description">Omhoog navigeren</string>
     <string name="abc_action_menu_overflow_description">Meer opties</string>
@@ -47,7 +44,6 @@
     <string name="abc_shareactionprovider_share_with">Delen met</string>
     <string name="abc_shareactionprovider_share_with_application">Delen met %s</string>
     <string name="abc_toolbar_collapse_description">Samenvouwen</string>
-    <string name="about_phone_label">Over</string>
     <string name="accessibility_settings_title">Toegankelijkheid</string>
     <string name="account_phone">Alleen op apparaat, niet gesynchroniseerd</string>
     <string name="action_copy_number_text">Nummer kopiëren</string>
@@ -98,7 +94,6 @@
     <string name="blocked_numbers_disabled_emergency_desc">Oproepblokkering is uitgeschakeld omdat je in de afgelopen 48 uur contact met de noodhulpdiensten hebt opgenomen via deze telefoon. De functie wordt automatisch weer ingeschakeld nadat de periode van 48 uur is verstreken.</string>
     <string name="blocked_numbers_disabled_emergency_header_label">Oproepblokkering tijdelijk uitgeschakeld</string>
     <string name="bubble_return_to_call">Terug naar oproep</string>
-    <string name="build_version_label">Buildversie</string>
     <string name="call">Bellen</string>
     <string name="callFailed_simError">Geen simkaart of fout met simkaart</string>
     <string name="call_assistant">%s bellen</string>
@@ -173,7 +168,7 @@
     <string name="call_pager">Pager bellen</string>
     <string name="call_radio">Radio bellen</string>
     <string name="call_settings_label">Oproepen</string>
-    <string name="call_subject_hint">Typ een notitie om te verzenden met de oproep...</string>
+    <string name="call_subject_hint">Typ een notitie om te verzenden met de oproep…</string>
     <string name="call_subject_limit">%1$s/%2$s</string>
     <string name="call_subject_type_and_number">%1$s %2$s</string>
     <string name="call_telex">Telex bellen</string>
@@ -201,7 +196,7 @@
     <string name="clearCallLogProgress_title">Oproepgeschiedenis wissen…</string>
     <string name="clearFrequentsConfirmation">Je wist de lijst met contacten waarmee je regelmatig contact opneemt in de apps Contacten en Telefoon, en e-mailapps moeten je voorkeursadressen weer opnieuw leren.</string>
     <string name="clearFrequentsConfirmation_title">Lijst regelmatige contacten wissen?</string>
-    <string name="clearFrequentsProgress_title">Regelmatige contacten wissen...</string>
+    <string name="clearFrequentsProgress_title">Regelmatige contacten wissen…</string>
     <string name="conference_call_name">Telefonische vergadering</string>
     <string name="conference_caller_disconnect_content_description">Oproep beëindigen</string>
     <string name="contact_grid_callback_number">Dit telefoonnummer: %1$s</string>
@@ -220,7 +215,6 @@
     <string name="content_description_rtt_chat_avatar">Avatar</string>
     <string name="content_description_rtt_check_button">Verzenden</string>
     <string name="copy_number">Nummer kopiëren</string>
-    <string name="copy_transcript_text">Transcriptie kopiëren</string>
     <string name="custom_message_hint">Schrijf zelf een bericht</string>
     <string name="default_notification_description">Standaardgeluid (%1$s)</string>
     <string name="delete">Verwijderen</string>
@@ -389,7 +383,6 @@
     <string name="label_sip_address">SIP</string>
     <string name="launcherActivityLabel">Telefoon</string>
     <string name="launcherDialpadActivityLabel">Toetsenblok van telefoon</string>
-    <string name="licenseActivityLabel">Open-sourcelicenties</string>
     <string name="listAllContactsInAccount">Contacten in %s</string>
     <string name="listCustomView">Contacten in aangepaste weergave</string>
     <string name="listSingleContact">Eén contact</string>
@@ -431,10 +424,6 @@
     <string name="network_name_wifi">Wifi</string>
     <string name="new_call_log_carrier_video">Video via provider</string>
     <string name="new_call_log_duo_video">Duo-video</string>
-    <string name="new_call_log_header_older">Ouder</string>
-    <string name="new_call_log_header_today">Vandaag</string>
-    <string name="new_call_log_header_yesterday">Gisteren</string>
-    <string name="new_call_log_permission_no_calllog">Als je je gesprekkenlijst wilt bekijken, schakel je de machtiging voor Telefoon in.</string>
     <string name="new_call_log_secondary_blocked">Geblokkeerd</string>
     <string name="new_call_log_secondary_spam">Spam</string>
     <string name="new_call_log_unknown">Onbekend</string>
@@ -490,7 +479,6 @@
     <string name="ok_got_it">OK</string>
     <string name="old_block_number_confirmation_title">%1$s blokkeren?</string>
     <string name="old_call_subject_type_and_number">%1$s %2$s</string>
-    <string name="open_source_license_detail_label">Licentiedetails voor open-sourcesoftware</string>
     <string name="organizationLabelsGroup">Organisatie</string>
     <string name="outgoing_wps_warning">Als je een WPS-oproep plaatst, wordt je huidige gesprek afgebroken.</string>
     <string name="pause_prompt_no">Nee</string>
@@ -524,7 +512,6 @@
     <string name="pre_call_select_phone_account_hint_intra_carrier">Gebruikt dezelfde provider</string>
     <string name="pre_call_select_phone_account_hint_other_sim_in_use">Niet beschikbaar tijdens gebruik van %1$s</string>
     <string name="pre_call_select_phone_account_remember">Deze keuze onthouden</string>
-    <string name="privacy_policy_label">Privacybeleid</string>
     <string name="private_num_non_verizon">Privénummer</string>
     <string name="private_num_verizon">Beperkt</string>
     <string name="quick_question">Snelle vraag…</string>
@@ -646,7 +633,6 @@
     <string name="tab_title">Tabblad %1$s.</string>
     <string name="tab_title_call_history">Oproepen</string>
     <string name="tab_title_speed_dial">Snelkeuze</string>
-    <string name="terms_of_service_label">Servicevoorwaarden</string>
     <string name="toast_cannot_write_system_settings">Telefoon-app heeft geen toestemming om systeeminstellingen te schrijven.</string>
     <string name="toast_text_copied">Tekst gekopieerd</string>
     <string name="toolbar_close">Sluiten</string>
@@ -691,13 +677,7 @@
     <string name="view_updates_from_group">Updates bekijken</string>
     <string name="voice_call">Spraakoproep</string>
     <string name="voice_search_not_available">Gesproken zoekopdracht niet beschikbaar</string>
-    <string name="voicemail">Voicemail</string>
-    <string name="voicemailCallLogDateTimeFormat">%1$s om %2$s</string>
-    <string name="voicemailCallLogDateTimeFormatWithDuration">%1$s • %2$s</string>
-    <string name="voicemailCallLogToday">@string/call_log_header_today</string>
-    <string name="voicemailDurationFormat">%1$02d:%2$02d</string>
     <string name="voicemailMultiSelectActionBarTitle">%1$s geselecteerd</string>
-    <string name="voicemail_donation_promo_content">Laat Google deze en toekomstige voicemailberichten met transcripten controleren. Ze worden anoniem opgeslagen. Je kunt deze instellingen op elk gewenst moment wijzigen. %1$s</string>
     <string name="voicemail_string">Voicemail</string>
     <string name="voicemail_transcription_rating">Beoordeel transcriptkwaliteit</string>
     <string name="wait_prompt_str">"De volgende tonen verzenden?

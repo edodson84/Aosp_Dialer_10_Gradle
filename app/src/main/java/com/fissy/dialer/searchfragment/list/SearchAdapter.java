@@ -23,8 +23,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
@@ -42,7 +42,7 @@ import java.util.List;
 /**
  * RecyclerView adapter for {@link NewSearchFragment}.
  */
-@VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
+
 public final class SearchAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     private final SearchCursorManager searchCursorManager;
@@ -55,7 +55,7 @@ public final class SearchAdapter extends RecyclerView.Adapter<ViewHolder> {
     private OnClickListener allowClickListener;
     private OnClickListener dismissClickListener;
 
-    @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
+
     public SearchAdapter(
             Context context, SearchCursorManager searchCursorManager, RowClickListener rowClickListener) {
         this.context = context;
@@ -63,8 +63,9 @@ public final class SearchAdapter extends RecyclerView.Adapter<ViewHolder> {
         this.rowClickListener = rowClickListener;
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup root, @RowType int rowType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup root, @RowType int rowType) {
         switch (rowType) {
             case RowType.CONTACT_ROW:
                 return new SearchContactViewHolder(
@@ -105,7 +106,7 @@ public final class SearchAdapter extends RecyclerView.Adapter<ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if (holder instanceof SearchContactViewHolder) {
             ((SearchContactViewHolder) holder).bind(searchCursorManager.getCursor(position), query);
         } else if (holder instanceof NearbyPlaceViewHolder) {

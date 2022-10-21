@@ -41,7 +41,6 @@ import com.fissy.dialer.precall.PreCallComponent;
 import com.fissy.dialer.preferredsim.PreferredSimComponent;
 import com.fissy.dialer.preferredsim.suggestion.SimSuggestionComponent;
 import com.fissy.dialer.promotion.PromotionComponent;
-import com.fissy.dialer.simulator.SimulatorComponent;
 import com.fissy.dialer.spam.SpamComponent;
 import com.fissy.dialer.speeddial.loader.UiItemLoaderComponent;
 import com.fissy.dialer.storage.StorageComponent;
@@ -77,7 +76,6 @@ public interface BaseDialerRootComponent
         PromotionComponent.HasComponent,
         UiItemLoaderComponent.HasComponent,
         SimSuggestionComponent.HasComponent,
-        SimulatorComponent.HasComponent,
         SpamComponent.HasComponent,
         SpeakEasyComponent.HasComponent,
         StorageComponent.HasComponent,

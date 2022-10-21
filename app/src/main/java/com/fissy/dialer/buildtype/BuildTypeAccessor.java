@@ -25,6 +25,7 @@ import com.fissy.dialer.proguard.UsedByReflection;
  * reflection.
  */
 @UsedByReflection(value = "BuildType.java")
+public
         /* package */ interface BuildTypeAccessor {
     @BuildType.Type
     int getBuildType();

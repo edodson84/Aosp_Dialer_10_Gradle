@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -81,16 +84,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.fissy.dialer.about.LicenseMenuActivity"
-            android:exported="true"
-            android:label="@string/licenseActivityLabel"
-            android:theme="@style/Dialer" />
-        <activity
-            android:name="com.fissy.dialer.about.LicenseActivity"
-            android:exported="false"
-            android:label="@string/licenseActivityLabel"
-            android:theme="@style/Dialer" />
-        <activity
             android:name="com.fissy.dialer.app.filterednumber.BlockedNumbersSettingsActivity"
             android:exported="false"
             android:label="@string/manage_blocked_numbers_label"
@@ -160,7 +153,8 @@
             android:name="com.fissy.dialer.assisteddialing.ui.AssistedDialingSettingActivity"
             android:label="@string/assisted_dialing_setting_title"
             android:parentActivityName="com.fissy.dialer.app.settings.DialerSettingsActivity"
-            android:theme="@style/Dialer">
+            android:theme="@style/Dialer"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.fissy.dialer.app.settings.SHOW_ASSISTED_DIALING_SETTINGS" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -207,7 +201,8 @@
             android:name="com.fissy.dialer.interactions.ContactUpdateService"
             android:exported="false" />
 
-        <receiver android:name="com.fissy.dialer.interactions.UndemoteOutgoingCallReceiver">
+        <receiver android:name="com.fissy.dialer.interactions.UndemoteOutgoingCallReceiver"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
             </intent-filter>
@@ -265,7 +260,7 @@
 
                 <data android:scheme="tel" />
             </intent-filter>
-            <intent-filter>
+            <intent-filter tools:ignore="AppLinkUrlError">
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -365,18 +360,6 @@
             android:taskAffinity=""
             android:theme="@style/CallContactsTheme" />
 
-        <service
-            android:name="com.fissy.dialer.simulator.impl.SimulatorConnectionService"
-            android:exported="true"
-            android:permission="android.permission.BIND_CONNECTION_SERVICE">
-            <intent-filter>
-                <action android:name="android.telecomm.ConnectionService" />
-            </intent-filter>
-        </service>
-        <service
-            android:name="com.fissy.dialer.simulator.service.SimulatorService"
-            android:exported="true" />
-
         <meta-data
             android:name="android.telephony.HIDE_VOICEMAIL_SETTINGS_MENU"
             android:value="true" />
@@ -454,7 +437,6 @@
             android:exported="false"
             android:label="@string/phoneAppLabel"
             android:resizeableActivity="true"
-            android:screenOrientation="portrait"
             android:taskAffinity="com.android.incallui"
             android:theme="@style/Theme.InCallScreen" />
         <activity

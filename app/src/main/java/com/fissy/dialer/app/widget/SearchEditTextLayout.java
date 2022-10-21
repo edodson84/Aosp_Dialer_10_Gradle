@@ -32,6 +32,8 @@ import com.fissy.dialer.R;
 import com.fissy.dialer.animation.AnimUtils;
 import com.fissy.dialer.util.DialerUtils;
 
+import java.util.Objects;
+
 public class SearchEditTextLayout extends FrameLayout {
 
     private static final float EXPAND_MARGIN_FRACTION_START = 0.8f;
@@ -100,12 +102,9 @@ public class SearchEditTextLayout extends FrameLayout {
         // Convert a long click into a click to expand the search box. Touch events are also
         // forwarded to the searchView. This accelerates the long-press scenario for copy/paste.
         collapsed.setOnLongClickListener(
-                new OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View view) {
-                        collapsed.performClick();
-                        return false;
-                    }
+                view -> {
+                    collapsed.performClick();
+                    return false;
                 });
         collapsed.setOnTouchListener(
                 (v, event) -> {
@@ -114,24 +113,18 @@ public class SearchEditTextLayout extends FrameLayout {
                 });
 
         searchView.setOnFocusChangeListener(
-                new OnFocusChangeListener() {
-                    @Override
-                    public void onFocusChange(View v, boolean hasFocus) {
-                        if (hasFocus) {
-                            DialerUtils.showInputMethod(v);
-                        } else {
-                            DialerUtils.hideInputMethod(v);
-                        }
+                (v, hasFocus) -> {
+                    if (hasFocus) {
+                        DialerUtils.showInputMethod(v);
+                    } else {
+                        DialerUtils.hideInputMethod(v);
                     }
                 });
 
         searchView.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (callback != null) {
-                            callback.onSearchViewClicked();
-                        }
+                v -> {
+                    if (callback != null) {
+                        callback.onSearchViewClicked();
                     }
                 });
 
@@ -153,21 +146,13 @@ public class SearchEditTextLayout extends FrameLayout {
 
         findViewById(R.id.search_close_button)
                 .setOnClickListener(
-                        new OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                searchView.setText(null);
-                            }
-                        });
+                        v -> searchView.setText(null));
 
         findViewById(R.id.search_back_button)
                 .setOnClickListener(
-                        new OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if (callback != null) {
-                                    callback.onBackButtonClicked();
-                                }
+                        v -> {
+                            if (callback != null) {
+                                callback.onBackButtonClicked();
                             }
                         });
 
@@ -297,13 +282,10 @@ public class SearchEditTextLayout extends FrameLayout {
             animator.cancel();
         }
 
-        animator.addUpdateListener(
-                new AnimatorUpdateListener() {
-                    @Override
-                    public void onAnimationUpdate(ValueAnimator animation) {
-                        final Float fraction = (Float) animation.getAnimatedValue();
-                        setMargins(fraction);
-                    }
+        Objects.requireNonNull(animator).addUpdateListener(
+                animation -> {
+                    final Float fraction = (Float) animation.getAnimatedValue();
+                    setMargins(fraction);
                 });
 
         animator.setDuration(ANIMATION_DURATION);

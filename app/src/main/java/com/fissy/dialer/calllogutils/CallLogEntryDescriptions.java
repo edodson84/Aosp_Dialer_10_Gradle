@@ -118,8 +118,6 @@ public final class CallLogEntryDescriptions {
                 return R.plurals.a11y_new_call_log_entry_answered_call;
             case Calls.OUTGOING_TYPE:
                 return R.plurals.a11y_new_call_log_entry_outgoing_call;
-            case Calls.MISSED_TYPE:
-                return R.plurals.a11y_new_call_log_entry_missed_call;
             case Calls.VOICEMAIL_TYPE:
                 throw new IllegalStateException("Voicemails not expected in call log");
             case Calls.BLOCKED_TYPE:

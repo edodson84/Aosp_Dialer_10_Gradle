@@ -28,11 +28,7 @@ public enum Mode
     public static final int BUBBLE_VALUE = 1;
     private static final com.google.protobuf.Internal.EnumLiteMap<
             Mode> internalValueMap =
-            new com.google.protobuf.Internal.EnumLiteMap<Mode>() {
-                public Mode findValueByNumber(int number) {
-                    return Mode.forNumber(number);
-                }
-            };
+            number -> Mode.forNumber(number);
     private final int value;
 
     Mode(int value) {

@@ -19,6 +19,7 @@ package com.android.incallui.incall.protocol;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.fissy.dialer.common.LogUtil;
@@ -81,6 +82,7 @@ public abstract class SecondaryInfo implements Parcelable {
 
     public abstract boolean isFullscreen();
 
+    @NonNull
     @Override
     public String toString() {
         return String.format(

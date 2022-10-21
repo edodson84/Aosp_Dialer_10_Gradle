@@ -20,7 +20,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
-import android.media.ExifInterface;
+import androidx.exifinterface.media.ExifInterface;
 import android.net.Uri;
 
 import androidx.annotation.NonNull;
@@ -36,6 +36,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Objects;
 
 /**
  * Task for copying and resizing images to be shared with RCS process.
@@ -74,7 +75,7 @@ class CopyAndResizeImageWorker implements Worker<Uri, Pair<File, String>> {
         int rotation = 0;
         try {
             rotation =
-                    new ExifInterface(input.getPath())
+                    new ExifInterface(Objects.requireNonNull(input).getPath())
                             .getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
         } catch (Exception ignored) {
             // Couldn't get exif tags, not the end of the world

@@ -34,6 +34,8 @@ import com.fissy.dialer.R;
 import com.fissy.dialer.blocking.FilteredNumbersUtil;
 import com.fissy.dialer.blocking.FilteredNumbersUtil.ImportSendToVoicemailContactsListener;
 
+import java.util.Objects;
+
 /**
  * TODO(calderwoodra): documentation
  */
@@ -76,7 +78,7 @@ public class ViewNumbersToImportFragment extends ListFragment
         super.onResume();
 
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        actionBar.setTitle(R.string.import_send_to_voicemail_numbers_label);
+        Objects.requireNonNull(actionBar).setTitle(R.string.import_send_to_voicemail_numbers_label);
         actionBar.setDisplayShowCustomEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
@@ -94,15 +96,13 @@ public class ViewNumbersToImportFragment extends ListFragment
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        final CursorLoader cursorLoader =
-                new CursorLoader(
-                        getContext(),
-                        Phone.CONTENT_URI,
-                        FilteredNumbersUtil.PhoneQuery.PROJECTION,
-                        FilteredNumbersUtil.PhoneQuery.SELECT_SEND_TO_VOICEMAIL_TRUE,
-                        null,
-                        null);
-        return cursorLoader;
+        return new CursorLoader(
+                getContext(),
+                Phone.CONTENT_URI,
+                FilteredNumbersUtil.PhoneQuery.PROJECTION,
+                FilteredNumbersUtil.PhoneQuery.SELECT_SEND_TO_VOICEMAIL_TRUE,
+                null,
+                null);
     }
 
     @Override
@@ -120,12 +120,9 @@ public class ViewNumbersToImportFragment extends ListFragment
         if (view.getId() == R.id.import_button) {
             FilteredNumbersUtil.importSendToVoicemailContacts(
                     getContext(),
-                    new ImportSendToVoicemailContactsListener() {
-                        @Override
-                        public void onImportComplete() {
-                            if (getActivity() != null) {
-                                getActivity().onBackPressed();
-                            }
+                    () -> {
+                        if (getActivity() != null) {
+                            getActivity().onBackPressed();
                         }
                     });
         } else if (view.getId() == R.id.cancel_button) {

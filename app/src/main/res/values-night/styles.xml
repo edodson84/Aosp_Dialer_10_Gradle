@@ -17,16 +17,8 @@
 
     <style name="Dialer" parent="@style/Theme.Material3.Dark">
         <item name="darkmode">true</item>
-        <item name="android:actionBarPopupTheme">@style/ThemeOverlay.Material3.Dark</item>
-        <item name="android:actionBarSize">64dp</item>
-        <item name="android:actionBarStyle">@style/Widget.Material3.ActionBar.Solid</item>
-        <item name="android:actionModeStyle">@style/Widget.Material3.ActionMode</item>
-        <item name="android:contextPopupMenuStyle">@style/PopupMenu</item>
-        <item name="android:popupBackground">@drawable/popup_background</item>
         <item name="popupMenuBackground">@drawable/popup_background</item>
-        <item name="android:listPopupWindowStyle">@style/Widget.Material3.PopupMenu.ListPopupWindow</item>
         <item name="android:popupMenuStyle">@style/PopupMenu</item>
-        <item name="android:actionOverflowMenuStyle">@style/Widget.Material3.PopupMenu.Overflow</item>
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:windowLightNavigationBar">false</item>
         <item name="android:textColorHighlight">@color/highlighted_text_material</item>
@@ -52,6 +44,7 @@
         <item name="colorOnError">@color/md_theme_dark_onError</item>
         <item name="colorOnErrorContainer">@color/md_theme_dark_onErrorContainer</item>
         <item name="android:colorBackground">@color/md_theme_dark_background</item>
+        <item name="android:windowBackground">@color/md_theme_dark_background</item>
         <item name="colorOnBackground">@color/md_theme_dark_onBackground</item>
         <item name="colorSurface">@color/md_theme_dark_surface</item>
         <item name="colorOnSurface">@color/md_theme_dark_onSurface</item>

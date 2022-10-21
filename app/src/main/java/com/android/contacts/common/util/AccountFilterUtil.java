@@ -29,7 +29,7 @@ import com.fissy.dialer.R;
 public class AccountFilterUtil {
 
     /**
-     * Similar to {@link #updateAccountFilterTitleForPeople(View, ContactListFilter, boolean,
+     * Similar to {@link (View, ContactListFilter, boolean,
      * boolean)}, but for Phone UI.
      */
     public static boolean updateAccountFilterTitleForPhone(

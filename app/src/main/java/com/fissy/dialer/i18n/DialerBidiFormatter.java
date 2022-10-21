@@ -24,6 +24,7 @@ import android.util.Patterns;
 
 import androidx.annotation.Nullable;
 
+import java.util.Objects;
 import java.util.regex.Matcher;
 
 /**
@@ -68,7 +69,7 @@ public final class DialerBidiFormatter {
         SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder();
 
         // Find the start index and the end index of each segment matching the phone number pattern.
-        Matcher matcher = Patterns.PHONE.matcher(text.toString());
+        Matcher matcher = Patterns.PHONE.matcher(Objects.requireNonNull(text).toString());
 
         int currIndex = 0;
         while (matcher.find()) {

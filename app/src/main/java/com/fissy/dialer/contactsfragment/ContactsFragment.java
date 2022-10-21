@@ -18,12 +18,12 @@ package com.fissy.dialer.contactsfragment;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
-import android.app.Fragment;
-import android.app.LoaderManager.LoaderCallbacks;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.Loader;
+
+import androidx.annotation.NonNull;
+import androidx.loader.content.Loader;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -37,7 +37,9 @@ import android.widget.TextView;
 
 import androidx.annotation.IntDef;
 import androidx.annotation.Nullable;
-import androidx.legacy.app.FragmentCompat;
+import androidx.fragment.app.Fragment;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.app.LoaderManager.LoaderCallbacks;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.Recycler;
@@ -89,7 +91,7 @@ public class ContactsFragment extends Fragment
     private @Header
     int header;
     private boolean hasPhoneNumbers;
-    private String query;
+
 
     /**
      * Used to get a configured instance of ContactsFragment.
@@ -119,30 +121,12 @@ public class ContactsFragment extends Fragment
         return fragment;
     }
 
-    /**
-     * Returns {@link ContactsFragment} with a list of contacts such that:
-     *
-     * <ul>
-     *   <li>Each contact has a phone number
-     *   <li>Contacts are filterable via {@link #updateQuery(String)}
-     *   <li>There is no list header (i.e. {@link Header#NONE}
-     *   <li>Clicking on a contact notifies the parent activity via {@link
-     *       OnContactSelectedListener#onContactSelected(ImageView, Uri, long)}.
-     * </ul>
-     */
-    public static ContactsFragment newAddFavoritesInstance() {
-        ContactsFragment fragment = new ContactsFragment();
-        Bundle args = new Bundle();
-        args.putInt(EXTRA_HEADER, Header.NONE);
-        args.putBoolean(EXTRA_HAS_PHONE_NUMBERS, true);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @SuppressWarnings("WrongConstant")
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        assert getArguments() != null;
         header = getArguments().getInt(EXTRA_HEADER);
         hasPhoneNumbers = getArguments().getBoolean(EXTRA_HAS_PHONE_NUMBERS);
         if (savedInstanceState == null) {
@@ -216,27 +200,24 @@ public class ContactsFragment extends Fragment
         if (getActivity() != null
                 && isAdded()
                 && PermissionsUtil.hasContactsReadPermissions(getContext())) {
-            getLoaderManager().restartLoader(0, null, this);
+            LoaderManager.getInstance(this).restartLoader(0, null, this);
         }
     }
 
     /**
      * @return a loader according to sort order and display order.
      */
+    @NonNull
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         ContactsCursorLoader cursorLoader = new ContactsCursorLoader(getContext(), hasPhoneNumbers);
+        String query = "";
         cursorLoader.setQuery(query);
         return cursorLoader;
     }
 
-    public void updateQuery(String query) {
-        this.query = query;
-        getLoaderManager().restartLoader(0, null, this);
-    }
-
     @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+    public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor cursor) {
         LogUtil.enterBlock("ContactsFragment.onLoadFinished");
         if (cursor == null || cursor.getCount() == 0) {
             emptyContentView.setDescription(R.string.all_contacts_empty);
@@ -254,7 +235,7 @@ public class ContactsFragment extends Fragment
     }
 
     @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
+    public void onLoaderReset(@NonNull Loader<Cursor> loader) {
         recyclerView.setAdapter(null);
         recyclerView.setOnScrollChangeListener(null);
         adapter = null;
@@ -318,13 +299,12 @@ public class ContactsFragment extends Fragment
         if (emptyContentView.getActionLabel() == R.string.permission_single_turn_on) {
             String[] deniedPermissions =
                     PermissionsUtil.getPermissionsCurrentlyDenied(
-                            getContext(), PermissionsUtil.allContactsGroupPermissionsUsedInDialer);
+                            requireContext(), PermissionsUtil.allContactsGroupPermissionsUsedInDialer);
             if (deniedPermissions.length > 0) {
                 LogUtil.i(
                         "ContactsFragment.onEmptyViewActionButtonClicked",
                         "Requesting permissions: " + Arrays.toString(deniedPermissions));
-                FragmentCompat.requestPermissions(
-                        this, deniedPermissions, READ_CONTACTS_PERMISSION_REQUEST_CODE);
+                this.requestPermissions(deniedPermissions, READ_CONTACTS_PERMISSION_REQUEST_CODE);
             }
 
         } else if (emptyContentView.getActionLabel()
@@ -339,7 +319,7 @@ public class ContactsFragment extends Fragment
 
     @Override
     public void onRequestPermissionsResult(
-            int requestCode, String[] permissions, int[] grantResults) {
+            int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == READ_CONTACTS_PERMISSION_REQUEST_CODE) {
             if (grantResults.length >= 1 && PackageManager.PERMISSION_GRANTED == grantResults[0]) {
                 // Force a refresh of the data since we were missing the permission before this.
@@ -359,7 +339,7 @@ public class ContactsFragment extends Fragment
     }
 
     private void loadContacts() {
-        getLoaderManager().initLoader(0, null, this);
+        LoaderManager.getInstance(this).initLoader(0, null, this);
         recyclerView.setVisibility(View.VISIBLE);
         emptyContentView.setVisibility(View.GONE);
     }

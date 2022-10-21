@@ -77,6 +77,7 @@ import com.fissy.dialer.widget.LockableViewPager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Fragment that shows UI for an ongoing voice call.
@@ -131,7 +132,7 @@ public class InCallFragment extends Fragment
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         if (savedSecondaryInfo != null) {
             setSecondary(savedSecondaryInfo);
@@ -142,7 +143,7 @@ public class InCallFragment extends Fragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         inCallButtonUiDelegate =
-                FragmentUtils.getParent(this, InCallButtonUiDelegateFactory.class)
+                Objects.requireNonNull(FragmentUtils.getParent(this, InCallButtonUiDelegateFactory.class))
                         .newInCallButtonUiDelegate();
         if (savedInstanceState != null) {
             inCallButtonUiDelegate.onRestoreInstanceState(savedInstanceState);
@@ -158,7 +159,7 @@ public class InCallFragment extends Fragment
             @Nullable ViewGroup viewGroup,
             @Nullable Bundle bundle) {
         LogUtil.i("InCallFragment.onCreateView", null);
-        getActivity().setTheme(R.style.Theme_InCallScreen);
+        Objects.requireNonNull(getActivity()).setTheme(R.style.Theme_InCallScreen);
         // Bypass to avoid StrictModeResourceMismatchViolation
         final View view =
                 StrictModeUtils.bypass(
@@ -182,7 +183,7 @@ public class InCallFragment extends Fragment
         endCallButton = view.findViewById(R.id.incall_end_call);
         endCallButton.setOnClickListener(this);
 
-        if (ContextCompat.checkSelfPermission(getContext(), permission.READ_PHONE_STATE)
+        if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getContext()), permission.READ_PHONE_STATE)
                 != PackageManager.PERMISSION_GRANTED) {
             voiceNetworkType = TelephonyManager.NETWORK_TYPE_UNKNOWN;
         } else {
@@ -234,7 +235,7 @@ public class InCallFragment extends Fragment
         LogUtil.i("InCallFragment.onViewCreated", null);
         super.onViewCreated(view, bundle);
         inCallScreenDelegate =
-                FragmentUtils.getParent(this, InCallScreenDelegateFactory.class).newInCallScreenDelegate();
+                Objects.requireNonNull(FragmentUtils.getParent(this, InCallScreenDelegateFactory.class)).newInCallScreenDelegate();
         Assert.isNotNull(inCallScreenDelegate);
 
         buttonControllers.add(new ButtonController.MuteButtonController(inCallButtonUiDelegate));
@@ -271,7 +272,7 @@ public class InCallFragment extends Fragment
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         inCallButtonUiDelegate.onSaveInstanceState(outState);
     }
@@ -300,7 +301,7 @@ public class InCallFragment extends Fragment
             contactGridManager.setAvatarHidden(true);
 
             // Need to let the dialpad move up a little further when location info is being shown
-            View dialpadView = getView().findViewById(R.id.incall_dialpad_container);
+            View dialpadView = Objects.requireNonNull(getView()).findViewById(R.id.incall_dialpad_container);
             ViewGroup.LayoutParams params = dialpadView.getLayoutParams();
             if (params instanceof RelativeLayout.LayoutParams) {
                 ((RelativeLayout.LayoutParams) params).removeRule(RelativeLayout.BELOW);
@@ -508,8 +509,8 @@ public class InCallFragment extends Fragment
                                            @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == REQUEST_CODE_CALL_RECORD_PERMISSION) {
             boolean allGranted = grantResults.length > 0;
-            for (int i = 0; i < grantResults.length; i++) {
-                allGranted &= grantResults[i] == PackageManager.PERMISSION_GRANTED;
+            for (int grantResult : grantResults) {
+                allGranted &= grantResult == PackageManager.PERMISSION_GRANTED;
             }
             if (allGranted) {
                 inCallButtonUiDelegate.callRecordClicked(true);

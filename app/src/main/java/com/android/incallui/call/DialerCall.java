@@ -18,12 +18,10 @@ package com.android.incallui.call;
 
 import android.Manifest.permission;
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.hardware.camera2.CameraCharacteristics;
 import android.net.Uri;
 import android.os.Build.VERSION;
-import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.os.SystemClock;
@@ -64,7 +62,6 @@ import com.android.incallui.videotech.utils.VideoUtils;
 import com.fissy.dialer.R;
 import com.fissy.dialer.assisteddialing.ConcreteCreator;
 import com.fissy.dialer.assisteddialing.TransformationInfo;
-import com.fissy.dialer.blocking.FilteredNumbersUtil;
 import com.fissy.dialer.callintent.CallInitiationType;
 import com.fissy.dialer.callintent.CallIntentParser;
 import com.fissy.dialer.callintent.CallSpecificAppData;
@@ -291,6 +288,10 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
 
     public static void clearRestrictedCount() {
         hiddenCounter = 0;
+    }
+
+    public RttTranscript getRttTranscript() {
+        return rttTranscript;
     }    private final Call.Callback telecomCallCallback =
             new Call.Callback() {
                 @Override
@@ -444,10 +445,6 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
                     }
                 }
             };
-
-    public RttTranscript getRttTranscript() {
-        return rttTranscript;
-    }
 
     public void setRttTranscript(RttTranscript rttTranscript) {
         this.rttTranscript = rttTranscript;
@@ -653,9 +650,6 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
         if (!PermissionsUtil.hasPermission(context, permission.READ_PHONE_STATE)) {
             return;
         }
-        if (VERSION.SDK_INT < VERSION_CODES.O) {
-            return;
-        }
         // TODO(a bug): This may take several seconds to complete, revisit it to move it to worker
         // thread.
         carrierConfig =
@@ -672,11 +666,6 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
      * @return {@code true} if the bundle is corrupted, {@code false} otherwise.
      */
     protected boolean areCallExtrasCorrupted(Bundle callExtras) {
-        /**
-         * There's currently a bug in Telephony service (a bug) that could corrupt the extras
-         * bundle, resulting in a IllegalArgumentException while validating data under {@link
-         * Bundle#containsKey(String)}.
-         */
         try {
             callExtras.containsKey(Connection.EXTRA_CHILD_ADDRESS);
             return false;
@@ -689,10 +678,6 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
 
     protected void updateFromCallExtras(Bundle callExtras) {
         if (callExtras == null || areCallExtrasCorrupted(callExtras)) {
-            /**
-             * If the bundle is corrupted, abandon information update as a work around. These are not
-             * critical for the dialer to function.
-             */
             return;
         }
         // Check for a change in the child address and notify any listeners.
@@ -814,10 +799,6 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
         }
 
         // Call.EXTRA_LAST_EMERGENCY_CALLBACK_TIME_MILLIS is available starting in O
-        if (VERSION.SDK_INT < VERSION_CODES.O) {
-            long timestampMillis = FilteredNumbersUtil.getLastEmergencyCallTimeMillis(context);
-            return isInEmergencyCallbackWindow(timestampMillis);
-        }
 
         // We want to treat any incoming call that arrives a short time after an outgoing emergency call
         // as a potential emergency callback.
@@ -979,7 +960,6 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
     /**
      * Checks if the call supports the given set of capabilities supplied as a bit mask.
      */
-    @TargetApi(28)
     public boolean can(int capabilities) {
         int supportedCapabilities = telecomCall.getDetails().getCallCapabilities();
 
@@ -1026,7 +1006,6 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
      * the same time that is logged as the start time in the Call Log (see {@link
      * android.provider.CallLog.Calls#DATE}).
      */
-    @TargetApi(VERSION_CODES.O)
     public long getCreationTimeMillis() {
         return telecomCall.getDetails().getCreationTimeMillis();
     }
@@ -1072,7 +1051,6 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
         return getVideoTech().isTransmittingOrReceiving() || VideoProfile.isVideo(getVideoState());
     }
 
-    @TargetApi(28)
     public boolean isActiveRttCall() {
         if (BuildCompat.isAtLeastP()) {
             return getTelecomCall().isRttActive();
@@ -1081,7 +1059,6 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
         }
     }
 
-    @TargetApi(28)
     @Nullable
     public RttCall getRttCall() {
         if (!isActiveRttCall()) {
@@ -1090,18 +1067,16 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
         return getTelecomCall().getRttCall();
     }
 
-    @TargetApi(28)
     public boolean isPhoneAccountRttCapable() {
         PhoneAccount phoneAccount = getPhoneAccount();
         if (phoneAccount == null) {
-            return false;
+            return true;
         }
-        return phoneAccount.hasCapabilities(PhoneAccount.CAPABILITY_RTT);
+        return !phoneAccount.hasCapabilities(PhoneAccount.CAPABILITY_RTT);
     }
 
-    @TargetApi(28)
     public boolean canUpgradeToRttCall() {
-        if (!isPhoneAccountRttCapable()) {
+        if (isPhoneAccountRttCapable()) {
             return false;
         }
         if (isActiveRttCall()) {
@@ -1116,12 +1091,10 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
         return !CallList.getInstance().hasActiveRttCall();
     }
 
-    @TargetApi(28)
     public void sendRttUpgradeRequest() {
         getTelecomCall().sendRttRequest();
     }
 
-    @TargetApi(28)
     public void respondToRttRequest(boolean accept, int rttRequestId) {
         Logger.get(context)
                 .logCallImpression(
@@ -1133,7 +1106,6 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
         getTelecomCall().respondToRttRequest(rttRequestId, accept);
     }
 
-    @TargetApi(28)
     private void saveRttTranscript() {
         if (!BuildCompat.isAtLeastP()) {
             return;
@@ -1235,6 +1207,7 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
         }
     }
 
+    @NonNull
     @Override
     public String toString() {
         if (telecomCall == null) {
@@ -1704,7 +1677,7 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
         return preferredAccountRecorder;
     }
 
-    public void setPreferredAccountRecorder(PreferredAccountRecorder preferredAccountRecorder) {
+    public void setPreferredAccountRecorder(@Nullable PreferredAccountRecorder preferredAccountRecorder) {
         this.preferredAccountRecorder = preferredAccountRecorder;
     }
 
@@ -1767,10 +1740,8 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
      */
     public void setIsSpeakEasyCall(boolean isSpeakEasyCall) {
         this.isSpeakEasyCall = isSpeakEasyCall;
-        if (listeners != null) {
-            for (DialerCallListener listener : listeners) {
-                listener.onDialerCallSpeakEasyStateChange();
-            }
+        for (DialerCallListener listener : listeners) {
+            listener.onDialerCallSpeakEasyStateChange();
         }
     }
 
@@ -1885,6 +1856,7 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
             }
         }
 
+        @NonNull
         @Override
         public String toString() {
             return String.format(

@@ -76,7 +76,8 @@
             android:layout_marginStart="@dimen/ad_icon_margin_start_offset"
             android:layout_marginTop="@dimen/ad_icon_margin_top_offset"
             android:scaleType="fitCenter"
-            android:src="@drawable/quantum_ic_language_vd_theme_24" />
+            android:src="@drawable/quantum_ic_language_vd_theme_24"
+            android:contentDescription="TODO" />
 
         <TextView
             android:id="@id/assisted_dialing_text"

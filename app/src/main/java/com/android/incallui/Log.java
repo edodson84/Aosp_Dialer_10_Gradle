@@ -130,10 +130,10 @@ public class Log {
     }
 
     private static String encodeHex(byte[] bytes) {
-        StringBuffer hex = new StringBuffer(bytes.length * 2);
+        StringBuilder hex = new StringBuilder(bytes.length * 2);
 
-        for (int i = 0; i < bytes.length; i++) {
-            int byteIntValue = bytes[i] & 0xff;
+        for (byte aByte : bytes) {
+            int byteIntValue = aByte & 0xff;
             if (byteIntValue < 0x10) {
                 hex.append("0");
             }

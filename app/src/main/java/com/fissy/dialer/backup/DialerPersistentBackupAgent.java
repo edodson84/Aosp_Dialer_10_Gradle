@@ -21,7 +21,6 @@ import android.os.ParcelFileDescriptor;
 import android.util.ArrayMap;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.VisibleForTesting;
 
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
@@ -46,7 +45,7 @@ public class DialerPersistentBackupAgent extends PersistentBackupAgentHelper {
     @NonNull
     private final String[] sharedPreferencesToBackup;
 
-    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+
     DialerPersistentBackupAgent(@NonNull String[] sharedPrefs) {
         this.sharedPreferencesToBackup = Assert.isNotNull(sharedPrefs);
         Logger.get(this).logImpression(DialerImpression.Type.BACKUP_KEY_VALUE_BACKUP_AGENT_CONSTRUCTOR);

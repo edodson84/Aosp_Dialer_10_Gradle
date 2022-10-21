@@ -16,6 +16,8 @@
 
 package com.fissy.dialer.common.concurrent;
 
+import androidx.annotation.NonNull;
+
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.MoreExecutors;
 
@@ -35,7 +37,7 @@ public final class DefaultFutureCallback<T> implements FutureCallback<T> {
     }
 
     @Override
-    public void onFailure(Throwable throwable) {
+    public void onFailure(@NonNull Throwable throwable) {
         ThreadUtil.getUiThreadHandler()
                 .post(
                         () -> {

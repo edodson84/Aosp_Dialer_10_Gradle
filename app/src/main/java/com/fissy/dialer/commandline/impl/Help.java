@@ -30,6 +30,7 @@ import com.google.common.util.concurrent.ListenableFuture;
 
 import java.util.Locale;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 import javax.inject.Inject;
@@ -77,7 +78,7 @@ public class Help implements Command {
         ImmutableMap<String, Command> commands =
                 CommandLineComponent.get(context).commandSupplier().get();
         stringBuilder
-                .append(runOrThrow(commands.get("version")))
+                .append(runOrThrow(Objects.requireNonNull(commands.get("version"))))
                 .append("\n")
                 .append("\n")
                 .append("usage: <command> [args...]\n")

@@ -83,7 +83,7 @@ class ContactListFilterControllerImpl extends ContactListFilterController {
 
     private final Context mAppContext;
     private final List<ContactListFilterListener> mListeners =
-            new ArrayList<ContactListFilterListener>();
+            new ArrayList<>();
     private ContactListFilter mFilter;
 
     public ContactListFilterControllerImpl(Context context) {

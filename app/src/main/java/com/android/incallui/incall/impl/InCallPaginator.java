@@ -31,6 +31,8 @@ import androidx.viewpager.widget.ViewPager.OnPageChangeListener;
 import com.fissy.dialer.R;
 import com.fissy.dialer.common.Assert;
 
+import java.util.Objects;
+
 /**
  * This is the view class for incall paginator visible when a user has EC data attached to their
  * call. It contains animation methods when the swipe gesture is performed.
@@ -123,7 +125,8 @@ public class InCallPaginator extends View implements OnPageChangeListener {
         if (useModeSwitchTransition) {
             float trackWidth = 2 * dotRadius + transitionFraction * (2 * dotRadius + dotsSeparation);
             float indicatorRadius = dotRadius * (1f - 2f * Math.min(transitionFraction, 0.5f));
-            float indicatorOffset = dotRadius + dotsSeparation / 2;
+            int radius2 = dotsSeparation / 2;
+            float indicatorOffset = dotRadius + radius2;
             if (toFirstPage) {
                 float trackLeft = centerX - indicatorOffset - dotRadius;
                 inactiveDotPath.addRoundRect(
@@ -172,16 +175,16 @@ public class InCallPaginator extends View implements OnPageChangeListener {
         }
         Paint inactivePaint = inactiveDotPaintPortrait;
         canvas.drawPath(inactiveDotPath, inactivePaint);
-
+        int radius2 = dotsSeparation / 2;
         // Draw the white active dot.
         float activeDotOffset =
-                (toFirstPage ? 1f - 2f * progress : 2f * progress - 1f) * (dotRadius + dotsSeparation / 2);
+                (toFirstPage ? 1f - 2f * progress : 2f * progress - 1f) * (dotRadius + radius2);
         Paint activePaint = activeDotPaintPortrait;
         canvas.drawCircle(centerX + activeDotOffset, centerY, dotRadius, activePaint);
     }
 
     public void setupWithViewPager(ViewPager pager) {
-        Assert.checkArgument(pager.getAdapter().getCount() == 2, "Invalid page count.");
+        Assert.checkArgument(Objects.requireNonNull(pager.getAdapter()).getCount() == 2, "Invalid page count.");
         pager.addOnPageChangeListener(this);
     }
 

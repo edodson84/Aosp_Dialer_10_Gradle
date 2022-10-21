@@ -40,6 +40,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.Icon;
 import android.media.AudioAttributes;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.os.Trace;
@@ -125,7 +126,7 @@ public class StatusBarNotifier
     private final Context context;
     private final ContactInfoCache contactInfoCache;
     private final DialerRingtoneManager dialerRingtoneManager;
-    private int currentNotification = NOTIFICATION_NONE;
+    private int currentNotification;
     private int callState = DialerCallState.INVALID;
     private int videoState = VideoProfile.STATE_AUDIO_ONLY;
     private int savedIcon = 0;
@@ -176,7 +177,13 @@ public class StatusBarNotifier
      */
     private static PendingIntent createNotificationPendingIntent(Context context, String action) {
         final Intent intent = new Intent(action, null, context, NotificationBroadcastReceiver.class);
-        return PendingIntent.getBroadcast(context, 0, intent, 0);
+        int flags;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            flags = PendingIntent.FLAG_MUTABLE;
+        } else {
+            flags = 0;
+        }
+        return PendingIntent.getBroadcast(context, 0, intent, flags);
     }
 
     /**
@@ -187,7 +194,7 @@ public class StatusBarNotifier
         Trace.beginSection("StatusBarNotifier.getLargeIconToDisplay");
         Resources resources = context.getResources();
         Bitmap largeIcon = null;
-        if (contactInfo.photo != null && (contactInfo.photo instanceof BitmapDrawable)) {
+        if ((contactInfo.photo instanceof BitmapDrawable)) {
             largeIcon = ((BitmapDrawable) contactInfo.photo).getBitmap();
         }
         if (contactInfo.photo == null) {
@@ -858,13 +865,11 @@ public class StatusBarNotifier
 
     private Spannable getActionText(@StringRes int stringRes, @ColorRes int colorRes) {
         Spannable spannable = new SpannableString(context.getText(stringRes));
-        if (VERSION.SDK_INT >= VERSION_CODES.N_MR1) {
-            // This will only work for cases where the Notification.Builder has a fullscreen intent set
-            // Notification.Builder that does not have a full screen intent will take the color of the
-            // app and the following leads to a no-op.
-            spannable.setSpan(
-                    new ForegroundColorSpan(context.getColor(colorRes)), 0, spannable.length(), 0);
-        }
+        // This will only work for cases where the Notification.Builder has a fullscreen intent set
+        // Notification.Builder that does not have a full screen intent will take the color of the
+        // app and the following leads to a no-op.
+        spannable.setSpan(
+                new ForegroundColorSpan(context.getColor(colorRes)), 0, spannable.length(), 0);
         return spannable;
     }
 
@@ -1082,7 +1087,13 @@ public class StatusBarNotifier
         // and clicks the notification's expanded view.  It's also used to
         // launch the InCallActivity immediately when when there's an incoming
         // call (see the "fullScreenIntent" field below).
-        return PendingIntent.getActivity(context, requestCode, intent, 0);
+        int flags;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            flags = PendingIntent.FLAG_MUTABLE;
+        } else {
+            flags = 0;
+        }
+        return PendingIntent.getActivity(context, requestCode, intent, flags);
     }
 
     private void setStatusBarCallListener(StatusBarCallListener listener) {

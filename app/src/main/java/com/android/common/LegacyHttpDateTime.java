@@ -19,6 +19,7 @@ package com.android.common;
 import android.text.format.Time;
 
 import java.util.Calendar;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -73,24 +74,24 @@ final class LegacyHttpDateTime {
     public static long parse(String timeString)
             throws IllegalArgumentException {
 
-        int date = 1;
-        int month = Calendar.JANUARY;
-        int year = 1970;
+        int date;
+        int month;
+        int year;
         TimeOfDay timeOfDay;
 
         Matcher rfcMatcher = HTTP_DATE_RFC_PATTERN.matcher(timeString);
         if (rfcMatcher.find()) {
-            date = getDate(rfcMatcher.group(1));
-            month = getMonth(rfcMatcher.group(2));
-            year = getYear(rfcMatcher.group(3));
-            timeOfDay = getTime(rfcMatcher.group(4));
+            date = getDate(Objects.requireNonNull(rfcMatcher.group(1)));
+            month = getMonth(Objects.requireNonNull(rfcMatcher.group(2)));
+            year = getYear(Objects.requireNonNull(rfcMatcher.group(3)));
+            timeOfDay = getTime(Objects.requireNonNull(rfcMatcher.group(4)));
         } else {
             Matcher ansicMatcher = HTTP_DATE_ANSIC_PATTERN.matcher(timeString);
             if (ansicMatcher.find()) {
-                month = getMonth(ansicMatcher.group(1));
-                date = getDate(ansicMatcher.group(2));
-                timeOfDay = getTime(ansicMatcher.group(3));
-                year = getYear(ansicMatcher.group(4));
+                month = getMonth(Objects.requireNonNull(ansicMatcher.group(1)));
+                date = getDate(Objects.requireNonNull(ansicMatcher.group(2)));
+                timeOfDay = getTime(Objects.requireNonNull(ansicMatcher.group(3)));
+                year = getYear(Objects.requireNonNull(ansicMatcher.group(4)));
             } else {
                 throw new IllegalArgumentException();
             }

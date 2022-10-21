@@ -21,6 +21,8 @@ import android.content.Context;
 import android.telecom.DisconnectCause;
 import android.util.Pair;
 
+import androidx.annotation.NonNull;
+
 import com.android.incallui.call.DialerCall;
 
 import java.util.Locale;
@@ -55,6 +57,7 @@ public class DisconnectMessage {
         toastMessage = null;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return String.format(

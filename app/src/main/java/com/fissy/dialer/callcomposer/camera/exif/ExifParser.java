@@ -26,11 +26,12 @@ import java.nio.ByteOrder;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.TreeMap;
 
 /**
  * This class provides a low-level EXIF parsing API. Given a JPEG format InputStream, the caller can
- * request which IFD's to read via {@link #parse(java.io.InputStream, int)} with given options.
+
  *
  * <p>Below is an example of getting EXIF data from IFD 0 and EXIF IFD using the parser.
  *
@@ -161,7 +162,7 @@ public class ExifParser {
     private ExifTag stripSizeTag;
     private ExifTag jpegSizeTag;
     private boolean needToParseOffsetsInCurrentIfd;
-    private boolean containExifData = false;
+    private boolean containExifData;
     private int app1End;
     private byte[] dataAboveIfd0;
     private int ifd0Position;
@@ -201,8 +202,6 @@ public class ExifParser {
     /**
      * Parses the the given InputStream with the given options
      *
-     * @throws java.io.IOException
-     * @throws ExifInvalidFormatException
      */
     protected static ExifParser parse(InputStream inputStream, int options, ExifInterface iRef)
             throws IOException, ExifInvalidFormatException {
@@ -213,8 +212,6 @@ public class ExifParser {
      * Parses the the given InputStream with default options; that is, every IFD and thumbnaill will
      * be parsed.
      *
-     * @throws java.io.IOException
-     * @throws ExifInvalidFormatException
      * @see #parse(java.io.InputStream, int, ExifInterface)
      */
     protected static ExifParser parse(InputStream inputStream, ExifInterface iRef)
@@ -253,8 +250,6 @@ public class ExifParser {
     /**
      * Moves the parser forward and returns the next parsing event
      *
-     * @throws java.io.IOException
-     * @throws ExifInvalidFormatException
      * @see #EVENT_START_OF_IFD
      * @see #EVENT_NEW_TAG
      * @see #EVENT_VALUE_OF_REGISTERED_TAG
@@ -290,7 +285,7 @@ public class ExifParser {
                 int offsetSize = 4;
                 // Some camera models use invalid length of the offset
                 if (correspondingEvent.size() > 0) {
-                    offsetSize = correspondingEvent.firstEntry().getKey() - tiffStream.getReadByteCount();
+                    offsetSize = Objects.requireNonNull(correspondingEvent.firstEntry()).getKey() - tiffStream.getReadByteCount();
                 }
                 if (offsetSize < 4) {
                     LogUtil.i("ExifParser.next", "Invalid size of link to next IFD: " + offsetSize);
@@ -304,7 +299,7 @@ public class ExifParser {
         }
         while (correspondingEvent.size() != 0) {
             Entry<Integer, Object> entry = correspondingEvent.pollFirstEntry();
-            Object event = entry.getValue();
+            Object event = Objects.requireNonNull(entry).getValue();
             try {
                 skipTo(entry.getKey());
             } catch (IOException e) {
@@ -354,8 +349,6 @@ public class ExifParser {
     /**
      * Skips the tags area of current IFD, if the parser is not in the tag area, nothing will happen.
      *
-     * @throws java.io.IOException
-     * @throws ExifInvalidFormatException
      */
     private void skipRemainingTagsInCurrentIfd() throws IOException, ExifInvalidFormatException {
         int endOfTags = ifdStartOffset + OFFSET_SIZE + TAG_SIZE * numOfTagInIfd;
@@ -624,15 +617,15 @@ public class ExifParser {
                 || type == ExifTag.TYPE_UNSIGNED_BYTE) {
             int size = tag.getComponentCount();
             if (correspondingEvent.size() > 0) {
-                if (correspondingEvent.firstEntry().getKey() < tiffStream.getReadByteCount() + size) {
-                    Object event = correspondingEvent.firstEntry().getValue();
+                if (Objects.requireNonNull(correspondingEvent.firstEntry()).getKey() < tiffStream.getReadByteCount() + size) {
+                    Object event = Objects.requireNonNull(correspondingEvent.firstEntry()).getValue();
                     if (event instanceof ImageEvent) {
                         // Tag value overlaps thumbnail, ignore thumbnail.
                         LogUtil.i(
                                 "ExifParser.readFullTagValue",
                                 "Thumbnail overlaps value for tag: \n" + tag);
                         Entry<Integer, Object> entry = correspondingEvent.pollFirstEntry();
-                        LogUtil.i("ExifParser.readFullTagValue", "Invalid thumbnail offset: " + entry.getKey());
+                        LogUtil.i("ExifParser.readFullTagValue", "Invalid thumbnail offset: " + Objects.requireNonNull(entry).getKey());
                     } else {
                         // Tag value overlaps another shorten count
                         if (event instanceof IfdEvent) {
@@ -647,7 +640,7 @@ public class ExifParser {
                                             + " overlaps value for tag: \n"
                                             + tag);
                         }
-                        size = correspondingEvent.firstEntry().getKey() - tiffStream.getReadByteCount();
+                        size = Objects.requireNonNull(correspondingEvent.firstEntry()).getKey() - tiffStream.getReadByteCount();
                         LogUtil.i(
                                 "ExifParser.readFullTagValue",
                                 "Invalid size of tag: \n" + tag + " setting count to: " + size);

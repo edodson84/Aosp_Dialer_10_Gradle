@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
@@ -121,7 +122,7 @@ public final class BlockReportSpamDialogs {
         protected DialogInterface.OnDismissListener dismissListener;
 
         @Override
-        public void onDismiss(DialogInterface dialog) {
+        public void onDismiss( @NonNull DialogInterface dialog) {
             if (dismissListener != null) {
                 dismissListener.onDismiss(dialog);
             }
@@ -172,6 +173,8 @@ public final class BlockReportSpamDialogs {
             return fragment;
         }
 
+
+        @NonNull
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             super.onCreateDialog(savedInstanceState);
@@ -227,6 +230,8 @@ public final class BlockReportSpamDialogs {
             return fragment;
         }
 
+
+        @NonNull
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             super.onCreateDialog(savedInstanceState);
@@ -268,6 +273,8 @@ public final class BlockReportSpamDialogs {
             return fragment;
         }
 
+
+        @NonNull
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             super.onCreateDialog(savedInstanceState);
@@ -313,6 +320,8 @@ public final class BlockReportSpamDialogs {
             return fragment;
         }
 
+
+        @NonNull
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             super.onCreateDialog(savedInstanceState);
@@ -356,6 +365,8 @@ public final class BlockReportSpamDialogs {
             return fragment;
         }
 
+
+        @NonNull
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             super.onCreateDialog(savedInstanceState);
@@ -389,6 +400,8 @@ public final class BlockReportSpamDialogs {
             return fragment;
         }
 
+
+        @NonNull
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             super.onCreateDialog(savedInstanceState);

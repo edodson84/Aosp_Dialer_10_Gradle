@@ -60,12 +60,12 @@ public class DialpadKeyButton extends FrameLayout {
     private CharSequence longHoverContentDesc;
 
     /**
-     * Backup of clickable property. Used for accessibility.
+     *  of clickable property. Used for accessibility.
      */
     private boolean wasClickable;
 
     /**
-     * Backup of long-clickable property. Used for accessibility.
+     * of long-clickable property. Used for accessibility.
      */
     private boolean wasLongClickable;
 

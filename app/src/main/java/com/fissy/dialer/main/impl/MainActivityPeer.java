@@ -16,24 +16,28 @@
 
 package com.fissy.dialer.main.impl;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.app.KeyguardManager;
+
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.CallLog.Calls;
 import android.provider.ContactsContract.QuickContact;
 import android.telecom.PhoneAccount;
-import android.telephony.TelephonyManager;
 import android.text.method.LinkMovementMethod;
 import android.view.ActionMode;
 import android.view.DragEvent;
@@ -41,12 +45,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.android.contacts.common.list.OnPhoneNumberPickerActionListener;
@@ -69,15 +74,11 @@ import com.fissy.dialer.callcomposer.CallComposerActivity;
 import com.fissy.dialer.calldetails.OldCallDetailsActivity;
 import com.fissy.dialer.callintent.CallIntentBuilder;
 import com.fissy.dialer.callintent.CallSpecificAppData;
-import com.fissy.dialer.calllog.CallLogComponent;
-import com.fissy.dialer.calllog.config.CallLogConfigComponent;
 import com.fissy.dialer.common.FragmentUtils.FragmentUtilListener;
 import com.fissy.dialer.common.LogUtil;
-import com.fissy.dialer.common.concurrent.DefaultFutureCallback;
 import com.fissy.dialer.common.concurrent.DialerExecutorComponent;
+import com.fissy.dialer.common.concurrent.SupportUiListener;
 import com.fissy.dialer.common.concurrent.ThreadUtil;
-import com.fissy.dialer.common.concurrent.UiListener;
-import com.fissy.dialer.configprovider.ConfigProviderComponent;
 import com.fissy.dialer.constants.ActivityRequestCodes;
 import com.fissy.dialer.contactsfragment.ContactsFragment;
 import com.fissy.dialer.contactsfragment.ContactsFragment.Header;
@@ -112,17 +113,14 @@ import com.fissy.dialer.speeddial.SpeedDialFragment;
 import com.fissy.dialer.storage.StorageComponent;
 import com.fissy.dialer.telecom.TelecomUtil;
 import com.fissy.dialer.util.DialerUtils;
-import com.fissy.dialer.util.PermissionsUtil;
-import com.fissy.dialer.util.TransactionSafeActivity;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
-import com.google.common.util.concurrent.MoreExecutors;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.TimeUnit;
 
 /**
  * MainActivityPeer which implements all of the old fragments we know and love <3
@@ -141,9 +139,9 @@ public class MainActivityPeer implements com.fissy.dialer.main.MainActivityPeer,
     private static final String ACTION_SHOW_TAB = "ACTION_SHOW_TAB";
 
     private static final String EXTRA_SHOW_TAB = "EXTRA_SHOW_TAB";
-
+    public static SharedPreferences themeprefs;
     // TODO(calderwoodra): change to AppCompatActivity once new speed dial ships
-    private final TransactionSafeActivity activity;
+    private final AppCompatActivity activity;
     // Contacts
     private MainOnContactSelectedListener onContactSelectedListener;
     // Dialpad and Search
@@ -169,31 +167,19 @@ public class MainActivityPeer implements com.fissy.dialer.main.MainActivityPeer,
     private String savedLanguageCode;
     private LastTabController lastTabController;
     private BottomNavBar bottomNav;
-    private MainBottomNavBarBottomNavTabListener bottomNavTabListener;
     private final BroadcastReceiver disableCallLogFrameworkReceiver =
             new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
-                    if (bottomNavTabListener == null) {
-                        return;
-                    }
-                    /*
-                     * Remove the NewCallLogFragment and NewVoicemailFragment if it is currently attached. If
-                     * this is not done, user interaction with the fragment could cause call log framework
-                     * state to be unexpectedly written. For example scrolling could cause the
-                     * AnnotatedCallLog to be read (which would trigger database creation).
-                     */
-                    bottomNavTabListener.disableNewCallLogFragment();
-                    bottomNavTabListener.disableNewVoicemailFragment();
+
                 }
             };
     private View snackbarContainer;
     private MissedCallCountObserver missedCallCountObserver;
-    private UiListener<String> getLastOutgoingCallListener;
-    private UiListener<Integer> missedCallObserverUiListener;
-    private View bottomSheet;
+    private SupportUiListener<String> getLastOutgoingCallListener;
+    private SupportUiListener<Integer> missedCallObserverUiListener;
 
-    public MainActivityPeer(TransactionSafeActivity activity) {
+    public MainActivityPeer(AppCompatActivity activity) {
         this.activity = activity;
     }
 
@@ -207,11 +193,6 @@ public class MainActivityPeer implements com.fissy.dialer.main.MainActivityPeer,
     }
 
 
-    private static TelephonyManager getTelephonyManager(Context context) {
-        return context.getSystemService(TelephonyManager.class);
-    }
-
-    public static SharedPreferences themeprefs;
     @Override
     public void onActivityCreate(Bundle savedInstanceState) {
         LogUtil.enterBlock("MainActivityPeer.onActivityCreate");
@@ -242,18 +223,19 @@ public class MainActivityPeer implements com.fissy.dialer.main.MainActivityPeer,
     private void initUiListeners() {
         getLastOutgoingCallListener =
                 DialerExecutorComponent.get(activity)
-                        .createUiListener(activity.getFragmentManager(), "Query last phone number");
+                        .createUiListener(activity.getSupportFragmentManager(), "Query last phone number");
         missedCallObserverUiListener =
                 DialerExecutorComponent.get(activity)
-                        .createUiListener(activity.getFragmentManager(), "Missed call observer");
+                        .createUiListener(activity.getSupportFragmentManager(), "Missed call observer");
     }
 
+    @SuppressLint("CutPasteId")
     private void initLayout(Bundle savedInstanceState) {
         onContactSelectedListener = new MainOnContactSelectedListener(activity);
         dialpadFragmentHostInterface = new MainDialpadFragmentHost();
 
         snackbarContainer = activity.findViewById(R.id.coordinator_layout);
-        bottomSheet = activity.findViewById(R.id.promotion_bottom_sheet);
+        View bottomSheet = activity.findViewById(R.id.promotion_bottom_sheet);
         BottomSheetBehavior<View> bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
 
@@ -269,17 +251,14 @@ public class MainActivityPeer implements com.fissy.dialer.main.MainActivityPeer,
                 });
 
         MainToolbar toolbar = activity.findViewById(R.id.toolbar);
-        toolbar.maybeShowSimulator(activity);
         activity.setSupportActionBar(activity.findViewById(R.id.toolbar));
 
         bottomNav = activity.findViewById(R.id.bottom_nav_bar);
-        bottomNavTabListener =
-                new MainBottomNavBarBottomNavTabListener(
-                        activity,
-                        activity.getFragmentManager(),
-                        activity.getSupportFragmentManager(),
-                        fab,
-                        bottomSheet);
+        MainBottomNavBarBottomNavTabListener bottomNavTabListener = new MainBottomNavBarBottomNavTabListener(
+                activity,
+                activity.getSupportFragmentManager(),
+                fab,
+                bottomSheet);
         bottomNav.addOnTabSelectedListener(bottomNavTabListener);
 
         missedCallCountObserver =
@@ -288,7 +267,7 @@ public class MainActivityPeer implements com.fissy.dialer.main.MainActivityPeer,
 
         callLogFragmentListener =
                 new MainCallLogFragmentListener(
-                        activity, activity.getContentResolver(), bottomNav, toolbar, bottomNavTabListener);
+                        activity, activity.getContentResolver(), bottomNav, toolbar);
         bottomNav.addOnTabSelectedListener(callLogFragmentListener);
 
         searchController =
@@ -349,7 +328,7 @@ public class MainActivityPeer implements com.fissy.dialer.main.MainActivityPeer,
         //  3) External intents should take priority over other intents (like Calls.CONTENT_TYPE).
         @TabIndex int tabToSelect;
         if (Calls.CONTENT_TYPE.equals(intent.getType())) {
-            Bundle extras = intent.getExtras();
+            intent.getExtras();
             LogUtil.i("MainActivityPeer.onHandleIntent", "Call log content type intent");
             tabToSelect = TabIndex.CALL_LOG;
 
@@ -446,20 +425,6 @@ public class MainActivityPeer implements com.fissy.dialer.main.MainActivityPeer,
          * paused, when the user returns we need to remove the NewCallLogFragment if the framework has
          * been disabled in the meantime.
          */
-        bottomNavTabListener.ensureCorrectCallLogShown();
-        bottomNavTabListener.ensureCorrectVoicemailShown();
-
-        // Config the badge of missed calls for the new call log.
-        if (bottomNavTabListener.newCallLogFragmentActive()) {
-            if (PermissionsUtil.hasCallLogReadPermissions(activity)) {
-                missedCallCountObserver.onChange(false); // Set the initial value for the badge
-                activity
-                        .getContentResolver()
-                        .registerContentObserver(Calls.CONTENT_URI, true, missedCallCountObserver);
-            } else {
-                bottomNav.setNotificationCount(TabIndex.CALL_LOG, 0);
-            }
-        }
 
         // add 1 sec delay to get memory snapshot so that dialer wont react slowly on resume.
         ThreadUtil.postDelayedOnUiThread(
@@ -485,13 +450,7 @@ public class MainActivityPeer implements com.fissy.dialer.main.MainActivityPeer,
     @Override
     public void onActivityStop() {
         lastTabController.onActivityStop();
-        callLogFragmentListener.onActivityStop(
-                activity.isChangingConfigurations(),
-                activity.getSystemService(KeyguardManager.class).isKeyguardLocked());
-    }
-
-    @Override
-    public void onActivityDestroyed() {
+        callLogFragmentListener.onActivityStop();
     }
 
     private void showPostCallPrompt() {
@@ -562,10 +521,93 @@ public class MainActivityPeer implements com.fissy.dialer.main.MainActivityPeer,
             // may have changed after a user finished activating Duo.
             DuoComponent.get(activity).getDuo().reloadReachability(activity);
 
-        } else {
+        } else if (requestCode == ActivityRequestCodes.DEFAULT_DIALER) {
+            if (resultCode == AppCompatActivity.RESULT_OK) {
+                checkAndRequestPermissions();
+            }
+        }
+
+        else {
             LogUtil.e("MainActivityPeer.onActivityResult", "Unknown request code: " + requestCode);
         }
     }
+
+    // Function to check and request permission.
+
+    private void checkAndRequestPermissions() {
+        int camera = ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA);
+        int storage = ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        int loc = ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION);
+        int loc2 = ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION);
+        int contacts = ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_CONTACTS);
+        int contacts2 = ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_CONTACTS);
+        int phone = ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_PHONE_STATE);
+        int calllog = ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_CALL_LOG);
+        int calllog2 = ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_CALL_LOG);
+        int numbers = ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_PHONE_NUMBERS);
+        int nfc = 0;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+            nfc = ContextCompat.checkSelfPermission(activity, Manifest.permission.BLUETOOTH_CONNECT);
+        }
+        List<String> listPermissionsNeeded = new ArrayList<>();
+
+        if (camera != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.CAMERA);
+        }
+        if (storage != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
+        if (loc2 != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.ACCESS_FINE_LOCATION);
+        }
+        if (loc != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+        }
+        if (contacts != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.READ_CONTACTS);
+        }
+        if (contacts2 != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.WRITE_CONTACTS);
+        }
+        if (phone != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.READ_PHONE_STATE);
+        }
+        if (calllog != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.READ_CALL_LOG);
+        }
+        if (calllog2 != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.WRITE_CALL_LOG);
+        }
+        if (numbers != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.READ_PHONE_NUMBERS);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (nfc != PackageManager.PERMISSION_GRANTED) {
+                listPermissionsNeeded.add(Manifest.permission.BLUETOOTH_CONNECT);
+            }
+        }
+        if (!listPermissionsNeeded.isEmpty()) {
+            ActivityCompat.requestPermissions(activity, listPermissionsNeeded.toArray
+                    (new String[0]), ActivityRequestCodes.REQUEST_ID_MULTIPLE_PERMISSIONS);
+        }
+    }
+
+    // This function is called when the user accepts or decline the permission.
+    // Request Code is used to check which permission called this function.
+    // This request code is provided when the user is prompt for permission.
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        LogUtil.enterBlock("MainActivityPeer.onrequestpermission");
+        if (requestCode == ActivityRequestCodes.REQUEST_ID_MULTIPLE_PERMISSIONS) {
+            if (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_PHONE_NUMBERS) == PackageManager.PERMISSION_GRANTED) {
+                Snackbar.make(snackbarContainer, "Permissions Granted", Snackbar.LENGTH_LONG).show();
+            }
+        }
+    }
+
 
     @Override
     public boolean onBackPressed() {
@@ -667,10 +709,10 @@ public class MainActivityPeer implements com.fissy.dialer.main.MainActivityPeer,
 
         private final MainSearchController searchController;
         private final Context context;
-        private final UiListener<String> listener;
+        private final SupportUiListener<String> listener;
 
         MainDialpadListener(
-                Context context, MainSearchController searchController, UiListener<String> uiListener) {
+                Context context, MainSearchController searchController, SupportUiListener<String> uiListener) {
             this.context = context;
             this.searchController = searchController;
             this.listener = uiListener;
@@ -827,23 +869,19 @@ public class MainActivityPeer implements com.fissy.dialer.main.MainActivityPeer,
         private final Context context;
         private final BottomNavBar bottomNavBar;
         private final Toolbar toolbar;
-        private final MainBottomNavBarBottomNavTabListener bottomNavTabListener;
         private @TabIndex
         int currentTab = TabIndex.SPEED_DIAL;
-        private long timeSelected = -1;
         private boolean activityIsAlive;
 
         MainCallLogFragmentListener(
                 Context context,
                 ContentResolver contentResolver,
                 BottomNavBar bottomNavBar,
-                Toolbar toolbar,
-                MainBottomNavBarBottomNavTabListener bottomNavTabListener) {
+                Toolbar toolbar) {
             callLogQueryHandler = new CallLogQueryHandler(context, contentResolver, this);
             this.context = context;
             this.bottomNavBar = bottomNavBar;
             this.toolbar = toolbar;
-            this.bottomNavTabListener = bottomNavTabListener;
         }
 
         @Override
@@ -887,15 +925,10 @@ public class MainActivityPeer implements com.fissy.dialer.main.MainActivityPeer,
         }
 
         private void markMissedCallsAsReadAndRemoveNotification() {
-            if (bottomNavTabListener.newCallLogFragmentActive()) {
-                Futures.addCallback(
-                        CallLogComponent.get(context).getClearMissedCalls().clearAll(),
-                        new DefaultFutureCallback<>(),
-                        MoreExecutors.directExecutor());
-            } else {
+
                 callLogQueryHandler.markMissedCallsAsRead();
                 CallLogNotificationsService.cancelAllMissedCalls(context);
-            }
+
         }
 
         private void setCurrentTab(@TabIndex int tabIndex) {
@@ -903,16 +936,12 @@ public class MainActivityPeer implements com.fissy.dialer.main.MainActivityPeer,
                 markMissedCallsAsReadAndRemoveNotification();
             }
             currentTab = tabIndex;
-            timeSelected = System.currentTimeMillis();
         }
 
         public void onActivityResume() {
             LogUtil.enterBlock("MainCallLogFragmentListener.onActivityResume");
             activityIsAlive = true;
 
-            if (!bottomNavTabListener.newCallLogFragmentActive()) {
-                callLogQueryHandler.fetchMissedCallsUnreadCount();
-            }
             // Reset the tab on resume to restart the timer
             setCurrentTab(bottomNavBar.getSelectedTab());
         }
@@ -920,26 +949,10 @@ public class MainActivityPeer implements com.fissy.dialer.main.MainActivityPeer,
         /**
          * Should be called is called.
          */
-        public void onActivityStop(boolean changingConfigurations, boolean keyguardLocked) {
+        public void onActivityStop() {
             activityIsAlive = false;
-            // The new call log fragment handles this on its own.
-            if (!bottomNavTabListener.newCallLogFragmentActive()
-                    && viewedCallLogTabPastTimeThreshold()
-                    && !changingConfigurations
-                    && !keyguardLocked) {
-                markMissedCallsAsReadAndRemoveNotification();
-            }
         }
 
-        /**
-         * Returns true if the user has been (and still is) on the history tab for long than the
-         * threshold.
-         */
-        private boolean viewedCallLogTabPastTimeThreshold() {
-            return currentTab == TabIndex.CALL_LOG
-                    && timeSelected != -1
-                    && System.currentTimeMillis() - timeSelected > TimeUnit.SECONDS.toMillis(3);
-        }
     }
 
     /**
@@ -973,9 +986,9 @@ public class MainActivityPeer implements com.fissy.dialer.main.MainActivityPeer,
     private static final class MainOnPhoneNumberPickerActionListener
             implements OnPhoneNumberPickerActionListener {
 
-        private final TransactionSafeActivity activity;
+        private final AppCompatActivity activity;
 
-        MainOnPhoneNumberPickerActionListener(TransactionSafeActivity activity) {
+        MainOnPhoneNumberPickerActionListener(AppCompatActivity activity) {
             this.activity = activity;
         }
 
@@ -1148,11 +1161,9 @@ public class MainActivityPeer implements com.fissy.dialer.main.MainActivityPeer,
         private static final String SPEED_DIAL_TAG = "speed_dial";
         private static final String CALL_LOG_TAG = "call_log";
         private static final String CONTACTS_TAG = "contacts";
-        private static final String VOICEMAIL_TAG = "voicemail";
 
-        private final TransactionSafeActivity activity;
+        private final AppCompatActivity activity;
         private final FragmentManager fragmentManager;
-        private final androidx.fragment.app.FragmentManager supportFragmentManager;
         private final FloatingActionButton fab;
         private final View bottomSheet;
 
@@ -1160,14 +1171,12 @@ public class MainActivityPeer implements com.fissy.dialer.main.MainActivityPeer,
         private int selectedTab = TabIndex.NO_TAB;
 
         private MainBottomNavBarBottomNavTabListener(
-                TransactionSafeActivity activity,
+                AppCompatActivity activity,
                 FragmentManager fragmentManager,
-                androidx.fragment.app.FragmentManager supportFragmentManager,
                 FloatingActionButton fab,
                 View bottomSheet) {
             this.activity = activity;
             this.fragmentManager = fragmentManager;
-            this.supportFragmentManager = supportFragmentManager;
             this.fab = fab;
             this.bottomSheet = bottomSheet;
         }
@@ -1211,18 +1220,10 @@ public class MainActivityPeer implements com.fissy.dialer.main.MainActivityPeer,
             Logger.get(activity).logScreenView(ScreenEvent.Type.MAIN_SPEED_DIAL, activity);
             selectedTab = TabIndex.SPEED_DIAL;
 
-            if (ConfigProviderComponent.get(activity)
-                    .getConfigProvider()
-                    .getBoolean("enable_new_favorites_tab", false)) {
-                androidx.fragment.app.Fragment supportFragment =
-                        supportFragmentManager.findFragmentByTag(SPEED_DIAL_TAG);
-                showSupportFragment(
-                        supportFragment == null ? SpeedDialFragment.newInstance() : supportFragment,
-                        SPEED_DIAL_TAG);
-            } else {
+
                 Fragment fragment = fragmentManager.findFragmentByTag(SPEED_DIAL_TAG);
                 showFragment(fragment == null ? new OldSpeedDialFragment() : fragment, SPEED_DIAL_TAG);
-            }
+
             fab.show();
         }
 
@@ -1240,70 +1241,6 @@ public class MainActivityPeer implements com.fissy.dialer.main.MainActivityPeer,
             showPromotionBottomSheet(activity, bottomSheet);
         }
 
-        void disableNewCallLogFragment() {
-            LogUtil.i("MainBottomNavBarBottomNavTabListener.disableNewCallLogFragment", "disabled");
-            androidx.fragment.app.Fragment supportFragment =
-                    supportFragmentManager.findFragmentByTag(CALL_LOG_TAG);
-            if (supportFragment != null) {
-                supportFragmentManager.beginTransaction().remove(supportFragment).commitAllowingStateLoss();
-                // If the NewCallLogFragment was showing, immediately show the old call log fragment
-                // instead.
-                if (selectedTab == TabIndex.CALL_LOG) {
-                    LogUtil.i(
-                            "MainBottomNavBarBottomNavTabListener.disableNewCallLogFragment", "showing old");
-                    Fragment fragment = fragmentManager.findFragmentByTag(CALL_LOG_TAG);
-                    showFragment(fragment == null ? new CallLogFragment() : fragment, CALL_LOG_TAG);
-                }
-            }
-        }
-
-        void disableNewVoicemailFragment() {
-            LogUtil.i("MainBottomNavBarBottomNavTabListener.disableNewVoicemailFragment", "disabled");
-            androidx.fragment.app.Fragment supportFragment =
-                    supportFragmentManager.findFragmentByTag(VOICEMAIL_TAG);
-            if (supportFragment != null) {
-                supportFragmentManager.beginTransaction().remove(supportFragment).commitAllowingStateLoss();
-            }
-        }
-
-        void ensureCorrectCallLogShown() {
-            androidx.fragment.app.Fragment supportFragment =
-                    supportFragmentManager.findFragmentByTag(CALL_LOG_TAG);
-            if (supportFragment != null
-                    && !CallLogConfigComponent.get(activity).callLogConfig().isNewCallLogFragmentEnabled()) {
-                LogUtil.i("MainBottomNavBarBottomNavTabListener.ensureCorrectCallLogShown", "disabling");
-                disableNewCallLogFragment();
-            }
-        }
-
-        void ensureCorrectVoicemailShown() {
-            androidx.fragment.app.Fragment supportFragment =
-                    supportFragmentManager.findFragmentByTag(VOICEMAIL_TAG);
-            if (supportFragment != null
-                    && !CallLogConfigComponent.get(activity)
-                    .callLogConfig()
-                    .isNewVoicemailFragmentEnabled()) {
-                LogUtil.i("MainBottomNavBarBottomNavTabListener.ensureCorrectVoicemailShown", "disabling");
-                disableNewVoicemailFragment();
-            }
-        }
-
-        boolean newCallLogFragmentActive() {
-            return supportFragmentManager.findFragmentByTag(CALL_LOG_TAG) != null
-                    || (fragmentManager.findFragmentByTag(CALL_LOG_TAG) == null
-                    && CallLogConfigComponent.get(activity)
-                    .callLogConfig()
-                    .isNewCallLogFragmentEnabled());
-        }
-
-        boolean newVoicemailFragmentActive() {
-            return supportFragmentManager.findFragmentByTag(VOICEMAIL_TAG) != null
-                    || (fragmentManager.findFragmentByTag(VOICEMAIL_TAG) == null
-                    && CallLogConfigComponent.get(activity)
-                    .callLogConfig()
-                    .isNewVoicemailFragmentEnabled());
-        }
-
         @Override
         public void onContactsSelected() {
             LogUtil.enterBlock("MainBottomNavBarBottomNavTabListener.onContactsSelected");
@@ -1319,10 +1256,6 @@ public class MainActivityPeer implements com.fissy.dialer.main.MainActivityPeer,
             fab.show();
         }
 
-        private void showFragment(@NonNull Fragment fragment, String tag) {
-            showFragment(fragment, null, tag);
-        }
-
         /**
          * Shows the passed in fragment and hides all of the others in one transaction.
          *
@@ -1336,7 +1269,6 @@ public class MainActivityPeer implements com.fissy.dialer.main.MainActivityPeer,
          */
         private void showFragment(
                 @Nullable Fragment fragment,
-                @Nullable androidx.fragment.app.Fragment supportFragment,
                 String tag) {
             LogUtil.enterBlock("MainBottomNavBarBottomNavTabListener.showFragment");
             Fragment oldSpeedDial = fragmentManager.findFragmentByTag(SPEED_DIAL_TAG);
@@ -1353,42 +1285,10 @@ public class MainActivityPeer implements com.fissy.dialer.main.MainActivityPeer,
                         "MainBottomNavBarBottomNavTabListener.showFragment", "Not added yet: " + fragment);
                 transaction.add(R.id.fragment_container, fragment, tag);
             }
-            if (activity.isSafeToCommitTransactions()) {
+
                 transaction.commit();
-            }
 
-            // Handle support fragments.
-            // TODO(calderwoodra): Handle other new fragments.
-            androidx.fragment.app.Fragment speedDial =
-                    supportFragmentManager.findFragmentByTag(SPEED_DIAL_TAG);
-            androidx.fragment.app.Fragment newCallLog =
-                    supportFragmentManager.findFragmentByTag(CALL_LOG_TAG);
-            androidx.fragment.app.Fragment newVoicemail =
-                    supportFragmentManager.findFragmentByTag(VOICEMAIL_TAG);
 
-            androidx.fragment.app.FragmentTransaction supportTransaction =
-                    supportFragmentManager.beginTransaction();
-            boolean supportFragmentShown =
-                    showIfEqualElseHideSupport(supportTransaction, supportFragment, speedDial);
-            supportFragmentShown |=
-                    showIfEqualElseHideSupport(supportTransaction, supportFragment, newCallLog);
-            supportFragmentShown |=
-                    showIfEqualElseHideSupport(supportTransaction, supportFragment, newVoicemail);
-
-            if (!supportFragmentShown && supportFragment != null) {
-                LogUtil.i(
-                        "MainBottomNavBarBottomNavTabListener.showFragment",
-                        "Not added yet: " + supportFragment);
-                supportTransaction.add(R.id.fragment_container, supportFragment, tag);
-            }
-            if (activity.isSafeToCommitTransactions()) {
-                supportTransaction.commit();
-            }
-        }
-
-        private void showSupportFragment(
-                @NonNull androidx.fragment.app.Fragment supportFragment, String tag) {
-            showFragment(null, supportFragment, tag);
         }
 
         /**
@@ -1408,24 +1308,6 @@ public class MainActivityPeer implements com.fissy.dialer.main.MainActivityPeer,
             return shown;
         }
 
-        /**
-         * @param supportFragment1 will be shown if equal to {@code fragment2}
-         * @param supportFragment2 will be hidden if unequal to {@code fragment1}
-         * @return {@code true} if {@code fragment1} was shown
-         */
-        private boolean showIfEqualElseHideSupport(
-                androidx.fragment.app.FragmentTransaction supportTransaction,
-                androidx.fragment.app.Fragment supportFragment1,
-                androidx.fragment.app.Fragment supportFragment2) {
-            boolean shown = false;
-            if (supportFragment1 != null && supportFragment1.equals(supportFragment2)) {
-                supportTransaction.show(supportFragment1);
-                shown = true;
-            } else if (supportFragment2 != null) {
-                supportTransaction.hide(supportFragment2);
-            }
-            return shown;
-        }
     }
 
     private static final class LastTabController {
@@ -1444,7 +1326,7 @@ public class MainActivityPeer implements com.fissy.dialer.main.MainActivityPeer,
          */
         @TabIndex
         int getLastTab() {
-            @TabIndex int tabIndex = TabIndex.SPEED_DIAL;
+            @TabIndex int tabIndex;
 
             tabIndex =
                     StorageComponent.get(context)

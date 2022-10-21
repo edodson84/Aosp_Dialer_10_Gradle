@@ -1400,7 +1400,6 @@ public final class HistoryItemActionModuleInfo extends
                     throw new RuntimeException(
                             new com.google.protobuf.InvalidProtocolBufferException(
                                     e.getMessage()).setUnfinishedMessage(this));
-                } finally {
                 }
             }
             case GET_DEFAULT_INSTANCE: {
@@ -1457,11 +1456,7 @@ public final class HistoryItemActionModuleInfo extends
         public static final int VOICEMAIL_VALUE = 2;
         private static final com.google.protobuf.Internal.EnumLiteMap<
                 Host> internalValueMap =
-                new com.google.protobuf.Internal.EnumLiteMap<Host>() {
-                    public Host findValueByNumber(int number) {
-                        return Host.forNumber(number);
-                    }
-                };
+                number -> Host.forNumber(number);
         private final int value;
 
         Host(int value) {

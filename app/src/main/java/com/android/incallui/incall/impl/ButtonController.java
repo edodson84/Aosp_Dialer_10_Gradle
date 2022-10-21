@@ -333,7 +333,6 @@ interface ButtonController {
         @DrawableRes
         private int icon = R.drawable.quantum_ic_volume_up_vd_theme_24;
         private boolean nonBluetoothMode;
-        private CharSequence contentDescription;
         private CharSequence isOnContentDescription;
         private CharSequence isOffContentDescription;
 
@@ -406,7 +405,7 @@ interface ButtonController {
             icon = info.icon;
             @StringRes int contentDescriptionResId = info.contentDescription;
 
-            contentDescription = delegate.getContext().getText(contentDescriptionResId);
+            CharSequence contentDescription = delegate.getContext().getText(contentDescriptionResId);
             isOnContentDescription =
                     TextUtils.concat(
                             contentDescription,

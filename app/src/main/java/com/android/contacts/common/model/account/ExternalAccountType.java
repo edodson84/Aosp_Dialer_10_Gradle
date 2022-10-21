@@ -151,7 +151,7 @@ public class ExternalAccountType extends BaseAccountType {
         } catch (DefinitionException e) {
             final StringBuilder error = new StringBuilder();
             error.append("Problem reading XML");
-            if (needLineNumberInErrorLog && (parser != null)) {
+            if (needLineNumberInErrorLog) {
                 error.append(" in line ");
                 error.append(parser.getLineNumber());
             }
@@ -166,7 +166,7 @@ public class ExternalAccountType extends BaseAccountType {
             }
         }
 
-        mExtensionPackageNames = new ArrayList<String>();
+        mExtensionPackageNames = new ArrayList<>();
         mInviteActionLabelResId =
                 resolveExternalResId(
                         context,

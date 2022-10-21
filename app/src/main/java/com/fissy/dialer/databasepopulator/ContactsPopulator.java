@@ -39,6 +39,7 @@ import com.google.auto.value.AutoValue;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -183,7 +184,7 @@ public final class ContactsPopulator {
                     .applyBatch(
                             ContactsContract.AUTHORITY,
                             new ArrayList<>(
-                                    Arrays.asList(
+                                    Collections.singletonList(
                                             ContentProviderOperation.newDelete(RawContacts.CONTENT_URI).build())));
         } catch (RemoteException | OperationApplicationException e) {
             Assert.fail("failed to delete contacts: " + e);
@@ -309,7 +310,7 @@ public final class ContactsPopulator {
                 Paint paint = new Paint();
                 paint.setColor(color);
                 paint.setStyle(Paint.Style.FILL);
-                canvas.drawCircle(width / 2, height / 2, width / 3, paint);
+                canvas.drawCircle(150, 150, 100, paint);
 
                 ByteArrayOutputStream photoStream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.PNG, 75, photoStream);

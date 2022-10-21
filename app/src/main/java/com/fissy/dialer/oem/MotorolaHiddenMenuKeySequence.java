@@ -128,9 +128,7 @@ public class MotorolaHiddenMenuKeySequence {
         MotorolaHiddenMenuKeySequence instance = getInstance(context);
 
         int len = input.length();
-        if (len <= 3
-                || instance.hiddenKeyPatterns == null
-                || instance.hiddenKeyPatternIntents == null) {
+        if (len <= 3 || instance.hiddenKeyPatterns == null) {
             return false;
         }
 
@@ -146,9 +144,7 @@ public class MotorolaHiddenMenuKeySequence {
         MotorolaHiddenMenuKeySequence instance = getInstance(context);
 
         int len = input.length();
-        if (len <= 3
-                || instance.hiddenKeySequences == null
-                || instance.hiddenKeySequenceIntents == null) {
+        if (len <= 3 || instance.hiddenKeySequences == null) {
             return false;
         }
 

@@ -55,6 +55,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.PriorityQueue;
 
 /**
@@ -97,7 +98,7 @@ public class PhoneFavoritesTileAdapter extends BaseAdapter implements OnDragDrop
     /**
      * Contact data stored in cache. This is used to populate the associated view.
      */
-    private ArrayList<ContactEntry> contactEntries = null;
+    private ArrayList<ContactEntry> contactEntries;
     private int numFrequents;
     private int numStarred;
     /**
@@ -601,9 +602,9 @@ public class PhoneFavoritesTileAdapter extends BaseAdapter implements OnDragDrop
 
         toArrange.clear();
         for (int i = 1; i < maxToPin + 1; i++) {
-            if (!pinnedQueue.isEmpty() && pinnedQueue.peek().pinned <= i) {
+            if (!pinnedQueue.isEmpty() && Objects.requireNonNull(pinnedQueue.peek()).pinned <= i) {
                 final ContactEntry toPin = pinnedQueue.poll();
-                toPin.pinned = i;
+                Objects.requireNonNull(toPin).pinned = i;
                 toArrange.add(toPin);
             } else if (!unpinnedContacts.isEmpty()) {
                 toArrange.add(unpinnedContacts.remove(0));
@@ -616,7 +617,7 @@ public class PhoneFavoritesTileAdapter extends BaseAdapter implements OnDragDrop
         // and then cleared frequents. Contacts in this situation should become unpinned.
         while (!pinnedQueue.isEmpty()) {
             final ContactEntry entry = pinnedQueue.poll();
-            entry.pinned = PinnedPositions.UNPINNED;
+            Objects.requireNonNull(entry).pinned = PinnedPositions.UNPINNED;
             toArrange.add(entry);
         }
 

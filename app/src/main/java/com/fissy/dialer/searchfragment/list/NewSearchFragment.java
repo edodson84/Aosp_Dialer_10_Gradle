@@ -18,10 +18,7 @@ package com.fissy.dialer.searchfragment.list;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
-import android.app.Fragment;
-import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Intent;
-import android.content.Loader;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -40,6 +37,11 @@ import android.widget.FrameLayout.LayoutParams;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
+import androidx.fragment.app.Fragment;
+import androidx.loader.app.LoaderManager;
+
+import androidx.loader.app.LoaderManager.LoaderCallbacks;
+import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -79,6 +81,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Fragment used for searching contacts.
@@ -118,23 +121,22 @@ public final class NewSearchFragment extends Fragment
     private final Runnable loaderCp2ContactsRunnable =
             () -> {
                 if (getHost() != null) {
-                    getLoaderManager().restartLoader(CONTACTS_LOADER_ID, null, this);
+                    LoaderManager.getInstance(this).restartLoader(CONTACTS_LOADER_ID, null, this);
                 }
             };
     private final Runnable loadNearbyPlacesRunnable =
             () -> {
                 if (getHost() != null) {
-                    getLoaderManager().restartLoader(NEARBY_PLACES_LOADER_ID, null, this);
+                    LoaderManager.getInstance(this).restartLoader(NEARBY_PLACES_LOADER_ID, null, this);
                 }
             };
     private final Runnable loadDirectoryContactsRunnable =
             () -> {
                 if (getHost() != null) {
-                    getLoaderManager().restartLoader(DIRECTORY_CONTACTS_LOADER_ID, null, this);
+                    LoaderManager.getInstance(this).restartLoader(DIRECTORY_CONTACTS_LOADER_ID, null, this);
                 }
             };
     private EmptyContentView emptyContentView;
-    private RecyclerView recyclerView;
     private SearchAdapter adapter;
     private final Runnable capabilitiesUpdatedRunnable = () -> adapter.notifyDataSetChanged();
     private String query;
@@ -149,7 +151,7 @@ public final class NewSearchFragment extends Fragment
         return new NewSearchFragment();
     }
 
-    @Nullable
+    @NonNull
     @Override
     public View onCreateView(
             LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedInstanceState) {
@@ -159,7 +161,7 @@ public final class NewSearchFragment extends Fragment
         adapter.setSearchActions(getActions());
         showLocationPermission();
         emptyContentView = view.findViewById(R.id.empty_view);
-        recyclerView = view.findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setOnTouchListener(this);
         recyclerView.setAdapter(adapter);
@@ -187,17 +189,18 @@ public final class NewSearchFragment extends Fragment
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(KEY_CALL_INITIATION_TYPE, callInitiationType.getNumber());
         outState.putString(KEY_QUERY, query);
     }
 
     private void initLoaders() {
-        getLoaderManager().initLoader(CONTACTS_LOADER_ID, null, this);
+        LoaderManager.getInstance(this).initLoader(CONTACTS_LOADER_ID, null, this);
         loadDirectoriesCursor();
     }
 
+    @NonNull
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle bundle) {
         LogUtil.i("NewSearchFragment.onCreateLoader", "loading cursor: " + id);
@@ -222,7 +225,7 @@ public final class NewSearchFragment extends Fragment
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+    public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor cursor) {
         LogUtil.i("NewSearchFragment.onLoadFinished", "Loader finished: " + loader);
         if (cursor != null
                 && !(loader instanceof DirectoriesCursorLoader)
@@ -234,12 +237,14 @@ public final class NewSearchFragment extends Fragment
             adapter.setContactsCursor((SearchCursor) cursor);
 
         } else if (loader instanceof NearbyPlacesCursorLoader) {
+            LogUtil.i("NewSearchFragment.onLoadFinished", "Loader Nearby: " + loader);
             adapter.setNearbyPlacesCursor((SearchCursor) cursor);
 
         } else if (loader instanceof DirectoryContactsCursorLoader) {
             adapter.setDirectoryContactsCursor((SearchCursor) cursor);
 
         } else if (loader instanceof DirectoriesCursorLoader) {
+            LogUtil.i("NewSearchFragment.onLoadFinished", "Loader Directory: " + loader);
             directories.clear();
             directories.addAll(DirectoriesCursorLoader.toDirectories(cursor));
             loadNearbyPlacesCursor();
@@ -251,7 +256,7 @@ public final class NewSearchFragment extends Fragment
     }
 
     @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
+    public void onLoaderReset(@NonNull Loader<Cursor> loader) {
         LogUtil.i("NewSearchFragment.onLoaderReset", "Loader reset: " + loader);
         if (loader instanceof SearchContactsCursorLoader) {
             adapter.setContactsCursor(null);
@@ -262,10 +267,6 @@ public final class NewSearchFragment extends Fragment
         }
     }
 
-    @VisibleForTesting
-    public String getRawNumber() {
-        return rawNumber;
-    }
 
     public void setRawNumber(String rawNumber) {
         this.rawNumber = rawNumber;
@@ -316,7 +317,7 @@ public final class NewSearchFragment extends Fragment
         }
         boolean slideUp = start > end;
         Interpolator interpolator = slideUp ? AnimUtils.EASE_IN : AnimUtils.EASE_OUT;
-        int startHeight = getActivity().findViewById(android.R.id.content).getHeight();
+        int startHeight = Objects.requireNonNull(getActivity()).findViewById(android.R.id.content).getHeight();
         int endHeight = startHeight - (end - start);
         getView().setTranslationY(start);
         getView()
@@ -371,7 +372,7 @@ public final class NewSearchFragment extends Fragment
     public void onEmptyViewActionButtonClicked() {
         String[] deniedPermissions =
                 PermissionsUtil.getPermissionsCurrentlyDenied(
-                        getContext(), PermissionsUtil.allContactsGroupPermissionsUsedInDialer);
+                        Objects.requireNonNull(getContext()), PermissionsUtil.allContactsGroupPermissionsUsedInDialer);
         if (deniedPermissions.length > 0) {
             LogUtil.i(
                     "NewSearchFragment.onEmptyViewActionButtonClicked",
@@ -386,7 +387,7 @@ public final class NewSearchFragment extends Fragment
      */
     private void loadDirectoriesCursor() {
         if (!directoriesDisabledForTesting) {
-            getLoaderManager().initLoader(DIRECTORIES_LOADER_ID, null, this);
+            LoaderManager.getInstance(this).initLoader(DIRECTORIES_LOADER_ID, null, this);
         }
     }
 
@@ -446,7 +447,7 @@ public final class NewSearchFragment extends Fragment
                 "attempted to request already granted location permission");
         String[] deniedPermissions =
                 PermissionsUtil.getPermissionsCurrentlyDenied(
-                        getContext(), PermissionsUtil.allLocationGroupPermissionsUsedInDialer);
+                        Objects.requireNonNull(getContext()), PermissionsUtil.allLocationGroupPermissionsUsedInDialer);
         FragmentUtils.getParentUnsafe(this, SearchFragmentListener.class).requestingPermission();
         requestPermissions(deniedPermissions, LOCATION_PERMISSION_REQUEST_CODE);
     }
@@ -468,16 +469,16 @@ public final class NewSearchFragment extends Fragment
     @Override
     public void onResume() {
         super.onResume();
-        EnrichedCallComponent.get(getContext())
+        EnrichedCallComponent.get(Objects.requireNonNull(getContext()))
                 .getEnrichedCallManager()
                 .registerCapabilitiesListener(this);
-        getLoaderManager().restartLoader(CONTACTS_LOADER_ID, null, this);
+        LoaderManager.getInstance(this).restartLoader(CONTACTS_LOADER_ID, null, this);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        EnrichedCallComponent.get(getContext())
+        EnrichedCallComponent.get(Objects.requireNonNull(getContext()))
                 .getEnrichedCallManager()
                 .unregisterCapabilitiesListener(this);
     }
@@ -489,13 +490,6 @@ public final class NewSearchFragment extends Fragment
                 .postDelayed(capabilitiesUpdatedRunnable, ENRICHED_CALLING_CAPABILITIES_UPDATED_DELAY);
     }
 
-    // Currently, setting up multiple FakeContentProviders doesn't work and results in this fragment
-    // being untestable while it can query multiple datasources. This is a temporary fix.
-    // TODO(a bug): Remove this method and test this fragment with multiple data sources
-    @VisibleForTesting
-    public void setDirectoriesDisabled(boolean disabled) {
-        directoriesDisabledForTesting = disabled;
-    }
 
     /**
      * Returns a list of search actions to be shown in the search results.

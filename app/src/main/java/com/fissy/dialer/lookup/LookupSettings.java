@@ -20,7 +20,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public final class LookupSettings {
-    private static final String TAG = LookupSettings.class.getSimpleName();
 
     /**
      * Preferences
@@ -40,7 +39,7 @@ public final class LookupSettings {
     }
 
     public static void setForwardLookupEnabled(Context context, boolean value) {
-        getSharedPreferences(context).edit().putBoolean(ENABLE_FORWARD_LOOKUP, value).commit();
+        getSharedPreferences(context).edit().putBoolean(ENABLE_FORWARD_LOOKUP, value).apply();
     }
 
 }

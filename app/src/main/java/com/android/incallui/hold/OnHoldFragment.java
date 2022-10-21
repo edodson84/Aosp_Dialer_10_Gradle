@@ -36,6 +36,8 @@ import com.android.incallui.incall.protocol.SecondaryInfo;
 import com.fissy.dialer.R;
 import com.fissy.dialer.common.Assert;
 
+import java.util.Objects;
+
 /**
  * Shows banner UI for background call
  */
@@ -59,7 +61,7 @@ public class OnHoldFragment extends Fragment {
             LayoutInflater layoutInflater, @Nullable ViewGroup viewGroup, @Nullable Bundle bundle) {
         final View view = layoutInflater.inflate(R.layout.incall_on_hold_banner, viewGroup, false);
 
-        SecondaryInfo secondaryInfo = getArguments().getParcelable(ARG_INFO);
+        SecondaryInfo secondaryInfo = Objects.requireNonNull(getArguments()).getParcelable(ARG_INFO);
         secondaryInfo = Assert.isNotNull(secondaryInfo);
 
         ((TextView) view.findViewById(R.id.hold_contact_name))

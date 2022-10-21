@@ -16,11 +16,13 @@
 
 package com.android.incallui.audioroute;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.PorterDuff.Mode;
 import android.os.Bundle;
@@ -33,7 +35,9 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.core.os.BuildCompat;
 
 import com.android.incallui.call.CallList;
@@ -67,11 +71,13 @@ public class AudioRouteSelectorDialogFragment extends BottomSheetDialogFragment 
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         FragmentUtils.checkParent(this, AudioRouteSelectorPresenter.class);
     }
 
+
+    @NonNull
     @Override
     public Dialog onCreateDialog(final Bundle savedInstanceState) {
         LogUtil.i("AudioRouteSelectorDialogFragment.onCreateDialog", null);
@@ -93,8 +99,8 @@ public class AudioRouteSelectorDialogFragment extends BottomSheetDialogFragment 
     @SuppressLint("NewApi")
     public View onCreateView(
             LayoutInflater layoutInflater, @Nullable ViewGroup viewGroup, @Nullable Bundle bundle) {
-        View view = layoutInflater.inflate(R.layout.audioroute_selector, viewGroup, false);
-        CallAudioState audioState = getArguments().getParcelable(ARG_AUDIO_STATE);
+        View view = layoutInflater.inflate(R.layout.audioroute_selector, null, false);
+        CallAudioState audioState = requireArguments().getParcelable(ARG_AUDIO_STATE);
 
         if (BuildCompat.isAtLeastP()) {
             // Create items for all connected Bluetooth devices
@@ -141,7 +147,7 @@ public class AudioRouteSelectorDialogFragment extends BottomSheetDialogFragment 
     }
 
     @Override
-    public void onCancel(DialogInterface dialogInterface) {
+    public void onCancel(@NonNull DialogInterface dialogInterface) {
         super.onCancel(dialogInterface);
         FragmentUtils.getParentUnsafe(
                         AudioRouteSelectorDialogFragment.this, AudioRouteSelectorPresenter.class)
@@ -204,6 +210,16 @@ public class AudioRouteSelectorDialogFragment extends BottomSheetDialogFragment 
             return (String) getActiveDeviceMethod.invoke(bluetoothDevice);
         } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
             e.printStackTrace();
+            if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return null;
+            }
             return bluetoothDevice.getName();
         }
     }

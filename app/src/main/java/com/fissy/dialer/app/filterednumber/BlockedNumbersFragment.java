@@ -41,6 +41,8 @@ import com.fissy.dialer.blocking.FilteredNumbersUtil.ImportSendToVoicemailContac
 import com.fissy.dialer.database.FilteredNumberContract;
 import com.fissy.dialer.lettertile.LetterTileDrawable;
 
+import java.util.Objects;
+
 /**
  * TODO(calderwoodra): documentation
  */
@@ -116,7 +118,7 @@ public class BlockedNumbersFragment extends ListFragment
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         ColorDrawable backgroundDrawable =
                 new ColorDrawable(android.R.attr.colorPrimary);
-        actionBar.setBackgroundDrawable(backgroundDrawable);
+        Objects.requireNonNull(actionBar).setBackgroundDrawable(backgroundDrawable);
         actionBar.setDisplayShowCustomEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
@@ -138,12 +140,9 @@ public class BlockedNumbersFragment extends ListFragment
         } else {
             FilteredNumbersUtil.checkForSendToVoicemailContact(
                     getActivity(),
-                    new CheckForSendToVoicemailContactListener() {
-                        @Override
-                        public void onComplete(boolean hasSendToVoicemailContact) {
-                            final int visibility = hasSendToVoicemailContact ? View.VISIBLE : View.GONE;
-                            importSettings.setVisibility(visibility);
-                        }
+                    hasSendToVoicemailContact -> {
+                        final int visibility = hasSendToVoicemailContact ? View.VISIBLE : View.GONE;
+                        importSettings.setVisibility(visibility);
                     });
         }
 
@@ -212,27 +211,19 @@ public class BlockedNumbersFragment extends ListFragment
         } else if (resId == R.id.import_button) {
             FilteredNumbersUtil.importSendToVoicemailContacts(
                     activity,
-                    new ImportSendToVoicemailContactsListener() {
-                        @Override
-                        public void onImportComplete() {
-                            importSettings.setVisibility(View.GONE);
-                        }
-                    });
+                    () -> importSettings.setVisibility(View.GONE));
         } else if (resId == R.id.migrate_promo_allow_button) {
             view.setEnabled(false);
             (blockedNumbersMigratorForTest != null
                     ? blockedNumbersMigratorForTest
                     : new BlockedNumbersMigrator(getContext()))
                     .migrate(
-                            new Listener() {
-                                @Override
-                                public void onComplete() {
-                                    getContext()
-                                            .startActivity(
-                                                    FilteredNumberCompat.createManageBlockedNumbersIntent(getContext()));
-                                    // Remove this activity from the backstack
-                                    activity.finish();
-                                }
+                            () -> {
+                                getContext()
+                                        .startActivity(
+                                                FilteredNumberCompat.createManageBlockedNumbersIntent(getContext()));
+                                // Remove this activity from the backstack
+                                activity.finish();
                             });
         }
     }

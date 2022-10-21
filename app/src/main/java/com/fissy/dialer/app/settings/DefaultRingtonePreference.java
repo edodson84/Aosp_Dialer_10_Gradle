@@ -24,44 +24,41 @@ import android.preference.RingtonePreference;
 import android.provider.Settings;
 import android.util.AttributeSet;
 import android.widget.Toast;
-
 import com.fissy.dialer.R;
 
-/**
- * RingtonePreference which doesn't show default ringtone setting.
- */
+/** RingtonePreference which doesn't show default ringtone setting. */
 public class DefaultRingtonePreference extends RingtonePreference {
 
-    public DefaultRingtonePreference(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
+  public DefaultRingtonePreference(Context context, AttributeSet attrs) {
+    super(context, attrs);
+  }
 
-    @Override
-    protected void onPrepareRingtonePickerIntent(Intent ringtonePickerIntent) {
-        super.onPrepareRingtonePickerIntent(ringtonePickerIntent);
+  @Override
+  protected void onPrepareRingtonePickerIntent(Intent ringtonePickerIntent) {
+    super.onPrepareRingtonePickerIntent(ringtonePickerIntent);
 
-        /*
-         * Since this preference is for choosing the default ringtone, it
-         * doesn't make sense to show a 'Default' item.
-         */
-        ringtonePickerIntent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, false);
-    }
+    /*
+     * Since this preference is for choosing the default ringtone, it
+     * doesn't make sense to show a 'Default' item.
+     */
+    ringtonePickerIntent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, false);
+  }
 
-    @Override
-    protected void onSaveRingtone(Uri ringtoneUri) {
-        if (!Settings.System.canWrite(getContext())) {
-            Toast.makeText(
-                            getContext(),
-                            getContext().getResources().getString(R.string.toast_cannot_write_system_settings),
-                            Toast.LENGTH_SHORT)
-                    .show();
-            return;
-        }
-        RingtoneManager.setActualDefaultRingtoneUri(getContext(), getRingtoneType(), ringtoneUri);
+  @Override
+  protected void onSaveRingtone(Uri ringtoneUri) {
+    if (!Settings.System.canWrite(getContext())) {
+      Toast.makeText(
+              getContext(),
+              getContext().getResources().getString(R.string.toast_cannot_write_system_settings),
+              Toast.LENGTH_SHORT)
+          .show();
+      return;
     }
+    RingtoneManager.setActualDefaultRingtoneUri(getContext(), getRingtoneType(), ringtoneUri);
+  }
 
-    @Override
-    protected Uri onRestoreRingtone() {
-        return RingtoneManager.getActualDefaultRingtoneUri(getContext(), getRingtoneType());
-    }
+  @Override
+  protected Uri onRestoreRingtone() {
+    return RingtoneManager.getActualDefaultRingtoneUri(getContext(), getRingtoneType());
+  }
 }

@@ -68,11 +68,8 @@ public class CameraManager implements FocusOverlayManager.Listener {
     private static final int ERROR_TAKING_PICTURE = 4;
     private static final int NO_CAMERA_SELECTED = -1;
     private static final Camera.ShutterCallback DUMMY_SHUTTER_CALLBACK =
-            new Camera.ShutterCallback() {
-                @Override
-                public void onShutter() {
-                    // Do nothing
-                }
+            () -> {
+                // Do nothing
             };
     private static CameraManager instance;
     /**
@@ -251,19 +248,16 @@ public class CameraManager implements FocusOverlayManager.Listener {
         if (preview != null) {
             Assert.checkArgument(preview.isValid());
             preview.setOnTouchListener(
-                    new View.OnTouchListener() {
-                        @Override
-                        public boolean onTouch(final View view, final MotionEvent motionEvent) {
-                            if ((motionEvent.getActionMasked() & MotionEvent.ACTION_UP)
-                                    == MotionEvent.ACTION_UP) {
-                                focusOverlayManager.setPreviewSize(view.getWidth(), view.getHeight());
-                                focusOverlayManager.onSingleTapUp(
-                                        (int) motionEvent.getX() + view.getLeft(),
-                                        (int) motionEvent.getY() + view.getTop());
-                            }
-                            view.performClick();
-                            return true;
+                    (view, motionEvent) -> {
+                        if ((motionEvent.getActionMasked() & MotionEvent.ACTION_UP)
+                                == MotionEvent.ACTION_UP) {
+                            focusOverlayManager.setPreviewSize(view.getWidth(), view.getHeight());
+                            focusOverlayManager.onSingleTapUp(
+                                    (int) motionEvent.getX() + view.getLeft(),
+                                    (int) motionEvent.getY() + view.getTop());
                         }
+                        view.performClick();
+                        return true;
                     });
         }
         cameraPreview = preview;
@@ -398,7 +392,6 @@ public class CameraManager implements FocusOverlayManager.Listener {
 
         // Cancel any previous open camera tasks
         if (openCameraTask != null) {
-            pendingOpenCameraIndex = NO_CAMERA_SELECTED;
             delayTask = true;
         }
 
@@ -500,54 +493,51 @@ public class CameraManager implements FocusOverlayManager.Listener {
             return;
         }
         final Camera.PictureCallback jpegCallback =
-                new Camera.PictureCallback() {
-                    @Override
-                    public void onPictureTaken(final byte[] bytes, final Camera camera) {
-                        takingPicture = false;
-                        if (CameraManager.this.camera != camera) {
-                            // This may happen if the camera was changed between front/back while the
-                            // picture is being taken.
-                            callback.onMediaInfo(MediaCallback.MEDIA_CAMERA_CHANGED);
-                            return;
-                        }
-
-                        if (bytes == null) {
-                            callback.onMediaInfo(MediaCallback.MEDIA_NO_DATA);
-                            return;
-                        }
-
-                        final Camera.Size size = camera.getParameters().getPictureSize();
-                        int width;
-                        int height;
-                        if (rotation == 90 || rotation == 270) {
-                            // Is rotated, so swapping dimensions is desired
-                            // noinspection SuspiciousNameCombination
-                            width = size.height;
-                            // noinspection SuspiciousNameCombination
-                            height = size.width;
-                        } else {
-                            width = size.width;
-                            height = size.height;
-                        }
-                        LogUtil.i(
-                                "CameraManager.onPictureTaken", "taken picture size: " + bytes.length + " bytes");
-                        DialerExecutorComponent.get(cameraPreview.getContext())
-                                .dialerExecutorFactory()
-                                .createNonUiTaskBuilder(
-                                        new ImagePersistWorker(
-                                                width, height, heightPercent, bytes, cameraPreview.getContext()))
-                                .onSuccess(
-                                        (result) -> {
-                                            callback.onMediaReady(
-                                                    result.getUri(), "image/jpeg", result.getWidth(), result.getHeight());
-                                        })
-                                .onFailure(
-                                        (throwable) -> {
-                                            callback.onMediaFailed(new Exception("Persisting image failed", throwable));
-                                        })
-                                .build()
-                                .executeSerial(null);
+                (bytes, camera) -> {
+                    takingPicture = false;
+                    if (CameraManager.this.camera != camera) {
+                        // This may happen if the camera was changed between front/back while the
+                        // picture is being taken.
+                        callback.onMediaInfo(MediaCallback.MEDIA_CAMERA_CHANGED);
+                        return;
                     }
+
+                    if (bytes == null) {
+                        callback.onMediaInfo(MediaCallback.MEDIA_NO_DATA);
+                        return;
+                    }
+
+                    final Camera.Size size = camera.getParameters().getPictureSize();
+                    int width;
+                    int height;
+                    if (rotation == 90 || rotation == 270) {
+                        // Is rotated, so swapping dimensions is desired
+                        // noinspection SuspiciousNameCombination
+                        width = size.height;
+                        // noinspection SuspiciousNameCombination
+                        height = size.width;
+                    } else {
+                        width = size.width;
+                        height = size.height;
+                    }
+                    LogUtil.i(
+                            "CameraManager.onPictureTaken", "taken picture size: " + bytes.length + " bytes");
+                    DialerExecutorComponent.get(cameraPreview.getContext())
+                            .dialerExecutorFactory()
+                            .createNonUiTaskBuilder(
+                                    new ImagePersistWorker(
+                                            width, height, heightPercent, bytes, cameraPreview.getContext()))
+                            .onSuccess(
+                                    (result) -> {
+                                        callback.onMediaReady(
+                                                result.getUri(), "image/jpeg", result.getWidth(), result.getHeight());
+                                    })
+                            .onFailure(
+                                    (throwable) -> {
+                                        callback.onMediaFailed(new Exception("Persisting image failed", throwable));
+                                    })
+                            .build()
+                            .executeSerial(null);
                 };
 
         takingPicture = true;
@@ -645,12 +635,7 @@ public class CameraManager implements FocusOverlayManager.Listener {
             cameraPreview.startPreview(this.camera);
             this.camera.startPreview();
             this.camera.setAutoFocusMoveCallback(
-                    new Camera.AutoFocusMoveCallback() {
-                        @Override
-                        public void onAutoFocusMoving(final boolean start, final Camera camera) {
-                            focusOverlayManager.onAutoFocusMoving(start);
-                        }
-                    });
+                    (start, camera) -> focusOverlayManager.onAutoFocusMoving(start));
             focusOverlayManager.setParameters(this.camera.getParameters());
             focusOverlayManager.setMirror(cameraInfo.facing == CameraInfo.CAMERA_FACING_BACK);
             focusOverlayManager.onPreviewStarted();
@@ -698,14 +683,12 @@ public class CameraManager implements FocusOverlayManager.Listener {
      */
     private Camera.Size chooseBestPreviewSize(final Camera.Size pictureSize) {
         final List<Camera.Size> sizes =
-                new ArrayList<Camera.Size>(camera.getParameters().getSupportedPreviewSizes());
+                new ArrayList<>(camera.getParameters().getSupportedPreviewSizes());
         final float aspectRatio = pictureSize.width / (float) pictureSize.height;
         final int capturePixels = pictureSize.width * pictureSize.height;
 
         // Sort the sizes so the best size is first
-        Collections.sort(
-                sizes,
-                new SizeComparator(Integer.MAX_VALUE, Integer.MAX_VALUE, aspectRatio, capturePixels));
+        sizes.sort(new SizeComparator(Integer.MAX_VALUE, Integer.MAX_VALUE, aspectRatio, capturePixels));
 
         return sizes.get(0);
     }
@@ -718,12 +701,7 @@ public class CameraManager implements FocusOverlayManager.Listener {
 
         try {
             this.camera.autoFocus(
-                    new Camera.AutoFocusCallback() {
-                        @Override
-                        public void onAutoFocus(final boolean success, final Camera camera) {
-                            focusOverlayManager.onAutoFocus(success, false /* shutterDown */);
-                        }
-                    });
+                    (success, camera) -> focusOverlayManager.onAutoFocus(success, false /* shutterDown */));
         } catch (final RuntimeException e) {
             LogUtil.e("CameraManager.autoFocus", "RuntimeException in CameraManager.autoFocus", e);
             // If autofocus fails, the camera should have called the callback with success=false,

@@ -147,6 +147,7 @@ public class ContactInfo {
         return TextUtils.equals(geoDescription, other.geoDescription);
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "ContactInfo{"

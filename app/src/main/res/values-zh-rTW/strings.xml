@@ -17,9 +17,6 @@
     <string name="a11y_new_call_log_entry_full_description_with_phone_account_info">^1，^2，^3。</string>
     <string name="a11y_new_call_log_entry_full_description_without_phone_account_info">^1，^2。</string>
     <string name="a11y_new_call_log_entry_phone_account">使用 ^1，透過 ^2</string>
-    <string name="a11y_new_call_log_entry_tap_action">expand menu</string>
-    <string name="a11y_new_call_log_entry_video_call">make a video call to ^1</string>
-    <string name="a11y_new_call_log_entry_voice_call">call ^1</string>
     <string name="abc_action_bar_home_description">瀏覽首頁</string>
     <string name="abc_action_bar_up_description">向上瀏覽</string>
     <string name="abc_action_menu_overflow_description">更多選項</string>
@@ -47,7 +44,6 @@
     <string name="abc_shareactionprovider_share_with">選擇分享對象</string>
     <string name="abc_shareactionprovider_share_with_application">與「%s」分享</string>
     <string name="abc_toolbar_collapse_description">收合</string>
-    <string name="about_phone_label">關於</string>
     <string name="accessibility_settings_title">協助工具</string>
     <string name="account_phone">只儲存在裝置上，不會同步處理</string>
     <string name="action_copy_number_text">複製號碼</string>
@@ -98,7 +94,6 @@
     <string name="blocked_numbers_disabled_emergency_desc">由於您曾在過去 48 小時內使用這支手機撥打緊急服務電話，因此來電封鎖功能已停用。此功能停用達 48 小時後，將由系統自動重新啟用。</string>
     <string name="blocked_numbers_disabled_emergency_header_label">來電封鎖功能已暫時關閉</string>
     <string name="bubble_return_to_call">返回通話</string>
-    <string name="build_version_label">版本</string>
     <string name="call">撥號</string>
     <string name="callFailed_simError">沒有 SIM 卡或 SIM 卡發生錯誤</string>
     <string name="call_assistant">撥打%s電話號碼</string>
@@ -173,7 +168,7 @@
     <string name="call_pager">撥打呼叫器號碼</string>
     <string name="call_radio">撥打無線電號碼</string>
     <string name="call_settings_label">通話</string>
-    <string name="call_subject_hint">輸入可在撥號時傳送的備註...</string>
+    <string name="call_subject_hint">輸入可在撥號時傳送的備註…</string>
     <string name="call_subject_limit">%1$s/%2$s</string>
     <string name="call_subject_type_and_number">%1$s %2$s</string>
     <string name="call_telex">撥打電報電話號碼</string>
@@ -220,7 +215,6 @@
     <string name="content_description_rtt_chat_avatar">顯示圖片</string>
     <string name="content_description_rtt_check_button">請說</string>
     <string name="copy_number">複製號碼</string>
-    <string name="copy_transcript_text">複製留言轉錄內容</string>
     <string name="custom_message_hint">撰寫自訂訊息</string>
     <string name="default_notification_description">預設音效 (%1$s)</string>
     <string name="delete">刪除</string>
@@ -376,7 +370,7 @@
     <string name="incall_remotely_held">保留中</string>
     <string name="incall_talkback_speaker_off">，已關閉</string>
     <string name="incall_talkback_speaker_on">，已開啟</string>
-    <string name="incall_transferring">轉接中...</string>
+    <string name="incall_transferring">轉接中…</string>
     <string name="incall_video_call_request_failed">無法連線</string>
     <string name="incall_video_call_request_rejected">通話遭到拒絕</string>
     <string name="incall_video_call_request_timed_out">通話要求逾時</string>
@@ -389,7 +383,6 @@
     <string name="label_sip_address">SIP</string>
     <string name="launcherActivityLabel">電話</string>
     <string name="launcherDialpadActivityLabel">電話撥號鍵盤</string>
-    <string name="licenseActivityLabel">開放原始碼授權</string>
     <string name="listAllContactsInAccount">%s 中的聯絡人</string>
     <string name="listCustomView">聯絡人自訂檢視</string>
     <string name="listSingleContact">單一聯絡人</string>
@@ -431,10 +424,6 @@
     <string name="network_name_wifi">Wi-Fi</string>
     <string name="new_call_log_carrier_video">電信業者視訊通話</string>
     <string name="new_call_log_duo_video">Duo 視訊通話</string>
-    <string name="new_call_log_header_older">較舊</string>
-    <string name="new_call_log_header_today">今天</string>
-    <string name="new_call_log_header_yesterday">昨天</string>
-    <string name="new_call_log_permission_no_calllog">如要查看你的通話記錄，請開啟「電話」存取權限。</string>
     <string name="new_call_log_secondary_blocked">已封鎖</string>
     <string name="new_call_log_secondary_spam">騷擾/廣告電話</string>
     <string name="new_call_log_unknown">不明</string>
@@ -490,7 +479,6 @@
     <string name="ok_got_it">好，我知道了</string>
     <string name="old_block_number_confirmation_title">要封鎖 %1$s 嗎？</string>
     <string name="old_call_subject_type_and_number">%1$s %2$s</string>
-    <string name="open_source_license_detail_label">開放原始碼軟體的授權詳細資料</string>
     <string name="organizationLabelsGroup">機構</string>
     <string name="outgoing_wps_warning">撥打 WPS 電話會中斷你正在進行的通話。</string>
     <string name="pause_prompt_no">否</string>
@@ -524,7 +512,6 @@
     <string name="pre_call_select_phone_account_hint_intra_carrier">使用此號碼所屬電信業者提供的 SIM 卡</string>
     <string name="pre_call_select_phone_account_hint_other_sim_in_use">使用 %1$s 時無法撥打電話</string>
     <string name="pre_call_select_phone_account_remember">記住這個選擇</string>
-    <string name="privacy_policy_label">隱私權政策</string>
     <string name="private_num_non_verizon">私人號碼</string>
     <string name="private_num_verizon">受限</string>
     <string name="quick_question">簡單的問題…</string>
@@ -646,7 +633,6 @@
     <string name="tab_title">%1$s分頁。</string>
     <string name="tab_title_call_history">通話紀錄</string>
     <string name="tab_title_speed_dial">快速撥號</string>
-    <string name="terms_of_service_label">服務條款</string>
     <string name="toast_cannot_write_system_settings">電話應用程式的權限不足，無法寫入系統設定。</string>
     <string name="toast_text_copied">已複製文字</string>
     <string name="toolbar_close">關閉</string>
@@ -691,13 +677,7 @@
     <string name="view_updates_from_group">查看最新動態</string>
     <string name="voice_call">語音通話</string>
     <string name="voice_search_not_available">無法使用語音搜尋</string>
-    <string name="voicemail">語音留言</string>
-    <string name="voicemailCallLogDateTimeFormat">%1$s%2$s</string>
-    <string name="voicemailCallLogDateTimeFormatWithDuration">%1$s • %2$s</string>
-    <string name="voicemailCallLogToday">@string/call_log_header_today</string>
-    <string name="voicemailDurationFormat">%1$02d:%2$02d</string>
     <string name="voicemailMultiSelectActionBarTitle">已選取 %1$s 個</string>
-    <string name="voicemail_donation_promo_content">允許 Google 聽取這則和日後含有轉錄內容的語音留言。系統會以匿名的方式儲存這些內容。你隨時可以變更這項設定。%1$s</string>
     <string name="voicemail_string">語音留言</string>
     <string name="voicemail_transcription_rating">為轉錄品質評分</string>
     <string name="wait_prompt_str">"傳送此鈴聲？

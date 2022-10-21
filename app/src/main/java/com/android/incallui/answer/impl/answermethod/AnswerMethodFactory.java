@@ -26,6 +26,8 @@ import com.android.incallui.util.AccessibilityUtil;
 import com.fissy.dialer.R;
 import com.fissy.dialer.common.LogUtil;
 
+import java.util.Objects;
+
 /**
  * Creates the appropriate {@link AnswerMethod} for the circumstances.
  */
@@ -48,7 +50,7 @@ public class AnswerMethodFactory {
         }
         // If we have already started showing TwoButtonMethod, we should keep showing TwoButtonMethod.
         // Otherwise check if we need to change to TwoButtonMethod
-        return !(answerMethod instanceof TwoButtonMethod) && needTwoButton(answerMethod.getActivity());
+        return !(answerMethod instanceof TwoButtonMethod) && needTwoButton(Objects.requireNonNull(answerMethod.getActivity()));
     }
 
 

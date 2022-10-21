@@ -22,11 +22,12 @@ import android.util.AttributeSet;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.util.ViewUtil;
+import com.google.android.material.textview.MaterialTextView;
 
 /**
  * TextView which resizes dynamically with respect to text length.
  */
-public class ResizingTextTextView extends androidx.appcompat.widget.AppCompatTextView {
+public class ResizingTextTextView extends MaterialTextView {
 
     private final int originalTextSize;
     private final int minTextSize;

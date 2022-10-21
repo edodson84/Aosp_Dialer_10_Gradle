@@ -59,7 +59,8 @@
                         android:layout_height="@dimen/contact_photo_size"
                         android:scaleType="fitCenter"
                         android:src="@drawable/ic_check_mark_48dp"
-                        android:visibility="gone" />
+                        android:visibility="gone"
+                        android:contentDescription="TODO" />
                 </FrameLayout>
 
                 <LinearLayout
@@ -98,7 +99,8 @@
                             android:layout_marginEnd="@dimen/call_log_icon_margin"
                             android:scaleType="center"
                             android:src="@drawable/ic_work_profile"
-                            android:visibility="gone" />
+                            android:visibility="gone"
+                            android:contentDescription="TODO" />
 
                         <TextView
                             android:id="@id/call_location_and_date"
@@ -158,7 +160,7 @@
                             <TextView
                                 android:id="@id/voicemail_transcription_rating_text"
                                 style="@style/TranscriptionQualityRating"
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1.0"
                                 android:focusable="true"
@@ -195,7 +197,8 @@
                     android:layout_gravity="center_vertical"
                     android:background="?android:selectableItemBackgroundBorderless"
                     android:scaleType="center"
-                    android:visibility="gone" />
+                    android:visibility="gone"
+                    android:contentDescription="TODO" />
             </LinearLayout>
 
             <ViewStub

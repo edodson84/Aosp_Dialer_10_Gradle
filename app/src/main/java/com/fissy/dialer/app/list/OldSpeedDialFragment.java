@@ -20,10 +20,9 @@ import static android.Manifest.permission.READ_CONTACTS;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.app.Fragment;
-import android.app.LoaderManager;
-import android.content.CursorLoader;
-import android.content.Loader;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.CursorLoader;
+import androidx.loader.content.Loader;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Rect;
@@ -43,7 +42,9 @@ import android.widget.FrameLayout.LayoutParams;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
 import androidx.collection.LongSparseArray;
+import androidx.fragment.app.Fragment;
 import androidx.legacy.app.FragmentCompat;
 
 import com.android.contacts.common.ContactTileLoaderFactory;
@@ -60,6 +61,7 @@ import com.fissy.dialer.widget.EmptyContentView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * This fragment displays the user's favorite/frequent contacts in a grid.
@@ -92,7 +94,7 @@ public class OldSpeedDialFragment extends Fragment
     private final ContactTileView.Listener contactTileAdapterListener =
             new ContactTileAdapterListener(this);
     private final ScrollListener scrollListener = new ScrollListener(this);
-    private LoaderManager.LoaderCallbacks<Cursor> contactTileLoaderListener;
+    private androidx.loader.app.LoaderManager.LoaderCallbacks<Cursor> contactTileLoaderListener;
     private int animationDuration;
     private PhoneFavoritesTileAdapter contactTileAdapter;
     private PhoneFavoriteListView listView;
@@ -111,7 +113,7 @@ public class OldSpeedDialFragment extends Fragment
         // We don't construct the resultant adapter at this moment since it requires LayoutInflater
         // that will be available on onCreateView().
         contactTileAdapter =
-                new PhoneFavoritesTileAdapter(getContext(), contactTileAdapterListener, this);
+                new PhoneFavoritesTileAdapter(requireContext(), contactTileAdapterListener, this);
         contactTileAdapter.setPhotoLoader(ContactPhotoManager.getInstance(getContext()));
         contactTileLoaderListener = new ContactTileLoaderListener(this, contactTileAdapter);
         animationDuration = getResources().getInteger(R.integer.fade_duration);
@@ -123,11 +125,11 @@ public class OldSpeedDialFragment extends Fragment
         Trace.beginSection(TAG + " onResume");
         super.onResume();
         if (PermissionsUtil.hasContactsReadPermissions(getContext())) {
-            if (getLoaderManager().getLoader(LOADER_ID_CONTACT_TILE) == null) {
-                getLoaderManager().initLoader(LOADER_ID_CONTACT_TILE, null, contactTileLoaderListener);
+            if (LoaderManager.getInstance(this).getLoader(LOADER_ID_CONTACT_TILE) == null) {
+                LoaderManager.getInstance(this).initLoader(LOADER_ID_CONTACT_TILE, null, contactTileLoaderListener);
 
             } else {
-                getLoaderManager().getLoader(LOADER_ID_CONTACT_TILE).forceLoad();
+                LoaderManager.getInstance(this).getLoader(LOADER_ID_CONTACT_TILE).forceLoad();
             }
 
             emptyView.setDescription(R.string.speed_dial_empty);
@@ -213,7 +215,7 @@ public class OldSpeedDialFragment extends Fragment
         // This method call implicitly assures ContactTileLoaderListener's onLoadFinished() will
         // be called, on which we'll check if "all" contacts should be reloaded again or not.
         if (PermissionsUtil.hasContactsReadPermissions(getContext())) {
-            getLoaderManager().initLoader(LOADER_ID_CONTACT_TILE, null, contactTileLoaderListener);
+            LoaderManager.getInstance(this).initLoader(LOADER_ID_CONTACT_TILE, null, contactTileLoaderListener);
         } else {
             setEmptyViewVisibility(true);
         }
@@ -275,68 +277,65 @@ public class OldSpeedDialFragment extends Fragment
         ViewUtil.doOnPreDraw(
                 listView,
                 true,
-                new Runnable() {
-                    @Override
-                    public void run() {
+                () -> {
 
-                        final int firstVisiblePosition = listView.getFirstVisiblePosition();
-                        final AnimatorSet animSet = new AnimatorSet();
-                        final ArrayList<Animator> animators = new ArrayList<Animator>();
-                        for (int i = 0; i < listView.getChildCount(); i++) {
-                            final View child = listView.getChildAt(i);
-                            int position = firstVisiblePosition + i;
+                    final int firstVisiblePosition = listView.getFirstVisiblePosition();
+                    final AnimatorSet animSet = new AnimatorSet();
+                    final ArrayList<Animator> animators = new ArrayList<Animator>();
+                    for (int i = 0; i < listView.getChildCount(); i++) {
+                        final View child = listView.getChildAt(i);
+                        int position = firstVisiblePosition + i;
 
-                            // Since we are getting the position from mListView and then querying
-                            // mContactTileAdapter, its very possible that things are out of sync
-                            // and we might index out of bounds.  Let's make sure that this doesn't happen.
-                            if (!contactTileAdapter.isIndexInBound(position)) {
-                                continue;
+                        // Since we are getting the position from mListView and then querying
+                        // mContactTileAdapter, its very possible that things are out of sync
+                        // and we might index out of bounds.  Let's make sure that this doesn't happen.
+                        if (!contactTileAdapter.isIndexInBound(position)) {
+                            continue;
+                        }
+
+                        final long itemId = contactTileAdapter.getItemId(position);
+
+                        if (containsId(idsInPlace, itemId)) {
+                            animators.add(ObjectAnimator.ofFloat(child, "alpha", 0.0f, 1.0f));
+                            break;
+                        } else {
+                            Integer startTop = itemIdTopMap.get(itemId);
+                            Integer startLeft = itemIdLeftMap.get(itemId);
+                            final int top = child.getTop();
+                            final int left = child.getLeft();
+                            int deltaX = 0;
+                            int deltaY = 0;
+
+                            if (startLeft != null) {
+                                if (startLeft != left) {
+                                    deltaX = startLeft - left;
+                                    animators.add(ObjectAnimator.ofFloat(child, "translationX", deltaX, 0.0f));
+                                }
                             }
 
-                            final long itemId = contactTileAdapter.getItemId(position);
-
-                            if (containsId(idsInPlace, itemId)) {
-                                animators.add(ObjectAnimator.ofFloat(child, "alpha", 0.0f, 1.0f));
-                                break;
-                            } else {
-                                Integer startTop = itemIdTopMap.get(itemId);
-                                Integer startLeft = itemIdLeftMap.get(itemId);
-                                final int top = child.getTop();
-                                final int left = child.getLeft();
-                                int deltaX = 0;
-                                int deltaY = 0;
-
-                                if (startLeft != null) {
-                                    if (startLeft != left) {
-                                        deltaX = startLeft - left;
-                                        animators.add(ObjectAnimator.ofFloat(child, "translationX", deltaX, 0.0f));
-                                    }
-                                }
-
-                                if (startTop != null) {
-                                    if (startTop != top) {
-                                        deltaY = startTop - top;
-                                        animators.add(ObjectAnimator.ofFloat(child, "translationY", deltaY, 0.0f));
-                                    }
+                            if (startTop != null) {
+                                if (startTop != top) {
+                                    deltaY = startTop - top;
+                                    animators.add(ObjectAnimator.ofFloat(child, "translationY", deltaY, 0.0f));
                                 }
                             }
                         }
-
-                        if (animators.size() > 0) {
-                            animSet.setDuration(animationDuration).playTogether(animators);
-                            animSet.start();
-                        }
-
-                        itemIdTopMap.clear();
-                        itemIdLeftMap.clear();
                     }
+
+                    if (animators.size() > 0) {
+                        animSet.setDuration(animationDuration).playTogether(animators);
+                        animSet.start();
+                    }
+
+                    itemIdTopMap.clear();
+                    itemIdLeftMap.clear();
                 });
     }
 
     private boolean containsId(long[] ids, long target) {
         // Linear search on array is fine because this is typically only 0-1 elements long
-        for (int i = 0; i < ids.length; i++) {
-            if (ids[i] == target) {
+        for (long id : ids) {
+            if (id == target) {
                 return true;
             }
         }
@@ -357,13 +356,12 @@ public class OldSpeedDialFragment extends Fragment
     public void onEmptyViewActionButtonClicked() {
         String[] deniedPermissions =
                 PermissionsUtil.getPermissionsCurrentlyDenied(
-                        getContext(), PermissionsUtil.allContactsGroupPermissionsUsedInDialer);
+                        requireContext(), PermissionsUtil.allContactsGroupPermissionsUsedInDialer);
         if (deniedPermissions.length > 0) {
             LogUtil.i(
                     "OldSpeedDialFragment.onEmptyViewActionButtonClicked",
                     "Requesting permissions: " + Arrays.toString(deniedPermissions));
-            FragmentCompat.requestPermissions(
-                    this, deniedPermissions, READ_CONTACTS_PERMISSION_REQUEST_CODE);
+            this.requestPermissions(deniedPermissions, READ_CONTACTS_PERMISSION_REQUEST_CODE);
         } else {
             // Switch tabs
             FragmentUtils.getParentUnsafe(this, HostInterface.class).showAllContactsTab();
@@ -372,7 +370,7 @@ public class OldSpeedDialFragment extends Fragment
 
     @Override
     public void onRequestPermissionsResult(
-            int requestCode, String[] permissions, int[] grantResults) {
+            int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == READ_CONTACTS_PERMISSION_REQUEST_CODE) {
             if (grantResults.length == 1 && PackageManager.PERMISSION_GRANTED == grantResults[0]) {
                 PermissionsUtil.notifyPermissionGranted(getContext(), READ_CONTACTS);
@@ -405,6 +403,7 @@ public class OldSpeedDialFragment extends Fragment
             this.adapter = adapter;
         }
 
+        @NonNull
         @Override
         public CursorLoader onCreateLoader(int id, Bundle args) {
             return ContactTileLoaderFactory.createStrequentPhoneOnlyLoader(fragment.getContext());

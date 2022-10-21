@@ -43,6 +43,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.common.collect.ImmutableSet;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * {@link BottomSheetDialog} used to show a list of actions in a bottom sheet menu.
@@ -75,12 +76,12 @@ public class HistoryItemActionBottomSheet extends BottomSheetDialog implements O
                 View background = findViewById(com.google.android.material.R.id.touch_outside);
                 View bottomSheet = findViewById(com.google.android.material.R.id.design_bottom_sheet);
 
-                BottomSheetBehavior<View> behavior = BottomSheetBehavior.from(bottomSheet);
+                BottomSheetBehavior<View> behavior = BottomSheetBehavior.from(Objects.requireNonNull(bottomSheet));
 
                 // If the height of the background is equal to that of the bottom sheet, the bottom sheet
                 // *can* be expanded to full screen.
-                contactLayout.setElevation(
-                        background.getHeight() == bottomSheet.getHeight()
+                Objects.requireNonNull(contactLayout).setElevation(
+                        Objects.requireNonNull(background).getHeight() == bottomSheet.getHeight()
                                 && behavior.getState() == BottomSheetStateCompat.STATE_EXPANDED
                                 ? getContext()
                                 .getResources()
@@ -114,14 +115,14 @@ public class HistoryItemActionBottomSheet extends BottomSheetDialog implements O
 
     @Override
     protected void onCreate(Bundle bundle) {
-        contactLayout = Assert.isNotNull(findViewById(R.id.contact_layout_root));
+        contactLayout = (LinearLayout) Assert.isNotNull((View) findViewById(R.id.contact_layout_root));
 
         initBottomSheetState();
         setupBottomSheetBehavior();
         setupWindow();
         setupContactLayout();
 
-        LinearLayout container = Assert.isNotNull(findViewById(R.id.action_container));
+        LinearLayout container = (LinearLayout) Assert.isNotNull((View) findViewById(R.id.action_container));
         for (HistoryItemActionModule module : modules) {
             if (module instanceof DividerModule) {
                 container.addView(getDividerView(container));
@@ -149,7 +150,7 @@ public class HistoryItemActionBottomSheet extends BottomSheetDialog implements O
         // bottom sheet is not fully expanded.
         if (isTouchExplorationEnabled()) {
             BottomSheetBehavior<View> behavior =
-                    BottomSheetBehavior.from(findViewById(com.google.android.material.R.id.design_bottom_sheet));
+                    BottomSheetBehavior.from(Objects.requireNonNull(findViewById(com.google.android.material.R.id.design_bottom_sheet)));
             behavior.setState(BottomSheetStateCompat.STATE_EXPANDED);
         }
     }
@@ -167,7 +168,7 @@ public class HistoryItemActionBottomSheet extends BottomSheetDialog implements O
      */
     private void setupBottomSheetBehavior() {
         BottomSheetBehavior<View> behavior =
-                BottomSheetBehavior.from(findViewById(com.google.android.material.R.id.design_bottom_sheet));
+                BottomSheetBehavior.from(Objects.requireNonNull(findViewById(com.google.android.material.R.id.design_bottom_sheet)));
         behavior.setBottomSheetCallback(
                 new BottomSheetCallback() {
                     @Override

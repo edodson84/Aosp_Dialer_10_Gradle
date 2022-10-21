@@ -22,7 +22,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.SoundEffectConstants;
-import android.widget.Button;
 import android.widget.Checkable;
 
 import com.fissy.dialer.R;
@@ -30,7 +29,7 @@ import com.fissy.dialer.R;
 /**
  * Image button that maintains a checked state.
  */
-public class RttCheckableButton extends Button implements Checkable {
+public class RttCheckableButton extends androidx.appcompat.widget.AppCompatButton implements Checkable {
 
     private static final int[] CHECKED_STATE_SET = {android.R.attr.state_checked};
     private boolean broadcasting;
@@ -53,7 +52,7 @@ public class RttCheckableButton extends Button implements Checkable {
 
     public RttCheckableButton(
             Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
+        super(context, attrs, defStyleAttr);
         init(context, attrs);
     }
 

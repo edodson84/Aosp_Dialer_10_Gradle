@@ -80,6 +80,7 @@ import com.google.common.util.concurrent.Futures;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Fragment for displaying:
@@ -142,7 +143,7 @@ public class SpeedDialFragment extends Fragment {
         emptyContentView.setImage(R.drawable.empty_speed_dial);
 
         speedDialLoaderListener =
-                DialerExecutorComponent.get(getContext())
+                DialerExecutorComponent.get(Objects.requireNonNull(getContext()))
                         .createUiListener(getChildFragmentManager(), "speed_dial_loader_listener");
 
         // Setup our RecyclerView
@@ -205,7 +206,7 @@ public class SpeedDialFragment extends Fragment {
         }
 
         Futures.addCallback(
-                DialerExecutorComponent.get(getContext())
+                DialerExecutorComponent.get(Objects.requireNonNull(getContext()))
                         .backgroundExecutor()
                         .submit(
                                 () -> {
@@ -244,7 +245,7 @@ public class SpeedDialFragment extends Fragment {
 
         speedDialLoaderListener.listen(
                 getContext(),
-                UiItemLoaderComponent.get(getContext()).speedDialUiItemMutator().loadSpeedDialUiItems(),
+                UiItemLoaderComponent.get(Objects.requireNonNull(getContext())).speedDialUiItemMutator().loadSpeedDialUiItems(),
                 this::onSpeedDialUiItemListLoaded,
                 throwable -> {
                     throw new RuntimeException(throwable);
@@ -259,7 +260,7 @@ public class SpeedDialFragment extends Fragment {
                 updateSpeedDialItemsOnResume = false;
                 speedDialLoaderListener.listen(
                         getContext(),
-                        UiItemLoaderComponent.get(getContext())
+                        UiItemLoaderComponent.get(Objects.requireNonNull(getContext()))
                                 .speedDialUiItemMutator()
                                 .starContact(data.getData()),
                         this::onSpeedDialUiItemListLoaded,
@@ -274,7 +275,7 @@ public class SpeedDialFragment extends Fragment {
         LogUtil.enterBlock("SpeedDialFragment.onSpeedDialUiItemListLoaded");
         // TODO(calderwoodra): Use DiffUtil to properly update and animate the change
         adapter.setSpeedDialUiItems(
-                UiItemLoaderComponent.get(getContext())
+                UiItemLoaderComponent.get(Objects.requireNonNull(getContext()))
                         .speedDialUiItemMutator()
                         .insertDuoChannels(getContext(), speedDialUiItems));
         adapter.notifyDataSetChanged();
@@ -321,7 +322,7 @@ public class SpeedDialFragment extends Fragment {
         PermissionsUtil.registerPermissionReceiver(
                 getActivity(), readContactsPermissionGrantedReceiver, Manifest.permission.READ_CONTACTS);
         if (PermissionsUtil.hasContactsReadPermissions(getContext())) {
-            getContext()
+            Objects.requireNonNull(getContext())
                     .getContentResolver()
                     .registerContentObserver(Contacts.CONTENT_STREQUENT_URI, true, strequentsContentObserver);
         }
@@ -332,7 +333,7 @@ public class SpeedDialFragment extends Fragment {
         super.onStop();
         PermissionsUtil.unregisterPermissionReceiver(
                 getContext(), readContactsPermissionGrantedReceiver);
-        getContext().getContentResolver().unregisterContentObserver(strequentsContentObserver);
+        Objects.requireNonNull(getContext()).getContentResolver().unregisterContentObserver(strequentsContentObserver);
     }
 
     /**
@@ -565,7 +566,7 @@ public class SpeedDialFragment extends Fragment {
             }
 
             // Add sms module
-            if (!TextUtils.isEmpty(defaultChannel.number())) {
+            if (!TextUtils.isEmpty(Objects.requireNonNull(defaultChannel).number())) {
                 modules.add(
                         IntentModule.newModuleForSendingTextMessage(getContext(), defaultChannel.number()));
             }
@@ -632,11 +633,11 @@ public class SpeedDialFragment extends Fragment {
             public boolean onClick() {
                 speedDialLoaderListener.listen(
                         getContext(),
-                        UiItemLoaderComponent.get(getContext())
+                        UiItemLoaderComponent.get(Objects.requireNonNull(getContext()))
                                 .speedDialUiItemMutator()
                                 .starContact(
                                         Uri.withAppendedPath(
-                                                Phone.CONTENT_FILTER_URI, speedDialUiItem.defaultChannel().number())),
+                                                Phone.CONTENT_FILTER_URI, Objects.requireNonNull(speedDialUiItem.defaultChannel()).number())),
                         SpeedDialFragment.this::onSpeedDialUiItemListLoaded,
                         throwable -> {
                             throw new RuntimeException(throwable);

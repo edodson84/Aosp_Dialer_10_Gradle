@@ -19,6 +19,8 @@ package com.fissy.dialer.calllog;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import androidx.annotation.NonNull;
+
 import com.fissy.dialer.calllog.constants.SharedPrefKeys;
 import com.fissy.dialer.calllog.database.MutationApplier;
 import com.fissy.dialer.calllog.datasources.CallLogDataSource;
@@ -203,6 +205,7 @@ public class RefreshAnnotatedCallLogWorker {
         return isDirtyFuture;
     }
 
+    @NonNull
     private ListenableFuture<RefreshResult> rebuild(boolean isBuilt) {
         CallLogMutations mutations = new CallLogMutations();
 

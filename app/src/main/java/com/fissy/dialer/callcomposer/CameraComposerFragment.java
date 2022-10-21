@@ -53,6 +53,8 @@ import com.fissy.dialer.logging.DialerImpression;
 import com.fissy.dialer.logging.Logger;
 import com.fissy.dialer.util.PermissionsUtil;
 
+import java.util.Objects;
+
 /**
  * Fragment used to compose call with image from the user's camera.
  */
@@ -132,7 +134,7 @@ public class CameraComposerFragment extends CallComposerFragment
     }
 
     private void setupCamera() {
-        if (!PermissionsUtil.hasCameraPrivacyToastShown(getContext())) {
+        if (!PermissionsUtil.hasCameraPrivacyToastShown(Objects.requireNonNull(getContext()))) {
             PermissionsUtil.showCameraPermissionToast(getContext());
         }
         CameraManager.get().setListener(this);
@@ -167,7 +169,7 @@ public class CameraComposerFragment extends CallComposerFragment
     public void onClick(View view) {
         if (view == capture) {
             float heightPercent = 1;
-            if (!getListener().isFullscreen() && !getListener().isLandscapeLayout()) {
+            if (!Objects.requireNonNull(getListener()).isFullscreen() && !getListener().isLandscapeLayout()) {
                 heightPercent = Math.min((float) cameraView.getHeight() / preview.getView().getHeight(), 1);
             }
 
@@ -179,15 +181,15 @@ public class CameraComposerFragment extends CallComposerFragment
         } else if (view == swapCamera) {
             ((Animatable) swapCamera.getDrawable()).start();
             CameraManager.get().swapCamera();
-            cameraDirection = CameraManager.get().getCameraInfo().facing;
+            cameraDirection = Objects.requireNonNull(CameraManager.get().getCameraInfo()).facing;
         } else if (view == cancel) {
             clearComposer();
         } else if (view == exitFullscreen) {
-            getListener().showFullscreen(false);
+            Objects.requireNonNull(getListener()).showFullscreen(false);
             fullscreen.setVisibility(View.VISIBLE);
             exitFullscreen.setVisibility(View.GONE);
         } else if (view == fullscreen) {
-            getListener().showFullscreen(true);
+            Objects.requireNonNull(getListener()).showFullscreen(true);
             fullscreen.setVisibility(View.GONE);
             exitFullscreen.setVisibility(View.VISIBLE);
         } else if (view == allowPermission) {
@@ -195,7 +197,7 @@ public class CameraComposerFragment extends CallComposerFragment
             // time seeing this permission or they only pressed deny previously, they will see the
             // permission request. If they permanently denied the permission, they will be sent to Dialer
             // settings in order enable the permission.
-            if (PermissionsUtil.isFirstRequest(getContext(), permissions[0])
+            if (PermissionsUtil.isFirstRequest(Objects.requireNonNull(getContext()), permissions[0])
                     || shouldShowRequestPermissionRationale(permissions[0])) {
                 Logger.get(getContext()).logImpression(DialerImpression.Type.CAMERA_PERMISSION_REQUESTED);
                 LogUtil.i("CameraComposerFragment.onClick", "Camera permission requested.");
@@ -213,7 +215,7 @@ public class CameraComposerFragment extends CallComposerFragment
     }
 
     /**
-     * Called by {@link com.fissy.dialer.callcomposer.camera.ImagePersistTask} when the image is
+     * Called by
      * finished being cropped and stored on the device.
      */
     @Override
@@ -233,7 +235,7 @@ public class CameraComposerFragment extends CallComposerFragment
     }
 
     /**
-     * Called by {@link com.fissy.dialer.callcomposer.camera.ImagePersistTask} when the image failed
+     * Called by
      * to crop or be stored on the device.
      */
     @Override
@@ -367,7 +369,7 @@ public class CameraComposerFragment extends CallComposerFragment
         capture.setVisibility(uriReadyOrProcessing ? View.GONE : View.VISIBLE);
         cancel.setVisibility(uriReadyOrProcessing ? View.VISIBLE : View.GONE);
 
-        if (uriReadyOrProcessing || getListener().isLandscapeLayout()) {
+        if (uriReadyOrProcessing || Objects.requireNonNull(getListener()).isLandscapeLayout()) {
             fullscreen.setVisibility(View.GONE);
             exitFullscreen.setVisibility(View.GONE);
         } else if (getListener().isFullscreen()) {
@@ -383,7 +385,7 @@ public class CameraComposerFragment extends CallComposerFragment
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(CAMERA_DIRECTION_KEY, cameraDirection);
         outState.putParcelable(CAMERA_URI_KEY, cameraUri);
@@ -393,7 +395,7 @@ public class CameraComposerFragment extends CallComposerFragment
     public void onRequestPermissionsResult(
             int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (permissions.length > 0 && permissions[0].equals(this.permissions[0])) {
-            PermissionsUtil.permissionRequested(getContext(), permissions[0]);
+            PermissionsUtil.permissionRequested(Objects.requireNonNull(getContext()), permissions[0]);
         }
         if (requestCode == CAMERA_PERMISSION
                 && grantResults.length > 0
@@ -401,7 +403,7 @@ public class CameraComposerFragment extends CallComposerFragment
             Logger.get(getContext()).logImpression(DialerImpression.Type.CAMERA_PERMISSION_GRANTED);
             LogUtil.i("CameraComposerFragment.onRequestPermissionsResult", "Permission granted.");
             permissionView.setVisibility(View.GONE);
-            PermissionsUtil.setCameraPrivacyToastShown(getContext());
+            PermissionsUtil.setCameraPrivacyToastShown(Objects.requireNonNull(getContext()));
             setupCamera();
         } else if (requestCode == CAMERA_PERMISSION) {
             Logger.get(getContext()).logImpression(DialerImpression.Type.CAMERA_PERMISSION_DENIED);

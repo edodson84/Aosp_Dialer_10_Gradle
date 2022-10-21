@@ -155,6 +155,8 @@ public final class BottomNavBar extends LinearLayout {
                     break;
                 default:
                     throw Assert.createIllegalStateFailException("Invalid tab: " + tabIndex);
+                case TabIndex.NO_TAB:
+                    break;
             }
         }
     }

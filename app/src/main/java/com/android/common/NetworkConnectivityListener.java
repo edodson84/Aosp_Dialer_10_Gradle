@@ -43,7 +43,7 @@ public class NetworkConnectivityListener {
     private static final boolean DBG = false;
 
     private Context mContext;
-    private HashMap<Handler, Integer> mHandlers = new HashMap<Handler, Integer>();
+    private final HashMap<Handler, Integer> mHandlers = new HashMap<>();
     private State mState;
     private boolean mListening;
     private String mReason;
@@ -61,7 +61,7 @@ public class NetworkConnectivityListener {
      */
     private NetworkInfo mOtherNetworkInfo;
 
-    private ConnectivityBroadcastReceiver mReceiver;
+    private final ConnectivityBroadcastReceiver mReceiver;
 
     /**
      * Create a new NetworkConnectivityListener.
@@ -74,7 +74,6 @@ public class NetworkConnectivityListener {
     /**
      * This method starts listening for network connectivity state changes.
      *
-     * @param context
      */
     public synchronized void startListening(Context context) {
         if (!mListening) {
@@ -116,7 +115,6 @@ public class NetworkConnectivityListener {
     /**
      * This methods unregisters the specified Handler.
      *
-     * @param target
      */
     public void unregisterHandler(Handler target) {
         mHandlers.remove(target);
@@ -194,7 +192,7 @@ public class NetworkConnectivityListener {
             String action = intent.getAction();
 
             if (!action.equals(ConnectivityManager.CONNECTIVITY_ACTION) ||
-                    mListening == false) {
+                    !mListening) {
                 Log.w(TAG, "onReceived() called with " + mState.toString() + " and " + intent);
                 return;
             }
@@ -224,9 +222,7 @@ public class NetworkConnectivityListener {
             }
 
             // Notifiy any handlers.
-            Iterator<Handler> it = mHandlers.keySet().iterator();
-            while (it.hasNext()) {
-                Handler target = it.next();
+            for (Handler target : mHandlers.keySet()) {
                 Message message = Message.obtain(target, mHandlers.get(target));
                 target.sendMessage(message);
             }

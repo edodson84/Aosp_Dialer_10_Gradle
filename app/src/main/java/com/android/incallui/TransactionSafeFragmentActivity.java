@@ -19,6 +19,7 @@ package com.android.incallui;
 import android.app.Activity;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
 /**
@@ -48,17 +49,13 @@ public abstract class TransactionSafeFragmentActivity extends FragmentActivity {
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         isSafeToCommitTransactions = false;
     }
 
     /**
-     * Returns true if it is safe to commit {@link FragmentTransaction}s at this time, based on
-     * whether {@link Activity#onSaveInstanceState} has been called or not.
-     *
-     * <p>Make sure that the current activity calls into {@link super.onSaveInstanceState(Bundle
-     * outState)} (if that method is overridden), so the flag is properly set.
+
      */
     public boolean isSafeToCommitTransactions() {
         return isSafeToCommitTransactions;

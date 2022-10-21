@@ -18,7 +18,6 @@ package com.fissy.dialer.app.list;
 
 import static androidx.viewpager.widget.ViewPager.SCROLL_STATE_SETTLING;
 
-import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -28,6 +27,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener;
 
 import com.android.contacts.common.list.ViewPagerTabs;
@@ -45,6 +45,7 @@ import com.fissy.dialer.logging.UiAction;
 import com.fissy.dialer.performancereport.PerformanceReport;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Fragment that is used as the main screen of the Dialer.
@@ -68,7 +69,6 @@ public class ListsFragment extends Fragment
     private RemoveView removeView;
     private View removeViewContent;
     private Fragment currentPage;
-    private SharedPreferences prefs;
     /**
      * The position of the currently selected tab.
      */
@@ -84,7 +84,7 @@ public class ListsFragment extends Fragment
         LogUtil.d("ListsFragment.onCreate", null);
         Trace.beginSection(TAG + " onCreate");
         super.onCreate(savedInstanceState);
-        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(requireActivity().getApplicationContext());
         Trace.endSection();
     }
 
@@ -101,7 +101,7 @@ public class ListsFragment extends Fragment
         }
 
         callLogQueryHandler =
-                new CallLogQueryHandler(getActivity(), getActivity().getContentResolver(), this);
+                new CallLogQueryHandler(getActivity(), requireActivity().getContentResolver(), this);
         callLogQueryHandler.fetchMissedCallsUnreadCount();
         Trace.endSection();
         currentPage = adapter.getItem(viewPager.getCurrentItem());
@@ -271,7 +271,7 @@ public class ListsFragment extends Fragment
             return;
         }
 
-        int count = 0;
+        int count;
         try {
             count = cursor.getCount();
         } finally {

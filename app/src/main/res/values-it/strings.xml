@@ -17,9 +17,6 @@
     <string name="a11y_new_call_log_entry_full_description_with_phone_account_info">^1, ^2, ^3.</string>
     <string name="a11y_new_call_log_entry_full_description_without_phone_account_info">^1, ^2.</string>
     <string name="a11y_new_call_log_entry_phone_account">su ^1, tramite ^2</string>
-    <string name="a11y_new_call_log_entry_tap_action">expand menu</string>
-    <string name="a11y_new_call_log_entry_video_call">make a video call to ^1</string>
-    <string name="a11y_new_call_log_entry_voice_call">call ^1</string>
     <string name="abc_action_bar_home_description">Vai alla home page</string>
     <string name="abc_action_bar_up_description">Vai in alto</string>
     <string name="abc_action_menu_overflow_description">Altre opzioni</string>
@@ -47,7 +44,6 @@
     <string name="abc_shareactionprovider_share_with">Condividi con</string>
     <string name="abc_shareactionprovider_share_with_application">Condividi tramite %s</string>
     <string name="abc_toolbar_collapse_description">Comprimi</string>
-    <string name="about_phone_label">Informazioni</string>
     <string name="accessibility_settings_title">Accessibilità</string>
     <string name="account_phone">Solo dispositivo, non sincronizzato</string>
     <string name="action_copy_number_text">Copia numero</string>
@@ -98,7 +94,6 @@
     <string name="blocked_numbers_disabled_emergency_desc">Il blocco chiamate è stato disattivato perché hai contattato servizi di emergenza da questo telefono nelle ultime 48 ore. Verrà riattivato automaticamente una volta trascorso il periodo di 48 ore.</string>
     <string name="blocked_numbers_disabled_emergency_header_label">Blocco chiamate temporaneam. disattivato</string>
     <string name="bubble_return_to_call">Torna a chiamata</string>
-    <string name="build_version_label">Versione build</string>
     <string name="call">Chiama</string>
     <string name="callFailed_simError">Nessuna SIM o errore della SIM</string>
     <string name="call_assistant">Chiama %s</string>
@@ -173,7 +168,7 @@
     <string name="call_pager">Chiama cercapersone</string>
     <string name="call_radio">Chiama radiotelefono</string>
     <string name="call_settings_label">Chiamate</string>
-    <string name="call_subject_hint">Digita una nota da inviare con la chiamata...</string>
+    <string name="call_subject_hint">Digita una nota da inviare con la chiamata…</string>
     <string name="call_subject_limit">%1$s/%2$s</string>
     <string name="call_subject_type_and_number">%1$s %2$s</string>
     <string name="call_telex">Chiama telex</string>
@@ -220,7 +215,6 @@
     <string name="content_description_rtt_chat_avatar">Avatar</string>
     <string name="content_description_rtt_check_button">Procedi</string>
     <string name="copy_number">Copia numero</string>
-    <string name="copy_transcript_text">Copia trascrizione</string>
     <string name="custom_message_hint">Scrivi un messaggio personalizzato</string>
     <string name="default_notification_description">Suono predefinito (%1$s)</string>
     <string name="delete">Elimina</string>
@@ -389,7 +383,6 @@
     <string name="label_sip_address">SIP</string>
     <string name="launcherActivityLabel">Telefono</string>
     <string name="launcherDialpadActivityLabel">Tastierino del telefono</string>
-    <string name="licenseActivityLabel">Licenze open source</string>
     <string name="listAllContactsInAccount">Contatti in %s</string>
     <string name="listCustomView">Contatti in visualizzazione personalizzata</string>
     <string name="listSingleContact">Contatto singolo</string>
@@ -431,10 +424,6 @@
     <string name="network_name_wifi">Wi-Fi</string>
     <string name="new_call_log_carrier_video">Videochiamata operatore</string>
     <string name="new_call_log_duo_video">Videochiamata Duo</string>
-    <string name="new_call_log_header_older">Meno recenti</string>
-    <string name="new_call_log_header_today">Oggi</string>
-    <string name="new_call_log_header_yesterday">Ieri</string>
-    <string name="new_call_log_permission_no_calllog">"Per accedere al registro chiamate, attiva l'autorizzazione sul telefono."</string>
     <string name="new_call_log_secondary_blocked">Bloccate</string>
     <string name="new_call_log_secondary_spam">Spam</string>
     <string name="new_call_log_unknown">Sconosciuto</string>
@@ -490,7 +479,6 @@
     <string name="ok_got_it">Ok</string>
     <string name="old_block_number_confirmation_title">Bloccare il numero%1$s?</string>
     <string name="old_call_subject_type_and_number">%1$s %2$s</string>
-    <string name="open_source_license_detail_label">Dettagli delle licenze per il software open source</string>
     <string name="organizationLabelsGroup">Organizzazione</string>
     <string name="outgoing_wps_warning">Se effettui una chiamata WPS, la chiamata esistente verrà disconnessa.</string>
     <string name="pause_prompt_no">No</string>
@@ -524,7 +512,6 @@
     <string name="pre_call_select_phone_account_hint_intra_carrier">Utilizza lo stesso operatore</string>
     <string name="pre_call_select_phone_account_hint_other_sim_in_use">Non disponibile quando utilizzi %1$s</string>
     <string name="pre_call_select_phone_account_remember">Memorizza questa scelta</string>
-    <string name="privacy_policy_label">Norme sulla privacy</string>
     <string name="private_num_non_verizon">Numero privato</string>
     <string name="private_num_verizon">Limitata</string>
     <string name="quick_question">Domanda rapida…</string>
@@ -571,7 +558,7 @@
     <string name="set_default_account">Usa sempre questa per chiamare</string>
     <string name="settings">Impostazioni</string>
     <string name="share_and_call">Condividi e chiama</string>
-    <string name="simContacts_emptyLoading">Caricamento da SIM...</string>
+    <string name="simContacts_emptyLoading">Caricamento da SIM…</string>
     <string name="simContacts_title">Contatti della scheda SIM</string>
     <string name="simulator_submenu_label">Simulatore</string>
     <string name="sms">SMS</string>
@@ -646,7 +633,6 @@
     <string name="tab_title">Scheda %1$s.</string>
     <string name="tab_title_call_history">Cronologia</string>
     <string name="tab_title_speed_dial">Chiamata rapida</string>
-    <string name="terms_of_service_label">Termini di servizio</string>
     <string name="toast_cannot_write_system_settings">"L'app Telefono non dispone dell'autorizzazione per modificare le impostazioni di sistema."</string>
     <string name="toast_text_copied">Testo copiato</string>
     <string name="toolbar_close">Chiudi</string>
@@ -691,13 +677,7 @@
     <string name="view_updates_from_group">Visualizza aggiornamenti</string>
     <string name="voice_call">Chiama</string>
     <string name="voice_search_not_available">Ricerca vocale non disponibile</string>
-    <string name="voicemail">Segreteria</string>
-    <string name="voicemailCallLogDateTimeFormat">%1$s alle ore %2$s</string>
-    <string name="voicemailCallLogDateTimeFormatWithDuration">%1$s • %2$s</string>
-    <string name="voicemailCallLogToday">@string/call_log_header_today</string>
-    <string name="voicemailDurationFormat">%1$02d:%2$02d</string>
     <string name="voicemailMultiSelectActionBarTitle">%1$s selezionate</string>
-    <string name="voicemail_donation_promo_content">Consenti a Google di rivedere questo messaggio vocale e quelli futuri a cui sono associate trascrizioni. I messaggi verranno archiviati in modo anonimo. Puoi modificare le impostazioni in qualsiasi momento. %1$s</string>
     <string name="voicemail_string">Messaggi vocali</string>
     <string name="voicemail_transcription_rating">Valuta la qualità della trascrizione</string>
     <string name="wait_prompt_str">"Inviare i numeri successivi?

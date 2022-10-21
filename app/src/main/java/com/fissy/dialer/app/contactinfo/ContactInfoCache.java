@@ -368,7 +368,7 @@ public class ContactInfoCache {
                     shouldRedraw |= queryContactInfo(request);
                     if (shouldRedraw
                             && (updateRequests.isEmpty()
-                            || (request.isLocalRequest() && !updateRequests.peek().isLocalRequest()))) {
+                            || (request.isLocalRequest() && !Objects.requireNonNull(updateRequests.peek()).isLocalRequest()))) {
                         shouldRedraw = false;
                         handler.sendEmptyMessage(REDRAW);
                     }

@@ -77,15 +77,12 @@ public class ContactListViewUtils {
             ViewUtil.doOnPreDraw(
                     listView,
                     false,
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            // Use the rootLayout.getWidth() instead of listView.getWidth() since
-                            // we sometimes hide the listView until we finish loading data. This would
-                            // result in incorrect padding.
-                            ContactListViewUtils.addPaddingToView(
-                                    listView, rootLayout.getWidth(), listSpaceWeight, listViewWeight);
-                        }
+                    () -> {
+                        // Use the rootLayout.getWidth() instead of listView.getWidth() since
+                        // we sometimes hide the listView until we finish loading data. This would
+                        // result in incorrect padding.
+                        ContactListViewUtils.addPaddingToView(
+                                listView, rootLayout.getWidth(), listSpaceWeight, listViewWeight);
                     });
         }
     }

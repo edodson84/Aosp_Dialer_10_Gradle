@@ -23,7 +23,6 @@ import android.provider.CallLog.Calls;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.telecom.PhoneAccount;
 import android.telephony.PhoneNumberUtils;
-import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.View;
@@ -39,12 +38,10 @@ import com.fissy.dialer.oem.MotorolaUtils;
 import com.fissy.dialer.phonenumbercache.CachedNumberLookupService;
 import com.fissy.dialer.phonenumbercache.PhoneNumberCache;
 import com.fissy.dialer.phonenumberutil.PhoneNumberHelper;
-import com.fissy.dialer.spannable.ContentWithLearnMoreSpanner;
 import com.fissy.dialer.util.DialerUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Helper class to fill in the views in {@link PhoneCallDetailsViews}.
@@ -58,10 +55,6 @@ public class PhoneCallDetailsHelper {
     private final Context context;
     private final Resources resources;
     private final CallLogCache callLogCache;
-    /**
-     * Calendar used to construct dates
-     */
-    private final Calendar calendar;
 
     private final CachedNumberLookupService cachedNumberLookupService;
     /**
@@ -85,7 +78,10 @@ public class PhoneCallDetailsHelper {
         this.context = context;
         this.resources = resources;
         this.callLogCache = callLogCache;
-        calendar = Calendar.getInstance();
+        /**
+         * Calendar used to construct dates
+         */
+        Calendar calendar = Calendar.getInstance();
         cachedNumberLookupService = PhoneNumberCache.get(context).getCachedNumberLookupService();
     }
 
@@ -210,14 +206,14 @@ public class PhoneCallDetailsHelper {
     public CharSequence getCallLocationAndDate(PhoneCallDetails details) {
         descriptionItems.clear();
 
-            // Get type of call (ie mobile, home, etc) if known, or the caller's location.
-            CharSequence callTypeOrLocation = getCallTypeOrLocation(details);
+        // Get type of call (ie mobile, home, etc) if known, or the caller's location.
+        CharSequence callTypeOrLocation = getCallTypeOrLocation(details);
 
-            // Only add the call type or location if its not empty.  It will be empty for unknown
-            // callers.
-            if (!TextUtils.isEmpty(callTypeOrLocation)) {
-                descriptionItems.add(callTypeOrLocation);
-            }
+        // Only add the call type or location if its not empty.  It will be empty for unknown
+        // callers.
+        if (!TextUtils.isEmpty(callTypeOrLocation)) {
+            descriptionItems.add(callTypeOrLocation);
+        }
 
         // The date of this call
         descriptionItems.add(getCallDate(details));
@@ -277,23 +273,9 @@ public class PhoneCallDetailsHelper {
                 DateUtils.FORMAT_ABBREV_RELATIVE);
     }
 
-    /**
-     * Get the granular version of the call date/time of the call. The result is always in the form
-     * 'DATE at TIME'. The date value changes based on when the call was created.
-     *
-     * <p>If created today, DATE is 'Today' If created this year, DATE is 'MMM dd' Otherwise, DATE is
-     * 'MMM dd, yyyy'
-     *
-     * <p>TIME is the localized time format, e.g. 'hh:mm a' or 'HH:mm'
-     *
-     * @param details Call details to use
-     * @return String representing when the call occurred
-     */
-
 
     /**
      * Returns the current time in milliseconds since the epoch.
-     *
      */
     private long getCurrentTimeMillis() {
         if (currentTimeMillisForTest == null) {
@@ -317,6 +299,6 @@ public class PhoneCallDetailsHelper {
             text = dateText;
         }
 
-            views.callLocationAndDate.setText(text);
+        views.callLocationAndDate.setText(text);
     }
 }

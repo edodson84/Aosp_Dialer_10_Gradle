@@ -13,4 +13,5 @@
     <bool name="two_button_show_button_labels">false</bool>
     <bool name="two_button_show">false</bool>
     <bool name="video_call_auto_fullscreen">true</bool>
+    <bool name="enable_forward_lookup">true</bool>
 </resources>

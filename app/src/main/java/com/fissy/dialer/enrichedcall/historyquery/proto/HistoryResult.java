@@ -506,7 +506,6 @@ public final class HistoryResult extends
                     throw new RuntimeException(
                             new com.google.protobuf.InvalidProtocolBufferException(
                                     e.getMessage()).setUnfinishedMessage(this));
-                } finally {
                 }
             }
             case GET_DEFAULT_INSTANCE: {
@@ -567,11 +566,7 @@ public final class HistoryResult extends
         public static final int OUTGOING_POST_CALL_VALUE = 4;
         private static final com.google.protobuf.Internal.EnumLiteMap<
                 Type> internalValueMap =
-                new com.google.protobuf.Internal.EnumLiteMap<Type>() {
-                    public Type findValueByNumber(int number) {
-                        return Type.forNumber(number);
-                    }
-                };
+                number -> Type.forNumber(number);
         private final int value;
 
         Type(int value) {

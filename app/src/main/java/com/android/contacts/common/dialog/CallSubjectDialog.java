@@ -82,12 +82,7 @@ public class CallSubjectDialog extends Activity {
      * Click listener which handles user clicks outside of the dialog.
      */
     private final View.OnClickListener mBackgroundListener =
-            new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    finish();
-                }
-            };
+            v -> finish();
     private int mAnimationDuration;
     private Charset mMessageEncoding;
     private View mBackgroundView;
@@ -97,8 +92,6 @@ public class CallSubjectDialog extends Activity {
     private TextView mNumberView;
     private EditText mCallSubjectView;
     private TextView mCharacterLimitView;
-    private View mHistoryButton;
-    private View mSendAndCallButton;
     private ListView mSubjectList;
     private int mLimit = CALL_SUBJECT_LIMIT;
     /**
@@ -284,7 +277,6 @@ public class CallSubjectDialog extends Activity {
      *
      * @param savedInstanceState The last saved instance state of the Fragment, or null if this is a
      *                           freshly created Fragment.
-     * @return Dialog instance.
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -310,10 +302,10 @@ public class CallSubjectDialog extends Activity {
         filters[0] = new InputFilter.LengthFilter(mLimit);
         mCallSubjectView.setFilters(filters);
         mCharacterLimitView = (TextView) findViewById(R.id.character_limit);
-        mHistoryButton = findViewById(R.id.history_button);
+        View mHistoryButton = findViewById(R.id.history_button);
         mHistoryButton.setOnClickListener(mHistoryOnClickListener);
         mHistoryButton.setVisibility(mSubjectHistory.isEmpty() ? View.GONE : View.VISIBLE);
-        mSendAndCallButton = findViewById(R.id.send_and_call_button);
+        View mSendAndCallButton = findViewById(R.id.send_and_call_button);
         mSendAndCallButton.setOnClickListener(mSendAndCallOnClickListener);
         mSubjectList = (ListView) findViewById(R.id.subject_list);
         mSubjectList.setOnItemClickListener(mItemClickListener);
@@ -444,7 +436,7 @@ public class CallSubjectDialog extends Activity {
         if (show) {
             // Showing the subject list; bind the list of history items to the list and show it.
             ArrayAdapter<String> adapter =
-                    new ArrayAdapter<String>(
+                    new ArrayAdapter<>(
                             CallSubjectDialog.this, R.layout.call_subject_history_list_item, mSubjectHistory);
             mSubjectList.setAdapter(adapter);
             mSubjectList.setVisibility(View.VISIBLE);

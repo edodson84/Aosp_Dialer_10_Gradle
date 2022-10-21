@@ -13,7 +13,8 @@
         android:id="@id/disambig_option_image"
         android:layout_width="24.0dip"
         android:layout_height="24.0dip"
-        android:layout_gravity="center_vertical" />
+        android:layout_gravity="center_vertical"
+        android:contentDescription="TODO" />
 
     <TextView
         android:id="@id/disambig_option_text"

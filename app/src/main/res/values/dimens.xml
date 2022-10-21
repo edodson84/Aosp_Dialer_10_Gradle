@@ -257,7 +257,6 @@
     <dimen name="rtt_banner_button_padding">12.0dip</dimen>
     <dimen name="rtt_banner_height">56.0dip</dimen>
     <dimen name="rtt_message_margin_top">16.0dip</dimen>
-    <dimen name="rtt_overflow_menu_elevation">8.0dip</dimen>
     <dimen name="rtt_overflow_menu_width">180.0dip</dimen>
     <dimen name="rtt_same_group_message_margin_top">2.0dip</dimen>
     <dimen name="rtt_transcript_avatar_size">40.0dip</dimen>

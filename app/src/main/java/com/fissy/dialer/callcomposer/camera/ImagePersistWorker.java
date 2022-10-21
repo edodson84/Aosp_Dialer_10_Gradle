@@ -88,7 +88,7 @@ public class ImagePersistWorker implements Worker<Void, Result> {
             exifInterface.readExif(bytes);
             final Integer orientationValue = exifInterface.getTagIntValue(ExifInterface.TAG_ORIENTATION);
             if (orientationValue != null) {
-                orientation = orientationValue.intValue();
+                orientation = orientationValue;
             }
         } catch (final IOException e) {
             // Couldn't get exif tags, not the end of the world

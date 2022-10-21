@@ -6,7 +6,7 @@
         android:id="@id/dialpad_key_layout"
         style="@style/DialpadKeyInternalLayoutStyle">
 
-        <com.fissy.dialer.dialpadview.DialpadTextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@id/dialpad_key_number"
             style="@style/DialpadKeyNumberStyle" />
 
@@ -14,11 +14,11 @@
             android:id="@id/dialpad_key_icon_or_letters_layout"
             style="@style/DialpadKeyInternalLayoutStyle">
 
-            <com.fissy.dialer.dialpadview.DialpadTextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@id/dialpad_key_letters"
                 style="@style/DialpadKeyLettersStyle" />
 
-            <com.fissy.dialer.dialpadview.DialpadTextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@id/dialpad_key_secondary_letters"
                 style="@style/DialpadKeyLettersStyle"
                 android:layout_marginTop="2.0dip" />

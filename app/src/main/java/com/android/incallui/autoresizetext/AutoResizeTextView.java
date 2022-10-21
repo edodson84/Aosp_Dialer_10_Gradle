@@ -26,11 +26,11 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.SparseIntArray;
 import android.util.TypedValue;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
 import com.fissy.dialer.R;
+import com.google.android.material.textview.MaterialTextView;
 
 /**
  * A TextView that automatically scales its text to completely fill its allotted width.
@@ -40,7 +40,7 @@ import com.fissy.dialer.R;
  * found yet. A known workaround is the solution provided on StackOverflow:
  * http://stackoverflow.com/a/5535672
  */
-public class AutoResizeTextView extends TextView {
+public class AutoResizeTextView extends MaterialTextView {
     private static final int NO_LINE_LIMIT = -1;
     private static final float DEFAULT_MIN_TEXT_SIZE = 16.0f;
     private static final int DEFAULT_RESIZE_STEP_UNIT = TypedValue.COMPLEX_UNIT_PX;
@@ -67,12 +67,6 @@ public class AutoResizeTextView extends TextView {
     public AutoResizeTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initialize(context, attrs, defStyleAttr, 0);
-    }
-
-    public AutoResizeTextView(
-            Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        initialize(context, attrs, defStyleAttr, defStyleRes);
     }
 
     private void initialize(

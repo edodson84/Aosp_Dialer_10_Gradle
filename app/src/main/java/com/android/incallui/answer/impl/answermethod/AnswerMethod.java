@@ -19,6 +19,7 @@ package com.android.incallui.answer.impl.answermethod;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
@@ -42,7 +43,7 @@ public abstract class AnswerMethod extends Fragment {
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach( @NonNull Context context) {
         super.onAttach(context);
         FragmentUtils.checkParent(this, AnswerMethodHolder.class);
     }

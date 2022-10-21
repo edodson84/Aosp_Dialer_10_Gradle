@@ -26,7 +26,7 @@ import android.widget.ImageView;
  * <p>This improves the performance by not passing requestLayout() to its parent, taking advantage
  * of knowing that image size won't change once set.
  */
-public class LayoutSuppressingImageView extends ImageView {
+public class LayoutSuppressingImageView extends androidx.appcompat.widget.AppCompatImageView {
 
     public LayoutSuppressingImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -34,6 +34,7 @@ public class LayoutSuppressingImageView extends ImageView {
 
     @Override
     public void requestLayout() {
+        super.requestLayout();
         forceLayout();
     }
 }

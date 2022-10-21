@@ -53,22 +53,6 @@ public class LoggingEvents {
      * events - only the ones that need to be reported from outside the voice
      * search app, such as from Browser.
      */
-    public class VoiceSearch {
-        // The app name to be used for logging VoiceSearch events.
-        public static final String APP_NAME = "googlemobile";
-
-        public static final int RETRY = 0;
-
-        public static final int N_BEST_REVEAL = 1;
-
-        public static final int N_BEST_CHOOSE = 2;
-        public static final String EXTRA_N_BEST_CHOOSE_INDEX = "index";  // value should be int
-
-        public static final int QUERY_UPDATED = 3;
-        public static final String EXTRA_QUERY_UPDATED_VALUE = "value";  // value should be String
-
-        public static final int RESULT_CLICKED = 4;
-    }
 
     /**
      * Logging event constants for VoiceIME. Below are the extra values for
@@ -76,7 +60,7 @@ public class LoggingEvents {
      * extras for some events that need to be included as additional fields in
      * the event.
      */
-    public class VoiceIme {
+    public static class VoiceIme {
         // The app name to be used for logging VoiceIME events.
         public static final String APP_NAME = "voiceime";
 

@@ -16,6 +16,8 @@
 
 package com.fissy.dialer.callcomposer.camera.exif;
 
+import androidx.annotation.NonNull;
+
 import java.util.Objects;
 
 /**
@@ -69,6 +71,7 @@ public class Rational {
         return Objects.hash(numerator, denominator);
     }
 
+    @NonNull
     @Override
     public String toString() {
         return numerator + "/" + denominator;

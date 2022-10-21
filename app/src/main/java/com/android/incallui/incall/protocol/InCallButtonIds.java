@@ -26,6 +26,7 @@ import java.lang.annotation.RetentionPolicy;
  */
 @Retention(RetentionPolicy.SOURCE)
 @IntDef({
+        InCallButtonIds.NO_MUTUALLY_EXCLUSIVE_BUTTON_SET,
         InCallButtonIds.BUTTON_AUDIO,
         InCallButtonIds.BUTTON_MUTE,
         InCallButtonIds.BUTTON_DIALPAD,
@@ -46,7 +47,7 @@ import java.lang.annotation.RetentionPolicy;
         InCallButtonIds.BUTTON_UPGRADE_TO_RTT
 })
 public @interface InCallButtonIds {
-
+    int NO_MUTUALLY_EXCLUSIVE_BUTTON_SET = -1;
     int BUTTON_AUDIO = 0;
     int BUTTON_MUTE = 1;
     int BUTTON_DIALPAD = 2;

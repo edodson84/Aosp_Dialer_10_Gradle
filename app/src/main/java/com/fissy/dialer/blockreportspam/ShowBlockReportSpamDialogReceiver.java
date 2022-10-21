@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 
 import com.fissy.dialer.R;
@@ -95,7 +96,7 @@ public final class ShowBlockReportSpamDialogReceiver extends BroadcastReceiver {
                     }
 
                     @Override
-                    public void onFailure(Throwable throwable) {
+                    public void onFailure(@NonNull Throwable throwable) {
                         if (throwable instanceof BlockingFailedException) {
                             Logger.get(context).logImpression(Type.USER_ACTION_BLOCK_NUMBER_FAILED);
                             Toast.makeText(context, R.string.block_number_failed_toast, Toast.LENGTH_LONG).show();
@@ -121,7 +122,7 @@ public final class ShowBlockReportSpamDialogReceiver extends BroadcastReceiver {
                     }
 
                     @Override
-                    public void onFailure(Throwable throwable) {
+                    public void onFailure(@NonNull Throwable throwable) {
                         if (throwable instanceof BlockingFailedException) {
                             Logger.get(context).logImpression(Type.USER_ACTION_UNBLOCK_NUMBER_FAILED);
                             Toast.makeText(context, R.string.unblock_number_failed_toast, Toast.LENGTH_LONG)

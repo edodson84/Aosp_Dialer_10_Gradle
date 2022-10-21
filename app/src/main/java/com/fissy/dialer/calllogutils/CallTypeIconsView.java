@@ -174,8 +174,6 @@ public class CallTypeIconsView extends View {
                 return resources.incoming;
             case Calls.OUTGOING_TYPE:
                 return resources.outgoing;
-            case Calls.MISSED_TYPE:
-                return resources.missed;
             case Calls.VOICEMAIL_TYPE:
                 return resources.voicemail;
             case Calls.BLOCKED_TYPE:

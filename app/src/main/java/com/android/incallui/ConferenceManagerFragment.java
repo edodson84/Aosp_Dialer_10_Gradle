@@ -22,6 +22,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
+
 import com.android.incallui.ConferenceManagerPresenter.ConferenceManagerUi;
 import com.android.incallui.baseui.BaseFragment;
 import com.android.incallui.call.CallList;
@@ -32,6 +34,7 @@ import com.fissy.dialer.logging.Logger;
 import com.fissy.dialer.logging.ScreenEvent;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Fragment that allows the user to manage a conference call.
@@ -68,7 +71,7 @@ public class ConferenceManagerFragment
         final View parent = inflater.inflate(R.layout.conference_manager_fragment, container, false);
 
         conferenceParticipantList = (ListView) parent.findViewById(R.id.participantList);
-        contactPhotoManager = ContactPhotoManager.getInstance(getActivity().getApplicationContext());
+        contactPhotoManager = ContactPhotoManager.getInstance(Objects.requireNonNull(getActivity()).getApplicationContext());
 
         return parent;
     }
@@ -84,7 +87,7 @@ public class ConferenceManagerFragment
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
     }
 

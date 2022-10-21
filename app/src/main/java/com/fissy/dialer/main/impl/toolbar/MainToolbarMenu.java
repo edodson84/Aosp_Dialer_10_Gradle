@@ -17,15 +17,10 @@
 package com.fissy.dialer.main.impl.toolbar;
 
 import android.content.Context;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.fissy.dialer.R;
-import com.fissy.dialer.simulator.Simulator;
-import com.fissy.dialer.simulator.SimulatorComponent;
 
 /**
  * Popup menu accessible from the search bar
@@ -40,14 +35,4 @@ public final class MainToolbarMenu extends PopupMenu {
         getMenu().findItem(R.id.clear_frequents).setVisible(show);
     }
 
-    public void maybeShowSimulator(AppCompatActivity activity) {
-        MenuItem simulatorMenuItem = getMenu().findItem(R.id.menu_simulator_submenu);
-        Simulator simulator = SimulatorComponent.get(activity).getSimulator();
-        if (simulator.shouldShow()) {
-            simulatorMenuItem.setVisible(true);
-            simulatorMenuItem.setActionProvider(simulator.getActionProvider(activity));
-        } else {
-            simulatorMenuItem.setVisible(false);
-        }
-    }
 }

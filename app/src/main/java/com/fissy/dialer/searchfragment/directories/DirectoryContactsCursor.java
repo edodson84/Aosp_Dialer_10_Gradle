@@ -21,6 +21,7 @@ import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.database.MergeCursor;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
@@ -99,7 +100,7 @@ public final class DirectoryContactsCursor extends MergeCursor implements Search
             cursorList.add(createHeaderCursor(context, directory.getDisplayName(), directory.getId()));
             cursorList.add(cursor);
         }
-        return cursorList.toArray(new Cursor[cursorList.size()]);
+        return cursorList.toArray(new Cursor[0]);
     }
 
     private static MatrixCursor createHeaderCursor(Context context, String name, long id) {
@@ -150,7 +151,7 @@ public final class DirectoryContactsCursor extends MergeCursor implements Search
     }
 
     @Override
-    public boolean updateQuery(@Nullable String query) {
+    public boolean updateQuery(@NonNull String query) {
         // When the query changes, a new network request is made for nearby places. Meaning this cursor
         // will be closed and another created, so return false.
         return false;

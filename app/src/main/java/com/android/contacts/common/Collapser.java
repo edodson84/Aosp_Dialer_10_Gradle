@@ -20,6 +20,7 @@ import android.content.Context;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Class used for collapsing data items into groups of similar items. The data items that should be
@@ -43,8 +44,6 @@ public final class Collapser {
 
     /**
      * Collapses a list of Collapsible items into a list of collapsed items. Items are collapsed if
-     * {@link Collapsible#shouldCollapseWith(Object)} returns true, and are collapsed through the
-     * {@Link Collapsible#collapseWith(Object)} function implemented by the data item.
      *
      * @param list List of Objects of type <T extends Collapsible<T>> to be collapsed.
      */
@@ -76,12 +75,7 @@ public final class Collapser {
         }
 
         // Remove the null items
-        Iterator<T> itr = list.iterator();
-        while (itr.hasNext()) {
-            if (itr.next() == null) {
-                itr.remove();
-            }
-        }
+        list.removeIf(Objects::isNull);
     }
 
     /*

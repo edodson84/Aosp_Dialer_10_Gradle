@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.CallSuper;
 import androidx.annotation.MainThread;
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
@@ -98,6 +99,8 @@ abstract class CallDetailsAdapterCommon extends RecyclerView.Adapter<RecyclerVie
      */
     protected abstract PhotoInfo getPhotoInfo();
 
+
+    @NonNull
     @Override
     @CallSuper
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -122,7 +125,7 @@ abstract class CallDetailsAdapterCommon extends RecyclerView.Adapter<RecyclerVie
 
     @Override
     @CallSuper
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder( @NonNull ViewHolder holder, int position) {
         if (position == 0) { // Header
             bindCallDetailsHeaderViewHolder((CallDetailsHeaderViewHolder) holder, position);
         } else if (position == getItemCount() - 1) {

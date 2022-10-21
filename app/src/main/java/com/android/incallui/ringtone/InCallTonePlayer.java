@@ -82,32 +82,24 @@ public class InCallTonePlayer {
         final ToneGeneratorInfo info = getToneGeneratorInfo(tone);
         numPlayingTones = new CountDownLatch(1);
         executor.execute(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        playOnBackgroundThread(info);
-                    }
-                });
+                () -> playOnBackgroundThread(info));
     }
 
     private ToneGeneratorInfo getToneGeneratorInfo(int tone) {
-        switch (tone) {
-            case TONE_CALL_WAITING:
-                /*
-                 * DialerCall waiting tones play until they're stopped either by the user accepting or
-                 * declining the call so the tone length is set at what's effectively forever. The
-                 * tone is played at a high priority volume and through STREAM_VOICE_CALL since it's
-                 * call related and using that stream will route it through bluetooth devices
-                 * appropriately.
-                 */
-                return new ToneGeneratorInfo(
-                        ToneGenerator.TONE_SUP_CALL_WAITING,
-                        VOLUME_RELATIVE_HIGH_PRIORITY,
-                        Integer.MAX_VALUE,
-                        AudioManager.STREAM_VOICE_CALL);
-            default:
-                throw new IllegalArgumentException("Bad tone: " + tone);
+        if (tone == TONE_CALL_WAITING) {/*
+         * DialerCall waiting tones play until they're stopped either by the user accepting or
+         * declining the call so the tone length is set at what's effectively forever. The
+         * tone is played at a high priority volume and through STREAM_VOICE_CALL since it's
+         * call related and using that stream will route it through bluetooth devices
+         * appropriately.
+         */
+            return new ToneGeneratorInfo(
+                    ToneGenerator.TONE_SUP_CALL_WAITING,
+                    VOLUME_RELATIVE_HIGH_PRIORITY,
+                    Integer.MAX_VALUE,
+                    AudioManager.STREAM_VOICE_CALL);
         }
+        throw new IllegalArgumentException("Bad tone: " + tone);
     }
 
     private void playOnBackgroundThread(ToneGeneratorInfo info) {
@@ -163,6 +155,7 @@ public class InCallTonePlayer {
             this.stream = stream;
         }
 
+        @NonNull
         @Override
         public String toString() {
             return "ToneGeneratorInfo{"

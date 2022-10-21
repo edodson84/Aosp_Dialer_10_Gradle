@@ -64,8 +64,7 @@ public class CallLogAsyncTaskUtil {
                             callIdLongs[i] = callIds[i];
                         }
                         where
-                                .append(CallLog.Calls._ID)
-                                .append(" IN (" + TextUtils.join(",", callIdLongs) + ")");
+                                .append(CallLog.Calls._ID).append(" IN (").append(TextUtils.join(",", callIdLongs)).append(")");
 
                         ContentValues values = new ContentValues(1);
                         values.put(CallLog.Calls.IS_READ, "1");

@@ -16,7 +16,9 @@
 
 package com.android.incallui.answer.impl;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCaptureSession;
 import android.hardware.camera2.CameraCharacteristics;
@@ -34,6 +36,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import com.android.incallui.video.protocol.VideoCallScreen;
@@ -42,6 +45,7 @@ import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * Shows the local preview for the incoming video call or video upgrade request. This class is used
@@ -146,6 +150,7 @@ public class SelfManagedAnswerVideoCallScreen extends StateCallback implements V
         return fragment;
     }
 
+    @NonNull
     @Override
     public String getCallId() {
         return callId;
@@ -174,6 +179,16 @@ public class SelfManagedAnswerVideoCallScreen extends StateCallback implements V
         surfaceView.getHolder().setFixedSize(previewSize.getWidth(), previewSize.getHeight());
 
         try {
+            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
             manager.openCamera(cameraId, this, null);
         } catch (CameraAccessException e) {
             LogUtil.e("SelfManagedAnswerVideoCallScreen.openCamera", "failed to open camera", e);
@@ -232,7 +247,7 @@ public class SelfManagedAnswerVideoCallScreen extends StateCallback implements V
         try {
             captureRequestBuilder = camera.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
             captureRequestBuilder.addTarget(surface);
-            camera.createCaptureSession(Arrays.asList(surface), new CaptureSessionCallback(), null);
+            camera.createCaptureSession(Collections.singletonList(surface), new CaptureSessionCallback(), null);
         } catch (CameraAccessException e) {
             LogUtil.e(
                     "SelfManagedAnswerVideoCallScreen.createCameraPreview", "failed to create preview", e);

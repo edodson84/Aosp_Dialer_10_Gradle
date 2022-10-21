@@ -44,14 +44,14 @@ class CountedDataInputStream extends FilterInputStream {
     @Override
     public int read(byte[] b) throws IOException {
         int r = in.read(b);
-        count += (r >= 0) ? r : 0;
+        count += Math.max(r, 0);
         return r;
     }
 
     @Override
     public int read(byte[] b, int off, int len) throws IOException {
         int r = in.read(b, off, len);
-        count += (r >= 0) ? r : 0;
+        count += Math.max(r, 0);
         return r;
     }
 

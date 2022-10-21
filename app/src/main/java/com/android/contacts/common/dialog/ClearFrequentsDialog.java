@@ -16,10 +16,9 @@
 
 package com.android.contacts.common.dialog;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
-import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -28,6 +27,11 @@ import android.content.DialogInterface.OnClickListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.widget.ProgressBar;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.util.PermissionsUtil;
@@ -45,42 +49,27 @@ public class ClearFrequentsDialog extends DialogFragment {
         dialog.show(fragmentManager, "clearFrequents");
     }
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final Context context = getActivity().getApplicationContext();
-        final ContentResolver resolver = getActivity().getContentResolver();
+        final Context context = requireActivity().getApplicationContext();
+        final ContentResolver resolver = requireActivity().getContentResolver();
         final OnClickListener okListener =
-                new OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (!PermissionsUtil.hasContactsReadPermissions(context)) {
-                            return;
-                        }
-
-                        final ProgressDialog progressDialog =
-                                ProgressDialog.show(
-                                        getContext(),
-                                        getString(R.string.clearFrequentsProgress_title),
-                                        null,
-                                        true,
-                                        true);
-
-                        final AsyncTask<Void, Void, Void> task =
-                                new AsyncTask<Void, Void, Void>() {
-                                    @Override
-                                    protected Void doInBackground(Void... params) {
-                                        resolver.delete(
-                                                ContactsContract.DataUsageFeedback.DELETE_USAGE_URI, null, null);
-                                        return null;
-                                    }
-
-                                    @Override
-                                    protected void onPostExecute(Void result) {
-                                        progressDialog.dismiss();
-                                    }
-                                };
-                        task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                (dialog, which) -> {
+                    if (!PermissionsUtil.hasContactsReadPermissions(context)) {
+                        return;
                     }
+
+                    @SuppressLint("StaticFieldLeak") final AsyncTask<Void, Void, Void> task =
+                            new AsyncTask<Void, Void, Void>() {
+                                @Override
+                                protected Void doInBackground(Void... params) {
+                                    resolver.delete(
+                                            ContactsContract.DataUsageFeedback.DELETE_USAGE_URI, null, null);
+                                    return null;
+                                }
+                            };
+                    task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 };
         return new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.clearFrequentsConfirmation_title)

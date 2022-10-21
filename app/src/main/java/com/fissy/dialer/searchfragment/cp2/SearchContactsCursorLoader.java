@@ -17,7 +17,6 @@
 package com.fissy.dialer.searchfragment.cp2;
 
 import android.content.Context;
-import android.content.CursorLoader;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.database.MergeCursor;
@@ -28,6 +27,7 @@ import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.loader.content.CursorLoader;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.common.LogUtil;
@@ -170,7 +170,7 @@ public final class SearchContactsCursorLoader extends CursorLoader {
         }
 
         @Override
-        public boolean updateQuery(@Nullable String query) {
+        public boolean updateQuery(@NonNull String query) {
             return false;
         }
 

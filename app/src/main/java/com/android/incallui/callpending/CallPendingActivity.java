@@ -46,12 +46,12 @@ import com.fissy.dialer.app.settings.ThemeOptionsSettingsFragment;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.enrichedcall.EnrichedCallComponent;
 import com.fissy.dialer.enrichedcall.Session;
-import com.fissy.dialer.main.impl.MainActivity;
 import com.fissy.dialer.main.impl.MainActivityPeer;
 import com.fissy.dialer.multimedia.MultimediaData;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Objects;
 
 /**
  * Activity useful for showing the incall ui without an actual call being placed.
@@ -160,7 +160,7 @@ public class CallPendingActivity extends FragmentActivity
     private void setupInCallScreen() {
         InCallScreen inCallScreen =
                 (InCallScreen) getSupportFragmentManager().findFragmentByTag(TAG_IN_CALL_SCREEN);
-        inCallScreen.setPrimary(createPrimaryInfo());
+        Objects.requireNonNull(inCallScreen).setPrimary(createPrimaryInfo());
         inCallScreen.setCallState(
                 PrimaryCallState.builder()
                         .setState(DialerCallState.CALL_PENDING)

@@ -66,7 +66,6 @@ public class SmartDialCursorLoader extends AsyncTaskLoader<Cursor> {
         }
         this.query = SmartDialNameMatcher.normalizeNumber(context, query);
 
-        /** Constructs a name matcher object for matching names. */
         nameMatcher = new SmartDialNameMatcher(this.query);
         nameMatcher.setShouldMatchEmptyQuery(!showEmptyListForNullQuery);
     }
@@ -86,7 +85,6 @@ public class SmartDialCursorLoader extends AsyncTaskLoader<Cursor> {
             return new MatrixCursor(PhoneQuery.PROJECTION_PRIMARY);
         }
 
-        /** Loads results from the database helper. */
         final DialerDatabaseHelper dialerDatabaseHelper =
                 Database.get(context).getDatabaseHelper(context);
         final ArrayList<ContactNumber> allMatches =
@@ -96,7 +94,6 @@ public class SmartDialCursorLoader extends AsyncTaskLoader<Cursor> {
             LogUtil.v(TAG, "Loaded matches " + allMatches.size());
         }
 
-        /** Constructs a cursor for the returned array of results. */
         final MatrixCursor cursor = new MatrixCursor(PhoneQuery.PROJECTION_PRIMARY);
         Object[] row = new Object[PhoneQuery.PROJECTION_PRIMARY.length];
         for (ContactNumber contact : allMatches) {
@@ -115,21 +112,17 @@ public class SmartDialCursorLoader extends AsyncTaskLoader<Cursor> {
     @Override
     public void deliverResult(Cursor cursor) {
         if (isReset()) {
-            /** The Loader has been reset; ignore the result and invalidate the data. */
             releaseResources(cursor);
             return;
         }
 
-        /** Hold a reference to the old data so it doesn't get garbage collected. */
         Cursor oldCursor = this.cursor;
         this.cursor = cursor;
 
         if (isStarted()) {
-            /** If the Loader is in a started state, deliver the results to the client. */
             super.deliverResult(cursor);
         }
 
-        /** Invalidate the old data as we don't need it any more. */
         if (oldCursor != null && oldCursor != cursor) {
             releaseResources(oldCursor);
         }
@@ -138,27 +131,22 @@ public class SmartDialCursorLoader extends AsyncTaskLoader<Cursor> {
     @Override
     protected void onStartLoading() {
         if (cursor != null) {
-            /** Deliver any previously loaded data immediately. */
             deliverResult(cursor);
         }
         if (cursor == null) {
-            /** Force loads every time as our results change with queries. */
             forceLoad();
         }
     }
 
     @Override
     protected void onStopLoading() {
-        /** The Loader is in a stopped state, so we should attempt to cancel the current load. */
         cancelLoad();
     }
 
     @Override
     protected void onReset() {
-        /** Ensure the loader has been stopped. */
         onStopLoading();
 
-        /** Release all previously saved query results. */
         if (cursor != null) {
             releaseResources(cursor);
             cursor = null;
@@ -169,7 +157,6 @@ public class SmartDialCursorLoader extends AsyncTaskLoader<Cursor> {
     public void onCanceled(Cursor cursor) {
         super.onCanceled(cursor);
 
-        /** The load has been canceled, so we should release the resources associated with 'data'. */
         releaseResources(cursor);
     }
 
@@ -233,14 +220,14 @@ public class SmartDialCursorLoader extends AsyncTaskLoader<Cursor> {
             final List<String> projectionList =
                     new ArrayList<>(Arrays.asList(PROJECTION_PRIMARY_INTERNAL));
             projectionList.add(Phone.CARRIER_PRESENCE); // 9
-            PROJECTION_PRIMARY = projectionList.toArray(new String[projectionList.size()]);
+            PROJECTION_PRIMARY = projectionList.toArray(new String[0]);
         }
 
         static {
             final List<String> projectionList =
                     new ArrayList<>(Arrays.asList(PROJECTION_ALTERNATIVE_INTERNAL));
             projectionList.add(Phone.CARRIER_PRESENCE); // 9
-            PROJECTION_ALTERNATIVE = projectionList.toArray(new String[projectionList.size()]);
+            PROJECTION_ALTERNATIVE = projectionList.toArray(new String[0]);
         }
     }
 }

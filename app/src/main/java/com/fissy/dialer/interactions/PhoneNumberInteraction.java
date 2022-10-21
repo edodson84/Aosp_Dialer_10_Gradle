@@ -47,7 +47,9 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.IntDef;
+import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.android.contacts.common.Collapser;
@@ -66,7 +68,6 @@ import com.fissy.dialer.logging.Logger;
 import com.fissy.dialer.precall.PreCall;
 import com.fissy.dialer.util.DialerUtils;
 import com.fissy.dialer.util.PermissionsUtil;
-import com.fissy.dialer.util.TransactionSafeActivity;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -145,31 +146,27 @@ public class PhoneNumberInteraction implements OnLoadCompleteListener<Cursor> {
             boolean isVideoCall,
             CallSpecificAppData callSpecificAppData) {
         Intent intent;
-        switch (interactionType) {
-            case ContactDisplayUtils.INTERACTION_SMS:
-                intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("sms", phoneNumber, null));
-                break;
-            default:
-                intent =
-                        PreCall.getIntent(
-                                context,
-                                new CallIntentBuilder(phoneNumber, callSpecificAppData)
-                                        .setIsVideoCall(isVideoCall)
-                                        .setAllowAssistedDial(callSpecificAppData.getAllowAssistedDialing()));
-                break;
+        if (interactionType == ContactDisplayUtils.INTERACTION_SMS) {
+            intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("sms", phoneNumber, null));
+        } else {
+            intent =
+                    PreCall.getIntent(
+                            context,
+                            new CallIntentBuilder(phoneNumber, callSpecificAppData)
+                                    .setIsVideoCall(isVideoCall)
+                                    .setAllowAssistedDial(callSpecificAppData.getAllowAssistedDialing()));
         }
         DialerUtils.startActivityWithErrorToast(context, intent);
     }
 
     /**
-     * @param activity    that is calling this interaction. This must be of type {@link
-     *                    TransactionSafeActivity} because we need to check on the activity state after the phone
+
      *                    numbers have been queried for. The activity must implement {@link InteractionErrorListener}
      *                    and {@link DisambigDialogDismissedListener}.
      * @param isVideoCall {@code true} if the call is a video call, {@code false} otherwise.
      */
     public static void startInteractionForPhoneCall(
-            TransactionSafeActivity activity,
+            AppCompatActivity activity,
             Uri uri,
             boolean isVideoCall,
             CallSpecificAppData callSpecificAppData) {
@@ -246,11 +243,6 @@ public class PhoneNumberInteraction implements OnLoadCompleteListener<Cursor> {
         try {
             ArrayList<PhoneItem> phoneList = new ArrayList<>();
             String primaryPhone = null;
-            if (!isSafeToCommitTransactions()) {
-                LogUtil.i("PhoneNumberInteraction.onLoadComplete", "not safe to commit transaction");
-                interactionError(InteractionErrorCode.USER_LEAVING_ACTIVITY);
-                return;
-            }
             if (cursor.moveToFirst()) {
                 int contactIdColumn = cursor.getColumnIndexOrThrow(Phone.CONTACT_ID);
                 int isSuperPrimaryColumn = cursor.getColumnIndexOrThrow(Phone.IS_SUPER_PRIMARY);
@@ -310,16 +302,6 @@ public class PhoneNumberInteraction implements OnLoadCompleteListener<Cursor> {
     private void interactionError(@InteractionErrorCode int interactionErrorCode) {
         // mContext is really the activity -- see ctor docs.
         ((InteractionErrorListener) context).interactionError(interactionErrorCode);
-    }
-
-    private boolean isSafeToCommitTransactions() {
-        return !(context instanceof TransactionSafeActivity)
-                || ((TransactionSafeActivity) context).isSafeToCommitTransactions();
-    }
-
-    @VisibleForTesting
-        /* package */ CursorLoader getLoader() {
-        return loader;
     }
 
     private void showDisambiguationDialog(ArrayList<PhoneItem> phoneList) {
@@ -457,6 +439,7 @@ public class PhoneNumberInteraction implements OnLoadCompleteListener<Cursor> {
                     Phone.CONTENT_ITEM_TYPE, phoneNumber, Phone.CONTENT_ITEM_TYPE, phoneItem.phoneNumber);
         }
 
+        @NonNull
         @Override
         public String toString() {
             return phoneNumber;
@@ -495,9 +478,7 @@ public class PhoneNumberInteraction implements OnLoadCompleteListener<Cursor> {
      * {@link DialogFragment} used for displaying a dialog with a list of phone numbers of which one
      * will be chosen to make a call or initiate an sms message.
      *
-     * <p>It is recommended to use {@link #startInteractionForPhoneCall(TransactionSafeActivity, Uri,
-     * boolean, CallSpecificAppData)} instead of directly using this class, as those methods handle
-     * one or multiple data cases appropriately.
+
      *
      * <p>This fragment may only be attached to activities which implement {@link
      * DisambigDialogDismissedListener}.
@@ -511,7 +492,6 @@ public class PhoneNumberInteraction implements OnLoadCompleteListener<Cursor> {
         private static final String ARG_IS_VIDEO_CALL = "is_video_call";
 
         private int interactionType;
-        private ListAdapter phonesAdapter;
         private List<PhoneItem> phoneList;
         private CallSpecificAppData callSpecificAppData;
         private boolean isVideoCall;
@@ -546,7 +526,7 @@ public class PhoneNumberInteraction implements OnLoadCompleteListener<Cursor> {
             isVideoCall = getArguments().getBoolean(ARG_IS_VIDEO_CALL);
             callSpecificAppData = CallIntentParser.getCallSpecificAppData(getArguments());
 
-            phonesAdapter = new PhoneItemAdapter(activity, phoneList, interactionType);
+            ListAdapter phonesAdapter = new PhoneItemAdapter(activity, phoneList, interactionType);
             final LayoutInflater inflater = activity.getLayoutInflater();
             @SuppressLint("InflateParams") // Allowed since dialog view is not available yet
             final View setPrimaryView = inflater.inflate(R.layout.set_primary_checkbox, null);

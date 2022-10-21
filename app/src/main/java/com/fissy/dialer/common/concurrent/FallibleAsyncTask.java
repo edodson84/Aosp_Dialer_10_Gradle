@@ -26,7 +26,7 @@ import com.google.auto.value.AutoValue;
 
 /**
  * A task that runs work in the background, passing Throwables from {@link
- * #doInBackground(Object[])} to {@link #onPostExecute(Object)} through a {@link
+
  * FallibleTaskResult}.
  *
  * @param <ParamsT>   the type of the parameters sent to the task upon execution
@@ -38,6 +38,7 @@ import com.google.auto.value.AutoValue;
 public abstract class FallibleAsyncTask<ParamsT, ProgressT, ResultT>
         extends AsyncTask<ParamsT, ProgressT, FallibleTaskResult<ResultT>> {
 
+    @SafeVarargs
     @Override
     protected final FallibleTaskResult<ResultT> doInBackground(ParamsT... params) {
         try {
@@ -97,7 +98,6 @@ public abstract class FallibleAsyncTask<ParamsT, ProgressT, ResultT>
          * Returns {@code true} if this object is the result of background work that threw a Throwable.
          */
         public boolean isFailure() {
-            //noinspection ThrowableResultOfMethodCallIgnored
             return getThrowable() != null;
         }
     }

@@ -91,7 +91,6 @@ public final class Selection {
      * enclosed in a parenthesis.
      */
     @NonNull
-    @SuppressWarnings("rawtypes")
     public static Selection fromString(@Nullable String selection, @Nullable String... args) {
         return new Builder(selection, args == null ? Collections.emptyList() : Arrays.asList(args))
                 .build();
@@ -147,7 +146,6 @@ public final class Selection {
                     }
                     break;
                 default:
-                    continue;
             }
         }
         Assert.checkArgument(depth == 1);
@@ -261,7 +259,7 @@ public final class Selection {
             }
             return new Selection(
                     parenthesized(selection.toString()),
-                    selectionArgs.toArray(new String[selectionArgs.size()]));
+                    selectionArgs.toArray(new String[0]));
         }
 
         @NonNull

@@ -56,7 +56,7 @@ public final class BitmapResizer {
             return Bitmap.createBitmap(image, 0, 0, width, height, matrix, true);
         }
 
-        float ratio = 1;
+        float ratio;
         if (width > height) {
             // landscape
             ratio = MAX_OUTPUT_RESOLUTION / (float) width;

@@ -34,21 +34,15 @@ public final class CallSpecificAppData extends
     public static final int ALLOW_ASSISTED_DIALING_FIELD_NUMBER = 14;
     private static final com.google.protobuf.Internal.ListAdapter.Converter<
             java.lang.Integer, com.fissy.dialer.callintent.SpeedDialContactType.Type> speedDialContactType_converter_ =
-            new com.google.protobuf.Internal.ListAdapter.Converter<
-                    java.lang.Integer, com.fissy.dialer.callintent.SpeedDialContactType.Type>() {
-                public com.fissy.dialer.callintent.SpeedDialContactType.Type convert(java.lang.Integer from) {
-                    com.fissy.dialer.callintent.SpeedDialContactType.Type result = com.fissy.dialer.callintent.SpeedDialContactType.Type.forNumber(from);
-                    return result == null ? com.fissy.dialer.callintent.SpeedDialContactType.Type.UNDEFINED : result;
-                }
+            from -> {
+                SpeedDialContactType.Type result = SpeedDialContactType.Type.forNumber(from);
+                return result == null ? SpeedDialContactType.Type.UNDEFINED : result;
             };
     private static final com.google.protobuf.Internal.ListAdapter.Converter<
             java.lang.Integer, com.fissy.dialer.logging.UiAction.Type> uiActionsSinceAppLaunch_converter_ =
-            new com.google.protobuf.Internal.ListAdapter.Converter<
-                    java.lang.Integer, com.fissy.dialer.logging.UiAction.Type>() {
-                public com.fissy.dialer.logging.UiAction.Type convert(java.lang.Integer from) {
-                    com.fissy.dialer.logging.UiAction.Type result = com.fissy.dialer.logging.UiAction.Type.forNumber(from);
-                    return result == null ? com.fissy.dialer.logging.UiAction.Type.UNKNOWN : result;
-                }
+            from -> {
+                com.fissy.dialer.logging.UiAction.Type result = com.fissy.dialer.logging.UiAction.Type.forNumber(from);
+                return result == null ? com.fissy.dialer.logging.UiAction.Type.UNKNOWN : result;
             };
     // @@protoc_insertion_point(class_scope:com.fissy.dialer.callintent.CallSpecificAppData)
     private static final com.fissy.dialer.callintent.CallSpecificAppData DEFAULT_INSTANCE;
@@ -276,8 +270,7 @@ public final class CallSpecificAppData extends
      * <code>repeated .com.fissy.dialer.callintent.SpeedDialContactType.Type speed_dial_contact_type = 4;</code>
      */
     public java.util.List<com.fissy.dialer.callintent.SpeedDialContactType.Type> getSpeedDialContactTypeList() {
-        return new com.google.protobuf.Internal.ListAdapter<
-                java.lang.Integer, com.fissy.dialer.callintent.SpeedDialContactType.Type>(speedDialContactType_, speedDialContactType_converter_);
+        return new com.google.protobuf.Internal.ListAdapter<>(speedDialContactType_, speedDialContactType_converter_);
     }
 
     /**
@@ -441,8 +434,7 @@ public final class CallSpecificAppData extends
      * <code>repeated .com.fissy.dialer.logging.UiAction.Type ui_actions_since_app_launch = 8;</code>
      */
     public java.util.List<com.fissy.dialer.logging.UiAction.Type> getUiActionsSinceAppLaunchList() {
-        return new com.google.protobuf.Internal.ListAdapter<
-                java.lang.Integer, com.fissy.dialer.logging.UiAction.Type>(uiActionsSinceAppLaunch_, uiActionsSinceAppLaunch_converter_);
+        return new com.google.protobuf.Internal.ListAdapter<>(uiActionsSinceAppLaunch_, uiActionsSinceAppLaunch_converter_);
     }
 
     /**
@@ -853,7 +845,7 @@ public final class CallSpecificAppData extends
                         .computeEnumSizeNoTag(speedDialContactType_.getInt(i));
             }
             size += dataSize;
-            size += 1 * speedDialContactType_.size();
+            size += speedDialContactType_.size();
         }
         if (((bitField0_ & 0x00000008) == 0x00000008)) {
             size += com.google.protobuf.CodedOutputStream
@@ -874,7 +866,7 @@ public final class CallSpecificAppData extends
                         .computeEnumSizeNoTag(uiActionsSinceAppLaunch_.getInt(i));
             }
             size += dataSize;
-            size += 1 * uiActionsSinceAppLaunch_.size();
+            size += uiActionsSinceAppLaunch_.size();
         }
         {
             int dataSize = 0;
@@ -883,7 +875,7 @@ public final class CallSpecificAppData extends
                         .computeInt64SizeNoTag(uiActionTimestampsSinceAppLaunch_.getLong(i));
             }
             size += dataSize;
-            size += 1 * getUiActionTimestampsSinceAppLaunchList().size();
+            size += getUiActionTimestampsSinceAppLaunchList().size();
         }
         if (((bitField0_ & 0x00000040) == 0x00000040)) {
             size += com.google.protobuf.CodedOutputStream
@@ -1148,7 +1140,6 @@ public final class CallSpecificAppData extends
                     throw new RuntimeException(
                             new com.google.protobuf.InvalidProtocolBufferException(
                                     e.getMessage()).setUnfinishedMessage(this));
-                } finally {
                 }
             }
             case GET_DEFAULT_INSTANCE: {

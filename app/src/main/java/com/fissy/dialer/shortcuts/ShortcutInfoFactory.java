@@ -38,7 +38,7 @@ import java.util.Map;
  * <p>The main work this factory does is create shortcut intents. It also delegates to the {@link
  * IconFactory} to create icons.
  */
-@TargetApi(VERSION_CODES.N_MR1) // Shortcuts introduced in N MR1
+ // Shortcuts introduced in N MR1
 final class ShortcutInfoFactory {
 
     /**

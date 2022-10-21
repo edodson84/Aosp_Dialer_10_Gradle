@@ -28,12 +28,11 @@ public class InCallUIMaterialColorMapUtils extends MaterialColorMapUtils {
 
     private final TypedArray primaryColors;
     private final TypedArray secondaryColors;
-    private final Resources resources;
     private final Context context;
 
     public InCallUIMaterialColorMapUtils(Context context) {
         super(context.getResources());
-        this.resources = context.getResources();
+        Resources resources = context.getResources();
         this.context = context;
         primaryColors = resources.obtainTypedArray(R.array.background_colors);
         secondaryColors = resources.obtainTypedArray(R.array.background_colors_dark);
@@ -42,7 +41,6 @@ public class InCallUIMaterialColorMapUtils extends MaterialColorMapUtils {
     /**
      * {@link Resources#getColor(int) used for compatibility
      */
-    @SuppressWarnings("deprecation")
     public static MaterialPalette getDefaultPrimaryAndSecondaryColors(Context context) {
         final int primaryColor = android.R.attr.colorPrimary;
         final int secondaryColor = android.R.attr.colorPrimaryDark;

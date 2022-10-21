@@ -26,6 +26,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
@@ -42,6 +43,7 @@ import com.fissy.dialer.common.concurrent.DialerExecutorComponent;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * This class is used to detect the country where the user is. It is a simplified version of the
@@ -105,7 +107,7 @@ public class CountryDetector {
 
     @SuppressWarnings("missingPermission")
     private static void registerForLocationUpdates(Context context, LocationManager locationManager) {
-        if (!hasLocationPermissions(context)) {
+        if (hasLocationPermissions(context)) {
             LogUtil.w(
                     "CountryDetector.registerForLocationUpdates",
                     "no location permissions, not registering for location updates");
@@ -115,8 +117,15 @@ public class CountryDetector {
         LogUtil.i("CountryDetector.registerForLocationUpdates", "registering for location updates");
 
         final Intent activeIntent = new Intent(context, LocationChangedReceiver.class);
+        int flags;
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S){
+           flags = PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_MUTABLE;
+        }
+        else{
+            flags = PendingIntent.FLAG_UPDATE_CURRENT;
+        }
         final PendingIntent pendingIntent =
-                PendingIntent.getBroadcast(context, 0, activeIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                PendingIntent.getBroadcast(context, 0, activeIntent, flags);
 
         locationManager.requestLocationUpdates(
                 LocationManager.PASSIVE_PROVIDER,
@@ -170,8 +179,7 @@ public class CountryDetector {
     }
 
     private static boolean hasLocationPermissions(Context context) {
-        return context.checkSelfPermission(permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED;
+        return context.checkSelfPermission(permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED;
     }
 
     public String getCurrentCountryIso() {
@@ -191,7 +199,7 @@ public class CountryDetector {
         if (TextUtils.isEmpty(result)) {
             result = DEFAULT_COUNTRY_ISO;
         }
-        return result.toUpperCase(Locale.US);
+        return Objects.requireNonNull(result).toUpperCase(Locale.US);
     }
 
     /**
@@ -207,7 +215,7 @@ public class CountryDetector {
     @Nullable
     private String getLocationBasedCountryIso() {
         if (!Geocoder.isPresent()
-                || !hasLocationPermissions(appContext)
+                || hasLocationPermissions(appContext)
                 || !UserManagerCompat.isUserUnlocked(appContext)) {
             return null;
         }

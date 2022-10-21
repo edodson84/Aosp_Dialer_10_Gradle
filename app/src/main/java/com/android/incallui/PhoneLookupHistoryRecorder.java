@@ -19,6 +19,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.telecom.Call;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.fissy.dialer.calllog.config.CallLogConfigComponent;
@@ -33,6 +34,8 @@ import com.google.common.base.Optional;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
+
+import java.util.Objects;
 
 /**
  * Fetches the current {@link PhoneLookupInfo} for the provided call and writes it to the
@@ -65,7 +68,7 @@ final class PhoneLookupHistoryRecorder {
                             return;
                         }
                         ContentValues contentValues = new ContentValues();
-                        contentValues.put(PhoneLookupHistory.PHONE_LOOKUP_INFO, result.toByteArray());
+                        contentValues.put(PhoneLookupHistory.PHONE_LOOKUP_INFO, Objects.requireNonNull(result).toByteArray());
                         contentValues.put(PhoneLookupHistory.LAST_MODIFIED, System.currentTimeMillis());
                         appContext
                                 .getContentResolver()
@@ -77,7 +80,7 @@ final class PhoneLookupHistoryRecorder {
                     }
 
                     @Override
-                    public void onFailure(Throwable t) {
+                    public void onFailure(@NonNull Throwable t) {
                         // TODO(zachh): Consider how to best handle this; take measures to repair call log?
                         LogUtil.w(
                                 "PhoneLookupHistoryRecorder.onFailure", "could not write PhoneLookupHistory", t);

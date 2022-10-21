@@ -17,9 +17,6 @@
     <string name="a11y_new_call_log_entry_full_description_with_phone_account_info">^1၊ ^2၊ ^3။</string>
     <string name="a11y_new_call_log_entry_full_description_without_phone_account_info">^1၊ ^2။</string>
     <string name="a11y_new_call_log_entry_phone_account">^1 တွင်၊ ^2 မှတစ်ဆင့်</string>
-    <string name="a11y_new_call_log_entry_tap_action">expand menu</string>
-    <string name="a11y_new_call_log_entry_video_call">make a video call to ^1</string>
-    <string name="a11y_new_call_log_entry_voice_call">call ^1</string>
     <string name="abc_action_bar_home_description">မူလနေရာကို သွားရန်</string>
     <string name="abc_action_bar_up_description">အပေါ်သို့သွားရန်</string>
     <string name="abc_action_menu_overflow_description">ပိုမိုရွေးချယ်စရာများ</string>
@@ -38,7 +35,7 @@
     <string name="abc_menu_space_shortcut_label">space</string>
     <string name="abc_menu_sym_shortcut_label">Sym+</string>
     <string name="abc_prepend_shortcut_label">Menu+</string>
-    <string name="abc_search_hint">ရှာဖွေပါ...</string>
+    <string name="abc_search_hint">ရှာဖွေပါ…</string>
     <string name="abc_searchview_description_clear">ရှာစရာ အချက်အလက်များ ဖယ်ရှားရန်</string>
     <string name="abc_searchview_description_query">ရှာစရာ အချက်အလက်နေရာ</string>
     <string name="abc_searchview_description_search">ရှာဖွေရန်</string>
@@ -47,7 +44,6 @@
     <string name="abc_shareactionprovider_share_with">မျှဝေဖို့ ရွေးပါ</string>
     <string name="abc_shareactionprovider_share_with_application">%s ဖြင့် မျှဝေရန်</string>
     <string name="abc_toolbar_collapse_description">ခေါက်ရန်</string>
-    <string name="about_phone_label">အကြောင်း</string>
     <string name="accessibility_settings_title">ရယူသုံးနိုင်မှု</string>
     <string name="account_phone">ကိရိယာတွင်သာ၊ စင့်ခ်မလုပ်ပါ</string>
     <string name="action_copy_number_text">နံပါတ်ကိုကူးရန်</string>
@@ -98,7 +94,6 @@
     <string name="blocked_numbers_disabled_emergency_desc">သင်သည် လွန်ခဲ့သည့် ၄၈ နာရီအတွင်း ဤဖုန်းဖြင့် အရေးပေါ်ဌာနကိုဖုန်း ခေါ်ဆိုခဲ့သောကြောင့် ခေါ်ဆိုမှုပိတ်ဆို့ခြင်းကို ဖြုတ်ထားသည်။ ၄၈ နာရီကျော်လွန်သည်နှင့် ၎င်းကိုအလိုအလျောက် ပြန်ဖွင့်ပေးပါမည်။</string>
     <string name="blocked_numbers_disabled_emergency_header_label">ခေါ်ဆိုမှုပိတ်ဆို့ခြင်း ယာယီပိတ်ထားသည်</string>
     <string name="bubble_return_to_call">ခေါ်ဆိုမှုသို့ ပြန်သွားရန်</string>
-    <string name="build_version_label">တည်ဆောက်မှု ဗားရှင်း</string>
     <string name="call">ခေါ်ဆိုရန်</string>
     <string name="callFailed_simError">ဆင်းမ်ကဒ်မရှိ သို့မဟုတ် ဆင်းမ်ကဒ်အမှား</string>
     <string name="call_assistant">%s ကိုခေါ်ပါ</string>
@@ -148,7 +143,7 @@
     <string name="call_log_action_remove_spam">စပမ်း မဟုတ်ပါ</string>
     <string name="call_log_action_send_message">စာ တစ်စောင် ပို့ပါ</string>
     <string name="call_log_action_set_up_video">ဗီဒီယိုခေါ်ဆိုမှု စတင်ရန်</string>
-    <string name="call_log_action_share_voicemail">... သို့ ပို့ပါ</string>
+    <string name="call_log_action_share_voicemail">… သို့ ပို့ပါ</string>
     <string name="call_log_action_unblock_number">နံပါတ်ကို ဖွင့်မည်</string>
     <string name="call_log_action_video_call">ဗီဒီယို ခေါ်ဆိုမှု</string>
     <string name="call_log_activity_title">ယခင်ခေါ်ဆိုမှုများ</string>
@@ -173,7 +168,7 @@
     <string name="call_pager">ပေဂျာကိုခေါ်ပါ</string>
     <string name="call_radio">ရေဒီယိုကိုခေါ်ပါ</string>
     <string name="call_settings_label">ခေါ်ဆိုမှုများ</string>
-    <string name="call_subject_hint">ခေါ်ဆိုမှုဖြင့် ပေးပို့ရန် မှတ်စုတစ်ခု ရိုက်ပါ ...</string>
+    <string name="call_subject_hint">ခေါ်ဆိုမှုဖြင့် ပေးပို့ရန် မှတ်စုတစ်ခု ရိုက်ပါ …</string>
     <string name="call_subject_limit">%1$s / %2$s</string>
     <string name="call_subject_type_and_number">%1$s %2$s</string>
     <string name="call_telex">တဲလက်ဇ်နံပါတ်ကိုခေါ်ပါ</string>
@@ -220,7 +215,6 @@
     <string name="content_description_rtt_chat_avatar">ရုပ်ပုံ</string>
     <string name="content_description_rtt_check_button">ဆက်လုပ်ရန်</string>
     <string name="copy_number">နံပါတ်ကို ကူးယူရန်</string>
-    <string name="copy_transcript_text">အသံမှစာအဖြစ်ဘာသာပြန်ခြင်းကို ကူးရန်</string>
     <string name="custom_message_hint">စိတ်ကြိုက် မက်ဆေ့ဂျ်တစ်ခု ရေးပါ</string>
     <string name="default_notification_description">ပုံသေ အသံ (%1$s)</string>
     <string name="delete">ဖျက်ရန်</string>
@@ -380,16 +374,15 @@
     <string name="incall_video_call_request_failed">ချိတ်ဆက်၍ မရပါ</string>
     <string name="incall_video_call_request_rejected">ခေါ်ဆိုမှုကို ငြင်းပယ်လိုက်ပါသည်</string>
     <string name="incall_video_call_request_timed_out">ခေါ်ဆိုမှု အချိန်ကုန်ဆုံးသွားပါပြီ</string>
-    <string name="incall_video_call_requesting">ဝန်ဆောင်မှုပေးသူဗီဒီယို ခေါ်ဆိုနေသည်...</string>
+    <string name="incall_video_call_requesting">ဝန်ဆောင်မှုပေးသူဗီဒီယို ခေါ်ဆိုနေသည်…</string>
     <string name="incall_video_call_upgrade_request">ဝန်ဆောင်မှုပေးသူဗီဒီယိုသို့ ပြောင်းနေသည်…</string>
-    <string name="incall_wifi_video_call_requesting">Wi-Fi ဝန်ဆောင်မှုပေးသူဗီဒီယို ခေါ်ဆိုနေသည်...</string>
+    <string name="incall_wifi_video_call_requesting">Wi-Fi ဝန်ဆောင်မှုပေးသူဗီဒီယို ခေါ်ဆိုနေသည်…</string>
     <string name="invalidNumber">%1$sသည် မမှန်ကန်ပါ။</string>
     <string name="just_now">ယခုလေးတင်</string>
     <string name="label_notes">မှတ်စုများ</string>
     <string name="label_sip_address">SIP</string>
     <string name="launcherActivityLabel">ဖုန်း</string>
     <string name="launcherDialpadActivityLabel">ဖုန်းခလုတ်ခုံ</string>
-    <string name="licenseActivityLabel">အခမဲ့ရင်းမြစ်လိုင်စင်များ</string>
     <string name="listAllContactsInAccount">%s ထဲမှ အဆက်အသွယ်များ</string>
     <string name="listCustomView">မိမိစိတ်ကြိုက် မြင်ကွင်းမှ</string>
     <string name="listSingleContact">အဆက်အသွယ်တစ်ခုတည်း</string>
@@ -431,10 +424,6 @@
     <string name="network_name_wifi">Wifi</string>
     <string name="new_call_log_carrier_video">ဖုန်းလိုင်း ဗီဒီယို</string>
     <string name="new_call_log_duo_video">Duo ဗီဒီယို</string>
-    <string name="new_call_log_header_older">ယခင်နေ့များက</string>
-    <string name="new_call_log_header_today">ယနေ့</string>
-    <string name="new_call_log_header_yesterday">မနေ့က</string>
-    <string name="new_call_log_permission_no_calllog">ခေါ်ဆိုမှုမှတ်တမ်းကို ကြည့်ရန်၊ ဖုန်းခွင့်ပြုချက်ကို ဖွင့်ပါ။</string>
     <string name="new_call_log_secondary_blocked">ပိတ်ထားသည်များ</string>
     <string name="new_call_log_secondary_spam">စပမ်း</string>
     <string name="new_call_log_unknown">အမည်မသိ</string>
@@ -490,7 +479,6 @@
     <string name="ok_got_it">ရပါပြီ</string>
     <string name="old_block_number_confirmation_title">%1$sကို ပိတ်မလား။</string>
     <string name="old_call_subject_type_and_number">%1$s %2$s</string>
-    <string name="open_source_license_detail_label">အခမဲ့ရင်းမြစ်ဆော့ဖ်ဝဲအတွက် လိုင်စင်အသေးစိတ်များ</string>
     <string name="organizationLabelsGroup">အဖွဲ့အစည်း</string>
     <string name="outgoing_wps_warning">WPS ခေါ်ဆိုပါက သင့်လက်ရှိခေါ်ဆိုမှု ပြတ်တောက်သွားပါမည်။</string>
     <string name="pause_prompt_no">No</string>
@@ -524,7 +512,6 @@
     <string name="pre_call_select_phone_account_hint_intra_carrier">တူညီသောဖုန်းလိုင်းကို အသုံးပြုသည်</string>
     <string name="pre_call_select_phone_account_hint_other_sim_in_use">%1$s ကို အသုံးပြုနေစဉ် မရရှိနိုင်ပါ</string>
     <string name="pre_call_select_phone_account_remember">ဤရွေးချယ်မှုကို မှတ်ထားရန်</string>
-    <string name="privacy_policy_label">ပုဂ္ဂိုလ်ရေးဆိုင်ရာ မူဝါဒ</string>
     <string name="private_num_non_verizon">ပုဂ္ဂလိကဖုန်းနံပါတ်</string>
     <string name="private_num_verizon">ကန့်သတ်ထားသည်</string>
     <string name="quick_question">အမြန်မေးခွန်း…</string>
@@ -646,7 +633,6 @@
     <string name="tab_title">%1$s တဘ်။</string>
     <string name="tab_title_call_history">ခေါ်ဆိုမှု</string>
     <string name="tab_title_speed_dial">နံပါတ်ကွက်</string>
-    <string name="terms_of_service_label">ဝန်ဆောင်မှု စည်းမျဉ်းများ</string>
     <string name="toast_cannot_write_system_settings">ဖုန်း အက်ပ်ဆီတွင် စနစ် ဆက်တင်များသို့ ရေးသားခွင့် မရှိပါ။</string>
     <string name="toast_text_copied">စာသားကူးယူပြီးပါပြီ</string>
     <string name="toolbar_close">ပိတ်ရန်</string>
@@ -691,13 +677,7 @@
     <string name="view_updates_from_group">အဆင့်မြှင့်ခြင်းများပြရန်</string>
     <string name="voice_call">ဖုန်း ခေါ်ဆိုရန်</string>
     <string name="voice_search_not_available">အသံဖြင့် ရှာဖွေမှု မရှိ</string>
-    <string name="voicemail">အသံစာပို့စနစ်</string>
-    <string name="voicemailCallLogDateTimeFormat">%1$s %2$s ၌</string>
-    <string name="voicemailCallLogDateTimeFormatWithDuration">%1$s • %2$s</string>
-    <string name="voicemailCallLogToday">@string/call_log_header_today</string>
-    <string name="voicemailDurationFormat">%1$02d:%2$02d</string>
     <string name="voicemailMultiSelectActionBarTitle">%1$s ကို ရွေးချယ်ထားသည်</string>
-    <string name="voicemail_donation_promo_content">"စာသားမှတ်တမ်းပါ ဤသည်နှင့် နောင်လာမည့် အသံမေးလ်မက်ဆေ့ဂျ်များကို Google အား သုံးသပ်ခွင့်ပေးပါ။ ၎င်းတို့ကို အမည်မဖော်ဘဲ သိမ်းထားပါမည်။ 'ဆက်တင်များ' ကို အချိန်မရွေး ပြောင်းပါ။ %1$s"</string>
     <string name="voicemail_string">အသံမေးလ်</string>
     <string name="voicemail_transcription_rating">စာသားမှတ်တမ်း အဆင့်သတ်မှတ်ရန်</string>
     <string name="wait_prompt_str">"အောက်ပါ တီးလုံးများကို ပို့မလား?

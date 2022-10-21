@@ -57,15 +57,12 @@ public class CallLogNotificationsActivity extends AppCompatActivity {
         }
 
         String action = intent.getAction();
-        switch (action) {
-            case ACTION_SEND_SMS_FROM_MISSED_CALL_NOTIFICATION:
-                MissedCallNotifier.getInstance(this)
-                        .sendSmsFromMissedCall(
-                                intent.getStringExtra(EXTRA_MISSED_CALL_NUMBER), intent.getData());
-                break;
-            default:
-                LogUtil.d("CallLogNotificationsActivity.onCreate", "could not handle: " + intent);
-                break;
+        if (ACTION_SEND_SMS_FROM_MISSED_CALL_NOTIFICATION.equals(action)) {
+            MissedCallNotifier.getInstance(this)
+                    .sendSmsFromMissedCall(
+                            intent.getStringExtra(EXTRA_MISSED_CALL_NUMBER), intent.getData());
+        } else {
+            LogUtil.d("CallLogNotificationsActivity.onCreate", "could not handle: " + intent);
         }
         finish();
     }

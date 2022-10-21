@@ -17,9 +17,6 @@
     <string name="a11y_new_call_log_entry_full_description_with_phone_account_info">^1, ^2, ^3.</string>
     <string name="a11y_new_call_log_entry_full_description_without_phone_account_info">^1, ^2.</string>
     <string name="a11y_new_call_log_entry_phone_account">em ^1, pelo número ^2</string>
-    <string name="a11y_new_call_log_entry_tap_action">expand menu</string>
-    <string name="a11y_new_call_log_entry_video_call">make a video call to ^1</string>
-    <string name="a11y_new_call_log_entry_voice_call">call ^1</string>
     <string name="abc_action_bar_home_description">Navegar para a página inicial</string>
     <string name="abc_action_bar_up_description">Navegar para cima</string>
     <string name="abc_action_menu_overflow_description">Mais opções</string>
@@ -38,7 +35,7 @@
     <string name="abc_menu_space_shortcut_label">espaço</string>
     <string name="abc_menu_sym_shortcut_label">Sym+</string>
     <string name="abc_prepend_shortcut_label">Menu+</string>
-    <string name="abc_search_hint">Pesquisar...</string>
+    <string name="abc_search_hint">Pesquisar…</string>
     <string name="abc_searchview_description_clear">Limpar consulta</string>
     <string name="abc_searchview_description_query">Consulta de pesquisa</string>
     <string name="abc_searchview_description_search">Pesquisar</string>
@@ -47,7 +44,6 @@
     <string name="abc_shareactionprovider_share_with">Compartilhar com</string>
     <string name="abc_shareactionprovider_share_with_application">Compartilhar com %s</string>
     <string name="abc_toolbar_collapse_description">Recolher</string>
-    <string name="about_phone_label">Sobre</string>
     <string name="accessibility_settings_title">Acessibilidade</string>
     <string name="account_phone">Somente no dispositivo, não sincronizado</string>
     <string name="action_copy_number_text">Copiar número</string>
@@ -98,7 +94,6 @@
     <string name="blocked_numbers_disabled_emergency_desc">O bloqueio de chamadas foi desativado porque você entrou em contato com serviços de emergência usando este telefone nas últimas 48 horas. Ele será reativado automaticamente depois de um período de 48 horas.</string>
     <string name="blocked_numbers_disabled_emergency_header_label">Bloqueio de chamadas temporiamente desativado</string>
     <string name="bubble_return_to_call">Voltar à chamada</string>
-    <string name="build_version_label">Versão</string>
     <string name="call">Ligar</string>
     <string name="callFailed_simError">Sem SIM ou erro de SIM</string>
     <string name="call_assistant">Ligar para %s</string>
@@ -108,7 +103,7 @@
     <string name="call_car">Ligar para carro</string>
     <string name="call_company_main">Ligar para empresa (principal)</string>
     <string name="call_composer_connection_failed">%1$s está off-line e não é possível entrar em contato</string>
-    <string name="call_composer_image_uploading">Enviando imagem...</string>
+    <string name="call_composer_image_uploading">Enviando imagem…</string>
     <string name="call_custom">Ligar para %s</string>
     <string name="call_details">Detalhes da chamada</string>
     <string name="call_details_copy_number">Copiar número</string>
@@ -130,8 +125,8 @@
     <string name="call_incoming_default_label_answer_and_release_second">Deslize para cima para atender uma chamada e colocar a outra em espera</string>
     <string name="call_incoming_default_label_answer_and_release_third">Deslize para cima para atender e encerrar a chamada em espera</string>
     <string name="call_incoming_important">Importante</string>
-    <string name="call_incoming_message_custom">Escreva sua resposta...</string>
-    <string name="call_incoming_respond_via_sms_custom_message">Escreva sua resposta...</string>
+    <string name="call_incoming_message_custom">Escreva sua resposta…</string>
+    <string name="call_incoming_respond_via_sms_custom_message">Escreva sua resposta…</string>
     <string name="call_incoming_swipe_to_answer">Deslize para cima para atender</string>
     <string name="call_incoming_swipe_to_answer_and_release">Deslize a partir do ícone para atender e encerrar a chamada em andamento</string>
     <string name="call_incoming_swipe_to_answer_video_as_audio">Deslize a partir do ícone para atender como uma chamada de áudio</string>
@@ -173,7 +168,7 @@
     <string name="call_pager">Ligar para pager</string>
     <string name="call_radio">Ligar para rádio</string>
     <string name="call_settings_label">Chamadas</string>
-    <string name="call_subject_hint">Escreva uma nota para enviar com a chamada...</string>
+    <string name="call_subject_hint">Escreva uma nota para enviar com a chamada…</string>
     <string name="call_subject_limit">%1$s / %2$s</string>
     <string name="call_subject_type_and_number">%1$s %2$s</string>
     <string name="call_telex">Ligar para telex</string>
@@ -220,7 +215,6 @@
     <string name="content_description_rtt_chat_avatar">Avatar</string>
     <string name="content_description_rtt_check_button">Continuar</string>
     <string name="copy_number">Copiar número</string>
-    <string name="copy_transcript_text">Copiar transcrição</string>
     <string name="custom_message_hint">Escreva sua mensagem</string>
     <string name="default_notification_description">Som padrão (%1$s)</string>
     <string name="delete">Excluir</string>
@@ -380,7 +374,7 @@
     <string name="incall_video_call_request_failed">Não foi possível conectar</string>
     <string name="incall_video_call_request_rejected">Chamada recusada</string>
     <string name="incall_video_call_request_timed_out">Chamada expirada</string>
-    <string name="incall_video_call_requesting">Fazendo videochamada via operadora...</string>
+    <string name="incall_video_call_requesting">Fazendo videochamada via operadora…</string>
     <string name="incall_video_call_upgrade_request">Alternando para videochamada via operadora…</string>
     <string name="incall_wifi_video_call_requesting">Fazendo videochamada via operadora de Wi-Fi…</string>
     <string name="invalidNumber">O número %1$s é inválido.</string>
@@ -389,7 +383,6 @@
     <string name="label_sip_address">SIP</string>
     <string name="launcherActivityLabel">Telefone</string>
     <string name="launcherDialpadActivityLabel">Teclado do smartphone</string>
-    <string name="licenseActivityLabel">Licenças de código aberto</string>
     <string name="listAllContactsInAccount">Contatos em %s</string>
     <string name="listCustomView">Cont. na vis. pers.</string>
     <string name="listSingleContact">Contato único</string>
@@ -431,10 +424,6 @@
     <string name="network_name_wifi">Wi-Fi</string>
     <string name="new_call_log_carrier_video">Videochamadas via operadora</string>
     <string name="new_call_log_duo_video">Videochamadas do Duo</string>
-    <string name="new_call_log_header_older">Mais antigas</string>
-    <string name="new_call_log_header_today">Hoje</string>
-    <string name="new_call_log_header_yesterday">Ontem</string>
-    <string name="new_call_log_permission_no_calllog">Para ver seu registro de chamadas, ative a permissão para o app Telefone.</string>
     <string name="new_call_log_secondary_blocked">Bloqueados</string>
     <string name="new_call_log_secondary_spam">Spam</string>
     <string name="new_call_log_unknown">Desconhecidos</string>
@@ -490,7 +479,6 @@
     <string name="ok_got_it">Ok</string>
     <string name="old_block_number_confirmation_title">Bloquear %1$s?</string>
     <string name="old_call_subject_type_and_number">%1$s %2$s</string>
-    <string name="open_source_license_detail_label">Detalhes da licença do software de código aberto</string>
     <string name="organizationLabelsGroup">Organização</string>
     <string name="outgoing_wps_warning">Fazer uma chamada usando o WPS desconectará a chamada atual.</string>
     <string name="pause_prompt_no">Não</string>
@@ -524,7 +512,6 @@
     <string name="pre_call_select_phone_account_hint_intra_carrier">Usa a mesma operadora</string>
     <string name="pre_call_select_phone_account_hint_other_sim_in_use">Indisponível enquanto %1$s é usado</string>
     <string name="pre_call_select_phone_account_remember">Lembrar desta escolha</string>
-    <string name="privacy_policy_label">Política de privacidade</string>
     <string name="private_num_non_verizon">Número particular</string>
     <string name="private_num_verizon">Restrito</string>
     <string name="quick_question">Pergunta rápida…</string>
@@ -571,7 +558,7 @@
     <string name="set_default_account">Sempre usar esta opção para chamadas</string>
     <string name="settings">Configurações</string>
     <string name="share_and_call">Compartilhar e ligar</string>
-    <string name="simContacts_emptyLoading">Carregando do cartão SIM...</string>
+    <string name="simContacts_emptyLoading">Carregando do cartão SIM…</string>
     <string name="simContacts_title">Contatos do cartão SIM</string>
     <string name="simulator_submenu_label">Simulador</string>
     <string name="sms">Mensagem de texto</string>
@@ -646,7 +633,6 @@
     <string name="tab_title">Guia \"%1$s\".</string>
     <string name="tab_title_call_history">Histórico</string>
     <string name="tab_title_speed_dial">Discagem rápida</string>
-    <string name="terms_of_service_label">Termos de Serviço</string>
     <string name="toast_cannot_write_system_settings">O app Telefone não tem permissão para gravar nas configurações do sistema.</string>
     <string name="toast_text_copied">Texto copiado</string>
     <string name="toolbar_close">Fechar</string>
@@ -691,13 +677,7 @@
     <string name="view_updates_from_group">Ver atualizações</string>
     <string name="voice_call">Chamada de voz</string>
     <string name="voice_search_not_available">A pesquisa por voz não está disponível</string>
-    <string name="voicemail">Correio de voz</string>
-    <string name="voicemailCallLogDateTimeFormat">%1$s às %2$s</string>
-    <string name="voicemailCallLogDateTimeFormatWithDuration">%1$s • %2$s</string>
-    <string name="voicemailCallLogToday">@string/call_log_header_today</string>
-    <string name="voicemailDurationFormat">%1$02d:%2$02d</string>
     <string name="voicemailMultiSelectActionBarTitle">Itens selecionados: %1$s</string>
-    <string name="voicemail_donation_promo_content">Permita que o Google analise esta e as próximas mensagens do correio de voz usando as transcrições. As mensagens serão armazenadas anonimamente. Altere as configurações a qualquer momento. %1$s</string>
     <string name="voicemail_string">Correio de voz</string>
     <string name="voicemail_transcription_rating">Avaliar transcrição</string>
     <string name="wait_prompt_str">"Enviar os toques a seguir?

@@ -120,14 +120,7 @@ class NotificationThrottler {
                 notifications.add(notification);
             }
         }
-        Collections.sort(
-                notifications,
-                new Comparator<StatusBarNotification>() {
-                    @Override
-                    public int compare(StatusBarNotification left, StatusBarNotification right) {
-                        return Long.compare(left.getPostTime(), right.getPostTime());
-                    }
-                });
+        notifications.sort((left, right) -> Long.compare(left.getPostTime(), right.getPostTime()));
         return notifications;
     }
 

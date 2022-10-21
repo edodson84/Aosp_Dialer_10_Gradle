@@ -26,14 +26,16 @@
             android:id="@id/contact_badge_background"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:src="@drawable/contact_photo_badge_background" />
+            android:src="@drawable/contact_photo_badge_background"
+            android:contentDescription="TODO" />
 
         <ImageView
             android:id="@id/video_call_badge"
             android:layout_width="13.0dip"
             android:layout_height="13.0dip"
             android:layout_gravity="center"
-            android:src="@drawable/quantum_ic_videocam_vd_white_24" />
+            android:src="@drawable/quantum_ic_videocam_vd_white_24"
+            android:contentDescription="TODO" />
 
         <ImageView
             android:id="@id/rtt_call_badge"
@@ -41,6 +43,7 @@
             android:layout_height="13.0dip"
             android:layout_gravity="center"
             android:src="@drawable/quantum_ic_rtt_vd_theme_24"
-            app:tint="?android:colorBackground" />
+            app:tint="?android:colorBackground"
+            android:contentDescription="TODO" />
     </FrameLayout>
 </FrameLayout>

@@ -20,11 +20,14 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 import com.fissy.dialer.R;
+
+import java.util.Objects;
 
 /**
  * Dialog for spam blocking on-boarding promotion.
@@ -54,7 +57,7 @@ public class SpamBlockingPromoDialogFragment extends DialogFragment {
     }
 
     @Override
-    public void onDismiss(DialogInterface dialog) {
+    public void onDismiss(@NonNull DialogInterface dialog) {
         if (dismissListener != null) {
             dismissListener.onDismiss(dialog);
         }
@@ -70,11 +73,12 @@ public class SpamBlockingPromoDialogFragment extends DialogFragment {
         super.onPause();
     }
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
         // Return the newly created dialog
-        return new AlertDialog.Builder(getActivity())
+        return new AlertDialog.Builder(Objects.requireNonNull(getActivity()))
                 .setCancelable(true)
                 .setTitle(R.string.spam_blocking_promo_title)
                 .setMessage(R.string.spam_blocking_promo_text)

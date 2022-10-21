@@ -23,7 +23,8 @@
             android:layout_width="0.0dip"
             android:layout_height="fill_parent"
             android:layout_weight="1.0"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:contentDescription="TODO" />
 
         <FrameLayout
             android:id="@id/answer_message_frag"
@@ -44,5 +45,6 @@
         android:layout_width="@dimen/answer_message_avatar_size"
         android:layout_height="@dimen/answer_message_avatar_size"
         android:layout_centerHorizontal="true"
-        android:elevation="@dimen/answer_avatar_elevation" />
+        android:elevation="@dimen/answer_avatar_elevation"
+        android:contentDescription="TODO" />
 </RelativeLayout>

@@ -302,7 +302,7 @@ public class GlideRequest<TranscodeType> extends RequestBuilder<TranscodeType> i
     }
 
     /**
-     * @see GlideOptions#set(Option<T>, T)
+
      */
     @NonNull
     @CheckResult
@@ -554,7 +554,7 @@ public class GlideRequest<TranscodeType> extends RequestBuilder<TranscodeType> i
     }
 
     /**
-     * @see GlideOptions#transforms(Transformation<Bitmap>[])
+
      */
     @NonNull
     @CheckResult
@@ -586,7 +586,7 @@ public class GlideRequest<TranscodeType> extends RequestBuilder<TranscodeType> i
     }
 
     /**
-     * @see GlideOptions#optionalTransform(Class<T>, Transformation<T>)
+
      */
     @NonNull
     @CheckResult
@@ -601,7 +601,7 @@ public class GlideRequest<TranscodeType> extends RequestBuilder<TranscodeType> i
     }
 
     /**
-     * @see GlideOptions#transform(Class<T>, Transformation<T>)
+
      */
     @NonNull
     @CheckResult
@@ -756,6 +756,7 @@ public class GlideRequest<TranscodeType> extends RequestBuilder<TranscodeType> i
         return (GlideRequest<TranscodeType>) super.load(arg0);
     }
 
+    @NonNull
     @Override
     @CheckResult
     public GlideRequest<TranscodeType> clone() {

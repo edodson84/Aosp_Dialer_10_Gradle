@@ -18,7 +18,6 @@ package com.fissy.dialer.lookup;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.ContactsContract.Contacts;
 import android.telephony.PhoneNumberUtils;
@@ -39,8 +38,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.ArrayList;
-import java.util.List;
+import java.nio.charset.StandardCharsets;
 
 public class LookupCache {
     public static final String NAME = "Name";
@@ -52,16 +50,6 @@ public class LookupCache {
     public static final String PHOTO_ID = "PhotoID";
     public static final String LOOKUP_URI = "LookupURI";
     private static final String TAG = LookupCache.class.getSimpleName();
-
-    public static boolean hasCachedContact(Context context, String number) {
-        String normalizedNumber = formatE164(context, number);
-        if (normalizedNumber == null) {
-            return false;
-        }
-
-        File file = getFilePath(context, normalizedNumber);
-        return file.exists();
-    }
 
     public static void cacheContact(Context context, ContactInfo info) {
         File file = getFilePath(context, info.normalizedNumber);
@@ -75,9 +63,8 @@ public class LookupCache {
 
         try {
             out = new FileOutputStream(file);
-            writer = new JsonWriter(new OutputStreamWriter(out, "UTF-8"));
+            writer = new JsonWriter(new OutputStreamWriter(out, StandardCharsets.UTF_8));
             writer.setIndent("  ");
-            List messages = new ArrayList();
 
             writer.beginObject();
             if (info.name != null) {
@@ -134,7 +121,7 @@ public class LookupCache {
 
         try {
             in = new FileInputStream(file);
-            reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
+            reader = new JsonReader(new InputStreamReader(in, StandardCharsets.UTF_8));
 
             reader.beginObject();
             while (reader.hasNext()) {
@@ -256,17 +243,6 @@ public class LookupCache {
             DialerUtils.closeQuietly(out);
         }
         return null;
-    }
-
-    public static Bitmap getCachedImage(Context context, String normalizedNumber) {
-        File image = getImagePath(context, normalizedNumber);
-        if (!image.exists()) {
-            return null;
-        }
-
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-        return BitmapFactory.decodeFile(image.getPath(), options);
     }
 
     private static String formatE164(Context context, String number) {

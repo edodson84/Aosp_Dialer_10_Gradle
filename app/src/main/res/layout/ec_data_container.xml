@@ -30,7 +30,8 @@
             android:id="@id/multimedia_image"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:contentDescription="TODO" />
 
         <TextView
             android:id="@id/multimedia_attachments_number"

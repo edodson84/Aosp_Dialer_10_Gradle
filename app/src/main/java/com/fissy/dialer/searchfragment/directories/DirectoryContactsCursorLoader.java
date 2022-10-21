@@ -17,7 +17,6 @@
 package com.fissy.dialer.searchfragment.directories;
 
 import android.content.Context;
-import android.content.CursorLoader;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
@@ -26,6 +25,7 @@ import android.provider.ContactsContract.CommonDataKinds.Phone;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
+import androidx.loader.content.CursorLoader;
 
 import com.fissy.dialer.common.cp2.DirectoryUtils;
 import com.fissy.dialer.searchfragment.common.Projections;

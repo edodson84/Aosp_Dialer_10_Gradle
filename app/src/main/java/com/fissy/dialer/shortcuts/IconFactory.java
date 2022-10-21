@@ -96,12 +96,9 @@ class IconFactory {
                 ContactsContract.Contacts.openContactPhotoInputStream(
                         context.getContentResolver(), lookupUri, false /* preferHighres */);
 
-        return VERSION.SDK_INT >= VERSION_CODES.O
-                ? createAdaptiveIcon(displayName, lookupKey, inputStream)
-                : createFlatIcon(displayName, lookupKey, inputStream);
+        return createAdaptiveIcon(displayName, lookupKey, inputStream);
     }
 
-    @RequiresApi(VERSION_CODES.O)
     private Icon createAdaptiveIcon(
             @NonNull String displayName, @NonNull String lookupKey, @Nullable InputStream inputStream) {
         if (inputStream == null) {

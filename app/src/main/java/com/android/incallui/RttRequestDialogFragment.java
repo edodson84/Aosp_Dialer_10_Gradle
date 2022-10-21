@@ -40,6 +40,7 @@ import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.contacts.ContactsComponent;
 
 import java.lang.ref.WeakReference;
+import java.util.Objects;
 
 /**
  * Dialog that shown to user when receiving RTT request mid call.
@@ -78,7 +79,7 @@ public class RttRequestDialogFragment extends DialogFragment {
 
         ContactInfoCache cache = ContactInfoCache.getInstance(getContext());
         DialerCall dialerCall =
-                CallList.getInstance().getCallById(getArguments().getString(ARG_CALL_ID));
+                CallList.getInstance().getCallById(Objects.requireNonNull(getArguments()).getString(ARG_CALL_ID));
         cache.findInfo(dialerCall, false, new ContactLookupCallback(this));
 
         dialogView
@@ -102,7 +103,7 @@ public class RttRequestDialogFragment extends DialogFragment {
     private void onPositiveButtonClick() {
         LogUtil.enterBlock("RttRequestDialogFragment.onPositiveButtonClick");
 
-        DialerCall call = CallList.getInstance().getCallById(getArguments().getString(ARG_CALL_ID));
+        DialerCall call = CallList.getInstance().getCallById(Objects.requireNonNull(getArguments()).getString(ARG_CALL_ID));
         call.respondToRttRequest(true, getArguments().getInt(ARG_RTT_REQUEST_ID));
         dismiss();
     }
@@ -110,7 +111,7 @@ public class RttRequestDialogFragment extends DialogFragment {
     private void onNegativeButtonClick() {
         LogUtil.enterBlock("RttRequestDialogFragment.onNegativeButtonClick");
 
-        DialerCall call = CallList.getInstance().getCallById(getArguments().getString(ARG_CALL_ID));
+        DialerCall call = CallList.getInstance().getCallById(Objects.requireNonNull(getArguments()).getString(ARG_CALL_ID));
         call.respondToRttRequest(false, getArguments().getInt(ARG_RTT_REQUEST_ID));
         dismiss();
     }

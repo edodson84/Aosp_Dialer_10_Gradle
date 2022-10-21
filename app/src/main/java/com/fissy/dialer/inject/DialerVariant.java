@@ -16,6 +16,8 @@
 
 package com.fissy.dialer.inject;
 
+import androidx.annotation.NonNull;
+
 /**
  * Represents all dialer variants.
  */
@@ -38,6 +40,7 @@ public enum DialerVariant {
         this.variant = variant;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return variant;

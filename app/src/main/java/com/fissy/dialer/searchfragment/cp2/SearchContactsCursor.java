@@ -22,7 +22,7 @@ import android.database.MatrixCursor;
 import android.database.MergeCursor;
 import android.provider.ContactsContract.Directory;
 
-import androidx.annotation.Nullable;
+import androidx.annotation.NonNull;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.searchfragment.common.SearchCursor;
@@ -56,7 +56,7 @@ final class SearchContactsCursor extends MergeCursor implements SearchCursor {
     }
 
     @Override
-    public boolean updateQuery(@Nullable String query) {
+    public boolean updateQuery(@NonNull String query) {
         contactFilterCursor.filter(query, context);
         return true;
     }

@@ -17,9 +17,6 @@
     <string name="a11y_new_call_log_entry_full_description_with_phone_account_info">^1, ^2, ^3.</string>
     <string name="a11y_new_call_log_entry_full_description_without_phone_account_info">^1, ^2.</string>
     <string name="a11y_new_call_log_entry_phone_account">ຢູ່ ^1, ຜ່ານ ^2</string>
-    <string name="a11y_new_call_log_entry_tap_action">expand menu</string>
-    <string name="a11y_new_call_log_entry_video_call">make a video call to ^1</string>
-    <string name="a11y_new_call_log_entry_voice_call">call ^1</string>
     <string name="abc_action_bar_home_description">ກັບໄປໜ້າຫຼັກ</string>
     <string name="abc_action_bar_up_description">ຂຶ້ນເທິງ</string>
     <string name="abc_action_menu_overflow_description">ໂຕເລືອກອື່ນ</string>
@@ -47,7 +44,6 @@
     <string name="abc_shareactionprovider_share_with">ແບ່ງປັນກັບ</string>
     <string name="abc_shareactionprovider_share_with_application">ແບ່ງປັນດ້ວຍ %s</string>
     <string name="abc_toolbar_collapse_description">ຫຍໍ້</string>
-    <string name="about_phone_label">ກ່ຽວກັບ</string>
     <string name="accessibility_settings_title">​ການ​ຊ່ວຍ​ເຂົ້າ​ເຖິງ</string>
     <string name="account_phone">ອຸປະກອນເທົ່ານັ້ນ, ບໍ່ຊິ້ງຂໍ້ມູນ</string>
     <string name="action_copy_number_text">ອັດ​ສຳ​ເນົາ​ໝາຍເລກ</string>
@@ -98,7 +94,6 @@
     <string name="blocked_numbers_disabled_emergency_desc">ການບ​ລັອກ​ສາຍ​ໂທ​ຖືກ​ປິດ​ໃຊ້​ງານ​ແລ້ວ ເພາະ​ວ່າ​ທ່ານ​ໄດ້​ຕິດ​ຕໍ່​ຫາ​ຝ່າຍ​ບໍ​ລິ​ການ​ສຸກ​ເສີນ​ຈາກ​ໂທ​ລະ​ສັບ​ນີ້​ພາຍ​ໃນ 48 ຊົ່ວ​ໂມງ​ສຸດ​ທ້າຍ. ມັນ​ຈະ​ຖືກ​ເປີດ​ໃຊ້​ງານ​ອີກ​ໂດຍ​ອັດ​ຕະ​ໂນ​ມັດ ເມື່ອ​ໝົດ​ໄລ​ຍະ 48 ຊົ່ວ​ໂມງ​ໄປ​ແລ້ວ.</string>
     <string name="blocked_numbers_disabled_emergency_header_label">ການບ​ລັອກ​ສາຍ​ໂທ​ປິດ​ຊົ່ວ​ຄາວ</string>
     <string name="bubble_return_to_call">ກັບໄປຫາການໂທ</string>
-    <string name="build_version_label">ເວີຊັນສ້າງ</string>
     <string name="call">ໂທ</string>
     <string name="callFailed_simError">ບໍ່ມີ​ SIM ຫຼື SIM ຜິດພາດ</string>
     <string name="call_assistant">ໂທ​ຫາ %s</string>
@@ -108,7 +103,7 @@
     <string name="call_car">ໂທຫາເບີລົດ</string>
     <string name="call_company_main">ໂທຫາເບີຫຼັກຂອງບໍລິສັດ</string>
     <string name="call_composer_connection_failed">%1$s ອອບລາຍຢູ່ ແລະ ບໍ່ສາມາດຕິດຕໍ່ຫາໄດ້</string>
-    <string name="call_composer_image_uploading">ກຳລັງສົ່ງຮູບພາບ...</string>
+    <string name="call_composer_image_uploading">ກຳລັງສົ່ງຮູບພາບ…</string>
     <string name="call_custom">ໂທຫາ %s</string>
     <string name="call_details">ລາຍລະອຽດ​ການໂທ</string>
     <string name="call_details_copy_number">ສຳເນົາເບີໂທ</string>
@@ -130,8 +125,8 @@
     <string name="call_incoming_default_label_answer_and_release_second">ປັດຂຶ້ນເພື່ອຮັບສາຍ ແລະ ພັກສາຍທີ່ກຳລັງໂທອອກໄວ້ກ່ອນ</string>
     <string name="call_incoming_default_label_answer_and_release_third">ປັດຂຶ້ນເພື່ອຮັບສາຍ ແລະ ວາງສາຍທີ່ກຳລັງພັກຢູ່</string>
     <string name="call_incoming_important">ສຳຄັນ</string>
-    <string name="call_incoming_message_custom">ຂຽນຂໍ້ຄວາມຂອງທ່ານເອງ...</string>
-    <string name="call_incoming_respond_via_sms_custom_message">ຂຽນຂໍ້ຄວາມຂອງທ່ານເອງ...</string>
+    <string name="call_incoming_message_custom">ຂຽນຂໍ້ຄວາມຂອງທ່ານເອງ…</string>
+    <string name="call_incoming_respond_via_sms_custom_message">ຂຽນຂໍ້ຄວາມຂອງທ່ານເອງ…</string>
     <string name="call_incoming_swipe_to_answer">ປັດອອກຂ້າງເພື່ອຮັບສາຍ</string>
     <string name="call_incoming_swipe_to_answer_and_release">ປັດຈາກໄອຄອນເພື່ອຮັບສາຍ ແລະ ວາງສາຍທີ່ກຳລັງໂທອອກ</string>
     <string name="call_incoming_swipe_to_answer_video_as_audio">ປັດຈາກໄອຄອນເພື່ອຮັບສາຍ</string>
@@ -148,7 +143,7 @@
     <string name="call_log_action_remove_spam">ບໍ່ແມ່ນສະແປມ</string>
     <string name="call_log_action_send_message">ສົ່ງຂໍ້ຄວາມ</string>
     <string name="call_log_action_set_up_video">ຕັ້ງຄ່າການໂທວິດີໂອ</string>
-    <string name="call_log_action_share_voicemail">ສົ່ງໄປ ...</string>
+    <string name="call_log_action_share_voicemail">ສົ່ງໄປ …</string>
     <string name="call_log_action_unblock_number">ປົດ​ບ​ລັອກ​ໝາຍ​ເລກ</string>
     <string name="call_log_action_video_call">​ໂທ​ດ້ວຍ​ວິ​ດີ​ໂອ</string>
     <string name="call_log_activity_title">ປະຫວັດການໂທ</string>
@@ -173,7 +168,7 @@
     <string name="call_pager">ໂທຫາເບີ pager</string>
     <string name="call_radio">ໂທຫາເບີວິທະຍຸ</string>
     <string name="call_settings_label">​ການ​ໂທ</string>
-    <string name="call_subject_hint">ພິມ​ບັນ​ທຶກ ເພື່ອ​ສົ່ງ​ກັບ​ການ​ໂທ ...</string>
+    <string name="call_subject_hint">ພິມ​ບັນ​ທຶກ ເພື່ອ​ສົ່ງ​ກັບ​ການ​ໂທ …</string>
     <string name="call_subject_limit">%1$s / %2$s</string>
     <string name="call_subject_type_and_number">%1$s %2$s</string>
     <string name="call_telex">ໂທຫາເບີ telex</string>
@@ -201,7 +196,7 @@
     <string name="clearCallLogProgress_title">ກຳ​ລັງ​ລຶບ​ປະ​ຫວັດ​ການ​ໂທ…</string>
     <string name="clearFrequentsConfirmation">ທ່ານຈະລຶບຂໍ້ມູນລາຍຊື່ທີ່ຕິດຕໍ່ຫາເລື້ອຍໆຢູ່ໃນແອັບຯລາຍ​ຊື່ ແລະໂທ​ລະ​ສັບ ພ້ອມທັງບັງຄັບໃຫ້ແອັບຯອີເມວເລີ່ມຮຽນຮູ້ຄ່າກຳນົດທີ່ຢູ່ຂອງທ່ານໃໝ່ຕັ້ງແຕ່ຕົ້ນ.</string>
     <string name="clearFrequentsConfirmation_title">ລຶບລາຍຊື່ທີ່ຕິດຕໍ່ເລື້ອຍໆອອກ?</string>
-    <string name="clearFrequentsProgress_title">ກຳລັງລຶບລ້າງລາຍຊື່ທີ່ຕິດຕໍ່ຫາເລື້ອຍໆ...</string>
+    <string name="clearFrequentsProgress_title">ກຳລັງລຶບລ້າງລາຍຊື່ທີ່ຕິດຕໍ່ຫາເລື້ອຍໆ…</string>
     <string name="conference_call_name">ການປະຊຸມທາງໂທລະສັບ</string>
     <string name="conference_caller_disconnect_content_description">ວາງສາຍ</string>
     <string name="contact_grid_callback_number">ເບີຂອງໂທລະສັບໜ່ວຍນີ້: %1$s</string>
@@ -220,7 +215,6 @@
     <string name="content_description_rtt_chat_avatar">ຮູບແທນຕົວ</string>
     <string name="content_description_rtt_check_button">ເຮັດຕໍ່ໄປ</string>
     <string name="copy_number">ສຳເນົາເບີໂທ</string>
-    <string name="copy_transcript_text">ອັດ​ສຳ​ເນົາ​ການ​ກ່າຍ​ເປັນ​ໜັງ​ສື</string>
     <string name="custom_message_hint">ຂຽນຂໍ້ຄວາມດ້ວຍຕົນເອງ</string>
     <string name="default_notification_description">ສຽງເລີ່ມຕົ້ນ (%1$s)</string>
     <string name="delete">​ລຶບ</string>
@@ -229,7 +223,7 @@
     <string name="description_call_action">ໂທ​ຫາ ^1</string>
     <string name="description_call_composer_camera">ຖ່າຍຮູບ</string>
     <string name="description_call_composer_message">ສົ່ງຂໍ້ຄວາມ</string>
-    <string name="description_call_composer_photo">ເລືອກຮູບພາບ...</string>
+    <string name="description_call_composer_photo">ເລືອກຮູບພາບ…</string>
     <string name="description_camera_cancel_photo">ຖ່າຍຮູບໃໝ່</string>
     <string name="description_camera_switch_camera_facing">ສະຫຼັບໄປໃຊ້ກ້ອງໜ້າ</string>
     <string name="description_camera_switch_camera_rear">ສະຫຼັບໄປໃຊ້ກ້ອງຫຼັງ</string>
@@ -380,7 +374,7 @@
     <string name="incall_video_call_request_failed">ບໍ່ສາມາດເຊື່ອມຕໍ່ໄດ້</string>
     <string name="incall_video_call_request_rejected">ສາຍຖືກປະຕິເສດ</string>
     <string name="incall_video_call_request_timed_out">ການໂທໝົດເວລາ</string>
-    <string name="incall_video_call_requesting">ການໂທວິດີໂອເຄືອຂ່າຍ...</string>
+    <string name="incall_video_call_requesting">ການໂທວິດີໂອເຄືອຂ່າຍ…</string>
     <string name="incall_video_call_upgrade_request">ກຳລັບສະຫຼັບໄປຫາວິດີໂອເຄືອຂ່າຍ…</string>
     <string name="incall_wifi_video_call_requesting">ການໂທວິດີໂອເຄືອຂ່າຍ Wi-Fi…</string>
     <string name="invalidNumber">%1$s ບໍ່ຖືກຕ້ອງ.</string>
@@ -389,7 +383,6 @@
     <string name="label_sip_address">SIP</string>
     <string name="launcherActivityLabel">ໂທລະສັບ</string>
     <string name="launcherDialpadActivityLabel">ແປ້ນກົດໂທລະສັບ</string>
-    <string name="licenseActivityLabel">ໃບອະນຸຍາດໂອເພນຊອດ</string>
     <string name="listAllContactsInAccount">ລາຍຊື່ຜູ່ຕິດຕໍ່ໃນ %s</string>
     <string name="listCustomView">ລາຍຊື່ຜູ່ຕິດຕໍ່ໃນມຸມມອງກຳນົດເອງ</string>
     <string name="listSingleContact">ລາຍຊື່ຜູ່ຕິດຕໍ່ດ່ຽວ</string>
@@ -431,10 +424,6 @@
     <string name="network_name_wifi">Wifi</string>
     <string name="new_call_log_carrier_video">ວິດີໂອຜູ້ໃຫ້ບໍລິການ</string>
     <string name="new_call_log_duo_video">ວິດີໂອ Duo</string>
-    <string name="new_call_log_header_older">ເກົ່າກວ່າ</string>
-    <string name="new_call_log_header_today">ມື້ນີ້</string>
-    <string name="new_call_log_header_yesterday">ມື້ວານນີ້</string>
-    <string name="new_call_log_permission_no_calllog">ເພື່ອເບິ່ງບັນທຶກການໂທຂອງທ່ານ, ກະລຸນາເປີດການອະນຸຍາດໂທລະສັບກ່ອນ.</string>
     <string name="new_call_log_secondary_blocked">ບລັອກແລ້ວ</string>
     <string name="new_call_log_secondary_spam">ສະແປມ</string>
     <string name="new_call_log_unknown">ບໍ່ຮູ້ຈັກ</string>
@@ -490,7 +479,6 @@
     <string name="ok_got_it">ຕົກລົງ, ເຂົ້າໃຈແລ້ວ</string>
     <string name="old_block_number_confirmation_title">ບລັອກເບີ %1$s ບໍ?</string>
     <string name="old_call_subject_type_and_number">%1$s %2$s</string>
-    <string name="open_source_license_detail_label">ລາຍລະອຽດໃບອະນຸຍາດໂອເພນຊອດ</string>
     <string name="organizationLabelsGroup">ອົງກອນ</string>
     <string name="outgoing_wps_warning">ການໂທ WPS ຈະຕັດສາຍທີ່ມີຢູ່ແລ້ວຂອງທ່ານ.</string>
     <string name="pause_prompt_no">ບໍ່</string>
@@ -524,7 +512,6 @@
     <string name="pre_call_select_phone_account_hint_intra_carrier">ໃຊ້ຜູ້ໃຫ້ບໍລິການດຽວກັນ</string>
     <string name="pre_call_select_phone_account_hint_other_sim_in_use">ບໍ່ສາມາດໃຊ້ໄດ້ໃນລະຫວ່າງໃຊ້ %1$s</string>
     <string name="pre_call_select_phone_account_remember">ຈື່ການເລືອກນີ້ໄວ້</string>
-    <string name="privacy_policy_label">ນະໂຍບາຍຄວາມເປັນສ່ວນຕົວ</string>
     <string name="private_num_non_verizon">ເບີສ່ວນຕົວ</string>
     <string name="private_num_verizon">ຖືກຈຳກັດ</string>
     <string name="quick_question">ມີເລື່ອງຖາມໜ້ອຍໜຶ່ງ…</string>
@@ -571,7 +558,7 @@
     <string name="set_default_account">ໃຊ້​ຊິມ​ນີ້​ເພື່ອ​ການໂທທຸກ​ເທື່ອ</string>
     <string name="settings">ການຕັ້ງຄ່າ</string>
     <string name="share_and_call">ແບ່ງປັນ ແລະ ໂທ</string>
-    <string name="simContacts_emptyLoading">ກຳລັງໂຫລດຈາກ SIM card...</string>
+    <string name="simContacts_emptyLoading">ກຳລັງໂຫລດຈາກ SIM card…</string>
     <string name="simContacts_title">ລາຍຊື່ຜູ້ຕິດຕໍ່ SIM card</string>
     <string name="simulator_submenu_label">ຕົວຈຳລອງ</string>
     <string name="sms">​ຂໍ້​ຄວາມ</string>
@@ -646,7 +633,6 @@
     <string name="tab_title">ແຖບ %1$s.</string>
     <string name="tab_title_call_history">ປະຫວັດການໂທ</string>
     <string name="tab_title_speed_dial">ໂທດ່ວນ</string>
-    <string name="terms_of_service_label">ຂໍ້ກຳນົດບໍລິການ</string>
     <string name="toast_cannot_write_system_settings">ແອັບໂທລະສັບບໍ່ມີການອະນຸຍາດໃຫ້ຂຽນໃສ່ການຕັ້ງຄ່າລະບົບ.</string>
     <string name="toast_text_copied">ສຳເນົາຂໍ້ຄວາມແລ້ວ</string>
     <string name="toolbar_close">ປິດ</string>
@@ -691,13 +677,7 @@
     <string name="view_updates_from_group">ເບິ່ງອັບເດດ</string>
     <string name="voice_call">ການໂທດ້ວຍສຽງ</string>
     <string name="voice_search_not_available">ບໍ່​ມີ​ການ​ຊອກ​ຫາ​ດ້ວຍ​ສຽງ​ຢູ່</string>
-    <string name="voicemail">ຂໍ້ຄວາມສຽງ</string>
-    <string name="voicemailCallLogDateTimeFormat">%1$s ເວລາ %2$s</string>
-    <string name="voicemailCallLogDateTimeFormatWithDuration">%1$s • %2$s</string>
-    <string name="voicemailCallLogToday">@string/call_log_header_today</string>
-    <string name="voicemailDurationFormat">%1$02d:%2$02d</string>
     <string name="voicemailMultiSelectActionBarTitle">ເລືອກ %1$s ລາຍການແລ້ວ</string>
-    <string name="voicemail_donation_promo_content">ອະນຸຍາດໃຫ້ Google ກວດສອບຂໍ້ຄວາມສຽງນີ້ ແລະ ຂໍ້ຄວາມສຽງໃນອະນາຄົດດ້ວຍການຖອດຂໍ້ຄວາມ. ພວກມັນຈະຖືກເກັບໄວ້ໂດຍບໍ່ລະບຸຊື່. ທ່ານສາມາດປ່ຽນການຕັ້ງຄ່ານີ້ໄດ້ທຸກເວລາ. %1$s</string>
     <string name="voicemail_string">ຂໍ້ຄວາມສຽງ</string>
     <string name="voicemail_transcription_rating">ໃຫ້ຄະແນນຄຸນນະພາບການຖອດຂໍ້ຄວາມ</string>
     <string name="wait_prompt_str">"ສົ່ງໂທນສຽງຕໍ່ໄປນີ້ບໍ່?

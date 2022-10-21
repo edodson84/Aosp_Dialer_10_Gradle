@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:minHeight="48.0dip">
@@ -11,7 +12,8 @@
         android:layout_gravity="start|center"
         android:layout_marginStart="8.0dip"
         android:padding="12.0dip"
-        android:tint="?android:colorPrimary" />
+        app:tint="?android:colorPrimary"
+        android:contentDescription="TODO" />
 
     <TextView
         android:id="@id/search_action_text"

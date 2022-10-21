@@ -65,16 +65,23 @@ final class LatinSmartDialMap extends SmartDialMap {
 
         switch (ch) {
             case 'À':
-                return Optional.of('a');
             case 'Á':
-                return Optional.of('a');
             case 'Â':
-                return Optional.of('a');
             case 'Ã':
-                return Optional.of('a');
             case 'Ä':
-                return Optional.of('a');
             case 'Å':
+            case 'à':
+            case 'á':
+            case 'â':
+            case 'ã':
+            case 'ä':
+            case 'å':
+            case 'Ā':
+            case 'ā':
+            case 'Ă':
+            case 'ă':
+            case 'Ą':
+            case 'ą':
                 return Optional.of('a');
             case 'Ç':
                 return Optional.of('c');
@@ -122,18 +129,6 @@ final class LatinSmartDialMap extends SmartDialMap {
                 return Optional.of('u');
             case 'Ý':
                 return Optional.of('u');
-            case 'à':
-                return Optional.of('a');
-            case 'á':
-                return Optional.of('a');
-            case 'â':
-                return Optional.of('a');
-            case 'ã':
-                return Optional.of('a');
-            case 'ä':
-                return Optional.of('a');
-            case 'å':
-                return Optional.of('a');
             case 'ç':
                 return Optional.of('c');
             case 'è':
@@ -180,18 +175,6 @@ final class LatinSmartDialMap extends SmartDialMap {
                 return Optional.of('y');
             case 'ÿ':
                 return Optional.of('y');
-            case 'Ā':
-                return Optional.of('a');
-            case 'ā':
-                return Optional.of('a');
-            case 'Ă':
-                return Optional.of('a');
-            case 'ă':
-                return Optional.of('a');
-            case 'Ą':
-                return Optional.of('a');
-            case 'ą':
-                return Optional.of('a');
             case 'Ć':
                 return Optional.of('c');
             case 'ć':

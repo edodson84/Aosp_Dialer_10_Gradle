@@ -625,7 +625,6 @@ public final class CallDetailsHeaderInfo extends
                     throw new RuntimeException(
                             new com.google.protobuf.InvalidProtocolBufferException(
                                     e.getMessage()).setUnfinishedMessage(this));
-                } finally {
                 }
             }
             case GET_DEFAULT_INSTANCE: {

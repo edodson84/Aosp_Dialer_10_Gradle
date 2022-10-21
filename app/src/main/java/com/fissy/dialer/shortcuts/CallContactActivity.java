@@ -21,6 +21,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.fissy.dialer.R;
@@ -34,7 +36,7 @@ import com.fissy.dialer.util.TransactionSafeActivity;
 /**
  * Invisible activity launched when a shortcut is selected by user. Calls a contact based on URI.
  */
-public class CallContactActivity extends TransactionSafeActivity
+public class CallContactActivity extends AppCompatActivity
         implements PhoneNumberInteraction.DisambigDialogDismissedListener,
         PhoneNumberInteraction.InteractionErrorListener,
         ActivityCompat.OnRequestPermissionsResultCallback {
@@ -129,7 +131,7 @@ public class CallContactActivity extends TransactionSafeActivity
 
     @Override
     public void onRequestPermissionsResult(
-            int requestCode, String[] permissions, int[] grantResults) {
+            int requestCode, @NonNull String[] permissions,  @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case PhoneNumberInteraction.REQUEST_READ_CONTACTS:

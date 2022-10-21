@@ -79,7 +79,7 @@ public class FilteredNumbersUtil {
      */
     public static void checkForSendToVoicemailContact(
             final Context context, final CheckForSendToVoicemailContactListener listener) {
-        final AsyncTask task =
+        final AsyncTask<Object, Void, Boolean> task =
                 new AsyncTask<Object, Void, Boolean>() {
                     @Override
                     public Boolean doInBackground(Object... params) {
@@ -133,9 +133,6 @@ public class FilteredNumbersUtil {
                 new AsyncTask<Object, Void, Boolean>() {
                     @Override
                     public Boolean doInBackground(Object... params) {
-                        if (context == null) {
-                            return false;
-                        }
 
                         // Get the phone number of contacts marked as SEND_TO_VOICEMAIL.
                         final Cursor phoneCursor =
@@ -187,7 +184,7 @@ public class FilteredNumbersUtil {
                             if (listener != null) {
                                 listener.onImportComplete();
                             }
-                        } else if (context != null) {
+                        } else {
                             String toastStr = context.getString(R.string.send_to_voicemail_import_failed);
                             Toast.makeText(context, toastStr, Toast.LENGTH_SHORT).show();
                         }
@@ -207,7 +204,7 @@ public class FilteredNumbersUtil {
             return false;
         }
 
-        Long lastEmergencyCallTime = getLastEmergencyCallTimeMillis(context);
+        long lastEmergencyCallTime = getLastEmergencyCallTimeMillis(context);
         if (lastEmergencyCallTime == 0) {
             return false;
         }
@@ -248,45 +245,42 @@ public class FilteredNumbersUtil {
         // If the user has blocked numbers, notify that call blocking is temporarily disabled.
         FilteredNumberAsyncQueryHandler queryHandler = new FilteredNumberAsyncQueryHandler(context);
         queryHandler.hasBlockedNumbers(
-                new OnHasBlockedNumbersListener() {
-                    @Override
-                    public void onHasBlockedNumbers(boolean hasBlockedNumbers) {
-                        if (context == null || !hasBlockedNumbers) {
-                            return;
-                        }
-
-                        Notification.Builder builder =
-                                new Notification.Builder(context)
-                                        .setSmallIcon(R.drawable.quantum_ic_block_white_24)
-                                        .setContentTitle(
-                                                context.getString(R.string.call_blocking_disabled_notification_title))
-                                        .setContentText(
-                                                context.getString(R.string.call_blocking_disabled_notification_text))
-                                        .setAutoCancel(true);
-
-                        if (BuildCompat.isAtLeastO()) {
-                            builder.setChannelId(NotificationChannelId.DEFAULT);
-                        }
-                        builder.setContentIntent(
-                                PendingIntent.getActivity(
-                                        context,
-                                        0,
-                                        FilteredNumberCompat.createManageBlockedNumbersIntent(context),
-                                        PendingIntent.FLAG_UPDATE_CURRENT));
-
-                        DialerNotificationManager.notify(
-                                context,
-                                CALL_BLOCKING_NOTIFICATION_TAG,
-                                CALL_BLOCKING_DISABLED_BY_EMERGENCY_CALL_NOTIFICATION_ID,
-                                builder.build());
-
-                        // Record that the user has been notified for this emergency call.
-                        StorageComponent.get(context)
-                                .unencryptedSharedPrefs()
-                                .edit()
-                                .putBoolean(NOTIFIED_CALL_BLOCKING_DISABLED_BY_EMERGENCY_CALL_PREF_KEY, true)
-                                .apply();
+                hasBlockedNumbers -> {
+                    if (context == null || !hasBlockedNumbers) {
+                        return;
                     }
+
+                    Notification.Builder builder =
+                            new Notification.Builder(context)
+                                    .setSmallIcon(R.drawable.quantum_ic_block_white_24)
+                                    .setContentTitle(
+                                            context.getString(R.string.call_blocking_disabled_notification_title))
+                                    .setContentText(
+                                            context.getString(R.string.call_blocking_disabled_notification_text))
+                                    .setAutoCancel(true);
+
+                    if (BuildCompat.isAtLeastO()) {
+                        builder.setChannelId(NotificationChannelId.DEFAULT);
+                    }
+                    builder.setContentIntent(
+                            PendingIntent.getActivity(
+                                    context,
+                                    0,
+                                    FilteredNumberCompat.createManageBlockedNumbersIntent(context),
+                                    PendingIntent.FLAG_UPDATE_CURRENT));
+
+                    DialerNotificationManager.notify(
+                            context,
+                            CALL_BLOCKING_NOTIFICATION_TAG,
+                            CALL_BLOCKING_DISABLED_BY_EMERGENCY_CALL_NOTIFICATION_ID,
+                            builder.build());
+
+                    // Record that the user has been notified for this emergency call.
+                    StorageComponent.get(context)
+                            .unencryptedSharedPrefs()
+                            .edit()
+                            .putBoolean(NOTIFIED_CALL_BLOCKING_DISABLED_BY_EMERGENCY_CALL_PREF_KEY, true)
+                            .apply();
                 });
     }
 

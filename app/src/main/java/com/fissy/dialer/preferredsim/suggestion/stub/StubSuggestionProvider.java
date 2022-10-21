@@ -36,9 +36,10 @@ public class StubSuggestionProvider implements SuggestionProvider {
     public StubSuggestionProvider() {
     }
 
+    @NonNull
     @WorkerThread
     @Override
-    public Optional<Suggestion> getSuggestion(Context context, String number) {
+    public Optional<Suggestion> getSuggestion(@NonNull Context context, @NonNull String number) {
         return Optional.absent();
     }
 
@@ -52,6 +53,6 @@ public class StubSuggestionProvider implements SuggestionProvider {
 
     @Override
     public void reportIncorrectSuggestion(
-            @NonNull Context context, @NonNull String number, PhoneAccountHandle newAccount) {
+            @NonNull Context context, @NonNull String number, @NonNull PhoneAccountHandle newAccount) {
     }
 }

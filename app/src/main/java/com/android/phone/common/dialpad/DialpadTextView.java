@@ -21,7 +21,8 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.widget.TextView;
+
+import com.google.android.material.textview.MaterialTextView;
 
 /**
  * This is a custom text view intended only for rendering the numerals (and star and pound) on the
@@ -31,8 +32,8 @@ import android.widget.TextView;
  * a larger default, for the dialpad we use this class to more precisely render characters according
  * to the precise amount of space they need.
  */
-public class DialpadTextView extends TextView {
-    private Rect mTextBounds = new Rect();
+public class DialpadTextView extends MaterialTextView {
+    private final Rect mTextBounds = new Rect();
     private String mTextStr;
 
     public DialpadTextView(Context context, AttributeSet attrs) {
@@ -44,6 +45,7 @@ public class DialpadTextView extends TextView {
      */
     @Override
     public void draw(Canvas canvas) {
+        super.draw(canvas);
         Paint paint = getPaint();
 
         // Without this, the draw does not respect the style's specified text color.

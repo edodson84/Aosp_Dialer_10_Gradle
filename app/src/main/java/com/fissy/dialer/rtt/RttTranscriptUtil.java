@@ -83,18 +83,17 @@ public final class RttTranscriptUtil {
     @WorkerThread
     private static RttTranscript getRttTranscript(Context context, String transcriptId) {
         Assert.isWorkerThread();
-        RttTranscriptDatabaseHelper databaseHelper = new RttTranscriptDatabaseHelper(context);
-        try (Cursor cursor =
-                     databaseHelper
-                             .getReadableDatabase()
-                             .query(
-                                     RttTranscriptDatabaseHelper.TABLE,
-                                     new String[]{RttTranscriptColumn.TRANSCRIPT_DATA},
-                                     RttTranscriptColumn.TRANSCRIPT_ID + " = ?",
-                                     new String[]{transcriptId},
-                                     null,
-                                     null,
-                                     null)) {
+        try (RttTranscriptDatabaseHelper databaseHelper = new RttTranscriptDatabaseHelper(context); Cursor cursor =
+                databaseHelper
+                        .getReadableDatabase()
+                        .query(
+                                RttTranscriptDatabaseHelper.TABLE,
+                                new String[]{RttTranscriptColumn.TRANSCRIPT_DATA},
+                                RttTranscriptColumn.TRANSCRIPT_ID + " = ?",
+                                new String[]{transcriptId},
+                                null,
+                                null,
+                                null)) {
             if (cursor != null && cursor.moveToFirst()) {
                 try {
                     return RttTranscript.parseFrom(cursor.getBlob(0));
@@ -104,8 +103,6 @@ public final class RttTranscriptUtil {
             } else {
                 return null;
             }
-        } finally {
-            databaseHelper.close();
         }
     }
 

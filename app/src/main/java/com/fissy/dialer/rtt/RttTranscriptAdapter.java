@@ -21,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fissy.dialer.R;
@@ -55,8 +56,9 @@ public class RttTranscriptAdapter extends RecyclerView.Adapter<RttTranscriptMess
         return i;
     }
 
+    @NonNull
     @Override
-    public RttTranscriptMessageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RttTranscriptMessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(R.layout.rtt_transcript_list_item, parent, false);
         return new RttTranscriptMessageViewHolder(view);
@@ -68,7 +70,7 @@ public class RttTranscriptAdapter extends RecyclerView.Adapter<RttTranscriptMess
     }
 
     @Override
-    public void onBindViewHolder(RttTranscriptMessageViewHolder rttChatMessageViewHolder, int i) {
+    public void onBindViewHolder(@NonNull RttTranscriptMessageViewHolder rttChatMessageViewHolder, int i) {
         boolean isSameGroup = false;
         boolean hasMoreInSameGroup = false;
         RttTranscriptMessage rttTranscriptMessage = rttTranscript.getMessages(i);

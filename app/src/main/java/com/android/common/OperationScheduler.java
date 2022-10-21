@@ -19,6 +19,9 @@ package com.android.common;
 import android.content.SharedPreferences;
 import android.text.format.Time;
 
+import androidx.annotation.NonNull;
+
+import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -312,9 +315,10 @@ public class OperationScheduler {
     /**
      * Return a string description of the scheduler state for debugging.
      */
+    @NonNull
     public String toString() {
         StringBuilder out = new StringBuilder("[OperationScheduler:");
-        TreeMap<String, Object> copy = new TreeMap<String, Object>(mStorage.getAll());  // Sort keys
+        TreeMap<String, Object> copy = new TreeMap<>(mStorage.getAll());  // Sort keys
         for (Map.Entry<String, Object> e : copy.entrySet()) {
             String key = e.getKey();
             if (key.startsWith(PREFIX)) {
@@ -329,7 +333,7 @@ public class OperationScheduler {
                     if (v == null) {
                         out.append("=(null)");
                     } else {
-                        out.append("=").append(v.toString());
+                        out.append("=").append(v);
                     }
                 }
             }
@@ -380,17 +384,18 @@ public class OperationScheduler {
          */
         public long periodicIntervalMillis = 0;
 
+        @NonNull
         @Override
         public String toString() {
             if (backoffExponentialMillis > 0) {
-                return String.format(
+                return String.format(Locale.US,
                         "OperationScheduler.Options[backoff=%.1f+%.1f+%.1f max=%.1f min=%.1f period=%.1f]",
                         backoffFixedMillis / 1000.0, backoffIncrementalMillis / 1000.0,
                         backoffExponentialMillis / 1000.0,
                         maxMoratoriumMillis / 1000.0, minTriggerMillis / 1000.0,
                         periodicIntervalMillis / 1000.0);
             } else {
-                return String.format(
+                return String.format(Locale.US,
                         "OperationScheduler.Options[backoff=%.1f+%.1f max=%.1f min=%.1f period=%.1f]",
                         backoffFixedMillis / 1000.0, backoffIncrementalMillis / 1000.0,
                         maxMoratoriumMillis / 1000.0, minTriggerMillis / 1000.0,

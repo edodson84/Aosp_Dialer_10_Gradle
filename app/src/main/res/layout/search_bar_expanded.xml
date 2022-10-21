@@ -27,7 +27,8 @@
         android:inputType="textFilter"
         android:maxLines="1"
         android:textCursorDrawable="@drawable/searchedittext_custom_cursor"
-        android:textSize="@dimen/search_text_size" />
+        android:textSize="@dimen/search_text_size"
+        android:autofillHints="" />
 
     <ImageView
         android:id="@id/search_close_button"

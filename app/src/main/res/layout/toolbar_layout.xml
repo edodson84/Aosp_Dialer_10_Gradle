@@ -47,7 +47,7 @@
                     android:layout_toStartOf="@id/voice_search_button"
                     android:layout_toEndOf="@id/search_magnifying_glass"
                     android:text="@string/dialer_hint_find_contact"
-                    android:textSize="16.0dip" />
+                    android:textSize="16.0sp" />
 
                 <ImageView
                     android:id="@id/voice_search_button"
@@ -97,7 +97,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8.0dip"
                     android:layout_marginBottom="8.0dip"
-                    android:src="@drawable/quantum_ic_close_vd_theme_24" />
+                    android:src="@drawable/quantum_ic_close_vd_theme_24"
+                    android:contentDescription="@string/remove_contact" />
 
                 <TextView
                     android:id="@id/remove_view_text"

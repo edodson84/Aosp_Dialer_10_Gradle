@@ -31,7 +31,7 @@ public abstract class CompositeCursorAdapter extends BaseAdapter {
 
     private static final int INITIAL_CAPACITY = 2;
     private final Context mContext;
-    private ArrayList<Partition> mPartitions;
+    private final ArrayList<Partition> mPartitions;
     private int mCount = 0;
     private boolean mCacheValid = true;
     private boolean mNotificationsEnabled = true;
@@ -43,7 +43,7 @@ public abstract class CompositeCursorAdapter extends BaseAdapter {
 
     public CompositeCursorAdapter(Context context, int initialCapacity) {
         mContext = context;
-        mPartitions = new ArrayList<Partition>();
+        mPartitions = new ArrayList<>();
     }
 
     public Context getContext() {

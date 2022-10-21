@@ -17,9 +17,6 @@
     <string name="a11y_new_call_log_entry_full_description_with_phone_account_info">^1, ^2, ^3 ។</string>
     <string name="a11y_new_call_log_entry_full_description_without_phone_account_info">^1, ^2 ។</string>
     <string name="a11y_new_call_log_entry_phone_account">នៅ​លើ ^1 តាមរយៈ ^2</string>
-    <string name="a11y_new_call_log_entry_tap_action">expand menu</string>
-    <string name="a11y_new_call_log_entry_video_call">make a video call to ^1</string>
-    <string name="a11y_new_call_log_entry_voice_call">call ^1</string>
     <string name="abc_action_bar_home_description">រកមើល​ទៅ​ដើម</string>
     <string name="abc_action_bar_up_description">រកមើល​ឡើងលើ</string>
     <string name="abc_action_menu_overflow_description">ជម្រើស​ច្រើន​ទៀត</string>
@@ -47,7 +44,6 @@
     <string name="abc_shareactionprovider_share_with">ចែករំលែក​ជាមួយ</string>
     <string name="abc_shareactionprovider_share_with_application">ចែក​រំលែក​ជា​មួយ %s</string>
     <string name="abc_toolbar_collapse_description">បង្រួម</string>
-    <string name="about_phone_label">អំពី</string>
     <string name="accessibility_settings_title">ភាពងាយស្រួល</string>
     <string name="account_phone">សម្រាប់​តែ​ឧបករណ៍ មិន​បាន​ធ្វើ​សមកាលកម្ម</string>
     <string name="action_copy_number_text">ថតចម្លងលេខទូរស័ព្ទ</string>
@@ -98,7 +94,6 @@
     <string name="blocked_numbers_disabled_emergency_desc">ការរារាំងការហៅត្រូវបានបិទដំណើរការ ដោយសារតែអ្នកបានទាក់ទងទៅសេវាអាសន្នចេញពីទូរស័ព្ទនេះក្នុងចន្លោះពេល 48 ម៉ោងកន្លងមកនេះ។ វានឹងបើកដំណើរការឡើងវិញ បន្ទាប់ពីរយៈពេល 48 ម៉ោងផុតកំណត់។</string>
     <string name="blocked_numbers_disabled_emergency_header_label">ការរារាំងការហៅត្រូវបានបិទជាបណ្តោះអាសន្ន</string>
     <string name="bubble_return_to_call">ហៅ​ទូរសព្ទ​ទៅ​វិញ</string>
-    <string name="build_version_label">កំណែបង្កើត</string>
     <string name="call">ហៅ​ទូរសព្ទ</string>
     <string name="callFailed_simError">គ្មាន​ស៊ីមកាត ឬ​កំហុស​ស៊ីមកាត</string>
     <string name="call_assistant">ហៅ​ទៅ %s</string>
@@ -108,7 +103,7 @@
     <string name="call_car">ហៅ​ទៅ​ទូរស័ព្ទ​រថយន្ត</string>
     <string name="call_company_main">ហៅ​ទៅ​លេខ​សំខាន់​របស់​ក្រុមហ៊ុន</string>
     <string name="call_composer_connection_failed">%1$s មិន​នៅ​លើ​អ៊ីនធឺណិត និង​មិន​អាច​ទាក់ទង​បាន​ទេ</string>
-    <string name="call_composer_image_uploading">កំពុង​ផ្ញើ​រូបភាព...</string>
+    <string name="call_composer_image_uploading">កំពុង​ផ្ញើ​រូបភាព…</string>
     <string name="call_custom">ហៅ %s</string>
     <string name="call_details">ព័ត៌មាន​លម្អិត​អំពី​ការ​ហៅ</string>
     <string name="call_details_copy_number">ថតចម្លងលេខទូរសព្ទ</string>
@@ -148,7 +143,7 @@
     <string name="call_log_action_remove_spam">មិនមែន​សារ​ឥតបានការ</string>
     <string name="call_log_action_send_message">ផ្ញើសារ</string>
     <string name="call_log_action_set_up_video">រៀបចំការហៅ​ជា​វីដេអូ​</string>
-    <string name="call_log_action_share_voicemail">ផ្ញើទៅ...</string>
+    <string name="call_log_action_share_voicemail">ផ្ញើទៅ…</string>
     <string name="call_log_action_unblock_number">ឈប់ទប់ស្កាត់លេខ</string>
     <string name="call_log_action_video_call">ហៅជាវីដេអូ</string>
     <string name="call_log_activity_title">ប្រវត្តិ​ហៅ</string>
@@ -173,7 +168,7 @@
     <string name="call_pager">ហៅ​ទៅ​លេខ​ភេយ័រ</string>
     <string name="call_radio">ហៅ​ទៅ​លេខ​វិទ្យុ</string>
     <string name="call_settings_label">ការហៅ</string>
-    <string name="call_subject_hint">វាយបញ្ចូលចំណាំដែលត្រូវផ្ញើជាមួយការហៅទូរស័ព្ទ ...</string>
+    <string name="call_subject_hint">វាយបញ្ចូលចំណាំដែលត្រូវផ្ញើជាមួយការហៅទូរស័ព្ទ …</string>
     <string name="call_subject_limit">%1$s / %2$s</string>
     <string name="call_subject_type_and_number">%1$s %2$s</string>
     <string name="call_telex">ហៅ​ទៅ telex</string>
@@ -201,7 +196,7 @@
     <string name="clearCallLogProgress_title">កំពុងជម្រះប្រវត្តិហៅ…</string>
     <string name="clearFrequentsConfirmation">អ្នកនឹងជម្រះបញ្ជីដែលអ្នកទាក់ទងជាញឹកញាប់នៅក្នុងកម្មវិធីទូរស័ព្ទ និងទំនាក់ទំនង ហើយបង្ខំឲ្យកម្មវិធីអ៊ីមែលស្វែងយល់ពីចំណូលចិត្តទំនាក់ទំនងរបស់អ្នកតាំងពីដំបូង។</string>
     <string name="clearFrequentsConfirmation_title">សម្អាត​ទំនាក់ទំនង​ញឹកញាប់?</string>
-    <string name="clearFrequentsProgress_title">សម្អាត​ទំនាក់ទំនង​ញឹកញាប់...</string>
+    <string name="clearFrequentsProgress_title">សម្អាត​ទំនាក់ទំនង​ញឹកញាប់…</string>
     <string name="conference_call_name">ហៅជា​សន្និសីទ</string>
     <string name="conference_caller_disconnect_content_description">បញ្ចប់ការហៅ</string>
     <string name="contact_grid_callback_number">លេខ​ទូរសព្ទ​នេះ៖ %1$s</string>
@@ -220,7 +215,6 @@
     <string name="content_description_rtt_chat_avatar">រូបតំណាង</string>
     <string name="content_description_rtt_check_button">ទៅ​មុខ</string>
     <string name="copy_number">ថត​ចម្លង​លេខ​ទូរសព្ទ</string>
-    <string name="copy_transcript_text">ថតចម្លងសំណៅពីសារសម្លេង</string>
     <string name="custom_message_hint">សរសេរ​សារ​ផ្ទាល់ខ្លួន</string>
     <string name="default_notification_description">សំឡេង​លំនាំដើម (%1$s)</string>
     <string name="delete">លុប</string>
@@ -337,7 +331,7 @@
     <string name="incall_calling_on_recent_choice_template">កំពុង​ហៅ​ទូរសព្ទ​លើ​ជម្រើស %s ថ្មីៗ</string>
     <string name="incall_calling_on_same_carrier_template">កំពុង​ហៅ​ទូរសព្ទ​តាមក្រុមហ៊ុន​សេវា​ទូរសព្ទ %s ដូចគ្នា</string>
     <string name="incall_calling_via_template">កំពុង​ហៅតាម %s</string>
-    <string name="incall_connecting">កំពុង​ហៅ...</string>
+    <string name="incall_connecting">កំពុង​ហៅ…</string>
     <string name="incall_connecting_assited_dialed">កំពុង​ហៅ​ទូរសព្ទ ដោយ​ប្រើប្រាស់ +%1$s (%2$s)…</string>
     <string name="incall_connecting_assited_dialed_component">កំពុង​ប្រើប្រាស់ +%1$s (%2$s)…</string>
     <string name="incall_content_description_bluetooth">ប៊្លូធូស</string>
@@ -376,11 +370,11 @@
     <string name="incall_remotely_held">កំពុង​រង់ចាំ</string>
     <string name="incall_talkback_speaker_off">, បានបិទ</string>
     <string name="incall_talkback_speaker_on">, បាន​បើក</string>
-    <string name="incall_transferring">កំពុងផ្ទេរ...</string>
+    <string name="incall_transferring">កំពុងផ្ទេរ…</string>
     <string name="incall_video_call_request_failed">មិនអាច​ភ្ជាប់​បាន</string>
     <string name="incall_video_call_request_rejected">បាន​បដិសេធ​ការ​ហៅ</string>
     <string name="incall_video_call_request_timed_out">ការ​ហៅ​បាន​អស់​ពេល</string>
-    <string name="incall_video_call_requesting">កំពុង​ហៅជា​វីដេអូ​តាម​ក្រុមហ៊ុន​បម្រើ​សេវា​ទូរសព្ទ...</string>
+    <string name="incall_video_call_requesting">កំពុង​ហៅជា​វីដេអូ​តាម​ក្រុមហ៊ុន​បម្រើ​សេវា​ទូរសព្ទ…</string>
     <string name="incall_video_call_upgrade_request">កំពុង​ប្ដូរ​ទៅ​ការហៅ​ជា​វីដេអូ​តាម​ក្រុមហ៊ុន​បម្រើ​សេវា​ទូរសព្ទ…</string>
     <string name="incall_wifi_video_call_requesting">កំពុង​ហៅ​ជា​វីដេអូ​តាម​ក្រុមហ៊ុន​បម្រើ​សេវា​ទូរសព្ទ​តាម Wi-Fi…</string>
     <string name="invalidNumber">%1$s មិនត្រឹមត្រូវទេ។</string>
@@ -389,7 +383,6 @@
     <string name="label_sip_address">SIP</string>
     <string name="launcherActivityLabel">ទូរស័ព្ទ</string>
     <string name="launcherDialpadActivityLabel">បន្ទះ​ចុច​លេខទូរសព្ទ</string>
-    <string name="licenseActivityLabel">អាជ្ញាប័ណ្ណ​កម្មវិធី​​​​​កូដ​ចំហ</string>
     <string name="listAllContactsInAccount">ទំនាក់ទំនង​នៅ​ក្នុង %s</string>
     <string name="listCustomView">ទំនាក់ទំនង​ក្នុង​ទិដ្ឋភាព​ផ្ទាល់ខ្លួន</string>
     <string name="listSingleContact">ទំនាក់ទំនង​ទោល</string>
@@ -431,10 +424,6 @@
     <string name="network_name_wifi">វ៉ាយហ្វាយ</string>
     <string name="new_call_log_carrier_video">វីដេអូ​តាម​ក្រុមហ៊ុន​សេវា​ទូរសព្ទ</string>
     <string name="new_call_log_duo_video">វីដេអូ​តាម Duo</string>
-    <string name="new_call_log_header_older">ចាស់ៗ</string>
-    <string name="new_call_log_header_today">ថ្ងៃនេះ</string>
-    <string name="new_call_log_header_yesterday">ម្សិលមិញ</string>
-    <string name="new_call_log_permission_no_calllog">ដើម្បីមើលកំណត់ហេតុហៅទូរសព្ទរបស់អ្នក សូមបើកការអនុញ្ញាតទូរសព្ទ។</string>
     <string name="new_call_log_secondary_blocked">បាន​ទប់ស្កាត់</string>
     <string name="new_call_log_secondary_spam">សារ​ឥត​បាន​ការ</string>
     <string name="new_call_log_unknown">មិន​ស្គាល់</string>
@@ -490,7 +479,6 @@
     <string name="ok_got_it">យល់ព្រម យល់ហើយ</string>
     <string name="old_block_number_confirmation_title">ទប់ស្កាត់ %1$s ឬ?</string>
     <string name="old_call_subject_type_and_number">%1$s %2$s</string>
-    <string name="open_source_license_detail_label">ព័ត៌មាន​លម្អិត​អំពី​អាជ្ញាបណ្ណ​សម្រាប់​កម្មវិធី​ប្រភព​កូដ​ចំហ</string>
     <string name="organizationLabelsGroup">ស្ថាប័ន</string>
     <string name="outgoing_wps_warning">ការ​ហៅ​ចេញ​​ដោយ​ប្រើ​សេវា WPS នឹង​ផ្ដាច់​ការ​ហៅ​ដែល​មាន​​របស់​អ្នក។</string>
     <string name="pause_prompt_no">ទេ</string>
@@ -524,7 +512,6 @@
     <string name="pre_call_select_phone_account_hint_intra_carrier">ប្រើប្រាស់​ក្រុមហ៊ុន​សេវា​ទូរសព្ទ​ដូចគ្នា</string>
     <string name="pre_call_select_phone_account_hint_other_sim_in_use">មិន​ដំណើរការ នៅពេល​កំពុង​ប្រើប្រាស់ %1$s</string>
     <string name="pre_call_select_phone_account_remember">ចងចាំ​ជម្រើស​នេះ</string>
-    <string name="privacy_policy_label">គោលការណ៍​ឯកជន​ភាព</string>
     <string name="private_num_non_verizon">លេខ​ឯកជន</string>
     <string name="private_num_verizon">បាន​ដាក់​កម្រិត</string>
     <string name="quick_question">សំណួរ​រហ័ស…</string>
@@ -571,7 +558,7 @@
     <string name="set_default_account">ប្រើ​វា​សម្រាប់​ការ​ហៅ​ជា​និច្ច</string>
     <string name="settings">ការ​កំណត់</string>
     <string name="share_and_call">ចែករំលែក និង​ហៅ​ទូរសព្ទ</string>
-    <string name="simContacts_emptyLoading">កំពុង​ផ្ទុក​ពី​ស៊ីម​កាត...</string>
+    <string name="simContacts_emptyLoading">កំពុង​ផ្ទុក​ពី​ស៊ីម​កាត…</string>
     <string name="simContacts_title">ទំនាក់ទំនង​នៅ​ក្នុង​ស៊ីម​កាត</string>
     <string name="simulator_submenu_label">កម្មវិធីធ្វើ​ដូច​មែនទែន</string>
     <string name="sms">សារ​​អត្ថបទ</string>
@@ -646,7 +633,6 @@
     <string name="tab_title">ផ្ទាំង %1$s។</string>
     <string name="tab_title_call_history">ប្រវត្តិហៅ​ទូរសព្ទ</string>
     <string name="tab_title_speed_dial">ការហៅរហ័ស</string>
-    <string name="terms_of_service_label">លក្ខខណ្ឌ​ប្រើប្រាស់</string>
     <string name="toast_cannot_write_system_settings">កម្មវិធីទូរស័ព្ទមិនមានសិទ្ធិអនុញ្ញាតដើម្បីសរសេរការកំណត់ប្រព័ន្ធទេ។</string>
     <string name="toast_text_copied">បាន​ចម្លង​អត្ថបទ</string>
     <string name="toolbar_close">បិទ</string>
@@ -691,13 +677,7 @@
     <string name="view_updates_from_group">មើល​បច្ចុប្បន្នភាព</string>
     <string name="voice_call">ការហៅ​ជា​សំឡេង</string>
     <string name="voice_search_not_available">ការស្វែងរកជាសម្លេងមិនមានទេ</string>
-    <string name="voicemail">សារ​ជា​សំឡេង</string>
-    <string name="voicemailCallLogDateTimeFormat">%1$s នៅម៉ោង %2$s</string>
-    <string name="voicemailCallLogDateTimeFormatWithDuration">%1$s • %2$s</string>
-    <string name="voicemailCallLogToday">@string/call_log_header_today</string>
-    <string name="voicemailDurationFormat">%1$02d:%2$02d</string>
     <string name="voicemailMultiSelectActionBarTitle">បាន​ជ្រើសរើស %1$s</string>
-    <string name="voicemail_donation_promo_content">អនុញ្ញាត​ឱ្យ Google ពិនិត្យ​មើល​វា និង​សារ​ជា​សំឡេងអនាគត​ដែល​មាន​ប្រតិចារឹក​។ សារ​ទាំង​នេះ​នឹង​ត្រូវ​បាន​រក្សា​ទុក​ជា​លក្ខណៈ​អនាមិក។ ផ្លាស់ប្ដូរ​ការកំណត់​បាន​គ្រប់​ពេល។ %1$s</string>
     <string name="voicemail_string">សារ​ជា​សំឡេង</string>
     <string name="voicemail_transcription_rating">វាយតម្លៃ​គុណភាព​ប្រតិចារឹក</string>
     <string name="wait_prompt_str">"ផ្ញើ​សំឡេង​ដូច​ខាងក្រោម?

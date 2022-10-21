@@ -16,9 +16,8 @@
 
 package com.fissy.dialer.common.concurrent;
 
-import android.app.FragmentManager;
-
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 
 import com.fissy.dialer.common.concurrent.DialerExecutor.Worker;
 

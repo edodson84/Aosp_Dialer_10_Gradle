@@ -28,9 +28,7 @@ import androidx.annotation.NonNull;
 public class CallCompat {
 
     public static boolean canPullExternalCall(@NonNull android.telecom.Call call) {
-        return VERSION.SDK_INT >= VERSION_CODES.N_MR1
-                && ((call.getDetails().getCallCapabilities() & Details.CAPABILITY_CAN_PULL_CALL)
-                == Details.CAPABILITY_CAN_PULL_CALL);
+        return (call.getDetails().getCallCapabilities() & Details.CAPABILITY_CAN_PULL_CALL) == Details.CAPABILITY_CAN_PULL_CALL;
     }
 
     /**

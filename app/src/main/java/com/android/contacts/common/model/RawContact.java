@@ -26,6 +26,8 @@ import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.Data;
 import android.provider.ContactsContract.RawContacts;
 
+import androidx.annotation.NonNull;
+
 import com.android.contacts.common.model.account.AccountType;
 import com.android.contacts.common.model.account.AccountWithDataSet;
 import com.android.contacts.common.model.dataitem.DataItem;
@@ -75,7 +77,7 @@ public final class RawContact implements Parcelable {
 
     public RawContact(ContentValues values) {
         mValues = values;
-        mDataItems = new ArrayList<NamedDataItem>();
+        mDataItems = new ArrayList<>();
     }
 
     /**
@@ -267,6 +269,7 @@ public final class RawContact implements Parcelable {
         return list;
     }
 
+    @NonNull
     public String toString() {
         final StringBuilder sb = new StringBuilder();
         sb.append("RawContact: ").append(mValues);

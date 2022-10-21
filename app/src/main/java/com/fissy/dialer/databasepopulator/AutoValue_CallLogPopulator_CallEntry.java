@@ -93,7 +93,7 @@ final class AutoValue_CallLogPopulator_CallEntry extends CallLogPopulator.CallEn
         }
 
         @Override
-        CallLogPopulator.CallEntry.Builder setNumber(String number) {
+        CallLogPopulator.CallEntry.Builder setNumber(@NonNull String number) {
             if (number == null) {
                 throw new NullPointerException("Null number");
             }

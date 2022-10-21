@@ -23,7 +23,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.app.settings.ThemeOptionsSettingsFragment;
-import com.fissy.dialer.main.impl.MainActivity;
 import com.fissy.dialer.main.impl.MainActivityPeer;
 
 /**

@@ -22,6 +22,7 @@ import android.content.Context;
 import android.util.ArrayMap;
 
 import androidx.annotation.MainThread;
+import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
 import com.fissy.dialer.DialerPhoneNumber;
@@ -196,7 +197,7 @@ public final class RealtimeRowProcessor {
                     }
 
                     @Override
-                    public void onFailure(Throwable throwable) {
+                    public void onFailure(@NonNull Throwable throwable) {
                         throw new RuntimeException(throwable);
                     }
                 },

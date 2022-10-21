@@ -287,9 +287,6 @@ public final class CallDetailsEntries extends
                 Visitor visitor = (Visitor) arg0;
                 com.fissy.dialer.calldetails.CallDetailsEntries other = (com.fissy.dialer.calldetails.CallDetailsEntries) arg1;
                 entries_ = visitor.visitList(entries_, other.entries_);
-                if (visitor == com.google.protobuf.GeneratedMessageLite.MergeFromVisitor
-                        .INSTANCE) {
-                }
                 return this;
             }
             case MERGE_FROM_STREAM: {
@@ -328,7 +325,6 @@ public final class CallDetailsEntries extends
                     throw new RuntimeException(
                             new com.google.protobuf.InvalidProtocolBufferException(
                                     e.getMessage()).setUnfinishedMessage(this));
-                } finally {
                 }
             }
             case GET_DEFAULT_INSTANCE: {
@@ -1339,7 +1335,6 @@ public final class CallDetailsEntries extends
                         throw new RuntimeException(
                                 new com.google.protobuf.InvalidProtocolBufferException(
                                         e.getMessage()).setUnfinishedMessage(this));
-                    } finally {
                     }
                 }
                 case GET_DEFAULT_INSTANCE: {

@@ -31,7 +31,7 @@ import com.fissy.dialer.common.LogUtil;
  */
 public class SystemProximityWakeLock implements AnswerProximityWakeLock, DisplayListener {
 
-    private static final String TAG = "SystemProximityWakeLock";
+    private static final String TAG = "Dialer:SystemProximityWakeLock";
 
     private final Context context;
     private final PowerManager.WakeLock wakeLock;
@@ -55,7 +55,7 @@ public class SystemProximityWakeLock implements AnswerProximityWakeLock, Display
 
     @Override
     public void acquire() {
-        wakeLock.acquire();
+        wakeLock.acquire(10*60*1000L /*10 minutes*/);
         context.getSystemService(DisplayManager.class).registerDisplayListener(this, null);
     }
 

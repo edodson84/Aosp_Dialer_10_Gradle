@@ -143,7 +143,7 @@ public class SupportUiListener<OutputT> extends Fragment {
         }
 
         @Override
-        public void onFailure(Throwable throwable) {
+        public void onFailure(@NonNull Throwable throwable) {
             LogUtil.e("SupportUiListener.runTask", "task failed", throwable);
             if (failureListener == null) {
                 LogUtil.i("SupportUiListener.runTask", "task failed but UI is dead");

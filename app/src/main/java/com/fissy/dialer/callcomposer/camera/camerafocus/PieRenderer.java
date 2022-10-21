@@ -81,7 +81,6 @@ public class PieRenderer extends OverlayRenderer implements FocusIndicator {
     private PieItem openItem;
 
     private Paint selectedPaint;
-    private Paint subPaint;
 
     // touch handling
     private PieItem currentItem;
@@ -149,7 +148,7 @@ public class PieRenderer extends OverlayRenderer implements FocusIndicator {
 
     private void init(Context ctx) {
         setVisible(false);
-        items = new ArrayList<PieItem>();
+        items = new ArrayList<>();
         Resources res = ctx.getResources();
         radius = res.getDimensionPixelSize(R.dimen.pie_radius_start);
         circleSize = radius - res.getDimensionPixelSize(R.dimen.focus_radius_offset);
@@ -159,7 +158,7 @@ public class PieRenderer extends OverlayRenderer implements FocusIndicator {
         selectedPaint = new Paint();
         selectedPaint.setColor(Color.argb(255, 51, 181, 229));
         selectedPaint.setAntiAlias(true);
-        subPaint = new Paint();
+        Paint subPaint = new Paint();
         subPaint.setAntiAlias(true);
         subPaint.setColor(Color.argb(200, 250, 230, 128));
         focusPaint = new Paint();
@@ -221,7 +220,6 @@ public class PieRenderer extends OverlayRenderer implements FocusIndicator {
     /**
      * guaranteed has center set
      *
-     * @param show
      */
     private void show(boolean show) {
         if (show) {
@@ -486,7 +484,6 @@ public class PieRenderer extends OverlayRenderer implements FocusIndicator {
     /**
      * enter a slice for a view updates model only
      *
-     * @param item
      */
     private void onEnter(PieItem item) {
         if (currentItem != null) {
@@ -707,9 +704,7 @@ public class PieRenderer extends OverlayRenderer implements FocusIndicator {
     private void cancelFocus() {
         focusCancelled = true;
         overlay.removeCallbacks(disappear);
-        if (animation != null) {
-            animation.cancel();
-        }
+        animation.cancel();
         focusCancelled = false;
         focused = false;
         state = STATE_IDLE;

@@ -75,20 +75,15 @@ public class BlockedNumberContentObserver extends ContentObserver
         asyncTaskExecutor.submit(
                 DeleteBlockedCallTask.IDENTIFIER,
                 new DeleteBlockedCallTask(context, this, number, timeAddedMillis));
-    }    private final Runnable timeoutRunnable =
-            new Runnable() {
-                @Override
-                public void run() {
-                    unregister();
-                }
-            };
+    }
 
     @Override
     public void onDeleteBlockedCallTaskComplete(boolean didFindEntry) {
         if (didFindEntry) {
             unregister();
         }
-    }
+    }    private final Runnable timeoutRunnable =
+            () -> unregister();
 
     /**
      * Registers this {@link ContentObserver} to listen for changes to the {@link CallLog}. If the

@@ -17,7 +17,7 @@
 package com.fissy.dialer.constants;
 
 /**
- * Class containing {@link android.app.Activity#onActivityResult(int, int, android.content.Intent)}
+ * Class containing {@link android.app.Activity(int, int, android.content.Intent)}
  * request codes.
  */
 public final class ActivityRequestCodes {
@@ -42,6 +42,10 @@ public final class ActivityRequestCodes {
      * Request code for {@link com.fissy.dialer.speeddial.SpeedDialFragment} contact picker intent.
      */
     public static final int SPEED_DIAL_ADD_FAVORITE = 5;
+
+    public static final int DEFAULT_DIALER = 6;
+
+    public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 7;
 
     private ActivityRequestCodes() {
     }

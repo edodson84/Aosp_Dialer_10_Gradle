@@ -80,11 +80,9 @@ final class SystemDialerStrictMode implements DialerStrictMode {
                 new StrictMode.VmPolicy.Builder(vmPenalties)
                         .detectLeakedClosableObjects()
                         .detectLeakedSqlLiteObjects();
-        if (Build.VERSION.SDK_INT >= VERSION_CODES.O) {
-            vmPolicyBuilder.detectContentUriWithoutPermission();
-            // TODO(azlatin): Enable detecting untagged sockets once: a bug is fixed.
-            // vmPolicyBuilder.detectUntaggedSockets();
-        }
+        vmPolicyBuilder.detectContentUriWithoutPermission();
+        // TODO(azlatin): Enable detecting untagged sockets once: a bug is fixed.
+        // vmPolicyBuilder.detectUntaggedSockets();
         StrictMode.setVmPolicy(vmPolicyBuilder.build());
     }
 

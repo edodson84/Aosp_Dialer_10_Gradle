@@ -127,7 +127,7 @@ public class DuoStub implements Duo {
 
     @Override
     public Optional<Intent> getInstallDuoIntent() {
-        return null;
+        return Optional.absent();
     }
 
     @MainThread
@@ -139,14 +139,14 @@ public class DuoStub implements Duo {
 
     @MainThread
     @Override
-    public void registerListener(DuoListener listener) {
+    public void registerListener(@NonNull DuoListener listener) {
         Assert.isMainThread();
         Assert.isNotNull(listener);
     }
 
     @MainThread
     @Override
-    public void unregisterListener(DuoListener listener) {
+    public void unregisterListener(@NonNull DuoListener listener) {
         Assert.isMainThread();
         Assert.isNotNull(listener);
     }

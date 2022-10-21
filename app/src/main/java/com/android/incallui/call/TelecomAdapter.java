@@ -202,7 +202,6 @@ public class TelecomAdapter implements InCallServiceListener {
         }
     }
 
-    @TargetApi(28)
     public void requestBluetoothAudio(BluetoothDevice bluetoothDevice) {
         if (inCallService != null) {
             inCallService.requestBluetoothAudio(bluetoothDevice);

@@ -20,6 +20,7 @@ import android.content.Context;
 import android.telecom.Call;
 
 import androidx.annotation.MainThread;
+import androidx.annotation.NonNull;
 
 import com.fissy.dialer.DialerPhoneNumber;
 import com.fissy.dialer.common.concurrent.DialerExecutorComponent;
@@ -82,6 +83,7 @@ public interface PhoneLookup<T> {
      * expected to return existing info saved during the most recent lookup for a call to/from the
      * provided number ({@link #lookup(Context, Call)}).
      */
+    @NonNull
     ListenableFuture<T> lookup(DialerPhoneNumber dialerPhoneNumber);
 
     /**

@@ -17,9 +17,6 @@
     <string name="a11y_new_call_log_entry_full_description_with_phone_account_info">^1, ^2, ^3.</string>
     <string name="a11y_new_call_log_entry_full_description_without_phone_account_info">^1, ^2.</string>
     <string name="a11y_new_call_log_entry_phone_account">v účte ^1, prostredníctvom čísla ^2</string>
-    <string name="a11y_new_call_log_entry_tap_action">expand menu</string>
-    <string name="a11y_new_call_log_entry_video_call">make a video call to ^1</string>
-    <string name="a11y_new_call_log_entry_voice_call">call ^1</string>
     <string name="abc_action_bar_home_description">Prejsť na plochu</string>
     <string name="abc_action_bar_up_description">Prejsť hore</string>
     <string name="abc_action_menu_overflow_description">Ďalšie možnosti</string>
@@ -47,7 +44,6 @@
     <string name="abc_shareactionprovider_share_with">Zdieľať pomocou</string>
     <string name="abc_shareactionprovider_share_with_application">Zdieľať s aplikáciou %s</string>
     <string name="abc_toolbar_collapse_description">Zbaliť</string>
-    <string name="about_phone_label">Informácie</string>
     <string name="accessibility_settings_title">Dostupnosť</string>
     <string name="account_phone">Len v zariadení, bez synchronizácie</string>
     <string name="action_copy_number_text">Kopírovať číslo</string>
@@ -98,7 +94,6 @@
     <string name="blocked_numbers_disabled_emergency_desc">Pretože ste z tohto telefónu počas posledných 48 hodín volali na tiesňovú linku, blokovanie hovorov bolo vypnuté. Po uplynutí 48 hodín sa automaticky znova zapne.</string>
     <string name="blocked_numbers_disabled_emergency_header_label">Blokovanie hovorov je dočasne vypnuté</string>
     <string name="bubble_return_to_call">Späť na hovor</string>
-    <string name="build_version_label">Verzia zostavy</string>
     <string name="call">Volať</string>
     <string name="callFailed_simError">SIM karta chýba alebo nefunguje</string>
     <string name="call_assistant">Volať kontakt %s</string>
@@ -173,7 +168,7 @@
     <string name="call_pager">Volať na pager</string>
     <string name="call_radio">Volať na rádiostanicu</string>
     <string name="call_settings_label">Hovory</string>
-    <string name="call_subject_hint">Napíšte poznámku, ktorá sa odošle s hovorom...</string>
+    <string name="call_subject_hint">Napíšte poznámku, ktorá sa odošle s hovorom…</string>
     <string name="call_subject_limit">%1$s / %2$s</string>
     <string name="call_subject_type_and_number">%1$s %2$s</string>
     <string name="call_telex">Volať na číslo Telex</string>
@@ -198,10 +193,10 @@
     <string name="child_number">na čísle %s</string>
     <string name="clearCallLogConfirmation">Týmto z histórie odstránite všetky hovory.</string>
     <string name="clearCallLogConfirmation_title">Chcete vymazať históriu hovorov?</string>
-    <string name="clearCallLogProgress_title">Vymazáva sa história hovorov...</string>
+    <string name="clearCallLogProgress_title">Vymazáva sa história hovorov…</string>
     <string name="clearFrequentsConfirmation">Vymažete zoznam často kontaktovaných osôb v aplikáciách Kontakty a Telefón a e-mailové aplikácie budú musieť odznova vytvoriť predvoľby adresátov.</string>
     <string name="clearFrequentsConfirmation_title">Vymazať často kontaktované osoby?</string>
-    <string name="clearFrequentsProgress_title">Mazanie často kontaktov. osôb...</string>
+    <string name="clearFrequentsProgress_title">Mazanie často kontaktov. osôb…</string>
     <string name="conference_call_name">Konferenčný hovor</string>
     <string name="conference_caller_disconnect_content_description">Ukončiť hovor</string>
     <string name="contact_grid_callback_number">Číslo tohto telefónu: %1$s</string>
@@ -220,7 +215,6 @@
     <string name="content_description_rtt_chat_avatar">Avatar</string>
     <string name="content_description_rtt_check_button">Pokračovať</string>
     <string name="copy_number">Kopírovať číslo</string>
-    <string name="copy_transcript_text">Kopírovať prepis</string>
     <string name="custom_message_hint">Napíšte vlastnú správu</string>
     <string name="default_notification_description">Predvolený zvuk (%1$s)</string>
     <string name="delete">Odstrániť</string>
@@ -389,7 +383,6 @@
     <string name="label_sip_address">SIP</string>
     <string name="launcherActivityLabel">Telefón</string>
     <string name="launcherDialpadActivityLabel">Klávesnica telefónu</string>
-    <string name="licenseActivityLabel">Licencie open source</string>
     <string name="listAllContactsInAccount">Kontakty v účte %s</string>
     <string name="listCustomView">Kontakty vo vlastnom zobrazení</string>
     <string name="listSingleContact">Jednotlivý kontakt</string>
@@ -431,10 +424,6 @@
     <string name="network_name_wifi">Wi‑Fi</string>
     <string name="new_call_log_carrier_video">Video operátora</string>
     <string name="new_call_log_duo_video">Video služby Duo</string>
-    <string name="new_call_log_header_older">Staršie</string>
-    <string name="new_call_log_header_today">Dnes</string>
-    <string name="new_call_log_header_yesterday">Včera</string>
-    <string name="new_call_log_permission_no_calllog">Ak si chcete zobraziť denník hovorov, zapnite povolenie Telefón.</string>
     <string name="new_call_log_secondary_blocked">Blokované</string>
     <string name="new_call_log_secondary_spam">Spam</string>
     <string name="new_call_log_unknown">Neznáme</string>
@@ -490,7 +479,6 @@
     <string name="ok_got_it">Dobre</string>
     <string name="old_block_number_confirmation_title">Chcete blokovať číslo %1$s?</string>
     <string name="old_call_subject_type_and_number">%1$s %2$s</string>
-    <string name="open_source_license_detail_label">Podrobnosti o licenciách pre softvér open source</string>
     <string name="organizationLabelsGroup">Organizácia</string>
     <string name="outgoing_wps_warning">Uskutočnením hovoru cez WPS prerušíte existujúci hovor.</string>
     <string name="pause_prompt_no">Nie</string>
@@ -524,7 +512,6 @@
     <string name="pre_call_select_phone_account_hint_intra_carrier">Používa rovnakého operátora</string>
     <string name="pre_call_select_phone_account_hint_other_sim_in_use">Nedostupné pri použití karty %1$s</string>
     <string name="pre_call_select_phone_account_remember">Zapamätať si túto voľbu</string>
-    <string name="privacy_policy_label">Pravidlá ochrany súkromia</string>
     <string name="private_num_non_verizon">Súkromné číslo</string>
     <string name="private_num_verizon">Obmedzené</string>
     <string name="quick_question">Rýchla otázka…</string>
@@ -571,7 +558,7 @@
     <string name="set_default_account">Vždy používať pre hovory</string>
     <string name="settings">Nastavenia</string>
     <string name="share_and_call">Zdieľať a volať</string>
-    <string name="simContacts_emptyLoading">Načítava sa zo SIM karty...</string>
+    <string name="simContacts_emptyLoading">Načítava sa zo SIM karty…</string>
     <string name="simContacts_title">Kontakty na SIM karte</string>
     <string name="simulator_submenu_label">Simulátor</string>
     <string name="sms">Textová správa</string>
@@ -646,7 +633,6 @@
     <string name="tab_title">Karta %1$s.</string>
     <string name="tab_title_call_history">História hovorov</string>
     <string name="tab_title_speed_dial">Rých. voľ.</string>
-    <string name="terms_of_service_label">Zmluvné podmienky</string>
     <string name="toast_cannot_write_system_settings">Telefónna aplikácia nemá povolenie na zápis do nastavení systému.</string>
     <string name="toast_text_copied">Text bol skopírovaný</string>
     <string name="toolbar_close">Zavrieť</string>
@@ -691,13 +677,7 @@
     <string name="view_updates_from_group">Zobraziť aktualizácie</string>
     <string name="voice_call">Hlasový hovor</string>
     <string name="voice_search_not_available">Hlasové vyhľadávanie nie je k dispozícii</string>
-    <string name="voicemail">Hlasová schránka</string>
-    <string name="voicemailCallLogDateTimeFormat">%1$s o %2$s</string>
-    <string name="voicemailCallLogDateTimeFormatWithDuration">%1$s • %2$s</string>
-    <string name="voicemailCallLogToday">@string/call_log_header_today</string>
-    <string name="voicemailDurationFormat">%1$02d:%2$02d</string>
     <string name="voicemailMultiSelectActionBarTitle">Vybraté: %1$s</string>
-    <string name="voicemail_donation_promo_content">Umožnite Googlu skontrolovať túto a budúce hlasové správy s prepismi. Správy budú ukladané anonymne. Nastavenia môžete kedykoľvek zmeniť. %1$s</string>
     <string name="voicemail_string">Hlasová schránka</string>
     <string name="voicemail_transcription_rating">Ohodnoťte kvalitu prepisu</string>
     <string name="wait_prompt_str">"Odoslať nasledujúce tóny?

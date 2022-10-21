@@ -35,7 +35,7 @@ import com.fissy.dialer.common.concurrent.DialerExecutorFactory;
  * android.provider.BlockedNumberContract} blocking. In order for this to happen, the user cannot
  * have any numbers that are blocked in the Dialer solution.
  */
-@Deprecated
+
 public class BlockedNumbersAutoMigrator {
 
     static final String HAS_CHECKED_AUTO_MIGRATE_KEY = "checkedAutoMigrate";
@@ -84,16 +84,13 @@ public class BlockedNumbersAutoMigrator {
 
         LogUtil.i("BlockedNumbersAutoMigrator", "attempting to auto-migrate.");
         queryHandler.hasBlockedNumbers(
-                new OnHasBlockedNumbersListener() {
-                    @Override
-                    public void onHasBlockedNumbers(boolean hasBlockedNumbers) {
-                        if (hasBlockedNumbers) {
-                            LogUtil.i("BlockedNumbersAutoMigrator", "not auto-migrating: blocked numbers exist.");
-                            return;
-                        }
-                        LogUtil.i("BlockedNumbersAutoMigrator", "auto-migrating: no blocked numbers.");
-                        FilteredNumberCompat.setHasMigratedToNewBlocking(appContext, true);
+                hasBlockedNumbers -> {
+                    if (hasBlockedNumbers) {
+                        LogUtil.i("BlockedNumbersAutoMigrator", "not auto-migrating: blocked numbers exist.");
+                        return;
                     }
+                    LogUtil.i("BlockedNumbersAutoMigrator", "auto-migrating: no blocked numbers.");
+                    FilteredNumberCompat.setHasMigratedToNewBlocking(appContext, true);
                 });
     }
 

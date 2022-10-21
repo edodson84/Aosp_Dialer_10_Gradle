@@ -18,7 +18,10 @@ package com.android.incallui.baseui;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
+import java.util.Objects;
 
 /**
  * Parent for all fragments that use Presenters and Ui design.
@@ -58,7 +61,7 @@ public abstract class BaseFragment<T extends Presenter<U>, U extends Ui> extends
         if (savedInstanceState != null) {
             presenter.onRestoreInstanceState(savedInstanceState);
             if (savedInstanceState.getBoolean(KEY_FRAGMENT_HIDDEN)) {
-                getFragmentManager().beginTransaction().hide(this).commit();
+                requireFragmentManager().beginTransaction().hide(this).commit();
             }
         }
     }
@@ -70,7 +73,7 @@ public abstract class BaseFragment<T extends Presenter<U>, U extends Ui> extends
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         presenter.onSaveInstanceState(outState);
         outState.putBoolean(KEY_FRAGMENT_HIDDEN, isHidden());

@@ -959,7 +959,6 @@ public final class PhoneLookupInfo extends
                     throw new RuntimeException(
                             new com.google.protobuf.InvalidProtocolBufferException(
                                     e.getMessage()).setUnfinishedMessage(this));
-                } finally {
                 }
             }
             case GET_DEFAULT_INSTANCE: {
@@ -1017,11 +1016,7 @@ public final class PhoneLookupInfo extends
         public static final int NOT_BLOCKED_VALUE = 2;
         private static final com.google.protobuf.Internal.EnumLiteMap<
                 BlockedState> internalValueMap =
-                new com.google.protobuf.Internal.EnumLiteMap<BlockedState>() {
-                    public BlockedState findValueByNumber(int number) {
-                        return BlockedState.forNumber(number);
-                    }
-                };
+                number -> BlockedState.forNumber(number);
         private final int value;
 
         BlockedState(int value) {
@@ -2062,7 +2057,6 @@ public final class PhoneLookupInfo extends
                         throw new RuntimeException(
                                 new com.google.protobuf.InvalidProtocolBufferException(
                                         e.getMessage()).setUnfinishedMessage(this));
-                    } finally {
                     }
                 }
                 case GET_DEFAULT_INSTANCE: {
@@ -3372,7 +3366,6 @@ public final class PhoneLookupInfo extends
                             throw new RuntimeException(
                                     new com.google.protobuf.InvalidProtocolBufferException(
                                             e.getMessage()).setUnfinishedMessage(this));
-                        } finally {
                         }
                     }
                     case GET_DEFAULT_INSTANCE: {
@@ -4581,7 +4574,6 @@ public final class PhoneLookupInfo extends
                         throw new RuntimeException(
                                 new com.google.protobuf.InvalidProtocolBufferException(
                                         e.getMessage()).setUnfinishedMessage(this));
-                    } finally {
                     }
                 }
                 case GET_DEFAULT_INSTANCE: {
@@ -5530,7 +5522,6 @@ public final class PhoneLookupInfo extends
                         throw new RuntimeException(
                                 new com.google.protobuf.InvalidProtocolBufferException(
                                         e.getMessage()).setUnfinishedMessage(this));
-                    } finally {
                     }
                 }
                 case GET_DEFAULT_INSTANCE: {
@@ -5599,11 +5590,7 @@ public final class PhoneLookupInfo extends
             public static final int NEARBY_BUSINESS_VALUE = 2;
             private static final com.google.protobuf.Internal.EnumLiteMap<
                     InfoType> internalValueMap =
-                    new com.google.protobuf.Internal.EnumLiteMap<InfoType>() {
-                        public InfoType findValueByNumber(int number) {
-                            return InfoType.forNumber(number);
-                        }
-                    };
+                    number -> InfoType.forNumber(number);
             private final int value;
 
             InfoType(int value) {
@@ -6440,7 +6427,6 @@ public final class PhoneLookupInfo extends
                         throw new RuntimeException(
                                 new com.google.protobuf.InvalidProtocolBufferException(
                                         e.getMessage()).setUnfinishedMessage(this));
-                    } finally {
                     }
                 }
                 case GET_DEFAULT_INSTANCE: {
@@ -6769,7 +6755,6 @@ public final class PhoneLookupInfo extends
                         throw new RuntimeException(
                                 new com.google.protobuf.InvalidProtocolBufferException(
                                         e.getMessage()).setUnfinishedMessage(this));
-                    } finally {
                     }
                 }
                 case GET_DEFAULT_INSTANCE: {
@@ -7287,7 +7272,6 @@ public final class PhoneLookupInfo extends
                         throw new RuntimeException(
                                 new com.google.protobuf.InvalidProtocolBufferException(
                                         e.getMessage()).setUnfinishedMessage(this));
-                    } finally {
                     }
                 }
                 case GET_DEFAULT_INSTANCE: {
@@ -7735,7 +7719,6 @@ public final class PhoneLookupInfo extends
                         throw new RuntimeException(
                                 new com.google.protobuf.InvalidProtocolBufferException(
                                         e.getMessage()).setUnfinishedMessage(this));
-                    } finally {
                     }
                 }
                 case GET_DEFAULT_INSTANCE: {
@@ -8368,7 +8351,6 @@ public final class PhoneLookupInfo extends
                         throw new RuntimeException(
                                 new com.google.protobuf.InvalidProtocolBufferException(
                                         e.getMessage()).setUnfinishedMessage(this));
-                    } finally {
                     }
                 }
                 case GET_DEFAULT_INSTANCE: {

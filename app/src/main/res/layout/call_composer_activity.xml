@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@id/background"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -131,11 +132,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:drawableStart="@drawable/quantum_ic_call_white_18"
                 android:drawablePadding="@dimen/send_and_call_drawable_padding"
                 android:text="@string/share_and_call"
                 android:textAllCaps="true"
-                android:textColor="?android:textColorPrimaryInverse" />
+                android:textColor="?android:textColorPrimaryInverse"
+                app:drawableStartCompat="@drawable/quantum_ic_call_white_18" />
         </FrameLayout>
     </FrameLayout>
 

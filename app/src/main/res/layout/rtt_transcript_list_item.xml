@@ -17,7 +17,8 @@
             android:layout_height="@dimen/rtt_transcript_avatar_size"
             android:layout_marginStart="8.0dip"
             android:layout_marginEnd="8.0dip"
-            android:visibility="gone" />
+            android:visibility="gone"
+            android:contentDescription="TODO" />
 
         <TextView
             android:id="@id/rtt_chat_message"

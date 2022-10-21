@@ -20,6 +20,8 @@ import androidx.collection.SimpleArrayMap;
 
 import com.google.common.base.Optional;
 
+import java.util.Objects;
+
 /**
  * Definition for utilities that supports smart dial in different languages.
  */
@@ -85,7 +87,7 @@ abstract class SmartDialMap {
      */
     protected Optional<Character> getDialpadNumericCharacter(char ch) {
         return isValidDialpadAlphabeticChar(ch)
-                ? Optional.of(getCharToKeyMap().get(ch))
+                ? Optional.of(Objects.requireNonNull(getCharToKeyMap().get(ch)))
                 : Optional.absent();
     }
 

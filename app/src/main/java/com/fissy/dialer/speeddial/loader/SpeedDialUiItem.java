@@ -113,7 +113,7 @@ public abstract class SpeedDialUiItem {
             Resources resources, Cursor cursor, boolean isImsEnabled) {
         Trace.beginSection("fromCursor");
         Assert.checkArgument(cursor != null);
-        Assert.checkArgument(cursor.getCount() != 0);
+        Assert.checkArgument(Objects.requireNonNull(cursor).getCount() != 0);
         String lookupKey = cursor.getString(LOOKUP_KEY);
         SpeedDialUiItem.Builder builder =
                 SpeedDialUiItem.builder()

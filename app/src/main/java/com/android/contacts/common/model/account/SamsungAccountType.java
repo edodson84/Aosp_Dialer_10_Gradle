@@ -65,7 +65,7 @@ public class SamsungAccountType extends BaseAccountType {
             addDataKindPhoto(context);
             addDataKindNote(context);
             addDataKindWebsite(context);
-            addDataKindGroupMembership(context);
+            addDataKindGroupMembership();
             addDataKindRelation(context);
             addDataKindEvent(context);
 

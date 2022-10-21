@@ -19,6 +19,7 @@ package com.fissy.dialer.searchfragment.list;
 import android.database.MatrixCursor;
 
 import androidx.annotation.IntDef;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
@@ -235,7 +236,6 @@ public final class SearchCursorManager {
                 corpDirectoryCursor.moveToPosition(position);
                 return corpDirectoryCursor;
             }
-            position -= count;
         }
 
         throw Assert.createIllegalStateFailException("No valid cursor.");
@@ -318,7 +318,7 @@ public final class SearchCursorManager {
         }
 
         @Override
-        public boolean updateQuery(String query) {
+        public boolean updateQuery(@NonNull String query) {
             return false;
         }
 

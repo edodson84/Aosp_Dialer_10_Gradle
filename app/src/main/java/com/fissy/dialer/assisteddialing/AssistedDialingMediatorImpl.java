@@ -36,13 +36,7 @@ final class AssistedDialingMediatorImpl implements AssistedDialingMediator {
 
     AssistedDialingMediatorImpl(
             @NonNull LocationDetector locationDetector, @NonNull NumberTransformer numberTransformer) {
-        if (locationDetector == null) {
-            throw new NullPointerException("locationDetector was null");
-        }
 
-        if (numberTransformer == null) {
-            throw new NullPointerException("numberTransformer was null");
-        }
         this.locationDetector = locationDetector;
         this.numberTransformer = numberTransformer;
     }

@@ -46,6 +46,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -520,7 +521,7 @@ public final class HistoryItemActionModulesBuilder {
     private Optional<DialerImpression.Type> getImpression(@Event int event) {
         switch (moduleInfo.getHost()) {
             case CALL_LOG:
-                return Optional.of(CALL_LOG_IMPRESSIONS.get(event));
+                return Optional.of(Objects.requireNonNull(CALL_LOG_IMPRESSIONS.get(event)));
             case VOICEMAIL:
                 // TODO(a bug): Return proper impressions for voicemail.
                 return Optional.empty();

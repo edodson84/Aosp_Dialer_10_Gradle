@@ -3,14 +3,14 @@
     android:drawable="@drawable/vd_hd_attempting">
     <target
         android:name="progressBar"
-        android:animation="@drawable/avd_hd_attempting__0" />
+        android:animation="@animator/avd_hd_attempting__0" />
     <target
         android:name="progressRoot"
-        android:animation="@drawable/avd_hd_attempting__1" />
+        android:animation="@animator/avd_hd_attempting__1" />
     <target
         android:name="hdRoot"
-        android:animation="@drawable/avd_hd_attempting__2" />
+        android:animation="@animator/avd_hd_attempting__2" />
     <target
         android:name="root"
-        android:animation="@drawable/avd_hd_attempting__3" />
+        android:animation="@animator/avd_hd_attempting__3" />
 </animated-vector>

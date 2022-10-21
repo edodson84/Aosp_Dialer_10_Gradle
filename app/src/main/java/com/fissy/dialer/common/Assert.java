@@ -37,7 +37,6 @@ public class Assert {
     /**
      * Called when a truly exceptional case occurs.
      *
-     * @throws AssertionError
      * @deprecated Use throw Assert.create*FailException() instead.
      */
     @Deprecated
@@ -49,7 +48,6 @@ public class Assert {
      * Called when a truly exceptional case occurs.
      *
      * @param reason the optional reason to supply as the exception message
-     * @throws AssertionError
      * @deprecated Use throw Assert.create*FailException() instead.
      */
     @Deprecated

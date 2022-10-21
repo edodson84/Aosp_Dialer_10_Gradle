@@ -62,33 +62,28 @@ public class BlockedNumbersAdapter extends NumbersAdapter {
 
         final View deleteButton = view.findViewById(R.id.delete_button);
         deleteButton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        BlockNumberDialogFragment.show(
-                                id,
-                                number,
-                                countryIso,
-                                PhoneNumberHelper.formatNumber(getContext(), number, countryIso),
-                                R.id.blocked_numbers_activity_container,
-                                getFragmentManager(),
-                                new BlockNumberDialogFragment.Callback() {
-                                    @Override
-                                    public void onFilterNumberSuccess() {
-                                    }
+                view1 -> BlockNumberDialogFragment.show(
+                        id,
+                        number,
+                        countryIso,
+                        PhoneNumberHelper.formatNumber(getContext(), number, countryIso),
+                        R.id.blocked_numbers_activity_container,
+                        getFragmentManager(),
+                        new BlockNumberDialogFragment.Callback() {
+                            @Override
+                            public void onFilterNumberSuccess() {
+                            }
 
-                                    @Override
-                                    public void onUnfilterNumberSuccess() {
-                                        Logger.get(context)
-                                                .logInteraction(InteractionEvent.Type.UNBLOCK_NUMBER_MANAGEMENT_SCREEN);
-                                    }
+                            @Override
+                            public void onUnfilterNumberSuccess() {
+                                Logger.get(context)
+                                        .logInteraction(InteractionEvent.Type.UNBLOCK_NUMBER_MANAGEMENT_SCREEN);
+                            }
 
-                                    @Override
-                                    public void onChangeFilteredNumberUndo() {
-                                    }
-                                });
-                    }
-                });
+                            @Override
+                            public void onChangeFilteredNumberUndo() {
+                            }
+                        }));
 
         updateView(view, number, countryIso);
     }

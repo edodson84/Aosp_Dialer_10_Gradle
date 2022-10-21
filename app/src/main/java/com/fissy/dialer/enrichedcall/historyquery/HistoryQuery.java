@@ -20,6 +20,8 @@ import androidx.annotation.NonNull;
 import com.fissy.dialer.common.LogUtil;
 import com.google.auto.value.AutoValue;
 
+import java.util.Locale;
+
 /**
  * Data object representing the pieces of information required to query for historical enriched call
  * data.
@@ -38,9 +40,10 @@ public abstract class HistoryQuery {
 
     public abstract long getCallEndTimestamp();
 
+    @NonNull
     @Override
     public String toString() {
-        return String.format(
+        return String.format(Locale.US,
                 "HistoryQuery{number: %s, callStartTimestamp: %d, callEndTimestamp: %d}",
                 LogUtil.sanitizePhoneNumber(getNumber()), getCallStartTimestamp(), getCallEndTimestamp());
     }

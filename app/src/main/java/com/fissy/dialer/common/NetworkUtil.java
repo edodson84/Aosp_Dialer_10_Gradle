@@ -134,7 +134,7 @@ public class NetworkUtil {
         }
         return TextUtils.isEmpty(name)
                 ? context.getString(R.string.network_name_wifi)
-                : name.replaceAll("\"", "");
+                : Objects.requireNonNull(name).replaceAll("\"", "");
     }
 
     private static String getMobileNetworkName(Context context) {

@@ -63,13 +63,13 @@ public class ContactsUtils {
     long determineUserType(Long directoryId, Long contactId) {
         // First check directory id
         if (directoryId != null) {
-            return Directory.isEnterpriseDirectoryId(directoryId) ? USER_TYPE_WORK : USER_TYPE_CURRENT;
+            return Directory.isEnterpriseDirectoryId(directoryId) ? (int)USER_TYPE_WORK : (int)USER_TYPE_CURRENT;
         }
         // Only check contact id if directory id is null
         if (contactId != null && contactId != 0L && Contacts.isEnterpriseContactId(contactId)) {
-            return USER_TYPE_WORK;
+            return (int)USER_TYPE_WORK;
         } else {
-            return USER_TYPE_CURRENT;
+            return (int)USER_TYPE_CURRENT;
         }
     }
 

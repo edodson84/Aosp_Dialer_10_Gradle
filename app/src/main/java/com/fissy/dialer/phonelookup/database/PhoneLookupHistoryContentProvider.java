@@ -41,6 +41,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * {@link ContentProvider} for the PhoneLookupHistory.
@@ -67,7 +68,7 @@ public class PhoneLookupHistoryContentProvider extends ContentProvider {
      * Ensures that only a single notification is generated from {@link #applyBatch(ArrayList)}.
      */
     private boolean isApplyingBatch() {
-        return applyingBatch.get() != null && applyingBatch.get();
+        return applyingBatch.get() == null || !Boolean.TRUE.equals(applyingBatch.get());
     }
 
     @Override
@@ -129,14 +130,14 @@ public class PhoneLookupHistoryContentProvider extends ContentProvider {
         switch (uriType) {
             case UriType.PHONE_LOOKUP_HISTORY_TABLE_CODE:
                 Assert.checkArgument(
-                        values.getAsString(PhoneLookupHistory.NORMALIZED_NUMBER) != null,
+                        Objects.requireNonNull(values).getAsString(PhoneLookupHistory.NORMALIZED_NUMBER) != null,
                         "You must specify a normalized number when inserting");
                 break;
             case UriType.PHONE_LOOKUP_HISTORY_TABLE_ID_CODE:
                 String normalizedNumberFromUri =
                         Uri.decode(uri.getQueryParameter(PhoneLookupHistory.NUMBER_QUERY_PARAM));
                 String normalizedNumberFromValues =
-                        values.getAsString(PhoneLookupHistory.NORMALIZED_NUMBER);
+                        Objects.requireNonNull(values).getAsString(PhoneLookupHistory.NORMALIZED_NUMBER);
                 Assert.checkArgument(
                         normalizedNumberFromValues == null
                                 || normalizedNumberFromValues.equals(normalizedNumberFromUri),
@@ -162,7 +163,7 @@ public class PhoneLookupHistoryContentProvider extends ContentProvider {
         Uri insertedUri =
                 PhoneLookupHistory.contentUriForNumber(
                         values.getAsString(PhoneLookupHistory.NORMALIZED_NUMBER));
-        if (!isApplyingBatch()) {
+        if (isApplyingBatch()) {
             notifyChange(insertedUri);
         }
         return insertedUri;
@@ -194,7 +195,7 @@ public class PhoneLookupHistoryContentProvider extends ContentProvider {
             LogUtil.w("PhoneLookupHistoryContentProvider.delete", "no rows deleted");
             return rows;
         }
-        if (!isApplyingBatch()) {
+        if (isApplyingBatch()) {
             notifyChange(uri);
         }
         return rows;
@@ -227,13 +228,13 @@ public class PhoneLookupHistoryContentProvider extends ContentProvider {
                     LogUtil.w("PhoneLookupHistoryContentProvider.update", "no rows updated");
                     return rows;
                 }
-                if (!isApplyingBatch()) {
+                if (isApplyingBatch()) {
                     notifyChange(uri);
                 }
                 return rows;
             case UriType.PHONE_LOOKUP_HISTORY_TABLE_ID_CODE:
                 Assert.checkArgument(
-                        !values.containsKey(PhoneLookupHistory.NORMALIZED_NUMBER),
+                        !Objects.requireNonNull(values).containsKey(PhoneLookupHistory.NORMALIZED_NUMBER),
                         "Do not specify number in values when updating by number");
                 Assert.checkArgument(selection == null, "Do not specify selection when updating by ID");
                 Assert.checkArgument(
@@ -244,7 +245,7 @@ public class PhoneLookupHistoryContentProvider extends ContentProvider {
                 values.put(PhoneLookupHistory.NORMALIZED_NUMBER, normalizedNumber);
                 long result = database.replace(PhoneLookupHistory.TABLE, null, values);
                 Assert.checkArgument(result != -1, "replacing PhoneLookupHistory row failed");
-                if (!isApplyingBatch()) {
+                if (isApplyingBatch()) {
                     notifyChange(uri);
                 }
                 return 1;

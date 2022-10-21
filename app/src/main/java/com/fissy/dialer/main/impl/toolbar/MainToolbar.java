@@ -16,7 +16,6 @@
 
 package com.fissy.dialer.main.impl.toolbar;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MenuItem;
@@ -27,17 +26,18 @@ import android.widget.PopupMenu;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
+import com.fissy.dialer.main.impl.MainActivity;
 import com.fissy.dialer.util.ViewUtil;
-import com.google.common.base.Optional;
+
+import java.util.Optional;
 
 /**
- * Toolbar for {@link com.fissy.dialer.main.impl.MainActivity}.
+ * Toolbar for {@link MainActivity}.
  */
 public final class MainToolbar extends Toolbar implements PopupMenu.OnMenuItemClickListener {
 
@@ -186,7 +186,4 @@ public final class MainToolbar extends Toolbar implements PopupMenu.OnMenuItemCl
         overflowMenu.showClearFrequents(show);
     }
 
-    public void maybeShowSimulator(AppCompatActivity appCompatActivity) {
-        overflowMenu.maybeShowSimulator(appCompatActivity);
-    }
 }

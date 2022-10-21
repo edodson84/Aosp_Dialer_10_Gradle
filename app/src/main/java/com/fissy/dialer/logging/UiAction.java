@@ -143,9 +143,6 @@ public final class UiAction extends
             case VISIT: {
                 Visitor visitor = (Visitor) arg0;
                 com.fissy.dialer.logging.UiAction other = (com.fissy.dialer.logging.UiAction) arg1;
-                if (visitor == com.google.protobuf.GeneratedMessageLite.MergeFromVisitor
-                        .INSTANCE) {
-                }
                 return this;
             }
             case MERGE_FROM_STREAM: {
@@ -157,15 +154,11 @@ public final class UiAction extends
                     boolean done = false;
                     while (!done) {
                         int tag = input.readTag();
-                        switch (tag) {
-                            case 0:
+                        if (tag == 0) {
+                            done = true;
+                        } else {
+                            if (!parseUnknownField(tag, input)) {
                                 done = true;
-                                break;
-                            default: {
-                                if (!parseUnknownField(tag, input)) {
-                                    done = true;
-                                }
-                                break;
                             }
                         }
                     }
@@ -175,7 +168,6 @@ public final class UiAction extends
                     throw new RuntimeException(
                             new com.google.protobuf.InvalidProtocolBufferException(
                                     e.getMessage()).setUnfinishedMessage(this));
-                } finally {
                 }
             }
             case GET_DEFAULT_INSTANCE: {
@@ -412,11 +404,7 @@ public final class UiAction extends
         public static final int CLOSE_CALL_HISTORY_WITH_CANCEL_BUTTON_VALUE = 401;
         private static final com.google.protobuf.Internal.EnumLiteMap<
                 Type> internalValueMap =
-                new com.google.protobuf.Internal.EnumLiteMap<Type>() {
-                    public Type findValueByNumber(int number) {
-                        return Type.forNumber(number);
-                    }
-                };
+                number -> Type.forNumber(number);
         private final int value;
 
         Type(int value) {

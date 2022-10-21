@@ -95,12 +95,11 @@ public class SystemCallLogDataSource implements CallLogDataSource {
                     Calls.FEATURES,
                     Calls.POST_DIAL_DIGITS
             };
-    @RequiresApi(VERSION_CODES.O)
     private static final String[] PROJECTION_O_AND_LATER;
 
     static {
         List<String> projectionList = new ArrayList<>(Arrays.asList(PROJECTION_PRE_O));
-        PROJECTION_O_AND_LATER = projectionList.toArray(new String[projectionList.size()]);
+        PROJECTION_O_AND_LATER = projectionList.toArray(new String[0]);
     }
 
     private final Context appContext;
@@ -503,9 +502,6 @@ public class SystemCallLogDataSource implements CallLogDataSource {
 
 
     private String[] getProjection() {
-        if (VERSION.SDK_INT >= VERSION_CODES.O) {
-            return PROJECTION_O_AND_LATER;
-        }
-        return PROJECTION_PRE_O;
+        return PROJECTION_O_AND_LATER;
     }
 }

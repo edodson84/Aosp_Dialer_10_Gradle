@@ -64,7 +64,6 @@ import com.fissy.dialer.common.LogUtil;
     /**
      * Update phone call details. This is called before any drawing to avoid expensive operation on UI
      * thread.
-
      */
     @WorkerThread
     public void updatePhoneCallDetails(PhoneCallDetails details) {

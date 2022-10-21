@@ -60,7 +60,6 @@ public final class CallLogQuery {
     public static final int POST_DIAL_DIGITS = 24;
     public static final int VIA_NUMBER = 25;
 
-    @RequiresApi(VERSION_CODES.O)
     public static final int TRANSCRIPTION_STATE = 26;
 
     private static final String[] PROJECTION_N =
@@ -102,11 +101,11 @@ public final class CallLogQuery {
     static {
         List<String> projectionList = new ArrayList<>(Arrays.asList(PROJECTION_N));
         projectionList.add(TRANSCRIPTION_STATE_COLUMN);
-        PROJECTION_O = projectionList.toArray(new String[projectionList.size()]);
+        PROJECTION_O = projectionList.toArray(new String[0]);
     }
 
     @NonNull
     public static String[] getProjection() {
-        return VERSION.SDK_INT >= VERSION_CODES.O ? PROJECTION_O : PROJECTION_N;
+        return PROJECTION_O;
     }
 }

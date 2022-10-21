@@ -21,6 +21,7 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.Manifest.permission.ADD_VOICEMAIL;
 import static android.Manifest.permission.CALL_PHONE;
 import static android.Manifest.permission.MODIFY_PHONE_STATE;
+import static android.Manifest.permission.NEARBY_WIFI_DEVICES;
 import static android.Manifest.permission.READ_CALL_LOG;
 import static android.Manifest.permission.READ_CONTACTS;
 import static android.Manifest.permission.READ_PHONE_STATE;
@@ -71,9 +72,8 @@ public class PermissionsUtil {
                             MODIFY_PHONE_STATE,
                             SEND_SMS,
                             CALL_PHONE,
-                            ADD_VOICEMAIL,
-                            WRITE_VOICEMAIL,
-                            READ_VOICEMAIL));
+                            READ_CONTACTS,
+                            WRITE_CONTACTS));
     public static final List<String> allContactsGroupPermissionsUsedInDialer =
             Collections.unmodifiableList(Arrays.asList(READ_CONTACTS, WRITE_CONTACTS));
     public static final List<String> allLocationGroupPermissionsUsedInDialer =
@@ -227,7 +227,7 @@ public class PermissionsUtil {
                 permissionsCurrentlyDenied.add(permission);
             }
         }
-        return permissionsCurrentlyDenied.toArray(new String[permissionsCurrentlyDenied.size()]);
+        return permissionsCurrentlyDenied.toArray(new String[0]);
     }
 
     /**

@@ -22,6 +22,8 @@ import android.text.TextUtils;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.util.Objects;
+
 /**
  * Provides logging functions.
  */
@@ -217,7 +219,7 @@ public class LogUtil {
         if ((level >= android.util.Log.INFO) || android.util.Log.isLoggable(tag, level)) {
             formattedMsg = localTag;
             if (!TextUtils.isEmpty(msg)) {
-                formattedMsg += SEPARATOR + (hasArgs ? String.format(msg, args) : msg);
+                formattedMsg += SEPARATOR + (hasArgs ? String.format(Objects.requireNonNull(msg), Objects.requireNonNull(args)) : msg);
             }
             android.util.Log.println(level, tag, formattedMsg);
         }

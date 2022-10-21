@@ -251,9 +251,8 @@ public abstract class CallIntent implements Parcelable {
 
         abstract ImmutableMap.Builder<String, Long> longInCallUiIntentExtrasBuilder();
 
-        public Builder addInCallUiIntentExtra(String key, String value) {
+        public void addInCallUiIntentExtra(String key, String value) {
             stringInCallUiIntentExtrasBuilder().put(key, value);
-            return this;
         }
 
         public Builder addInCallUiIntentExtra(String key, Long value) {

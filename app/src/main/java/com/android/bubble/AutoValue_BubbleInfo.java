@@ -123,7 +123,7 @@ final class AutoValue_BubbleInfo extends BubbleInfo {
         }
 
         @Override
-        public BubbleInfo.Builder setPrimaryIcon(Icon primaryIcon) {
+        public BubbleInfo.Builder setPrimaryIcon(@NonNull Icon primaryIcon) {
             if (primaryIcon == null) {
                 throw new NullPointerException("Null primaryIcon");
             }

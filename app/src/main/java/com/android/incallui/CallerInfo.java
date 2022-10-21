@@ -30,6 +30,8 @@ import android.provider.ContactsContract.RawContacts;
 import android.telephony.PhoneNumberUtils;
 import android.text.TextUtils;
 
+import androidx.annotation.NonNull;
+
 import com.android.contacts.common.ContactsUtils;
 import com.android.contacts.common.ContactsUtils.UserType;
 import com.android.contacts.common.util.TelephonyManagerUtils;
@@ -154,7 +156,7 @@ public class CallerInfo {
         // TODO: Move all the basic initialization here?
         isEmergency = false;
         isVoiceMail = false;
-        userType = ContactsUtils.USER_TYPE_CURRENT;
+        userType = (int)ContactsUtils.USER_TYPE_CURRENT;
     }
 
     static String[] getDefaultPhoneLookupProjection() {
@@ -182,7 +184,7 @@ public class CallerInfo {
         info.numberType = 0;
         info.phoneLabel = null;
         info.photoResource = 0;
-        info.userType = ContactsUtils.USER_TYPE_CURRENT;
+        info.userType = (int)ContactsUtils.USER_TYPE_CURRENT;
 
         Log.v(TAG, "getCallerInfo() based on cursor...");
 
@@ -291,9 +293,7 @@ public class CallerInfo {
 
         // Determine userType by directoryId and contactId
         final String directory =
-                contactRef == null
-                        ? null
-                        : contactRef.getQueryParameter(ContactsContract.DIRECTORY_PARAM_KEY);
+                contactRef.getQueryParameter(ContactsContract.DIRECTORY_PARAM_KEY);
         Long directoryId = null;
         if (directory != null) {
             try {
@@ -402,8 +402,6 @@ public class CallerInfo {
 
         Log.v(TAG, "- getColumnIndexForPersonId: contactRef URI = '" + contactRef + "'...");
         // Warning: Do not enable the following logging (due to ANR risk.)
-        // if (VDBG) Rlog.v(TAG, "- MIME type: "
-        //                 + context.getContentResolver().getType(contactRef));
 
         String url = contactRef.toString();
         String columnName = null;
@@ -514,48 +512,14 @@ public class CallerInfo {
     /**
      * @return a string debug representation of this instance.
      */
+
+    @NonNull
     @Override
     public String toString() {
-        // Warning: never check in this file with VERBOSE_DEBUG = true
-        // because that will result in PII in the system log.
-        final boolean VERBOSE_DEBUG = false;
 
-        if (VERBOSE_DEBUG) {
-            return new StringBuilder(384)
-                    .append(super.toString() + " { ")
-                    .append("\nname: " + name)
-                    .append("\nphoneNumber: " + phoneNumber)
-                    .append("\nnormalizedNumber: " + normalizedNumber)
-                    .append("\forwardingNumber: " + forwardingNumber)
-                    .append("\ngeoDescription: " + geoDescription)
-                    .append("\ncnapName: " + cnapName)
-                    .append("\nnumberPresentation: " + numberPresentation)
-                    .append("\nnamePresentation: " + namePresentation)
-                    .append("\ncontactExists: " + contactExists)
-                    .append("\nphoneLabel: " + phoneLabel)
-                    .append("\nnumberType: " + numberType)
-                    .append("\nnumberLabel: " + numberLabel)
-                    .append("\nphotoResource: " + photoResource)
-                    .append("\ncontactIdOrZero: " + contactIdOrZero)
-                    .append("\nneedUpdate: " + needUpdate)
-                    .append("\ncontactRefUri: " + contactRefUri)
-                    .append("\ncontactRingtoneUri: " + contactRingtoneUri)
-                    .append("\ncontactDisplayPhotoUri: " + contactDisplayPhotoUri)
-                    .append("\nshouldSendToVoicemail: " + shouldSendToVoicemail)
-                    .append("\ncachedPhoto: " + cachedPhoto)
-                    .append("\nisCachedPhotoCurrent: " + isCachedPhotoCurrent)
-                    .append("\nemergency: " + isEmergency)
-                    .append("\nvoicemail: " + isVoiceMail)
-                    .append("\nuserType: " + userType)
-                    .append(" }")
-                    .toString();
-        } else {
-            return new StringBuilder(128)
-                    .append(super.toString() + " { ")
-                    .append("name " + ((name == null) ? "null" : "non-null"))
-                    .append(", phoneNumber " + ((phoneNumber == null) ? "null" : "non-null"))
-                    .append(" }")
-                    .toString();
-        }
+        return super.toString() + " { " +
+                "name " + ((name == null) ? "null" : "non-null") +
+                ", phoneNumber " + ((phoneNumber == null) ? "null" : "non-null") +
+                " }";
     }
 }

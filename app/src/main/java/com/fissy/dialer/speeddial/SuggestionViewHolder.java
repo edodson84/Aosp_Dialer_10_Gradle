@@ -33,6 +33,8 @@ import com.fissy.dialer.speeddial.database.SpeedDialEntry.Channel;
 import com.fissy.dialer.speeddial.loader.SpeedDialUiItem;
 import com.fissy.dialer.widget.ContactPhotoView;
 
+import java.util.Objects;
+
 /**
  * ViewHolder for displaying suggested contacts in {@link SpeedDialFragment}.
  */
@@ -62,7 +64,7 @@ public class SuggestionViewHolder extends RecyclerView.ViewHolder implements OnC
         String number =
                 PhoneNumberHelper.formatNumber(
                         context,
-                        speedDialUiItem.defaultChannel().number(),
+                        Objects.requireNonNull(speedDialUiItem.defaultChannel()).number(),
                         GeoUtil.getCurrentCountryIso(context));
 
         String label = speedDialUiItem.defaultChannel().label();

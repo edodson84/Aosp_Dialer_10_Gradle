@@ -50,6 +50,7 @@ import com.fissy.dialer.util.PermissionsUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Fragment used to compose call with image from the user's gallery.
@@ -115,16 +116,16 @@ public class GalleryComposerFragment extends CallComposerFragment
         super.onActivityCreated(bundle);
 
         copyAndResizeImage =
-                DialerExecutorComponent.get(getContext())
+                DialerExecutorComponent.get(Objects.requireNonNull(getContext()))
                         .dialerExecutorFactory()
                         .createUiTaskBuilder(
-                                getActivity().getFragmentManager(),
+                                Objects.requireNonNull(getActivity()).getSupportFragmentManager(),
                                 "copyAndResizeImage",
                                 new CopyAndResizeImageWorker(getActivity().getApplicationContext()))
                         .onSuccess(
                                 output -> {
                                     GalleryGridItemData data1 =
-                                            adapter.insertEntry(output.first.getAbsolutePath(), output.second);
+                                            adapter.insertEntry(Objects.requireNonNull(output).first.getAbsolutePath(), output.second);
                                     insertedImages.add(0, data1);
                                     setSelected(data1, true);
                                 })
@@ -138,18 +139,19 @@ public class GalleryComposerFragment extends CallComposerFragment
     }
 
     private void setupGallery() {
-        adapter = new GalleryGridAdapter(getContext(), null, this);
+        adapter = new GalleryGridAdapter(Objects.requireNonNull(getContext()), null, this);
         galleryGridView.setAdapter(adapter);
         getLoaderManager().initLoader(0 /* id */, null /* args */, this /* loaderCallbacks */);
     }
 
+    @NonNull
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         return cursorLoader = new GalleryCursorLoader(getContext());
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+    public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor cursor) {
         adapter.swapCursor(cursor);
         if (insertedImages != null && !insertedImages.isEmpty()) {
             adapter.insertEntries(insertedImages);
@@ -158,7 +160,7 @@ public class GalleryComposerFragment extends CallComposerFragment
     }
 
     @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
+    public void onLoaderReset(@NonNull Loader<Cursor> loader) {
         adapter.swapCursor(null);
     }
 
@@ -169,7 +171,7 @@ public class GalleryComposerFragment extends CallComposerFragment
             // time seeing this permission or they've only pressed deny previously, they will see the
             // permission request. If they've permanently denied the permission, they will be sent to
             // Dialer settings in order to enable the permission.
-            if (PermissionsUtil.isFirstRequest(getContext(), permissions[0])
+            if (PermissionsUtil.isFirstRequest(Objects.requireNonNull(getContext()), permissions[0])
                     || shouldShowRequestPermissionRationale(permissions[0])) {
                 LogUtil.i("GalleryComposerFragment.onClick", "Storage permission requested.");
                 Logger.get(getContext()).logImpression(DialerImpression.Type.STORAGE_PERMISSION_REQUESTED);
@@ -182,7 +184,6 @@ public class GalleryComposerFragment extends CallComposerFragment
                 intent.setData(Uri.parse("package:" + getContext().getPackageName()));
                 startActivityForResult(intent, RESULT_OPEN_SETTINGS);
             }
-            return;
         } else {
             GalleryGridItemView itemView = ((GalleryGridItemView) view);
             if (itemView.isGallery()) {
@@ -243,7 +244,7 @@ public class GalleryComposerFragment extends CallComposerFragment
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelable(SELECTED_DATA_KEY, selectedData);
         outState.putBoolean(IS_COPY_KEY, selectedDataIsCopy);
@@ -255,7 +256,7 @@ public class GalleryComposerFragment extends CallComposerFragment
     public void onRequestPermissionsResult(
             int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (permissions.length > 0 && permissions[0].equals(this.permissions[0])) {
-            PermissionsUtil.permissionRequested(getContext(), permissions[0]);
+            PermissionsUtil.permissionRequested(Objects.requireNonNull(getContext()), permissions[0]);
         }
         if (requestCode == STORAGE_PERMISSION
                 && grantResults.length > 0
@@ -295,8 +296,7 @@ public class GalleryComposerFragment extends CallComposerFragment
         // Guard against null uri cases for when the activity returns a null/invalid intent.
         if (url != null) {
             copyAndResizeImage.executeParallel(Uri.parse(url));
-        } else {
-            // TODO(a bug) - gracefully handle message failure
-        }
+        }  // TODO(a bug) - gracefully handle message failure
+
     }
 }

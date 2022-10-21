@@ -48,7 +48,7 @@ import java.util.Map;
 public abstract class GoogleForwardLookup {
     private static final String TAG = GoogleForwardLookup.class.getSimpleName();
 
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
 
     private static final String QUERY_FILTER = "q";
     private static final String QUERY_LANGUAGE = "hl";
@@ -176,15 +176,14 @@ public abstract class GoogleForwardLookup {
 
                 TypedArray typedArray =
                         MainActivity.main.getTheme().obtainStyledAttributes(R.styleable.darkmodeView);
-               boolean darkmode = typedArray.getBoolean(R.styleable.darkmodeView_darkmode, false);
+                boolean darkmode = typedArray.getBoolean(R.styleable.darkmodeView_darkmode, false);
                 typedArray.recycle();
 
                 ThemeOptionsSettingsFragment.ThemeButtonBehavior mThemeBehavior = ThemeOptionsSettingsFragment.getThemeButtonBehavior(MainActivityPeer.themeprefs);
                 String business;
                 if (mThemeBehavior == ThemeOptionsSettingsFragment.ThemeButtonBehavior.DARK || darkmode) {
                     business = ContactBuilder.PHOTO_URI_BUSINESS_DARK;
-                }
-                else{
+                } else {
                     business = ContactBuilder.PHOTO_URI_BUSINESS;
                 }
                 String photoUri = params.optString(RESULT_PHOTO_URI, business);

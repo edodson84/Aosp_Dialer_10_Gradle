@@ -3,6 +3,7 @@ package com.fissy.dialer.callintent;
 import android.net.Uri;
 import android.telecom.PhoneAccountHandle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.common.collect.ImmutableMap;
@@ -199,7 +200,7 @@ final class AutoValue_CallIntent extends CallIntent {
         }
 
         @Override
-        public CallIntent.Builder setNumber(Uri number) {
+        public CallIntent.Builder setNumber(@NonNull Uri number) {
             if (number == null) {
                 throw new NullPointerException("Null number");
             }
@@ -208,7 +209,7 @@ final class AutoValue_CallIntent extends CallIntent {
         }
 
         @Override
-        public CallIntent.Builder setCallSpecificAppData(CallSpecificAppData callSpecificAppData) {
+        public CallIntent.Builder setCallSpecificAppData(@NonNull CallSpecificAppData callSpecificAppData) {
             if (callSpecificAppData == null) {
                 throw new NullPointerException("Null callSpecificAppData");
             }

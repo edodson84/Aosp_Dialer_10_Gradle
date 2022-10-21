@@ -38,7 +38,8 @@
             android:layout_alignParentEnd="true"
             android:layout_marginStart="8.0dip"
             android:paddingEnd="16.0dip"
-            android:src="@drawable/fast_scroller_scroll_bar" />
+            android:src="@drawable/fast_scroller_scroll_bar"
+            android:contentDescription="TODO" />
     </com.fissy.dialer.contactsfragment.FastScroller>
 
     <include layout="@layout/header" />

@@ -24,6 +24,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Icon;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.CallLog.Calls;
 import android.service.notification.StatusBarNotification;
 import android.telecom.PhoneAccount;
@@ -39,7 +40,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.annotation.WorkerThread;
-import androidx.core.os.BuildCompat;
 import androidx.core.os.UserManagerCompat;
 import androidx.core.util.Pair;
 
@@ -51,11 +51,9 @@ import com.fissy.dialer.app.calllog.CallLogNotificationsQueryHelper.NewCall;
 import com.fissy.dialer.app.contactinfo.ContactPhotoLoader;
 import com.fissy.dialer.callintent.CallInitiationType;
 import com.fissy.dialer.callintent.CallIntentBuilder;
-import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.common.concurrent.DialerExecutor.Worker;
 import com.fissy.dialer.duo.DuoComponent;
-import com.fissy.dialer.enrichedcall.FuzzyPhoneNumberMatcher;
 import com.fissy.dialer.notification.DialerNotificationManager;
 import com.fissy.dialer.notification.NotificationChannelId;
 import com.fissy.dialer.notification.missedcalls.MissedCallConstants;
@@ -69,6 +67,7 @@ import com.fissy.dialer.util.IntentUtil;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -97,7 +96,7 @@ public class MissedCallNotifier implements Worker<Pair<Integer, String>, Void> {
     @Nullable
     @Override
     public Void doInBackground(@Nullable Pair<Integer, String> input) throws Throwable {
-        updateMissedCallNotification(input.first, input.second);
+        updateMissedCallNotification(Objects.requireNonNull(input).first, input.second);
         return null;
     }
 
@@ -253,7 +252,7 @@ public class MissedCallNotifier implements Worker<Pair<Integer, String>, Void> {
                             context,
                             callTag,
                             MissedCallConstants.NOTIFICATION_ID,
-                            getNotificationForCall(call, null));
+                            getNotificationForCall(call));
                 }
             }
         }
@@ -299,30 +298,8 @@ public class MissedCallNotifier implements Worker<Pair<Integer, String>, Void> {
         }
     }
 
-    @WorkerThread
-    public void insertPostCallNotification(@NonNull String number, @NonNull String note) {
-        Assert.isWorkerThread();
-        LogUtil.enterBlock("MissedCallNotifier.insertPostCallNotification");
-        List<NewCall> newCalls = callLogNotificationsQueryHelper.getNewMissedCalls();
-        if (newCalls != null && !newCalls.isEmpty()) {
-            for (NewCall call : newCalls) {
-                if (FuzzyPhoneNumberMatcher.matches(call.number, number.replace("tel:", ""))) {
-                    LogUtil.i("MissedCallNotifier.insertPostCallNotification", "Notification updated");
-                    // Update the first notification that matches our post call note sender.
-                    DialerNotificationManager.notify(
-                            context,
-                            getNotificationTagForCall(call),
-                            MissedCallConstants.NOTIFICATION_ID,
-                            getNotificationForCall(call, note));
-                    return;
-                }
-            }
-        }
-        LogUtil.i("MissedCallNotifier.insertPostCallNotification", "notification not found");
-    }
-
     private Notification getNotificationForCall(
-            @NonNull NewCall call, @Nullable String postCallMessage) {
+            @NonNull NewCall call) {
         ContactInfo contactInfo =
                 callLogNotificationsQueryHelper.getContactInfo(
                         call.number, call.numberPresentation, call.countryIso);
@@ -346,11 +323,6 @@ public class MissedCallNotifier implements Worker<Pair<Integer, String>, Void> {
                                     .unicodeWrap(contactInfo.name, TextDirectionHeuristics.LTR));
         } else {
             expandedText = contactInfo.name;
-        }
-
-        if (postCallMessage != null) {
-            expandedText =
-                    context.getString(R.string.post_call_notification_message, expandedText, postCallMessage);
         }
 
         ContactPhotoLoader loader = new ContactPhotoLoader(context, contactInfo);
@@ -396,7 +368,7 @@ public class MissedCallNotifier implements Worker<Pair<Integer, String>, Void> {
 
     private Notification.Builder createNotificationBuilder() {
 
-        return new Notification.Builder(context)
+        return new Notification.Builder(context, NotificationChannelId.MISSED_CALL)
                 .setGroup(MissedCallConstants.GROUP_KEY)
                 .setSmallIcon(android.R.drawable.stat_notify_missed_call)
                 .setColor(ThemeUtils.resolveColor(context, android.R.attr.colorAccent))
@@ -414,9 +386,8 @@ public class MissedCallNotifier implements Worker<Pair<Integer, String>, Void> {
                                 CallLogNotificationsService.createCancelSingleMissedCallPendingIntent(
                                         context, call.callsUri))
                         .setContentIntent(createCallLogPendingIntent(call.callsUri));
-        if (BuildCompat.isAtLeastO()) {
+
             builder.setChannelId(NotificationChannelId.MISSED_CALL);
-        }
 
         return builder;
     }
@@ -466,7 +437,13 @@ public class MissedCallNotifier implements Worker<Pair<Integer, String>, Void> {
 
         // TODO (a bug): scroll to call
         contentIntent.setData(callUri);
-        return PendingIntent.getActivity(context, 0, contentIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        int flags;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            flags = PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_MUTABLE;
+        } else {
+            flags = PendingIntent.FLAG_UPDATE_CURRENT;
+        }
+        return PendingIntent.getActivity(context, 0, contentIntent, flags);
     }
 
     private PendingIntent createCallBackPendingIntent(String number, @NonNull Uri callUri) {
@@ -476,7 +453,13 @@ public class MissedCallNotifier implements Worker<Pair<Integer, String>, Void> {
         intent.setData(callUri);
         // Use FLAG_UPDATE_CURRENT to make sure any previous pending intent is updated with the new
         // extra.
-        return PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        int flags;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            flags = PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_MUTABLE;
+        } else {
+            flags = PendingIntent.FLAG_UPDATE_CURRENT;
+        }
+        return PendingIntent.getService(context, 0, intent, flags);
     }
 
     private PendingIntent createSendSmsFromNotificationPendingIntent(
@@ -487,7 +470,13 @@ public class MissedCallNotifier implements Worker<Pair<Integer, String>, Void> {
         intent.setData(callUri);
         // Use FLAG_UPDATE_CURRENT to make sure any previous pending intent is updated with the new
         // extra.
-        return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        int flags;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            flags = PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_MUTABLE;
+        } else {
+            flags = PendingIntent.FLAG_UPDATE_CURRENT;
+        }
+        return PendingIntent.getActivity(context, 0, intent, flags);
     }
 
     /**

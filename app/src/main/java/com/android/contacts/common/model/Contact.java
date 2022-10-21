@@ -23,6 +23,7 @@ import android.provider.ContactsContract.Data;
 import android.provider.ContactsContract.Directory;
 import android.provider.ContactsContract.DisplayNameSources;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
 import com.android.contacts.common.GroupMetaData;
@@ -373,6 +374,7 @@ public class Contact {
         return mIsUserProfile;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "{requested="

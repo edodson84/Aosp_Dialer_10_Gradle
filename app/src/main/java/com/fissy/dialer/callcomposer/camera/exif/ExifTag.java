@@ -16,6 +16,8 @@
 
 package com.fissy.dialer.callcomposer.camera.exif;
 
+import androidx.annotation.NonNull;
+
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
@@ -23,10 +25,7 @@ import java.util.Objects;
 
 /**
  * This class stores information of an EXIF tag. For more information about defined EXIF tags,
- * please read the Jeita EXIF 2.2 standard. Tags should be instantiated using {@link
- * ExifInterface#buildTag}.
- *
- * @see ExifInterface
+
  */
 public class ExifTag {
     /**
@@ -618,6 +617,7 @@ public class ExifTag {
                 tagId, dataType, hasDefinedDefaultComponentCount, componentCountActual, ifd, value, offset);
     }
 
+    @NonNull
     @Override
     public String toString() {
         return String.format("tag id: %04X\n", tagId)

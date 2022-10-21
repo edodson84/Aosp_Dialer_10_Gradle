@@ -81,6 +81,7 @@ import com.fissy.dialer.postcall.PostCall;
 import com.fissy.dialer.preferredsim.suggestion.SuggestionProvider;
 
 import java.lang.ref.WeakReference;
+import java.util.Objects;
 
 /**
  * Controller for the Call Card Fragment. This class listens for changes to InCallState and passes
@@ -203,7 +204,7 @@ public class CallCardPresenter
         AccessibilityEvent event = AccessibilityEvent.obtain(AccessibilityEvent.TYPE_ANNOUNCEMENT);
         inCallScreen.dispatchPopulateAccessibilityEvent(event);
         View view = inCallScreen.getInCallScreenFragment().getView();
-        view.getParent().requestSendAccessibilityEvent(view, event);
+        Objects.requireNonNull(view).getParent().requestSendAccessibilityEvent(view, event);
         return true;
     }
 
@@ -260,12 +261,12 @@ public class CallCardPresenter
             inCallScreen.showLocationUi(getLocationFragment());
 
             // Log location impressions
-            if (!hasLocationPermission()) {
+            if (hasLocationPermission()) {
                 Logger.get(context).logImpression(DialerImpression.Type.EMERGENCY_NO_LOCATION_PERMISSION);
             } else if (isBatteryTooLowForEmergencyLocation()) {
                 Logger.get(context)
                         .logImpression(DialerImpression.Type.EMERGENCY_BATTERY_TOO_LOW_TO_GET_LOCATION);
-            } else if (!callLocation.canGetLocation(context)) {
+            } else if (callLocation.canGetLocation(context)) {
                 Logger.get(context).logImpression(DialerImpression.Type.EMERGENCY_CANT_GET_LOCATION);
             }
         }
@@ -627,7 +628,7 @@ public class CallCardPresenter
     public void onManageConferenceClicked() {
         InCallActivity activity =
                 (InCallActivity) (inCallScreen.getInCallScreenFragment().getActivity());
-        activity.showConferenceFragment(true);
+        Objects.requireNonNull(activity).showConferenceFragment(true);
     }
 
     @Override
@@ -831,7 +832,7 @@ public class CallCardPresenter
             LogUtil.i("CallCardPresenter.getLocationFragment", "shouldn't show location");
             return false;
         }
-        if (!hasLocationPermission()) {
+        if (hasLocationPermission()) {
             LogUtil.i("CallCardPresenter.getLocationFragment", "no location permission.");
             return false;
         }
@@ -839,7 +840,7 @@ public class CallCardPresenter
             LogUtil.i("CallCardPresenter.getLocationFragment", "low battery.");
             return false;
         }
-        if (inCallScreen.getInCallScreenFragment().getActivity().isInMultiWindowMode()) {
+        if (Objects.requireNonNull(inCallScreen.getInCallScreenFragment().getActivity()).isInMultiWindowMode()) {
             LogUtil.i("CallCardPresenter.getLocationFragment", "in multi-window mode");
             return false;
         }
@@ -847,7 +848,7 @@ public class CallCardPresenter
             LogUtil.i("CallCardPresenter.getLocationFragment", "emergency video calls not supported");
             return false;
         }
-        if (!callLocation.canGetLocation(context)) {
+        if (callLocation.canGetLocation(context)) {
             LogUtil.i("CallCardPresenter.getLocationFragment", "can't get current location");
             return false;
         }
@@ -869,8 +870,7 @@ public class CallCardPresenter
     }
 
     private boolean hasLocationPermission() {
-        return ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED;
+        return ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED;
     }
 
     private boolean isBatteryTooLowForEmergencyLocation() {
@@ -953,7 +953,7 @@ public class CallCardPresenter
      */
     private String getGatewayNumber() {
         if (hasOutgoingGatewayCall()) {
-            return DialerCall.getNumberFromHandle(primary.getGatewayInfo().getGatewayAddress());
+            return DialerCall.getNumberFromHandle(Objects.requireNonNull(primary.getGatewayInfo()).getGatewayAddress());
         }
         return null;
     }
@@ -977,7 +977,7 @@ public class CallCardPresenter
             final PackageManager pm = context.getPackageManager();
             try {
                 ApplicationInfo info =
-                        pm.getApplicationInfo(primary.getGatewayInfo().getGatewayProviderPackageName(), 0);
+                        pm.getApplicationInfo(Objects.requireNonNull(primary.getGatewayInfo()).getGatewayProviderPackageName(), 0);
                 return pm.getApplicationLabel(info).toString();
             } catch (PackageManager.NameNotFoundException e) {
                 LogUtil.e("CallCardPresenter.getConnectionLabel", "gateway Application Not Found.", e);
@@ -1006,8 +1006,7 @@ public class CallCardPresenter
         // Return connection icon if one exists.
         StatusHints statusHints = primary.getStatusHints();
         if (statusHints != null && statusHints.getIcon() != null) {
-            Drawable icon = statusHints.getIcon().loadDrawable(context);
-            return icon;
+            return statusHints.getIcon().loadDrawable(context);
         }
 
         return null;
@@ -1187,7 +1186,7 @@ public class CallCardPresenter
         private final boolean isPrimary;
 
         public ContactLookupCallback(CallCardPresenter callCardPresenter, boolean isPrimary) {
-            this.callCardPresenter = new WeakReference<CallCardPresenter>(callCardPresenter);
+            this.callCardPresenter = new WeakReference<>(callCardPresenter);
             this.isPrimary = isPrimary;
         }
 

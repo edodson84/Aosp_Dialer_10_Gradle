@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceActivity;
 
+import androidx.annotation.NonNull;
+
 import com.android.bubble.Bubble;
 import com.android.bubble.BubbleComponent;
 import com.android.bubble.stub.BubbleStub_Factory;
@@ -182,13 +184,6 @@ import com.fissy.dialer.promotion.impl.DuoPromotion_Factory;
 import com.fissy.dialer.promotion.impl.PromotionModule_ProvidePriorityPromotionListFactory;
 import com.fissy.dialer.promotion.impl.RttPromotion;
 import com.fissy.dialer.promotion.impl.RttPromotion_Factory;
-import com.fissy.dialer.simulator.Simulator;
-import com.fissy.dialer.simulator.SimulatorComponent;
-import com.fissy.dialer.simulator.SimulatorConnectionsBank;
-import com.fissy.dialer.simulator.SimulatorEnrichedCall;
-import com.fissy.dialer.simulator.impl.SimulatorConnectionsBankImpl_Factory;
-import com.fissy.dialer.simulator.impl.SimulatorImpl_Factory;
-import com.fissy.dialer.simulator.stub.SimulatorEnrichedCallStub_Factory;
 import com.fissy.dialer.spam.Spam;
 import com.fissy.dialer.spam.SpamComponent;
 import com.fissy.dialer.spam.SpamSettings;
@@ -368,11 +363,6 @@ public final class DaggerAospDialerRootComponent implements AospDialerRootCompon
 
     private Provider<SuggestionProvider> bindSuggestionProvider;
 
-    private Provider<Simulator> bindsSimulatorProvider;
-
-    private Provider<SimulatorEnrichedCall> bindsSimulatorEnrichedCallProvider;
-
-    private Provider<SimulatorConnectionsBank> bindsSimulatorConnectionsBankProvider;
 
     private Provider<DialerStrictMode> bindDialerStrictModeProvider;
 
@@ -695,13 +685,6 @@ public final class DaggerAospDialerRootComponent implements AospDialerRootCompon
         this.bindSuggestionProvider =
                 DoubleCheck.provider((Provider) StubSuggestionProvider_Factory.create());
 
-        this.bindsSimulatorProvider = DoubleCheck.provider((Provider) SimulatorImpl_Factory.create());
-
-        this.bindsSimulatorEnrichedCallProvider =
-                DoubleCheck.provider((Provider) SimulatorEnrichedCallStub_Factory.create());
-
-        this.bindsSimulatorConnectionsBankProvider =
-                DoubleCheck.provider((Provider) SimulatorConnectionsBankImpl_Factory.create());
 
         this.bindDialerStrictModeProvider =
                 DoubleCheck.provider((Provider) SystemDialerStrictMode_Factory.create());
@@ -834,11 +817,6 @@ public final class DaggerAospDialerRootComponent implements AospDialerRootCompon
     }
 
     @Override
-    public SimulatorComponent simulatorComponent() {
-        return new SimulatorComponentImpl();
-    }
-
-    @Override
     public SpamComponent spamComponent() {
         return new SpamComponentImpl();
     }
@@ -928,6 +906,7 @@ public final class DaggerAospDialerRootComponent implements AospDialerRootCompon
         private BubbleComponentImpl() {
         }
 
+        @NonNull
         @Override
         public Bubble getBubble() {
             return DaggerAospDialerRootComponent.this.bindsBubbleProvider.get();
@@ -1076,6 +1055,7 @@ public final class DaggerAospDialerRootComponent implements AospDialerRootCompon
         private ConfigProviderComponentImpl() {
         }
 
+        @NonNull
         @Override
         public ConfigProvider getConfigProvider() {
             return DaggerAospDialerRootComponent.this.toProvider2.get();
@@ -1176,6 +1156,7 @@ public final class DaggerAospDialerRootComponent implements AospDialerRootCompon
         private DuoComponentImpl() {
         }
 
+        @NonNull
         @Override
         public Duo getDuo() {
             return DaggerAospDialerRootComponent.this.bindsDuoProvider.get();
@@ -1186,11 +1167,13 @@ public final class DaggerAospDialerRootComponent implements AospDialerRootCompon
         private EnrichedCallComponentImpl() {
         }
 
+        @NonNull
         @Override
         public EnrichedCallManager getEnrichedCallManager() {
             return DaggerAospDialerRootComponent.this.provideEnrichedCallManagerProvider.get();
         }
 
+        @NonNull
         @Override
         public RcsVideoShareFactory getRcsVideoShareFactory() {
             return DaggerAospDialerRootComponent.this.providesRcsVideoShareFactoryProvider.get();
@@ -1201,11 +1184,13 @@ public final class DaggerAospDialerRootComponent implements AospDialerRootCompon
         private FeedbackComponentImpl() {
         }
 
+        @NonNull
         @Override
         public CallList.Listener getCallFeedbackListener() {
             return DaggerAospDialerRootComponent.this.provideCallFeedbackListenerProvider.get();
         }
 
+        @NonNull
         @Override
         public FeedbackSender getCallFeedbackSender() {
             return StubFeedbackModule_ProvideCallFeedbackSenderFactory.create().get();
@@ -1300,6 +1285,7 @@ public final class DaggerAospDialerRootComponent implements AospDialerRootCompon
             return DaggerAospDialerRootComponent.this.toProvider4.get();
         }
 
+        @NonNull
         @Override
         public ImmutableList<PreCallAction> createActions() {
             return DaggerAospDialerRootComponent.this.provideActionsProvider.get();
@@ -1362,25 +1348,6 @@ public final class DaggerAospDialerRootComponent implements AospDialerRootCompon
         }
     }
 
-    private final class SimulatorComponentImpl extends SimulatorComponent {
-        private SimulatorComponentImpl() {
-        }
-
-        @Override
-        public Simulator getSimulator() {
-            return DaggerAospDialerRootComponent.this.bindsSimulatorProvider.get();
-        }
-
-        @Override
-        public SimulatorEnrichedCall getSimulatorEnrichedCall() {
-            return DaggerAospDialerRootComponent.this.bindsSimulatorEnrichedCallProvider.get();
-        }
-
-        @Override
-        public SimulatorConnectionsBank getSimulatorConnectionsBank() {
-            return DaggerAospDialerRootComponent.this.bindsSimulatorConnectionsBankProvider.get();
-        }
-    }
 
     private final class SpamComponentImpl extends SpamComponent {
         private Provider<SpamSettings> bindSpamSettingsProvider;

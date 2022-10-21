@@ -17,9 +17,6 @@
     <string name="a11y_new_call_log_entry_full_description_with_phone_account_info">^1, ^2, ^3.</string>
     <string name="a11y_new_call_log_entry_full_description_without_phone_account_info">^1, ^2.</string>
     <string name="a11y_new_call_log_entry_phone_account">^1 боюнча, ^2 аркылуу</string>
-    <string name="a11y_new_call_log_entry_tap_action">expand menu</string>
-    <string name="a11y_new_call_log_entry_video_call">make a video call to ^1</string>
-    <string name="a11y_new_call_log_entry_voice_call">call ^1</string>
     <string name="abc_action_bar_home_description">Үйгө багыттоо</string>
     <string name="abc_action_bar_up_description">Жогору</string>
     <string name="abc_action_menu_overflow_description">Көбүрөөк мүмкүнчүлүктөр</string>
@@ -47,7 +44,6 @@
     <string name="abc_shareactionprovider_share_with">Бөлүшүү</string>
     <string name="abc_shareactionprovider_share_with_application">%s аркылуу бөлүшүү</string>
     <string name="abc_toolbar_collapse_description">Жыйнап коюу</string>
-    <string name="about_phone_label">Колдонмо жөнүндө</string>
     <string name="accessibility_settings_title">Атайын мүмкүнчүлүктөр</string>
     <string name="account_phone">Түзмөктө гана, шайкештирилбеген</string>
     <string name="action_copy_number_text">Номерди көчүрүү</string>
@@ -98,7 +94,6 @@
     <string name="blocked_numbers_disabled_emergency_desc">Акыркы 48 саат ичинде бул телефондон өзгөчө кырдаал кызматына байланышкандыктан чалууну бөгөттөө өчүрүлдү. 48 сааттык мөөнөтү аяктагандан кийин ал автоматтык түрдө кайра иштетилет.</string>
     <string name="blocked_numbers_disabled_emergency_header_label">Чалууну бөгөттөө убактылуу өчүрүлгөн</string>
     <string name="bubble_return_to_call">Чалууга кайтуу</string>
-    <string name="build_version_label">Курама версиясы</string>
     <string name="call">Чалуу</string>
     <string name="callFailed_simError">SIM-карта жок же анда ката кетти</string>
     <string name="call_assistant">Чалуу %s</string>
@@ -108,7 +103,7 @@
     <string name="call_car">Автомобилге чалуу</string>
     <string name="call_company_main">Компаниянын негизгисине чалуу</string>
     <string name="call_composer_connection_failed">%1$s оффлайн режиминде болгондуктан, байланышууга болбойт</string>
-    <string name="call_composer_image_uploading">Сүрөт жөнөтүлүүдө...</string>
+    <string name="call_composer_image_uploading">Сүрөт жөнөтүлүүдө…</string>
     <string name="call_custom">Чалуу %s</string>
     <string name="call_details">Чалуу тууралуу</string>
     <string name="call_details_copy_number">Номерди көчүрүү</string>
@@ -130,8 +125,8 @@
     <string name="call_incoming_default_label_answer_and_release_second">Жооп берүү жана учурдагы чалууну кармоо үчүн экранды өйдө сүрүп коюңуз</string>
     <string name="call_incoming_default_label_answer_and_release_third">Жооп берүү же кармалып турган чалууну бутүрүү үчүн экранды өйдө сүрүп коюңуз</string>
     <string name="call_incoming_important">Маанилүү</string>
-    <string name="call_incoming_message_custom">Сиздин жообуңуз...</string>
-    <string name="call_incoming_respond_via_sms_custom_message">Сиздин жообуңуз...</string>
+    <string name="call_incoming_message_custom">Сиздин жообуңуз…</string>
+    <string name="call_incoming_respond_via_sms_custom_message">Сиздин жообуңуз…</string>
     <string name="call_incoming_swipe_to_answer">Жооп берүү үчүн экранды сүрүп коюңуз</string>
     <string name="call_incoming_swipe_to_answer_and_release">Чалууга жооп берүү же чалууну аяктоо үчүн сүрөтчөнү сүрүңүз</string>
     <string name="call_incoming_swipe_to_answer_video_as_audio">Аудио чалуу катары жооп берүү үчүн сүрөтчөдөн сүрүңүз</string>
@@ -220,7 +215,6 @@
     <string name="content_description_rtt_chat_avatar">Аватар</string>
     <string name="content_description_rtt_check_button">Тапшыруу</string>
     <string name="copy_number">Номерди көчүрүү</string>
-    <string name="copy_transcript_text">Транскрипцияны көчүрүү</string>
     <string name="custom_message_hint">Башка билдирүүнү жазыңыз</string>
     <string name="default_notification_description">Абалкы үнү (%1$s)</string>
     <string name="delete">Жок кылуу</string>
@@ -337,7 +331,7 @@
     <string name="incall_calling_on_recent_choice_template">Акыркы тандалган %s оператору аркылуу чалынууда</string>
     <string name="incall_calling_on_same_carrier_template">Ошол эле %s оператору аркылуу чалынууда</string>
     <string name="incall_calling_via_template">%s аркылуу чалуу</string>
-    <string name="incall_connecting">Чалуу...</string>
+    <string name="incall_connecting">Чалуу…</string>
     <string name="incall_connecting_assited_dialed">Код аркылуу чалуу +%1$s (%2$s)…</string>
     <string name="incall_connecting_assited_dialed_component">+%1$s (%2$s) колдонулууда…</string>
     <string name="incall_content_description_bluetooth">Bluetooth</string>
@@ -389,7 +383,6 @@
     <string name="label_sip_address">SIP</string>
     <string name="launcherActivityLabel">Телефон</string>
     <string name="launcherDialpadActivityLabel">Телефондун номер тергичи</string>
-    <string name="licenseActivityLabel">Ачык программа уруксаттамалары</string>
     <string name="listAllContactsInAccount">%s байланыштары</string>
     <string name="listCustomView">Байланыштардын ыңгайлаштырылган көрүнүшү</string>
     <string name="listSingleContact">Жалгыз байланыш</string>
@@ -431,10 +424,6 @@
     <string name="network_name_wifi">Wi‑Fi</string>
     <string name="new_call_log_carrier_video">Видео чалуу</string>
     <string name="new_call_log_duo_video">Duo видео чалуусу</string>
-    <string name="new_call_log_header_older">Мурункураак</string>
-    <string name="new_call_log_header_today">Бүгүн</string>
-    <string name="new_call_log_header_yesterday">Кечээ</string>
-    <string name="new_call_log_permission_no_calllog">Чалуулар таржымалыңызды көрүү үчүн, \"Телефон\" колдонмосуна уруксат бериңиз.</string>
     <string name="new_call_log_secondary_blocked">Бөгөттөлдү</string>
     <string name="new_call_log_secondary_spam">Спам</string>
     <string name="new_call_log_unknown">Белгисиз</string>
@@ -490,7 +479,6 @@
     <string name="ok_got_it">Жарайт, түшүндүм</string>
     <string name="old_block_number_confirmation_title">%1$s бөгөттөлсүнбү?</string>
     <string name="old_call_subject_type_and_number">%1$s %2$s</string>
-    <string name="open_source_license_detail_label">Баштапкы коду ачык программанын уруксаттамасынын чоо-жайы</string>
     <string name="organizationLabelsGroup">Ишкана</string>
     <string name="outgoing_wps_warning">Азыр WPS аркылуу чалсаңыз, учурдагы чалуу үзүлүп калат.</string>
     <string name="pause_prompt_no">Жок</string>
@@ -524,7 +512,6 @@
     <string name="pre_call_select_phone_account_hint_intra_carrier">Ошол эле байланыш операторун колдонот</string>
     <string name="pre_call_select_phone_account_hint_other_sim_in_use">%1$s SIM-картаны пайдаланып жатканда жеткиликсиз</string>
     <string name="pre_call_select_phone_account_remember">Бул тандоону эстеп калуу</string>
-    <string name="privacy_policy_label">Купуялык саясаты</string>
     <string name="private_num_non_verizon">Купуя номер</string>
     <string name="private_num_verizon">Чектелген</string>
     <string name="quick_question">Тез суроо…</string>
@@ -646,7 +633,6 @@
     <string name="tab_title">\"%1$s\" өтмөгү.</string>
     <string name="tab_title_call_history">Чалуу таржымалы</string>
     <string name="tab_title_speed_dial">Тез терүү</string>
-    <string name="terms_of_service_label">Тейлөө шарттары</string>
     <string name="toast_cannot_write_system_settings">Телефон колдонмосунун Тутум жөндөөлөрүнө жазууга уруксаты жок.</string>
     <string name="toast_text_copied">Текст көчүрүлдү</string>
     <string name="toolbar_close">Жабуу</string>
@@ -691,13 +677,7 @@
     <string name="view_updates_from_group">Жаңыртууларды көрүү</string>
     <string name="voice_call">Үн чалуусу</string>
     <string name="voice_search_not_available">Үн менен издөө жеткиликтүү эмес</string>
-    <string name="voicemail">Үн почтасы</string>
-    <string name="voicemailCallLogDateTimeFormat">%1$s саат %2$s</string>
-    <string name="voicemailCallLogDateTimeFormatWithDuration">%1$s • %2$s</string>
-    <string name="voicemailCallLogToday">@string/call_log_header_today</string>
-    <string name="voicemailDurationFormat">%1$02d:%2$02d</string>
     <string name="voicemailMultiSelectActionBarTitle">%1$s тандалды</string>
-    <string name="voicemail_donation_promo_content">Үн почтаңыздын ушул жана башка билдирүүлөрүн Google транскрипциялары менен карап чыгышы керек. Алар жашыруун мүнөздө сакталат. Жөндөөлөрдү каалаган убакытта өзгөртсөңүз болот. %1$s</string>
     <string name="voicemail_string">Үн почтасы</string>
     <string name="voicemail_transcription_rating">Баалоо транскрипциясынын сапаты</string>
     <string name="wait_prompt_str">"Төмөнкү номер жөнөтүлсүнбү?

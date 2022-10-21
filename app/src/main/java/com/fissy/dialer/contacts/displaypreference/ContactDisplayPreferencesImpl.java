@@ -102,20 +102,16 @@ public final class ContactDisplayPreferencesImpl implements ContactDisplayPrefer
     }
 
     private String translateLegacyDisplayOrder(int legacyValue) {
-        switch (legacyValue) {
-            case 2:
-                return DisplayOrder.ALTERNATIVE.getValue(appContext);
-            default:
-                return DisplayOrder.PRIMARY.getValue(appContext);
+        if (legacyValue == 2) {
+            return DisplayOrder.ALTERNATIVE.getValue(appContext);
         }
+        return DisplayOrder.PRIMARY.getValue(appContext);
     }
 
     private String translateLegacySortOrder(int legacyValue) {
-        switch (legacyValue) {
-            case 2:
-                return SortOrder.BY_ALTERNATIVE.getValue(appContext);
-            default:
-                return SortOrder.BY_PRIMARY.getValue(appContext);
+        if (legacyValue == 2) {
+            return SortOrder.BY_ALTERNATIVE.getValue(appContext);
         }
+        return SortOrder.BY_PRIMARY.getValue(appContext);
     }
 }

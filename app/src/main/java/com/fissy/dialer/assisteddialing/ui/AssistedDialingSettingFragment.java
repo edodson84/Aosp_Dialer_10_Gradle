@@ -124,8 +124,8 @@ public class AssistedDialingSettingFragment extends PreferenceFragment {
             }
         }
 
-        countryChooserPref.setEntries(newKeys.toArray(new CharSequence[newKeys.size()]));
-        countryChooserPref.setEntryValues(newValues.toArray(new CharSequence[newValues.size()]));
+        countryChooserPref.setEntries(newKeys.toArray(new CharSequence[0]));
+        countryChooserPref.setEntryValues(newValues.toArray(new CharSequence[0]));
 
         if (!newValues.contains(countryChooserPref.getValue())) {
             ameliorateInvalidSelectedValue(countryChooserPref);

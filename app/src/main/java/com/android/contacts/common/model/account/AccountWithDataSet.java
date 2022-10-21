@@ -27,6 +27,8 @@ import android.provider.ContactsContract;
 import android.provider.ContactsContract.RawContacts;
 import android.text.TextUtils;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -100,7 +102,7 @@ public class AccountWithDataSet implements Parcelable {
     }
 
     /**
-     * Unpack a string created by {@link #stringify}.
+     * Unpack a string created
      *
      * @throws IllegalArgumentException if it's an invalid string.
      */
@@ -142,8 +144,8 @@ public class AccountWithDataSet implements Parcelable {
 
         final String[] array = ARRAY_STRINGIFY_SEPARATOR_PAT.split(s);
 
-        for (int i = 0; i < array.length; i++) {
-            ret.add(unstringify(array[i]));
+        for (String value : array) {
+            ret.add(unstringify(value));
         }
 
         return ret;
@@ -223,14 +225,10 @@ public class AccountWithDataSet implements Parcelable {
         return result;
     }
 
+
+    @NonNull
     public String toString() {
         return "AccountWithDataSet {name=" + name + ", type=" + type + ", dataSet=" + dataSet + "}";
     }
 
-    /**
-     * Pack the instance into a string.
-     */
-    public String stringify() {
-        return addStringified(new StringBuilder(), this).toString();
-    }
 }

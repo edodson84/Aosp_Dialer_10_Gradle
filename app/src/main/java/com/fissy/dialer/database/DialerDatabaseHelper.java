@@ -482,7 +482,7 @@ public class DialerDatabaseHelper extends SQLiteOpenHelper {
                     continue;
                 }
 
-                final Long contactId = updatedContactCursor.getLong(UpdatedContactQuery.UPDATED_CONTACT_ID);
+                final long contactId = updatedContactCursor.getLong(UpdatedContactQuery.UPDATED_CONTACT_ID);
 
                 db.delete(Tables.SMARTDIAL_TABLE, SmartDialDbColumns.CONTACT_ID + "=" + contactId, null);
                 db.delete(Tables.PREFIX_TABLE, PrefixColumns.CONTACT_ID + "=" + contactId, null);
@@ -648,7 +648,6 @@ public class DialerDatabaseHelper extends SQLiteOpenHelper {
                     continue;
                 }
 
-                /** Computes a list of prefixes of a given contact name. */
                 final ArrayList<String> namePrefixes =
                         SmartDialPrefix.generateNamePrefixes(context, nameCursor.getString(columnIndexName));
 
@@ -683,7 +682,6 @@ public class DialerDatabaseHelper extends SQLiteOpenHelper {
         LogUtil.v("DialerDatabaseHelper.updateSmartDialDatabase", "starting to update database");
         final StopWatch stopWatch = DEBUG ? StopWatch.start("Updating databases") : null;
 
-        /** Gets the last update time on the database. */
         final SharedPreferences databaseLastUpdateSharedPref =
                 context.getSharedPreferences(DATABASE_LAST_CREATED_SHARED_PREF, Context.MODE_PRIVATE);
 
@@ -700,14 +698,12 @@ public class DialerDatabaseHelper extends SQLiteOpenHelper {
         LogUtil.i(
                 "DialerDatabaseHelper.updateSmartDialDatabase", "last updated at %s", lastUpdateMillis);
 
-        /** Sets the time after querying the database as the current update time. */
-        final Long currentMillis = System.currentTimeMillis();
+        final long currentMillis = System.currentTimeMillis();
 
         if (DEBUG) {
             stopWatch.lap("Queried the Contacts database");
         }
 
-        /** Removes contacts that have been deleted. */
         removeDeletedContacts(db, lastUpdateMillis);
         removePotentiallyCorruptedContacts(db, lastUpdateMillis);
 
@@ -715,16 +711,7 @@ public class DialerDatabaseHelper extends SQLiteOpenHelper {
             stopWatch.lap("Finished deleting deleted entries");
         }
 
-        /**
-         * If the database did not exist before, jump through deletion as there is nothing to delete.
-         */
         if (!lastUpdateMillis.equals("0")) {
-            /**
-             * Removes contacts that have been updated. Updated contact information will be inserted
-             * later. Note that this has to use a separate result set from updatePhoneCursor, since it is
-             * possible for a contact to be updated (e.g. phone number deleted), but have no results show
-             * up in updatedPhoneCursor (since all of its phone numbers have been deleted).
-             */
             final Cursor updatedContactCursor =
                     context
                             .getContentResolver()
@@ -750,10 +737,6 @@ public class DialerDatabaseHelper extends SQLiteOpenHelper {
             }
         }
 
-        /**
-         * Queries the contact database to get all phone numbers that have been updated since the last
-         * update time.
-         */
         final Cursor updatedPhoneCursor =
                 context
                         .getContentResolver()
@@ -771,7 +754,6 @@ public class DialerDatabaseHelper extends SQLiteOpenHelper {
         }
 
         try {
-            /** Inserts recently updated phone numbers to the smartdial database. */
             insertUpdatedContactsAndNumberPrefix(db, updatedPhoneCursor, currentMillis);
             if (DEBUG) {
                 stopWatch.lap("Finished building the smart dial table");
@@ -780,10 +762,6 @@ public class DialerDatabaseHelper extends SQLiteOpenHelper {
             updatedPhoneCursor.close();
         }
 
-        /**
-         * Gets a list of distinct contacts which have been updated, and adds the name prefixes of these
-         * contacts to the prefix table.
-         */
         final Cursor nameCursor =
                 db.rawQuery(
                         "SELECT DISTINCT "
@@ -803,7 +781,6 @@ public class DialerDatabaseHelper extends SQLiteOpenHelper {
                     stopWatch.lap("Queried the smart dial table for contact names");
                 }
 
-                /** Inserts prefixes of names into the prefix table. */
                 insertNamePrefixes(db, nameCursor);
                 if (DEBUG) {
                     stopWatch.lap("Finished building the name prefix table");
@@ -813,21 +790,18 @@ public class DialerDatabaseHelper extends SQLiteOpenHelper {
             }
         }
 
-        /** Creates index on contact_id for fast JOIN operation. */
         db.execSQL(
                 "CREATE INDEX IF NOT EXISTS smartdial_contact_id_index ON "
                         + Tables.SMARTDIAL_TABLE
                         + " ("
                         + SmartDialDbColumns.CONTACT_ID
                         + ");");
-        /** Creates index on last_smartdial_update_time for fast SELECT operation. */
         db.execSQL(
                 "CREATE INDEX IF NOT EXISTS smartdial_last_update_index ON "
                         + Tables.SMARTDIAL_TABLE
                         + " ("
                         + SmartDialDbColumns.LAST_SMARTDIAL_UPDATE_TIME
                         + ");");
-        /** Creates index on sorting fields for fast sort operation. */
         db.execSQL(
                 "CREATE INDEX IF NOT EXISTS smartdial_sort_index ON "
                         + Tables.SMARTDIAL_TABLE
@@ -848,14 +822,12 @@ public class DialerDatabaseHelper extends SQLiteOpenHelper {
                         + ", "
                         + SmartDialDbColumns.IS_PRIMARY
                         + ");");
-        /** Creates index on prefix for fast SELECT operation. */
         db.execSQL(
                 "CREATE INDEX IF NOT EXISTS nameprefix_index ON "
                         + Tables.PREFIX_TABLE
                         + " ("
                         + PrefixColumns.PREFIX
                         + ");");
-        /** Creates index on contact_id for fast JOIN operation. */
         db.execSQL(
                 "CREATE INDEX IF NOT EXISTS nameprefix_contact_id_index ON "
                         + Tables.PREFIX_TABLE
@@ -867,7 +839,6 @@ public class DialerDatabaseHelper extends SQLiteOpenHelper {
             stopWatch.lap(TAG + "Finished recreating index");
         }
 
-        /** Updates the database index statistics. */
         db.execSQL("ANALYZE " + Tables.SMARTDIAL_TABLE);
         db.execSQL("ANALYZE " + Tables.PREFIX_TABLE);
         db.execSQL("ANALYZE smartdial_contact_id_index");
@@ -902,7 +873,6 @@ public class DialerDatabaseHelper extends SQLiteOpenHelper {
             String query, SmartDialNameMatcher nameMatcher) {
         final SQLiteDatabase db = getReadableDatabase();
 
-        /** Uses SQL query wildcard '%' to represent prefix matching. */
         final String looseQuery = query + "%";
 
         final ArrayList<ContactNumber> result = new ArrayList<>();
@@ -911,7 +881,6 @@ public class DialerDatabaseHelper extends SQLiteOpenHelper {
 
         final String currentTimeStamp = Long.toString(System.currentTimeMillis());
 
-        /** Queries the database to find contacts that have an index matching the query prefix. */
         final Cursor cursor =
                 db.rawQuery(
                         "SELECT "
@@ -955,7 +924,6 @@ public class DialerDatabaseHelper extends SQLiteOpenHelper {
                 stopWatch.lap("Prefix query completed");
             }
 
-            /** Gets the column ID from the cursor. */
             final int columnDataId = 0;
             final int columnDisplayNamePrimary = 1;
             final int columnPhotoId = 2;
@@ -972,7 +940,6 @@ public class DialerDatabaseHelper extends SQLiteOpenHelper {
             if (DEBUG) {
                 stopWatch.lap("Moved cursor to start");
             }
-            /** Iterates the cursor to find top contact suggestions without duplication. */
             while ((cursor.moveToNext()) && (counter < MAX_ENTRIES)) {
                 if (cursor.isNull(columnDataId)) {
                     LogUtil.i(
@@ -988,23 +955,15 @@ public class DialerDatabaseHelper extends SQLiteOpenHelper {
                 final String lookupKey = cursor.getString(columnLookupKey);
                 final int carrierPresence = cursor.getInt(columnCarrierPresence);
 
-                /**
-                 * If a contact already exists and another phone number of the contact is being processed,
-                 * skip the second instance.
-                 */
                 final ContactMatch contactMatch = new ContactMatch(lookupKey, id);
                 if (duplicates.contains(contactMatch)) {
                     continue;
                 }
 
-                /**
-                 * If the contact has either the name or number that matches the query, add to the result.
-                 */
                 final boolean nameMatches = nameMatcher.matches(context, displayName);
                 final boolean numberMatches =
                         (nameMatcher.matchesNumber(context, phoneNumber, query) != null);
                 if (nameMatches || numberMatches) {
-                    /** If a contact has not been added, add it to the result and the hash set. */
                     duplicates.add(contactMatch);
                     result.add(
                             new ContactNumber(

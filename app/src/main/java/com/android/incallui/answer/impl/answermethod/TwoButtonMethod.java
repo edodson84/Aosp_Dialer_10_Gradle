@@ -42,6 +42,8 @@ import com.fissy.dialer.R;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
 
+import java.util.Objects;
+
 /**
  * Answer method that shows two buttons for answer/reject.
  */
@@ -99,7 +101,7 @@ public class TwoButtonMethod extends AnswerMethod
         answerButton.setOnClickListener(this);
         declineButton.setOnClickListener(this);
 
-        if (AccessibilityUtil.isTouchExplorationEnabled(getContext())) {
+        if (AccessibilityUtil.isTouchExplorationEnabled(Objects.requireNonNull(getContext()))) {
             /* Falsing already handled by AccessibilityManager */
             touchHandler =
                     FlingUpDownTouchHandler.attach(
@@ -166,7 +168,7 @@ public class TwoButtonMethod extends AnswerMethod
         if (hintTextView == null) {
             return;
         }
-        hintTextView.setVisibility(getActivity().isInMultiWindowMode() ? View.GONE : View.VISIBLE);
+        hintTextView.setVisibility(Objects.requireNonNull(getActivity()).isInMultiWindowMode() ? View.GONE : View.VISIBLE);
         if (!TextUtils.isEmpty(hintText) && !buttonClicked) {
             hintTextView.setText(hintText);
             hintTextView.animate().alpha(1f).start();

@@ -17,9 +17,6 @@
     <string name="a11y_new_call_log_entry_full_description_with_phone_account_info">^1, ^2, ^3.</string>
     <string name="a11y_new_call_log_entry_full_description_without_phone_account_info">^1, ^2.</string>
     <string name="a11y_new_call_log_entry_phone_account">^1 ರಲ್ಲಿ, ^2 ಮೂಲಕ</string>
-    <string name="a11y_new_call_log_entry_tap_action">expand menu</string>
-    <string name="a11y_new_call_log_entry_video_call">make a video call to ^1</string>
-    <string name="a11y_new_call_log_entry_voice_call">call ^1</string>
     <string name="abc_action_bar_home_description">ಮುಖಪುಟವನ್ನು ನ್ಯಾವಿಗೇಟ್ ಮಾಡಿ</string>
     <string name="abc_action_bar_up_description">ಮೇಲಕ್ಕೆ ನ್ಯಾವಿಗೇಟ್ ಮಾಡಿ</string>
     <string name="abc_action_menu_overflow_description">ಇನ್ನಷ್ಟು ಆಯ್ಕೆಗಳು</string>
@@ -47,7 +44,6 @@
     <string name="abc_shareactionprovider_share_with">ಇವರೊಂದಿಗೆ ಹಂಚಿಕೊಳ್ಳಿ</string>
     <string name="abc_shareactionprovider_share_with_application">%s ನೊಂದಿಗೆ ಹಂಚಿಕೊಳ್ಳಿ</string>
     <string name="abc_toolbar_collapse_description">ಸಂಕುಚಿಸು</string>
-    <string name="about_phone_label">ಕುರಿತು</string>
     <string name="accessibility_settings_title">ಪ್ರವೇಶಿಸುವಿಕೆ</string>
     <string name="account_phone">ಸಾಧನ-ಮಾತ್ರ, ಸಿಂಕ್ ಮಾಡಲಾಗದಿರುವುದು</string>
     <string name="action_copy_number_text">ಸಂಖ್ಯೆಯನ್ನು ನಕಲಿಸಿ</string>
@@ -98,7 +94,6 @@
     <string name="blocked_numbers_disabled_emergency_desc">ನೀವು ಕಳೆದ 48 ಗಂಟೆಗಳಲ್ಲಿ ಈ ಫೋನ್‌ನಿಂದ ತುರ್ತು ಸೇವೆಗಳಿಗೆ ಸಂಪರ್ಕಿಸಿರುವ ಕಾರಣದಿಂದ ಕರೆ ನಿರ್ಬಂಧಿಸುವಿಕೆಯನ್ನು ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆ. ಒಮ್ಮೆ 48 ಗಂಟೆಗಳ ಅವಧಿಯು ಮುಕ್ತಾಯಗೊಂಡ ನಂತರ ಅದನ್ನು ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಮರುಸಕ್ರಿಯಗೊಳಿಸಲಾಗುವುದು.</string>
     <string name="blocked_numbers_disabled_emergency_header_label">ಕರೆ ನಿರ್ಬಂಧಿಸುವಿಕೆ ತಾತ್ಕಾಲಿಕ ಆಫ್ ಮಾಡಲಾಗಿದೆ</string>
     <string name="bubble_return_to_call">ಕರೆಗೆ ಹಿಂತಿರುಗಿ</string>
-    <string name="build_version_label">ಬಿಲ್ಡ್ ಆವೃತ್ತಿ</string>
     <string name="call">ಕರೆಮಾಡಿ</string>
     <string name="callFailed_simError">ಯಾವುದೇ ಸಿಮ್‌ ಇಲ್ಲ ಅಥವಾ ಸಿಮ್‌ ದೋಷ</string>
     <string name="call_assistant">%s ಕರೆ ಮಾಡಿ</string>
@@ -148,7 +143,7 @@
     <string name="call_log_action_remove_spam">ಸ್ಪ್ಯಾಮ್‌ ಅಲ್ಲ</string>
     <string name="call_log_action_send_message">ಸಂದೇಶ ಕಳುಹಿಸಿ</string>
     <string name="call_log_action_set_up_video">ವೀಡಿಯೊ ಕರೆಮಾಡುವಿಕೆ ಹೊಂದಿಸಿ</string>
-    <string name="call_log_action_share_voicemail">ಇದಕ್ಕೆ ಕಳುಹಿಸಿ ...</string>
+    <string name="call_log_action_share_voicemail">ಇದಕ್ಕೆ ಕಳುಹಿಸಿ …</string>
     <string name="call_log_action_unblock_number">ಸಂಖ್ಯೆಯನ್ನು ಅನಿರ್ಬಂಧಿಸು</string>
     <string name="call_log_action_video_call">ವೀಡಿಯೊ ಕರೆ</string>
     <string name="call_log_activity_title">ಕರೆ ಇತಿಹಾಸ</string>
@@ -173,7 +168,7 @@
     <string name="call_pager">ಪೇಜರ್‌‌ಗೆ ಕರೆ ಮಾಡಿ</string>
     <string name="call_radio">ರೇಡಿಯೋಗೆ ಕರೆ ಮಾಡಿ</string>
     <string name="call_settings_label">ಕರೆಗಳು</string>
-    <string name="call_subject_hint">ಕರೆ ಕಳುಹಿಸಲು ಟಿಪ್ಪಣಿಯನ್ನು ಟೈಪ್ ಮಾಡಿ ...</string>
+    <string name="call_subject_hint">ಕರೆ ಕಳುಹಿಸಲು ಟಿಪ್ಪಣಿಯನ್ನು ಟೈಪ್ ಮಾಡಿ …</string>
     <string name="call_subject_limit">%1$s / %2$s</string>
     <string name="call_subject_type_and_number">%1$s %2$s</string>
     <string name="call_telex">ಟೆಲೆಕ್ಸ್‌‌‌ಗೆ ಕರೆ ಮಾಡಿ</string>
@@ -220,7 +215,6 @@
     <string name="content_description_rtt_chat_avatar">ಅವತಾರ್</string>
     <string name="content_description_rtt_check_button">ಮುಂದುವರಿಯಿರಿ</string>
     <string name="copy_number">ಸಂಖ್ಯೆಯನ್ನು ನಕಲಿಸಿ</string>
-    <string name="copy_transcript_text">ಟ್ರಾನ್ಸ್‌ಕ್ರಿಪ್ಶನ್ ನಕಲಿಸಿ</string>
     <string name="custom_message_hint">ಕಸ್ಟಮ್ ಸಂದೇಶವನ್ನು ಬರೆಯಿರಿ</string>
     <string name="default_notification_description">ಡಿಫಾಲ್ಟ್‌ ಧ್ವನಿ (%1$s)</string>
     <string name="delete">ಅಳಿಸಿ</string>
@@ -337,7 +331,7 @@
     <string name="incall_calling_on_recent_choice_template">ಇತ್ತೀಚಿನ ಆಯ್ಕೆಯ ಆಧಾರದ ಮೇಲೆ %s ನಿಂದ ಕರೆ ಮಾಡಲಾಗುತ್ತಿದೆ</string>
     <string name="incall_calling_on_same_carrier_template">%s ವಾಹಕದ ಮೂಲಕ ಕರೆ ಮಾಡಲಾಗುತ್ತಿದೆ</string>
     <string name="incall_calling_via_template">%s ಮೂಲಕ ಕರೆ ಮಾಡಲಾಗುತ್ತಿದೆ</string>
-    <string name="incall_connecting">ಕರೆ ಮಾಡಲಾಗುತ್ತಿದೆ...</string>
+    <string name="incall_connecting">ಕರೆ ಮಾಡಲಾಗುತ್ತಿದೆ…</string>
     <string name="incall_connecting_assited_dialed">+%1$s (%2$s) ಬಳಸಿಕೊಂಡು ಕರೆಮಾಡಲಾಗುತ್ತಿದೆ…</string>
     <string name="incall_connecting_assited_dialed_component">+%1$s (%2$s) ಅನ್ನು ಬಳಸಲಾಗುತ್ತಿದೆ…</string>
     <string name="incall_content_description_bluetooth">ಬ್ಲೂಟೂತ್‌</string>
@@ -376,7 +370,7 @@
     <string name="incall_remotely_held">ಹೋಲ್ಡ್‌ ಮಾಡಲಾಗಿದೆ</string>
     <string name="incall_talkback_speaker_off">, ಆಫ್ ಆಗಿದೆ</string>
     <string name="incall_talkback_speaker_on">, ಆನ್ ಆಗಿದೆ</string>
-    <string name="incall_transferring">ವರ್ಗಾಯಿಸಲಾಗುತ್ತಿದೆ...</string>
+    <string name="incall_transferring">ವರ್ಗಾಯಿಸಲಾಗುತ್ತಿದೆ…</string>
     <string name="incall_video_call_request_failed">ಸಂಪರ್ಕಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ</string>
     <string name="incall_video_call_request_rejected">ಕರೆ ನಿರಾಕರಿಸಲಾಗಿದೆ</string>
     <string name="incall_video_call_request_timed_out">ಕರೆ ಅವಧಿ ಮೀರಿದೆ</string>
@@ -389,7 +383,6 @@
     <string name="label_sip_address">ಎಸ್‌ಐಪಿ</string>
     <string name="launcherActivityLabel">ಫೋನ್</string>
     <string name="launcherDialpadActivityLabel">ಫೋನ್ ಕೀಪ್ಯಾಡ್</string>
-    <string name="licenseActivityLabel">ತೆರೆದ ಮೂಲ ಪರವಾನಗಿಗಳು</string>
     <string name="listAllContactsInAccount">%s ನಲ್ಲಿ ಸಂಪರ್ಕಗಳು</string>
     <string name="listCustomView">ಕಸ್ಟಮ್‌ ವೀಕ್ಷಣೆಯಲ್ಲಿನ ಸಂಪರ್ಕಗಳು</string>
     <string name="listSingleContact">ಏಕೈಕ ಸಂಪರ್ಕ</string>
@@ -431,10 +424,6 @@
     <string name="network_name_wifi">ವೈಫೈ</string>
     <string name="new_call_log_carrier_video">ವಾಹಕ ವೀಡಿಯೊ</string>
     <string name="new_call_log_duo_video">Duo ವೀಡಿಯೊ</string>
-    <string name="new_call_log_header_older">ಹಳೆಯದು</string>
-    <string name="new_call_log_header_today">ಇಂದು</string>
-    <string name="new_call_log_header_yesterday">ನಿನ್ನೆ</string>
-    <string name="new_call_log_permission_no_calllog">ನಿಮ್ಮ ಕರೆಯ ಲಾಗ್ ಅನ್ನು ವೀಕ್ಷಿಸಲು, ಫೋನ್ ಅನುಮತಿಯನ್ನು ಆನ್ ಮಾಡಿ.</string>
     <string name="new_call_log_secondary_blocked">ನಿರ್ಬಂಧಿಸಲಾಗಿದೆ</string>
     <string name="new_call_log_secondary_spam">ಸ್ಪ್ಯಾಮ್</string>
     <string name="new_call_log_unknown">ಅಪರಿಚಿತ</string>
@@ -490,7 +479,6 @@
     <string name="ok_got_it">ಸರಿ, ಅರ್ಥವಾಯಿತು</string>
     <string name="old_block_number_confirmation_title">%1$sಅನ್ನು ನಿರ್ಬಂಧಿಸಬೇಕೇ?</string>
     <string name="old_call_subject_type_and_number">%1$s %2$s</string>
-    <string name="open_source_license_detail_label">ತೆರೆದ ಮೂಲ ಸಾಫ್ಟ್‌ವೇರ್‌ಗಾಗಿ ಪರವಾನಗಿ ವಿವರಗಳು</string>
     <string name="organizationLabelsGroup">ಸಂಘಟನೆ</string>
     <string name="outgoing_wps_warning">WPS ಕರೆ ಅನ್ನು ಮಾಡುವುದರಿಂದ ಅಸ್ತಿತ್ವದಲ್ಲಿರುವ ನಿಮ್ಮ ಕರೆ ಕಡಿತಗೊಳ್ಳುತ್ತದೆ.</string>
     <string name="pause_prompt_no">ಇಲ್ಲ</string>
@@ -524,7 +512,6 @@
     <string name="pre_call_select_phone_account_hint_intra_carrier">ಅದೇ ವಾಹಕವನ್ನು ಬಳಸುತ್ತದೆ</string>
     <string name="pre_call_select_phone_account_hint_other_sim_in_use">%1$s ಅನ್ನು ಬಳುಸುತ್ತಿರುವಾಗ ಬೇರೆ ಕರೆಗಳನ್ನು ಮಾಡಲು ಸಾಧ್ಯವಾಗುವುದಿಲ್ಲ</string>
     <string name="pre_call_select_phone_account_remember">ಈ ಆಯ್ಕೆಯನ್ನು ನೆನಪಿಡಿ</string>
-    <string name="privacy_policy_label">ಗೌಪ್ಯತೆ ನೀತಿ</string>
     <string name="private_num_non_verizon">ಖಾಸಗಿ ಸಂಖ್ಯೆ</string>
     <string name="private_num_verizon">ನಿರ್ಬಂಧಿಸಲಾಗಿದೆ</string>
     <string name="quick_question">ತ್ವರಿತ ಪ್ರಶ್ನೆ…</string>
@@ -646,7 +633,6 @@
     <string name="tab_title">%1$s ಟ್ಯಾಬ್.</string>
     <string name="tab_title_call_history">ಕರೆ ಇತಿಹಾಸ</string>
     <string name="tab_title_speed_dial">ಸ್ಪೀಡ್ ಡಯಲ್</string>
-    <string name="terms_of_service_label">ಸೇವಾ ನಿಯಮಗಳು</string>
     <string name="toast_cannot_write_system_settings">ಸಿಸ್ಟಂ ಸೆಟ್ಟಿಂಗ್‌ಗಳಿಗೆ ಬರೆಯಲು ಫೋನ್ ಅಪ್ಲಿಕೇಶನ್ ಅನುಮತಿಯನ್ನು ಹೊಂದಿಲ್ಲ.</string>
     <string name="toast_text_copied">ಪಠ್ಯವನ್ನು ನಕಲಿಸಲಾಗಿದೆ</string>
     <string name="toolbar_close">ಮುಚ್ಚಿ</string>
@@ -691,13 +677,7 @@
     <string name="view_updates_from_group">ನವೀಕರಣಗಳನ್ನು ವೀಕ್ಷಿಸಿ</string>
     <string name="voice_call">ಧ್ವನಿ ಕರೆ</string>
     <string name="voice_search_not_available">ಧ್ವನಿ ಹುಡುಕಾಟ ಲಭ್ಯವಿಲ್ಲ</string>
-    <string name="voicemail">ಧ್ವನಿಮೇಲ್</string>
-    <string name="voicemailCallLogDateTimeFormat">%1$s ರಂದು %2$s ಗಂಟೆಗೆ</string>
-    <string name="voicemailCallLogDateTimeFormatWithDuration">%1$s • %2$s</string>
-    <string name="voicemailCallLogToday">@string/call_log_header_today</string>
-    <string name="voicemailDurationFormat">%1$02d:%2$02d</string>
     <string name="voicemailMultiSelectActionBarTitle">%1$s ಆಯ್ಕೆಮಾಡಲಾಗಿದೆ</string>
-    <string name="voicemail_donation_promo_content">ಲಿಪ್ಯಂತರಗಳೊಂದಿಗೆ ಇದನ್ನು ಮತ್ತು ಭವಿಷ್ಯದ ಧ್ವನಿಮೇಲ್ ಸಂದೇಶಗಳನ್ನು ಪರಿಶೀಲಿಸಲು Google ಗೆ ಅನುಮತಿಸಿ. ಅವುಗಳನ್ನು ಅನಾಮಧೇಯವಾಗಿ ಸಂಗ್ರಹಿಸಲಾಗುತ್ತದೆ. ಯಾವುದೇ ಸಮಯದಲ್ಲಿ ಸೆಟ್ಟಿಂಗ್‌ಗಳನ್ನು ಬದಲಾಯಿಸಿ. %1$s</string>
     <string name="voicemail_string">ಧ್ವನಿಮೇಲ್</string>
     <string name="voicemail_transcription_rating">ಈ ಟ್ರಾನ್ಸ್‌ಕ್ರಿಪ್ಶನ್ ಗುಣಮಟ್ಟಕ್ಕೆ ದರ ನಿಗದಿಪಡಿಸಿ</string>
     <string name="wait_prompt_str">"ಕೆಳಗಿನ ಟೋನ್‌ಗಳನ್ನು ಕಳುಹಿಸುವುದೇ?

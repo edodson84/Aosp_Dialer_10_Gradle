@@ -343,9 +343,8 @@ public class CallLogNotificationsQueryHelper {
         private static final int DATE_COLUMN_INDEX = 8;
 
         static {
-            List<String> list = new ArrayList<>();
-            list.addAll(Arrays.asList(PROJECTION));
-            PROJECTION_O = list.toArray(new String[list.size()]);
+            List<String> list = new ArrayList<>(Arrays.asList(PROJECTION));
+            PROJECTION_O = list.toArray(new String[0]);
         }
 
         private final ContentResolver contentResolver;
@@ -388,19 +387,18 @@ public class CallLogNotificationsQueryHelper {
             }
 
             if (thresholdMillis != NO_THRESHOLD) {
-                selectionBuilder =
-                        selectionBuilder.and(
-                                Selection.column(Calls.DATE)
-                                        .is("IS NULL")
-                                        .buildUpon()
-                                        .or(Selection.column(Calls.DATE).is(">=", thresholdMillis))
-                                        .build());
+                selectionBuilder.and(
+                        Selection.column(Calls.DATE)
+                                .is("IS NULL")
+                                .buildUpon()
+                                .or(Selection.column(Calls.DATE).is(">=", thresholdMillis))
+                                .build());
             }
             Selection selection = selectionBuilder.build();
             try (Cursor cursor =
                          contentResolver.query(
                                  Calls.CONTENT_URI_WITH_VOICEMAIL,
-                                 (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) ? PROJECTION_O : PROJECTION,
+                                 PROJECTION_O,
                                  selection.getSelection(),
                                  selection.getSelectionArgs(),
                                  Calls.DEFAULT_SORT_ORDER)) {
@@ -439,7 +437,7 @@ public class CallLogNotificationsQueryHelper {
             try (Cursor cursor =
                          contentResolver.query(
                                  Calls.CONTENT_URI_WITH_VOICEMAIL,
-                                 (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) ? PROJECTION_O : PROJECTION,
+                                 PROJECTION_O,
                                  selection.getSelection(),
                                  selection.getSelectionArgs(),
                                  null)) {

@@ -25,7 +25,6 @@ import android.util.Pair;
 
 import androidx.annotation.NonNull;
 
-import com.android.contacts.common.compat.telecom.TelecomManagerCompat;
 import com.android.incallui.call.DialerCall;
 import com.fissy.dialer.R;
 import com.fissy.dialer.callintent.CallInitiationType;
@@ -38,10 +37,12 @@ import com.fissy.dialer.precall.PreCall;
  */
 public class VideoCallNotAvailablePrompt implements DisconnectDialog {
 
+    public static final String REASON_IMS_ACCESS_BLOCKED = "REASON_IMS_ACCESS_BLOCKED";
+
     @Override
     public boolean shouldShow(DisconnectCause disconnectCause) {
         if (disconnectCause.getCode() == DisconnectCause.ERROR
-                && TelecomManagerCompat.REASON_IMS_ACCESS_BLOCKED.equals(disconnectCause.getReason())) {
+                && REASON_IMS_ACCESS_BLOCKED.equals(disconnectCause.getReason())) {
             LogUtil.i(
                     "VideoCallNotAvailablePrompt.shouldShowPrompt",
                     "showing prompt for disconnect cause: %s",

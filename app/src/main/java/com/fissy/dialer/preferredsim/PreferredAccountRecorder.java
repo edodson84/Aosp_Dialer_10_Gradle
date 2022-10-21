@@ -33,6 +33,8 @@ import com.fissy.dialer.preferredsim.PreferredSimFallbackContract.PreferredSim;
 import com.fissy.dialer.preferredsim.suggestion.SimSuggestionComponent;
 import com.fissy.dialer.preferredsim.suggestion.SuggestionProvider.Suggestion;
 
+import java.util.Objects;
+
 /**
  * Records selected preferred SIM and reports related metric to the suggestion provider
  */
@@ -136,7 +138,7 @@ public class PreferredAccountRecorder {
             ContentValues values = new ContentValues();
             values.put(
                     PreferredSim.PREFERRED_PHONE_ACCOUNT_COMPONENT_NAME,
-                    input.phoneAccountHandle.getComponentName().flattenToString());
+                    Objects.requireNonNull(input).phoneAccountHandle.getComponentName().flattenToString());
             values.put(PreferredSim.PREFERRED_PHONE_ACCOUNT_ID, input.phoneAccountHandle.getId());
             input
                     .context

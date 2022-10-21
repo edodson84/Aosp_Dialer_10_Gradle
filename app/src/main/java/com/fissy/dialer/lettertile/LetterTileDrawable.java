@@ -218,7 +218,8 @@ public class LetterTileDrawable extends Drawable {
         final int minDimension = Math.min(bounds.width(), bounds.height());
 
         if (isCircle) {
-            canvas.drawCircle(bounds.centerX(), bounds.centerY(), minDimension / 2, paint);
+            int radius2 = minDimension / 2;
+            canvas.drawCircle(bounds.centerX(), bounds.centerY(), radius2, paint);
         } else {
             canvas.drawRect(bounds, paint);
         }
@@ -392,14 +393,6 @@ public class LetterTileDrawable extends Drawable {
 
         this.setIsCircular(shape == SHAPE_CIRCLE);
 
-        /**
-         * We return quickly under the following conditions: 1. We are asked to draw a default tile, and
-         * no coloring information is provided, meaning no further initialization is necessary OR 2.
-         * We've already invoked this method before, set mDisplayName, and found that it has not
-         * changed. This is useful during events like hangup, when we lose the call state for special
-         * types of contacts, like voicemail. We keep track of the special case until we encounter a new
-         * display name.
-         */
         if (contactType == TYPE_DEFAULT
                 && ((displayName == null && identifierForTileColor == null)
                 || (displayName != null && displayName.equals(this.displayName)))) {

@@ -141,9 +141,7 @@ public class CallIntentBuilder implements Parcelable {
     private static @NonNull
     CallSpecificAppData createCallSpecificAppData(
             CallInitiationType.Type callInitiationType) {
-        CallSpecificAppData callSpecificAppData =
-                CallSpecificAppData.newBuilder().setCallInitiationType(callInitiationType).build();
-        return callSpecificAppData;
+        return CallSpecificAppData.newBuilder().setCallInitiationType(callInitiationType).build();
     }
 
     public static void increaseLightbringerCallButtonAppearInExpandedCallLogItemCount() {

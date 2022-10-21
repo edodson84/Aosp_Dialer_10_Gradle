@@ -88,6 +88,7 @@ public abstract class MultimediaData {
     /**
      * Returns the string form of this MultimediaData with no PII.
      */
+    @NonNull
     @Override
     public String toString() {
         return String.format(

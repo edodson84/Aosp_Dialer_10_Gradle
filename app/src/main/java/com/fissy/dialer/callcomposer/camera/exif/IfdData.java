@@ -60,7 +60,7 @@ class IfdData {
      * Get a array the contains all {@link ExifTag} in this IFD.
      */
     private ExifTag[] getAllTags() {
-        return exifTags.values().toArray(new ExifTag[exifTags.size()]);
+        return exifTags.values().toArray(new ExifTag[0]);
     }
 
     /**

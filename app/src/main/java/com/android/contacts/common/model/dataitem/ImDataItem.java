@@ -47,11 +47,7 @@ public class ImDataItem extends DataItem {
     }
 
     public String getData() {
-        if (mCreatedFromEmail) {
-            return getContentValues().getAsString(Email.DATA);
-        } else {
-            return getContentValues().getAsString(Im.DATA);
-        }
+        return getContentValues().getAsString(Email.DATA);
     }
 
     public String getLabel() {
@@ -101,7 +97,7 @@ public class ImDataItem extends DataItem {
             }
             return true;
         } else // Check if custom protocols are not the same
-            if (getProtocol() != that.getProtocol()) {
+            if (!getProtocol().equals(that.getProtocol())) {
                 return false;
             } else return getProtocol() != Im.PROTOCOL_CUSTOM
                     || TextUtils.equals(getCustomProtocol(), that.getCustomProtocol());

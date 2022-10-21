@@ -28,6 +28,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.android.incallui.call.state.DialerCallState;
 import com.fissy.dialer.R;
 import com.fissy.dialer.callrecord.CallRecording;
@@ -63,10 +65,10 @@ public class CallRecorder implements CallList.Listener {
     private Context context;
     private boolean initialized = false;
     private ICallRecorderService service = null;
-    private HashSet<RecordingProgressListener> progressListeners =
-            new HashSet<RecordingProgressListener>();
-    private Handler handler = new Handler();
-    private ServiceConnection connection = new ServiceConnection() {
+    private final HashSet<RecordingProgressListener> progressListeners =
+            new HashSet<>();
+    private final Handler handler = new Handler();
+    private final ServiceConnection connection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             CallRecorder.this.service = ICallRecorderService.Stub.asInterface(service);
@@ -77,7 +79,7 @@ public class CallRecorder implements CallList.Listener {
             CallRecorder.this.service = null;
         }
     };
-    private Runnable updateRecordingProgressTask = new Runnable() {
+    private final Runnable updateRecordingProgressTask = new Runnable() {
         @Override
         public void run() {
             CallRecording active = getActiveRecording();
@@ -279,7 +281,7 @@ public class CallRecorder implements CallList.Listener {
     }
 
     @Override
-    public void onInternationalCallOnWifi(DialerCall call) {
+    public void onInternationalCallOnWifi(@NonNull DialerCall call) {
     }
 
     public void addRecordingProgressListener(RecordingProgressListener listener) {
@@ -291,8 +293,7 @@ public class CallRecorder implements CallList.Listener {
     }
 
     private void loadAllowedStates() {
-        XmlResourceParser parser = context.getResources().getXml(R.xml.call_record_states);
-        try {
+        try (XmlResourceParser parser = context.getResources().getXml(R.xml.call_record_states)) {
             // Consume all START_DOCUMENT which can appear more than once.
             while (parser.next() == XmlPullParser.START_DOCUMENT) {
             }
@@ -320,8 +321,6 @@ public class CallRecorder implements CallList.Listener {
         } catch (XmlPullParserException | IOException e) {
             Log.e(TAG, "Could not parse allowed country list", e);
             RECORD_ALLOWED_STATE_BY_COUNTRY.clear();
-        } finally {
-            parser.close();
         }
     }
 

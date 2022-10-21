@@ -100,7 +100,7 @@ final class AutoValue_DialerShortcut extends DialerShortcut {
         }
 
         @Override
-        DialerShortcut.Builder setLookupKey(String lookupKey) {
+        DialerShortcut.Builder setLookupKey(@NonNull String lookupKey) {
             if (lookupKey == null) {
                 throw new NullPointerException("Null lookupKey");
             }
@@ -109,7 +109,7 @@ final class AutoValue_DialerShortcut extends DialerShortcut {
         }
 
         @Override
-        DialerShortcut.Builder setDisplayName(String displayName) {
+        DialerShortcut.Builder setDisplayName(@NonNull String displayName) {
             if (displayName == null) {
                 throw new NullPointerException("Null displayName");
             }

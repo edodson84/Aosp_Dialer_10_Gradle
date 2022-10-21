@@ -52,21 +52,6 @@ import com.fissy.dialer.util.PermissionsUtil;
  */
 public class CallLogNotificationsService extends IntentService {
     /**
-     * Action to update voicemail notifications.
-     * <p>
-     * May include an optional extra {@link #EXTRA_NEW_VOICEMAIL_URI}.
-     */
-    public static final String ACTION_UPDATE_VOICEMAIL_NOTIFICATIONS =
-            "com.android.dialer.calllog.UPDATE_VOICEMAIL_NOTIFICATIONS";
-
-    /**
-     * Extra to included with {@link #ACTION_UPDATE_VOICEMAIL_NOTIFICATIONS} to identify the new
-     * voicemail that triggered an update.
-     * <p>
-     * It must be a {@link Uri}.
-     */
-    public static final String EXTRA_NEW_VOICEMAIL_URI = "NEW_VOICEMAIL_URI";
-    /**
      * Action to call back a missed call.
      */
     public static final String ACTION_CALL_BACK_FROM_MISSED_CALL_NOTIFICATION =
@@ -109,20 +94,6 @@ public class CallLogNotificationsService extends IntentService {
                 .executeSerial(context);
     }
 
-    public static PendingIntent createMarkAllNewVoicemailsAsOldIntent(@NonNull Context context) {
-        Intent intent = new Intent(context, CallLogNotificationsService.class);
-        intent.setAction(CallLogNotificationsService.ACTION_MARK_ALL_NEW_VOICEMAILS_AS_OLD);
-        return PendingIntent.getService(context, 0, intent, 0);
-    }
-
-    public static PendingIntent createMarkSingleNewVoicemailAsOldIntent(
-            @NonNull Context context, @Nullable Uri voicemailUri) {
-        Intent intent = new Intent(context, CallLogNotificationsService.class);
-        intent.setAction(CallLogNotificationsService.ACTION_MARK_SINGLE_NEW_VOICEMAIL_AS_OLD);
-        intent.setData(voicemailUri);
-        return PendingIntent.getService(context, 0, intent, 0);
-    }
-
     public static PendingIntent createCancelAllMissedCallsPendingIntent(@NonNull Context context) {
         Intent intent = new Intent(context, CallLogNotificationsService.class);
         intent.setAction(ACTION_CANCEL_ALL_MISSED_CALLS);
@@ -137,14 +108,6 @@ public class CallLogNotificationsService extends IntentService {
         return PendingIntent.getService(context, 0, intent, 0);
     }
 
-    public static PendingIntent createLegacyVoicemailDismissedPendingIntent(
-            @NonNull Context context, PhoneAccountHandle phoneAccountHandle) {
-        Intent intent = new Intent(context, CallLogNotificationsService.class);
-        intent.setAction(ACTION_LEGACY_VOICEMAIL_DISMISSED);
-        intent.putExtra(EXTRA_PHONE_ACCOUNT_HANDLE, phoneAccountHandle);
-        return PendingIntent.getService(context, 0, intent, 0);
-    }
-
     @WorkerThread
     private static void cancelAllMissedCallsBackground(Context context) {
         LogUtil.enterBlock("CallLogNotificationsService.cancelAllMissedCallsBackground");
@@ -152,18 +115,6 @@ public class CallLogNotificationsService extends IntentService {
         CallLogNotificationsQueryHelper.markAllMissedCallsInCallLogAsRead(context);
         MissedCallNotificationCanceller.cancelAll(context);
         TelecomUtil.cancelMissedCallsNotification(context);
-    }
-
-    public static void updateVoicemailNotifications(Context context, Uri voicemailUri) {
-        if (TelecomUtil.hasReadWriteVoicemailPermissions(context)) {
-            Intent serviceIntent = new Intent(context, CallLogNotificationsService.class);
-            serviceIntent.setAction("com.android.dialer.calllog.UPDATE_VOICEMAIL_NOTIFICATIONS");
-            // If voicemailUri is null, then notifications for all voicemails will be updated.
-            if (voicemailUri != null) {
-                serviceIntent.putExtra("NEW_VOICEMAIL_URI", voicemailUri);
-            }
-            context.startService(serviceIntent);
-        }
     }
 
     @Override

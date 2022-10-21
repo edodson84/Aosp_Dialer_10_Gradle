@@ -17,7 +17,8 @@
             android:layout_width="50.0dip"
             android:layout_height="24.0dip"
             android:layout_marginTop="8.0dip"
-            android:background="@drawable/button_background" />
+            android:background="@drawable/button_background"
+            android:contentDescription="TODO" />
 
         <TextView
             android:id="@id/notification_badge"

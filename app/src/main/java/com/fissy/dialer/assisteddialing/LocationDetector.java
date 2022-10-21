@@ -25,6 +25,7 @@ import androidx.annotation.Nullable;
 import com.fissy.dialer.common.LogUtil;
 
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
 
 // TODO(erfanian): Improve definition of roaming and home country in finalized API.
@@ -40,9 +41,6 @@ final class LocationDetector {
 
     LocationDetector(
             @NonNull TelephonyManager telephonyManager, @Nullable String userProvidedHomeCountry) {
-        if (telephonyManager == null) {
-            throw new NullPointerException("Provided TelephonyManager was null");
-        }
 
         this.telephonyManager = telephonyManager;
         this.userProvidedHomeCountry = userProvidedHomeCountry;
@@ -61,7 +59,7 @@ final class LocationDetector {
         if (!TextUtils.isEmpty(userProvidedHomeCountry)) {
             LogUtil.i(
                     "LocationDetector.getUpperCaseUserRoamingCountry", "user provided home country code");
-            return Optional.of(userProvidedHomeCountry.toUpperCase(Locale.US));
+            return Optional.of(Objects.requireNonNull(userProvidedHomeCountry).toUpperCase(Locale.US));
         }
 
         String simCountryIso = telephonyManager.getSimCountryIso();

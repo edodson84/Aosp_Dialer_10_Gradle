@@ -29,6 +29,7 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 import androidx.annotation.WorkerThread;
 import androidx.appcompat.app.AlertDialog;
@@ -54,6 +55,7 @@ import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -113,9 +115,10 @@ public class DisambigDialog extends DialogFragment {
         new SpeedDialEntryDatabaseHelper(appContext).update(ImmutableList.of(entry));
     }
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        LayoutInflater inflater = getActivity().getLayoutInflater();
+        LayoutInflater inflater = Objects.requireNonNull(getActivity()).getLayoutInflater();
         // TODO(calderwoodra): set max height of the scrollview. Might need to override onMeasure.
         View view = inflater.inflate(R.layout.disambig_dialog_layout, null, false);
         container = view.findViewById(R.id.communication_avenue_container);
@@ -127,10 +130,10 @@ public class DisambigDialog extends DialogFragment {
     @Override
     public void onResume() {
         super.onResume();
-        getDialog()
+        Objects.requireNonNull(getDialog())
                 .getWindow()
                 .setLayout(
-                        getContext().getResources().getDimensionPixelSize(R.dimen.disambig_dialog_width),
+                        Objects.requireNonNull(getContext()).getResources().getDimensionPixelSize(R.dimen.disambig_dialog_width),
                         LayoutParams.WRAP_CONTENT);
     }
 
@@ -166,7 +169,7 @@ public class DisambigDialog extends DialogFragment {
 
     private void insertDivider(LinearLayout container) {
         View view =
-                getActivity()
+                Objects.requireNonNull(getActivity())
                         .getLayoutInflater()
                         .inflate(R.layout.disambig_dialog_divider, container, false);
         container.addView(view);
@@ -174,13 +177,13 @@ public class DisambigDialog extends DialogFragment {
 
     private void insertHeader(LinearLayout container, String number, String label) {
         View view =
-                getActivity()
+                Objects.requireNonNull(getActivity())
                         .getLayoutInflater()
                         .inflate(R.layout.disambig_option_header_layout, container, false);
         String secondaryInfo =
                 TextUtils.isEmpty(label)
                         ? number
-                        : getContext().getString(R.string.call_subject_type_and_number, label, number);
+                        : Objects.requireNonNull(getContext()).getString(R.string.call_subject_type_and_number, label, number);
         ((TextView) view.findViewById(R.id.disambig_header_phone_label)).setText(secondaryInfo);
         container.addView(view);
     }
@@ -190,7 +193,7 @@ public class DisambigDialog extends DialogFragment {
      */
     private void insertOption(LinearLayout container, Channel channel) {
         View view =
-                getActivity()
+                Objects.requireNonNull(getActivity())
                         .getLayoutInflater()
                         .inflate(R.layout.disambig_option_layout, container, false);
         if (channel.isVideoTechnology()) {
@@ -218,7 +221,7 @@ public class DisambigDialog extends DialogFragment {
     private void onVideoOptionClicked(Channel channel) {
         if (rememberThisChoice.isChecked()) {
             Logger.get(getContext()).logImpression(DialerImpression.Type.FAVORITE_SET_VIDEO_DEFAULT);
-            setDefaultChannel(getContext().getApplicationContext(), speedDialUiItem, channel);
+            setDefaultChannel(Objects.requireNonNull(getContext()).getApplicationContext(), speedDialUiItem, channel);
         }
 
         if (channel.technology() == Channel.DUO) {
@@ -239,7 +242,7 @@ public class DisambigDialog extends DialogFragment {
     private void onVoiceOptionClicked(Channel channel) {
         if (rememberThisChoice.isChecked()) {
             Logger.get(getContext()).logImpression(DialerImpression.Type.FAVORITE_SET_VOICE_DEFAULT);
-            setDefaultChannel(getContext().getApplicationContext(), speedDialUiItem, channel);
+            setDefaultChannel(Objects.requireNonNull(getContext()).getApplicationContext(), speedDialUiItem, channel);
         }
 
         PreCall.start(

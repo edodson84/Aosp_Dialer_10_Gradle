@@ -95,8 +95,9 @@ public class DrawableConverter {
             Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, width, height, false);
             RoundedBitmapDrawable drawable =
                     RoundedBitmapDrawableFactory.create(context.getResources(), scaledBitmap);
+            int radius2 = drawable.getIntrinsicHeight() / 2;
             drawable.setAntiAlias(true);
-            drawable.setCornerRadius(drawable.getIntrinsicHeight() / 2);
+            drawable.setCornerRadius(radius2);
             return drawable;
         }
         return null;

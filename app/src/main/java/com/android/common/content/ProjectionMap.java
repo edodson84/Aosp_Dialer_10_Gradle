@@ -16,6 +16,8 @@
 
 package com.android.common.content;
 
+import androidx.annotation.NonNull;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -48,13 +50,13 @@ public class ProjectionMap extends HashMap<String, String> {
     }
 
     @Override
-    public void putAll(Map<? extends String, ? extends String> map) {
+    public void putAll(@NonNull Map<? extends String, ? extends String> map) {
         throw new UnsupportedOperationException();
     }
 
     public static class Builder {
 
-        private ProjectionMap mMap = new ProjectionMap();
+        private final ProjectionMap mMap = new ProjectionMap();
 
         public Builder add(String column) {
             mMap.putColumn(column, column);

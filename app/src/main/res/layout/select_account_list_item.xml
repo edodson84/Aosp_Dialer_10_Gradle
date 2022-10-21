@@ -13,7 +13,8 @@
         android:id="@id/icon"
         android:layout_width="24.0dip"
         android:layout_height="24.0dip"
-        android:scaleType="center" />
+        android:scaleType="center"
+        android:contentDescription="TODO" />
 
     <LinearLayout
         android:id="@id/text"

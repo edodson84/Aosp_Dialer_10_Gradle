@@ -88,6 +88,7 @@ import com.fissy.dialer.widget.LockableViewPager;
 import com.google.protobuf.InvalidProtocolBufferException;
 
 import java.io.File;
+import java.util.Objects;
 
 /**
  * Implements an activity which prompts for a call with additional media for an outgoing call. The
@@ -231,7 +232,7 @@ public class CallComposerActivity extends AppCompatActivity
                 DialerExecutorComponent.get(getApplicationContext())
                         .dialerExecutorFactory()
                         .createUiTaskBuilder(
-                                getFragmentManager(),
+                                getSupportFragmentManager(),
                                 "copyAndResizeImageToSend",
                                 new CopyAndResizeImageWorker(this.getApplicationContext()))
                         .onSuccess(this::onCopyAndResizeImageSuccess)
@@ -395,7 +396,7 @@ public class CallComposerActivity extends AppCompatActivity
 
         if (fragment instanceof MessageComposerFragment) {
             MessageComposerFragment messageComposerFragment = (MessageComposerFragment) fragment;
-            builder.setText(messageComposerFragment.getMessage());
+            builder.setText(Objects.requireNonNull(messageComposerFragment.getMessage()));
             placeRCSCall(builder);
         }
         if (fragment instanceof GalleryComposerFragment) {
@@ -403,13 +404,13 @@ public class CallComposerActivity extends AppCompatActivity
             // If the current data is not a copy, make one.
             if (!galleryComposerFragment.selectedDataIsCopy()) {
                 copyAndResizeExecutor.executeParallel(
-                        galleryComposerFragment.getGalleryData().getFileUri());
+                        Objects.requireNonNull(galleryComposerFragment.getGalleryData()).getFileUri());
             } else {
                 Uri shareableUri =
                         FileProvider.getUriForFile(
                                 this,
                                 Constants.get().getFileProviderAuthority(),
-                                new File(galleryComposerFragment.getGalleryData().getFilePath()));
+                                new File(Objects.requireNonNull(Objects.requireNonNull(galleryComposerFragment.getGalleryData()).getFilePath())));
 
                 builder.setImage(
                         grantUriPermission(shareableUri),
@@ -537,7 +538,7 @@ public class CallComposerActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelable(VIEW_PAGER_STATE_KEY, pager.onSaveInstanceState());
         outState.putBoolean(ENTRANCE_ANIMATION_KEY, shouldAnimateEntrance);

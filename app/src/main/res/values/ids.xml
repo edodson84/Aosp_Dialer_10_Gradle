@@ -39,7 +39,6 @@
     <item name="answer_message_image" type="id" />
     <item name="answer_message_text" type="id" />
     <item name="answer_method_container" type="id" />
-    <item name="assisted_dial_icon" type="id" />
     <item name="assisted_dialing_container" type="id" />
     <item name="assisted_dialing_globe" type="id" />
     <item name="assisted_dialing_text" type="id" />
@@ -69,7 +68,6 @@
     <item name="call_action_text" type="id" />
     <item name="call_back_action" type="id" />
     <item name="call_back_button" type="id" />
-    <item name="call_button" type="id" />
     <item name="call_compose_action" type="id" />
     <item name="call_composer_camera" type="id" />
     <item name="call_composer_container" type="id" />
@@ -77,7 +75,6 @@
     <item name="call_composer_message" type="id" />
     <item name="call_composer_photo" type="id" />
     <item name="call_composer_view_pager" type="id" />
-    <item name="call_count" type="id" />
     <item name="call_detail_action_copy" type="id" />
     <item name="call_detail_action_delete" type="id" />
     <item name="call_detail_action_edit_before_call" type="id" />
@@ -99,7 +96,6 @@
     <item name="call_time" type="id" />
     <item name="call_to_action" type="id" />
     <item name="call_type" type="id" />
-    <item name="call_type_icon" type="id" />
     <item name="call_type_icons" type="id" />
     <item name="call_type_or_location_text" type="id" />
     <item name="call_with_note_action" type="id" />
@@ -270,7 +266,6 @@
     <item name="group_divider" type="id" />
     <item name="hd_attempting" type="id" />
     <item name="hd_enabled" type="id" />
-    <item name="hd_icon" type="id" />
     <item name="header" type="id" />
     <item name="hint" type="id" />
     <item name="hint_container" type="id" />
@@ -325,10 +320,6 @@
     <item name="invite_video_action" type="id" />
     <item name="item_touch_helper_previous_elevation" type="id" />
     <item name="label" type="id" />
-    <item name="license" type="id" />
-    <item name="license_activity_scrollview" type="id" />
-    <item name="license_activity_textview" type="id" />
-    <item name="license_list" type="id" />
     <item name="line1" type="id" />
     <item name="line3" type="id" />
     <item name="list_card" type="id" />
@@ -383,14 +374,6 @@
     <item name="name" type="id" />
     <item name="navigation_header_container" type="id" />
     <item name="network" type="id" />
-    <item name="new_call_log_empty_content_view" type="id" />
-    <item name="new_call_log_entry_root" type="id" />
-    <item name="new_call_log_header_text" type="id" />
-    <item name="new_call_log_promotion_card_details" type="id" />
-    <item name="new_call_log_promotion_card_icon" type="id" />
-    <item name="new_call_log_promotion_card_ok" type="id" />
-    <item name="new_call_log_promotion_card_title" type="id" />
-    <item name="new_call_log_recycler_view" type="id" />
     <item name="nine" type="id" />
     <item name="notification_background" type="id" />
     <item name="notification_badge" type="id" />
@@ -408,7 +391,6 @@
     <item name="permission_image" type="id" />
     <item name="permission_text" type="id" />
     <item name="permission_view" type="id" />
-    <item name="phone_account" type="id" />
     <item name="phone_number" type="id" />
     <item name="phone_type" type="id" />
     <item name="photo" type="id" />
@@ -602,7 +584,6 @@
     <item name="voicemail_transcription_rating_bad" type="id" />
     <item name="voicemail_transcription_rating_good" type="id" />
     <item name="voicemail_transcription_rating_text" type="id" />
-    <item name="wifi_icon" type="id" />
     <item name="work_icon" type="id" />
     <item name="work_profile_icon" type="id" />
     <item name="zero" type="id" />

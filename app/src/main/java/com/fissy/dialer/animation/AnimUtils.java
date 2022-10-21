@@ -224,15 +224,12 @@ public class AnimUtils {
         final int deltaHeight = newHeight - oldHeight;
 
         animator.addUpdateListener(
-                new ValueAnimator.AnimatorUpdateListener() {
-                    @Override
-                    public void onAnimationUpdate(ValueAnimator animator) {
-                        Float value = (Float) animator.getAnimatedValue();
+                animator1 -> {
+                    Float value = (Float) animator1.getAnimatedValue();
 
-                        view.getLayoutParams().width = (int) (value * deltaWidth + oldWidth);
-                        view.getLayoutParams().height = (int) (value * deltaHeight + oldHeight);
-                        view.requestLayout();
-                    }
+                    view.getLayoutParams().width = (int) (value * deltaWidth + oldWidth);
+                    view.getLayoutParams().height = (int) (value * deltaHeight + oldHeight);
+                    view.requestLayout();
                 });
         animator.start();
     }

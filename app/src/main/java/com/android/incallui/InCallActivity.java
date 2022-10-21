@@ -92,7 +92,6 @@ import com.fissy.dialer.common.concurrent.UiListener;
 import com.fissy.dialer.configprovider.ConfigProviderComponent;
 import com.fissy.dialer.logging.Logger;
 import com.fissy.dialer.logging.ScreenEvent;
-import com.fissy.dialer.main.impl.MainActivity;
 import com.fissy.dialer.main.impl.MainActivityPeer;
 import com.fissy.dialer.metrics.Metrics;
 import com.fissy.dialer.metrics.MetricsComponent;
@@ -107,6 +106,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -168,11 +168,8 @@ public class InCallActivity extends TransactionSafeFragmentActivity
     }
 
     private static int getAudioRoute() {
-        if (audioRouteForTesting.isPresent()) {
-            return audioRouteForTesting.get();
-        }
+        return audioRouteForTesting.orElseGet(() -> AudioModeProvider.getInstance().getAudioState().getRoute());
 
-        return AudioModeProvider.getInstance().getAudioState().getRoute();
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
@@ -421,7 +418,7 @@ public class InCallActivity extends TransactionSafeFragmentActivity
                 preferredAccountFuture,
                 result -> {
                     String callId = waitingForAccountCall.getId();
-                    if (result.getSelectedPhoneAccountHandle().isPresent()) {
+                    if (Objects.requireNonNull(result).getSelectedPhoneAccountHandle().isPresent()) {
                         selectPhoneAccountListener.onPhoneAccountSelected(
                                 result.getSelectedPhoneAccountHandle().get(), false, callId);
                         return;
@@ -834,10 +831,10 @@ public class InCallActivity extends TransactionSafeFragmentActivity
         } else {
             if (show) {
                 showDialpadFragment();
-                getDialpadFragment().animateShowDialpad();
+                Objects.requireNonNull(getDialpadFragment()).animateShowDialpad();
             }
-            getDialpadFragment()
-                    .getView()
+            Objects.requireNonNull(getDialpadFragment()
+                            .getView())
                     .startAnimation(show ? dialpadSlideInAnimation : dialpadSlideOutAnimation);
         }
 
@@ -1334,7 +1331,7 @@ public class InCallActivity extends TransactionSafeFragmentActivity
                 return new ShouldShowUiResult(true, backgroundCall);
             }
 
-            return new ShouldShowUiResult(false, call);
+            return new ShouldShowUiResult(false, null);
         }
 
         if (!call.isSpeakEasyCall() || !call.isSpeakEasyEligible()) {
@@ -1422,7 +1419,7 @@ public class InCallActivity extends TransactionSafeFragmentActivity
                         call.getVideoTech().isSelfManagedCamera(),
                         shouldAllowAnswerAndRelease(call),
                         CallList.getInstance().getBackgroundCall() != null,
-                        getSpeakEasyCallManager().isAvailable(getApplicationContext())
+                        Objects.requireNonNull(getSpeakEasyCallManager()).isAvailable(getApplicationContext())
                                 && call.isSpeakEasyEligible());
         transaction.add(R.id.main, answerScreen.getAnswerScreenFragment(), Tags.ANSWER_SCREEN);
 
@@ -1700,7 +1697,7 @@ public class InCallActivity extends TransactionSafeFragmentActivity
         public void onPhoneAccountSelected(
                 PhoneAccountHandle selectedAccountHandle, boolean setDefault, String callId) {
             DialerCall call = CallList.getInstance().getCallById(callId);
-            LogUtil.i(TAG, "Phone account select with call:\n%s", call);
+            LogUtil.i(Objects.requireNonNull(TAG), "Phone account select with call:\n%s", call);
 
             if (call != null) {
                 call.phoneAccountSelected(selectedAccountHandle, false);
@@ -1713,7 +1710,7 @@ public class InCallActivity extends TransactionSafeFragmentActivity
         @Override
         public void onDialogDismissed(String callId) {
             DialerCall call = CallList.getInstance().getCallById(callId);
-            LogUtil.i(TAG, "Disconnecting call:\n%s" + call);
+            LogUtil.i(Objects.requireNonNull(TAG), "Disconnecting call:\n%s" + call);
 
             if (call != null) {
                 call.disconnect();

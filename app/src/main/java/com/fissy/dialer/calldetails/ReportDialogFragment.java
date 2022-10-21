@@ -18,7 +18,6 @@ package com.fissy.dialer.calldetails;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -27,8 +26,10 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.util.Pair;
+import androidx.fragment.app.DialogFragment;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.common.LogUtil;
@@ -40,6 +41,8 @@ import com.fissy.dialer.logging.Logger;
 import com.fissy.dialer.phonenumbercache.CachedNumberLookupService;
 import com.fissy.dialer.phonenumbercache.CachedNumberLookupService.CachedContactInfo;
 import com.fissy.dialer.phonenumbercache.PhoneNumberCache;
+
+import java.util.Objects;
 
 /**
  * Dialog for reporting an inaccurate caller id information.
@@ -72,13 +75,14 @@ public class ReportDialogFragment extends DialogFragment {
     public void onCreate(@Nullable Bundle bundle) {
         super.onCreate(bundle);
         setRetainInstance(true);
-        number = getArguments().getString(KEY_NUMBER);
+        number = Objects.requireNonNull(getArguments()).getString(KEY_NUMBER);
         cachedNumberLookupService = PhoneNumberCache.get(getContext()).getCachedNumberLookupService();
     }
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        LayoutInflater inflater = getActivity().getLayoutInflater();
+        LayoutInflater inflater = Objects.requireNonNull(getActivity()).getLayoutInflater();
         View view = inflater.inflate(R.layout.caller_id_report_dialog, null, false);
         name = view.findViewById(R.id.name);
         numberView = view.findViewById(R.id.number);
@@ -106,9 +110,9 @@ public class ReportDialogFragment extends DialogFragment {
         Worker<String, CachedContactInfo> worker =
                 number1 -> cachedNumberLookupService.lookupCachedContactFromNumber(getContext(), number1);
         SuccessListener<CachedContactInfo> successListener = this::setCachedContactInfo;
-        DialerExecutorComponent.get(getContext())
+        DialerExecutorComponent.get(Objects.requireNonNull(getContext()))
                 .dialerExecutorFactory()
-                .createUiTaskBuilder(getFragmentManager(), "lookup_contact_info", worker)
+                .createUiTaskBuilder(Objects.requireNonNull(getFragmentManager()), "lookup_contact_info", worker)
                 .onSuccess(successListener)
                 .build()
                 .executeParallel(number);
@@ -128,9 +132,9 @@ public class ReportDialogFragment extends DialogFragment {
     private void startReportCallerIdWorker() {
         Worker<Context, Pair<Context, Boolean>> worker = this::reportCallerId;
         SuccessListener<Pair<Context, Boolean>> successListener = this::onReportCallerId;
-        DialerExecutorComponent.get(getContext())
+        DialerExecutorComponent.get(Objects.requireNonNull(getContext()))
                 .dialerExecutorFactory()
-                .createUiTaskBuilder(getFragmentManager(), "report_caller_id", worker)
+                .createUiTaskBuilder(Objects.requireNonNull(getFragmentManager()), "report_caller_id", worker)
                 .onSuccess(successListener)
                 .build()
                 .executeParallel(getActivity());

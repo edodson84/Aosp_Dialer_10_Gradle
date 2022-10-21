@@ -10,7 +10,6 @@ import com.fissy.dialer.glide.DialerGlideModule;
 import java.util.Collections;
 import java.util.Set;
 
-@SuppressWarnings("deprecation")
 final class GeneratedAppGlideModuleImpl extends GeneratedAppGlideModule {
     private final DialerGlideModule appGlideModule;
 

@@ -37,6 +37,8 @@ import com.fissy.dialer.common.FragmentUtils;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.storage.StorageComponent;
 
+import java.util.Objects;
+
 /**
  * Dialog that may be shown when users place an outgoing call to an international number while on
  * Wifi.
@@ -67,14 +69,14 @@ public class InternationalCallOnWifiDialogFragment extends DialogFragment {
     public static boolean shouldShow(@NonNull Context context) {
         if (!UserManagerCompat.isUserUnlocked(context)) {
             LogUtil.i("InternationalCallOnWifiDialogFragment.shouldShow", "user locked, returning false");
-            return false;
+            return true;
         }
 
         SharedPreferences preferences = StorageComponent.get(context).unencryptedSharedPrefs();
         boolean shouldShow = preferences.getBoolean(ALWAYS_SHOW_WARNING_PREFERENCE_KEY, true);
 
         LogUtil.i("InternationalCallOnWifiDialogFragment.shouldShow", "result: %b", shouldShow);
-        return shouldShow;
+        return !shouldShow;
     }
 
     /**
@@ -97,7 +99,7 @@ public class InternationalCallOnWifiDialogFragment extends DialogFragment {
         super.onCreateDialog(bundle);
         LogUtil.enterBlock("InternationalCallOnWifiDialogFragment.onCreateDialog");
 
-        if (!InternationalCallOnWifiDialogFragment.shouldShow(getActivity())) {
+        if (InternationalCallOnWifiDialogFragment.shouldShow(Objects.requireNonNull(getActivity()))) {
             throw new IllegalStateException(
                     "shouldShow indicated InternationalCallOnWifiDialogFragment should not have showed");
         }
@@ -136,7 +138,7 @@ public class InternationalCallOnWifiDialogFragment extends DialogFragment {
         preferences.edit().putBoolean(ALWAYS_SHOW_WARNING_PREFERENCE_KEY, alwaysWarn).apply();
 
         // Neither callback nor callId are null in normal circumstances. See comments on callback
-        continueCall(getArguments().getString(ARG_CALL_ID));
+        continueCall(Objects.requireNonNull(getArguments()).getString(ARG_CALL_ID));
     }
 
     private void onNegativeButtonClick(@NonNull SharedPreferences preferences, boolean alwaysWarn) {
@@ -147,7 +149,7 @@ public class InternationalCallOnWifiDialogFragment extends DialogFragment {
         preferences.edit().putBoolean(ALWAYS_SHOW_WARNING_PREFERENCE_KEY, alwaysWarn).apply();
 
         // Neither callback nor callId are null in normal circumstances. See comments on callback
-        cancelCall(getArguments().getString(ARG_CALL_ID));
+        cancelCall(Objects.requireNonNull(getArguments()).getString(ARG_CALL_ID));
     }
 
     private void continueCall(@NonNull String callId) {

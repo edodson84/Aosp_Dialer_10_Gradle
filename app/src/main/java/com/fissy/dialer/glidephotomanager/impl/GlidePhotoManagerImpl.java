@@ -16,6 +16,7 @@
 
 package com.fissy.dialer.glidephotomanager.impl;
 
+import android.annotation.SuppressLint;
 import android.content.ContentUris;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -115,6 +116,7 @@ public class GlidePhotoManagerImpl implements GlidePhotoManager {
         request.into(imageView);
     }
 
+    @SuppressLint("CheckResult")
     private GlideRequest<Drawable> buildRequest(GlideRequests requestManager, PhotoInfo photoInfo) {
         // Warning: Glide ignores extra attributes on BitmapDrawable such as tint and draw the bitmap
         // directly so be sure not to set tint in the XML of any drawable referenced below.

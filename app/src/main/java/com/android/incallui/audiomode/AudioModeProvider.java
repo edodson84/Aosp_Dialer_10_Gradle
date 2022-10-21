@@ -59,7 +59,6 @@ public class AudioModeProvider {
                     hasHeadset = true;
                     continue;
                 default:
-                    continue;
             }
         }
         if (hasBluetooth) {

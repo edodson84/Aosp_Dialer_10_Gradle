@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.IntDef;
+import androidx.annotation.NonNull;
 import androidx.collection.ArrayMap;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -107,9 +108,10 @@ final class ContactsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         notifyDataSetChanged();
     }
 
+    @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(
-            ViewGroup parent, @ContactsViewType int viewType) {
+            @NonNull ViewGroup parent, @ContactsViewType int viewType) {
         switch (viewType) {
             case ADD_CONTACT_VIEW_TYPE:
                 return new AddContactViewHolder(
@@ -125,7 +127,7 @@ final class ContactsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         if (viewHolder instanceof AddContactViewHolder) {
             return;
         }
@@ -176,7 +178,7 @@ final class ContactsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     @Override
-    public void onViewRecycled(RecyclerView.ViewHolder contactViewHolder) {
+    public void onViewRecycled(@NonNull RecyclerView.ViewHolder contactViewHolder) {
         super.onViewRecycled(contactViewHolder);
         if (contactViewHolder instanceof ContactViewHolder) {
             holderMap.remove(contactViewHolder);

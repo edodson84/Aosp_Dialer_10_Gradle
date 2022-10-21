@@ -50,7 +50,7 @@ import com.fissy.dialer.common.concurrent.AsyncTaskExecutors;
  * <p>This allows launcher applications to provide users with shortcut suggestions, even if the user
  * isn't already using shortcuts.
  */
-@TargetApi(VERSION_CODES.N_MR1) // Shortcuts introduced in N_MR1
+ // Shortcuts introduced in N_MR1
 public class ShortcutUsageReporter {
 
     private static final AsyncTaskExecutor EXECUTOR = AsyncTaskExecutors.createThreadPoolExecutor();
@@ -70,7 +70,7 @@ public class ShortcutUsageReporter {
         Assert.isMainThread();
         Assert.isNotNull(context);
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N_MR1 || TextUtils.isEmpty(phoneNumber)) {
+        if (TextUtils.isEmpty(phoneNumber)) {
             return;
         }
 

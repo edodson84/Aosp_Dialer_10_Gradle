@@ -73,8 +73,6 @@ public class SmartDialPrefix {
      */
     private static Set<String> countryCodes = null;
 
-    private static boolean nanpInitialized = false;
-
     /**
      * Initializes the Nanp settings, and finds out whether user is in a NANP region.
      */
@@ -89,16 +87,13 @@ public class SmartDialPrefix {
                 PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
 
         if (userSimCountryCode != null) {
-            /** Updates shared preferences with the latest country obtained from getSimCountryIso. */
             prefs.edit().putString(PREF_USER_SIM_COUNTRY_CODE, userSimCountryCode).apply();
         } else {
-            /** Uses previously stored country code if loading fails. */
             userSimCountryCode =
                     prefs.getString(PREF_USER_SIM_COUNTRY_CODE, PREF_USER_SIM_COUNTRY_CODE_DEFAULT);
         }
-        /** Queries the NANP country list to find out whether user is in a NANP region. */
         userInNanpRegion = isCountryNanp(userSimCountryCode);
-        nanpInitialized = true;
+        boolean nanpInitialized = true;
     }
 
     /**
@@ -112,15 +107,9 @@ public class SmartDialPrefix {
         final ArrayList<String> result = new ArrayList<>();
         char c;
         final StringBuilder currentIndexToken = new StringBuilder();
-        /**
-         * Iterates through the whole name string. If the current character is a valid character, append
-         * it to the current token. If the current character is not a valid character, for example space
-         * " ", mark the current token as complete and add it to the list of tokens.
-         */
         for (int i = 0; i < length; i++) {
             c = CompositeSmartDialMap.normalizeCharacter(context, contactName.charAt(i));
             if (CompositeSmartDialMap.isValidDialpadCharacter(context, c)) {
-                /** Converts a character into the number on dialpad that represents the character. */
                 currentIndexToken.append(CompositeSmartDialMap.getDialpadIndex(context, c));
             } else {
                 if (currentIndexToken.length() != 0) {
@@ -130,7 +119,6 @@ public class SmartDialPrefix {
             }
         }
 
-        /** Adds the last token in case it has not been added. */
         if (currentIndexToken.length() != 0) {
             result.add(currentIndexToken.toString());
         }
@@ -147,40 +135,25 @@ public class SmartDialPrefix {
     public static ArrayList<String> generateNamePrefixes(Context context, String index) {
         final ArrayList<String> result = new ArrayList<>();
 
-        /** Parses the name into a list of tokens. */
         final ArrayList<String> indexTokens = parseToIndexTokens(context, index);
 
         if (indexTokens.size() > 0) {
-            /**
-             * Adds the full token combinations to the list. For example, a contact with name "Albert Ben
-             * Ed Foster" can be looked up by any prefix of the following strings "Foster" "EdFoster"
-             * "BenEdFoster" and "AlbertBenEdFoster". This covers all cases of look up that contains only
-             * one token, and that spans multiple continuous tokens.
-             */
             final StringBuilder fullNameToken = new StringBuilder();
             for (int i = indexTokens.size() - 1; i >= 0; i--) {
                 fullNameToken.insert(0, indexTokens.get(i));
                 result.add(fullNameToken.toString());
             }
 
-            /**
-             * Adds initial combinations to the list, with the number of initials restricted by {@link
-             * #LAST_TOKENS_FOR_INITIALS} and {@link #FIRST_TOKENS_FOR_INITIALS}. For example, a contact
-             * with name "Albert Ben Ed Foster" can be looked up by any prefix of the following strings
-             * "EFoster" "BFoster" "BEFoster" "AFoster" "ABFoster" "AEFoster" and "ABEFoster". This covers
-             * all cases of initial lookup.
-             */
             ArrayList<String> fullNames = new ArrayList<>();
             fullNames.add(indexTokens.get(indexTokens.size() - 1));
             final int recursiveNameStart = result.size();
             int recursiveNameEnd = result.size();
-            String initial = "";
+            String initial;
             for (int i = indexTokens.size() - 2; i >= 0; i--) {
                 if ((i >= indexTokens.size() - LAST_TOKENS_FOR_INITIALS)
                         || (i < FIRST_TOKENS_FOR_INITIALS)) {
                     initial = indexTokens.get(i).substring(0, 1);
 
-                    /** Recursively adds initial combinations to the list. */
                     for (int j = 0; j < fullNames.size(); ++j) {
                         result.add(initial + fullNames.get(j));
                     }
@@ -213,13 +186,9 @@ public class SmartDialPrefix {
     public static ArrayList<String> parseToNumberTokens(Context context, String number) {
         final ArrayList<String> result = new ArrayList<>();
         if (!TextUtils.isEmpty(number)) {
-            /** Adds the full number to the list. */
             result.add(SmartDialNameMatcher.normalizeNumber(context, number));
 
             final PhoneNumberTokens phoneNumberTokens = parsePhoneNumber(context, number);
-            if (phoneNumberTokens == null) {
-                return result;
-            }
 
             if (phoneNumberTokens.countryCodeOffset != 0) {
                 result.add(
@@ -250,7 +219,6 @@ public class SmartDialPrefix {
         if (!TextUtils.isEmpty(number)) {
             String normalizedNumber = SmartDialNameMatcher.normalizeNumber(context, number);
             if (number.charAt(0) == '+') {
-                /** If the number starts with '+', tries to find valid country code. */
                 for (int i = 1; i <= 1 + 3; i++) {
                     if (number.length() <= i) {
                         break;
@@ -262,10 +230,6 @@ public class SmartDialPrefix {
                     }
                 }
             } else {
-                /**
-                 * If the number does not start with '+', finds out whether it is in NANP format and has '1'
-                 * preceding the number.
-                 */
                 if ((normalizedNumber.length() == 11)
                         && (normalizedNumber.charAt(0) == '1')
                         && (userInNanpRegion)) {
@@ -277,19 +241,11 @@ public class SmartDialPrefix {
                 }
             }
 
-            /** If user is in NANP region, finds out whether a number is in NANP format. */
             if (userInNanpRegion) {
                 String areaCode = "";
                 if (countryCode.equals("") && normalizedNumber.length() == 10) {
-                    /**
-                     * if the number has no country code but fits the NANP format, extracts the NANP area
-                     * code, and finds out offset of the local number.
-                     */
                     areaCode = normalizedNumber.substring(0, 3);
                 } else if (countryCode.equals("1") && normalizedNumber.length() == 11) {
-                    /**
-                     * If the number has country code '1', finds out area code and offset of the local number.
-                     */
                     areaCode = normalizedNumber.substring(1, 4);
                 }
                 if (!areaCode.equals("")) {
@@ -314,7 +270,7 @@ public class SmartDialPrefix {
     }
 
     private static Set<String> initCountryCodes() {
-        final HashSet<String> result = new HashSet<String>();
+        final HashSet<String> result = new HashSet<>();
         result.add("1");
         result.add("7");
         result.add("20");
@@ -553,7 +509,7 @@ public class SmartDialPrefix {
     }
 
     private static Set<String> initNanpCountries() {
-        final HashSet<String> result = new HashSet<String>();
+        final HashSet<String> result = new HashSet<>();
         result.add("US"); // United States
         result.add("CA"); // Canada
         result.add("AS"); // American Samoa

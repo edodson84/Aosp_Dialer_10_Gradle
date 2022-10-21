@@ -7,7 +7,7 @@
         android:id="@id/dialpad_key_layout"
         style="@style/DialpadKeyInternalLayoutStyle">
 
-        <com.fissy.dialer.dialpadview.DialpadTextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@id/dialpad_key_number"
             style="@style/DialpadKeyStarStyle" />
     </LinearLayout>

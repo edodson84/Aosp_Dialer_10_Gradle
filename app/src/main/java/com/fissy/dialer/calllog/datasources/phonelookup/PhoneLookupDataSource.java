@@ -58,6 +58,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
@@ -236,7 +237,7 @@ public final class PhoneLookupDataSource implements CallLogDataSource {
                     for (Entry<DialerPhoneNumber, PhoneLookupInfo> entry : originalInfoMap.entrySet()) {
                         DialerPhoneNumber dialerPhoneNumber = entry.getKey();
                         PhoneLookupInfo phoneLookupInfo = entry.getValue();
-                        for (Long id : annotatedCallLogIdsByNumber.get(dialerPhoneNumber)) {
+                        for (Long id : Objects.requireNonNull(annotatedCallLogIdsByNumber.get(dialerPhoneNumber))) {
                             originalPhoneLookupHistoryDataByAnnotatedCallLogId.put(id, phoneLookupInfo);
                         }
                     }
@@ -251,8 +252,8 @@ public final class PhoneLookupDataSource implements CallLogDataSource {
                     for (Entry<DialerPhoneNumber, PhoneLookupInfo> entry : updatedInfoMap.entrySet()) {
                         DialerPhoneNumber dialerPhoneNumber = entry.getKey();
                         PhoneLookupInfo upToDateInfo = entry.getValue();
-                        if (!originalInfoMap.get(dialerPhoneNumber).equals(upToDateInfo)) {
-                            for (Long id : annotatedCallLogIdsByNumber.get(dialerPhoneNumber)) {
+                        if (!Objects.requireNonNull(originalInfoMap.get(dialerPhoneNumber)).equals(upToDateInfo)) {
+                            for (Long id : Objects.requireNonNull(annotatedCallLogIdsByNumber.get(dialerPhoneNumber))) {
                                 rowsToUpdate.put(id, upToDateInfo);
                             }
                             // Also save the updated information so that it can be written to PhoneLookupHistory

@@ -32,7 +32,7 @@
         android:orientation="horizontal"
         android:padding="8.0dip">
 
-        <Space
+        <View
             android:layout_width="0.0dip"
             android:layout_height="fill_parent"
             android:layout_weight="1.0" />

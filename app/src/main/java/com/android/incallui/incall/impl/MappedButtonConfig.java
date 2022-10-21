@@ -114,16 +114,13 @@ final class MappedButtonConfig {
      */
     @NonNull
     public Comparator<Integer> getSlotComparator() {
-        return new Comparator<Integer>() {
-            @Override
-            public int compare(Integer lhs, Integer rhs) {
-                MappingInfo lhsInfo = lookupMappingInfo(lhs);
-                MappingInfo rhsInfo = lookupMappingInfo(rhs);
-                if (lhsInfo.getSlot() != rhsInfo.getSlot()) {
-                    throw new IllegalArgumentException("lhs and rhs don't go in the same slot");
-                }
-                return lhsInfo.getSlotOrder() - rhsInfo.getSlotOrder();
+        return (lhs, rhs) -> {
+            MappingInfo lhsInfo = lookupMappingInfo(lhs);
+            MappingInfo rhsInfo = lookupMappingInfo(rhs);
+            if (lhsInfo.getSlot() != rhsInfo.getSlot()) {
+                throw new IllegalArgumentException("lhs and rhs don't go in the same slot");
             }
+            return lhsInfo.getSlotOrder() - rhsInfo.getSlotOrder();
         };
     }
 
@@ -138,13 +135,10 @@ final class MappedButtonConfig {
      */
     @NonNull
     public Comparator<Integer> getConflictComparator() {
-        return new Comparator<Integer>() {
-            @Override
-            public int compare(Integer lhs, Integer rhs) {
-                MappingInfo lhsInfo = lookupMappingInfo(lhs);
-                MappingInfo rhsInfo = lookupMappingInfo(rhs);
-                return lhsInfo.getConflictOrder() - rhsInfo.getConflictOrder();
-            }
+        return (lhs, rhs) -> {
+            MappingInfo lhsInfo = lookupMappingInfo(lhs);
+            MappingInfo rhsInfo = lookupMappingInfo(rhs);
+            return lhsInfo.getConflictOrder() - rhsInfo.getConflictOrder();
         };
     }
 
@@ -164,14 +158,12 @@ final class MappedButtonConfig {
     @AutoValue
     abstract static class MappingInfo {
 
-        public static final int NO_MUTUALLY_EXCLUSIVE_BUTTON_SET = -1;
-
         static Builder builder(int slot) {
             return new AutoValue_MappedButtonConfig_MappingInfo.Builder()
                     .setSlot(slot)
                     .setSlotOrder(Integer.MAX_VALUE)
                     .setConflictOrder(Integer.MAX_VALUE)
-                    .setMutuallyExclusiveButton(NO_MUTUALLY_EXCLUSIVE_BUTTON_SET);
+                    .setMutuallyExclusiveButton(InCallButtonIds.NO_MUTUALLY_EXCLUSIVE_BUTTON_SET);
         }
 
         /**
@@ -195,7 +187,7 @@ final class MappedButtonConfig {
 
         /**
          * Returns an integer representing a button for which the given button conflicts. Defaults to
-         * {@link NO_MUTUALLY_EXCLUSIVE_BUTTON_SET}.
+
          *
          * <p>If the mutually exclusive button is chosen, the associated button should never be chosen.
          */

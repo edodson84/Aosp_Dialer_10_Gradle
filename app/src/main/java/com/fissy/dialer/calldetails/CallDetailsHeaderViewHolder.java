@@ -27,6 +27,7 @@ import android.widget.QuickContactBadge;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fissy.dialer.R;
@@ -146,7 +147,7 @@ public class CallDetailsHeaderViewHolder extends RecyclerView.ViewHolder
     }
 
     @Override
-    public void onFailure(Throwable unused) {
+    public void onFailure( @NonNull Throwable unused) {
         assistedDialingInternationalDirectDialCodeAndCountryCodeText.setText(
                 R.string.assisted_dialing_country_code_entry_failure);
     }

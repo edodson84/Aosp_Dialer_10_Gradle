@@ -28,6 +28,7 @@ import android.util.ArrayMap;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 import androidx.core.content.ContextCompat;
 
@@ -36,7 +37,6 @@ import com.fissy.dialer.R;
 
 import java.text.Collator;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -55,12 +55,7 @@ public abstract class AccountType {
      * {@link Comparator} to sort by {@link DataKind#weight}.
      */
     private static final Comparator<DataKind> sWeightComparator =
-            new Comparator<DataKind>() {
-                @Override
-                public int compare(DataKind object1, DataKind object2) {
-                    return object1.weight - object2.weight;
-                }
-            };
+            (object1, object2) -> object1.weight - object2.weight;
     /**
      * Set of {@link DataKind} supported by this source.
      */
@@ -137,7 +132,7 @@ public abstract class AccountType {
      * the package name associated with the account type could not be found.
      */
     public final boolean isInitialized() {
-        return mIsInitialized;
+        return !mIsInitialized;
     }
 
     /**
@@ -254,7 +249,7 @@ public abstract class AccountType {
      * the account.
      */
     public List<String> getExtensionPackageNames() {
-        return new ArrayList<String>();
+        return new ArrayList<>();
     }
 
     /**
@@ -292,7 +287,7 @@ public abstract class AccountType {
      */
     public ArrayList<DataKind> getSortedDataKinds() {
         // TODO: optimize by marking if already sorted
-        Collections.sort(mKinds, sWeightComparator);
+        mKinds.sort(sWeightComparator);
         return mKinds;
     }
 
@@ -395,6 +390,8 @@ public abstract class AccountType {
             return rawValue;
         }
 
+
+        @NonNull
         @Override
         public String toString() {
             return this.getClass().getSimpleName()
@@ -428,6 +425,8 @@ public abstract class AccountType {
             return this;
         }
 
+
+        @NonNull
         @Override
         public String toString() {
             return super.toString() + " mYearOptional=" + mYearOptional;
@@ -482,6 +481,8 @@ public abstract class AccountType {
             return (inputType & EditorInfo.TYPE_TEXT_FLAG_MULTI_LINE) != 0;
         }
 
+
+        @NonNull
         @Override
         public String toString() {
             return this.getClass().getSimpleName()

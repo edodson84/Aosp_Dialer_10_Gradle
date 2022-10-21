@@ -39,7 +39,7 @@
                 android:background="?android:colorBackgroundFloating"
                 android:visibility="gone" />
 
-            <Space
+            <View
                 android:id="@id/dialpad_floating_action_button_margin_bottom"
                 android:layout_width="fill_parent"
                 android:layout_height="@dimen/floating_action_button_margin_bottom"

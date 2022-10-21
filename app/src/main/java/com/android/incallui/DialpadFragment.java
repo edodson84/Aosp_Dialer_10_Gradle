@@ -41,6 +41,7 @@ import com.fissy.dialer.logging.DialerImpression;
 import com.fissy.dialer.logging.Logger;
 
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Fragment for call control buttons
@@ -53,7 +54,6 @@ public class DialpadFragment extends BaseFragment<DialpadPresenter, DialpadUi>
      */
     private static final Map<Integer, Character> displayMap = new ArrayMap<>();
 
-    /** Set up the static maps */
     static {
         // Map the buttons to the display characters
         displayMap.put(R.id.one, '1');
@@ -98,7 +98,7 @@ public class DialpadFragment extends BaseFragment<DialpadPresenter, DialpadUi>
         if (v.getId() == R.id.dialpad_back) {
             Logger.get(getContext())
                     .logImpression(DialerImpression.Type.IN_CALL_DIALPAD_CLOSE_BUTTON_PRESSED);
-            getActivity().onBackPressed();
+            Objects.requireNonNull(getActivity()).onBackPressed();
         }
     }
 
@@ -142,8 +142,6 @@ public class DialpadFragment extends BaseFragment<DialpadPresenter, DialpadUi>
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //Context contextThemeWrapper = new ContextThemeWrapper(getActivity(), R.style.Dialer_ThemeBase);
-        //LayoutInflater layoutInflater = inflater.cloneInContext(contextThemeWrapper);
         final View parent = inflater.inflate(R.layout.incall_dialpad_fragment, container, false);
         dialpadView = (DialpadView) parent.findViewById(R.id.dialpad_view);
         dialpadView.setCanDigitsBeEdited(false);
@@ -201,7 +199,7 @@ public class DialpadFragment extends BaseFragment<DialpadPresenter, DialpadUi>
      * Starts the slide up animation for the Dialpad keys when the Dialpad is revealed.
      */
     public void animateShowDialpad() {
-        final DialpadView dialpadView = (DialpadView) getView().findViewById(R.id.dialpad_view);
+        final DialpadView dialpadView = (DialpadView) Objects.requireNonNull(getView()).findViewById(R.id.dialpad_view);
         dialpadView.animateShow();
     }
 
@@ -247,8 +245,8 @@ public class DialpadFragment extends BaseFragment<DialpadPresenter, DialpadUi>
 
     private void configureKeypadListeners() {
         DialpadKeyButton dialpadKey;
-        for (int i = 0; i < buttonIds.length; i++) {
-            dialpadKey = (DialpadKeyButton) dialpadView.findViewById(buttonIds[i]);
+        for (int buttonId : buttonIds) {
+            dialpadKey = (DialpadKeyButton) dialpadView.findViewById(buttonId);
             dialpadKey.setOnKeyListener(this);
             dialpadKey.setOnClickListener(this);
             dialpadKey.setOnPressedListener(this);
@@ -260,11 +258,11 @@ public class DialpadFragment extends BaseFragment<DialpadPresenter, DialpadUi>
         if (pressed && displayMap.containsKey(view.getId())) {
             Logger.get(getContext())
                     .logImpression(DialerImpression.Type.IN_CALL_DIALPAD_NUMBER_BUTTON_PRESSED);
-            Log.d(this, "onPressed: " + pressed + " " + displayMap.get(view.getId()));
+            Log.d(this, "onPressed: " + true + " " + displayMap.get(view.getId()));
             getPresenter().processDtmf(displayMap.get(view.getId()));
         }
         if (!pressed) {
-            Log.d(this, "onPressed: " + pressed);
+            Log.d(this, "onPressed: " + false);
             getPresenter().stopDtmf();
         }
     }

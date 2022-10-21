@@ -25,7 +25,6 @@ import com.bumptech.glide.request.RequestOptions;
  *
  * @see RequestOptions
  */
-@SuppressWarnings("deprecation")
 public final class GlideOptions extends RequestOptions implements Cloneable {
     private static GlideOptions fitCenterTransform0;
 
@@ -277,7 +276,7 @@ public final class GlideOptions extends RequestOptions implements Cloneable {
     }
 
     /**
-     * @see RequestOptions#encodeFormatOf(CompressFormat)
+
      */
     @CheckResult
     @NonNull
@@ -417,6 +416,7 @@ public final class GlideOptions extends RequestOptions implements Cloneable {
         return (GlideOptions) super.signature(arg0);
     }
 
+    @NonNull
     @Override
     @CheckResult
     public final GlideOptions clone() {

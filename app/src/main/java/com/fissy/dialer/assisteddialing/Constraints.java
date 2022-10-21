@@ -50,17 +50,10 @@ final class Constraints {
      * @param countryCodeProvider A csv of supported country codes, e.g. "US,CA"
      */
     public Constraints(@NonNull Context context, @NonNull CountryCodeProvider countryCodeProvider) {
-        if (context == null) {
-            throw new NullPointerException("Provided context cannot be null");
-        }
         this.context = context;
 
-        if (countryCodeProvider == null) {
-            throw new NullPointerException("Provided configProviderCountryCodes cannot be null");
-        }
-
         this.countryCodeProvider = countryCodeProvider;
-        this.phoneNumberUtil = StrictModeUtils.bypass(() -> PhoneNumberUtil.getInstance());
+        this.phoneNumberUtil = StrictModeUtils.bypass(PhoneNumberUtil::getInstance);
     }
 
     /**

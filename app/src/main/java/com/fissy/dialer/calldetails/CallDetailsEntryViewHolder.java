@@ -60,6 +60,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * ViewHolder for call entries in {@link OldCallDetailsActivity} or {@link CallDetailsActivity}.
@@ -77,9 +78,6 @@ public class CallDetailsEntryViewHolder extends ViewHolder {
     private final TextView postCallNote;
     private final TextView rttTranscript;
     private final ImageView multimediaImage;
-    // TODO(maxwelb): Display this when location is stored - a bug
-    @SuppressWarnings("unused")
-    private final TextView multimediaAttachmentsNumber;
     private final Context context;
     private final TextView playbackButton;
 
@@ -98,8 +96,8 @@ public class CallDetailsEntryViewHolder extends ViewHolder {
         multimediaDetails = (TextView) container.findViewById(R.id.multimedia_details);
         postCallNote = (TextView) container.findViewById(R.id.post_call_note);
         multimediaImage = (ImageView) container.findViewById(R.id.multimedia_image);
-        multimediaAttachmentsNumber =
-                (TextView) container.findViewById(R.id.multimedia_attachments_number);
+        // TODO(maxwelb): Display this when location is stored - a bug
+        TextView multimediaAttachmentsNumber = (TextView) container.findViewById(R.id.multimedia_attachments_number);
         rttTranscript = container.findViewById(R.id.rtt_transcript);
         this.callDetailsEntryListener = callDetailsEntryListener;
     }
@@ -185,7 +183,7 @@ public class CallDetailsEntryViewHolder extends ViewHolder {
         }
 
         int count = recordings != null ? recordings.size() : 0;
-        playbackButton.setOnClickListener(v -> handleRecordingClick(v, recordings));
+        playbackButton.setOnClickListener(v -> handleRecordingClick(v, Objects.requireNonNull(recordings)));
         playbackButton.setText(
                 context.getResources().getQuantityString(R.plurals.play_recordings, count, count));
         playbackButton.setVisibility(count > 0 ? View.VISIBLE : View.GONE);
@@ -267,7 +265,7 @@ public class CallDetailsEntryViewHolder extends ViewHolder {
             PopupMenu menu = new PopupMenu(context, v);
             String pattern = DateFormat.getBestDateTimePattern(Locale.getDefault(),
                     DateFormat.is24HourFormat(context) ? "Hmss" : "hmssa");
-            SimpleDateFormat format = new SimpleDateFormat(pattern);
+            SimpleDateFormat format = new SimpleDateFormat(pattern, Locale.US);
 
             for (int i = 0; i < recordings.size(); i++) {
                 final long startTime = recordings.get(i).startRecordingTime;

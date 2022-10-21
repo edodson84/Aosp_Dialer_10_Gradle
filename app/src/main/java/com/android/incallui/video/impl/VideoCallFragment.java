@@ -87,6 +87,8 @@ import com.fissy.dialer.common.FragmentUtils;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.util.PermissionsUtil;
 
+import java.util.Objects;
+
 /**
  * Contains UI elements for a video call.
  */
@@ -137,7 +139,7 @@ public class VideoCallFragment extends Fragment
                     return;
                 }
 
-                if (VideoChargesAlertDialogFragment.shouldShow(getContext(), getCallId())) {
+                if (VideoChargesAlertDialogFragment.shouldShow(Objects.requireNonNull(getContext()), getCallId())) {
                     LogUtil.i("VideoCallFragment.videoChargesAlertDialogRunnable", "showing dialog");
                     VideoChargesAlertDialogFragment.newInstance(getCallId())
                             .show(getChildFragmentManager(), TAG_VIDEO_CHARGES_ALERT);
@@ -217,12 +219,7 @@ public class VideoCallFragment extends Fragment
         view.animate()
                 .alpha(endAlpha)
                 .withEndAction(
-                        new Runnable() {
-                            @Override
-                            public void run() {
-                                view.setVisibility(visibility);
-                            }
-                        })
+                        () -> view.setVisibility(visibility))
                 .start();
     }
 
@@ -247,7 +244,7 @@ public class VideoCallFragment extends Fragment
         LogUtil.i("VideoCallFragment.onCreate", null);
 
         inCallButtonUiDelegate =
-                FragmentUtils.getParent(this, InCallButtonUiDelegateFactory.class)
+                Objects.requireNonNull(FragmentUtils.getParent(this, InCallButtonUiDelegateFactory.class))
                         .newInCallButtonUiDelegate();
         if (savedInstanceState != null) {
             inCallButtonUiDelegate.onRestoreInstanceState(savedInstanceState);
@@ -283,7 +280,7 @@ public class VideoCallFragment extends Fragment
                 new ContactGridManager(view, null /* no avatar */, 0, false /* showAnonymousAvatar */);
 
         controls = view.findViewById(R.id.videocall_video_controls);
-        controls.setVisibility(getActivity().isInMultiWindowMode() ? View.GONE : View.VISIBLE);
+        controls.setVisibility(Objects.requireNonNull(getActivity()).isInMultiWindowMode() ? View.GONE : View.VISIBLE);
         controlsContainer = view.findViewById(R.id.videocall_video_controls_container);
         speakerButton = (CheckableImageButton) view.findViewById(R.id.videocall_speaker_button);
         muteButton = (CheckableImageButton) view.findViewById(R.id.videocall_mute_button);
@@ -309,58 +306,29 @@ public class VideoCallFragment extends Fragment
         previewTextureView = (TextureView) view.findViewById(R.id.videocall_video_preview);
         previewTextureView.setClipToOutline(true);
         previewOffOverlay.setOnClickListener(
-                new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        checkCameraPermission();
-                    }
-                });
+                v -> checkCameraPermission());
         remoteTextureView = (TextureView) view.findViewById(R.id.videocall_video_remote);
         greenScreenBackgroundView = view.findViewById(R.id.videocall_green_screen_background);
         fullscreenBackgroundView = view.findViewById(R.id.videocall_fullscreen_background);
 
         remoteTextureView.addOnLayoutChangeListener(
-                new OnLayoutChangeListener() {
-                    @Override
-                    public void onLayoutChange(
-                            View v,
-                            int left,
-                            int top,
-                            int right,
-                            int bottom,
-                            int oldLeft,
-                            int oldTop,
-                            int oldRight,
-                            int oldBottom) {
-                        LogUtil.i("VideoCallFragment.onLayoutChange", "remoteTextureView layout changed");
-                        updateRemoteVideoScaling();
-                        updateRemoteOffView();
-                    }
+                (v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
+                    LogUtil.i("VideoCallFragment.onLayoutChange", "remoteTextureView layout changed");
+                    updateRemoteVideoScaling();
+                    updateRemoteOffView();
                 });
 
         previewTextureView.addOnLayoutChangeListener(
-                new OnLayoutChangeListener() {
-                    @Override
-                    public void onLayoutChange(
-                            View v,
-                            int left,
-                            int top,
-                            int right,
-                            int bottom,
-                            int oldLeft,
-                            int oldTop,
-                            int oldRight,
-                            int oldBottom) {
-                        LogUtil.i("VideoCallFragment.onLayoutChange", "previewTextureView layout changed");
-                        updatePreviewVideoScaling();
-                        updatePreviewOffView();
-                    }
+                (v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
+                    LogUtil.i("VideoCallFragment.onLayoutChange", "previewTextureView layout changed");
+                    updatePreviewVideoScaling();
+                    updatePreviewOffView();
                 });
         return view;
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle bundle) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle bundle) {
         super.onViewCreated(view, bundle);
         LogUtil.i("VideoCallFragment.onViewCreated", null);
 
@@ -387,7 +355,7 @@ public class VideoCallFragment extends Fragment
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         inCallButtonUiDelegate.onSaveInstanceState(outState);
     }
@@ -401,7 +369,7 @@ public class VideoCallFragment extends Fragment
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         if (savedSecondaryInfo != null) {
             setSecondary(savedSecondaryInfo);
@@ -419,7 +387,7 @@ public class VideoCallFragment extends Fragment
     public void onVideoScreenStart() {
         inCallButtonUiDelegate.refreshMuteState();
         videoCallScreenDelegate.onVideoCallScreenUiReady();
-        getView().postDelayed(cameraPermissionDialogRunnable, CAMERA_PERMISSION_DIALOG_DELAY_IN_MILLIS);
+        Objects.requireNonNull(getView()).postDelayed(cameraPermissionDialogRunnable, CAMERA_PERMISSION_DIALOG_DELAY_IN_MILLIS);
         getView()
                 .postDelayed(videoChargesAlertDialogRunnable, VIDEO_CHARGES_ALERT_DIALOG_DELAY_IN_MILLIS);
     }
@@ -447,7 +415,7 @@ public class VideoCallFragment extends Fragment
 
     @Override
     public void onVideoScreenStop() {
-        getView().removeCallbacks(videoChargesAlertDialogRunnable);
+        Objects.requireNonNull(getView()).removeCallbacks(videoChargesAlertDialogRunnable);
         getView().removeCallbacks(cameraPermissionDialogRunnable);
         videoCallScreenDelegate.onVideoCallScreenUiUnready();
     }
@@ -455,7 +423,7 @@ public class VideoCallFragment extends Fragment
     private void exitFullscreenMode() {
         LogUtil.i("VideoCallFragment.exitFullscreenMode", null);
 
-        if (!getView().isAttachedToWindow()) {
+        if (!Objects.requireNonNull(getView()).isAttachedToWindow()) {
             LogUtil.i("VideoCallFragment.exitFullscreenMode", "not attached");
             return;
         }
@@ -481,12 +449,7 @@ public class VideoCallFragment extends Fragment
                 .setInterpolator(linearOutSlowInInterpolator)
                 .alpha(1)
                 .withStartAction(
-                        new Runnable() {
-                            @Override
-                            public void run() {
-                                switchOnHoldCallController.setOnScreen();
-                            }
-                        });
+                        () -> switchOnHoldCallController.setOnScreen());
 
         View contactGridView = contactGridManager.getContainerView();
         // Animate contact grid to the shown state.
@@ -497,12 +460,7 @@ public class VideoCallFragment extends Fragment
                 .setInterpolator(linearOutSlowInInterpolator)
                 .alpha(1)
                 .withStartAction(
-                        new Runnable() {
-                            @Override
-                            public void run() {
-                                contactGridManager.show();
-                            }
-                        });
+                        () -> contactGridManager.show());
 
         endCallButton
                 .animate()
@@ -511,12 +469,7 @@ public class VideoCallFragment extends Fragment
                 .setInterpolator(linearOutSlowInInterpolator)
                 .alpha(1)
                 .withStartAction(
-                        new Runnable() {
-                            @Override
-                            public void run() {
-                                endCallButton.setVisibility(View.VISIBLE);
-                            }
-                        })
+                        () -> endCallButton.setVisibility(View.VISIBLE))
                 .start();
 
         // Animate all the preview controls up to make room for the navigation bar.
@@ -541,7 +494,6 @@ public class VideoCallFragment extends Fragment
         View view = getView();
         if (view != null) {
             // Code is more expressive with all flags present, even though some may be combined
-            // noinspection PointlessBitwiseExpression
             view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
         }
     }
@@ -589,17 +541,17 @@ public class VideoCallFragment extends Fragment
 
     private Point getPreviewOffsetStartShown() {
         // No insets in multiwindow mode, and rootWindowInsets will get the display's insets.
-        if (getActivity().isInMultiWindowMode()) {
+        if (Objects.requireNonNull(getActivity()).isInMultiWindowMode()) {
             return new Point();
         }
         if (isLandscape()) {
             int stableInsetEnd =
-                    getView().getLayoutDirection() == View.LAYOUT_DIRECTION_RTL
+                    Objects.requireNonNull(getView()).getLayoutDirection() == View.LAYOUT_DIRECTION_RTL
                             ? getView().getRootWindowInsets().getStableInsetLeft()
                             : -getView().getRootWindowInsets().getStableInsetRight();
             return new Point(stableInsetEnd, 0);
         } else {
-            return new Point(0, -getView().getRootWindowInsets().getStableInsetBottom());
+            return new Point(0, -Objects.requireNonNull(getView()).getRootWindowInsets().getStableInsetBottom());
         }
     }
 
@@ -680,12 +632,7 @@ public class VideoCallFragment extends Fragment
                 .setInterpolator(fastOutLinearInInterpolator)
                 .alpha(0)
                 .withEndAction(
-                        new Runnable() {
-                            @Override
-                            public void run() {
-                                endCallButton.setVisibility(View.INVISIBLE);
-                            }
-                        })
+                        () -> endCallButton.setVisibility(View.INVISIBLE))
                 .setInterpolator(new FastOutLinearInInterpolator())
                 .start();
 
@@ -723,7 +670,7 @@ public class VideoCallFragment extends Fragment
     @Override
     public void onCheckedChanged(CheckableImageButton button, boolean isChecked) {
         if (button == cameraOffButton) {
-            if (!isChecked && !VideoUtils.hasCameraPermissionAndShownPrivacyToast(getContext())) {
+            if (!isChecked && !VideoUtils.hasCameraPermissionAndShownPrivacyToast(Objects.requireNonNull(getContext()))) {
                 LogUtil.i("VideoCallFragment.onCheckedChanged", "show camera permission dialog");
                 checkCameraPermission();
             } else {
@@ -809,7 +756,7 @@ public class VideoCallFragment extends Fragment
         isInGreenScreenMode = shouldShowGreenScreen;
         isInFullscreenMode = shouldShowFullscreen;
 
-        if (getView().isAttachedToWindow() && !getActivity().isInMultiWindowMode()) {
+        if (Objects.requireNonNull(getView()).isAttachedToWindow() && !getActivity().isInMultiWindowMode()) {
             controlsContainer.onApplyWindowInsets(getView().getRootWindowInsets());
         }
         if (shouldShowGreenScreen) {
@@ -839,12 +786,12 @@ public class VideoCallFragment extends Fragment
     @Override
     @NonNull
     public String getCallId() {
-        return Assert.isNotNull(getArguments().getString(ARG_CALL_ID));
+        return Assert.isNotNull(Objects.requireNonNull(getArguments()).getString(ARG_CALL_ID));
     }
 
     @Override
     public void onHandoverFromWiFiToLte() {
-        getView().post(videoChargesAlertDialogRunnable);
+        Objects.requireNonNull(getView()).post(videoChargesAlertDialogRunnable);
     }
 
     @Override
@@ -1114,7 +1061,7 @@ public class VideoCallFragment extends Fragment
 
     private boolean isLandscape() {
         // Choose orientation based on display orientation, not window orientation
-        int rotation = getActivity().getWindowManager().getDefaultDisplay().getRotation();
+        int rotation = Objects.requireNonNull(getActivity()).getWindowManager().getDefaultDisplay().getRotation();
         return rotation == Surface.ROTATION_90 || rotation == Surface.ROTATION_270;
     }
 
@@ -1194,12 +1141,7 @@ public class VideoCallFragment extends Fragment
                             ? R.string.videocall_remote_video_on
                             : R.string.videocall_remotely_resumed);
             remoteVideoOff.postDelayed(
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            remoteVideoOff.setVisibility(View.GONE);
-                        }
-                    },
+                    () -> remoteVideoOff.setVisibility(View.GONE),
                     VIDEO_OFF_VIEW_FADE_OUT_DELAY_IN_MILLIS);
         } else {
             remoteVideoOff.setText(
@@ -1308,7 +1250,7 @@ public class VideoCallFragment extends Fragment
         // If camera permission is granted but user doesn't have consent of camera permission
         // (which means it's first time making video call), shows custom dialog instead. This
         // will only be shown to user once.
-        if (!VideoUtils.hasCameraPermissionAndShownPrivacyToast(getContext())) {
+        if (!VideoUtils.hasCameraPermissionAndShownPrivacyToast(Objects.requireNonNull(getContext()))) {
             videoCallScreenDelegate.onCameraPermissionDialogShown();
             if (!VideoUtils.hasCameraPermission(getContext())) {
                 requestPermissions(new String[]{permission.CAMERA}, CAMERA_PERMISSION_REQUEST_CODE);

@@ -17,9 +17,6 @@
     <string name="a11y_new_call_log_entry_full_description_with_phone_account_info">^1, ^2, ^3.</string>
     <string name="a11y_new_call_log_entry_full_description_without_phone_account_info">^1, ^2.</string>
     <string name="a11y_new_call_log_entry_phone_account">på ^1 via ^2</string>
-    <string name="a11y_new_call_log_entry_tap_action">expand menu</string>
-    <string name="a11y_new_call_log_entry_video_call">make a video call to ^1</string>
-    <string name="a11y_new_call_log_entry_voice_call">call ^1</string>
     <string name="abc_action_bar_home_description">Gå til startsiden</string>
     <string name="abc_action_bar_up_description">Gå opp</string>
     <string name="abc_action_menu_overflow_description">Flere alternativer</string>
@@ -47,7 +44,6 @@
     <string name="abc_shareactionprovider_share_with">Del med</string>
     <string name="abc_shareactionprovider_share_with_application">Del med %s</string>
     <string name="abc_toolbar_collapse_description">Skjul</string>
-    <string name="about_phone_label">Om</string>
     <string name="accessibility_settings_title">Tilgjengelighet</string>
     <string name="account_phone">Bare på enheten din, uten synkronisering</string>
     <string name="action_copy_number_text">Kopiér nummeret</string>
@@ -98,7 +94,6 @@
     <string name="blocked_numbers_disabled_emergency_desc">Blokkering av anrop er slått av fordi du kontaktet nødtjenester fra denne telefonen i løpet av de siste 48 timene. Funksjonen blir automatisk slått på igjen når perioden på 48 timer er utløpt.</string>
     <string name="blocked_numbers_disabled_emergency_header_label">Blokkering av anrop er midlertidig slått av</string>
     <string name="bubble_return_to_call">Tilbake til samtalen</string>
-    <string name="build_version_label">Delversjon</string>
     <string name="call">Ring</string>
     <string name="callFailed_simError">Ikke noe SIM-kort eller SIM-kortfeil</string>
     <string name="call_assistant">Ring %s</string>
@@ -201,7 +196,7 @@
     <string name="clearCallLogProgress_title">Sletter anropsloggen …</string>
     <string name="clearFrequentsConfirmation">Du fjerner listen over ofte kontaktede personer i Kontakter- og Telefon-appene, og tvinger e-postappene til å lære seg adresseinnstillingene dine på nytt.</string>
     <string name="clearFrequentsConfirmation_title">Vil du fjerne ofte kontaktede personer?</string>
-    <string name="clearFrequentsProgress_title">Fjerner ofte kontaktede personer ...</string>
+    <string name="clearFrequentsProgress_title">Fjerner ofte kontaktede personer …</string>
     <string name="conference_call_name">Telefonmøte</string>
     <string name="conference_caller_disconnect_content_description">Avslutt samtalen</string>
     <string name="contact_grid_callback_number">Nummeret til denne telefonen: %1$s</string>
@@ -220,7 +215,6 @@
     <string name="content_description_rtt_chat_avatar">Brukerbilde</string>
     <string name="content_description_rtt_check_button">Send</string>
     <string name="copy_number">Kopiér nummeret</string>
-    <string name="copy_transcript_text">Kopiér transkripsjonen</string>
     <string name="custom_message_hint">Skriv egendefinert melding</string>
     <string name="default_notification_description">Standardlyd (%1$s)</string>
     <string name="delete">Slett</string>
@@ -389,7 +383,6 @@
     <string name="label_sip_address">SIP</string>
     <string name="launcherActivityLabel">Telefon</string>
     <string name="launcherDialpadActivityLabel">Telefontastatur</string>
-    <string name="licenseActivityLabel">Lisenser for åpen kildekode</string>
     <string name="listAllContactsInAccount">Kontakter i %s</string>
     <string name="listCustomView">Kontakter i tilpasset visning</string>
     <string name="listSingleContact">Enkeltkontakt</string>
@@ -431,10 +424,6 @@
     <string name="network_name_wifi">Wi-Fi</string>
     <string name="new_call_log_carrier_video">Video via mobiloperatør</string>
     <string name="new_call_log_duo_video">Video via Duo</string>
-    <string name="new_call_log_header_older">Eldre</string>
-    <string name="new_call_log_header_today">I dag</string>
-    <string name="new_call_log_header_yesterday">I går</string>
-    <string name="new_call_log_permission_no_calllog">Slå på Telefon-tillatelsen for å se anropsloggen din.</string>
     <string name="new_call_log_secondary_blocked">Blokkert</string>
     <string name="new_call_log_secondary_spam">Nettsøppel</string>
     <string name="new_call_log_unknown">Ukjent</string>
@@ -490,7 +479,6 @@
     <string name="ok_got_it">Greit</string>
     <string name="old_block_number_confirmation_title">Vil du blokkere %1$s?</string>
     <string name="old_call_subject_type_and_number">%1$s %2$s</string>
-    <string name="open_source_license_detail_label">Lisensdetaljer for programvare med åpen kildekode</string>
     <string name="organizationLabelsGroup">Organisasjon</string>
     <string name="outgoing_wps_warning">Den pågående samtalen brytes hvis du foretar et WPS-anrop (Wireless Priority Service).</string>
     <string name="pause_prompt_no">Nei</string>
@@ -524,7 +512,6 @@
     <string name="pre_call_select_phone_account_hint_intra_carrier">Bruker samme operatør</string>
     <string name="pre_call_select_phone_account_hint_other_sim_in_use">Ikke tilgjengelig mens du bruker %1$s</string>
     <string name="pre_call_select_phone_account_remember">Husk dette valget</string>
-    <string name="privacy_policy_label">Personvernregler</string>
     <string name="private_num_non_verizon">Skjult nummer</string>
     <string name="private_num_verizon">Begrenset</string>
     <string name="quick_question">Et kjapt spørsmål …</string>
@@ -646,7 +633,6 @@
     <string name="tab_title">%1$s-fanen.</string>
     <string name="tab_title_call_history">Anropslogg</string>
     <string name="tab_title_speed_dial">Hurtigvalg</string>
-    <string name="terms_of_service_label">Vilkår for bruk</string>
     <string name="toast_cannot_write_system_settings">Telefonappen har ikke tillatelse til å skrive til systeminnstillinger.</string>
     <string name="toast_text_copied">Teksten er kopiert</string>
     <string name="toolbar_close">Lukk</string>
@@ -691,13 +677,7 @@
     <string name="view_updates_from_group">Se oppdateringer</string>
     <string name="voice_call">Taleanrop</string>
     <string name="voice_search_not_available">Talesøk er ikke tilgjengelig</string>
-    <string name="voicemail">Telefonsvarer</string>
-    <string name="voicemailCallLogDateTimeFormat">%1$s kl. %2$s</string>
-    <string name="voicemailCallLogDateTimeFormatWithDuration">%1$s • %2$s</string>
-    <string name="voicemailCallLogToday">@string/call_log_header_today</string>
-    <string name="voicemailDurationFormat">%1$02d:%2$02d</string>
     <string name="voicemailMultiSelectActionBarTitle">%1$s er valgt</string>
-    <string name="voicemail_donation_promo_content">La Google gå gjennom denne og fremtidige talemeldinger med transkripsjoner. De blir lagret anonymt. Du kan endre innstillingene når som helst. %1$s</string>
     <string name="voicemail_string">Talepost</string>
     <string name="voicemail_transcription_rating">Vurder transkripsjonskvalitet</string>
     <string name="wait_prompt_str">"Send disse tonene?

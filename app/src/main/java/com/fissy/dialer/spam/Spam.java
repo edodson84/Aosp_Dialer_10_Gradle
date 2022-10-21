@@ -20,6 +20,7 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.provider.CallLog.Calls;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.fissy.dialer.DialerPhoneNumber;
@@ -115,6 +116,7 @@ public interface Spam {
      * <p>It is the caller's responsibility to ensure the timestamp is in milliseconds. Failure to do
      * so will result in undefined behavior.
      */
+    @NonNull
     ListenableFuture<Boolean> dataUpdatedSince(long timestampMillis);
 
     /**

@@ -36,12 +36,10 @@ import android.text.BidiFormatter;
 import android.text.TextDirectionHeuristics;
 import android.text.TextUtils;
 import android.view.ContextMenu;
-import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewStub;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -50,17 +48,12 @@ import android.widget.TextView;
 import androidx.annotation.IntDef;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresPermission;
-import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.widget.PopupMenu;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.contacts.common.dialog.CallSubjectDialog;
 import com.fissy.dialer.R;
-import com.fissy.dialer.ThemeUtils;
-import com.fissy.dialer.app.calllog.CallLogAdapter.OnActionModeStateChangedListener;
 import com.fissy.dialer.app.calllog.calllogcache.CallLogCache;
-import com.fissy.dialer.app.settings.ThemeOptionsSettingsFragment;
 import com.fissy.dialer.blocking.BlockedNumbersMigrator;
 import com.fissy.dialer.blocking.FilteredNumberCompat;
 import com.fissy.dialer.blocking.FilteredNumbersUtil;
@@ -89,7 +82,6 @@ import com.fissy.dialer.logging.InteractionEvent;
 import com.fissy.dialer.logging.Logger;
 import com.fissy.dialer.logging.ScreenEvent;
 import com.fissy.dialer.logging.UiAction;
-import com.fissy.dialer.main.impl.MainActivity;
 import com.fissy.dialer.performancereport.PerformanceReport;
 import com.fissy.dialer.phonenumbercache.CachedNumberLookupService;
 import com.fissy.dialer.phonenumbercache.ContactInfo;
@@ -114,7 +106,7 @@ import java.lang.ref.WeakReference;
 public final class CallLogListItemViewHolder extends RecyclerView.ViewHolder
         implements View.OnClickListener,
         MenuItem.OnMenuItemClickListener,
-        View.OnCreateContextMenuListener{
+        View.OnCreateContextMenuListener {
 
     private static final String TASK_DELETE = "task_delete";
 
@@ -157,8 +149,6 @@ public final class CallLogListItemViewHolder extends RecyclerView.ViewHolder
     @HostUi
     private final int hostUi;
     private final View.OnClickListener expandCollapseListener;
-    private final OnActionModeStateChangedListener onActionModeStateChangedListener;
-    private final View.OnLongClickListener longPressListener;
     /**
      * Whether the data fields are populated by the worker thread, ready to be shown.
      */
@@ -273,7 +263,6 @@ public final class CallLogListItemViewHolder extends RecyclerView.ViewHolder
     public CharSequence dayGroupHeaderText;
     public boolean isAttachedToWindow;
     public AsyncTask<Void, Void, ?> asyncTask;
-    private boolean voicemailPrimaryActionButtonClicked;
     private CallDetailsEntries callDetailsEntries;
 
     private CallLogListItemViewHolder(
@@ -295,8 +284,6 @@ public final class CallLogListItemViewHolder extends RecyclerView.ViewHolder
 
         this.context = context;
         this.expandCollapseListener = expandCollapseListener;
-        onActionModeStateChangedListener = actionModeStateChangedListener;
-        longPressListener = longClickListener;
         this.callLogCache = callLogCache;
         this.callLogListItemHelper = callLogListItemHelper;
         this.blockReportListener = blockReportListener;
@@ -938,7 +925,7 @@ public final class CallLogListItemViewHolder extends RecyclerView.ViewHolder
 
         if (view.getId() == R.id.primary_action_button && !TextUtils.isEmpty(voicemailUri)) {
             Logger.get(context).logImpression(DialerImpression.Type.VOICEMAIL_PLAY_AUDIO_DIRECTLY);
-            voicemailPrimaryActionButtonClicked = true;
+            boolean voicemailPrimaryActionButtonClicked = true;
             expandCollapseListener.onClick(primaryActionView);
             return;
         }
@@ -962,26 +949,16 @@ public final class CallLogListItemViewHolder extends RecyclerView.ViewHolder
         if (view.getId() == R.id.block_report_action) {
             Logger.get(context).logImpression(DialerImpression.Type.CALL_LOG_BLOCK_REPORT_SPAM);
             maybeShowBlockNumberMigrationDialog(
-                    new BlockedNumbersMigrator.Listener() {
-                        @Override
-                        public void onComplete() {
-                            blockReportListener.onBlockReportSpam(
-                                    displayNumber, number, countryIso, callType, info.sourceType);
-                        }
-                    });
+                    () -> blockReportListener.onBlockReportSpam(
+                            displayNumber, number, countryIso, callType, info.sourceType));
             return;
         }
 
         if (view.getId() == R.id.block_action) {
             Logger.get(context).logImpression(DialerImpression.Type.CALL_LOG_BLOCK_NUMBER);
             maybeShowBlockNumberMigrationDialog(
-                    new BlockedNumbersMigrator.Listener() {
-                        @Override
-                        public void onComplete() {
-                            blockReportListener.onBlock(
-                                    displayNumber, number, countryIso, callType, info.sourceType);
-                        }
-                    });
+                    () -> blockReportListener.onBlock(
+                            displayNumber, number, countryIso, callType, info.sourceType));
             return;
         }
 
@@ -1114,7 +1091,7 @@ public final class CallLogListItemViewHolder extends RecyclerView.ViewHolder
     }
 
     private void maybeShowBlockNumberMigrationDialog(BlockedNumbersMigrator.Listener listener) {
-        if (!FilteredNumberCompat.maybeShowBlockNumberMigrationDialog(
+        if (FilteredNumberCompat.maybeShowBlockNumberMigrationDialog(
                 context, ((Activity) context).getFragmentManager(), listener)) {
             listener.onComplete();
         }

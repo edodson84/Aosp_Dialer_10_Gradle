@@ -154,7 +154,7 @@ final class AutoValue_ContactsPopulator_Contact extends ContactsPopulator.Contac
         }
 
         @Override
-        ContactsPopulator.Contact.Builder setAccountType(String accountType) {
+        ContactsPopulator.Contact.Builder setAccountType(@NonNull String accountType) {
             if (accountType == null) {
                 throw new NullPointerException("Null accountType");
             }
@@ -163,7 +163,7 @@ final class AutoValue_ContactsPopulator_Contact extends ContactsPopulator.Contac
         }
 
         @Override
-        ContactsPopulator.Contact.Builder setAccountName(String accountName) {
+        ContactsPopulator.Contact.Builder setAccountName(@NonNull String accountName) {
             if (accountName == null) {
                 throw new NullPointerException("Null accountName");
             }
@@ -196,7 +196,7 @@ final class AutoValue_ContactsPopulator_Contact extends ContactsPopulator.Contac
         }
 
         @Override
-        ContactsPopulator.Contact.Builder setPhoneNumbers(List<ContactsPopulator.PhoneNumber> phoneNumbers) {
+        ContactsPopulator.Contact.Builder setPhoneNumbers(@NonNull List<ContactsPopulator.PhoneNumber> phoneNumbers) {
             if (phoneNumbers == null) {
                 throw new NullPointerException("Null phoneNumbers");
             }
@@ -205,7 +205,7 @@ final class AutoValue_ContactsPopulator_Contact extends ContactsPopulator.Contac
         }
 
         @Override
-        ContactsPopulator.Contact.Builder setEmails(List<ContactsPopulator.Email> emails) {
+        ContactsPopulator.Contact.Builder setEmails(@NonNull List<ContactsPopulator.Email> emails) {
             if (emails == null) {
                 throw new NullPointerException("Null emails");
             }

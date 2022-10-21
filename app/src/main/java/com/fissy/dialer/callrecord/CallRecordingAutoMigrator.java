@@ -39,6 +39,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
+import java.util.Objects;
 
 public class CallRecordingAutoMigrator {
     private static final String TAG = "CallRecordingAutoMigrator";
@@ -74,7 +75,7 @@ public class CallRecordingAutoMigrator {
         final ContentResolver cr = appContext.getContentResolver();
         final SparseArray<CallRecording> oldRecordingData = store.getUnmigratedRecordingData();
         final File dir = Environment.getExternalStoragePublicDirectory("CallRecordings");
-        for (File recording : dir.listFiles()) {
+        for (File recording : Objects.requireNonNull(dir.listFiles())) {
             OutputStream os = null;
             try {
                 // determine data store ID and call creation time of recording
@@ -116,7 +117,7 @@ public class CallRecordingAutoMigrator {
             }
         }
 
-        if (dir.listFiles().length == 0) {
+        if (Objects.requireNonNull(dir.listFiles()).length == 0) {
             dir.delete();
         }
 
@@ -124,10 +125,8 @@ public class CallRecordingAutoMigrator {
     }
 
     private static class ShouldAttemptAutoMigrate implements Worker<Void, Boolean> {
-        private final Context appContext;
 
         ShouldAttemptAutoMigrate(Context appContext) {
-            this.appContext = appContext;
         }
 
         @Nullable

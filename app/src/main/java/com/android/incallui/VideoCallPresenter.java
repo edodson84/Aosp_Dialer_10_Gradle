@@ -142,21 +142,18 @@ public class VideoCallPresenter
      * dialpad).
      */
     private final Runnable autoFullscreenRunnable =
-            new Runnable() {
-                @Override
-                public void run() {
-                    if (autoFullScreenPending
-                            && !InCallPresenter.getInstance().isDialpadVisible()
-                            && isVideoMode) {
+            () -> {
+                if (autoFullScreenPending
+                        && !InCallPresenter.getInstance().isDialpadVisible()
+                        && isVideoMode) {
 
-                        LogUtil.v("VideoCallPresenter.mAutoFullScreenRunnable", "entering fullscreen mode");
-                        InCallPresenter.getInstance().setFullScreen(true);
-                        autoFullScreenPending = false;
-                    } else {
-                        LogUtil.v(
-                                "VideoCallPresenter.mAutoFullScreenRunnable",
-                                "skipping scheduled fullscreen mode.");
-                    }
+                    LogUtil.v("VideoCallPresenter.mAutoFullScreenRunnable", "entering fullscreen mode");
+                    InCallPresenter.getInstance().setFullScreen(true);
+                    autoFullScreenPending = false;
+                } else {
+                    LogUtil.v(
+                            "VideoCallPresenter.mAutoFullScreenRunnable",
+                            "skipping scheduled fullscreen mode.");
                 }
             };
     /**
@@ -242,7 +239,7 @@ public class VideoCallPresenter
 
         // Infer the camera direction from the video state and store it,
         // if this is an outgoing video call.
-        else if (isOutgoingVideoCall(call) && !isCameraDirectionSet(call)) {
+        else if (isOutgoingVideoCall(call) && isCameraDirectionSet(call)) {
             cameraDir = toCameraDirection(call.getVideoState());
             call.setCameraDir(cameraDir);
         }
@@ -255,7 +252,7 @@ public class VideoCallPresenter
 
         // Infer the camera direction from the video state and store it,
         // if this is an active video call and camera direction is not set.
-        else if (isActiveVideoCall(call) && !isCameraDirectionSet(call)) {
+        else if (isActiveVideoCall(call) && isCameraDirectionSet(call)) {
             cameraDir = toCameraDirection(call.getVideoState());
             call.setCameraDir(cameraDir);
         }
@@ -290,7 +287,7 @@ public class VideoCallPresenter
     }
 
     private static boolean isCameraDirectionSet(DialerCall call) {
-        return isVideoCall(call) && call.getCameraDir() != CameraDirection.CAMERA_DIRECTION_UNKNOWN;
+        return !isVideoCall(call) || call.getCameraDir() == CameraDirection.CAMERA_DIRECTION_UNKNOWN;
     }
 
     private static String toSimpleString(DialerCall call) {
@@ -987,7 +984,7 @@ public class VideoCallPresenter
         }
 
         // Change size of display surface to match the peer aspect ratio
-        if (width > 0 && height > 0 && videoCallScreen != null) {
+        if (width > 0 && height > 0) {
             getRemoteVideoSurfaceTexture().setSourceVideoDimensions(new Point(width, height));
             videoCallScreen.onRemoteVideoDimensionsChanged();
         }

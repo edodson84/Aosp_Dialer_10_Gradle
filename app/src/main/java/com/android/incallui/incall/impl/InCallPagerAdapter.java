@@ -16,6 +16,7 @@
 
 package com.android.incallui.incall.impl;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -25,6 +26,8 @@ import androidx.viewpager.widget.PagerAdapter;
 import com.android.incallui.sessiondata.MultimediaFragment;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.multimedia.MultimediaData;
+
+import java.util.Objects;
 
 /**
  * View pager adapter for in call ui.
@@ -44,19 +47,20 @@ public class InCallPagerAdapter extends FragmentStatePagerAdapter {
         this.showInCallButtonGrid = showInCallButtonGrid;
     }
 
+    @NonNull
     @Override
     public Fragment getItem(int position) {
         if (!showInCallButtonGrid) {
             // TODO(calderwoodra): handle fragment invalidation for when the data changes.
             return MultimediaFragment.newInstance(
-                    attachments, true /* isInteractive */, false /* showAvatar */, false /* isSpam */);
+                    Objects.requireNonNull(attachments), true /* isInteractive */, false /* showAvatar */, false /* isSpam */);
 
         } else if (position == getButtonGridPosition()) {
             return InCallButtonGridFragment.newInstance();
 
         } else {
             return MultimediaFragment.newInstance(
-                    attachments, true /* isInteractive */, false /* showAvatar */, false /* isSpam */);
+                    Objects.requireNonNull(attachments), true /* isInteractive */, false /* showAvatar */, false /* isSpam */);
         }
     }
 
@@ -86,7 +90,7 @@ public class InCallPagerAdapter extends FragmentStatePagerAdapter {
 
     //this is called when notifyDataSetChanged() is called
     @Override
-    public int getItemPosition(Object object) {
+    public int getItemPosition(@NonNull Object object) {
         // refresh all fragments when data set changed
         return PagerAdapter.POSITION_NONE;
     }

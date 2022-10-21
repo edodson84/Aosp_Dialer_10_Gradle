@@ -141,7 +141,7 @@ public class UiListener<OutputT> extends Fragment {
         }
 
         @Override
-        public void onFailure(Throwable throwable) {
+        public void onFailure(@NonNull Throwable throwable) {
             LogUtil.e("UiListener.runTask", "task failed", throwable);
             if (failureListener == null) {
                 LogUtil.i("UiListener.runTask", "task failed but UI is dead");

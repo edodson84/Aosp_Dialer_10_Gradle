@@ -25,6 +25,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import androidx.annotation.NonNull;
 import androidx.core.os.UserManagerCompat;
 
 import com.fissy.dialer.calllog.CallLogFramework;
@@ -219,7 +220,7 @@ public final class CallLogConfigImpl implements CallLogConfig {
                         }
 
                         @Override
-                        public void onFailure(Throwable throwable) {
+                        public void onFailure( @NonNull Throwable throwable) {
                             ThreadUtil.getUiThreadHandler()
                                     .post(
                                             () -> {

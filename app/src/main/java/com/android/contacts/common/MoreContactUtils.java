@@ -102,6 +102,7 @@ public class MoreContactUtils {
                     // don't understand the numbers? let's play it safe
                     return false;
                 case NO_MATCH:
+                case SHORT_NSN_MATCH:
                     return false;
                 case EXACT_MATCH:
                     break;
@@ -166,8 +167,6 @@ public class MoreContactUtils {
                             break;
                         }
                     }
-                    return false;
-                case SHORT_NSN_MATCH:
                     return false;
                 default:
                     throw new IllegalStateException("Unknown result value from phone number " + "library");

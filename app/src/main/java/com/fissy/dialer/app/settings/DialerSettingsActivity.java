@@ -29,14 +29,12 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.fissy.dialer.R;
-import com.fissy.dialer.about.AboutPhoneFragment;
 import com.fissy.dialer.assisteddialing.ConcreteCreator;
 import com.fissy.dialer.blocking.FilteredNumberCompat;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.compat.telephony.TelephonyManagerCompat;
 import com.fissy.dialer.configprovider.ConfigProviderComponent;
 import com.fissy.dialer.lookup.LookupSettingsFragment;
-import com.fissy.dialer.main.impl.MainActivity;
 import com.fissy.dialer.main.impl.MainActivityPeer;
 import com.fissy.dialer.proguard.UsedByReflection;
 
@@ -187,20 +185,6 @@ public class DialerSettingsActivity extends AppCompatPreferenceActivity {
                     new Intent("com.fissy.dialer.app.settings.SHOW_ASSISTED_DIALING_SETTINGS");
             target.add(assistedDialingSettingsHeader);
         }
-
-        if (showAbout()) {
-            Header aboutPhoneHeader = new Header();
-            aboutPhoneHeader.titleRes = R.string.about_phone_label;
-            aboutPhoneHeader.fragment = AboutPhoneFragment.class.getName();
-            target.add(aboutPhoneHeader);
-        }
-    }
-
-    /**
-     * Whether "about" should be shown in settings. Override to hide about.
-     */
-    public boolean showAbout() {
-        return true;
     }
 
     /**
@@ -228,18 +212,12 @@ public class DialerSettingsActivity extends AppCompatPreferenceActivity {
     @Override
     public void onHeaderClick(Header header, int position) {
         if (header.id == R.id.settings_header_sounds_and_vibration) {
-
             if (!Settings.System.canWrite(this)) {
-                Toast.makeText(
-                                this,
-                                getResources().getString(R.string.toast_cannot_write_system_settings),
-                                Toast.LENGTH_SHORT)
-                        .show();
-                startActivity(new Intent(Settings.ACTION_SOUND_SETTINGS));
+                Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS, Uri.parse("package:com.fissy.dialer"));
+                startActivityForResult(intent, 0);
                 return;
             }
         }
-
         super.onHeaderClick(header, position);
     }
 

@@ -1,5 +1,7 @@
 package com.android.utils;
 
+import androidx.annotation.NonNull;
+
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -165,23 +167,20 @@ public final class ReflectUtils {
     }
 
     private void sortConstructors(List<Constructor<?>> list) {
-        Collections.sort(list, new Comparator<Constructor<?>>() {
-            @Override
-            public int compare(Constructor<?> o1, Constructor<?> o2) {
-                Class<?>[] types1 = o1.getParameterTypes();
-                Class<?>[] types2 = o2.getParameterTypes();
-                int len = types1.length;
-                for (int i = 0; i < len; i++) {
-                    if (!types1[i].equals(types2[i])) {
-                        if (wrapper(types1[i]).isAssignableFrom(wrapper(types2[i]))) {
-                            return 1;
-                        } else {
-                            return -1;
-                        }
+        list.sort((o1, o2) -> {
+            Class<?>[] types1 = o1.getParameterTypes();
+            Class<?>[] types2 = o2.getParameterTypes();
+            int len = types1.length;
+            for (int i = 0; i < len; i++) {
+                if (!types1[i].equals(types2[i])) {
+                    if (wrapper(types1[i]).isAssignableFrom(wrapper(types2[i]))) {
+                        return 1;
+                    } else {
+                        return -1;
                     }
                 }
-                return 0;
             }
+            return 0;
         });
     }
 
@@ -370,23 +369,20 @@ public final class ReflectUtils {
     }
 
     private void sortMethods(final List<Method> methods) {
-        Collections.sort(methods, new Comparator<Method>() {
-            @Override
-            public int compare(Method o1, Method o2) {
-                Class<?>[] types1 = o1.getParameterTypes();
-                Class<?>[] types2 = o2.getParameterTypes();
-                int len = types1.length;
-                for (int i = 0; i < len; i++) {
-                    if (!types1[i].equals(types2[i])) {
-                        if (wrapper(types1[i]).isAssignableFrom(wrapper(types2[i]))) {
-                            return 1;
-                        } else {
-                            return -1;
-                        }
+        methods.sort((o1, o2) -> {
+            Class<?>[] types1 = o1.getParameterTypes();
+            Class<?>[] types2 = o2.getParameterTypes();
+            int len = types1.length;
+            for (int i = 0; i < len; i++) {
+                if (!types1[i].equals(types2[i])) {
+                    if (wrapper(types1[i]).isAssignableFrom(wrapper(types2[i]))) {
+                        return 1;
+                    } else {
+                        return -1;
                     }
                 }
-                return 0;
             }
+            return 0;
         });
     }
 
@@ -439,29 +435,25 @@ public final class ReflectUtils {
     @SuppressWarnings("unchecked")
     public <P> P proxy(final Class<P> proxyType) {
         final boolean isMap = (object instanceof Map);
-        final InvocationHandler handler = new InvocationHandler() {
-            @Override
-            @SuppressWarnings("null")
-            public Object invoke(Object proxy, Method method, Object[] args) {
-                String name = method.getName();
-                try {
-                    return reflect(object).method(name, args).get();
-                } catch (ReflectException e) {
-                    if (isMap) {
-                        Map<String, Object> map = (Map<String, Object>) object;
-                        int length = (args == null ? 0 : args.length);
+        final InvocationHandler handler = (proxy, method, args) -> {
+            String name = method.getName();
+            try {
+                return reflect(object).method(name, args).get();
+            } catch (ReflectException e) {
+                if (isMap) {
+                    Map<String, Object> map = (Map<String, Object>) object;
+                    int length = (args == null ? 0 : args.length);
 
-                        if (length == 0 && name.startsWith("get")) {
-                            return map.get(property(name.substring(3)));
-                        } else if (length == 0 && name.startsWith("is")) {
-                            return map.get(property(name.substring(2)));
-                        } else if (length == 1 && name.startsWith("set")) {
-                            map.put(property(name.substring(3)), args[0]);
-                            return null;
-                        }
+                    if (length == 0 && name.startsWith("get")) {
+                        return map.get(property(name.substring(3)));
+                    } else if (length == 0 && name.startsWith("is")) {
+                        return map.get(property(name.substring(2)));
+                    } else if (length == 1 && name.startsWith("set")) {
+                        map.put(property(name.substring(3)), args[0]);
+                        return null;
                     }
-                    throw e;
                 }
+                throw e;
             }
         };
         return (P) Proxy.newProxyInstance(proxyType.getClassLoader(),
@@ -521,6 +513,7 @@ public final class ReflectUtils {
         return obj instanceof ReflectUtils && object.equals(((ReflectUtils) obj).get());
     }
 
+    @NonNull
     @Override
     public String toString() {
         return object.toString();

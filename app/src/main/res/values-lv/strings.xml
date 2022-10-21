@@ -17,9 +17,6 @@
     <string name="a11y_new_call_log_entry_full_description_with_phone_account_info">^1, ^2, ^3.</string>
     <string name="a11y_new_call_log_entry_full_description_without_phone_account_info">^1, ^2.</string>
     <string name="a11y_new_call_log_entry_phone_account">kontā ^1, izmantojot numuru ^2</string>
-    <string name="a11y_new_call_log_entry_tap_action">expand menu</string>
-    <string name="a11y_new_call_log_entry_video_call">make a video call to ^1</string>
-    <string name="a11y_new_call_log_entry_voice_call">call ^1</string>
     <string name="abc_action_bar_home_description">Pārvietoties uz sākuma ekrānu</string>
     <string name="abc_action_bar_up_description">Pārvietoties augšup</string>
     <string name="abc_action_menu_overflow_description">Vairāk opciju</string>
@@ -47,7 +44,6 @@
     <string name="abc_shareactionprovider_share_with">Kopīgot ar:</string>
     <string name="abc_shareactionprovider_share_with_application">Kopīgot ar lietojumprogrammu %s</string>
     <string name="abc_toolbar_collapse_description">Sakļaut</string>
-    <string name="about_phone_label">Par</string>
     <string name="accessibility_settings_title">Pieejamība</string>
     <string name="account_phone">Tikai ierīcē, netiek sinhronizēta</string>
     <string name="action_copy_number_text">Kopēt numuru</string>
@@ -98,7 +94,6 @@
     <string name="blocked_numbers_disabled_emergency_desc">Zvanu bloķēšana ir atspējota, jo pēdējo 48 stundu laikā jūs sazinājāties ar ārkārtas palīdzības dienestiem, izmantojot šo tālruni. Zvanu bloķēšana tiks automātiski iespējota, tiklīdz beigsies 48 stundu periods.</string>
     <string name="blocked_numbers_disabled_emergency_header_label">Zvanu bloķēšana ir īslaicīgi izslēgta</string>
     <string name="bubble_return_to_call">Atpakaļ pie zvana</string>
-    <string name="build_version_label">Versija</string>
     <string name="call">Zvanīt</string>
     <string name="callFailed_simError">Nav SIM, vai SIM kļūda</string>
     <string name="call_assistant">Zvanīt: %s</string>
@@ -173,7 +168,7 @@
     <string name="call_pager">Zvanīt uz peidžeri</string>
     <string name="call_radio">Zvanīt uz radioierīci</string>
     <string name="call_settings_label">Zvani</string>
-    <string name="call_subject_hint">Ierakstiet piezīmi, ko nosūtīt ar zvanu...</string>
+    <string name="call_subject_hint">Ierakstiet piezīmi, ko nosūtīt ar zvanu…</string>
     <string name="call_subject_limit">%1$s no %2$s</string>
     <string name="call_subject_type_and_number">%1$s %2$s</string>
     <string name="call_telex">Zvanīt uz teleksu</string>
@@ -201,7 +196,7 @@
     <string name="clearCallLogProgress_title">Notiek zvanu vēstures dzēšana…</string>
     <string name="clearFrequentsConfirmation">Tiks dzēsts bieži lietoto kontaktpersonu saraksts lietotnēs Kontaktpersonas un Tālrunis, un e-pasta lietotnēs no jauna tiks sākta adrešu preferenču saglabāšana.</string>
     <string name="clearFrequentsConfirmation_title">Vai dzēst bieži lietotos kontaktus?</string>
-    <string name="clearFrequentsProgress_title">Bieži lietoto kontaktu dzēšana...</string>
+    <string name="clearFrequentsProgress_title">Bieži lietoto kontaktu dzēšana…</string>
     <string name="conference_call_name">Konferences zvans</string>
     <string name="conference_caller_disconnect_content_description">Beigt zvanu</string>
     <string name="contact_grid_callback_number">Šis tālruņa numurs: %1$s</string>
@@ -220,7 +215,6 @@
     <string name="content_description_rtt_chat_avatar">Iemiesojums</string>
     <string name="content_description_rtt_check_button">Sūtīt</string>
     <string name="copy_number">Kopēt numuru</string>
-    <string name="copy_transcript_text">Kopēt transkripciju</string>
     <string name="custom_message_hint">Rakstīt pielāgotu ziņojumu</string>
     <string name="default_notification_description">Noklusējuma signāls (%1$s)</string>
     <string name="delete">Dzēst</string>
@@ -389,7 +383,6 @@
     <string name="label_sip_address">SIP</string>
     <string name="launcherActivityLabel">Tālrunis</string>
     <string name="launcherDialpadActivityLabel">Tālruņa cipartastatūra</string>
-    <string name="licenseActivityLabel">Atklātā pirmkoda licences</string>
     <string name="listAllContactsInAccount">Kontaktpersonas sarakstā %s</string>
     <string name="listCustomView">Lietotāju filtrs</string>
     <string name="listSingleContact">Viena kontaktpersona</string>
@@ -431,10 +424,6 @@
     <string name="network_name_wifi">Wi-Fi</string>
     <string name="new_call_log_carrier_video">Mobilo sakaru operatora video</string>
     <string name="new_call_log_duo_video">Duo video</string>
-    <string name="new_call_log_header_older">Vecāki zvani</string>
-    <string name="new_call_log_header_today">Šodien</string>
-    <string name="new_call_log_header_yesterday">Vakar</string>
-    <string name="new_call_log_permission_no_calllog">Lai skatītu savu zvanu žurnālu, ieslēdziet atļauju Tālrunis.</string>
     <string name="new_call_log_secondary_blocked">Bloķēti</string>
     <string name="new_call_log_secondary_spam">Nevēlami zvani</string>
     <string name="new_call_log_unknown">Nezināms</string>
@@ -490,7 +479,6 @@
     <string name="ok_got_it">Labi</string>
     <string name="old_block_number_confirmation_title">Vai bloķēt numuru %1$s?</string>
     <string name="old_call_subject_type_and_number">%1$s %2$s</string>
-    <string name="open_source_license_detail_label">Licences informācija par atklātā pirmkoda programmatūru</string>
     <string name="organizationLabelsGroup">Organizācija</string>
     <string name="outgoing_wps_warning">Veicot WPS zvanu, tiks pārtraukts esošais zvans.</string>
     <string name="pause_prompt_no">Nē</string>
@@ -524,7 +512,6 @@
     <string name="pre_call_select_phone_account_hint_intra_carrier">Izmanto to pašu mobilo sakaru operatoru</string>
     <string name="pre_call_select_phone_account_hint_other_sim_in_use">Nav pieejams, izmantojot: %1$s</string>
     <string name="pre_call_select_phone_account_remember">Atcerēties šo izvēli</string>
-    <string name="privacy_policy_label">Konfidencialitātes politika</string>
     <string name="private_num_non_verizon">Privāts numurs</string>
     <string name="private_num_verizon">Ierobežots</string>
     <string name="quick_question">Ātrs jautājums…</string>
@@ -571,7 +558,7 @@
     <string name="set_default_account">Vienmēr izmantot zvaniem</string>
     <string name="settings">Iestatījumi</string>
     <string name="share_and_call">Kopīgot un zvanīt</string>
-    <string name="simContacts_emptyLoading">Notiek ielāde no SIM kartes...</string>
+    <string name="simContacts_emptyLoading">Notiek ielāde no SIM kartes…</string>
     <string name="simContacts_title">SIM kartes kontaktpersonas</string>
     <string name="simulator_submenu_label">Simulators</string>
     <string name="sms">Īsziņa</string>
@@ -646,7 +633,6 @@
     <string name="tab_title">Cilne “%1$s”</string>
     <string name="tab_title_call_history">Vēsture</string>
     <string name="tab_title_speed_dial">Ātrā izv.</string>
-    <string name="terms_of_service_label">Pakalpojumu sniegšanas noteikumi</string>
     <string name="toast_cannot_write_system_settings">Tālruņa lietotnei nav atļaujas rakstīt sistēmas iestatījumos.</string>
     <string name="toast_text_copied">Teksts ir nokopēts</string>
     <string name="toolbar_close">Aizvērt</string>
@@ -691,13 +677,7 @@
     <string name="view_updates_from_group">Skatīt atjauninājumus</string>
     <string name="voice_call">Balss zvans</string>
     <string name="voice_search_not_available">Meklēšana ar balsi nav pieejama.</string>
-    <string name="voicemail">Balss pasts</string>
-    <string name="voicemailCallLogDateTimeFormat">%1$s plkst. %2$s</string>
-    <string name="voicemailCallLogDateTimeFormatWithDuration">%1$s • %2$s</string>
-    <string name="voicemailCallLogToday">@string/call_log_header_today</string>
-    <string name="voicemailDurationFormat">%1$02d:%2$02d</string>
     <string name="voicemailMultiSelectActionBarTitle">Atlasīti: %1$s</string>
-    <string name="voicemail_donation_promo_content">Ļaujiet Google pārskatīt šo un turpmākos balss pasta ziņojumus ar transkripciju. Tie tiks glabāti anonīmi. Mainiet iestatījumus jebkurā laikā. %1$s</string>
     <string name="voicemail_string">Balss pasts</string>
     <string name="voicemail_transcription_rating">Transkripcijas kvalitāte</string>
     <string name="wait_prompt_str">"Vai sūtīt tālāk norādītos signālus?

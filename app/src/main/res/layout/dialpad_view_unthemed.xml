@@ -133,13 +133,13 @@
         android:layout_width="fill_parent"
         android:layout_height="1.0dip" />
 
-    <Space
+    <View
         android:layout_width="fill_parent"
         android:layout_height="@dimen/dialpad_space_above_keys" />
 
     <include layout="@layout/dialpad" />
 
-    <Space
+    <View
         android:layout_width="fill_parent"
         android:layout_height="@dimen/dialpad_space_below_keys" />
 </com.fissy.dialer.dialpadview.DialpadView>

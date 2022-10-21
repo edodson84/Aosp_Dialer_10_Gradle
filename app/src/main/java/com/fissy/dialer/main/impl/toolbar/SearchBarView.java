@@ -38,7 +38,8 @@ import com.fissy.dialer.animation.AnimUtils;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.UiUtil;
 import com.fissy.dialer.util.DialerUtils;
-import com.google.common.base.Optional;
+
+import java.util.Optional;
 
 /**
  * Search bar for {@link MainToolbar}. Mostly used to handle expand and collapse animation.

@@ -15,8 +15,12 @@
  */
 package com.android.contacts.common.util;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.telephony.TelephonyManager;
+
+import androidx.core.app.ActivityCompat;
 
 /**
  * This class provides several TelephonyManager util functions.
@@ -32,7 +36,16 @@ public class TelephonyManagerUtils {
     public static String getVoiceMailAlphaTag(Context context) {
         final TelephonyManager telephonyManager =
                 (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-        final String voiceMailLabel = telephonyManager.getVoiceMailAlphaTag();
-        return voiceMailLabel;
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return null;
+        }
+        return telephonyManager.getVoiceMailAlphaTag();
     }
 }

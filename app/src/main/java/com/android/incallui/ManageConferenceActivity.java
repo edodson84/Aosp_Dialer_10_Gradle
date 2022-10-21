@@ -24,6 +24,8 @@ import androidx.fragment.app.Fragment;
 
 import com.fissy.dialer.R;
 
+import java.util.Objects;
+
 /**
  * Shows the {@link ConferenceManagerFragment}
  */
@@ -40,7 +42,7 @@ public class ManageConferenceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         InCallPresenter.getInstance().setManageConferenceActivity(this);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         setContentView(R.layout.activity_manage_conference);
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.manageConferencePanel);

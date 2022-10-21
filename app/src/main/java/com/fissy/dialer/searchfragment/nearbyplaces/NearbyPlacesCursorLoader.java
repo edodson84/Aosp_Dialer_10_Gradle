@@ -17,18 +17,19 @@
 package com.fissy.dialer.searchfragment.nearbyplaces;
 
 import android.content.Context;
-import android.content.CursorLoader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 
 import androidx.annotation.NonNull;
+import androidx.loader.content.CursorLoader;
 
 import com.android.contacts.common.extensions.PhoneDirectoryExtenderAccessor;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.searchfragment.common.Projections;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Cursor loader for nearby places search results.
@@ -50,8 +51,8 @@ public final class NearbyPlacesCursorLoader extends CursorLoader {
     }
 
     private static Uri getContentUri(Context context, String query) {
-        return PhoneDirectoryExtenderAccessor.get(context)
-                .getContentUri()
+        return Objects.requireNonNull(PhoneDirectoryExtenderAccessor.get(context)
+                        .getContentUri())
                 .buildUpon()
                 .appendPath(query)
                 .appendQueryParameter(ContactsContract.LIMIT_PARAM_KEY, MAX_RESULTS)

@@ -47,7 +47,7 @@ public class Rfc822Validator implements AutoCompleteTextView.Validator {
      * It is however a simplification and it will not validate the double-quote syntax.
      */
     private static final String EMAIL_ADDRESS_LOCALPART_REGEXP =
-            "((?!\\s)[\\.\\w!#$%&'*+\\-/=?^`{|}~\u0080-\uFFFE])+";
+            "((?!\\s)[.\\w!#$%&'*+\\-/=?^`{|}~\u0080-\uFFFE])+";
 
     /**
      * Alias of characters that can be used in IRI, as per RFC 3987.
@@ -79,7 +79,7 @@ public class Rfc822Validator implements AutoCompleteTextView.Validator {
     private static final Pattern EMAIL_ADDRESS_PATTERN =
             Pattern.compile(EMAIL_ADDRESS_LOCALPART_REGEXP + "@" + DOMAIN_REGEXP);
 
-    private String mDomain;
+    private final String mDomain;
     private boolean mRemoveInvalid = false;
 
     /**

@@ -31,6 +31,7 @@ import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -80,7 +81,7 @@ public final class DialerNotificationManager {
         String groupKey = findGroupKey(notifications, tag, id);
         if (!TextUtils.isEmpty(groupKey)) {
             Pair<StatusBarNotification, Integer> groupSummaryAndCount =
-                    getGroupSummaryAndCount(notifications, groupKey);
+                    getGroupSummaryAndCount(notifications, Objects.requireNonNull(groupKey));
             if (groupSummaryAndCount.first != null && groupSummaryAndCount.second <= 1) {
                 LogUtil.i(
                         "DialerNotificationManager.cancel",

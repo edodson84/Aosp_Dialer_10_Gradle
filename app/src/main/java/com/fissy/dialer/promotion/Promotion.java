@@ -70,7 +70,7 @@ public interface Promotion {
     /**
      * Type of promotion, which means promotion should be shown as a card in {@link
      * RecyclerView} or {@link
-     * android.support.design.bottomsheet.BottomSheetBehavior}.
+
      */
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({PromotionType.CARD, PromotionType.BOTTOM_SHEET})

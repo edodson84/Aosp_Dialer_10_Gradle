@@ -28,16 +28,13 @@ import com.fissy.dialer.inject.ApplicationContext;
 import javax.inject.Inject;
 
 /**
- * Stub implementation of {@link com.google.android.apps.dialer.feedback.CallFeedbackListenerImpl}
+
  */
 public class CallFeedbackListenerStub implements CallList.Listener {
 
-    @NonNull
-    private final Context context;
-
     @Inject
     public CallFeedbackListenerStub(@ApplicationContext @NonNull Context context) {
-        this.context = Assert.isNotNull(context);
+        Context context1 = Assert.isNotNull(context);
     }
 
     @Override

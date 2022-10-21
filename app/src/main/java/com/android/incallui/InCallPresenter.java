@@ -16,8 +16,10 @@
 
 package com.android.incallui;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
@@ -40,6 +42,7 @@ import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
+import androidx.core.app.ActivityCompat;
 import androidx.core.os.UserManagerCompat;
 
 import com.android.contacts.common.compat.CallCompat;
@@ -114,20 +117,20 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
      * resizing, 1 means we only expect a single thread to access the map so make only a single shard
      */
     private final Set<InCallStateListener> listeners =
-            Collections.newSetFromMap(new ConcurrentHashMap<InCallStateListener, Boolean>(8, 0.9f, 1));
+            Collections.newSetFromMap(new ConcurrentHashMap<>(8, 0.9f, 1));
 
     private final List<IncomingCallListener> incomingCallListeners = new CopyOnWriteArrayList<>();
     private final Set<InCallDetailsListener> detailsListeners =
-            Collections.newSetFromMap(new ConcurrentHashMap<InCallDetailsListener, Boolean>(8, 0.9f, 1));
+            Collections.newSetFromMap(new ConcurrentHashMap<>(8, 0.9f, 1));
     private final Set<CanAddCallListener> canAddCallListeners =
-            Collections.newSetFromMap(new ConcurrentHashMap<CanAddCallListener, Boolean>(8, 0.9f, 1));
+            Collections.newSetFromMap(new ConcurrentHashMap<>(8, 0.9f, 1));
     private final Set<InCallUiListener> inCallUiListeners =
-            Collections.newSetFromMap(new ConcurrentHashMap<InCallUiListener, Boolean>(8, 0.9f, 1));
+            Collections.newSetFromMap(new ConcurrentHashMap<>(8, 0.9f, 1));
     private final Set<InCallOrientationListener> orientationListeners =
             Collections.newSetFromMap(
-                    new ConcurrentHashMap<InCallOrientationListener, Boolean>(8, 0.9f, 1));
+                    new ConcurrentHashMap<>(8, 0.9f, 1));
     private final Set<InCallEventListener> inCallEventListeners =
-            Collections.newSetFromMap(new ConcurrentHashMap<InCallEventListener, Boolean>(8, 0.9f, 1));
+            Collections.newSetFromMap(new ConcurrentHashMap<>(8, 0.9f, 1));
     private final PseudoScreenState pseudoScreenState = new PseudoScreenState();
     private final Set<InCallUiLock> inCallUiLocks = new ArraySet<>();
     private StatusBarNotifier statusBarNotifier;
@@ -248,7 +251,6 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
                 }
             };
     private CallList.Listener spamCallListListener;
-    private CallList.Listener activeCallsListener;
     /**
      * Whether or not we are currently bound and waiting for Telecom to send us a new call.
      */
@@ -433,7 +435,7 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
                 new SpamCallListListener(
                         context, DialerExecutorComponent.get(context).dialerExecutorFactory());
         this.callList.addListener(spamCallListListener);
-        activeCallsListener = new ActiveCallsCallListListener(context);
+        CallList.Listener activeCallsListener = new ActiveCallsCallListListener(context);
         this.callList.addListener(activeCallsListener);
 
         VideoPauseController.getInstance().setUp(this);
@@ -586,11 +588,10 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
                 context = inCallActivity.getApplicationContext();
                 updateListeners = true;
                 LogUtil.i("InCallPresenter.updateActivity", "UI Initialized");
-            } else {
-                // since setActivity is called onStart(), it can be called multiple times.
-                // This is fine and ignorable, but we do not want to update the world every time
-                // this happens (like going to/from background) so we do not set updateListeners.
-            }
+            }  // since setActivity is called onStart(), it can be called multiple times.
+            // This is fine and ignorable, but we do not want to update the world every time
+            // this happens (like going to/from background) so we do not set updateListeners.
+
 
             this.inCallActivity = inCallActivity;
             this.inCallActivity.setExcludeFromRecents(false);
@@ -739,61 +740,55 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
 
         // Proceed if the query is slow; the call may still be blocked after the query returns.
         final Runnable runnable =
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        hasTimedOut.set(true);
-                        latencyReport.onCallBlockingDone();
-                        callList.onCallAdded(context, call, latencyReport);
-                    }
+                () -> {
+                    hasTimedOut.set(true);
+                    latencyReport.onCallBlockingDone();
+                    callList.onCallAdded(context, call, latencyReport);
                 };
         handler.postDelayed(runnable, BLOCK_QUERY_TIMEOUT_MS);
 
         OnCheckBlockedListener onCheckBlockedListener =
-                new OnCheckBlockedListener() {
-                    @Override
-                    public void onCheckComplete(final Integer id) {
-                        if (isReadyForTearDown()) {
-                            LogUtil.i("InCallPresenter.onCheckComplete", "torn down, not adding call");
-                            return;
+                id -> {
+                    if (isReadyForTearDown()) {
+                        LogUtil.i("InCallPresenter.onCheckComplete", "torn down, not adding call");
+                        return;
+                    }
+                    if (!hasTimedOut.get()) {
+                        handler.removeCallbacks(runnable);
+                    }
+                    if (id == null) {
+                        if (!hasTimedOut.get()) {
+                            latencyReport.onCallBlockingDone();
+                            callList.onCallAdded(context, call, latencyReport);
                         }
+                    } else if (id == FilteredNumberAsyncQueryHandler.INVALID_ID) {
+                        LogUtil.d(
+                                "InCallPresenter.onCheckComplete", "invalid number, skipping block checking");
                         if (!hasTimedOut.get()) {
                             handler.removeCallbacks(runnable);
-                        }
-                        if (id == null) {
-                            if (!hasTimedOut.get()) {
-                                latencyReport.onCallBlockingDone();
-                                callList.onCallAdded(context, call, latencyReport);
-                            }
-                        } else if (id == FilteredNumberAsyncQueryHandler.INVALID_ID) {
-                            LogUtil.d(
-                                    "InCallPresenter.onCheckComplete", "invalid number, skipping block checking");
-                            if (!hasTimedOut.get()) {
-                                handler.removeCallbacks(runnable);
 
-                                latencyReport.onCallBlockingDone();
-                                callList.onCallAdded(context, call, latencyReport);
-                            }
-                        } else {
-                            LogUtil.i(
-                                    "InCallPresenter.onCheckComplete", "Rejecting incoming call from blocked number");
-                            call.reject(false, null);
-                            Logger.get(context).logInteraction(InteractionEvent.Type.CALL_BLOCKED);
-
-                            /*
-                             * If mContext is null, then the InCallPresenter was torn down before the
-                             * block check had a chance to complete. The context is no longer valid, so
-                             * don't attempt to remove the call log entry.
-                             */
-                            if (context == null) {
-                                return;
-                            }
-                            // Register observer to update the call log.
-                            // BlockedNumberContentObserver will unregister after successful log or timeout.
-                            BlockedNumberContentObserver contentObserver =
-                                    new BlockedNumberContentObserver(context, new Handler(), number, timeAdded);
-                            contentObserver.register();
+                            latencyReport.onCallBlockingDone();
+                            callList.onCallAdded(context, call, latencyReport);
                         }
+                    } else {
+                        LogUtil.i(
+                                "InCallPresenter.onCheckComplete", "Rejecting incoming call from blocked number");
+                        call.reject(false, null);
+                        Logger.get(context).logInteraction(InteractionEvent.Type.CALL_BLOCKED);
+
+                        /*
+                         * If mContext is null, then the InCallPresenter was torn down before the
+                         * block check had a chance to complete. The context is no longer valid, so
+                         * don't attempt to remove the call log entry.
+                         */
+                        if (context == null) {
+                            return;
+                        }
+                        // Register observer to update the call log.
+                        // BlockedNumberContentObserver will unregister after successful log or timeout.
+                        BlockedNumberContentObserver contentObserver =
+                                new BlockedNumberContentObserver(context, new Handler(), number, timeAdded);
+                        contentObserver.register();
                     }
                 };
 
@@ -840,7 +835,7 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
     public void onInternationalCallOnWifi(@NonNull DialerCall call) {
         LogUtil.enterBlock("InCallPresenter.onInternationalCallOnWifi");
 
-        if (!InternationalCallOnWifiDialogFragment.shouldShow(context)) {
+        if (InternationalCallOnWifiDialogFragment.shouldShow(context)) {
             LogUtil.i(
                     "InCallPresenter.onInternationalCallOnWifi",
                     "InternationalCallOnWifiDialogFragment.shouldShow returned false");
@@ -911,7 +906,7 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
         inCallState = newState;
 
         // Foreground call changed
-        DialerCall primary = null;
+        DialerCall primary;
         if (newState == InCallState.INCOMING) {
             primary = callList.getIncomingCall();
         } else if (newState == InCallState.PENDING_OUTGOING || newState == InCallState.OUTGOING) {
@@ -1329,7 +1324,6 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
         // "Swap calls", or can be a no-op, depending on the current state
         // of the Phone.
 
-        /** INCOMING CALL */
         final CallList calls = callList;
         final DialerCall incomingCall = calls.getIncomingCall();
         LogUtil.v("InCallPresenter.handleCallKey", "incomingCall: " + incomingCall);
@@ -1340,7 +1334,6 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
             return true;
         }
 
-        /** STATE_ACTIVE CALL */
         final DialerCall activeCall = calls.getActiveCall();
         if (activeCall != null) {
             // TODO: This logic is repeated from CallButtonPresenter.java. We should
@@ -1364,7 +1357,6 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
             }
         }
 
-        /** BACKGROUND CALL */
         final DialerCall heldCall = calls.getBackgroundCall();
         if (heldCall != null) {
             // We have a hold call so presumeable it will always support HOLD...but
@@ -1416,7 +1408,7 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
             isFullScreen = false;
             LogUtil.v(
                     "InCallPresenter.setFullScreen",
-                    "setFullScreen overridden as dialpad is shown = " + isFullScreen);
+                    "setFullScreen overridden as dialpad is shown = " + false);
         }
 
         if (this.isFullScreen == isFullScreen && !force) {
@@ -1602,7 +1594,7 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
                 extras.getParcelableArrayList(android.telecom.Call.AVAILABLE_PHONE_ACCOUNTS);
 
         if (phoneAccountHandles == null || phoneAccountHandles.isEmpty()) {
-            String scheme = call.getHandle().getScheme();
+            String scheme = Objects.requireNonNull(call.getHandle()).getScheme();
             final String errorMsg =
                     PhoneAccount.SCHEME_TEL.equals(scheme)
                             ? context.getString(R.string.callFailed_simError)
@@ -1899,6 +1891,16 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
     @Override
     public void onAudioStateChanged(CallAudioState audioState) {
         if (statusBarNotifier != null) {
+            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
             statusBarNotifier.updateNotification();
         }
     }
@@ -2027,6 +2029,7 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
             releaseInCallUiLock(InCallUiLockImpl.this);
         }
 
+        @NonNull
         @Override
         public String toString() {
             return "InCallUiLock[" + tag + "]";

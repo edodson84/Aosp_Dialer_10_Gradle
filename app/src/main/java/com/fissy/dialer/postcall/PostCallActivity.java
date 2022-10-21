@@ -35,7 +35,6 @@ import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.enrichedcall.EnrichedCallComponent;
 import com.fissy.dialer.enrichedcall.EnrichedCallManager;
-import com.fissy.dialer.main.impl.MainActivity;
 import com.fissy.dialer.main.impl.MainActivityPeer;
 import com.fissy.dialer.util.PermissionsUtil;
 import com.fissy.dialer.widget.DialerToolbar;
@@ -139,6 +138,8 @@ public class PostCallActivity extends AppCompatActivity implements MessageFragme
     @Override
     public void onRequestPermissionsResult(
             int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (permissions.length > 0 && permissions[0].equals(permission.SEND_SMS)) {
             PermissionsUtil.permissionRequested(this, permissions[0]);
         }

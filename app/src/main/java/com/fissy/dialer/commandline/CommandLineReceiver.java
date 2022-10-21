@@ -21,6 +21,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 
+import androidx.annotation.NonNull;
+
 import com.fissy.dialer.buildtype.BuildType;
 import com.fissy.dialer.buildtype.BuildType.Type;
 import com.fissy.dialer.commandline.Command.IllegalCommandLineArgumentException;
@@ -80,7 +82,7 @@ public class CommandLineReceiver extends BroadcastReceiver {
                         }
 
                         @Override
-                        public void onFailure(Throwable throwable) {
+                        public void onFailure(@NonNull Throwable throwable) {
                             if (throwable instanceof IllegalCommandLineArgumentException) {
                                 LogUtil.e(outputTag, throwable.getMessage() + "\n\nusage:\n" + command.getUsage());
                             }

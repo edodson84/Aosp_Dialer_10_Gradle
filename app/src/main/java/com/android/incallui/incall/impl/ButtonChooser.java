@@ -85,7 +85,7 @@ final class ButtonChooser {
         for (int i = 0; i < configuredSlots.size() && placedButtons.size() < numUiButtons; ++i) {
             int slotNumber = configuredSlots.get(i);
             List<Integer> potentialButtons = config.getButtonsForSlot(slotNumber);
-            Collections.sort(potentialButtons, config.getSlotComparator());
+            potentialButtons.sort(config.getSlotComparator());
             for (int j = 0; j < potentialButtons.size(); ++j) {
                 if (allowedButtons.contains(potentialButtons.get(j))) {
                     placedButtons.add(potentialButtons.get(j));
@@ -102,7 +102,7 @@ final class ButtonChooser {
             @NonNull Set<Integer> disabledButtons,
             @NonNull List<Integer> placedButtons,
             @NonNull List<Integer> conflicts) {
-        Collections.sort(conflicts, config.getConflictComparator());
+        conflicts.sort(config.getConflictComparator());
         for (Integer conflict : conflicts) {
             if (placedButtons.size() >= numUiButtons) {
                 return;
@@ -124,7 +124,7 @@ final class ButtonChooser {
 
     private boolean isMutuallyExclusiveButtonAvailable(
             int mutuallyExclusiveButton, @NonNull Set<Integer> allowedButtons) {
-        if (mutuallyExclusiveButton == MappingInfo.NO_MUTUALLY_EXCLUSIVE_BUTTON_SET) {
+        if (mutuallyExclusiveButton == InCallButtonIds.NO_MUTUALLY_EXCLUSIVE_BUTTON_SET) {
             return false;
         }
         return allowedButtons.contains(mutuallyExclusiveButton);

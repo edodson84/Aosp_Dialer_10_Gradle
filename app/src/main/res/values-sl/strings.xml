@@ -17,9 +17,6 @@
     <string name="a11y_new_call_log_entry_full_description_with_phone_account_info">^1, ^2, ^3.</string>
     <string name="a11y_new_call_log_entry_full_description_without_phone_account_info">^1, ^2.</string>
     <string name="a11y_new_call_log_entry_phone_account">v računu ^1, prek številke ^2</string>
-    <string name="a11y_new_call_log_entry_tap_action">expand menu</string>
-    <string name="a11y_new_call_log_entry_video_call">make a video call to ^1</string>
-    <string name="a11y_new_call_log_entry_voice_call">call ^1</string>
     <string name="abc_action_bar_home_description">Krmarjenje domov</string>
     <string name="abc_action_bar_up_description">Krmarjenje navzgor</string>
     <string name="abc_action_menu_overflow_description">Več možnosti</string>
@@ -47,7 +44,6 @@
     <string name="abc_shareactionprovider_share_with">Deljenje z</string>
     <string name="abc_shareactionprovider_share_with_application">Deljenje z drugimi prek aplikacije %s</string>
     <string name="abc_toolbar_collapse_description">Strni</string>
-    <string name="about_phone_label">Vizitka</string>
     <string name="accessibility_settings_title">Funkcije za ljudi s posebnimi potrebami</string>
     <string name="account_phone">Samo v napravi; se ne sinhronizira</string>
     <string name="action_copy_number_text">Kopiranje številke</string>
@@ -98,7 +94,6 @@
     <string name="blocked_numbers_disabled_emergency_desc">Blokiranje klicev je onemogočeno, ker ste se v zadnjih 48 urah s tem telefonom obrnili na nujno pomoč. Ko 48-urno obdobje poteče, bo blokiranje klicev samodejno znova omogočeno.</string>
     <string name="blocked_numbers_disabled_emergency_header_label">Blokiranje klicev je začasno izklopljeno</string>
     <string name="bubble_return_to_call">Nazaj na klic</string>
-    <string name="build_version_label">Delovna različica</string>
     <string name="call">Pokliči</string>
     <string name="callFailed_simError">Ni kartice SIM ali napaka kartice SIM</string>
     <string name="call_assistant">Pokliči številko pomočnika %s</string>
@@ -173,7 +168,7 @@
     <string name="call_pager">Pokliči pozivnik</string>
     <string name="call_radio">Pokliči radijski telefon</string>
     <string name="call_settings_label">Klici</string>
-    <string name="call_subject_hint">Vnesite zapisek, ki ga želite poslati s klicem ...</string>
+    <string name="call_subject_hint">Vnesite zapisek, ki ga želite poslati s klicem …</string>
     <string name="call_subject_limit">%1$s/%2$s</string>
     <string name="call_subject_type_and_number">%1$s %2$s</string>
     <string name="call_telex">Pokliči teleks</string>
@@ -201,7 +196,7 @@
     <string name="clearCallLogProgress_title">Izbris zgodovine klicev …</string>
     <string name="clearFrequentsConfirmation">Izbrisali boste seznam pogostih stikov v aplikacijah Stiki in Telefon, zato bodo e-poštne aplikacije začele shranjevati pogoste naslovnike od začetka.</string>
     <string name="clearFrequentsConfirmation_title">Želite izbrisati seznam pog. stikov?</string>
-    <string name="clearFrequentsProgress_title">Brisanje seznama pogost. stikov ...</string>
+    <string name="clearFrequentsProgress_title">Brisanje seznama pogost. stikov …</string>
     <string name="conference_call_name">Konferenčni klic</string>
     <string name="conference_caller_disconnect_content_description">Končaj klic</string>
     <string name="contact_grid_callback_number">Številka tega telefona: %1$s</string>
@@ -220,7 +215,6 @@
     <string name="content_description_rtt_chat_avatar">Avatar</string>
     <string name="content_description_rtt_check_button">Pošlji</string>
     <string name="copy_number">Kopiraj številko</string>
-    <string name="copy_transcript_text">Kopiraj prepis</string>
     <string name="custom_message_hint">Napišite sporočilo po meri</string>
     <string name="default_notification_description">Privzeti zvok (%1$s)</string>
     <string name="delete">Izbriši</string>
@@ -376,7 +370,7 @@
     <string name="incall_remotely_held">Zadržano</string>
     <string name="incall_talkback_speaker_off">, izklopljen</string>
     <string name="incall_talkback_speaker_on">, vklopljen</string>
-    <string name="incall_transferring">Prenašanje ...</string>
+    <string name="incall_transferring">Prenašanje …</string>
     <string name="incall_video_call_request_failed">Povezave ni mogoče vzpostaviti</string>
     <string name="incall_video_call_request_rejected">Klic je bil zavrnjen</string>
     <string name="incall_video_call_request_timed_out">Časovna omejitev klica je potekla</string>
@@ -389,7 +383,6 @@
     <string name="label_sip_address">SIP</string>
     <string name="launcherActivityLabel">Telefon</string>
     <string name="launcherDialpadActivityLabel">Tipkovnica telefona</string>
-    <string name="licenseActivityLabel">Odprtokodne licence</string>
     <string name="listAllContactsInAccount">Stiki v %s</string>
     <string name="listCustomView">Stiki v pogledu po meri</string>
     <string name="listSingleContact">Posamezen stik</string>
@@ -431,10 +424,6 @@
     <string name="network_name_wifi">Wi-Fi</string>
     <string name="new_call_log_carrier_video">Videoklic prek operaterja</string>
     <string name="new_call_log_duo_video">Videoklic Duo</string>
-    <string name="new_call_log_header_older">Starejše</string>
-    <string name="new_call_log_header_today">Danes</string>
-    <string name="new_call_log_header_yesterday">Včeraj</string>
-    <string name="new_call_log_permission_no_calllog">Če si želite ogledati dnevnik klicev, vklopite dovoljenje za telefon.</string>
     <string name="new_call_log_secondary_blocked">Blokirano</string>
     <string name="new_call_log_secondary_spam">Neželeno</string>
     <string name="new_call_log_unknown">Neznano</string>
@@ -490,7 +479,6 @@
     <string name="ok_got_it">V redu, razumem</string>
     <string name="old_block_number_confirmation_title">Želite blokirati številko %1$s?</string>
     <string name="old_call_subject_type_and_number">%1$s %2$s</string>
-    <string name="open_source_license_detail_label">Podrobnosti o licenci za odprtokodno programsko opremo</string>
     <string name="organizationLabelsGroup">Organizacija</string>
     <string name="outgoing_wps_warning">Če začnete klic WPS, bo obstoječi klic prekinjen.</string>
     <string name="pause_prompt_no">Ne</string>
@@ -524,7 +512,6 @@
     <string name="pre_call_select_phone_account_hint_intra_carrier">Uporablja istega operaterja</string>
     <string name="pre_call_select_phone_account_hint_other_sim_in_use">Ni na voljo med uporabo kartice %1$s</string>
     <string name="pre_call_select_phone_account_remember">Zapomni si to izbiro</string>
-    <string name="privacy_policy_label">Pravilnik o zasebnosti</string>
     <string name="private_num_non_verizon">Zasebna številka</string>
     <string name="private_num_verizon">Omejeno</string>
     <string name="quick_question">Kratko vprašanje …</string>
@@ -646,7 +633,6 @@
     <string name="tab_title">Zavihek »%1$s«.</string>
     <string name="tab_title_call_history">Zg. klicev</string>
     <string name="tab_title_speed_dial">Hitro izb.</string>
-    <string name="terms_of_service_label">Pogoji storitve</string>
     <string name="toast_cannot_write_system_settings">Aplikacija Telefon nima dovoljenja za pisanje v sistemske nastavitve.</string>
     <string name="toast_text_copied">Besedilo je kopirano</string>
     <string name="toolbar_close">Zapri</string>
@@ -691,13 +677,7 @@
     <string name="view_updates_from_group">Prikaži posodobitve</string>
     <string name="voice_call">Glasovni klic</string>
     <string name="voice_search_not_available">Glasovno iskanje ni na voljo</string>
-    <string name="voicemail">Glasovna pošta</string>
-    <string name="voicemailCallLogDateTimeFormat">%1$s ob %2$s</string>
-    <string name="voicemailCallLogDateTimeFormatWithDuration">%1$s • %2$s</string>
-    <string name="voicemailCallLogToday">@string/call_log_header_today</string>
-    <string name="voicemailDurationFormat">%1$02d:%2$02d</string>
     <string name="voicemailMultiSelectActionBarTitle">Št. izbranih: %1$s</string>
-    <string name="voicemail_donation_promo_content">Dovolite Googlu, da pregleda ta in prihodnja sporočila v odzivniku s prepisi. Shranjena bodo anonimno. Nastavitve lahko kadar koli spremenite. %1$s</string>
     <string name="voicemail_string">Odzivnik</string>
     <string name="voicemail_transcription_rating">Ocenite kakovost prepisa</string>
     <string name="wait_prompt_str">"Ali želite poslati naslednje tone?

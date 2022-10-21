@@ -9,5 +9,7 @@
     <EditText
         android:id="@id/custom_sms_input"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:inputType="textAutoComplete"
+        android:autofillHints="" />
 </FrameLayout>

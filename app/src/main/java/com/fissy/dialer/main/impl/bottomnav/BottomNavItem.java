@@ -81,7 +81,7 @@ public final class BottomNavItem extends LinearLayout {
         if (count == 0) {
             notificationBadge.setVisibility(View.INVISIBLE);
         } else {
-            String countString = String.format(Integer.toString(count));
+            String countString = Integer.toString(count);
 
             boolean use99PlusCount =
                     ConfigProviderComponent.get(getContext())

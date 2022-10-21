@@ -159,22 +159,22 @@ public abstract class ContactPhotoManager implements ComponentCallbacks2 {
         try {
             String contactType = uri.getQueryParameter(CONTACT_TYPE_PARAM_KEY);
             if (!TextUtils.isEmpty(contactType)) {
-                request.contactType = Integer.valueOf(contactType);
+                request.contactType = Integer.parseInt(contactType);
             }
 
             String scale = uri.getQueryParameter(SCALE_PARAM_KEY);
             if (!TextUtils.isEmpty(scale)) {
-                request.scale = Float.valueOf(scale);
+                request.scale = Float.parseFloat(scale);
             }
 
             String offset = uri.getQueryParameter(OFFSET_PARAM_KEY);
             if (!TextUtils.isEmpty(offset)) {
-                request.offset = Float.valueOf(offset);
+                request.offset = Float.parseFloat(offset);
             }
 
             String isCircular = uri.getQueryParameter(IS_CIRCULAR_PARAM_KEY);
             if (!TextUtils.isEmpty(isCircular)) {
-                request.isCircular = Boolean.valueOf(isCircular);
+                request.isCircular = Boolean.parseBoolean(isCircular);
             }
         } catch (NumberFormatException e) {
             LogUtil.w(
@@ -505,24 +505,22 @@ public abstract class ContactPhotoManager implements ComponentCallbacks2 {
                     defaultImageRequest.isCircular
                             ? LetterTileDrawable.SHAPE_CIRCLE
                             : LetterTileDrawable.SHAPE_RECTANGLE;
-            if (defaultImageRequest != null) {
-                // If the contact identifier is null or empty, fallback to the
-                // displayName. In that case, use {@code null} for the contact's
-                // display name so that a default bitmap will be used instead of a
-                // letter
-                if (TextUtils.isEmpty(defaultImageRequest.identifier)) {
-                    drawable.setCanonicalDialerLetterTileDetails(
-                            null, defaultImageRequest.displayName, tileShape, defaultImageRequest.contactType);
-                } else {
-                    drawable.setCanonicalDialerLetterTileDetails(
-                            defaultImageRequest.displayName,
-                            defaultImageRequest.identifier,
-                            tileShape,
-                            defaultImageRequest.contactType);
-                }
-                drawable.setScale(defaultImageRequest.scale);
-                drawable.setOffset(defaultImageRequest.offset);
+            // If the contact identifier is null or empty, fallback to the
+            // displayName. In that case, use {@code null} for the contact's
+            // display name so that a default bitmap will be used instead of a
+            // letter
+            if (TextUtils.isEmpty(defaultImageRequest.identifier)) {
+                drawable.setCanonicalDialerLetterTileDetails(
+                        null, defaultImageRequest.displayName, tileShape, defaultImageRequest.contactType);
+            } else {
+                drawable.setCanonicalDialerLetterTileDetails(
+                        defaultImageRequest.displayName,
+                        defaultImageRequest.identifier,
+                        tileShape,
+                        defaultImageRequest.contactType);
             }
+            drawable.setScale(defaultImageRequest.scale);
+            drawable.setOffset(defaultImageRequest.offset);
             return drawable;
         }
 

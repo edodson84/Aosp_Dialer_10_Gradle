@@ -17,9 +17,6 @@
     <string name="a11y_new_call_log_entry_full_description_with_phone_account_info">^1, ^2, ^3.</string>
     <string name="a11y_new_call_log_entry_full_description_without_phone_account_info">^1, ^2.</string>
     <string name="a11y_new_call_log_entry_phone_account">^1, нөмірі: ^2</string>
-    <string name="a11y_new_call_log_entry_tap_action">expand menu</string>
-    <string name="a11y_new_call_log_entry_video_call">make a video call to ^1</string>
-    <string name="a11y_new_call_log_entry_voice_call">call ^1</string>
     <string name="abc_action_bar_home_description">Негізгі бетте қозғалу</string>
     <string name="abc_action_bar_up_description">Жоғары қозғалу</string>
     <string name="abc_action_menu_overflow_description">Басқа опциялар</string>
@@ -47,7 +44,6 @@
     <string name="abc_shareactionprovider_share_with">Бөлісу</string>
     <string name="abc_shareactionprovider_share_with_application">%s қолданбасымен бөлісу</string>
     <string name="abc_toolbar_collapse_description">Тасалау</string>
-    <string name="about_phone_label">Мәліметтер</string>
     <string name="accessibility_settings_title">Арнайы мүмкіндіктер</string>
     <string name="account_phone">Тек қана құрылғыда, синхрондалмаған</string>
     <string name="action_copy_number_text">Нөмірді көшіру</string>
@@ -98,7 +94,6 @@
     <string name="blocked_numbers_disabled_emergency_desc">Қоңырауларға тыйым салу өшірілді, өйткені сіз соңғы 48 сағат ішінде осы телефоннан төтенше қызметтерге хабарластыңыз. Ол 48 сағаттық кезең өткеннен кейін автоматты түрде қайта қосылады.</string>
     <string name="blocked_numbers_disabled_emergency_header_label">Қоңырауларға тыйым салу уақытша өшірулі</string>
     <string name="bubble_return_to_call">Қоңырауға оралу</string>
-    <string name="build_version_label">Жинақ нұсқасы</string>
     <string name="call">Қоңырау шалу</string>
     <string name="callFailed_simError">SIM жоқ немесе SIM қателігі</string>
     <string name="call_assistant">%s нөміріне қоңырау соғу</string>
@@ -108,7 +103,7 @@
     <string name="call_car">Автокөлікке қоңырау шалу</string>
     <string name="call_company_main">Компанияның негізгі нөміріне қоңырау шалу</string>
     <string name="call_composer_connection_failed">%1$s желіден тыс және байланысу мүмкін емес</string>
-    <string name="call_composer_image_uploading">Сурет жіберілуде...</string>
+    <string name="call_composer_image_uploading">Сурет жіберілуде…</string>
     <string name="call_custom">%s нөміріне қоңырау шалу</string>
     <string name="call_details">Қоңырау деректері</string>
     <string name="call_details_copy_number">Нөмірді көшіру</string>
@@ -173,7 +168,7 @@
     <string name="call_pager">Пэйджерге қоңырау шалу</string>
     <string name="call_radio">Радиоға қоңырау шалу</string>
     <string name="call_settings_label">Қоңыраулар</string>
-    <string name="call_subject_hint">Қоңыраумен жіберу үшін ескертпе теріңіз ...</string>
+    <string name="call_subject_hint">Қоңыраумен жіберу үшін ескертпе теріңіз …</string>
     <string name="call_subject_limit">%1$s / %2$s</string>
     <string name="call_subject_type_and_number">%1$s %2$s</string>
     <string name="call_telex">Телекске қоңырау шалу</string>
@@ -220,7 +215,6 @@
     <string name="content_description_rtt_chat_avatar">Аватар</string>
     <string name="content_description_rtt_check_button">Алға</string>
     <string name="copy_number">Нөмірді көшіру</string>
-    <string name="copy_transcript_text">Транскрипцияны көшіру</string>
     <string name="custom_message_hint">Арнаулы хабар жазу</string>
     <string name="default_notification_description">Бастапқы бойынша дыбыс (%1$s)</string>
     <string name="delete">Жою</string>
@@ -376,11 +370,11 @@
     <string name="incall_remotely_held">Күтуде</string>
     <string name="incall_talkback_speaker_off">, өшірулі</string>
     <string name="incall_talkback_speaker_on">, қосулы</string>
-    <string name="incall_transferring">Тасымалдануда...</string>
+    <string name="incall_transferring">Тасымалдануда…</string>
     <string name="incall_video_call_request_failed">Қосылу мүмкін емес</string>
     <string name="incall_video_call_request_rejected">Қоңырау қабылданбады</string>
     <string name="incall_video_call_request_timed_out">Қоңырау уақыты бітті</string>
-    <string name="incall_video_call_requesting">Оператор бейне қоңырауы...</string>
+    <string name="incall_video_call_requesting">Оператор бейне қоңырауы…</string>
     <string name="incall_video_call_upgrade_request">Оператор бейне қоңырауына ауысуда…</string>
     <string name="incall_wifi_video_call_requesting">Wi-Fi бейне қоңырауы…</string>
     <string name="invalidNumber">%1$s нөмірі жарамсыз.</string>
@@ -389,7 +383,6 @@
     <string name="label_sip_address">SIP</string>
     <string name="launcherActivityLabel">Телефон</string>
     <string name="launcherDialpadActivityLabel">Телефон пернетақтасы</string>
-    <string name="licenseActivityLabel">Ашық бастапқы код лицензиялары</string>
     <string name="listAllContactsInAccount">%s ішіндегі контактілер</string>
     <string name="listCustomView">Контактілердің жеке көрінісі</string>
     <string name="listSingleContact">Жалғыз контакт</string>
@@ -431,10 +424,6 @@
     <string name="network_name_wifi">Wifi</string>
     <string name="new_call_log_carrier_video">Оператор бейне қоңырауы</string>
     <string name="new_call_log_duo_video">Duo бейне қоңырауы</string>
-    <string name="new_call_log_header_older">Ескілеу</string>
-    <string name="new_call_log_header_today">Бүгін</string>
-    <string name="new_call_log_header_yesterday">Кеше</string>
-    <string name="new_call_log_permission_no_calllog">Тіркелген қоңырауларды көру үшін \"Телефон\" рұқсатын қосыңыз.</string>
     <string name="new_call_log_secondary_blocked">Бөгелді</string>
     <string name="new_call_log_secondary_spam">Спам</string>
     <string name="new_call_log_unknown">Белгісіз</string>
@@ -490,7 +479,6 @@
     <string name="ok_got_it">Жарайды, түсіндім</string>
     <string name="old_block_number_confirmation_title">%1$s нөмірін бөгеу қажет пе?</string>
     <string name="old_call_subject_type_and_number">%1$s %2$s</string>
-    <string name="open_source_license_detail_label">Ашық бастапқы код бағдарламасына арналған лицензия туралы мәліметтер</string>
     <string name="organizationLabelsGroup">Ұйым</string>
     <string name="outgoing_wps_warning">WPS қоңырауын шалу қазіргі қоңырауды тоқтатады.</string>
     <string name="pause_prompt_no">Жоқ</string>
@@ -524,10 +512,9 @@
     <string name="pre_call_select_phone_account_hint_intra_carrier">Бір операторды қолданады</string>
     <string name="pre_call_select_phone_account_hint_other_sim_in_use">%1$s картасымен қатар қолдану мүмкін емес</string>
     <string name="pre_call_select_phone_account_remember">Таңдауды еске сақтау</string>
-    <string name="privacy_policy_label">Құпиялылық саясаты</string>
     <string name="private_num_non_verizon">Жеке нөмір</string>
     <string name="private_num_verizon">Шектелген</string>
-    <string name="quick_question">Жылдам сұрақ...</string>
+    <string name="quick_question">Жылдам сұрақ…</string>
     <string name="received_a_photo">Сурет қабылданды</string>
     <string name="relationLabelsGroup">Қарым-қатынас</string>
     <string name="remove_contact">Алып тастау</string>
@@ -571,7 +558,7 @@
     <string name="set_default_account">Осыны қоңыраулар үшін әрқашан пайд.</string>
     <string name="settings">Параметрлер</string>
     <string name="share_and_call">Бөлісу және қоңырау шалу</string>
-    <string name="simContacts_emptyLoading">SIM картасынан жүктелуде...</string>
+    <string name="simContacts_emptyLoading">SIM картасынан жүктелуде…</string>
     <string name="simContacts_title">SIM контактілері</string>
     <string name="simulator_submenu_label">Симулятор</string>
     <string name="sms">Мәтіндік-хабар</string>
@@ -646,7 +633,6 @@
     <string name="tab_title">%1$s қойындысы.</string>
     <string name="tab_title_call_history">Қоңыраулар тарихы</string>
     <string name="tab_title_speed_dial">Жылдам теру</string>
-    <string name="terms_of_service_label">Қызмет көрсету шарттары</string>
     <string name="toast_cannot_write_system_settings">Телефон қолданбасында жүйелік параметрлерге жазуға рұқсат жоқ.</string>
     <string name="toast_text_copied">Мәтін көшірілді</string>
     <string name="toolbar_close">Жабу</string>
@@ -691,13 +677,7 @@
     <string name="view_updates_from_group">Жаңартуларды көру</string>
     <string name="voice_call">Дауыстық қоңырау</string>
     <string name="voice_search_not_available">Дауыс арқылы іздеу қол жетімді емес</string>
-    <string name="voicemail">Дауыстық пошта</string>
-    <string name="voicemailCallLogDateTimeFormat">%1$s, %2$s</string>
-    <string name="voicemailCallLogDateTimeFormatWithDuration">%1$s • %2$s</string>
-    <string name="voicemailCallLogToday">@string/call_log_header_today</string>
-    <string name="voicemailDurationFormat">%1$02d:%2$02d</string>
     <string name="voicemailMultiSelectActionBarTitle">%1$s таңдалды</string>
-    <string name="voicemail_donation_promo_content">Google-ға осы және болашақ транскрипциялары бар дауыстық хабарларды шолуға рұқсат беріңіз. Олар анонимді түрде сақталады. Бұл параметрді кез келген уақытта өзгертуіңізге болады. %1$s</string>
     <string name="voicemail_string">Дауыстық хабар</string>
     <string name="voicemail_transcription_rating">Транскрипция сапасын бағалау</string>
     <string name="wait_prompt_str">"Келесі әуендер жіберілсін бе?

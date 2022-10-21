@@ -22,7 +22,6 @@ import android.telecom.VideoProfile;
 
 import androidx.annotation.FloatRange;
 import androidx.annotation.NonNull;
-import androidx.core.os.UserManagerCompat;
 
 import com.android.incallui.answer.protocol.AnswerScreen;
 import com.android.incallui.answer.protocol.AnswerScreenDelegate;
@@ -41,6 +40,8 @@ import com.fissy.dialer.logging.Logger;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
+
+import java.util.Objects;
 
 /**
  * Manages changes for an incoming call screen.
@@ -108,7 +109,7 @@ public class AnswerScreenPresenter
         ListenableFuture<Void> answerPrecondition;
 
         if (incomingCall != null && inCallActivity != null) {
-            answerPrecondition = inCallActivity.getSpeakEasyCallManager().onNewIncomingCall(incomingCall);
+            answerPrecondition = Objects.requireNonNull(inCallActivity.getSpeakEasyCallManager()).onNewIncomingCall(incomingCall);
         } else {
             answerPrecondition = Futures.immediateFuture(null);
         }
@@ -122,7 +123,7 @@ public class AnswerScreenPresenter
                     }
 
                     @Override
-                    public void onFailure(Throwable t) {
+                    public void onFailure( @NonNull Throwable t) {
                         onAnswerCallback(answerVideoAsAudio);
                         // TODO(erfanian): Enumerate all error states and specify recovery strategies.
                         throw new RuntimeException("Failed to successfully complete pre call tasks.", t);

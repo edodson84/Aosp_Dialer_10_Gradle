@@ -61,12 +61,10 @@ public class ActiveCallsCommand implements Command {
 
         String command = args.getPositionals().get(0);
 
-        switch (command) {
-            case "list":
-                return Futures.immediateFuture(
-                        ActiveCallsComponent.get(appContext).activeCalls().getActiveCalls().toString());
-            default:
-                throw new IllegalCommandLineArgumentException("unknown command " + command);
+        if ("list".equals(command)) {
+            return Futures.immediateFuture(
+                    ActiveCallsComponent.get(appContext).activeCalls().getActiveCalls().toString());
         }
+        throw new IllegalCommandLineArgumentException("unknown command " + command);
     }
 }

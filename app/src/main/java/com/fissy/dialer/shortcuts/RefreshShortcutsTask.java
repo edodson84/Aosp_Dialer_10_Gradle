@@ -32,7 +32,7 @@ import com.fissy.dialer.common.LogUtil;
 /**
  * {@link AsyncTask} used by the periodic job service to refresh dynamic and pinned shortcuts.
  */
-@TargetApi(VERSION_CODES.N_MR1) // Shortcuts introduced in N MR1
+ // Shortcuts introduced in N MR1
 final class RefreshShortcutsTask extends AsyncTask<JobParameters, Void, JobParameters> {
 
     private final JobService jobService;

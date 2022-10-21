@@ -123,12 +123,9 @@ public class ContactInfoHelper {
         }
 
         final Uri uri = Uri.withAppendedPath(Contacts.CONTENT_LOOKUP_URI, lookupKey);
-        Cursor cursor = null;
-        try {
-            cursor =
-                    context
-                            .getContentResolver()
-                            .query(uri, PhoneQuery.DISPLAY_NAME_ALTERNATIVE_PROJECTION, null, null, null);
+        try (Cursor cursor = context
+                .getContentResolver()
+                .query(uri, PhoneQuery.DISPLAY_NAME_ALTERNATIVE_PROJECTION, null, null, null)) {
 
             if (cursor != null && cursor.moveToFirst()) {
                 return cursor.getString(PhoneQuery.NAME_ALTERNATIVE);
@@ -136,10 +133,6 @@ public class ContactInfoHelper {
         } catch (IllegalArgumentException e) {
             // Avoid dialer crash when lookup key is not valid
             LogUtil.e(TAG, "IllegalArgumentException in lookUpDisplayNameAlternative", e);
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
         }
 
         return null;

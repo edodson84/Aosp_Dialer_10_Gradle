@@ -137,7 +137,7 @@ public abstract class AccountTypeManager {
      * @return Unmodifiable map from {@link AccountTypeWithDataSet}s to {@link AccountType}s which
      * support the "invite" feature and have one or more account.
      * <p>This is a filtered down and more "usable" list compared to {@link
-     * #getAllInvitableAccountTypes}, where usable is defined as: (1) making sure that the app
+     * }, where usable is defined as: (1) making sure that the app
      * that contributed the account type is not disabled (in order to avoid presenting the user
      * with an option that does nothing), and (2) that there is at least one raw contact with that
      * account type in the database (assuming that the user probably doesn't use that account
@@ -181,7 +181,7 @@ class AccountTypeManagerImpl extends AccountTypeManager
 
     private static final Map<AccountTypeWithDataSet, AccountType>
             EMPTY_UNMODIFIABLE_ACCOUNT_TYPE_MAP =
-            Collections.unmodifiableMap(new HashMap<AccountTypeWithDataSet, AccountType>());
+            Collections.unmodifiableMap(new HashMap<>());
 
     /**
      * A sample contact URI used to test whether any activities will respond to an invitable intent
@@ -193,33 +193,30 @@ class AccountTypeManagerImpl extends AccountTypeManager
     private static final int MESSAGE_LOAD_DATA = 0;
     private static final int MESSAGE_PROCESS_BROADCAST_INTENT = 1;
     private static final Comparator<AccountWithDataSet> ACCOUNT_COMPARATOR =
-            new Comparator<AccountWithDataSet>() {
-                @Override
-                public int compare(AccountWithDataSet a, AccountWithDataSet b) {
-                    if (Objects.equals(a.name, b.name)
-                            && Objects.equals(a.type, b.type)
-                            && Objects.equals(a.dataSet, b.dataSet)) {
-                        return 0;
-                    } else if (b.name == null || b.type == null) {
-                        return -1;
-                    } else if (a.name == null || a.type == null) {
-                        return 1;
-                    } else {
-                        int diff = a.name.compareTo(b.name);
-                        if (diff != 0) {
-                            return diff;
-                        }
-                        diff = a.type.compareTo(b.type);
-                        if (diff != 0) {
-                            return diff;
-                        }
+            (a, b) -> {
+                if (Objects.equals(a.name, b.name)
+                        && Objects.equals(a.type, b.type)
+                        && Objects.equals(a.dataSet, b.dataSet)) {
+                    return 0;
+                } else if (b.name == null || b.type == null) {
+                    return -1;
+                } else if (a.name == null || a.type == null) {
+                    return 1;
+                } else {
+                    int diff = a.name.compareTo(b.name);
+                    if (diff != 0) {
+                        return diff;
+                    }
+                    diff = a.type.compareTo(b.type);
+                    if (diff != 0) {
+                        return diff;
+                    }
 
-                        // Accounts without data sets get sorted before those that have them.
-                        if (a.dataSet != null) {
-                            return b.dataSet == null ? 1 : a.dataSet.compareTo(b.dataSet);
-                        } else {
-                            return -1;
-                        }
+                    // Accounts without data sets get sorted before those that have them.
+                    if (a.dataSet != null) {
+                        return b.dataSet == null ? 1 : a.dataSet.compareTo(b.dataSet);
+                    } else {
+                        return -1;
                     }
                 }
             };
@@ -248,15 +245,6 @@ class AccountTypeManagerImpl extends AccountTypeManager
     private final AccountType mFallbackAccountType;
     private final HandlerThread mListenerThread;
     private final Handler mListenerHandler;
-    private final BroadcastReceiver mBroadcastReceiver =
-            new BroadcastReceiver() {
-
-                @Override
-                public void onReceive(Context context, Intent intent) {
-                    Message msg = mListenerHandler.obtainMessage(MESSAGE_PROCESS_BROADCAST_INTENT, intent);
-                    mListenerHandler.sendMessage(msg);
-                }
-            };
     private List<AccountWithDataSet> mAccounts = new ArrayList<>();
     private List<AccountWithDataSet> mContactWritableAccounts = new ArrayList<>();
     private List<AccountWithDataSet> mGroupWritableAccounts = new ArrayList<>();
@@ -299,6 +287,14 @@ class AccountTypeManagerImpl extends AccountTypeManager
         filter.addAction(Intent.ACTION_PACKAGE_REMOVED);
         filter.addAction(Intent.ACTION_PACKAGE_CHANGED);
         filter.addDataScheme("package");
+        BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Message msg = mListenerHandler.obtainMessage(MESSAGE_PROCESS_BROADCAST_INTENT, intent);
+                mListenerHandler.sendMessage(msg);
+            }
+        };
         mContext.registerReceiver(mBroadcastReceiver, filter);
         IntentFilter sdFilter = new IntentFilter();
         sdFilter.addAction(Intent.ACTION_EXTERNAL_APPLICATIONS_AVAILABLE);
@@ -425,10 +421,8 @@ class AccountTypeManagerImpl extends AccountTypeManager
         final List<AccountWithDataSet> groupWritableAccounts = new ArrayList<>();
         final Set<String> extensionPackages = new HashSet<>();
 
-        final AccountManager am = mAccountManager;
-
         final SyncAdapterType[] syncs = ContentResolver.getSyncAdapterTypes();
-        final AuthenticatorDescription[] auths = am.getAuthenticatorTypes();
+        final AuthenticatorDescription[] auths = mAccountManager.getAuthenticatorTypes();
 
         // First process sync adapters to find any that provide contact data.
         for (SyncAdapterType sync : syncs) {
@@ -458,7 +452,7 @@ class AccountTypeManagerImpl extends AccountTypeManager
                         TAG, "Registering external account type=" + type + ", packageName=" + auth.packageName);
                 accountType = new ExternalAccountType(mContext, auth.packageName, false);
             }
-            if (!accountType.isInitialized()) {
+            if (accountType.isInitialized()) {
                 if (accountType.isEmbedded()) {
                     throw new IllegalStateException(
                             "Problem initializing embedded type " + accountType.getClass().getCanonicalName());
@@ -484,7 +478,7 @@ class AccountTypeManagerImpl extends AccountTypeManager
             Log.d(TAG, "Registering " + extensionPackages.size() + " extension packages");
             for (String extensionPackage : extensionPackages) {
                 ExternalAccountType accountType = new ExternalAccountType(mContext, extensionPackage, true);
-                if (!accountType.isInitialized()) {
+                if (accountType.isInitialized()) {
                     // Skip external account types that couldn't be initialized.
                     continue;
                 }
@@ -546,9 +540,9 @@ class AccountTypeManagerImpl extends AccountTypeManager
             }
         }
 
-        Collections.sort(allAccounts, ACCOUNT_COMPARATOR);
-        Collections.sort(contactWritableAccounts, ACCOUNT_COMPARATOR);
-        Collections.sort(groupWritableAccounts, ACCOUNT_COMPARATOR);
+        allAccounts.sort(ACCOUNT_COMPARATOR);
+        contactWritableAccounts.sort(ACCOUNT_COMPARATOR);
+        groupWritableAccounts.sort(ACCOUNT_COMPARATOR);
 
         timings.addSplit("Loaded accounts");
 
@@ -727,7 +721,7 @@ class AccountTypeManagerImpl extends AccountTypeManager
             AccountType accountType = allInvitables.get(accountTypeWithDataSet);
 
             // Make sure that account types don't come from apps that are disabled.
-            Intent invitableIntent = MoreContactUtils.getInvitableIntent(accountType, SAMPLE_CONTACT_URI);
+            Intent invitableIntent = MoreContactUtils.getInvitableIntent(Objects.requireNonNull(accountType), SAMPLE_CONTACT_URI);
             if (invitableIntent == null) {
                 result.remove(accountTypeWithDataSet);
                 continue;

@@ -126,72 +126,6 @@ public class TelephonyManagerCompat {
         return telephonyManager != null && telephonyManager.isHearingAidCompatibilitySupported();
     }
 
-    /**
-     * Returns the URI for the per-account voicemail ringtone set in Phone settings.
-     *
-     * @param telephonyManager The telephony manager instance to use for method calls.
-     * @param accountHandle    The handle for the {@link android.telecom.PhoneAccount} for which to
-     *                         retrieve the voicemail ringtone.
-     * @return The URI for the ringtone to play when receiving a voicemail from a specific
-     * PhoneAccount.
-     */
-    @Nullable
-    public static Uri getVoicemailRingtoneUri(
-            TelephonyManager telephonyManager, PhoneAccountHandle accountHandle) {
-        return telephonyManager.getVoicemailRingtoneUri(accountHandle);
-    }
-
-    /**
-     * Returns whether vibration is set for voicemail notification in Phone settings.
-     *
-     * @param telephonyManager The telephony manager instance to use for method calls.
-     * @param accountHandle    The handle for the {@link android.telecom.PhoneAccount} for which to
-     *                         retrieve the voicemail vibration setting.
-     * @return {@code true} if the vibration is set for this PhoneAccount, {@code false} otherwise.
-     */
-    public static boolean isVoicemailVibrationEnabled(
-            TelephonyManager telephonyManager, PhoneAccountHandle accountHandle) {
-        return telephonyManager.isVoicemailVibrationEnabled(accountHandle);
-    }
-
-    /**
-     * This method uses a new system API to enable or disable visual voicemail. TODO(twyen): restrict
-     * to N MR1, not needed in future SDK.
-     */
-    public static void setVisualVoicemailEnabled(
-            TelephonyManager telephonyManager, PhoneAccountHandle handle, boolean enabled) {
-        try {
-            TelephonyManager.class
-                    .getMethod("setVisualVoicemailEnabled", PhoneAccountHandle.class, boolean.class)
-                    .invoke(telephonyManager, handle, enabled);
-        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            LogUtil.e("TelephonyManagerCompat.setVisualVoicemailEnabled", "failed", e);
-        }
-    }
-
-    /**
-     * This method uses a new system API to check if visual voicemail is enabled TODO(twyen): restrict
-     * to N MR1, not needed in future SDK.
-     */
-    public static boolean isVisualVoicemailEnabled(
-            TelephonyManager telephonyManager, PhoneAccountHandle handle) {
-        try {
-            return (boolean)
-                    TelephonyManager.class
-                            .getMethod("isVisualVoicemailEnabled", PhoneAccountHandle.class)
-                            .invoke(telephonyManager, handle);
-        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            LogUtil.e("TelephonyManagerCompat.setVisualVoicemailEnabled", "failed", e);
-        }
-        return false;
-    }
-
-    /**
-     * Handles secret codes to launch arbitrary activities.
-     *
-     * @param context    the context to use
-     * @param secretCode the secret code without the "*#*#" prefix and "#*#*" suffix
-     */
     public static void handleSecretCode(Context context, String secretCode) {
         // Must use system service on O+ to avoid using broadcasts, which are not allowed on O+.
         if (BuildCompat.isAtLeastO()) {
@@ -230,12 +164,10 @@ public class TelephonyManagerCompat {
         if (phoneAccountHandle == null) {
             return telephonyManager;
         }
-        if (VERSION.SDK_INT >= VERSION_CODES.O) {
-            TelephonyManager telephonyManagerForPhoneAccount =
-                    telephonyManager.createForPhoneAccountHandle(phoneAccountHandle);
-            if (telephonyManagerForPhoneAccount != null) {
-                return telephonyManagerForPhoneAccount;
-            }
+        TelephonyManager telephonyManagerForPhoneAccount =
+                telephonyManager.createForPhoneAccountHandle(phoneAccountHandle);
+        if (telephonyManagerForPhoneAccount != null) {
+            return telephonyManagerForPhoneAccount;
         }
         return telephonyManager;
     }

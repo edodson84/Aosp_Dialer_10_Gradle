@@ -29,8 +29,8 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 
 import com.fissy.dialer.R;
-import com.fissy.dialer.app.calllog.CallLogFragment;
 import com.fissy.dialer.main.impl.MainActivity;
+import com.fissy.dialer.main.impl.MainActivityPeer;
 
 public class ThemeOptionsSettingsFragment extends PreferenceFragment
         implements Preference.OnPreferenceChangeListener {
@@ -43,7 +43,7 @@ public class ThemeOptionsSettingsFragment extends PreferenceFragment
     ListPreference theme;
 
     public static void settheme(Context context, String value) {
-        getSharedPreferences(context).edit().putString(KEY_THEME, value).commit();
+        getSharedPreferences(context).edit().putString(KEY_THEME, value).apply();
     }
 
     public static SharedPreferences getSharedPreferences(Context context) {

@@ -36,6 +36,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.fissy.dialer.R;
 
+import java.util.Objects;
+
 /**
  * Lightweight implementation of ViewPager tabs. This looks similar to traditional actionBar tabs,
  * but allows for the view containing the tabs to be placed anywhere on screen. Text-related
@@ -110,7 +112,7 @@ public class ViewPagerTabs extends HorizontalScrollView implements ViewPager.OnP
 
     public void setViewPager(ViewPager viewPager) {
         mPager = viewPager;
-        addTabs(mPager.getAdapter());
+        addTabs(Objects.requireNonNull(mPager.getAdapter()));
     }
 
     /**
@@ -222,7 +224,7 @@ public class ViewPagerTabs extends HorizontalScrollView implements ViewPager.OnP
     public void updateTab(int index) {
         removeTab(index);
 
-        if (index < mPager.getAdapter().getCount()) {
+        if (index < Objects.requireNonNull(mPager.getAdapter()).getCount()) {
             addTab(mPager.getAdapter().getPageTitle(index), index);
         }
     }
@@ -231,7 +233,7 @@ public class ViewPagerTabs extends HorizontalScrollView implements ViewPager.OnP
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         position = getRtlPosition(position);
         int tabStripChildCount = mTabStrip.getChildCount();
-        if ((tabStripChildCount == 0) || (position < 0) || (position >= tabStripChildCount)) {
+        if ((position < 0) || (position >= tabStripChildCount)) {
             return;
         }
 
@@ -242,7 +244,7 @@ public class ViewPagerTabs extends HorizontalScrollView implements ViewPager.OnP
     public void onPageSelected(int position) {
         position = getRtlPosition(position);
         int tabStripChildCount = mTabStrip.getChildCount();
-        if ((tabStripChildCount == 0) || (position < 0) || (position >= tabStripChildCount)) {
+        if ((position < 0) || (position >= tabStripChildCount)) {
             return;
         }
 
@@ -291,7 +293,7 @@ public class ViewPagerTabs extends HorizontalScrollView implements ViewPager.OnP
             final int screenWidth = context.getResources().getDisplayMetrics().widthPixels;
 
             Toast toast =
-                    Toast.makeText(context, mPager.getAdapter().getPageTitle(mPosition), Toast.LENGTH_SHORT);
+                    Toast.makeText(context, Objects.requireNonNull(mPager.getAdapter()).getPageTitle(mPosition), Toast.LENGTH_SHORT);
 
             // Show the toast under the tab
             toast.setGravity(

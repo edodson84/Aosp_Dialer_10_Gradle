@@ -14,13 +14,13 @@
         <animated-vector android:drawable="@drawable/vd_hd_attempting">
             <target
                 android:name="hdMask"
-                android:animation="@drawable/asd_hd_icon__0" />
+                android:animation="@animator/asd_hd_icon__0" />
             <target
                 android:name="hdRoot"
-                android:animation="@drawable/asd_hd_icon__1" />
+                android:animation="@animator/asd_hd_icon__1" />
             <target
                 android:name="root"
-                android:animation="@drawable/asd_hd_icon__2" />
+                android:animation="@animator/asd_hd_icon__2" />
         </animated-vector>
     </transition>
 </animated-selector>

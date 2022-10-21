@@ -109,7 +109,7 @@ public final class ProtoParsers {
 
     /**
      * Stores a proto in a Bundle, for later retrieval by {@link #get(Bundle, String, MessageLite)} or
-     * {@link #getFromInstanceState(Bundle, String, MessageLite)}.
+
      */
     public static void put(
             @NonNull Bundle bundle, @NonNull String key, @NonNull MessageLite message) {

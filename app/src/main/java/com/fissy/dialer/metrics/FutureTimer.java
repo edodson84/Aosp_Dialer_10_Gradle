@@ -19,6 +19,7 @@ package com.fissy.dialer.metrics;
 import android.os.SystemClock;
 
 import androidx.annotation.IntDef;
+import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
 import com.fissy.dialer.common.LogUtil;
@@ -151,7 +152,7 @@ public final class FutureTimer {
                     }
 
                     @Override
-                    public void onFailure(Throwable throwable) {
+                    public void onFailure(@NonNull Throwable throwable) {
                         // This callback is just for logging performance metrics; errors are handled elsewhere.
                     }
                 },

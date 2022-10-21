@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.Icon;
+import android.os.Build;
 import android.provider.Settings;
 import android.telecom.CallAudioState;
 import android.text.TextUtils;
@@ -365,7 +366,13 @@ public class ReturnToCallController implements InCallUiListener, Listener, Audio
     private PendingIntent createActionIntent(String action) {
         Intent intent = new Intent(context, ReturnToCallActionReceiver.class);
         intent.setAction(action);
-        return PendingIntent.getBroadcast(context, 0, intent, 0);
+        int flags;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            flags = PendingIntent.FLAG_MUTABLE;
+        } else {
+            flags = 0;
+        }
+        return PendingIntent.getBroadcast(context, 0, intent, flags);
     }
 
     @NonNull

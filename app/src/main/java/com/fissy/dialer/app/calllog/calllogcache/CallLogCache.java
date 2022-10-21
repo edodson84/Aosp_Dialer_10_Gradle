@@ -29,6 +29,7 @@ import com.fissy.dialer.telecom.TelecomUtil;
 import com.fissy.dialer.util.CallUtil;
 
 import java.util.Map;
+import java.util.Objects;
 
 import javax.annotation.concurrent.ThreadSafe;
 
@@ -74,7 +75,7 @@ public class CallLogCache {
         if (TextUtils.isEmpty(number)) {
             return false;
         }
-        return TelecomUtil.isVoicemailNumber(context, accountHandle, number.toString());
+        return TelecomUtil.isVoicemailNumber(context, accountHandle, Objects.requireNonNull(number).toString());
     }
 
     /**
@@ -109,7 +110,7 @@ public class CallLogCache {
         if (phoneAccountColorCache.containsKey(accountHandle)) {
             return phoneAccountColorCache.get(accountHandle);
         } else {
-            Integer color = PhoneAccountUtils.getAccountColor(context, accountHandle);
+            int color = PhoneAccountUtils.getAccountColor(context, accountHandle);
             phoneAccountColorCache.put(accountHandle, color);
             return color;
         }
@@ -124,9 +125,9 @@ public class CallLogCache {
      */
     public synchronized boolean doesAccountSupportCallSubject(PhoneAccountHandle accountHandle) {
         if (phoneAccountCallWithNoteCache.containsKey(accountHandle)) {
-            return phoneAccountCallWithNoteCache.get(accountHandle);
+            return Boolean.TRUE.equals(phoneAccountCallWithNoteCache.get(accountHandle));
         } else {
-            Boolean supportsCallWithNote =
+            boolean supportsCallWithNote =
                     PhoneAccountUtils.getAccountSupportsCallSubject(context, accountHandle);
             phoneAccountCallWithNoteCache.put(accountHandle, supportsCallWithNote);
             return supportsCallWithNote;

@@ -40,8 +40,6 @@ import com.fissy.dialer.precall.impl.PreCallModule;
 import com.fissy.dialer.preferredsim.PreferredSimModule;
 import com.fissy.dialer.preferredsim.suggestion.stub.StubSimSuggestionModule;
 import com.fissy.dialer.promotion.impl.PromotionModule;
-import com.fissy.dialer.simulator.impl.SimulatorModule;
-import com.fissy.dialer.simulator.stub.StubSimulatorEnrichedCallModule;
 import com.fissy.dialer.spam.stub.StubSpamModule;
 import com.fissy.dialer.storage.StorageModule;
 import com.fissy.dialer.strictmode.impl.SystemStrictModeModule;
@@ -70,8 +68,6 @@ import dagger.Component;
                 PreferredSimModule.class,
                 PromotionModule.class,
                 SharedPrefConfigProviderModule.class,
-                SimulatorModule.class,
-                StubSimulatorEnrichedCallModule.class,
                 StorageModule.class,
                 StubCallLocationModule.class,
                 StubDuoModule.class,

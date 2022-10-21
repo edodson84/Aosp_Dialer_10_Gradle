@@ -191,7 +191,6 @@ public class ExifInterface {
      * Reads the exif tags from a byte array, clearing this ExifInterface object's existing exif tags.
      *
      * @param jpeg a byte array containing a jpeg compressed image.
-     * @throws java.io.IOException
      */
     public void readExif(byte[] jpeg) throws IOException {
         readExif(new ByteArrayInputStream(jpeg));
@@ -202,7 +201,6 @@ public class ExifInterface {
      * tags.
      *
      * @param inStream an InputStream containing a jpeg compressed image.
-     * @throws java.io.IOException
      */
     private void readExif(InputStream inStream) throws IOException {
         if (inStream == null) {
@@ -226,11 +224,6 @@ public class ExifInterface {
     }
 
     private void initTagInfo() {
-        /**
-         * We put tag information in a 4-bytes integer. The first byte a bitmask representing the
-         * allowed IFDs of the tag, the second byte is the data type, and the last two byte are a short
-         * value indicating the default component count of this tag.
-         */
         // IFD0 tags
         int[] ifdAllowedIfds = {IfdId.TYPE_IFD_0, IfdId.TYPE_IFD_1};
         int ifdFlags = getFlagsFromAllowedIfds(ifdAllowedIfds) << 24;
@@ -310,7 +303,7 @@ public class ExifInterface {
     /**
      * Puts an ExifTag into this ExifInterface object's tags, removing a previous ExifTag with the
      * same TID and IFD. The IFD it is put into will be the one the tag was created with in {@link
-     * #buildTag}.
+
      *
      * @param tag an ExifTag to put into this ExifInterface's tags.
      * @return the previous ExifTag with the same TID and IFD or null if none exists.
@@ -338,7 +331,6 @@ public class ExifInterface {
      * @param bmap          a bitmap to compress and write exif into.
      * @param exifOutStream the OutputStream to which the jpeg image with added exif tags will be
      *                      written.
-     * @throws java.io.IOException
      */
     public void writeExif(Bitmap bmap, OutputStream exifOutStream) throws IOException {
         if (bmap == null || exifOutStream == null) {

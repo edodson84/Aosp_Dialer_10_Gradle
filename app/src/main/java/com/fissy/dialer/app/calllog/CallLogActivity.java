@@ -15,31 +15,27 @@
  */
 package com.fissy.dialer.app.calllog;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.provider.CallLog;
 import android.provider.CallLog.Calls;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.HorizontalScrollView;
-import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.ActionBar;
-import androidx.legacy.app.FragmentPagerAdapter;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.android.contacts.common.list.ViewPagerTabs;
 import com.fissy.dialer.R;
-import com.fissy.dialer.ThemeUtils;
 import com.fissy.dialer.app.settings.ThemeOptionsSettingsFragment;
 import com.fissy.dialer.calldetails.OldCallDetailsActivity;
 import com.fissy.dialer.common.Assert;
@@ -48,18 +44,18 @@ import com.fissy.dialer.database.CallLogQueryHandler;
 import com.fissy.dialer.logging.Logger;
 import com.fissy.dialer.logging.ScreenEvent;
 import com.fissy.dialer.logging.UiAction;
-import com.fissy.dialer.main.impl.MainActivity;
 import com.fissy.dialer.main.impl.MainActivityPeer;
 import com.fissy.dialer.performancereport.PerformanceReport;
 import com.fissy.dialer.postcall.PostCall;
-import com.fissy.dialer.util.TransactionSafeActivity;
 import com.fissy.dialer.util.ViewUtil;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.Objects;
 
 /**
  * Activity for viewing call history.
  */
-public class CallLogActivity extends TransactionSafeActivity
+public class CallLogActivity extends AppCompatActivity
         implements ViewPager.OnPageChangeListener,
         SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -94,7 +90,7 @@ public class CallLogActivity extends TransactionSafeActivity
         setContentView(R.layout.call_log_activity);
 
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowHomeEnabled(true);
+        Objects.requireNonNull(actionBar).setDisplayShowHomeEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setElevation(0);
@@ -116,7 +112,7 @@ public class CallLogActivity extends TransactionSafeActivity
 
         viewPager = findViewById(R.id.call_log_pager);
 
-        viewPagerAdapter = new ViewPagerAdapter(getFragmentManager());
+        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(viewPagerAdapter);
         viewPager.setOffscreenPageLimit(1);
         viewPager.setOnPageChangeListener(this);
@@ -177,9 +173,6 @@ public class CallLogActivity extends TransactionSafeActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (!isSafeToCommitTransactions()) {
-            return true;
-        }
 
         if (item.getItemId() == android.R.id.home) {
             PerformanceReport.recordClick(UiAction.Type.CLOSE_CALL_HISTORY_WITH_CANCEL_BUTTON);
@@ -188,7 +181,7 @@ public class CallLogActivity extends TransactionSafeActivity
             startActivity(intent);
             return true;
         } else if (item.getItemId() == R.id.delete_all) {
-            ClearCallLogDialog.show(getFragmentManager());
+            ClearCallLogDialog.show(getSupportFragmentManager());
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -289,6 +282,7 @@ public class CallLogActivity extends TransactionSafeActivity
             return getRtlPosition(position);
         }
 
+        @NonNull
         @Override
         public Fragment getItem(int position) {
             switch (getRtlPosition(position)) {
@@ -303,6 +297,8 @@ public class CallLogActivity extends TransactionSafeActivity
             }
         }
 
+
+        @NonNull
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             final CallLogFragment fragment = (CallLogFragment) super.instantiateItem(container, position);

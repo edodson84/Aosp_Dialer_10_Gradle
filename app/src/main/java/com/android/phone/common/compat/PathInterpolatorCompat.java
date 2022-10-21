@@ -25,10 +25,7 @@ import android.view.animation.PathInterpolator;
 public class PathInterpolatorCompat {
     public static Interpolator create(float controlX1, float controlY1,
                                       float controlX2, float controlY2) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            return new PathInterpolator(controlX1, controlY1, controlX2, controlY2);
-        }
-        return new PathInterpolatorBase(controlX1, controlY1, controlX2, controlY2);
+        return new PathInterpolator(controlX1, controlY1, controlX2, controlY2);
     }
 
     private static class PathInterpolatorBase implements Interpolator {

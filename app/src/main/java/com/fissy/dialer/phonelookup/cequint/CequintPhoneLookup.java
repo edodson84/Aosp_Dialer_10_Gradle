@@ -39,6 +39,8 @@ import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListeningExecutorService;
 
+import java.util.Objects;
+
 import javax.inject.Inject;
 
 /**
@@ -103,11 +105,11 @@ public class CequintPhoneLookup implements PhoneLookup<CequintInfo> {
                         backgroundExecutorService.submit(
                                 () ->
                                         buildCequintInfo(
-                                                CequintCallerIdManager.getCequintCallerIdContactForCall(
+                                                Objects.requireNonNull(CequintCallerIdManager.getCequintCallerIdContactForCall(
                                                         appContext,
                                                         Assert.isNotNull(dialerPhoneNumber).getNormalizedNumber(),
                                                         callerDisplayName,
-                                                        isIncomingCall))),
+                                                        isIncomingCall)))),
                 lightweightExecutorService);
     }
 
@@ -120,8 +122,8 @@ public class CequintPhoneLookup implements PhoneLookup<CequintInfo> {
         return backgroundExecutorService.submit(
                 () ->
                         buildCequintInfo(
-                                CequintCallerIdManager.getCequintCallerIdContactForNumber(
-                                        appContext, dialerPhoneNumber.getNormalizedNumber())));
+                                Objects.requireNonNull(CequintCallerIdManager.getCequintCallerIdContactForNumber(
+                                        appContext, dialerPhoneNumber.getNormalizedNumber()))));
     }
 
     @Override

@@ -16,8 +16,6 @@
 
 package com.fissy.dialer.common.concurrent;
 
-import android.app.FragmentManager;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -32,6 +30,7 @@ import com.fissy.dialer.common.concurrent.DialerExecutor.FailureListener;
 import com.fissy.dialer.common.concurrent.DialerExecutor.SuccessListener;
 import com.fissy.dialer.common.concurrent.DialerExecutor.Worker;
 
+import java.util.Objects;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ScheduledExecutorService;
@@ -61,10 +60,11 @@ public class DefaultDialerExecutorFactory implements DialerExecutorFactory {
         this.uiSerialExecutor = uiSerialExecutor;
     }
 
-    @Override
+
     @NonNull
+    @Override
     public <InputT, OutputT> DialerExecutor.Builder<InputT, OutputT> createUiTaskBuilder(
-            @NonNull FragmentManager fragmentManager,
+            @NonNull androidx.fragment.app.FragmentManager fragmentManager,
             @NonNull String taskId,
             @NonNull Worker<InputT, OutputT> worker) {
         return new UiTaskBuilder<>(
@@ -125,13 +125,11 @@ public class DefaultDialerExecutorFactory implements DialerExecutorFactory {
      * Convenience class for use by {@link DialerExecutorFactory} implementations.
      */
     public static class UiTaskBuilder<InputT, OutputT> extends BaseTaskBuilder<InputT, OutputT> {
-        private final FragmentManager fragmentManager;
+        private final androidx.fragment.app.FragmentManager fragmentManager;
         private final String id;
 
-        private DialerUiTaskFragment<InputT, OutputT> dialerUiTaskFragment;
-
         public UiTaskBuilder(
-                FragmentManager fragmentManager,
+                androidx.fragment.app.FragmentManager fragmentManager,
                 String id,
                 Worker<InputT, OutputT> worker,
                 ScheduledExecutorService serialExecutor,
@@ -144,15 +142,14 @@ public class DefaultDialerExecutorFactory implements DialerExecutorFactory {
         @NonNull
         @Override
         public DialerExecutor<InputT> build() {
-            dialerUiTaskFragment =
-                    DialerUiTaskFragment.create(
-                            fragmentManager,
-                            id,
-                            super.worker,
-                            super.successListener,
-                            super.failureListener,
-                            serialExecutorService,
-                            parallelExecutor);
+            DialerUiTaskFragment<InputT, OutputT> dialerUiTaskFragment = DialerUiTaskFragment.create(
+                    fragmentManager,
+                    id,
+                    super.worker,
+                    super.successListener,
+                    super.failureListener,
+                    Objects.requireNonNull(serialExecutorService),
+                    Objects.requireNonNull(parallelExecutor));
             return new UiDialerExecutor<>(dialerUiTaskFragment);
         }
     }

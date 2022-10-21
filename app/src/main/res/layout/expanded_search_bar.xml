@@ -29,7 +29,8 @@
         android:maxLines="1"
         android:minHeight="48.0dip"
         android:textCursorDrawable="@drawable/custom_cursor"
-        android:textSize="16.0sp" />
+        android:textSize="16.0sp"
+        android:autofillHints="" />
 
     <ImageView
         android:id="@id/search_clear_button"

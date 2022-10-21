@@ -26,6 +26,8 @@ import com.google.common.collect.Iterators;
 import com.google.common.collect.PeekingIterator;
 import com.google.common.collect.UnmodifiableIterator;
 
+import java.util.Objects;
+
 /**
  * Parses command line arguments into optional flags (--foo, --key=value, --key value) and required
  * positionals (which must be passed in order). Flags must start with "--" and are always before
@@ -42,8 +44,7 @@ import com.google.common.collect.UnmodifiableIterator;
 @AutoValue
 public abstract class Arguments {
 
-    public static final Arguments EMPTY =
-            new AutoValue_Arguments(ImmutableMap.of(), ImmutableList.of());
+    public static final Arguments EMPTY = null;
 
     public static Arguments parse(@Nullable String[] rawArguments)
             throws IllegalCommandLineArgumentException {
@@ -133,7 +134,7 @@ public abstract class Arguments {
         if (!getFlags().containsKey(flag)) {
             return defaultValue;
         }
-        switch (getFlags().get(flag)) {
+        switch (Objects.requireNonNull(Objects.requireNonNull(getFlags().get(flag)))) {
             case "true":
                 return true;
             case "false":

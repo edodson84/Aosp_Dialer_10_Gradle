@@ -85,7 +85,6 @@ public class AnswerHintFactory {
 
     /**
      * @param device         should be the value of{@link Build#PRODUCT}.
-     * @param configProvider should provide a list of devices quoted with '/' concatenated to a
      *                       string.
      */
     private static boolean isDeviceWhitelisted(Context context, String device) {

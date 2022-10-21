@@ -15,6 +15,8 @@
  */
 package com.fissy.dialer.common.concurrent;
 
+import androidx.annotation.NonNull;
+
 import com.google.common.util.concurrent.AbstractListeningExecutorService;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.SettableFuture;
@@ -60,8 +62,9 @@ public class UiThreadExecutor extends AbstractListeningExecutorService {
         throw new UnsupportedOperationException();
     }
 
+    @NonNull
     @Override
-    public <V> ListenableFuture<V> submit(final Callable<V> task) {
+    public <V> ListenableFuture<V> submit(@NonNull final Callable<V> task) {
         final SettableFuture<V> resultFuture = SettableFuture.create();
         ThreadUtil.postOnUiThread(
                 () -> {

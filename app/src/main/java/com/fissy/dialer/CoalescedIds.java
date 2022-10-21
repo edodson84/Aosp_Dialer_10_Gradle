@@ -203,7 +203,7 @@ public final class CoalescedIds extends
                         .computeInt64SizeNoTag(coalescedId_.getLong(i));
             }
             size += dataSize;
-            size += 1 * getCoalescedIdList().size();
+            size += getCoalescedIdList().size();
         }
         size += unknownFields.getSerializedSize();
         memoizedSerializedSize = size;
@@ -231,9 +231,6 @@ public final class CoalescedIds extends
                 Visitor visitor = (Visitor) arg0;
                 com.fissy.dialer.CoalescedIds other = (com.fissy.dialer.CoalescedIds) arg1;
                 coalescedId_ = visitor.visitLongList(coalescedId_, other.coalescedId_);
-                if (visitor == com.google.protobuf.GeneratedMessageLite.MergeFromVisitor
-                        .INSTANCE) {
-                }
                 return this;
             }
             case MERGE_FROM_STREAM: {
@@ -284,7 +281,6 @@ public final class CoalescedIds extends
                     throw new RuntimeException(
                             new com.google.protobuf.InvalidProtocolBufferException(
                                     e.getMessage()).setUnfinishedMessage(this));
-                } finally {
                 }
             }
             case GET_DEFAULT_INSTANCE: {

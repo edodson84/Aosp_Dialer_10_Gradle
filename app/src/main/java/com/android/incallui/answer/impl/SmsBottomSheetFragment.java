@@ -32,6 +32,7 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.android.incallui.incalluilock.InCallUiLock;
@@ -43,6 +44,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Shows options for rejecting call with SMS
@@ -64,10 +66,10 @@ public class SmsBottomSheetFragment extends BottomSheetDialogFragment {
     @Nullable
     @Override
     public View onCreateView(
-            LayoutInflater layoutInflater, @Nullable ViewGroup viewGroup, @Nullable Bundle bundle) {
+            @NonNull LayoutInflater layoutInflater, @Nullable ViewGroup viewGroup, @Nullable Bundle bundle) {
         LinearLayout layout = new LinearLayout(getContext());
         layout.setOrientation(LinearLayout.VERTICAL);
-        List<CharSequence> items = getArguments().getCharSequenceArrayList(ARG_OPTIONS);
+        List<CharSequence> items = Objects.requireNonNull(getArguments()).getCharSequenceArrayList(ARG_OPTIONS);
         if (items != null) {
             for (CharSequence item : items) {
                 layout.addView(newTextViewItem(item));
@@ -79,11 +81,12 @@ public class SmsBottomSheetFragment extends BottomSheetDialogFragment {
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         FragmentUtils.checkParent(this, SmsSheetHolder.class);
     }
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(final Bundle savedInstanceState) {
         LogUtil.i("SmsBottomSheetFragment.onCreateDialog", null);
@@ -117,13 +120,10 @@ public class SmsBottomSheetFragment extends BottomSheetDialogFragment {
         textView.setLayoutParams(params);
 
         textView.setOnClickListener(
-                new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        FragmentUtils.getParentUnsafe(SmsBottomSheetFragment.this, SmsSheetHolder.class)
-                                .smsSelected(text);
-                        dismiss();
-                    }
+                v -> {
+                    FragmentUtils.getParentUnsafe(SmsBottomSheetFragment.this, SmsSheetHolder.class)
+                            .smsSelected(text);
+                    dismiss();
                 });
         return textView;
     }
@@ -134,7 +134,7 @@ public class SmsBottomSheetFragment extends BottomSheetDialogFragment {
     }
 
     @Override
-    public void onDismiss(DialogInterface dialogInterface) {
+    public void onDismiss(@NonNull DialogInterface dialogInterface) {
         super.onDismiss(dialogInterface);
         FragmentUtils.getParentUnsafe(this, SmsSheetHolder.class).smsDismissed();
         inCallUiLock.release();

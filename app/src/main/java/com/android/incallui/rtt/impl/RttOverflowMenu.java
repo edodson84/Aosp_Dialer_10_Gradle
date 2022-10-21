@@ -35,7 +35,6 @@ public class RttOverflowMenu extends PopupWindow implements OnCheckedChangeListe
     private final RttCheckableButton muteButton;
     private final RttCheckableButton speakerButton;
     private final RttCheckableButton dialpadButton;
-    private final RttCheckableButton addCallButton;
     private final RttCheckableButton swapCallButton;
     private final InCallButtonUiDelegate inCallButtonUiDelegate;
     private final InCallScreenDelegate inCallScreenDelegate;
@@ -59,7 +58,7 @@ public class RttOverflowMenu extends PopupWindow implements OnCheckedChangeListe
         speakerButton.setOnCheckedChangeListener(this);
         dialpadButton = view.findViewById(R.id.menu_keypad);
         dialpadButton.setOnCheckedChangeListener(this);
-        addCallButton = view.findViewById(R.id.menu_add_call);
+        RttCheckableButton addCallButton = view.findViewById(R.id.menu_add_call);
         addCallButton.setOnClickListener(v -> this.inCallButtonUiDelegate.addCallClicked());
         swapCallButton = view.findViewById(R.id.menu_swap_call);
         swapCallButton.setOnClickListener(

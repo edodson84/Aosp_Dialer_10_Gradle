@@ -115,7 +115,7 @@ public class SpamCallListListener implements CallList.Listener {
                 new NumberInCallHistoryWorker(context, number, call.getCountryIso());
         dialerExecutorFactory
                 .createNonUiTaskBuilder(historyTask)
-                .onSuccess((result) -> call.setCallHistoryStatus(result))
+                .onSuccess(call::setCallHistoryStatus)
                 .build()
                 .executeParallel(null);
     }

@@ -95,6 +95,7 @@ import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -329,8 +330,8 @@ public class CallLogAdapter extends GroupingListAdapter
                                         v.getContext().getClass());
                                 // This is really bad, but we must do this to prevent a dependency cycle, enforce
                                 // best practices in new code, and avoid refactoring DialtactsActivity.
-                                ((FragmentUtilListener) ((MainActivityPeer.PeerSupplier) v.getContext()).getPeer())
-                                        .getImpl(CallLogFragmentListener.class)
+                                Objects.requireNonNull(((FragmentUtilListener) ((MainActivityPeer.PeerSupplier) v.getContext()).getPeer())
+                                                .getImpl(CallLogFragmentListener.class))
                                         .updateTabUnreadCounts();
                             }
                         }
@@ -418,7 +419,7 @@ public class CallLogAdapter extends GroupingListAdapter
 
     private static int getVoicemailId(String voicemailUri) {
         Assert.checkArgument(voicemailUri != null);
-        Assert.checkArgument(voicemailUri.length() > 0);
+        Assert.checkArgument(Objects.requireNonNull(voicemailUri).length() > 0);
         return (int) ContentUris.parseId(Uri.parse(voicemailUri));
     }
 
@@ -453,10 +454,6 @@ public class CallLogAdapter extends GroupingListAdapter
         return callTypes;
     }
 
-    @VisibleForTesting
-    public View.OnClickListener getExpandCollapseListener() {
-        return expandCollapseListener;
-    }
 
     @Nullable
     public RecyclerView.OnScrollListener getOnScrollListener() {
@@ -651,8 +648,10 @@ public class CallLogAdapter extends GroupingListAdapter
         callLogGroupBuilder.addGroups(cursor);
     }
 
+
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder( @NonNull ViewGroup parent, int viewType) {
         if (viewType == VIEW_TYPE_ALERT) {
             return callLogAlertManager.createViewHolder(parent);
         }
@@ -696,15 +695,11 @@ public class CallLogAdapter extends GroupingListAdapter
      * @param position   The position of the entry.
      */
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, int position) {
+    public void onBindViewHolder( @NonNull ViewHolder viewHolder, int position) {
         Trace.beginSection("onBindViewHolder: " + position);
-        switch (getItemViewType(position)) {
-            case VIEW_TYPE_ALERT:
-                // Do nothing
-                break;
-            default:
-                bindCallLogListViewHolder(viewHolder, position);
-                break;
+        if (getItemViewType(position) == VIEW_TYPE_ALERT) {// Do nothing
+        } else {
+            bindCallLogListViewHolder(viewHolder, position);
         }
         Trace.endSection();
     }
@@ -1143,13 +1138,6 @@ public class CallLogAdapter extends GroupingListAdapter
         currentlyExpandedPosition = RecyclerView.NO_POSITION;
     }
 
-    /**
-     * When the user clicks "undo", the hidden item is unhidden.
-     */
-
-    /**
-     * This callback signifies that a database deletion has completed.
-     */
     /**
      * Retrieves the day group of the previous call in the call log. Used to determine if the day
      * group has changed and to trigger display of the day group text.

@@ -9,9 +9,10 @@
         android:id="@id/contactgrid_connection_icon"
         android:layout_width="24.0dip"
         android:layout_height="24.0dip"
-        android:scaleType="fitCenter" />
+        android:scaleType="fitCenter"
+        android:contentDescription="TODO" />
 
-    <Space
+    <View
         android:id="@id/contactgrid_top_row_space"
         android:layout_width="@dimen/contactgrid_connection_icon_margin_end"
         android:layout_height="fill_parent" />

@@ -40,7 +40,7 @@ public class ExternalCallList {
 
     private final Set<Call> externalCalls = new ArraySet<>();
     private final Set<ExternalCallListener> externalCallListeners =
-            Collections.newSetFromMap(new ConcurrentHashMap<ExternalCallListener, Boolean>(8, 0.9f, 1));
+            Collections.newSetFromMap(new ConcurrentHashMap<>(8, 0.9f, 1));
 
     /**
      * Begins tracking an external call and notifies listeners of the new call.
@@ -72,16 +72,7 @@ public class ExternalCallList {
      */
     public void addExternalCallListener(@NonNull ExternalCallListener listener) {
         externalCallListeners.add(listener);
-    }    /**
-     * Handles {@link android.telecom.Call.Callback} callbacks.
-     */
-    private final Call.Callback telecomCallCallback =
-            new Call.Callback() {
-                @Override
-                public void onDetailsChanged(Call call, Call.Details details) {
-                    notifyExternalCallUpdated(call);
-                }
-            };
+    }
 
     /**
      * Removes a listener to external call events.
@@ -93,7 +84,16 @@ public class ExternalCallList {
                     "attempt to remove unregistered listener.");
         }
         externalCallListeners.remove(listener);
-    }
+    }    /**
+     * Handles {@link android.telecom.Call.Callback} callbacks.
+     */
+    private final Call.Callback telecomCallCallback =
+            new Call.Callback() {
+                @Override
+                public void onDetailsChanged(Call call, Call.Details details) {
+                    notifyExternalCallUpdated(call);
+                }
+            };
 
     public boolean isCallTracked(@NonNull android.telecom.Call telecomCall) {
         return externalCalls.contains(telecomCall);

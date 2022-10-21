@@ -67,7 +67,7 @@
          such as, ##[0-9]{3,7}# -->
     <string-array name="motorola_hidden_menu_key_pattern">
         <!--##MSL#, here MSL is 6 digits SPC code, ##OTKSL#, OTKSL is also digits code -->
-        <item>##[0-9]{6}#</item>
+        <item>##[0–9]{6}#</item>
     </string-array>
 
     <!-- This defines the intents that will be send out when the key sequence is matched, this must be

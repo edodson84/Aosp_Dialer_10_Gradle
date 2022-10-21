@@ -82,7 +82,7 @@ final class AutoValue_ImagePersistWorker_Result extends ImagePersistWorker.Resul
         }
 
         @Override
-        ImagePersistWorker.Result.Builder setUri(Uri uri) {
+        ImagePersistWorker.Result.Builder setUri(@NonNull Uri uri) {
             if (uri == null) {
                 throw new NullPointerException("Null uri");
             }

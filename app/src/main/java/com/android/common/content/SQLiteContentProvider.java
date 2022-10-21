@@ -41,7 +41,7 @@ public abstract class SQLiteContentProvider extends ContentProvider
      * Maximum number of operations allowed in a batch between yield points.
      */
     private static final int MAX_OPERATIONS_PER_YIELD_POINT = 500;
-    private final ThreadLocal<Boolean> mApplyingBatch = new ThreadLocal<Boolean>();
+    private final ThreadLocal<Boolean> mApplyingBatch = new ThreadLocal<>();
     protected SQLiteDatabase mDb;
     private SQLiteOpenHelper mOpenHelper;
     private volatile boolean mNotifyChange;
@@ -85,12 +85,12 @@ public abstract class SQLiteContentProvider extends ContentProvider
     }
 
     private boolean applyingBatch() {
-        return mApplyingBatch.get() != null && mApplyingBatch.get();
+        return mApplyingBatch.get() != null && Boolean.TRUE.equals(mApplyingBatch.get());
     }
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        Uri result = null;
+        Uri result;
         boolean applyingBatch = applyingBatch();
         if (!applyingBatch) {
             mDb = mOpenHelper.getWritableDatabase();
@@ -121,8 +121,8 @@ public abstract class SQLiteContentProvider extends ContentProvider
         mDb = mOpenHelper.getWritableDatabase();
         mDb.beginTransactionWithListener(this);
         try {
-            for (int i = 0; i < numValues; i++) {
-                Uri result = insertInTransaction(uri, values[i]);
+            for (ContentValues value : values) {
+                Uri result = insertInTransaction(uri, value);
                 if (result != null) {
                     mNotifyChange = true;
                 }
@@ -143,7 +143,7 @@ public abstract class SQLiteContentProvider extends ContentProvider
 
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        int count = 0;
+        int count;
         boolean applyingBatch = applyingBatch();
         if (!applyingBatch) {
             mDb = mOpenHelper.getWritableDatabase();
@@ -171,7 +171,7 @@ public abstract class SQLiteContentProvider extends ContentProvider
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        int count = 0;
+        int count;
         boolean applyingBatch = applyingBatch();
         if (!applyingBatch) {
             mDb = mOpenHelper.getWritableDatabase();

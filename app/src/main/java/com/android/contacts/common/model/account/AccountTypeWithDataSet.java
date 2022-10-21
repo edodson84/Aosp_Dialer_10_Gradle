@@ -24,6 +24,8 @@ import android.provider.ContactsContract;
 import android.provider.ContactsContract.RawContacts;
 import android.text.TextUtils;
 
+import androidx.annotation.NonNull;
+
 import java.util.Objects;
 
 /**
@@ -103,6 +105,8 @@ public class AccountTypeWithDataSet {
                 ^ (dataSet == null ? 0 : dataSet.hashCode());
     }
 
+
+    @NonNull
     @Override
     public String toString() {
         return "[" + accountType + "/" + dataSet + "]";

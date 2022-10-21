@@ -56,23 +56,21 @@ public class AccelerometerListener {
             new Handler() {
                 @Override
                 public void handleMessage(Message msg) {
-                    switch (msg.what) {
-                        case ORIENTATION_CHANGED:
-                            synchronized (this) {
-                                orientation = pendingOrientation;
-                                if (DEBUG) {
-                                    LogUtil.d(
-                                            TAG,
-                                            "orientation: "
-                                                    + (orientation == ORIENTATION_HORIZONTAL
-                                                    ? "horizontal"
-                                                    : (orientation == ORIENTATION_VERTICAL ? "vertical" : "unknown")));
-                                }
-                                if (listener != null) {
-                                    listener.orientationChanged(orientation);
-                                }
+                    if (msg.what == ORIENTATION_CHANGED) {
+                        synchronized (this) {
+                            orientation = pendingOrientation;
+                            if (DEBUG) {
+                                LogUtil.d(
+                                        TAG,
+                                        "orientation: "
+                                                + (orientation == ORIENTATION_HORIZONTAL
+                                                ? "horizontal"
+                                                : (orientation == ORIENTATION_VERTICAL ? "vertical" : "unknown")));
                             }
-                            break;
+                            if (listener != null) {
+                                listener.orientationChanged(orientation);
+                            }
+                        }
                     }
                 }
             };

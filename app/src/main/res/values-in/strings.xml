@@ -17,9 +17,6 @@
     <string name="a11y_new_call_log_entry_full_description_with_phone_account_info">^1, ^2, ^3.</string>
     <string name="a11y_new_call_log_entry_full_description_without_phone_account_info">^1, ^2.</string>
     <string name="a11y_new_call_log_entry_phone_account">di ^1, melalui ^2</string>
-    <string name="a11y_new_call_log_entry_tap_action">expand menu</string>
-    <string name="a11y_new_call_log_entry_video_call">make a video call to ^1</string>
-    <string name="a11y_new_call_log_entry_voice_call">call ^1</string>
     <string name="abc_action_bar_home_description">Navigasi ke beranda</string>
     <string name="abc_action_bar_up_description">Navigasi naik</string>
     <string name="abc_action_menu_overflow_description">Opsi lain</string>
@@ -38,7 +35,7 @@
     <string name="abc_menu_space_shortcut_label">spasi</string>
     <string name="abc_menu_sym_shortcut_label">Sym+</string>
     <string name="abc_prepend_shortcut_label">Menu+</string>
-    <string name="abc_search_hint">Telusuri...</string>
+    <string name="abc_search_hint">Telusuri…</string>
     <string name="abc_searchview_description_clear">Hapus kueri</string>
     <string name="abc_searchview_description_query">Kueri penelusuran</string>
     <string name="abc_searchview_description_search">Telusuri</string>
@@ -47,7 +44,6 @@
     <string name="abc_shareactionprovider_share_with">Bagikan dengan</string>
     <string name="abc_shareactionprovider_share_with_application">Bagikan ke %s</string>
     <string name="abc_toolbar_collapse_description">Ciutkan</string>
-    <string name="about_phone_label">Tentang</string>
     <string name="accessibility_settings_title">Aksesibilitas</string>
     <string name="account_phone">Hanya perangkat, tidak disinkronkan</string>
     <string name="action_copy_number_text">Salin nomor</string>
@@ -98,7 +94,6 @@
     <string name="blocked_numbers_disabled_emergency_desc">Pemblokiran panggilan telepon telah dinonaktifkan karena Anda menghubungi layanan darurat dari telepon ini dalam 48 jam terakhir. Akan diaktifkan kembali secara otomatis setelah masa 48 jam berakhir.</string>
     <string name="blocked_numbers_disabled_emergency_header_label">Blokir panggilan dinonaktifkan sementara</string>
     <string name="bubble_return_to_call">Kembali ke panggilan</string>
-    <string name="build_version_label">Versi build</string>
     <string name="call">Telepon</string>
     <string name="callFailed_simError">Tidak ada SIM atau kesalahan SIM</string>
     <string name="call_assistant">Hubungi %s</string>
@@ -173,7 +168,7 @@
     <string name="call_pager">Hubungi pager</string>
     <string name="call_radio">Hubungi radio</string>
     <string name="call_settings_label">Panggilan telepon</string>
-    <string name="call_subject_hint">Ketik catatan untuk dikirim dengan panggilan telepon ...</string>
+    <string name="call_subject_hint">Ketik catatan untuk dikirim dengan panggilan telepon …</string>
     <string name="call_subject_limit">%1$s / %2$s</string>
     <string name="call_subject_type_and_number">%1$s %2$s</string>
     <string name="call_telex">Hubungi teleks</string>
@@ -198,10 +193,10 @@
     <string name="child_number">melalui %s</string>
     <string name="clearCallLogConfirmation">Tindakan ini akan menghapus semua panggilan telepon dari histori</string>
     <string name="clearCallLogConfirmation_title">Hapus histori panggilan?</string>
-    <string name="clearCallLogProgress_title">Menghapus histori panggilan...</string>
+    <string name="clearCallLogProgress_title">Menghapus histori panggilan…</string>
     <string name="clearFrequentsConfirmation">Anda akan menghapus daftar yang sering dihubungi pada aplikasi Kontak dan Ponsel, serta memaksa aplikasi email untuk mempelajari preferensi penanganan dari awal.</string>
     <string name="clearFrequentsConfirmation_title">Hapus yang sering dihubungi?</string>
-    <string name="clearFrequentsProgress_title">Menghapus yang sering dihubungi...</string>
+    <string name="clearFrequentsProgress_title">Menghapus yang sering dihubungi…</string>
     <string name="conference_call_name">Telewicara</string>
     <string name="conference_caller_disconnect_content_description">Akhiri panggilan</string>
     <string name="contact_grid_callback_number">Nomor telepon: %1$s</string>
@@ -220,7 +215,6 @@
     <string name="content_description_rtt_chat_avatar">Avatar</string>
     <string name="content_description_rtt_check_button">Lanjutkan</string>
     <string name="copy_number">Salin nomor</string>
-    <string name="copy_transcript_text">Salin transkripsi</string>
     <string name="custom_message_hint">Tulis pesan khusus</string>
     <string name="default_notification_description">Suara default (%1$s)</string>
     <string name="delete">Hapus</string>
@@ -389,7 +383,6 @@
     <string name="label_sip_address">SIP</string>
     <string name="launcherActivityLabel">Telepon</string>
     <string name="launcherDialpadActivityLabel">Keypad Ponsel</string>
-    <string name="licenseActivityLabel">Lisensi open source</string>
     <string name="listAllContactsInAccount">Kontak di %s</string>
     <string name="listCustomView">Kontak dalam tampilan khusus</string>
     <string name="listSingleContact">Kontak tunggal</string>
@@ -431,10 +424,6 @@
     <string name="network_name_wifi">Wi-Fi</string>
     <string name="new_call_log_carrier_video">Video operator</string>
     <string name="new_call_log_duo_video">Video duo</string>
-    <string name="new_call_log_header_older">Lebih lama</string>
-    <string name="new_call_log_header_today">Hari ini</string>
-    <string name="new_call_log_header_yesterday">Kemarin</string>
-    <string name="new_call_log_permission_no_calllog">Untuk melihat log panggilan, aktifkan izin Telepon.</string>
     <string name="new_call_log_secondary_blocked">Diblokir</string>
     <string name="new_call_log_secondary_spam">Spam</string>
     <string name="new_call_log_unknown">Tidak dikenal</string>
@@ -490,7 +479,6 @@
     <string name="ok_got_it">Oke, paham</string>
     <string name="old_block_number_confirmation_title">Blokir%1$s?</string>
     <string name="old_call_subject_type_and_number">%1$s %2$s</string>
-    <string name="open_source_license_detail_label">Detail lisensi untuk software open source</string>
     <string name="organizationLabelsGroup">Organisasi</string>
     <string name="outgoing_wps_warning">Melakukan panggilan WPS akan mengakhiri panggilan yang ada.</string>
     <string name="pause_prompt_no">Tidak</string>
@@ -524,7 +512,6 @@
     <string name="pre_call_select_phone_account_hint_intra_carrier">Menggunakan operator yang sama</string>
     <string name="pre_call_select_phone_account_hint_other_sim_in_use">Tidak tersedia saat menggunakan %1$s</string>
     <string name="pre_call_select_phone_account_remember">Ingat pilihan ini</string>
-    <string name="privacy_policy_label">Kebijakan privasi</string>
     <string name="private_num_non_verizon">Nomor pribadi</string>
     <string name="private_num_verizon">Dibatasi</string>
     <string name="quick_question">Pertanyaan cepat…</string>
@@ -646,7 +633,6 @@
     <string name="tab_title">Tab %1$s.</string>
     <string name="tab_title_call_history">Histori Panggilan</string>
     <string name="tab_title_speed_dial">Panggilan Cepat</string>
-    <string name="terms_of_service_label">Persyaratan layanan</string>
     <string name="toast_cannot_write_system_settings">Aplikasi telepon tidak memiliki izin untuk menulis ke setelan sistem.</string>
     <string name="toast_text_copied">Teks disalin</string>
     <string name="toolbar_close">Tutup</string>
@@ -680,7 +666,7 @@
     <string name="video_call_lte_to_wifi_handover_toast">Melanjutkan panggilan dengan Wi‑Fi…</string>
     <string name="video_call_not_available_message">Coba lagi nanti atau lanjutkan sebagai panggilan suara.</string>
     <string name="video_call_not_available_title">Video call saat ini tidak tersedia</string>
-    <string name="video_call_wifi_to_lte_handover_toast">Melanjutkan panggilan menggunakan data seluler...</string>
+    <string name="video_call_wifi_to_lte_handover_toast">Melanjutkan panggilan menggunakan data seluler…</string>
     <string name="videocall_charges_alert_dialog_description">Video call yang dilakukan melalui jaringan seluler akan menggunakan kuota internet dan tarif suara. Biaya mungkin berlaku.</string>
     <string name="videocall_remote_video_off">Video mereka nonaktif</string>
     <string name="videocall_remote_video_on">Video mereka aktif</string>
@@ -691,13 +677,7 @@
     <string name="view_updates_from_group">Lihat pembaruan</string>
     <string name="voice_call">Panggilan suara</string>
     <string name="voice_search_not_available">Penelusuran suara tidak tersedia</string>
-    <string name="voicemail">Kotak Pesan</string>
-    <string name="voicemailCallLogDateTimeFormat">%1$s pukul %2$s</string>
-    <string name="voicemailCallLogDateTimeFormatWithDuration">%1$s • %2$s</string>
-    <string name="voicemailCallLogToday">@string/call_log_header_today</string>
-    <string name="voicemailDurationFormat">%1$02d.%2$02d</string>
     <string name="voicemailMultiSelectActionBarTitle">%1$s dipilih</string>
-    <string name="voicemail_donation_promo_content">Izinkan Google meninjau pesan suara ini dan pesan suara selanjutnya beserta transkripnya. Pesan suara akan disimpan secara anonim. Ubah Setelan kapan saja. %1$s</string>
     <string name="voicemail_string">Pesan suara</string>
     <string name="voicemail_transcription_rating">Nilai kualitas transkripsi</string>
     <string name="wait_prompt_str">"Kirimkan nada berikut?

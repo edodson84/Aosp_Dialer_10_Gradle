@@ -116,7 +116,7 @@ class ContactPhotoManagerImpl extends ContactPhotoManager implements Callback {
 
     static {
         BITMAP_UNAVAILABLE = new BitmapHolder(new byte[0], 0);
-        BITMAP_UNAVAILABLE.bitmapRef = new SoftReference<Bitmap>(null);
+        BITMAP_UNAVAILABLE.bitmapRef = new SoftReference<>(null);
     }
 
     private final Context context;
@@ -140,7 +140,7 @@ class ContactPhotoManagerImpl extends ContactPhotoManager implements Callback {
      * request may swapped out before the photo loading request is started.
      */
     private final ConcurrentHashMap<ImageView, Request> pendingRequests =
-            new ConcurrentHashMap<ImageView, Request>();
+            new ConcurrentHashMap<>();
     /**
      * Handler for messages sent to the UI thread.
      */
@@ -240,7 +240,7 @@ class ContactPhotoManagerImpl extends ContactPhotoManager implements Callback {
         return ((bytes + 1023) / 1024) + "K";
     }
 
-    private static final int safeDiv(int dividend, int divisor) {
+    private static int safeDiv(int dividend, int divisor) {
         return (divisor == 0) ? 0 : (dividend / divisor);
     }
 
@@ -310,7 +310,7 @@ class ContactPhotoManagerImpl extends ContactPhotoManager implements Callback {
 
             holder.decodedSampleSize = sampleSize;
             holder.bitmap = bitmap;
-            holder.bitmapRef = new SoftReference<Bitmap>(bitmap);
+            holder.bitmapRef = new SoftReference<>(bitmap);
             if (DEBUG) {
                 LogUtil.d(
                         "ContactPhotoManagerImpl.inflateBitmap",
@@ -611,8 +611,9 @@ class ContactPhotoManagerImpl extends ContactPhotoManager implements Callback {
     private Drawable getDrawableForBitmap(Resources resources, Bitmap bitmap, Request request) {
         if (request.isCircular) {
             final RoundedBitmapDrawable drawable = RoundedBitmapDrawableFactory.create(resources, bitmap);
+            int radius2 = drawable.getIntrinsicHeight() / 2;
             drawable.setAntiAlias(true);
-            drawable.setCornerRadius(drawable.getIntrinsicHeight() / 2);
+            drawable.setCornerRadius(radius2);
             return drawable;
         } else {
             return new BitmapDrawable(resources, bitmap);
@@ -787,9 +788,7 @@ class ContactPhotoManagerImpl extends ContactPhotoManager implements Callback {
          * concurrent change, we will need to check the map again once loading
          * is complete.
          */
-        Iterator<Request> iterator = pendingRequests.values().iterator();
-        while (iterator.hasNext()) {
-            Request request = iterator.next();
+        for (Request request : pendingRequests.values()) {
             final BitmapHolder holder = bitmapHolderCache.get(request.getKey());
             if (holder == BITMAP_UNAVAILABLE) {
                 continue;
@@ -1225,20 +1224,13 @@ class ContactPhotoManagerImpl extends ContactPhotoManager implements Callback {
             // Remaining photos were not found in the contacts database (but might be in profile).
             for (Long id : photoIds) {
                 if (ContactsContract.isProfileId(id)) {
-                    Cursor profileCursor = null;
-                    try {
-                        profileCursor =
-                                resolver.query(
-                                        ContentUris.withAppendedId(Data.CONTENT_URI, id), COLUMNS, null, null, null);
+                    try (Cursor profileCursor = resolver.query(
+                            ContentUris.withAppendedId(Data.CONTENT_URI, id), COLUMNS, null, null, null)) {
                         if (profileCursor != null && profileCursor.moveToFirst()) {
                             cacheBitmap(profileCursor.getLong(0), profileCursor.getBlob(1), preloading, -1);
                         } else {
                             // Couldn't load a photo this way either.
                             cacheBitmap(id, null, preloading, -1);
-                        }
-                    } finally {
-                        if (profileCursor != null) {
-                            profileCursor.close();
                         }
                     }
                 } else {
@@ -1289,7 +1281,6 @@ class ContactPhotoManagerImpl extends ContactPhotoManager implements Callback {
                                 is = connection.getInputStream();
                             } catch (IOException e) {
                                 connection.disconnect();
-                                is = null;
                             }
                         } finally {
                             TrafficStats.clearThreadStatsTag();

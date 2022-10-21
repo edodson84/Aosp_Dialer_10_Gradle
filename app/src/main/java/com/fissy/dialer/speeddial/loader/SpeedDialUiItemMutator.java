@@ -184,7 +184,7 @@ public final class SpeedDialUiItemMutator {
                 entryToDelete = entry;
             }
         }
-        db.delete(ImmutableList.of(entryToDelete.id()));
+        db.delete(ImmutableList.of(Objects.requireNonNull(Objects.requireNonNull(entryToDelete).id())));
         if (entriesForTheSameContact == 1) {
             unstarContact(speedDialUiItem);
         }

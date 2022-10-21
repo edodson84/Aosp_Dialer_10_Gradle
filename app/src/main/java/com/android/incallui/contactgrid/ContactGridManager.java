@@ -49,6 +49,7 @@ import com.fissy.dialer.util.DrawableConverter;
 import com.fissy.dialer.widget.BidiTextView;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Utility to manage the Contact grid
@@ -84,7 +85,7 @@ public class ContactGridManager {
     private final ViewAnimator bottomTextSwitcher;
     private final BidiTextView bottomTextView;
     private final Chronometer bottomTimerView;
-    private final Space topRowSpace;
+    private final View topRowSpace;
     // Row in emergency call: This phone's number: +1 (650) 253-0000
     private final TextView deviceNumberTextView;
     private final View deviceNumberDivider;
@@ -353,7 +354,7 @@ public class ContactGridManager {
         boolean hasPhoto =
                 primaryInfo.photo() != null && primaryInfo.photoType() == ContactPhotoType.CONTACT;
         if (hasPhoto) {
-            avatarImageView.setBackground(
+            Objects.requireNonNull(avatarImageView).setBackground(
                     DrawableConverter.getRoundedDrawable(
                             context, primaryInfo.photo(), avatarSize, avatarSize));
         } else {
@@ -372,7 +373,7 @@ public class ContactGridManager {
             // This is required to properly display the updated letter tile iconography based on the
             // contact type, because the background drawable reference cached in the view, and the
             // view is not aware of the mutations made to the background.
-            avatarImageView.invalidate();
+            Objects.requireNonNull(avatarImageView).invalidate();
             avatarImageView.setBackground(letterTile);
         }
     }

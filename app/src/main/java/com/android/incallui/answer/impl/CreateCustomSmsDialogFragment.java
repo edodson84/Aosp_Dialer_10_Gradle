@@ -70,41 +70,23 @@ public class CreateCustomSmsDialogFragment extends AppCompatDialogFragment {
                 .setView(view)
                 .setPositiveButton(
                         R.string.call_incoming_custom_message_send,
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                FragmentUtils.getParentUnsafe(
-                                                CreateCustomSmsDialogFragment.this, CreateCustomSmsHolder.class)
-                                        .customSmsCreated(editText.getText().toString().trim());
-                                dismiss();
-                            }
+                        (dialogInterface, i) -> {
+                            FragmentUtils.getParentUnsafe(
+                                            CreateCustomSmsDialogFragment.this, CreateCustomSmsHolder.class)
+                                    .customSmsCreated(editText.getText().toString().trim());
+                            dismiss();
                         })
                 .setNegativeButton(
                         R.string.call_incoming_custom_message_cancel,
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dismiss();
-                            }
-                        })
+                        (dialogInterface, i) -> dismiss())
                 .setOnCancelListener(
-                        new OnCancelListener() {
-                            @Override
-                            public void onCancel(DialogInterface dialogInterface) {
-                                dismiss();
-                            }
-                        })
+                        dialogInterface -> dismiss())
                 .setTitle(R.string.call_incoming_respond_via_sms_custom_message);
         final AlertDialog customMessagePopup = builder.create();
         customMessagePopup.setOnShowListener(
-                new OnShowListener() {
-                    @Override
-                    public void onShow(DialogInterface dialogInterface) {
-                        ((AlertDialog) dialogInterface)
-                                .getButton(AlertDialog.BUTTON_POSITIVE)
-                                .setEnabled(false);
-                    }
-                });
+                dialogInterface -> ((AlertDialog) dialogInterface)
+                        .getButton(AlertDialog.BUTTON_POSITIVE)
+                        .setEnabled(false));
 
         editText.addTextChangedListener(
                 new TextWatcher() {
@@ -134,7 +116,7 @@ public class CreateCustomSmsDialogFragment extends AppCompatDialogFragment {
     }
 
     @Override
-    public void onDismiss(DialogInterface dialogInterface) {
+    public void onDismiss(@NonNull DialogInterface dialogInterface) {
         super.onDismiss(dialogInterface);
         inCallUiLock.release();
         FragmentUtils.getParentUnsafe(this, CreateCustomSmsHolder.class).customSmsDismissed();

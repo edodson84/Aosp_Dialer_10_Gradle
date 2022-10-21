@@ -17,10 +17,11 @@
 package com.fissy.dialer.contactsfragment;
 
 import android.content.Context;
-import android.content.CursorLoader;
 import android.net.Uri;
 import android.provider.ContactsContract.Contacts;
 import android.text.TextUtils;
+
+import androidx.loader.content.CursorLoader;
 
 import com.fissy.dialer.contacts.ContactsComponent;
 

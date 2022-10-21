@@ -16,10 +16,7 @@
 
 package com.fissy.dialer.main.impl.toolbar;
 
-import android.app.Activity;
 import android.view.MenuItem;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Useful callback for {@link SearchBarView} listeners.
@@ -52,12 +49,12 @@ public interface SearchBarListener {
     boolean onMenuItemClicked(MenuItem menuItem);
 
     /**
-     * Called when {@link Activity#onPause()} is called.
+
      */
     void onActivityPause();
 
     /**
-     * Called when {@link AppCompatActivity#onUserLeaveHint()} is called.
+
      */
     void onUserLeaveHint();
 

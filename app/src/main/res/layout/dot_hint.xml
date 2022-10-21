@@ -12,7 +12,8 @@
         android:layout_height="@dimen/hint_large_begin_size"
         android:layout_gravity="center"
         android:alpha="0.0"
-        android:src="@drawable/answer_hint_large" />
+        android:src="@drawable/answer_hint_large"
+        android:contentDescription="TODO" />
 
     <ImageView
         android:id="@id/answer_hint_mid"
@@ -20,7 +21,8 @@
         android:layout_height="@dimen/hint_mid_begin_size"
         android:layout_gravity="center"
         android:alpha="0.0"
-        android:src="@drawable/answer_hint_mid" />
+        android:src="@drawable/answer_hint_mid"
+        android:contentDescription="TODO" />
 
     <ImageView
         android:id="@id/answer_hint_small"
@@ -28,5 +30,6 @@
         android:layout_height="@dimen/hint_small_begin_size"
         android:layout_gravity="center"
         android:alpha="0.0"
-        android:src="@drawable/answer_hint_small" />
+        android:src="@drawable/answer_hint_small"
+        android:contentDescription="TODO" />
 </FrameLayout>

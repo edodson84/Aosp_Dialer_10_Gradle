@@ -71,14 +71,11 @@ public class MigrateBlockedNumbersDialogFragment extends DialogFragment {
         // The Dialog's buttons aren't available until show is called, so an OnShowListener
         // is used to set the positive button callback.
         dialog.setOnShowListener(
-                new OnShowListener() {
-                    @Override
-                    public void onShow(DialogInterface dialog) {
-                        final AlertDialog alertDialog = (AlertDialog) dialog;
-                        alertDialog
-                                .getButton(AlertDialog.BUTTON_POSITIVE)
-                                .setOnClickListener(newPositiveButtonOnClickListener(alertDialog));
-                    }
+                dialog1 -> {
+                    final AlertDialog alertDialog = (AlertDialog) dialog1;
+                    alertDialog
+                            .getButton(AlertDialog.BUTTON_POSITIVE)
+                            .setOnClickListener(newPositiveButtonOnClickListener(alertDialog));
                 });
         return dialog;
     }
@@ -89,20 +86,14 @@ public class MigrateBlockedNumbersDialogFragment extends DialogFragment {
      * is underway, and close the dialog once the migrate is complete.
      */
     private View.OnClickListener newPositiveButtonOnClickListener(final AlertDialog alertDialog) {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
-                alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setEnabled(false);
-                blockedNumbersMigrator.migrate(
-                        new Listener() {
-                            @Override
-                            public void onComplete() {
-                                alertDialog.dismiss();
-                                migrationListener.onComplete();
-                            }
-                        });
-            }
+        return v -> {
+            alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
+            alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setEnabled(false);
+            blockedNumbersMigrator.migrate(
+                    () -> {
+                        alertDialog.dismiss();
+                        migrationListener.onComplete();
+                    });
         };
     }
 

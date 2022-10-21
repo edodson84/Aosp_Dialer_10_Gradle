@@ -46,7 +46,7 @@ import java.util.List;
 /**
  * A base class for email address autocomplete adapters. It uses
  * {@link Email#CONTENT_FILTER_URI} to search for data rows by email address
- * and/or contact name. It also searches registered {@link Directory}'s.
+ * and/or contact name. It also searches registered
  */
 public abstract class BaseEmailAddressAdapter extends CompositeCursorAdapter implements Filterable {
 
@@ -96,8 +96,8 @@ public abstract class BaseEmailAddressAdapter extends CompositeCursorAdapter imp
     protected final ContentResolver mContentResolver;
     private boolean mDirectoriesLoaded;
     private Account mAccount;
-    private int mPreferredMaxResultCount;
-    private Handler mHandler;
+    private final int mPreferredMaxResultCount;
+    private final Handler mHandler;
 
     public BaseEmailAddressAdapter(Context context) {
         this(context, DEFAULT_PREFERRED_MAX_RESULT_COUNT);
@@ -190,11 +190,11 @@ public abstract class BaseEmailAddressAdapter extends CompositeCursorAdapter imp
     @Override
     protected boolean isEnabled(int partitionIndex, int position) {
         // The "Searching..." item should not be selectable
-        return !isLoading(partitionIndex);
+        return isLoading(partitionIndex);
     }
 
     private boolean isLoading(int partitionIndex) {
-        return ((DirectoryPartition) getPartition(partitionIndex)).loading;
+        return !((DirectoryPartition) getPartition(partitionIndex)).loading;
     }
 
     @Override
@@ -211,7 +211,7 @@ public abstract class BaseEmailAddressAdapter extends CompositeCursorAdapter imp
         if (directoryCursor != null) {
             PackageManager packageManager = getContext().getPackageManager();
             DirectoryPartition preferredDirectory = null;
-            List<DirectoryPartition> directories = new ArrayList<DirectoryPartition>();
+            List<DirectoryPartition> directories = new ArrayList<>();
             while (directoryCursor.moveToNext()) {
                 long id = directoryCursor.getLong(DirectoryListQuery.ID);
 
@@ -264,7 +264,7 @@ public abstract class BaseEmailAddressAdapter extends CompositeCursorAdapter imp
         }
 
         int count = getPartitionCount();
-        int limit = 0;
+        int limit;
 
         // Since we will be changing several partitions at once, hold the data change
         // notifications
@@ -412,7 +412,7 @@ public abstract class BaseEmailAddressAdapter extends CompositeCursorAdapter imp
     private boolean isDuplicate(String emailAddress, int excludePartition) {
         int partitionCount = getPartitionCount();
         for (int partition = 0; partition < partitionCount; partition++) {
-            if (partition != excludePartition && !isLoading(partition)) {
+            if (partition != excludePartition && isLoading(partition)) {
                 Cursor cursor = getCursor(partition);
                 if (cursor != null) {
                     cursor.moveToPosition(-1);
@@ -429,7 +429,7 @@ public abstract class BaseEmailAddressAdapter extends CompositeCursorAdapter imp
         return false;
     }
 
-    private final String makeDisplayString(Cursor cursor) {
+    private String makeDisplayString(Cursor cursor) {
         if (cursor.getColumnName(0).equals(SEARCHING_CURSOR_MARKER)) {
             return "";
         }
@@ -443,11 +443,8 @@ public abstract class BaseEmailAddressAdapter extends CompositeCursorAdapter imp
         }
     }
 
-    /**
-     * Model object for a {@link Directory} row. There is a partition in the
-     * {@link CompositeCursorAdapter} for every directory (except
-     * {@link Directory#LOCAL_INVISIBLE}.
-     */
+
+
     public final static class DirectoryPartition extends CompositeCursorAdapter.Partition {
         public long directoryId;
         public String directoryType;
@@ -501,10 +498,7 @@ public abstract class BaseEmailAddressAdapter extends CompositeCursorAdapter imp
         };
     }
 
-    /**
-     * An asynchronous filter used for loading two data sets: email rows from the local
-     * contact provider and the list of {@link Directory}'s.
-     */
+
     private final class DefaultPartitionFilter extends Filter {
 
         @Override
@@ -581,9 +575,8 @@ public abstract class BaseEmailAddressAdapter extends CompositeCursorAdapter imp
                         .appendQueryParameter(LIMIT_PARAM_KEY,
                                 String.valueOf(getLimit() + ALLOWANCE_FOR_DUPLICATES))
                         .build();
-                Cursor cursor = mContentResolver.query(
+                results.values = mContentResolver.query(
                         uri, EmailQuery.PROJECTION, null, null, null);
-                results.values = cursor;
             }
             return results;
         }

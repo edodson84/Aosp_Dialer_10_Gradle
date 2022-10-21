@@ -39,6 +39,7 @@ import com.fissy.dialer.common.LogUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * {@link ContentProvider} for the annotated call log.
@@ -71,7 +72,7 @@ public class AnnotatedCallLogContentProvider extends ContentProvider {
      * Ensures that only a single notification is generated from {@link #applyBatch(ArrayList)}.
      */
     private boolean isApplyingBatch() {
-        return applyingBatch.get() != null && applyingBatch.get();
+        return applyingBatch.get() == null || !Boolean.TRUE.equals(applyingBatch.get());
     }
 
     @Override
@@ -159,11 +160,11 @@ public class AnnotatedCallLogContentProvider extends ContentProvider {
         switch (match) {
             case ANNOTATED_CALL_LOG_TABLE_CODE:
                 Assert.checkArgument(
-                        values.get(AnnotatedCallLog._ID) != null, "You must specify an _ID when inserting");
+                        Objects.requireNonNull(values).get(AnnotatedCallLog._ID) != null, "You must specify an _ID when inserting");
                 break;
             case ANNOTATED_CALL_LOG_TABLE_ID_CODE:
                 Long idFromUri = ContentUris.parseId(uri);
-                Long idFromValues = values.getAsLong(AnnotatedCallLog._ID);
+                Long idFromValues = Objects.requireNonNull(values).getAsLong(AnnotatedCallLog._ID);
                 Assert.checkArgument(
                         idFromValues == null || idFromValues.equals(idFromUri),
                         "_ID from values %d does not match ID from URI: %s",
@@ -187,7 +188,7 @@ public class AnnotatedCallLogContentProvider extends ContentProvider {
             return null;
         }
         Uri insertedUri = ContentUris.withAppendedId(AnnotatedCallLog.CONTENT_URI, id);
-        if (!isApplyingBatch()) {
+        if (isApplyingBatch()) {
             notifyChange(insertedUri);
         }
         return insertedUri;
@@ -219,7 +220,7 @@ public class AnnotatedCallLogContentProvider extends ContentProvider {
             LogUtil.w("AnnotatedCallLogContentProvider.delete", "no rows deleted");
             return rows;
         }
-        if (!isApplyingBatch()) {
+        if (isApplyingBatch()) {
             notifyChange(uri);
         }
         return rows;
@@ -245,23 +246,23 @@ public class AnnotatedCallLogContentProvider extends ContentProvider {
                     LogUtil.w("AnnotatedCallLogContentProvider.update", "no rows updated");
                     return rows;
                 }
-                if (!isApplyingBatch()) {
+                if (isApplyingBatch()) {
                     notifyChange(uri);
                 }
                 return rows;
             case ANNOTATED_CALL_LOG_TABLE_ID_CODE:
                 Assert.checkArgument(
-                        !values.containsKey(AnnotatedCallLog._ID), "Do not specify _ID when updating by ID");
+                        !Objects.requireNonNull(values).containsKey(AnnotatedCallLog._ID), "Do not specify _ID when updating by ID");
                 Assert.checkArgument(selection == null, "Do not specify selection when updating by ID");
                 Assert.checkArgument(
                         selectionArgs == null, "Do not specify selection args when updating by ID");
                 selection = getSelectionWithId(ContentUris.parseId(uri));
-                rows = database.update(AnnotatedCallLog.TABLE, values, selection, selectionArgs);
+                rows = database.update(AnnotatedCallLog.TABLE, values, selection, null);
                 if (rows == 0) {
                     LogUtil.w("AnnotatedCallLogContentProvider.update", "no rows updated");
                     return rows;
                 }
-                if (!isApplyingBatch()) {
+                if (isApplyingBatch()) {
                     notifyChange(uri);
                 }
                 return rows;

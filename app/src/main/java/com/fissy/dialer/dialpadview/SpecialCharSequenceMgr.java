@@ -438,16 +438,13 @@ public class SpecialCharSequenceMgr {
 
         final String serialNum = String.format(Locale.US, "%08d", dec2);
 
-        StringBuilder builder = new StringBuilder(22);
-        builder
-                .append(manufacturerCode, 0, 5)
-                .append(' ')
-                .append(manufacturerCode, 5, manufacturerCode.length())
-                .append(' ')
-                .append(serialNum, 0, 4)
-                .append(' ')
-                .append(serialNum, 4, serialNum.length());
-        return builder.toString();
+        return manufacturerCode.substring(0, 5) +
+                ' ' +
+                manufacturerCode.substring(5) +
+                ' ' +
+                serialNum.substring(0, 4) +
+                ' ' +
+                serialNum.substring(4);
     }
 
     /**

@@ -16,12 +16,13 @@
 
 package com.fissy.dialer.app.list;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
+import androidx.fragment.app.Fragment;
 import android.view.ViewGroup;
 
 import androidx.annotation.IntDef;
-import androidx.legacy.app.FragmentPagerAdapter;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.fissy.dialer.app.calllog.CallLogFragment;
@@ -65,6 +66,7 @@ public class DialtactsPagerAdapter extends FragmentPagerAdapter {
         return getRtlPosition(position);
     }
 
+    @NonNull
     @Override
     public Fragment getItem(int position) {
         LogUtil.d("ViewPagerAdapter.getItem", "position: %d", position);
@@ -89,8 +91,9 @@ public class DialtactsPagerAdapter extends FragmentPagerAdapter {
         }
     }
 
+    @NonNull
     @Override
-    public Fragment instantiateItem(ViewGroup container, int position) {
+    public Fragment instantiateItem(@NonNull ViewGroup container, int position) {
         LogUtil.d("ViewPagerAdapter.instantiateItem", "position: %d", position);
         // On rotation the FragmentManager handles rotation. Therefore getItem() isn't called.
         // Copy the fragments that the FragmentManager finds so that we can store them in
@@ -115,7 +118,7 @@ public class DialtactsPagerAdapter extends FragmentPagerAdapter {
      * tabs do not need to be recreated and POSITION_UNCHANGED is returned.
      */
     @Override
-    public int getItemPosition(Object object) {
+    public int getItemPosition(@NonNull Object object) {
         return POSITION_UNCHANGED;
     }
 

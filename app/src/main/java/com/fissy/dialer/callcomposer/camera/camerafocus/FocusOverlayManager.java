@@ -169,10 +169,9 @@ public class FocusOverlayManager {
                 // Lock AE & AWB so users can half-press shutter and recompose.
                 lockAeAwbIfNeeded();
             }
-        } else if (state == STATE_IDLE) {
-            // User has released the focus key before focus completes.
-            // Do nothing.
-        }
+        }  // User has released the focus key before focus completes.
+        // Do nothing.
+
     }
 
     public void onAutoFocusMoving(boolean moving) {
@@ -401,10 +400,7 @@ public class FocusOverlayManager {
         if (x > max) {
             return max;
         }
-        if (x < min) {
-            return min;
-        }
-        return x;
+        return Math.max(x, min);
     }
 
     private boolean isAutoExposureLockSupported(Parameters params) {
@@ -416,7 +412,7 @@ public class FocusOverlayManager {
     }
 
     private boolean isSupported(String value, List<String> supported) {
-        return supported != null && supported.indexOf(value) >= 0;
+        return supported != null && supported.contains(value);
     }
 
     private boolean isMeteringAreaSupported(Parameters params) {
@@ -464,11 +460,8 @@ public class FocusOverlayManager {
 
         @Override
         public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case RESET_TOUCH_FOCUS: {
-                    cancelAutoFocus();
-                    break;
-                }
+            if (msg.what == RESET_TOUCH_FOCUS) {
+                cancelAutoFocus();
             }
         }
     }

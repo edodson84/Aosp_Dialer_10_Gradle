@@ -17,9 +17,6 @@
     <string name="a11y_new_call_log_entry_full_description_with_phone_account_info">^1, ^2, ^3.</string>
     <string name="a11y_new_call_log_entry_full_description_without_phone_account_info">^1, ^2.</string>
     <string name="a11y_new_call_log_entry_phone_account">pada ^1, melalui ^2</string>
-    <string name="a11y_new_call_log_entry_tap_action">expand menu</string>
-    <string name="a11y_new_call_log_entry_video_call">make a video call to ^1</string>
-    <string name="a11y_new_call_log_entry_voice_call">call ^1</string>
     <string name="abc_action_bar_home_description">Navigasi skrin utama</string>
     <string name="abc_action_bar_up_description">Navigasi ke atas</string>
     <string name="abc_action_menu_overflow_description">Lagi pilihan</string>
@@ -47,7 +44,6 @@
     <string name="abc_shareactionprovider_share_with">Kongsi dengan</string>
     <string name="abc_shareactionprovider_share_with_application">Kongsi dengan %s</string>
     <string name="abc_toolbar_collapse_description">Runtuhkan</string>
-    <string name="about_phone_label">Perihal</string>
     <string name="accessibility_settings_title">Kebolehaksesan</string>
     <string name="account_phone">Peranti sahaja, tidak disegerakkan</string>
     <string name="action_copy_number_text">Salin nombor</string>
@@ -98,7 +94,6 @@
     <string name="blocked_numbers_disabled_emergency_desc">Sekatan panggilan telah dilumpuhkan kerana anda menghubungi perkhidmatan kecemasan daripada telefon ini dalam masa 48 jam yang lalu. Ciri ini akan didayakan semula secara automatik apabila tempoh 48 jam berakhir.</string>
     <string name="blocked_numbers_disabled_emergency_header_label">Sekatan panggilan dimatikan sementara</string>
     <string name="bubble_return_to_call">Kembali ke panggilan</string>
-    <string name="build_version_label">Versi binaan</string>
     <string name="call">Panggil</string>
     <string name="callFailed_simError">Tiada SIM atau ralat SIM</string>
     <string name="call_assistant">Panggil %s</string>
@@ -148,7 +143,7 @@
     <string name="call_log_action_remove_spam">Bukan spam</string>
     <string name="call_log_action_send_message">Hantar mesej</string>
     <string name="call_log_action_set_up_video">Sediakan panggilan video</string>
-    <string name="call_log_action_share_voicemail">Hantar ke ...</string>
+    <string name="call_log_action_share_voicemail">Hantar ke …</string>
     <string name="call_log_action_unblock_number">Nyahsekat nombor</string>
     <string name="call_log_action_video_call">Panggilan video</string>
     <string name="call_log_activity_title">Sejarah Panggilan</string>
@@ -198,10 +193,10 @@
     <string name="child_number">melalui %s</string>
     <string name="clearCallLogConfirmation">Tindakan ini akan memadamkan semua panggilan daripada sejarah anda</string>
     <string name="clearCallLogConfirmation_title">Kosongkan sejarah panggilan?</string>
-    <string name="clearCallLogProgress_title">Mengosongkan sejarah panggilan...</string>
+    <string name="clearCallLogProgress_title">Mengosongkan sejarah panggilan…</string>
     <string name="clearFrequentsConfirmation">Anda akan mengosongkan senarai yang kerap dihubungi dalam apl Kenalan dan Telefon serta memaksa apl e-mel untuk mempelajari pilihan alamat anda dari awal.</string>
     <string name="clearFrequentsConfirmation_title">Padam bersih senarai kerap dihubungi?</string>
-    <string name="clearFrequentsProgress_title">Memadam bersih senarai kerap dihubungi...</string>
+    <string name="clearFrequentsProgress_title">Memadam bersih senarai kerap dihubungi…</string>
     <string name="conference_call_name">Panggilan sidang</string>
     <string name="conference_caller_disconnect_content_description">Tamatkan panggilan</string>
     <string name="contact_grid_callback_number">Nombor telefon ini: %1$s</string>
@@ -220,7 +215,6 @@
     <string name="content_description_rtt_chat_avatar">Avatar</string>
     <string name="content_description_rtt_check_button">Teruskan</string>
     <string name="copy_number">Salin nombor</string>
-    <string name="copy_transcript_text">Salin transkripsi</string>
     <string name="custom_message_hint">Tulis mesej tersuai</string>
     <string name="default_notification_description">Bunyi lalai (%1$s)</string>
     <string name="delete">Padam</string>
@@ -389,7 +383,6 @@
     <string name="label_sip_address">SIP</string>
     <string name="launcherActivityLabel">Telefon</string>
     <string name="launcherDialpadActivityLabel">Pad Kekunci Telefon</string>
-    <string name="licenseActivityLabel">Lesen sumber terbuka</string>
     <string name="listAllContactsInAccount">Kenalan dalam %s</string>
     <string name="listCustomView">Kenalan dalam paparan tersuai</string>
     <string name="listSingleContact">Kenalan tunggal</string>
@@ -431,10 +424,6 @@
     <string name="network_name_wifi">Wi-Fi</string>
     <string name="new_call_log_carrier_video">Video pembawa</string>
     <string name="new_call_log_duo_video">Video Duo</string>
-    <string name="new_call_log_header_older">Lebih lama</string>
-    <string name="new_call_log_header_today">Hari ini</string>
-    <string name="new_call_log_header_yesterday">Semalam</string>
-    <string name="new_call_log_permission_no_calllog">Untuk melihat log panggilan anda, hidupkan kebenaran Telefon.</string>
     <string name="new_call_log_secondary_blocked">Disekat</string>
     <string name="new_call_log_secondary_spam">Spam</string>
     <string name="new_call_log_unknown">Tidak diketahui</string>
@@ -490,7 +479,6 @@
     <string name="ok_got_it">OK</string>
     <string name="old_block_number_confirmation_title">Sekat %1$s?</string>
     <string name="old_call_subject_type_and_number">%1$s %2$s</string>
-    <string name="open_source_license_detail_label">Butiran lesen untuk perisian sumber terbuka</string>
     <string name="organizationLabelsGroup">Organisasi</string>
     <string name="outgoing_wps_warning">Membuat panggilan WPS akan memutuskan panggilan anda yang sedia ada.</string>
     <string name="pause_prompt_no">Tidak</string>
@@ -524,7 +512,6 @@
     <string name="pre_call_select_phone_account_hint_intra_carrier">Menggunakan pembawa yang sama</string>
     <string name="pre_call_select_phone_account_hint_other_sim_in_use">Tidak tersedia semasa menggunakan %1$s</string>
     <string name="pre_call_select_phone_account_remember">Ingat pilihan ini</string>
-    <string name="privacy_policy_label">Dasar privasi</string>
     <string name="private_num_non_verizon">Nombor peribadi</string>
     <string name="private_num_verizon">Terhad</string>
     <string name="quick_question">Soalan pantas…</string>
@@ -646,7 +633,6 @@
     <string name="tab_title">Tab %1$s.</string>
     <string name="tab_title_call_history">Sjrh Pgln</string>
     <string name="tab_title_speed_dial">Dail Laju</string>
-    <string name="terms_of_service_label">Syarat perkhidmatan</string>
     <string name="toast_cannot_write_system_settings">Apl telefon tiada kebenaran untuk menulis ke tetapan sistem.</string>
     <string name="toast_text_copied">Teks disalin</string>
     <string name="toolbar_close">Tutup</string>
@@ -691,13 +677,7 @@
     <string name="view_updates_from_group">Lihat kemas kini</string>
     <string name="voice_call">Panggilan suara</string>
     <string name="voice_search_not_available">Carian suara tidak tersedia</string>
-    <string name="voicemail">Mel suara</string>
-    <string name="voicemailCallLogDateTimeFormat">%1$s pada %2$s</string>
-    <string name="voicemailCallLogDateTimeFormatWithDuration">%1$s • %2$s</string>
-    <string name="voicemailCallLogToday">@string/call_log_header_today</string>
-    <string name="voicemailDurationFormat">%1$02d:%2$02d</string>
     <string name="voicemailMultiSelectActionBarTitle">%1$s dipilih</string>
-    <string name="voicemail_donation_promo_content">Benarkan Google menyemak mesej mel suara ini dan masa hadapan dengan transkrip. Mesej mel suara akan disimpan secara awanama. Tukar Tetapan pada bila-bila masa. %1$s</string>
     <string name="voicemail_string">Mel suara</string>
     <string name="voicemail_transcription_rating">Nilaikan kualiti transkripsi</string>
     <string name="wait_prompt_str">"Hantar nada berikut?

@@ -32,7 +32,7 @@ import com.google.auto.value.AutoValue;
  * <p>This differs from {@link ShortcutInfo} in that it doesn't hold an icon or intent, and provides
  * convenience methods for doing things like constructing labels.
  */
-@TargetApi(VERSION_CODES.N_MR1) // Shortcuts introduced in N MR1
+ // Shortcuts introduced in N MR1
 @AutoValue
 abstract class DialerShortcut {
 

@@ -75,29 +75,23 @@ public class ConferenceParticipantListAdapter extends BaseAdapter {
      * Listener used to handle tap of the "disconnect' button for a participant.
      */
     private final View.OnClickListener disconnectListener =
-            new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    DialerCall call = getCallFromView(view);
-                    LogUtil.i(
-                            "ConferenceParticipantListAdapter.mDisconnectListener.onClick", "call: " + call);
-                    if (call != null) {
-                        call.disconnect();
-                    }
+            view -> {
+                DialerCall call = getCallFromView(view);
+                LogUtil.i(
+                        "ConferenceParticipantListAdapter.mDisconnectListener.onClick", "call: " + call);
+                if (call != null) {
+                    call.disconnect();
                 }
             };
     /**
      * Listener used to handle tap of the "separate' button for a participant.
      */
     private final View.OnClickListener separateListener =
-            new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    DialerCall call = getCallFromView(view);
-                    LogUtil.i("ConferenceParticipantListAdapter.mSeparateListener.onClick", "call: " + call);
-                    if (call != null) {
-                        call.splitFromConference();
-                    }
+            view -> {
+                DialerCall call = getCallFromView(view);
+                LogUtil.i("ConferenceParticipantListAdapter.mSeparateListener.onClick", "call: " + call);
+                if (call != null) {
+                    call.splitFromConference();
                 }
             };
     /**
@@ -177,7 +171,7 @@ public class ConferenceParticipantListAdapter extends BaseAdapter {
 
         if (participantsByCallId.containsKey(callId)) {
             ParticipantInfo participantInfo = participantsByCallId.get(callId);
-            participantInfo.setCall(call);
+            Objects.requireNonNull(participantInfo).setCall(call);
             refreshView(callId);
         }
     }
@@ -277,7 +271,7 @@ public class ConferenceParticipantListAdapter extends BaseAdapter {
     /* package */ void updateContactInfo(String callId, ContactCacheEntry entry) {
         if (participantsByCallId.containsKey(callId)) {
             ParticipantInfo participantInfo = participantsByCallId.get(callId);
-            participantInfo.setContactCacheEntry(entry);
+            Objects.requireNonNull(participantInfo).setContactCacheEntry(entry);
             participantInfo.setCacheLookupComplete(true);
             refreshView(callId);
         }
@@ -414,7 +408,7 @@ public class ConferenceParticipantListAdapter extends BaseAdapter {
 
             if (participantsByCallId.containsKey(callId)) {
                 ParticipantInfo participantInfo = participantsByCallId.get(callId);
-                participantInfo.setCall(call);
+                Objects.requireNonNull(participantInfo).setCall(call);
                 participantInfo.setContactCacheEntry(contactCache);
             } else {
                 newParticipantAdded = true;
@@ -447,29 +441,24 @@ public class ConferenceParticipantListAdapter extends BaseAdapter {
      * Sorts the participant list by contact name.
      */
     private void sortParticipantList() {
-        Collections.sort(
-                conferenceParticipants,
-                new Comparator<ParticipantInfo>() {
-                    @Override
-                    public int compare(ParticipantInfo p1, ParticipantInfo p2) {
-                        // Contact names might be null, so replace with empty string.
-                        ContactCacheEntry c1 = p1.getContactCacheEntry();
-                        String p1Name =
-                                ContactsComponent.get(getContext())
-                                        .contactDisplayPreferences()
-                                        .getSortName(c1.namePrimary, c1.nameAlternative);
-                        p1Name = p1Name != null ? p1Name : "";
+        conferenceParticipants.sort((p1, p2) -> {
+            // Contact names might be null, so replace with empty string.
+            ContactCacheEntry c1 = p1.getContactCacheEntry();
+            String p1Name =
+                    ContactsComponent.get(getContext())
+                            .contactDisplayPreferences()
+                            .getSortName(c1.namePrimary, c1.nameAlternative);
+            p1Name = p1Name != null ? p1Name : "";
 
-                        ContactCacheEntry c2 = p2.getContactCacheEntry();
-                        String p2Name =
-                                ContactsComponent.get(getContext())
-                                        .contactDisplayPreferences()
-                                        .getSortName(c2.namePrimary, c2.nameAlternative);
-                        p2Name = p2Name != null ? p2Name : "";
+            ContactCacheEntry c2 = p2.getContactCacheEntry();
+            String p2Name =
+                    ContactsComponent.get(getContext())
+                            .contactDisplayPreferences()
+                            .getSortName(c2.namePrimary, c2.nameAlternative);
+            p2Name = p2Name != null ? p2Name : "";
 
-                        return p1Name.compareToIgnoreCase(p2Name);
-                    }
-                });
+            return p1Name.compareToIgnoreCase(p2Name);
+        });
     }
 
     private DialerCall getCallFromView(View view) {

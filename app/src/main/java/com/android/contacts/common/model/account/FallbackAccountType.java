@@ -49,8 +49,8 @@ public class FallbackAccountType extends BaseAccountType {
             addDataKindPhoto(context);
             addDataKindNote(context);
             addDataKindWebsite(context);
-            addDataKindSipAddress(context);
-            addDataKindGroupMembership(context);
+            addDataKindSipAddress();
+            addDataKindGroupMembership();
 
             mIsInitialized = true;
         } catch (DefinitionException e) {

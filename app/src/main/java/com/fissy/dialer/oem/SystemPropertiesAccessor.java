@@ -54,9 +54,6 @@ class SystemPropertiesAccessor {
 
         try {
             Class<?> systemPropertiesClass = Class.forName("android.os.SystemProperties");
-            if (systemPropertiesClass == null) {
-                return null;
-            }
             systemPropertiesGetMethod = systemPropertiesClass.getMethod("get", String.class);
             return systemPropertiesGetMethod;
         } catch (ClassNotFoundException | NoSuchMethodException e) {

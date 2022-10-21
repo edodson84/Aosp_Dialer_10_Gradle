@@ -38,6 +38,7 @@ import com.fissy.dialer.callrecord.ICallRecorderService;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class CallRecorderService extends Service {
     private static final String TAG = "CallRecorderService";
@@ -46,7 +47,7 @@ public class CallRecorderService extends Service {
     private MediaRecorder mMediaRecorder = null;
     private CallRecording mCurrentRecording = null;
 
-    private SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyMMdd_HHmmssSSS");
+    private final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyMMdd_HHmmssSSS", Locale.US);
 
     private final ICallRecorderService.Stub mBinder = new ICallRecorderService.Stub() {
         @Override
@@ -163,7 +164,7 @@ public class CallRecorderService extends Service {
         } catch (RuntimeException e) {
             getContentResolver().delete(uri, null, null);
             // only catch exceptions thrown by the MediaRecorder JNI code
-            if (e.getMessage().indexOf("start failed") >= 0) {
+            if (e.getMessage().contains("start failed")) {
                 Log.w(TAG, "Could not start recording", e);
             } else {
                 throw e;

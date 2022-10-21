@@ -23,6 +23,8 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.webkit.MimeTypeMap;
 
+import androidx.annotation.NonNull;
+
 public final class CallRecording implements Parcelable {
     public static final Parcelable.Creator<CallRecording> CREATOR =
             new Parcelable.Creator<CallRecording>() {
@@ -95,6 +97,7 @@ public final class CallRecording implements Parcelable {
         return 0;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "phoneNumber=" + phoneNumber + ", creationTime=" + creationTime +

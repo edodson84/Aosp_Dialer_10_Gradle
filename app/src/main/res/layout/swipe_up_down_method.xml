@@ -32,7 +32,7 @@
             android:textSize="16.0sp"
             android:visibility="gone" />
 
-        <Space
+        <View
             android:id="@id/incoming_bouncer_space_holder"
             android:layout_width="fill_parent"
             android:layout_height="50.0dip"

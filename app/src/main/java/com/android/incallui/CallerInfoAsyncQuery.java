@@ -196,8 +196,7 @@ public class CallerInfoAsyncQuery {
         // in AsyncQueryHandler.
         // intermediateListener.onQueryComplete is also called from the same caller thread.
         // TODO(a bug): use thread pool instead of single thread.
-        for (int i = 0; i < size; i++) {
-            long directoryId = directoryIds[i];
+        for (long directoryId : directoryIds) {
             Uri uri = ContactInfoHelper.getContactInfoLookupUri(info.phoneNumber, directoryId);
             if (DBG) {
                 Log.d(LOG_TAG, "directoryId: " + directoryId + " uri: " + uri);

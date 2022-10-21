@@ -17,9 +17,6 @@
     <string name="a11y_new_call_log_entry_full_description_with_phone_account_info">^1, ^2, ^3.</string>
     <string name="a11y_new_call_log_entry_full_description_without_phone_account_info">^1, ^2।</string>
     <string name="a11y_new_call_log_entry_phone_account">"^1 'ਤੇ, ^2 ਰਾਹੀਂ"</string>
-    <string name="a11y_new_call_log_entry_tap_action">expand menu</string>
-    <string name="a11y_new_call_log_entry_video_call">make a video call to ^1</string>
-    <string name="a11y_new_call_log_entry_voice_call">call ^1</string>
     <string name="abc_action_bar_home_description">"ਹੋਮ 'ਤੇ ਜਾਓ"</string>
     <string name="abc_action_bar_up_description">ਉੱਪਰ ਜਾਓ</string>
     <string name="abc_action_menu_overflow_description">ਹੋਰ ਚੋਣਾਂ</string>
@@ -47,7 +44,6 @@
     <string name="abc_shareactionprovider_share_with">ਇਸ ਨਾਲ ਸਾਂਝਾ ਕਰੋ</string>
     <string name="abc_shareactionprovider_share_with_application">%s ਨਾਲ ਸਾਂਝਾ ਕਰੋ</string>
     <string name="abc_toolbar_collapse_description">ਨਸ਼ਟ ਕਰੋ</string>
-    <string name="about_phone_label">ਇਸ ਬਾਰੇ</string>
     <string name="accessibility_settings_title">ਪਹੁੰਚਯੋਗਤਾ</string>
     <string name="account_phone">"ਸਿਰਫ਼-ਡੀਵਾਈਸ 'ਤੇ, ਅਣ-ਸਮਕਾਲੀਕਿਰਤ"</string>
     <string name="action_copy_number_text">ਨੰਬਰ ਕਾਪੀ ਕਰੋ</string>
@@ -98,7 +94,6 @@
     <string name="blocked_numbers_disabled_emergency_desc">ਕਾਲ ਬਲੌਕਿੰਗ ਅਸਮਰੱਥ ਕਰ ਦਿੱਤੀ ਗਈ ਹੈ ਕਿਉਂਕਿ ਤੁਸੀਂ ਇਸ ਫੋਨ ਦੁਆਰਾ ਪਿਛਲੇ 48 ਘੰਟਿਆਂ ਤੋਂ ਐਮਰਜੈਂਸੀ ਸੇਵਾਵਾਂ ਨਾਲ ਕਨੈਕਟ ਕੀਤਾ ਹੋਇਆ ਹੈ। ਇਹ 48 ਘੰਟਿਆਂ ਦਾ ਸਮਾਂ ਪੂਰਾ ਹੋਣ ਤੇੋਂ ਬਾਅਦ ਆਟੋਮੈਟਿਕਲੀ ਮੁੜ-ਸਮਰੱਥ ਹੋ ਜਾਵੇਗੀ।</string>
     <string name="blocked_numbers_disabled_emergency_header_label">ਕਾਲ ਬਲੌਕਿੰਗ ਆਰਜ਼ੀ ਤੌਰ ਤੇ ਬੰਦ ਹੈ</string>
     <string name="bubble_return_to_call">"ਕਾਲ 'ਤੇ ਵਾਪਸ ਜਾਓ"</string>
-    <string name="build_version_label">ਨਿਰਮਾਣ ਰੂਪ</string>
     <string name="call">ਕਾਲ ਕਰੋ</string>
     <string name="callFailed_simError">ਕੋਈ SIM ਨਹੀਂ ਜਾਂ SIM ਅਸ਼ੁੱਧੀ</string>
     <string name="call_assistant">%s ਨੂੰ ਕਾਲ ਕਰੋ</string>
@@ -130,8 +125,8 @@
     <string name="call_incoming_default_label_answer_and_release_second">ਜਵਾਬ ਦੇਣ ਲਈ ਅਤੇ ਜਾਰੀ ਕਾਲ ਨੂੰ ਰੋਕ ਕੇ ਰੱਖਣ ਲਈ ਉੱਪਰ ਵੱਲ ਸਵਾਈਪ ਕਰੋ</string>
     <string name="call_incoming_default_label_answer_and_release_third">ਜਵਾਬ ਦੇਣ ਲਈ ਅਤੇ ਰੋਕੀ ਗਈ ਕਾਲ ਸਮਾਪਤ ਕਰਨ ਲਈ ਉੱਪਰ ਵੱਲ ਸਵਾਈਪ ਕਰੋ</string>
     <string name="call_incoming_important">ਮਹੱਤਵਪੂਰਨ</string>
-    <string name="call_incoming_message_custom">ਆਪਣਾ ਖੁਦ ਦਾ ਲਿਖੋ...</string>
-    <string name="call_incoming_respond_via_sms_custom_message">ਆਪਣਾ ਖੁਦ ਦਾ ਲਿਖੋ...</string>
+    <string name="call_incoming_message_custom">ਆਪਣਾ ਖੁਦ ਦਾ ਲਿਖੋ…</string>
+    <string name="call_incoming_respond_via_sms_custom_message">ਆਪਣਾ ਖੁਦ ਦਾ ਲਿਖੋ…</string>
     <string name="call_incoming_swipe_to_answer">ਜਵਾਬ ਦੇਣ ਲਈ ਉੱਪਰ ਵੱਲ ਸਵਾਈਪ ਕਰੋ</string>
     <string name="call_incoming_swipe_to_answer_and_release">ਜਵਾਬ ਦੇਣ ਲਈ ਅਤੇ ਜਾਰੀ ਕਾਲ ਨੂੰ ਸਮਾਪਤ ਕਰਨ ਲਈ ਪ੍ਰਤੀਕ ਤੋਂ ਸਵਾਈਪ ਕਰੋ</string>
     <string name="call_incoming_swipe_to_answer_video_as_audio">ਆਡੀਓ ਕਾਲ ਵਜੋਂ ਜਵਾਬ ਦੇਣ ਲਈ ਚਿੰਨ੍ਹ ਤੋਂ ਸਵਾਈਪ ਕਰੋ</string>
@@ -148,7 +143,7 @@
     <string name="call_log_action_remove_spam">ਸਪੈਮ ਨਹੀਂ</string>
     <string name="call_log_action_send_message">ਇੱਕ ਸੁਨੇਹਾ ਭੇਜੋ</string>
     <string name="call_log_action_set_up_video">ਵੀਡੀਓ ਕਾਲਿੰਗ ਸੈੱਟਅੱਪ ਕਰੋ</string>
-    <string name="call_log_action_share_voicemail">"ਇਸ 'ਤੇ ਭੇਜੋ..."</string>
+    <string name="call_log_action_share_voicemail">"ਇਸ 'ਤੇ ਭੇਜੋ…"</string>
     <string name="call_log_action_unblock_number">ਨੰਬਰ ਨੂੰ ਅਨਬਲੌਕ ਕਰੋ</string>
     <string name="call_log_action_video_call">ਵੀਡੀਓ ਕਾਲ</string>
     <string name="call_log_activity_title">ਕਾਲ ਇਤਿਹਾਸ</string>
@@ -173,7 +168,7 @@
     <string name="call_pager">ਪੇਜ਼ਰ ਤੇ ਕਾਲ ਕਰੋ</string>
     <string name="call_radio">ਰੇਡੀਓ ਕਾਲ ਕਰੋ</string>
     <string name="call_settings_label">ਕਾਲਾਂ</string>
-    <string name="call_subject_hint">ਕਾਲ ਦੇ ਨਾਲ ਭੇਜਣ ਲਈ ਕੋਈ ਨੋਟ ਟਾਈਪ ਕਰੋ ...</string>
+    <string name="call_subject_hint">ਕਾਲ ਦੇ ਨਾਲ ਭੇਜਣ ਲਈ ਕੋਈ ਨੋਟ ਟਾਈਪ ਕਰੋ …</string>
     <string name="call_subject_limit">%1$s / %2$s</string>
     <string name="call_subject_type_and_number">%1$s %2$s</string>
     <string name="call_telex">ਟੈਲੈਕਸ ਤੇ ਕਾਲ ਕਰੋ</string>
@@ -220,7 +215,6 @@
     <string name="content_description_rtt_chat_avatar">ਅਵਤਾਰ</string>
     <string name="content_description_rtt_check_button">ਅੱਗੇ ਵਧੋ</string>
     <string name="copy_number">ਨੰਬਰ ਕਾਪੀ ਕਰੋ</string>
-    <string name="copy_transcript_text">ਲਿਪੀ ਬਦਲਣਾ ਕਾਪੀ ਕਰੋ</string>
     <string name="custom_message_hint">ਵਿਸ਼ੇਸ਼-ਵਿਉਂਤਬੱਧ ਸੰਦੇਸ਼ ਲਿਖੋ</string>
     <string name="default_notification_description">ਪੂਰਵ-ਨਿਰਧਾਰਤ ਧੁਨੀ (%1$s)</string>
     <string name="delete">ਮਿਟਾਓ</string>
@@ -389,7 +383,6 @@
     <string name="label_sip_address">SIP</string>
     <string name="launcherActivityLabel">ਫੋਨ</string>
     <string name="launcherDialpadActivityLabel">ਫ਼ੋਨ ਕੀਪੈਡ</string>
-    <string name="licenseActivityLabel">ਖੁੱਲ੍ਹੇ ਸਰੋਤ ਲਾਇਸੰਸ</string>
     <string name="listAllContactsInAccount">%s ਵਿੱਚ ਸੰਪਰਕ</string>
     <string name="listCustomView">ਕਸਟਮ ਦ੍ਰਿਸ਼ ਵਿੱਚ ਸੰਪਰਕ</string>
     <string name="listSingleContact">ਸਿੰਗਲ ਸੰਪਰਕ</string>
@@ -431,10 +424,6 @@
     <string name="network_name_wifi">Wifi</string>
     <string name="new_call_log_carrier_video">ਕੈਰੀਅਰ ਵੀਡੀਓ ਕਾਲ</string>
     <string name="new_call_log_duo_video">Duo ਵੀਡੀਓ ਕਾਲ</string>
-    <string name="new_call_log_header_older">ਵਧੇਰੇ ਪੁਰਾਣਾ</string>
-    <string name="new_call_log_header_today">ਅੱਜ</string>
-    <string name="new_call_log_header_yesterday">ਕੱਲ੍ਹ</string>
-    <string name="new_call_log_permission_no_calllog">ਆਪਣਾ ਕਾਲ ਲੌਗ ਦੇਖਣ ਲਈ, ਫ਼ੋਨ ਇਜਾਜ਼ਤ ਚਾਲੂ ਕਰੋ।</string>
     <string name="new_call_log_secondary_blocked">ਬਲਾਕ ਕੀਤਾ ਗਿਆ</string>
     <string name="new_call_log_secondary_spam">ਸਪੈਮ</string>
     <string name="new_call_log_unknown">ਅਗਿਆਤ</string>
@@ -490,7 +479,6 @@
     <string name="ok_got_it">ਠੀਕ ਹੈ, ਸਮਝ ਲਿਆ</string>
     <string name="old_block_number_confirmation_title">ਕੀ %1$s ਬਲਾਕ ਕਰਨਾ ਹੈ?</string>
     <string name="old_call_subject_type_and_number">%1$s %2$s</string>
-    <string name="open_source_license_detail_label">ਖੁੱਲ੍ਹੇ ਸਰੋਤ ਸਾਫਟਵੇਅਰ ਲਈ ਲਾਇਸੰਸ ਵੇਰਵੇ</string>
     <string name="organizationLabelsGroup">ਕੰਪਨੀ</string>
     <string name="outgoing_wps_warning">ਇੱਕ WPS ਕਾਲ ਕਰਨਾ ਤੁਹਾਡੀ ਮੌਜੂਦਾ ਕਾਲ ਨੂੰ ਡਿਸਕਨੈਕਟ ਕਰ ਦੇਵੇਗਾ।</string>
     <string name="pause_prompt_no">ਨਹੀਂ</string>
@@ -524,7 +512,6 @@
     <string name="pre_call_select_phone_account_hint_intra_carrier">ਇੱਕੋ ਕੈਰੀਅਰ ਦੀ ਵਰਤੋਂ ਕਰਦਾ ਹੈ</string>
     <string name="pre_call_select_phone_account_hint_other_sim_in_use">%1$s ਦੀ ਵਰਤੋਂ ਦੌਰਾਨ ਉਪਲਬਧ ਨਹੀਂ ਹੈ</string>
     <string name="pre_call_select_phone_account_remember">ਇਹ ਚੋਣ ਯਾਦ ਰੱਖੋ</string>
-    <string name="privacy_policy_label">ਪਰਦੇਦਾਰੀ ਨੀਤੀ</string>
     <string name="private_num_non_verizon">ਨਿੱਜੀ ਨੰਬਰ</string>
     <string name="private_num_verizon">ਪ੍ਰਤੀਬੰਧਿਤ</string>
     <string name="quick_question">ਤਤਕਾਲ ਸਵਾਲ…</string>
@@ -646,7 +633,6 @@
     <string name="tab_title">%1$s ਟੈਬ।</string>
     <string name="tab_title_call_history">ਕਾਲ ਇਤਿਹਾਸ</string>
     <string name="tab_title_speed_dial">ਸਪੀਡ ਡਾਇਲ</string>
-    <string name="terms_of_service_label">ਸੇਵਾ ਦੀਆਂ ਮਦਾਂ</string>
     <string name="toast_cannot_write_system_settings">ਫ਼ੋਨ ਐਪ ਦੇ ਕੋਲ ਸਿਸਟਮ ਸੈਟਿੰਗਜ਼ ਵਿੱਚ ਲਿੱਖਣ ਦੀ ਅਨੁਮਤੀ ਨਹੀਂ ਹੁੰਦੀ ਹੈ।</string>
     <string name="toast_text_copied">ਲਿਖਤ ਕਾਪੀ ਕੀਤੀ ਗਈ</string>
     <string name="toolbar_close">ਬੰਦ ਕਰੋ</string>
@@ -691,13 +677,7 @@
     <string name="view_updates_from_group">ਅਪਡੇਟਾਂ ਦੇਖੋ</string>
     <string name="voice_call">ਅਵਾਜ਼ੀ ਕਾਲ</string>
     <string name="voice_search_not_available">ਵੌਇਸ ਖੋਜ ਉਪਲਬਧ ਨਹੀਂ ਹੈ</string>
-    <string name="voicemail">ਵੌਇਸਮੇਲ</string>
-    <string name="voicemailCallLogDateTimeFormat">%1$s ਨੂੰ %2$s ਵਜੇ</string>
-    <string name="voicemailCallLogDateTimeFormatWithDuration">%1$s • %2$s</string>
-    <string name="voicemailCallLogToday">@string/call_log_header_today</string>
-    <string name="voicemailDurationFormat">%1$02d:%2$02d</string>
     <string name="voicemailMultiSelectActionBarTitle">%1$s ਨੂੰ ਚੁਣਿਆ ਗਿਆ</string>
-    <string name="voicemail_donation_promo_content">Google ਨੂੰ ਪ੍ਰਤੀਲਿਪੀਆਂ ਵਾਲੇ ਇਸ ਅਤੇ ਭਵਿੱਖੀ ਵੌਇਸਮੇਲ ਸੁਨੇਹਿਆਂ ਦੀ ਸਮੀਖਿਆ ਕਰਨ ਦਿਓ। ਉਹਨਾਂ ਨੂੰ ਗੁਮਨਾਮ ਵਜੋਂ ਸਟੋਰ ਕੀਤਾ ਜਾਵੇਗਾ। ਕਿਸੇ ਵੇਲੇ ਵੀ ਸੈਟਿੰਗਾਂ ਬਦਲੋ। %1$s</string>
     <string name="voicemail_string">ਵੌਇਸਮੇਲ</string>
     <string name="voicemail_transcription_rating">ਪ੍ਰਤਿਲਿਪੀ ਗੁਣਵੱਤਾ ਨੂੰ ਰੇਟ ਕਰੋ</string>
     <string name="wait_prompt_str">"ਕੀ ਇਹ ਟੋਨਾਂ ਭੇਜਣੀਆਂ ਹਨ?

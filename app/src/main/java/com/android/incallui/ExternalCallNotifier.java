@@ -40,7 +40,6 @@ import androidx.core.os.BuildCompat;
 
 import com.android.contacts.common.ContactsUtils;
 import com.android.contacts.common.compat.CallCompat;
-import com.android.incallui.call.CallList;
 import com.android.incallui.call.DialerCall;
 import com.android.incallui.call.DialerCallDelegate;
 import com.android.incallui.call.ExternalCallList;
@@ -55,6 +54,7 @@ import com.fissy.dialer.notification.NotificationChannelId;
 import com.fissy.dialer.telecom.TelecomCallUtil;
 
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Handles the display of notifications for "external calls".
@@ -110,7 +110,7 @@ public class ExternalCallNotifier implements ExternalCallList.ExternalCallListen
 
     /**
      * Handles the addition of a new external call by showing a new notification. Triggered by {@link
-     * CallList#onCallAdded(android.telecom.Call)}.
+
      */
     @Override
     public void onExternalCallAdded(android.telecom.Call call) {
@@ -124,7 +124,7 @@ public class ExternalCallNotifier implements ExternalCallList.ExternalCallListen
 
     /**
      * Handles the removal of an external call by hiding its associated notification. Triggered by
-     * {@link CallList#onCallRemoved(android.telecom.Call)}.
+
      */
     @Override
     public void onExternalCallRemoved(android.telecom.Call call) {
@@ -139,7 +139,7 @@ public class ExternalCallNotifier implements ExternalCallList.ExternalCallListen
     @Override
     public void onExternalCallUpdated(Call call) {
         Assert.checkArgument(notifications.containsKey(call));
-        postNotification(notifications.get(call));
+        postNotification(Objects.requireNonNull(notifications.get(call)));
     }
 
     @Override
@@ -153,7 +153,6 @@ public class ExternalCallNotifier implements ExternalCallList.ExternalCallListen
      * @param notificationId The notification ID associated with the external call which is to be
      *                       pulled.
      */
-    @TargetApi(VERSION_CODES.N_MR1)
     public void pullExternalCall(int notificationId) {
         for (NotificationInfo info : notifications.values()) {
             if (info.getNotificationId() == notificationId
@@ -217,7 +216,7 @@ public class ExternalCallNotifier implements ExternalCallList.ExternalCallListen
 
         // This will also dismiss the group summary if there are no more external call notifications.
         DialerNotificationManager.cancel(
-                context, NOTIFICATION_TAG, notifications.get(call).getNotificationId());
+                context, NOTIFICATION_TAG, Objects.requireNonNull(notifications.get(call)).getNotificationId());
 
         notifications.remove(call);
     }
@@ -295,11 +294,6 @@ public class ExternalCallNotifier implements ExternalCallList.ExternalCallListen
                             .build());
         }
 
-        /**
-         * This builder is used for the notification shown when the device is locked and the user has
-         * set their notification settings to 'hide sensitive content' {@see
-         * Notification.Builder#setPublicVersion}.
-         */
         Notification.Builder publicBuilder = new Notification.Builder(context);
         publicBuilder.setSmallIcon(R.drawable.quantum_ic_call_white_24);
         publicBuilder.setColor(ThemeUtils.resolveColor(context, android.R.attr.colorAccent));
@@ -337,7 +331,7 @@ public class ExternalCallNotifier implements ExternalCallList.ExternalCallListen
                     BitmapFactory.decodeResource(
                             context.getResources(), R.drawable.quantum_ic_group_vd_theme_24);
         }
-        if (contactInfo.photo != null && (contactInfo.photo instanceof BitmapDrawable)) {
+        if ((contactInfo.photo instanceof BitmapDrawable)) {
             largeIcon = ((BitmapDrawable) contactInfo.photo).getBitmap();
         }
         return largeIcon;
@@ -445,6 +439,7 @@ public class ExternalCallNotifier implements ExternalCallList.ExternalCallListen
             this.notificationId = notificationId;
         }
 
+        @NonNull
         public Call getCall() {
             return call;
         }

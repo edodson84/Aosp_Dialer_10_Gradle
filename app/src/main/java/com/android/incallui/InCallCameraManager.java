@@ -31,7 +31,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class InCallCameraManager {
 
     private final Set<Listener> cameraSelectionListeners =
-            Collections.newSetFromMap(new ConcurrentHashMap<Listener, Boolean>(8, 0.9f, 1));
+            Collections.newSetFromMap(new ConcurrentHashMap<>(8, 0.9f, 1));
     /**
      * The context.
      */
@@ -121,7 +121,7 @@ public class InCallCameraManager {
 
         Log.v(this, "initializeCameraList");
 
-        CameraManager cameraManager = null;
+        CameraManager cameraManager;
         try {
             cameraManager = (CameraManager) context.getSystemService(Context.CAMERA_SERVICE);
         } catch (Exception e) {
@@ -133,7 +133,7 @@ public class InCallCameraManager {
             return;
         }
 
-        String[] cameraIds = {};
+        String[] cameraIds;
         try {
             cameraIds = cameraManager.getCameraIdList();
         } catch (CameraAccessException e) {
@@ -142,10 +142,10 @@ public class InCallCameraManager {
             return;
         }
 
-        for (int i = 0; i < cameraIds.length; i++) {
+        for (String cameraId : cameraIds) {
             CameraCharacteristics c = null;
             try {
-                c = cameraManager.getCameraCharacteristics(cameraIds[i]);
+                c = cameraManager.getCameraCharacteristics(cameraId);
             } catch (IllegalArgumentException e) {
                 // Device Id is unknown.
             } catch (CameraAccessException e) {
@@ -154,9 +154,9 @@ public class InCallCameraManager {
             if (c != null) {
                 int facingCharacteristic = c.get(CameraCharacteristics.LENS_FACING);
                 if (facingCharacteristic == CameraCharacteristics.LENS_FACING_FRONT) {
-                    frontFacingCameraId = cameraIds[i];
+                    frontFacingCameraId = cameraId;
                 } else if (facingCharacteristic == CameraCharacteristics.LENS_FACING_BACK) {
-                    rearFacingCameraId = cameraIds[i];
+                    rearFacingCameraId = cameraId;
                 }
             }
         }

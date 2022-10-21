@@ -16,12 +16,9 @@
 
 package com.fissy.dialer.dialpadview;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
-import android.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -35,8 +32,6 @@ import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.net.Uri;
-import android.os.Build.VERSION;
-import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.os.Trace;
@@ -77,6 +72,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 
 import com.android.contacts.common.dialog.CallSubjectDialog;
 import com.android.contacts.common.util.StopWatch;
@@ -109,6 +106,7 @@ import com.google.common.base.Optional;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -289,14 +287,10 @@ public class DialpadFragment extends Fragment
      * cannot be inflated in robolectric.
      */
     @SuppressWarnings("missingPermission")
-    @TargetApi(VERSION_CODES.O)
     @VisibleForTesting
     static boolean shouldShowEmergencyCallWarning(Context context) {
         if (showEmergencyCallWarningForTest != null) {
             return showEmergencyCallWarningForTest;
-        }
-        if (VERSION.SDK_INT < VERSION_CODES.O) {
-            return false;
         }
         if (!PermissionsUtil.hasReadPhoneStatePermissions(context)) {
             return false;
@@ -366,7 +360,7 @@ public class DialpadFragment extends Fragment
     }
 
     private TelephonyManager getTelephonyManager() {
-        return (TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE);
+        return (TelephonyManager) Objects.requireNonNull(getActivity()).getSystemService(Context.TELEPHONY_SERVICE);
     }
 
     @Override
@@ -439,14 +433,14 @@ public class DialpadFragment extends Fragment
             IntentFilter callStateIntentFilter =
                     new IntentFilter(TelephonyManager.ACTION_PHONE_STATE_CHANGED);
             callStateReceiver = new CallStateReceiver();
-            getActivity().registerReceiver(callStateReceiver, callStateIntentFilter);
+            Objects.requireNonNull(getActivity()).registerReceiver(callStateReceiver, callStateIntentFilter);
         }
 
         initPhoneNumberFormattingTextWatcherExecutor =
-                DialerExecutorComponent.get(getContext())
+                DialerExecutorComponent.get(Objects.requireNonNull(getContext()))
                         .dialerExecutorFactory()
                         .createUiTaskBuilder(
-                                getFragmentManager(),
+                                Objects.requireNonNull(getFragmentManager()),
                                 "DialpadFragment.initPhoneNumberFormattingTextWatcher",
                                 new InitPhoneNumberFormattingTextWatcherWorker())
                         .onSuccess(watcher -> dialpadView.getDigits().addTextChangedListener(watcher))
@@ -519,7 +513,7 @@ public class DialpadFragment extends Fragment
         floatingActionButton = fragmentView.findViewById(R.id.dialpad_floating_action_button);
         floatingActionButton.setOnClickListener(this);
         floatingActionButtonController =
-                new FloatingActionButtonController(getActivity(), floatingActionButton);
+                new FloatingActionButtonController(Objects.requireNonNull(getActivity()), floatingActionButton);
         Trace.endSection();
         Trace.endSection();
         return fragmentView;
@@ -537,7 +531,7 @@ public class DialpadFragment extends Fragment
         }
 
         if (shouldShowEmergencyCallWarning(getContext())) {
-            String hint = getContext().getString(R.string.dialpad_hint_emergency_calling_not_available);
+            String hint = Objects.requireNonNull(getContext()).getString(R.string.dialpad_hint_emergency_calling_not_available);
             digits.setContentDescription(hint);
             digitsHint.setText(hint);
             digitsHint.setVisibility(View.VISIBLE);
@@ -549,7 +543,7 @@ public class DialpadFragment extends Fragment
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         isLayoutRtl = ViewUtil.isRtl();
         isLandscape =
@@ -565,7 +559,7 @@ public class DialpadFragment extends Fragment
     }
 
     private boolean isLayoutReady() {
-        return digits != null;
+        return digits == null;
     }
 
     public EditText getDigitsWidget() {
@@ -604,7 +598,7 @@ public class DialpadFragment extends Fragment
                     if (People.CONTENT_ITEM_TYPE.equals(type) || Phones.CONTENT_ITEM_TYPE.equals(type)) {
                         // Query the phone number
                         Cursor c =
-                                getActivity()
+                                Objects.requireNonNull(getActivity())
                                         .getContentResolver()
                                         .query(
                                                 intent.getData(),
@@ -654,7 +648,7 @@ public class DialpadFragment extends Fragment
      */
     private void configureScreenFromIntent(@NonNull Intent intent) {
         LogUtil.i("DialpadFragment.configureScreenFromIntent", "action: %s", intent.getAction());
-        if (!isLayoutReady()) {
+        if (isLayoutReady()) {
             // This happens typically when parent's Activity#onNewIntent() is called while
             // Fragment#onCreateView() isn't called yet, and thus we cannot configure Views at
             // this point. onViewCreate() should call this method after preparing layouts, so
@@ -801,7 +795,7 @@ public class DialpadFragment extends Fragment
 
         stopWatch.lap("qloc");
 
-        final ContentResolver contentResolver = getActivity().getContentResolver();
+        final ContentResolver contentResolver = Objects.requireNonNull(getActivity()).getContentResolver();
 
         // retrieve the DTMF tone play back setting.
         dTMFToneEnabled =
@@ -888,7 +882,7 @@ public class DialpadFragment extends Fragment
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean(PREF_DIGITS_FILLED_BY_INTENT, digitsFilledByIntent);
         outState.putBoolean(PREF_IS_DIALPAD_SLIDE_OUT, isDialpadSlideUp);
@@ -901,7 +895,7 @@ public class DialpadFragment extends Fragment
             pseudoEmergencyAnimator.destroy();
             pseudoEmergencyAnimator = null;
         }
-        getActivity().unregisterReceiver(callStateReceiver);
+        Objects.requireNonNull(getActivity()).unregisterReceiver(callStateReceiver);
     }
 
     private void keyPressed(int keyCode) {
@@ -1106,13 +1100,13 @@ public class DialpadFragment extends Fragment
                                     getActivity().getContentResolver(), Settings.Global.AIRPLANE_MODE_ON, 0)
                                     != 0;
                     if (isAirplaneModeOn) {
-                        DialogFragment dialogFragment =
+                        androidx.fragment.app.DialogFragment dialogFragment =
                                 ErrorDialogFragment.newInstance(R.string.dialog_voicemail_airplane_mode_message);
-                        dialogFragment.show(getFragmentManager(), "voicemail_request_during_airplane_mode");
+                        dialogFragment.show(Objects.requireNonNull(getFragmentManager()), "voicemail_request_during_airplane_mode");
                     } else {
                         DialogFragment dialogFragment =
                                 ErrorDialogFragment.newInstance(R.string.dialog_voicemail_not_ready_message);
-                        dialogFragment.show(getFragmentManager(), "voicemail_not_ready");
+                        dialogFragment.show(Objects.requireNonNull(getFragmentManager()), "voicemail_not_ready");
                     }
                 }
                 return true;
@@ -1188,17 +1182,15 @@ public class DialpadFragment extends Fragment
             // "persist.radio.otaspdial" is a temporary hack needed for one carrier's automated
             // test equipment.
             // TODO: clean it up.
-            if (number != null
-                    && !TextUtils.isEmpty(prohibitedPhoneNumberRegexp)
-                    && number.matches(prohibitedPhoneNumberRegexp)) {
+            if (!TextUtils.isEmpty(prohibitedPhoneNumberRegexp) && number.matches(prohibitedPhoneNumberRegexp)) {
                 PerformanceReport.recordClick(UiAction.Type.PRESS_CALL_BUTTON_WITHOUT_CALLING);
                 LogUtil.i(
                         "DialpadFragment.handleDialButtonPressed",
                         "The phone number is prohibited explicitly by a rule.");
                 if (getActivity() != null) {
-                    DialogFragment dialogFragment =
+                    androidx.fragment.app.DialogFragment dialogFragment =
                             ErrorDialogFragment.newInstance(R.string.dialog_phone_call_prohibited_message);
-                    dialogFragment.show(getFragmentManager(), "phone_prohibited_dialog");
+                    dialogFragment.show(Objects.requireNonNull(getFragmentManager()), "phone_prohibited_dialog");
                 }
 
                 // Clear the digits just in case.
@@ -1286,7 +1278,7 @@ public class DialpadFragment extends Fragment
         // onResume(), since it's possible to toggle silent mode without
         // leaving the current activity (via the ENDCALL-longpress menu.)
         AudioManager audioManager =
-                (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
+                (AudioManager) Objects.requireNonNull(getActivity()).getSystemService(Context.AUDIO_SERVICE);
         int ringerMode = audioManager.getRingerMode();
         if ((ringerMode == AudioManager.RINGER_MODE_SILENT)
                 || (ringerMode == AudioManager.RINGER_MODE_VIBRATE)) {
@@ -1339,7 +1331,7 @@ public class DialpadFragment extends Fragment
             return;
         }
         // Check if onCreateView() is already called by checking one of View objects.
-        if (!isLayoutReady()) {
+        if (isLayoutReady()) {
             return;
         }
 
@@ -1426,7 +1418,7 @@ public class DialpadFragment extends Fragment
         // the dialpad chooser is up.  In this case we can't show the
         // InCallScreen, and there's no point staying here in the Dialer,
         // so we just take the user back where he came from...)
-        getActivity().finish();
+        Objects.requireNonNull(getActivity()).finish();
     }
 
     /**
@@ -1623,7 +1615,7 @@ public class DialpadFragment extends Fragment
     }
 
     public void setYFraction(float yFraction) {
-        ((DialpadSlidingRelativeLayout) getView()).setYFraction(yFraction);
+        ((DialpadSlidingRelativeLayout) Objects.requireNonNull(getView())).setYFraction(yFraction);
     }
 
     public int getDialpadHeight() {
@@ -1674,7 +1666,7 @@ public class DialpadFragment extends Fragment
         slideDown.setInterpolator(AnimUtils.EASE_OUT);
         slideDown.setAnimationListener(listener);
         slideDown.setDuration(animate ? dialpadSlideInDuration : 0);
-        getView().startAnimation(slideDown);
+        Objects.requireNonNull(getView()).startAnimation(slideDown);
         floatingActionButtonController.scaleOut();
     }
 
@@ -1708,7 +1700,7 @@ public class DialpadFragment extends Fragment
                     public void onAnimationRepeat(Animation animation) {
                     }
                 });
-        getView().startAnimation(slideUp);
+        Objects.requireNonNull(getView()).startAnimation(slideUp);
     }
 
     public boolean isDialpadSlideUp() {
@@ -1794,7 +1786,7 @@ public class DialpadFragment extends Fragment
         }
     }
 
-    public static class ErrorDialogFragment extends DialogFragment {
+    public static class ErrorDialogFragment extends androidx.fragment.app.DialogFragment {
 
         private static final String ARG_TITLE_RES_ID = "argTitleResId";
         private static final String ARG_MESSAGE_RES_ID = "argMessageResId";
@@ -1817,10 +1809,11 @@ public class DialpadFragment extends Fragment
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            titleResId = getArguments().getInt(ARG_TITLE_RES_ID);
+            titleResId = Objects.requireNonNull(getArguments()).getInt(ARG_TITLE_RES_ID);
             messageResId = getArguments().getInt(ARG_MESSAGE_RES_ID);
         }
 
+        @NonNull
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

@@ -17,9 +17,6 @@
     <string name="a11y_new_call_log_entry_full_description_with_phone_account_info">^1, ^2, ^3.</string>
     <string name="a11y_new_call_log_entry_full_description_without_phone_account_info">^1, ^2.</string>
     <string name="a11y_new_call_log_entry_phone_account">trên ^1, qua số ^2</string>
-    <string name="a11y_new_call_log_entry_tap_action">expand menu</string>
-    <string name="a11y_new_call_log_entry_video_call">make a video call to ^1</string>
-    <string name="a11y_new_call_log_entry_voice_call">call ^1</string>
     <string name="abc_action_bar_home_description">Điều hướng về trang chủ</string>
     <string name="abc_action_bar_up_description">Điều hướng lên trên</string>
     <string name="abc_action_menu_overflow_description">Tùy chọn khác</string>
@@ -47,7 +44,6 @@
     <string name="abc_shareactionprovider_share_with">Chia sẻ với</string>
     <string name="abc_shareactionprovider_share_with_application">Chia sẻ với %s</string>
     <string name="abc_toolbar_collapse_description">Thu gọn</string>
-    <string name="about_phone_label">Giới thiệu</string>
     <string name="accessibility_settings_title">Trợ năng</string>
     <string name="account_phone">Chỉ trên thiết bị, chưa đồng bộ hóa</string>
     <string name="action_copy_number_text">Sao chép số</string>
@@ -98,7 +94,6 @@
     <string name="blocked_numbers_disabled_emergency_desc">Tính năng chặn cuộc gọi đã bị tắt vì bạn đã liên hệ với dịch vụ khẩn cấp từ điện thoại này trong vòng 48 giờ qua. Tính năng này sẽ được bật lại tự động sau khi khoảng thời gian 48 giờ kết thúc.</string>
     <string name="blocked_numbers_disabled_emergency_header_label">Tạm thời tắt chặn cuộc gọi</string>
     <string name="bubble_return_to_call">Quay lại cuộc gọi</string>
-    <string name="build_version_label">Phiên bản đóng gói</string>
     <string name="call">Gọi</string>
     <string name="callFailed_simError">Không có SIM hoặc lỗi SIM</string>
     <string name="call_assistant">Gọi %s</string>
@@ -108,7 +103,7 @@
     <string name="call_car">Gọi số điện thoại trên ô tô</string>
     <string name="call_company_main">Gọi số điện thoại chính của công ty</string>
     <string name="call_composer_connection_failed">%1$s ngoại tuyến và không liên hệ được</string>
-    <string name="call_composer_image_uploading">Đang gửi hình ảnh...</string>
+    <string name="call_composer_image_uploading">Đang gửi hình ảnh…</string>
     <string name="call_custom">Gọi %s</string>
     <string name="call_details">Chi tiết cuộc gọi</string>
     <string name="call_details_copy_number">Sao chép số</string>
@@ -173,7 +168,7 @@
     <string name="call_pager">Gọi số máy nhắn tin</string>
     <string name="call_radio">Gọi số điện thoại radio</string>
     <string name="call_settings_label">Cuộc gọi</string>
-    <string name="call_subject_hint">Nhập ghi chú để gửi kèm cuộc gọi...</string>
+    <string name="call_subject_hint">Nhập ghi chú để gửi kèm cuộc gọi…</string>
     <string name="call_subject_limit">%1$s / %2$s</string>
     <string name="call_subject_type_and_number">%1$s %2$s</string>
     <string name="call_telex">Gọi số telex</string>
@@ -220,7 +215,6 @@
     <string name="content_description_rtt_chat_avatar">Hình đại diện</string>
     <string name="content_description_rtt_check_button">Tiếp tục</string>
     <string name="copy_number">Sao chép số</string>
-    <string name="copy_transcript_text">Sao chép bản ghi âm</string>
     <string name="custom_message_hint">Viết tin nhắn tùy chỉnh</string>
     <string name="default_notification_description">Âm thanh mặc định (%1$s)</string>
     <string name="delete">Xóa</string>
@@ -389,7 +383,6 @@
     <string name="label_sip_address">SIP</string>
     <string name="launcherActivityLabel">Điện thoại</string>
     <string name="launcherDialpadActivityLabel">Bàn phím điện thoại</string>
-    <string name="licenseActivityLabel">Giấy phép nguồn mở</string>
     <string name="listAllContactsInAccount">Danh bạ trong %s</string>
     <string name="listCustomView">Danh bạ ở chế độ xem tùy chỉnh</string>
     <string name="listSingleContact">Một liên hệ</string>
@@ -431,10 +424,6 @@
     <string name="network_name_wifi">Wi-Fi</string>
     <string name="new_call_log_carrier_video">Cuộc gọi video của nhà mạng</string>
     <string name="new_call_log_duo_video">Cuộc gọi video Duo</string>
-    <string name="new_call_log_header_older">Cũ hơn</string>
-    <string name="new_call_log_header_today">Hôm nay</string>
-    <string name="new_call_log_header_yesterday">Hôm qua</string>
-    <string name="new_call_log_permission_no_calllog">Để xem nhật ký cuộc gọi, hãy bật quyền truy cập vào Điện thoại.</string>
     <string name="new_call_log_secondary_blocked">Bị chặn</string>
     <string name="new_call_log_secondary_spam">Spam</string>
     <string name="new_call_log_unknown">Không xác định</string>
@@ -490,7 +479,6 @@
     <string name="ok_got_it">Ok, đã hiểu</string>
     <string name="old_block_number_confirmation_title">Bạn muốn chặn %1$s?</string>
     <string name="old_call_subject_type_and_number">%1$s %2$s</string>
-    <string name="open_source_license_detail_label">Chi tiết giấy phép cho phần mềm nguồn mở</string>
     <string name="organizationLabelsGroup">Tổ chức</string>
     <string name="outgoing_wps_warning">Việc thực hiện cuộc gọi WPS sẽ ngắt kết nối cuộc gọi hiện có của bạn.</string>
     <string name="pause_prompt_no">Không</string>
@@ -524,7 +512,6 @@
     <string name="pre_call_select_phone_account_hint_intra_carrier">Sử dụng cùng một nhà mạng</string>
     <string name="pre_call_select_phone_account_hint_other_sim_in_use">Không thể thực hiện cuộc gọi bằng %1$s</string>
     <string name="pre_call_select_phone_account_remember">Nhớ lựa chọn này</string>
-    <string name="privacy_policy_label">Chính sách bảo mật</string>
     <string name="private_num_non_verizon">Số cá nhân</string>
     <string name="private_num_verizon">Bị giới hạn</string>
     <string name="quick_question">Câu hỏi nhanh…</string>
@@ -550,7 +537,7 @@
     <string name="rtt_request_dialog_details">%1$s muốn sử dụng tính năng nhắn tin trong cuộc gọi thoại của bạn.</string>
     <string name="rtt_request_dialog_more_information">Tin nhắn theo thời gian thực (RTT) trợ giúp những người gọi khiếm thính, bị suy giảm thính lực, không có khả năng nói hoặc cần thêm hỗ trợ khác ngoài giọng nói.</string>
     <string name="rtt_request_dialog_title">Tham gia cuộc gọi bằng Tin nhắn theo thời gian thực (RTT)?</string>
-    <string name="rtt_status_banner_text">Đang chờ %s tham gia cuộc gọi Tin nhắn theo thời gian thực (RTT)...</string>
+    <string name="rtt_status_banner_text">Đang chờ %s tham gia cuộc gọi Tin nhắn theo thời gian thực (RTT)…</string>
     <string name="rtt_transcript_advisory">Bên kia có thể thấy bạn đang nhập. Bản chép lời được lưu trữ trong nhật ký cuộc gọi trên thiết bị của bạn.</string>
     <string name="rtt_transcript_link">Xem bản ghi</string>
     <string name="rtt_transcript_not_available">Bản ghi chỉ có sẵn cho các cuộc gọi hỗ trợ tính năng nhắn tin</string>
@@ -646,7 +633,6 @@
     <string name="tab_title">Tab %1$s.</string>
     <string name="tab_title_call_history">Nhật ký cuộc gọi</string>
     <string name="tab_title_speed_dial">Quay số nhanh</string>
-    <string name="terms_of_service_label">Điều khoản dịch vụ</string>
     <string name="toast_cannot_write_system_settings">Ứng dụng Điện thoại không có quyền ghi vào cài đặt hệ thống.</string>
     <string name="toast_text_copied">Đã sao chép văn bản</string>
     <string name="toolbar_close">Đóng</string>
@@ -691,13 +677,7 @@
     <string name="view_updates_from_group">Xem thông tin cập nhật</string>
     <string name="voice_call">Gọi thoại</string>
     <string name="voice_search_not_available">Không có tính năng tìm kiếm bằng giọng nói</string>
-    <string name="voicemail">Thư thoại</string>
-    <string name="voicemailCallLogDateTimeFormat">%1$s lúc %2$s</string>
-    <string name="voicemailCallLogDateTimeFormatWithDuration">%1$s • %2$s</string>
-    <string name="voicemailCallLogToday">@string/call_log_header_today</string>
-    <string name="voicemailDurationFormat">%1$02d:%2$02d</string>
     <string name="voicemailMultiSelectActionBarTitle">Đã chọn %1$s</string>
-    <string name="voicemail_donation_promo_content">Cho phép Google xem xét thư thoại này và các thư thoại trong tương lai có bản chép lời. Các thư thoại này sẽ được lưu trữ ẩn danh. Bạn có thể thay đổi Cài đặt bất cứ lúc nào. %1$s</string>
     <string name="voicemail_string">Thư thoại</string>
     <string name="voicemail_transcription_rating">Đánh giá chất lượng ghi âm</string>
     <string name="wait_prompt_str">"Gửi các âm sau?

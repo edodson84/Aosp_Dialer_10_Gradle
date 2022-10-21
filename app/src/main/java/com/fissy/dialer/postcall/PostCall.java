@@ -43,6 +43,8 @@ import com.fissy.dialer.util.IntentUtil;
 import com.google.android.material.snackbar.BaseTransientBottomBar.BaseCallback;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.Objects;
+
 /**
  * Helper class to handle all post call actions.
  */
@@ -79,7 +81,7 @@ public class PostCall {
         LogUtil.i("PostCall.promptUserToSendMessage", "returned from call, showing post call SnackBar");
         String message = activity.getString(R.string.post_call_message);
         EnrichedCallManager manager = EnrichedCallComponent.get(activity).getEnrichedCallManager();
-        EnrichedCallCapabilities capabilities = manager.getCapabilities(getPhoneNumber(activity));
+        EnrichedCallCapabilities capabilities = manager.getCapabilities(Objects.requireNonNull(getPhoneNumber(activity)));
         LogUtil.i(
                 "PostCall.promptUserToSendMessage",
                 "number: %s, capabilities: %s",

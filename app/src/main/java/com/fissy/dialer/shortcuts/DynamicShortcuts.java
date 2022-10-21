@@ -62,7 +62,7 @@ import java.util.Map.Entry;
  * <p>However, the job scheduler uses {@link #updateIcons()} to makes sure icons are forcefully
  * updated periodically (about once a day).
  */
-@TargetApi(VERSION_CODES.N_MR1) // Shortcuts introduced in N MR1
+ // Shortcuts introduced in N MR1
 final class DynamicShortcuts {
 
     private static final int MAX_DYNAMIC_SHORTCUTS = 3;

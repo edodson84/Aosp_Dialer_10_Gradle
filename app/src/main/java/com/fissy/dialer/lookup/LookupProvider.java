@@ -88,7 +88,6 @@ public class LookupProvider extends ContentProvider {
     /**
      * Get location from last location query.
      *
-     * @return The last location
      */
     private String PROVIDER = "network";
 
@@ -177,24 +176,21 @@ public class LookupProvider extends ContentProvider {
 
     @Override
     public ParcelFileDescriptor openFile(Uri uri, String mode) throws FileNotFoundException {
-        switch (uriMatcher.match(uri)) {
-            case IMAGE:
-                String number = uri.getLastPathSegment();
-                File image = LookupCache.getImagePath(getContext(), number);
+        if (uriMatcher.match(uri) == IMAGE) {
+            String number = uri.getLastPathSegment();
+            File image = LookupCache.getImagePath(getContext(), number);
 
-                if (mode.equals("r")) {
-                    if (image == null || !image.exists() || !image.isFile()) {
-                        throw new FileNotFoundException("Cached image does not exist");
-                    }
-
-                    return ParcelFileDescriptor.open(image, ParcelFileDescriptor.MODE_READ_ONLY);
-                } else {
-                    throw new FileNotFoundException("The URI is read only");
+            if (mode.equals("r")) {
+                if (!image.exists() || !image.isFile()) {
+                    throw new FileNotFoundException("Cached image does not exist");
                 }
 
-            default:
-                throw new FileNotFoundException("Invalid URI: " + uri);
+                return ParcelFileDescriptor.open(image, ParcelFileDescriptor.MODE_READ_ONLY);
+            } else {
+                throw new FileNotFoundException("The URI is read only");
+            }
         }
+        throw new FileNotFoundException("Invalid URI: " + uri);
     }
 
     /**
@@ -271,11 +267,11 @@ public class LookupProvider extends ContentProvider {
 
         try {
             filter = URLDecoder.decode(filter, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException ignored) {
         }
 
         ArrayList<ContactInfo> results = new ArrayList<>();
-        if ((type == NEARBY || type == NEARBY_AND_PEOPLE) && lastLocation != null) {
+        if (type == NEARBY || type == NEARBY_AND_PEOPLE) {
             List<ContactInfo> nearby = GoogleForwardLookup.lookup(getContext(), filter, lastLocation);
             if (nearby != null) {
                 if (DEBUG) Log.v(TAG, "adding places");
@@ -373,11 +369,7 @@ public class LookupProvider extends ContentProvider {
 
         if (city != null) {
             return city;
-        } else if (address != null) {
-            return address;
-        } else {
-            return null;
-        }
+        } else return address;
     }
 
     /**
@@ -388,8 +380,8 @@ public class LookupProvider extends ContentProvider {
      * @return Instance of the thread
      */
     private <T> T execute(Callable<T> callable, String name) {
-        FutureCallable<T> futureCallable = new FutureCallable<T>(callable);
-        FutureTask<T> future = new FutureTask<T>(futureCallable);
+        FutureCallable<T> futureCallable = new FutureCallable<>(callable);
+        FutureTask<T> future = new FutureTask<>(futureCallable);
         futureCallable.setFuture(future);
 
         synchronized (activeTasks) {

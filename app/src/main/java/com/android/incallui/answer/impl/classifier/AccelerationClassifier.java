@@ -20,6 +20,7 @@ import android.util.ArrayMap;
 import android.view.MotionEvent;
 
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * A classifier which looks at the speed and distance between successive points of a Stroke. It
@@ -55,7 +56,7 @@ class AccelerationClassifier extends StrokeClassifier {
             if (strokeMap.get(stroke) == null) {
                 strokeMap.put(stroke, new Data(point));
             } else {
-                strokeMap.get(stroke).addPoint(point);
+                Objects.requireNonNull(strokeMap.get(stroke)).addPoint(point);
             }
         }
     }
@@ -63,7 +64,7 @@ class AccelerationClassifier extends StrokeClassifier {
     @Override
     public float getFalseTouchEvaluation(Stroke stroke) {
         Data data = strokeMap.get(stroke);
-        return 2 * SpeedRatioEvaluator.evaluate(data.maxSpeedRatio);
+        return 2 * SpeedRatioEvaluator.evaluate(Objects.requireNonNull(data).maxSpeedRatio);
     }
 
     private static class Data {

@@ -58,7 +58,6 @@ import com.fissy.dialer.glidephotomanager.PhotoInfo;
 import com.fissy.dialer.logging.DialerImpression;
 import com.fissy.dialer.logging.Logger;
 import com.fissy.dialer.logging.UiAction;
-import com.fissy.dialer.main.impl.MainActivity;
 import com.fissy.dialer.main.impl.MainActivityPeer;
 import com.fissy.dialer.performancereport.PerformanceReport;
 import com.fissy.dialer.postcall.PostCall;
@@ -398,7 +397,7 @@ abstract class CallDetailsActivityCommon extends AppCompatActivity {
             DialerExecutorComponent.get(getActivity().getApplicationContext())
                     .dialerExecutorFactory()
                     .createUiTaskBuilder(
-                            getActivity().getFragmentManager(),
+                            getActivity().getSupportFragmentManager(),
                             "CallDetailsActivityCommon.createAssistedDialerNumberParserTask",
                             new AssistedDialingNumberParseWorker())
                     .onSuccess(successListener)
@@ -411,7 +410,7 @@ abstract class CallDetailsActivityCommon extends AppCompatActivity {
     static final class AssistedDialingNumberParseWorker implements Worker<String, Integer> {
 
         @Override
-        public Integer doInBackground(@NonNull String phoneNumber) {
+        public Integer doInBackground(String phoneNumber) {
             PhoneNumber parsedNumber;
             try {
                 parsedNumber = PhoneNumberUtil.getInstance().parse(phoneNumber, null);
@@ -465,7 +464,7 @@ abstract class CallDetailsActivityCommon extends AppCompatActivity {
         }
     }
 
-    private static final class ReportCallIdListener
+    private final class ReportCallIdListener
             implements CallDetailsFooterViewHolder.ReportCallIdListener {
         private final WeakReference<Activity> activityWeakReference;
 
@@ -475,8 +474,8 @@ abstract class CallDetailsActivityCommon extends AppCompatActivity {
 
         @Override
         public void reportCallId(String number) {
-            ReportDialogFragment.newInstance(number)
-                    .show(getActivity().getFragmentManager(), null /* tag */);
+            ReportDialogFragment fragment = ReportDialogFragment.newInstance(number);
+            fragment.show(getSupportFragmentManager(), null /* tag */);
         }
 
         @Override

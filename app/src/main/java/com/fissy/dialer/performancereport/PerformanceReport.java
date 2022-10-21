@@ -19,6 +19,7 @@ package com.fissy.dialer.performancereport;
 import android.os.SystemClock;
 import android.widget.AbsListView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,6 +28,7 @@ import com.fissy.dialer.logging.UiAction;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -48,7 +50,7 @@ public final class PerformanceReport {
     private static final RecyclerView.OnScrollListener recordOnScrollListener =
             new RecyclerView.OnScrollListener() {
                 @Override
-                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                     if (newState == RecyclerView.SCROLL_STATE_SETTLING) {
                         PerformanceReport.recordClick(UiAction.Type.SCROLL);
                     }
@@ -158,6 +160,6 @@ public final class PerformanceReport {
         LogUtil.i(
                 "PerformanceReport.setIgnoreActionOnce",
                 "next action will be ignored once if it is %s",
-                ignoreActionOnce.toString());
+                Objects.requireNonNull(ignoreActionOnce).toString());
     }
 }

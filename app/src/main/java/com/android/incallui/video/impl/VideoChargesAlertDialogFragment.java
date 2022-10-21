@@ -37,6 +37,8 @@ import com.fissy.dialer.R;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
 
+import java.util.Objects;
+
 /**
  * Alert dialog for video charges.
  */
@@ -115,7 +117,7 @@ public class VideoChargesAlertDialogFragment extends DialogFragment {
         super.onCreateDialog(bundle);
 
         if (!VideoChargesAlertDialogFragment.shouldShow(
-                getActivity(), getArguments().getString(ARG_CALL_ID))) {
+                Objects.requireNonNull(getActivity()), Objects.requireNonNull(getArguments()).getString(ARG_CALL_ID))) {
             throw new IllegalStateException(
                     "shouldShow indicated VideoChargesAlertDialogFragment should not have showed");
         }
@@ -142,7 +144,7 @@ public class VideoChargesAlertDialogFragment extends DialogFragment {
         preferences.edit().putBoolean(KEY_DO_NOT_SHOW_VIDEO_CHARGES_ALERT, isChecked).apply();
 
         DialerCall dialerCall =
-                CallList.getInstance().getCallById(getArguments().getString(ARG_CALL_ID));
+                CallList.getInstance().getCallById(Objects.requireNonNull(getArguments()).getString(ARG_CALL_ID));
         if (dialerCall != null) {
             dialerCall.setDidDismissVideoChargesAlertDialog(true);
         }

@@ -40,6 +40,7 @@ import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -223,8 +224,7 @@ final class PersistentLogFileHandler {
         }
         Arrays.sort(
                 files,
-                (File lhs, File rhs) ->
-                        Long.compare(Long.valueOf(lhs.getName()), Long.valueOf(rhs.getName())));
+                Comparator.comparingLong((File lhs) -> Long.parseLong(lhs.getName())));
         return files;
     }
 
@@ -265,7 +265,7 @@ final class PersistentLogFileHandler {
         }
 
         int index = sharedPreferences.getInt(getNextFileKey(), 0);
-        sharedPreferences.edit().putInt(getNextFileKey(), index + 1).commit();
+        sharedPreferences.edit().putInt(getNextFileKey(), index + 1).apply();
         return index;
     }
 

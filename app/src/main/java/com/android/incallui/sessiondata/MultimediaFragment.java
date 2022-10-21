@@ -45,6 +45,8 @@ import com.fissy.dialer.common.FragmentUtils;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.multimedia.MultimediaData;
 
+import java.util.Objects;
+
 /**
  * Displays info from {@link MultimediaData MultimediaData}.
  *
@@ -101,14 +103,14 @@ public class MultimediaFragment extends Fragment implements AvatarPresenter {
     @Override
     public void onCreate(@Nullable Bundle bundle) {
         super.onCreate(bundle);
-        showAvatar = getArguments().getBoolean(ARG_SHOW_AVATAR);
+        showAvatar = Objects.requireNonNull(getArguments()).getBoolean(ARG_SHOW_AVATAR);
         isSpam = getArguments().getBoolean(ARG_IS_SPAM);
     }
 
     @Nullable
     @Override
     public View onCreateView(
-            LayoutInflater layoutInflater, @Nullable ViewGroup viewGroup, @Nullable Bundle bundle) {
+            @NonNull LayoutInflater layoutInflater, @Nullable ViewGroup viewGroup, @Nullable Bundle bundle) {
 
         if (isSpam) {
             LogUtil.i("MultimediaFragment.onCreateView", "show spam layout");
@@ -118,7 +120,7 @@ public class MultimediaFragment extends Fragment implements AvatarPresenter {
         boolean hasImage = getImageUri() != null;
         boolean hasSubject = !TextUtils.isEmpty(getSubject());
         boolean hasMap = getLocation() != null;
-        if (hasMap && MapsComponent.get(getContext()).getMaps().isAvailable()) {
+        if (hasMap && MapsComponent.get(Objects.requireNonNull(getContext())).getMaps().isAvailable()) {
             if (hasImage) {
                 if (hasSubject) {
                     LogUtil.i("MultimediaFragment.onCreateView", "show text, image, location layout");
@@ -150,7 +152,7 @@ public class MultimediaFragment extends Fragment implements AvatarPresenter {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle bundle) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle bundle) {
         super.onViewCreated(view, bundle);
         View container = view.findViewById(R.id.answer_message_container);
         if (container != null) {
@@ -185,7 +187,7 @@ public class MultimediaFragment extends Fragment implements AvatarPresenter {
                                         Target<Drawable> target,
                                         boolean isFirstResource) {
                                     view.findViewById(R.id.loading_spinner).setVisibility(View.GONE);
-                                    LogUtil.e("MultimediaFragment.onLoadFailed", null, e);
+                                    LogUtil.e("MultimediaFragment.onLoadFailed", null, Objects.requireNonNull(e));
                                     // TODO(a bug) handle error cases nicely
                                     return false; // Let Glide handle the rest
                                 }
@@ -209,7 +211,7 @@ public class MultimediaFragment extends Fragment implements AvatarPresenter {
         if (fragmentHolder != null) {
             fragmentHolder.setClipToOutline(true);
             Fragment mapFragment =
-                    MapsComponent.get(getContext()).getMaps().createStaticMapFragment(getLocation());
+                    MapsComponent.get(Objects.requireNonNull(getContext())).getMaps().createStaticMapFragment(Objects.requireNonNull(getLocation()));
             getChildFragmentManager()
                     .beginTransaction()
                     .replace(R.id.answer_message_frag, mapFragment)
@@ -244,17 +246,17 @@ public class MultimediaFragment extends Fragment implements AvatarPresenter {
 
     @Nullable
     public String getSubject() {
-        return getArguments().getString(ARG_SUBJECT);
+        return Objects.requireNonNull(getArguments()).getString(ARG_SUBJECT);
     }
 
     @Nullable
     public Uri getImageUri() {
-        return getArguments().getParcelable(ARG_IMAGE);
+        return Objects.requireNonNull(getArguments()).getParcelable(ARG_IMAGE);
     }
 
     @Nullable
     public Location getLocation() {
-        return getArguments().getParcelable(ARG_LOCATION);
+        return Objects.requireNonNull(getArguments()).getParcelable(ARG_LOCATION);
     }
 
     /**

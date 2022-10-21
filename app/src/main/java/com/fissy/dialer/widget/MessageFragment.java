@@ -39,6 +39,8 @@ import com.fissy.dialer.R;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.FragmentUtils;
 
+import java.util.Objects;
+
 /**
  * Fragment used to compose call with message fragment.
  */
@@ -81,7 +83,7 @@ public class MessageFragment extends Fragment
 
         sendMessage = view.findViewById(R.id.send_message);
         sendMessageContainer = view.findViewById(R.id.count_and_send_container);
-        if (getArguments().getBoolean(SHOW_SEND_ICON_KEY, false)) {
+        if (Objects.requireNonNull(getArguments()).getBoolean(SHOW_SEND_ICON_KEY, false)) {
             sendMessage.setVisibility(View.VISIBLE);
             sendMessage.setEnabled(false);
             sendMessageContainer.setOnClickListener(this);

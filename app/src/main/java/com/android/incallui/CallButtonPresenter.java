@@ -58,6 +58,8 @@ import com.fissy.dialer.logging.DialerImpression.Type;
 import com.fissy.dialer.logging.Logger;
 import com.fissy.dialer.telecom.TelecomUtil;
 
+import java.util.Objects;
+
 /**
  * Logic for call buttons.
  */
@@ -84,7 +86,7 @@ public class CallButtonPresenter
     private boolean isInCallButtonUiReady;
     private PhoneAccountHandle otherAccount;
 
-    private CallRecorder.RecordingProgressListener recordingProgressListener =
+    private final CallRecorder.RecordingProgressListener recordingProgressListener =
             new CallRecorder.RecordingProgressListener() {
                 @Override
                 public void onStartRecording() {
@@ -336,7 +338,7 @@ public class CallButtonPresenter
                         call.getUniqueCallId(),
                         call.getTimeAddedMs());
         LogUtil.v("CallButtonPresenter", "show dialpad " + checked);
-        getActivity().showDialpadFragment(checked /* show */, true /* animate */);
+        Objects.requireNonNull(getActivity()).showDialpadFragment(checked /* show */, true /* animate */);
     }
 
     @Override
@@ -346,7 +348,7 @@ public class CallButtonPresenter
             final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
             boolean warningPresented = prefs.getBoolean(KEY_RECORDING_WARNING_PRESENTED, false);
             if (!warningPresented) {
-                new AlertDialog.Builder(getActivity())
+                new AlertDialog.Builder(Objects.requireNonNull(getActivity()))
                         .setTitle(R.string.recording_warning_title)
                         .setMessage(R.string.recording_warning_text)
                         .setPositiveButton(R.string.onscreenCallRecordText, (dialog, which) -> {

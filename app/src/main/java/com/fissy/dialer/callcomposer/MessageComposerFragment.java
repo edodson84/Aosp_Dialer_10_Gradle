@@ -34,6 +34,8 @@ import androidx.annotation.Nullable;
 
 import com.fissy.dialer.R;
 
+import java.util.Objects;
+
 /**
  * Fragment used to compose call with message fragment.
  */
@@ -61,7 +63,7 @@ public class MessageComposerFragment extends CallComposerFragment
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        charLimit = getArguments().getInt(CHAR_LIMIT_KEY, NO_CHAR_LIMIT);
+        charLimit = Objects.requireNonNull(getArguments()).getInt(CHAR_LIMIT_KEY, NO_CHAR_LIMIT);
 
         View view = inflater.inflate(R.layout.fragment_message_composer, container, false);
         TextView urgent = (TextView) view.findViewById(R.id.message_urgent);
@@ -112,7 +114,7 @@ public class MessageComposerFragment extends CallComposerFragment
 
     @Override
     public void afterTextChanged(Editable s) {
-        getListener().composeCall(this);
+        Objects.requireNonNull(getListener()).composeCall(this);
     }
 
     @Override
@@ -130,7 +132,7 @@ public class MessageComposerFragment extends CallComposerFragment
         if (getMessage() == null) {
             return false;
         }
-        getListener().sendAndCall();
+        Objects.requireNonNull(getListener()).sendAndCall();
         return true;
     }
 }

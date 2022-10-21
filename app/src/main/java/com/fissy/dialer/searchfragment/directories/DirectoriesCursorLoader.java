@@ -18,10 +18,10 @@
 package com.fissy.dialer.searchfragment.directories;
 
 import android.content.Context;
-import android.content.CursorLoader;
 import android.database.Cursor;
 import android.provider.ContactsContract;
 
+import androidx.loader.content.CursorLoader;
 import androidx.annotation.Nullable;
 
 import com.fissy.dialer.common.LogUtil;

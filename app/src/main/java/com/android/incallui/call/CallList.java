@@ -16,6 +16,7 @@
 
 package com.android.incallui.call;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
@@ -83,10 +84,10 @@ public class CallList implements DialerCallDelegate {
      * resizing, 1 means we only expect a single thread to access the map so make only a single shard
      */
     private final Set<Listener> listeners =
-            Collections.newSetFromMap(new ConcurrentHashMap<Listener, Boolean>(8, 0.9f, 1));
+            Collections.newSetFromMap(new ConcurrentHashMap<>(8, 0.9f, 1));
 
     private final Set<DialerCall> pendingDisconnectCalls =
-            Collections.newSetFromMap(new ConcurrentHashMap<DialerCall, Boolean>(8, 0.9f, 1));
+            Collections.newSetFromMap(new ConcurrentHashMap<>(8, 0.9f, 1));
 
     private UiListener uiListeners;
 
@@ -108,24 +109,7 @@ public class CallList implements DialerCallDelegate {
      */
     public static CallList getInstance() {
         return instance;
-    }    /**
-     * Handles the timeout for destroying disconnected calls.
-     */
-    private final Handler handler =
-            new Handler() {
-                @Override
-                public void handleMessage(Message msg) {
-                    switch (msg.what) {
-                        case EVENT_DISCONNECTED_TIMEOUT:
-                            LogUtil.d("CallList.handleMessage", "EVENT_DISCONNECTED_TIMEOUT ", msg.obj);
-                            finishDisconnectedCall((DialerCall) msg.obj);
-                            break;
-                        default:
-                            LogUtil.e("CallList.handleMessage", "Message not expected: " + msg.what);
-                            break;
-                    }
-                }
-            };
+    }
 
     public void onCallAdded(
             final Context context, final android.telecom.Call telecomCall, LatencyReport latencyReport) {
@@ -168,7 +152,7 @@ public class CallList implements DialerCallDelegate {
                             boolean isIncomingCall =
                                     call.getState() == DialerCallState.INCOMING
                                             || call.getState() == DialerCallState.CALL_WAITING;
-                            boolean isSpam = result.isSpam();
+                            boolean isSpam = Objects.requireNonNull(result).isSpam();
                             call.setSpamStatus(result);
 
                             if (isIncomingCall) {
@@ -185,7 +169,7 @@ public class CallList implements DialerCallDelegate {
                         }
 
                         @Override
-                        public void onFailure(Throwable t) {
+                        public void onFailure( @NonNull Throwable t) {
                             LogUtil.e("CallList.onFailure", "unable to query spam status", t);
                         }
                     },
@@ -201,13 +185,10 @@ public class CallList implements DialerCallDelegate {
                 new FilteredNumberAsyncQueryHandler(context);
 
         filteredNumberAsyncQueryHandler.isBlockedNumber(
-                new FilteredNumberAsyncQueryHandler.OnCheckBlockedListener() {
-                    @Override
-                    public void onCheckComplete(Integer id) {
-                        if (id != null && id != FilteredNumberAsyncQueryHandler.INVALID_ID) {
-                            call.setBlockedStatus(true);
-                            // No need to update UI since it's only used for logging.
-                        }
+                id -> {
+                    if (id != null && id != FilteredNumberAsyncQueryHandler.INVALID_ID) {
+                        call.setBlockedStatus(true);
+                        // No need to update UI since it's only used for logging.
                     }
                 },
                 call.getNumber(),
@@ -217,7 +198,7 @@ public class CallList implements DialerCallDelegate {
         if (call.getState() == DialerCallState.INCOMING
                 || call.getState() == DialerCallState.CALL_WAITING) {
             if (call.isActiveRttCall()) {
-                if (!call.isPhoneAccountRttCapable()) {
+                if (call.isPhoneAccountRttCapable()) {
                     RttPromotion.setEnabled(context);
                 }
                 Logger.get(context)
@@ -245,7 +226,22 @@ public class CallList implements DialerCallDelegate {
         }
 
         Trace.endSection();
-    }
+    }    /**
+     * Handles the timeout for destroying disconnected calls.
+     */
+    @SuppressLint("HandlerLeak")
+    private final Handler handler =
+            new Handler() {
+                @Override
+                public void handleMessage(Message msg) {
+                    if (msg.what == EVENT_DISCONNECTED_TIMEOUT) {
+                        LogUtil.d("CallList.handleMessage", "EVENT_DISCONNECTED_TIMEOUT ", msg.obj);
+                        finishDisconnectedCall((DialerCall) msg.obj);
+                    } else {
+                        LogUtil.e("CallList.handleMessage", "Message not expected: " + msg.what);
+                    }
+                }
+            };
 
     private void logSecondIncomingCall(
             @NonNull Context context, @NonNull DialerCall firstCall, @NonNull DialerCall incomingCall) {
@@ -263,7 +259,7 @@ public class CallList implements DialerCallDelegate {
                 impression = DialerImpression.Type.VOICE_CALL_WITH_INCOMING_VOICE_CALL;
             }
         }
-        Assert.checkArgument(impression != null);
+        Assert.checkArgument(true);
         Logger.get(context)
                 .logCallImpression(
                         impression, incomingCall.getUniqueCallId(), incomingCall.getTimeAddedMs());
@@ -277,7 +273,7 @@ public class CallList implements DialerCallDelegate {
     public void onCallRemoved(Context context, android.telecom.Call telecomCall) {
         if (callByTelecomCall.containsKey(telecomCall)) {
             DialerCall call = callByTelecomCall.get(telecomCall);
-            Assert.checkArgument(!call.isExternalCall());
+            Assert.checkArgument(!Objects.requireNonNull(call).isExternalCall());
 
             EnrichedCallManager manager = EnrichedCallComponent.get(context).getEnrichedCallManager();
             manager.unregisterCapabilitiesListener(call);
@@ -321,8 +317,6 @@ public class CallList implements DialerCallDelegate {
     /**
      * Handles the case where an internal call has become an exteral call. We need to
      *
-     * @param context
-     * @param telecomCall
      */
     public void onInternalCallMadeExternal(Context context, android.telecom.Call telecomCall) {
 
@@ -331,7 +325,7 @@ public class CallList implements DialerCallDelegate {
 
             // Don't log an already logged call. logCall() might be called multiple times
             // for the same call due to a bug.
-            if (call.getLogState() != null && !call.getLogState().isLogged) {
+            if (Objects.requireNonNull(call).getLogState() != null && !call.getLogState().isLogged) {
                 getLegacyBindings(context).logCall(call);
                 call.getLogState().isLogged = true;
             }

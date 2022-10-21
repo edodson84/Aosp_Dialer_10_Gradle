@@ -49,13 +49,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:accessibilityTraversalBefore="@id/videocall_speaker_button"
-            android:drawableTop="@drawable/quantum_ic_videocam_off_white_36"
             android:drawablePadding="8.0dip"
             android:gravity="center"
             android:padding="64.0dip"
             android:text="@string/call_incoming_video_is_off"
             android:textAppearance="@style/Dialer.Incall.TextAppearance"
-            android:visibility="gone" />
+            android:visibility="gone"
+            app:drawableTopCompat="@drawable/quantum_ic_videocam_off_white_36" />
 
         <LinearLayout
             android:id="@id/incall_contact_grid"
@@ -140,7 +140,7 @@
                     android:visibility="gone" />
             </FrameLayout>
 
-            <Space
+            <View
                 android:layout_width="fill_parent"
                 android:layout_height="220.0dip" />
         </LinearLayout>

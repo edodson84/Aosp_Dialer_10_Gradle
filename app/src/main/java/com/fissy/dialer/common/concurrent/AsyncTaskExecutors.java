@@ -87,9 +87,10 @@ public final class AsyncTaskExecutors {
             this.executor = executor;
         }
 
+        @SafeVarargs
         @Override
         @MainThread
-        public <T> AsyncTask<T, ?, ?> submit(Object identifer, AsyncTask<T, ?, ?> task, T... params) {
+        public final <T> AsyncTask<T, ?, ?> submit(Object identifer, AsyncTask<T, ?, ?> task, T... params) {
             Assert.isMainThread();
             return task.executeOnExecutor(executor, params);
         }
