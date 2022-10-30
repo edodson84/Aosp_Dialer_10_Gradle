@@ -17,7 +17,6 @@
 package com.fissy.dialer.app.widget;
 
 import android.animation.ValueAnimator;
-import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextUtils;

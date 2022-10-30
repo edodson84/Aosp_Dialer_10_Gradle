@@ -98,7 +98,7 @@ public class CallLogQueryHandler extends NoNullCursorAsyncQueryHandler {
     public void fetchCalls(int callType, long newerThan) {
         cancelFetch();
         if (PermissionsUtil.hasPhonePermissions(context)) {
-            fetchCalls(QUERY_CALLLOG_TOKEN, callType, false /* newOnly */, newerThan);
+            fetchCalls(QUERY_CALLLOG_TOKEN, callType,  /* newOnly */ newerThan);
         } else {
             updateAdapterData(null);
         }
@@ -107,7 +107,7 @@ public class CallLogQueryHandler extends NoNullCursorAsyncQueryHandler {
     /**
      * Fetches the list of calls in the call log.
      */
-    private void fetchCalls(int token, int callType, boolean newOnly, long newerThan) {
+    private void fetchCalls(int token, int callType, long newerThan) {
         StringBuilder where = new StringBuilder();
         List<String> selectionArgs = new ArrayList<>();
 
@@ -115,7 +115,7 @@ public class CallLogQueryHandler extends NoNullCursorAsyncQueryHandler {
         where.append("(").append(Calls.TYPE).append(" != ?)");
         selectionArgs.add(Integer.toString(Calls.BLOCKED_TYPE));
 
-        if (newOnly) {
+        if (false) {
             where.append(" AND (").append(Calls.NEW).append(" = 1)");
         }
 

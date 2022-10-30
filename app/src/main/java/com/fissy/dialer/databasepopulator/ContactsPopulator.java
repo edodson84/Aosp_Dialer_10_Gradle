@@ -261,8 +261,8 @@ public final class ContactsPopulator {
     abstract static class Contact {
         static Builder builder() {
             return new AutoValue_ContactsPopulator_Contact.Builder()
-                    .setAccountType("com.google")
-                    .setAccountName("foo@example")
+                    .setAccountType()
+                    .setAccountName()
                     .setPinned(0)
                     .setIsStarred(false)
                     .setPhoneNumbers(new ArrayList<>())
@@ -317,9 +317,9 @@ public final class ContactsPopulator {
                 return photoStream;
             }
 
-            abstract Builder setAccountType(@NonNull String accountType);
+            abstract Builder setAccountType();
 
-            abstract Builder setAccountName(@NonNull String accountName);
+            abstract Builder setAccountName();
 
             abstract Builder setName(@NonNull String name);
 
@@ -327,7 +327,7 @@ public final class ContactsPopulator {
 
             abstract Builder setPinned(int position);
 
-            abstract Builder setPhotoStream(ByteArrayOutputStream photoStream);
+            abstract void setPhotoStream(ByteArrayOutputStream photoStream);
 
             abstract Builder setPhoneNumbers(@NonNull List<PhoneNumber> phoneNumbers);
 

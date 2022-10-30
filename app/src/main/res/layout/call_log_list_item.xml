@@ -57,10 +57,10 @@
                         android:id="@id/quick_contact_checkbox"
                         android:layout_width="@dimen/contact_photo_size"
                         android:layout_height="@dimen/contact_photo_size"
+                        android:contentDescription="TODO"
                         android:scaleType="fitCenter"
                         android:src="@drawable/ic_check_mark_48dp"
-                        android:visibility="gone"
-                        android:contentDescription="TODO" />
+                        android:visibility="gone" />
                 </FrameLayout>
 
                 <LinearLayout
@@ -97,10 +97,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/call_log_icon_margin"
+                            android:contentDescription="TODO"
                             android:scaleType="center"
                             android:src="@drawable/ic_work_profile"
-                            android:visibility="gone"
-                            android:contentDescription="TODO" />
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@id/call_location_and_date"
@@ -196,9 +196,9 @@
                     android:layout_height="@dimen/call_log_list_item_primary_action_dimen"
                     android:layout_gravity="center_vertical"
                     android:background="?android:selectableItemBackgroundBorderless"
+                    android:contentDescription="TODO"
                     android:scaleType="center"
-                    android:visibility="gone"
-                    android:contentDescription="TODO" />
+                    android:visibility="gone" />
             </LinearLayout>
 
             <ViewStub

@@ -16,6 +16,8 @@
 
 package com.android.incallui.incall.impl;
 
+import static com.fissy.dialer.app.settings.DialerSettingsActivity.PrefsFragment.getThemeButtonBehavior;
+
 import android.Manifest.permission;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -63,7 +65,7 @@ import com.android.incallui.incall.protocol.PrimaryCallState.ButtonState;
 import com.android.incallui.incall.protocol.PrimaryInfo;
 import com.android.incallui.incall.protocol.SecondaryInfo;
 import com.fissy.dialer.R;
-import com.fissy.dialer.app.settings.ThemeOptionsSettingsFragment;
+import com.fissy.dialer.app.settings.DialerSettingsActivity;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.FragmentUtils;
 import com.fissy.dialer.common.LogUtil;
@@ -159,7 +161,7 @@ public class InCallFragment extends Fragment
             @Nullable ViewGroup viewGroup,
             @Nullable Bundle bundle) {
         LogUtil.i("InCallFragment.onCreateView", null);
-        Objects.requireNonNull(getActivity()).setTheme(R.style.Theme_InCallScreen);
+        requireActivity().setTheme(R.style.Theme_InCallScreen);
         // Bypass to avoid StrictModeResourceMismatchViolation
         final View view =
                 StrictModeUtils.bypass(
@@ -170,7 +172,7 @@ public class InCallFragment extends Fragment
                         view.findViewById(R.id.contactgrid_avatar),
                         getResources().getDimensionPixelSize(R.dimen.incall_avatar_size),
                         true /* showAnonymousAvatar */);
-        contactGridManager.onMultiWindowModeChanged(getActivity().isInMultiWindowMode());
+        contactGridManager.onMultiWindowModeChanged(requireActivity().isInMultiWindowMode());
 
         paginator = view.findViewById(R.id.incall_paginator);
         pager = view.findViewById(R.id.incall_pager);
@@ -183,7 +185,7 @@ public class InCallFragment extends Fragment
         endCallButton = view.findViewById(R.id.incall_end_call);
         endCallButton.setOnClickListener(this);
 
-        if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getContext()), permission.READ_PHONE_STATE)
+        if (ContextCompat.checkSelfPermission(requireContext(), permission.READ_PHONE_STATE)
                 != PackageManager.PERMISSION_GRANTED) {
             voiceNetworkType = TelephonyManager.NETWORK_TYPE_UNKNOWN;
         } else {
@@ -209,8 +211,8 @@ public class InCallFragment extends Fragment
                                     MainActivity.main.getTheme().obtainStyledAttributes(R.styleable.darkmodeView);
                             boolean darkmode = typedArray.getBoolean(R.styleable.darkmodeView_darkmode, false);
                             typedArray.recycle();
-                            ThemeOptionsSettingsFragment.ThemeButtonBehavior mThemeBehavior = ThemeOptionsSettingsFragment.getThemeButtonBehavior(MainActivityPeer.themeprefs);
-                            if (mThemeBehavior == ThemeOptionsSettingsFragment.ThemeButtonBehavior.LIGHT || !darkmode) {
+                            DialerSettingsActivity.PrefsFragment.ThemeButtonBehavior mThemeBehavior = getThemeButtonBehavior(MainActivityPeer.themeprefs);
+                            if (mThemeBehavior == DialerSettingsActivity.PrefsFragment.ThemeButtonBehavior.LIGHT || !darkmode) {
                                 container.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
                             }
                         }
@@ -301,7 +303,7 @@ public class InCallFragment extends Fragment
             contactGridManager.setAvatarHidden(true);
 
             // Need to let the dialpad move up a little further when location info is being shown
-            View dialpadView = Objects.requireNonNull(getView()).findViewById(R.id.incall_dialpad_container);
+            View dialpadView = requireView().findViewById(R.id.incall_dialpad_container);
             ViewGroup.LayoutParams params = dialpadView.getLayoutParams();
             if (params instanceof RelativeLayout.LayoutParams) {
                 ((RelativeLayout.LayoutParams) params).removeRule(RelativeLayout.BELOW);

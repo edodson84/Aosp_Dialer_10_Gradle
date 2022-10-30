@@ -15,10 +15,11 @@
  */
 package com.fissy.dialer.app.filterednumber;
 
-import android.app.FragmentManager;
 import android.content.Context;
 import android.database.Cursor;
 import android.view.View;
+
+import androidx.fragment.app.FragmentManager;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.blocking.BlockNumberDialogFragment;

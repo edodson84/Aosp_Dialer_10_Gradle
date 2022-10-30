@@ -4,8 +4,6 @@
 package com.fissy.dialer.logging;
 
 public final class VideoTechOuterClass {
-    static {
-    }
 
     private VideoTechOuterClass() {
     }

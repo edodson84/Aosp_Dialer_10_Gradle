@@ -17,14 +17,12 @@
 package com.fissy.dialer.shortcuts;
 
 import android.Manifest;
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.pm.ShortcutInfo;
 import android.content.pm.ShortcutManager;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build.VERSION_CODES;
 import android.provider.ContactsContract.Contacts;
 import android.util.ArrayMap;
 
@@ -51,7 +49,7 @@ import java.util.Map;
  * still up to date (e.g. photo and name). We also check to see if the contact has been deleted from
  * the user's contacts, and if so, we disable the pinned shortcut.
  */
- // Shortcuts introduced in N MR1
+// Shortcuts introduced in N MR1
 final class PinnedShortcuts {
 
     private static final String[] PROJECTION =

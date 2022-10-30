@@ -51,12 +51,12 @@ public abstract class SpeedDialEntry {
     public abstract Optional<Integer> pinnedPosition();
 
     /**
-
+     *
      */
     public abstract long contactId();
 
     /**
-
+     *
      */
     public abstract String lookupKey();
 

@@ -16,7 +16,6 @@
 
 package com.android.incallui;
 
-import android.annotation.TargetApi;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;

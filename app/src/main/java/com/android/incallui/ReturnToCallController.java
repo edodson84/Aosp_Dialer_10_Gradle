@@ -74,7 +74,7 @@ public class ReturnToCallController implements InCallUiListener, Listener, Audio
     private final PendingIntent endCall;
     private final PendingIntent fullScreen;
     private final ContactInfoCache contactInfoCache;
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    @VisibleForTesting()
     Bubble bubble;
     private CallAudioState audioState;
     private InCallState inCallState;

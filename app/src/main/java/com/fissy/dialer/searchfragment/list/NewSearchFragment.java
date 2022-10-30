@@ -22,7 +22,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.telephony.PhoneNumberUtils;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -39,9 +38,9 @@ import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.fragment.app.Fragment;
 import androidx.loader.app.LoaderManager;
-
 import androidx.loader.app.LoaderManager.LoaderCallbacks;
 import androidx.loader.content.Loader;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -81,7 +80,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Fragment used for searching contacts.
@@ -146,6 +144,9 @@ public final class NewSearchFragment extends Fragment
     private CallInitiationType.Type callInitiationType = CallInitiationType.Type.UNKNOWN_INITIATION;
     private boolean directoriesDisabledForTesting;
     private Runnable updatePositionRunnable;
+
+    public NewSearchFragment() {
+    }
 
     public static NewSearchFragment newInstance() {
         return new NewSearchFragment();
@@ -317,7 +318,7 @@ public final class NewSearchFragment extends Fragment
         }
         boolean slideUp = start > end;
         Interpolator interpolator = slideUp ? AnimUtils.EASE_IN : AnimUtils.EASE_OUT;
-        int startHeight = Objects.requireNonNull(getActivity()).findViewById(android.R.id.content).getHeight();
+        int startHeight = requireActivity().findViewById(android.R.id.content).getHeight();
         int endHeight = startHeight - (end - start);
         getView().setTranslationY(start);
         getView()
@@ -372,7 +373,7 @@ public final class NewSearchFragment extends Fragment
     public void onEmptyViewActionButtonClicked() {
         String[] deniedPermissions =
                 PermissionsUtil.getPermissionsCurrentlyDenied(
-                        Objects.requireNonNull(getContext()), PermissionsUtil.allContactsGroupPermissionsUsedInDialer);
+                        requireContext(), PermissionsUtil.allContactsGroupPermissionsUsedInDialer);
         if (deniedPermissions.length > 0) {
             LogUtil.i(
                     "NewSearchFragment.onEmptyViewActionButtonClicked",
@@ -447,14 +448,14 @@ public final class NewSearchFragment extends Fragment
                 "attempted to request already granted location permission");
         String[] deniedPermissions =
                 PermissionsUtil.getPermissionsCurrentlyDenied(
-                        Objects.requireNonNull(getContext()), PermissionsUtil.allLocationGroupPermissionsUsedInDialer);
+                        requireContext(), PermissionsUtil.allLocationGroupPermissionsUsedInDialer);
         FragmentUtils.getParentUnsafe(this, SearchFragmentListener.class).requestingPermission();
         requestPermissions(deniedPermissions, LOCATION_PERMISSION_REQUEST_CODE);
     }
 
     @VisibleForTesting
     public void dismissLocationPermission() {
-        PreferenceManager.getDefaultSharedPreferences(getContext())
+        PreferenceManager.getDefaultSharedPreferences(requireContext())
                 .edit()
                 .putBoolean(KEY_LOCATION_PROMPT_DISMISSED, true)
                 .apply();
@@ -462,14 +463,14 @@ public final class NewSearchFragment extends Fragment
     }
 
     private boolean hasBeenDismissed() {
-        return PreferenceManager.getDefaultSharedPreferences(getContext())
+        return PreferenceManager.getDefaultSharedPreferences(requireContext())
                 .getBoolean(KEY_LOCATION_PROMPT_DISMISSED, false);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        EnrichedCallComponent.get(Objects.requireNonNull(getContext()))
+        EnrichedCallComponent.get(requireContext())
                 .getEnrichedCallManager()
                 .registerCapabilitiesListener(this);
         LoaderManager.getInstance(this).restartLoader(CONTACTS_LOADER_ID, null, this);
@@ -478,7 +479,7 @@ public final class NewSearchFragment extends Fragment
     @Override
     public void onPause() {
         super.onPause();
-        EnrichedCallComponent.get(Objects.requireNonNull(getContext()))
+        EnrichedCallComponent.get(requireContext())
                 .getEnrichedCallManager()
                 .unregisterCapabilitiesListener(this);
     }

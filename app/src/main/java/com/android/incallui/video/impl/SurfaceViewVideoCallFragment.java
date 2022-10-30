@@ -92,7 +92,7 @@ public class SurfaceViewVideoCallFragment extends Fragment
         AudioRouteSelectorPresenter,
         OnSystemUiVisibilityChangeListener {
 
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    @VisibleForTesting()
     static final String ARG_CALL_ID = "call_id";
 
     private static final int CAMERA_PERMISSION_REQUEST_CODE = 1;

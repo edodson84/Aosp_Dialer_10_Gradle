@@ -18,13 +18,12 @@ package com.fissy.dialer.blocking;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.os.UserManagerCompat;
+import androidx.preference.PreferenceManager;
 
-import com.fissy.dialer.blocking.FilteredNumberAsyncQueryHandler.OnHasBlockedNumbersListener;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.common.concurrent.DialerExecutor.Worker;

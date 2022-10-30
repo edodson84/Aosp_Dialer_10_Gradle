@@ -21,8 +21,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import java.util.Objects;
-
 /**
  * Parent for all fragments that use Presenters and Ui design.
  */

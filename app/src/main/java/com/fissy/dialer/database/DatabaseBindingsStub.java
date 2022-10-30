@@ -30,7 +30,7 @@ public class DatabaseBindingsStub implements DatabaseBindings {
         if (dialerDatabaseHelper == null) {
             dialerDatabaseHelper =
                     new DialerDatabaseHelper(
-                            context, DialerDatabaseHelper.DATABASE_NAME, DialerDatabaseHelper.DATABASE_VERSION);
+                            context);
         }
         return dialerDatabaseHelper;
     }

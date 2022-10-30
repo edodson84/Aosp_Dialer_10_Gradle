@@ -22,7 +22,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.fissy.dialer.common.FragmentUtils;
 import com.fissy.dialer.phonenumbercache.ContactInfo;
 import com.fissy.dialer.util.ExpirableCache;
 

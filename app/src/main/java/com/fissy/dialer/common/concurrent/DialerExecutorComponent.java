@@ -16,8 +16,9 @@
 
 package com.fissy.dialer.common.concurrent;
 
-import android.app.FragmentManager;
 import android.content.Context;
+
+import androidx.fragment.app.FragmentManager;
 
 import com.fissy.dialer.common.concurrent.Annotations.BackgroundExecutor;
 import com.fissy.dialer.common.concurrent.Annotations.LightweightExecutor;
@@ -60,15 +61,6 @@ public abstract class DialerExecutorComponent {
     public <OutputT> UiListener<OutputT> createUiListener(
             FragmentManager fragmentManager, String taskId) {
         return UiListener.create(fragmentManager, taskId);
-    }
-
-    /**
-     * Version of {@link #createUiListener(FragmentManager, String)} that accepts support fragment
-     * manager.
-     */
-    public <OutputT> SupportUiListener<OutputT> createUiListener(
-            androidx.fragment.app.FragmentManager fragmentManager, String taskId) {
-        return SupportUiListener.create(fragmentManager, taskId);
     }
 
     /**

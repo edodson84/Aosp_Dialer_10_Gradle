@@ -21,10 +21,10 @@ import android.content.Context;
 import android.os.Looper;
 import android.os.StrictMode;
 import android.os.StrictMode.ThreadPolicy;
-import android.preference.PreferenceManager;
 
 import androidx.annotation.AnyThread;
 import androidx.core.os.UserManagerCompat;
+import androidx.preference.PreferenceManager;
 
 import com.fissy.dialer.buildtype.BuildType;
 import com.fissy.dialer.buildtype.BuildType.Type;

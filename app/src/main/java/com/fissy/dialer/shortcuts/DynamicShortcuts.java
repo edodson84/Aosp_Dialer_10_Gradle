@@ -17,12 +17,10 @@
 package com.fissy.dialer.shortcuts;
 
 import android.Manifest;
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.pm.ShortcutInfo;
 import android.content.pm.ShortcutManager;
-import android.os.Build.VERSION_CODES;
 import android.util.ArrayMap;
 
 import androidx.annotation.NonNull;
@@ -62,7 +60,7 @@ import java.util.Map.Entry;
  * <p>However, the job scheduler uses {@link #updateIcons()} to makes sure icons are forcefully
  * updated periodically (about once a day).
  */
- // Shortcuts introduced in N MR1
+// Shortcuts introduced in N MR1
 final class DynamicShortcuts {
 
     private static final int MAX_DYNAMIC_SHORTCUTS = 3;

@@ -23,14 +23,14 @@
         android:layout_marginStart="8.0dip"
         android:layout_toStartOf="@id/search_clear_button"
         android:layout_toEndOf="@id/search_back_button"
+        android:autofillHints=""
         android:hint="@string/dialer_hint_find_contact"
         android:imeOptions="flagNoExtractUi"
         android:inputType="textFilter"
         android:maxLines="1"
         android:minHeight="48.0dip"
         android:textCursorDrawable="@drawable/custom_cursor"
-        android:textSize="16.0sp"
-        android:autofillHints="" />
+        android:textSize="16.0sp" />
 
     <ImageView
         android:id="@id/search_clear_button"

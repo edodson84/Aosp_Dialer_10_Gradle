@@ -19,7 +19,6 @@ package com.android.contacts.common.widget;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -44,6 +43,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
+import androidx.fragment.app.DialogFragment;
 
 import com.android.contacts.common.compat.PhoneAccountCompat;
 import com.fissy.dialer.R;
@@ -100,16 +100,17 @@ public class SelectPhoneAccountDialogFragment extends DialogFragment {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean(ARG_IS_DEFAULT_CHECKED, isDefaultChecked);
     }
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         options =
                 ProtoParsers.getTrusted(
-                        getArguments(), ARG_OPTIONS, SelectPhoneAccountDialogOptions.getDefaultInstance());
+                        requireArguments(), ARG_OPTIONS, SelectPhoneAccountDialogOptions.getDefaultInstance());
         if (savedInstanceState != null) {
             isDefaultChecked = savedInstanceState.getBoolean(ARG_IS_DEFAULT_CHECKED);
         }
@@ -174,7 +175,7 @@ public class SelectPhoneAccountDialogFragment extends DialogFragment {
     }
 
     @Override
-    public void onCancel(DialogInterface dialog) {
+    public void onCancel(@NonNull DialogInterface dialog) {
         if (!isSelected && listener != null) {
             Bundle result = new Bundle();
             result.putString(SelectPhoneAccountListener.EXTRA_CALL_ID, getCallId());
@@ -266,10 +267,10 @@ public class SelectPhoneAccountDialogFragment extends DialogFragment {
                 // Cache views for faster scrolling
                 rowView = inflater.inflate(mResId, null);
                 holder = new ViewHolder();
-                holder.labelTextView = (TextView) rowView.findViewById(R.id.label);
-                holder.numberTextView = (TextView) rowView.findViewById(R.id.number);
+                holder.labelTextView = rowView.findViewById(R.id.label);
+                holder.numberTextView = rowView.findViewById(R.id.number);
                 holder.hintTextView = rowView.findViewById(R.id.hint);
-                holder.imageView = (ImageView) rowView.findViewById(R.id.icon);
+                holder.imageView = rowView.findViewById(R.id.icon);
                 rowView.setTag(holder);
             } else {
                 rowView = convertView;

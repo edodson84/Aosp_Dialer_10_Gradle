@@ -104,7 +104,6 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
                 declineUpgradeRequest();
                 break;
             case ACTION_PULL_EXTERNAL_CALL:
-                context.sendBroadcast(new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
                 int notificationId = intent.getIntExtra(EXTRA_NOTIFICATION_ID, -1);
                 InCallPresenter.getInstance().getExternalCallNotifier().pullExternalCall(notificationId);
                 break;

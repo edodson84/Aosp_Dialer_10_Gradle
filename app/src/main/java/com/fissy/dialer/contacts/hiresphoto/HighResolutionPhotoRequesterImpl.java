@@ -86,7 +86,7 @@ public class HighResolutionPhotoRequesterImpl implements HighResolutionPhotoRequ
                         "requesting photo for " + rawContactUri);
                 appContext.startService(intent);
             } catch (IllegalStateException | SecurityException e) {
-                throw new RequestFailedException("unable to start sync adapter", e);
+                throw new RequestFailedException(e);
             }
         }
     }
@@ -135,8 +135,8 @@ public class HighResolutionPhotoRequesterImpl implements HighResolutionPhotoRequ
             super(message);
         }
 
-        RequestFailedException(String message, Throwable cause) {
-            super(message, cause);
+        RequestFailedException(Throwable cause) {
+            super("unable to start sync adapter", cause);
         }
     }
 }

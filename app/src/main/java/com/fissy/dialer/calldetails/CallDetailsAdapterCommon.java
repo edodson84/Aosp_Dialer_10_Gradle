@@ -125,7 +125,7 @@ abstract class CallDetailsAdapterCommon extends RecyclerView.Adapter<RecyclerVie
 
     @Override
     @CallSuper
-    public void onBindViewHolder( @NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if (position == 0) { // Header
             bindCallDetailsHeaderViewHolder((CallDetailsHeaderViewHolder) holder, position);
         } else if (position == getItemCount() - 1) {

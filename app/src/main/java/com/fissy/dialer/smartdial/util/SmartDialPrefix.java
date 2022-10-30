@@ -18,11 +18,11 @@ package com.fissy.dialer.smartdial.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
 import androidx.annotation.VisibleForTesting;
+import androidx.preference.PreferenceManager;
 
 import com.fissy.dialer.smartdial.map.CompositeSmartDialMap;
 
@@ -93,7 +93,6 @@ public class SmartDialPrefix {
                     prefs.getString(PREF_USER_SIM_COUNTRY_CODE, PREF_USER_SIM_COUNTRY_CODE_DEFAULT);
         }
         userInNanpRegion = isCountryNanp(userSimCountryCode);
-        boolean nanpInitialized = true;
     }
 
     /**
@@ -535,23 +534,6 @@ public class SmartDialPrefix {
         result.add("TC"); // Turks and Caicos Islands
         result.add("VI"); // U.S. Virgin Islands
         return result;
-    }
-
-    /**
-     * Returns whether the user is in a region that uses Nanp format based on the sim location.
-     *
-     * @return Whether user is in Nanp region.
-     */
-    public static boolean getUserInNanpRegion() {
-        return userInNanpRegion;
-    }
-
-    /**
-     * Explicitly setting the user Nanp to the given boolean
-     */
-    @VisibleForTesting
-    public static void setUserInNanpRegion(boolean userInNanpRegion) {
-        SmartDialPrefix.userInNanpRegion = userInNanpRegion;
     }
 
     /**

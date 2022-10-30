@@ -126,11 +126,10 @@ public class PhoneNumberInteraction implements OnLoadCompleteListener<Cursor> {
 
     private PhoneNumberInteraction(
             Context context,
-            int interactionType,
             boolean isVideoCall,
             CallSpecificAppData callSpecificAppData) {
         this.context = context;
-        this.interactionType = interactionType;
+        this.interactionType = ContactDisplayUtils.INTERACTION_CALL;
         this.callSpecificAppData = callSpecificAppData;
         this.isVideoCall = isVideoCall;
 
@@ -160,9 +159,9 @@ public class PhoneNumberInteraction implements OnLoadCompleteListener<Cursor> {
     }
 
     /**
-
-     *                    numbers have been queried for. The activity must implement {@link InteractionErrorListener}
-     *                    and {@link DisambigDialogDismissedListener}.
+     * numbers have been queried for. The activity must implement {@link InteractionErrorListener}
+     * and {@link DisambigDialogDismissedListener}.
+     *
      * @param isVideoCall {@code true} if the call is a video call, {@code false} otherwise.
      */
     public static void startInteractionForPhoneCall(
@@ -171,7 +170,7 @@ public class PhoneNumberInteraction implements OnLoadCompleteListener<Cursor> {
             boolean isVideoCall,
             CallSpecificAppData callSpecificAppData) {
         new PhoneNumberInteraction(
-                activity, ContactDisplayUtils.INTERACTION_CALL, isVideoCall, callSpecificAppData)
+                activity, isVideoCall, callSpecificAppData)
                 .startInteraction(uri);
     }
 
@@ -478,7 +477,7 @@ public class PhoneNumberInteraction implements OnLoadCompleteListener<Cursor> {
      * {@link DialogFragment} used for displaying a dialog with a list of phone numbers of which one
      * will be chosen to make a call or initiate an sms message.
      *
-
+     *
      *
      * <p>This fragment may only be attached to activities which implement {@link
      * DisambigDialogDismissedListener}.

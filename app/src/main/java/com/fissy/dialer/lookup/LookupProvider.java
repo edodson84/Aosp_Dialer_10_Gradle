@@ -87,7 +87,6 @@ public class LookupProvider extends ContentProvider {
     private final LinkedList<FutureTask> activeTasks = new LinkedList<>();
     /**
      * Get location from last location query.
-     *
      */
     private String PROVIDER = "network";
 
@@ -138,7 +137,7 @@ public class LookupProvider extends ContentProvider {
                 final Location finalLastLocation = lastLocation;
                 final int finalMaxResults = maxResults;
 
-                return execute(() -> handleFilter(match, projection, filter, finalMaxResults, finalLastLocation), "FilterThread");
+                return execute(() -> handleFilter(match, projection, filter, finalMaxResults, finalLastLocation));
         }
 
         return null;
@@ -376,10 +375,9 @@ public class LookupProvider extends ContentProvider {
      * Execute thread that is killed after a specified amount of time.
      *
      * @param callable The thread
-     * @param name     Name of the thread
      * @return Instance of the thread
      */
-    private <T> T execute(Callable<T> callable, String name) {
+    private <T> T execute(Callable<T> callable) {
         FutureCallable<T> futureCallable = new FutureCallable<>(callable);
         FutureTask<T> future = new FutureTask<>(futureCallable);
         futureCallable.setFuture(future);
@@ -394,23 +392,23 @@ public class LookupProvider extends ContentProvider {
             }
         }
 
-        Log.v(TAG, "Starting task " + name);
+        Log.v(TAG, "Starting task " + "FilterThread");
 
-        new Thread(future, name).start();
+        new Thread(future, "FilterThread").start();
 
         try {
-            Log.v(TAG, "Getting future " + name);
+            Log.v(TAG, "Getting future " + "FilterThread");
             return future.get(10000, TimeUnit.MILLISECONDS);
         } catch (InterruptedException e) {
-            Log.w(TAG, "Task was interrupted: " + name);
+            Log.w(TAG, "Task was interrupted: " + "FilterThread");
             Thread.currentThread().interrupt();
         } catch (ExecutionException e) {
-            Log.w(TAG, "Task threw an exception: " + name, e);
+            Log.w(TAG, "Task threw an exception: " + "FilterThread", e);
         } catch (TimeoutException e) {
-            Log.w(TAG, "Task timed out: " + name);
+            Log.w(TAG, "Task timed out: " + "FilterThread");
             future.cancel(true);
         } catch (CancellationException e) {
-            Log.w(TAG, "Task was cancelled: " + name);
+            Log.w(TAG, "Task was cancelled: " + "FilterThread");
         }
 
         return null;

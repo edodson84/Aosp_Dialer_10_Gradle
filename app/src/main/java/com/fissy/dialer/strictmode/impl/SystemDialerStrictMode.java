@@ -17,8 +17,6 @@
 package com.fissy.dialer.strictmode.impl;
 
 import android.app.Application;
-import android.os.Build;
-import android.os.Build.VERSION_CODES;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.StrictMode;
@@ -50,34 +48,28 @@ final class SystemDialerStrictMode implements DialerStrictMode {
 
     /**
      * Set the recommended policy for the app.
-     *
-     * @param threadPenalties policy with preferred penalties. Detection bits will be ignored.
      */
-    private static void setRecommendedMainThreadPolicy(StrictMode.ThreadPolicy threadPenalties) {
+    private static void setRecommendedMainThreadPolicy() {
         StrictMode.ThreadPolicy threadPolicy =
-                new StrictMode.ThreadPolicy.Builder(threadPenalties).detectAll().build();
+                new StrictMode.ThreadPolicy.Builder(SystemDialerStrictMode.THREAD_DEATH_PENALTY).detectAll().build();
         StrictMode.setThreadPolicy(threadPolicy);
     }
 
     /**
      * Set the recommended policy for the app.
-     *
-     * @param vmPenalties policy with preferred penalties. Detection bits should be unset.
      */
-    private static void setRecommendedVMPolicy(StrictMode.VmPolicy vmPenalties) {
-        setRecommendedVMPolicy(vmPenalties, StrictModeVmConfig.empty());
+    private static void setRecommendedVMPolicy() {
+        setRecommendedVMPolicy(StrictModeVmConfig.empty());
     }
 
     /**
      * Set the recommended policy for the app.
-     *
-     * @param vmPenalties policy with preferred penalties. Detection bits should be unset.
      */
     private static void setRecommendedVMPolicy(
-            StrictMode.VmPolicy vmPenalties, StrictModeVmConfig config) {
+            StrictModeVmConfig config) {
         Assert.isNotNull(config);
         StrictMode.VmPolicy.Builder vmPolicyBuilder =
-                new StrictMode.VmPolicy.Builder(vmPenalties)
+                new StrictMode.VmPolicy.Builder(SystemDialerStrictMode.VM_DEATH_PENALTY)
                         .detectLeakedClosableObjects()
                         .detectLeakedSqlLiteObjects();
         vmPolicyBuilder.detectContentUriWithoutPermission();
@@ -91,15 +83,15 @@ final class SystemDialerStrictMode implements DialerStrictMode {
     public void onApplicationCreate(Application application) {
         if (StrictModeUtils.isStrictModeAllowed()) {
             StrictModeUtils.warmupSharedPrefs(application);
-            setRecommendedMainThreadPolicy(THREAD_DEATH_PENALTY);
-            setRecommendedVMPolicy(VM_DEATH_PENALTY);
+            setRecommendedMainThreadPolicy();
+            setRecommendedVMPolicy();
 
             // Because Android resets StrictMode policies after Application.onCreate is done, we set it
             // again right after.
             // See cl/105932355 for the discussion.
             // See a bug for the public bug.
             Handler handler = new Handler(Looper.myLooper());
-            handler.postAtFrontOfQueue(() -> setRecommendedMainThreadPolicy(THREAD_DEATH_PENALTY));
+            handler.postAtFrontOfQueue(() -> setRecommendedMainThreadPolicy());
         }
     }
 

@@ -166,7 +166,7 @@ public class SamsungAccountType extends BaseAccountType {
         return kind;
     }
 
-    private DataKind addDataKindRelation(Context context) throws DefinitionException {
+    private void addDataKindRelation(Context context) throws DefinitionException {
         DataKind kind =
                 addKind(new DataKind(Relation.CONTENT_ITEM_TYPE, R.string.relationLabelsGroup, 160, true));
         kind.actionHeader = new RelationActionInflater();
@@ -197,10 +197,9 @@ public class SamsungAccountType extends BaseAccountType {
         kind.fieldList = new ArrayList<>();
         kind.fieldList.add(new EditField(Relation.DATA, R.string.relationLabelsGroup, FLAGS_RELATION));
 
-        return kind;
     }
 
-    private DataKind addDataKindEvent(Context context) throws DefinitionException {
+    private void addDataKindEvent(Context context) throws DefinitionException {
         DataKind kind =
                 addKind(new DataKind(Event.CONTENT_ITEM_TYPE, R.string.eventLabelsGroup, 150, true));
         kind.actionHeader = new EventActionInflater();
@@ -222,7 +221,6 @@ public class SamsungAccountType extends BaseAccountType {
         kind.fieldList = new ArrayList<>();
         kind.fieldList.add(new EditField(Event.DATA, R.string.eventLabelsGroup, FLAGS_EVENT));
 
-        return kind;
     }
 
     @Override

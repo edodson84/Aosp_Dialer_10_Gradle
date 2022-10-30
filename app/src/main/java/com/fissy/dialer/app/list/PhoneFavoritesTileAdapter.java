@@ -98,7 +98,7 @@ public class PhoneFavoritesTileAdapter extends BaseAdapter implements OnDragDrop
     /**
      * Contact data stored in cache. This is used to populate the associated view.
      */
-    private ArrayList<ContactEntry> contactEntries;
+    private final ArrayList<ContactEntry> contactEntries;
     private int numFrequents;
     private int numStarred;
     /**

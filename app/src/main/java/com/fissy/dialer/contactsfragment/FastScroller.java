@@ -98,7 +98,7 @@ public class FastScroller extends RelativeLayout {
     private void setRecyclerViewPosition(float y) {
         final int itemCount = adapter.getItemCount();
         float scrolledPosition = getScrolledPercentage(y) * (float) itemCount;
-        int targetPos = getValueInRange(0, itemCount - 1, (int) scrolledPosition);
+        int targetPos = getValueInRange(itemCount - 1, (int) scrolledPosition);
         layoutManager.scrollToPositionWithOffset(targetPos, 0);
         container.setText(adapter.getHeaderString(targetPos));
         adapter.refreshHeaders();
@@ -115,8 +115,8 @@ public class FastScroller extends RelativeLayout {
         }
     }
 
-    private int getValueInRange(int min, int max, int value) {
-        int minimum = Math.max(min, value);
+    private int getValueInRange(int max, int value) {
+        int minimum = Math.max(0, value);
         return Math.min(minimum, max);
     }
 
@@ -133,9 +133,9 @@ public class FastScroller extends RelativeLayout {
         int scrollBarHeight = scrollBar.getHeight();
         int containerHeight = container.getHeight();
         scrollBar.setY(
-                getValueInRange(0, getHeight() - scrollBarHeight, (int) (y - scrollBarHeight / 2)));
+                getValueInRange(getHeight() - scrollBarHeight, (int) (y - scrollBarHeight / 2)));
         container.setY(
                 getValueInRange(
-                        0, getHeight() - containerHeight - scrollBarHeight / 2, (int) (y - containerHeight)));
+                        getHeight() - containerHeight - scrollBarHeight / 2, (int) (y - containerHeight)));
     }
 }

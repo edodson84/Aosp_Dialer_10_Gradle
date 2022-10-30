@@ -26,7 +26,7 @@ import com.google.auto.value.AutoValue;
 
 /**
  * A task that runs work in the background, passing Throwables from {@link
-
+ * <p>
  * FallibleTaskResult}.
  *
  * @param <ParamsT>   the type of the parameters sent to the task upon execution

@@ -16,6 +16,8 @@
 
 package com.fissy.dialer.postcall;
 
+import static com.fissy.dialer.app.settings.DialerSettingsActivity.PrefsFragment.getThemeButtonBehavior;
+
 import android.Manifest.permission;
 import android.content.Context;
 import android.content.Intent;
@@ -30,7 +32,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.fissy.dialer.R;
-import com.fissy.dialer.app.settings.ThemeOptionsSettingsFragment;
+import com.fissy.dialer.app.settings.DialerSettingsActivity;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.enrichedcall.EnrichedCallComponent;
@@ -62,12 +64,12 @@ public class PostCallActivity extends AppCompatActivity implements MessageFragme
 
     @Override
     protected void onCreate(@Nullable Bundle bundle) {
-        ThemeOptionsSettingsFragment.ThemeButtonBehavior mThemeBehavior = ThemeOptionsSettingsFragment.getThemeButtonBehavior(MainActivityPeer.themeprefs);
+        DialerSettingsActivity.PrefsFragment.ThemeButtonBehavior mThemeBehavior = getThemeButtonBehavior(MainActivityPeer.themeprefs);
 
-        if (mThemeBehavior == ThemeOptionsSettingsFragment.ThemeButtonBehavior.DARK) {
+        if (mThemeBehavior == DialerSettingsActivity.PrefsFragment.ThemeButtonBehavior.DARK) {
             getTheme().applyStyle(R.style.DialerDark, true);
         }
-        if (mThemeBehavior == ThemeOptionsSettingsFragment.ThemeButtonBehavior.LIGHT) {
+        if (mThemeBehavior == DialerSettingsActivity.PrefsFragment.ThemeButtonBehavior.LIGHT) {
             getTheme().applyStyle(R.style.DialerLight, true);
         }
         super.onCreate(bundle);

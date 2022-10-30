@@ -16,15 +16,12 @@
 
 package com.fissy.dialer.shortcuts;
 
-import android.annotation.TargetApi;
 import android.app.job.JobInfo;
 import android.app.job.JobParameters;
 import android.app.job.JobScheduler;
 import android.app.job.JobService;
 import android.content.ComponentName;
 import android.content.Context;
-import android.os.Build.VERSION;
-import android.os.Build.VERSION_CODES;
 
 import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
@@ -41,7 +38,7 @@ import java.util.concurrent.TimeUnit;
  *
  * <p>Only {@link #schedulePeriodicJob(Context)} should be used by callers.
  */
- // Shortcuts introduced in N MR1
+// Shortcuts introduced in N MR1
 public final class PeriodicJobService extends JobService {
 
     private static final long REFRESH_PERIOD_MILLIS = TimeUnit.HOURS.toMillis(24);

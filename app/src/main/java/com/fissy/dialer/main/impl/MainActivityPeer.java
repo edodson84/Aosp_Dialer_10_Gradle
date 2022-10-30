@@ -18,12 +18,6 @@ package com.fissy.dialer.main.impl;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -45,13 +39,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.android.contacts.common.list.OnPhoneNumberPickerActionListener;
@@ -69,7 +66,7 @@ import com.fissy.dialer.app.list.OnDragDropListener;
 import com.fissy.dialer.app.list.OnListFragmentScrolledListener;
 import com.fissy.dialer.app.list.PhoneFavoriteSquareTileView;
 import com.fissy.dialer.app.list.RemoveView;
-import com.fissy.dialer.app.settings.ThemeOptionsSettingsFragment;
+import com.fissy.dialer.app.settings.DialerSettingsActivity;
 import com.fissy.dialer.callcomposer.CallComposerActivity;
 import com.fissy.dialer.calldetails.OldCallDetailsActivity;
 import com.fissy.dialer.callintent.CallIntentBuilder;
@@ -77,8 +74,8 @@ import com.fissy.dialer.callintent.CallSpecificAppData;
 import com.fissy.dialer.common.FragmentUtils.FragmentUtilListener;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.common.concurrent.DialerExecutorComponent;
-import com.fissy.dialer.common.concurrent.SupportUiListener;
 import com.fissy.dialer.common.concurrent.ThreadUtil;
+import com.fissy.dialer.common.concurrent.UiListener;
 import com.fissy.dialer.constants.ActivityRequestCodes;
 import com.fissy.dialer.contactsfragment.ContactsFragment;
 import com.fissy.dialer.contactsfragment.ContactsFragment.Header;
@@ -142,6 +139,13 @@ public class MainActivityPeer implements com.fissy.dialer.main.MainActivityPeer,
     public static SharedPreferences themeprefs;
     // TODO(calderwoodra): change to AppCompatActivity once new speed dial ships
     private final AppCompatActivity activity;
+    private final BroadcastReceiver disableCallLogFrameworkReceiver =
+            new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+
+                }
+            };
     // Contacts
     private MainOnContactSelectedListener onContactSelectedListener;
     // Dialpad and Search
@@ -167,17 +171,10 @@ public class MainActivityPeer implements com.fissy.dialer.main.MainActivityPeer,
     private String savedLanguageCode;
     private LastTabController lastTabController;
     private BottomNavBar bottomNav;
-    private final BroadcastReceiver disableCallLogFrameworkReceiver =
-            new BroadcastReceiver() {
-                @Override
-                public void onReceive(Context context, Intent intent) {
-
-                }
-            };
     private View snackbarContainer;
     private MissedCallCountObserver missedCallCountObserver;
-    private SupportUiListener<String> getLastOutgoingCallListener;
-    private SupportUiListener<Integer> missedCallObserverUiListener;
+    private UiListener<String> getLastOutgoingCallListener;
+    private UiListener<Integer> missedCallObserverUiListener;
 
     public MainActivityPeer(AppCompatActivity activity) {
         this.activity = activity;
@@ -196,19 +193,7 @@ public class MainActivityPeer implements com.fissy.dialer.main.MainActivityPeer,
     @Override
     public void onActivityCreate(Bundle savedInstanceState) {
         LogUtil.enterBlock("MainActivityPeer.onActivityCreate");
-        themeprefs = ThemeOptionsSettingsFragment.getSharedPreferences(activity);
-        ThemeOptionsSettingsFragment.ThemeButtonBehavior mThemeBehavior = ThemeOptionsSettingsFragment.getThemeButtonBehavior(themeprefs);
-
-        if (mThemeBehavior == ThemeOptionsSettingsFragment.ThemeButtonBehavior.DARK) {
-            LogUtil.enterBlock("MainActivity.dark");
-            activity.getTheme().applyStyle(R.style.MainActivityThemeDark, true);
-        }
-        if (mThemeBehavior == ThemeOptionsSettingsFragment.ThemeButtonBehavior.LIGHT) {
-            LogUtil.enterBlock("MainActivity.light");
-            activity.getTheme().applyStyle(R.style.MainActivityThemeLight, true);
-        }
-
-
+        themeprefs = DialerSettingsActivity.PrefsFragment.getSharedPreferences(activity);
         activity.setContentView(R.layout.main_activity);
         initUiListeners();
         initLayout(savedInstanceState);
@@ -525,9 +510,7 @@ public class MainActivityPeer implements com.fissy.dialer.main.MainActivityPeer,
             if (resultCode == AppCompatActivity.RESULT_OK) {
                 checkAndRequestPermissions();
             }
-        }
-
-        else {
+        } else {
             LogUtil.e("MainActivityPeer.onActivityResult", "Unknown request code: " + requestCode);
         }
     }
@@ -709,10 +692,10 @@ public class MainActivityPeer implements com.fissy.dialer.main.MainActivityPeer,
 
         private final MainSearchController searchController;
         private final Context context;
-        private final SupportUiListener<String> listener;
+        private final UiListener<String> listener;
 
         MainDialpadListener(
-                Context context, MainSearchController searchController, SupportUiListener<String> uiListener) {
+                Context context, MainSearchController searchController, UiListener<String> uiListener) {
             this.context = context;
             this.searchController = searchController;
             this.listener = uiListener;
@@ -926,8 +909,8 @@ public class MainActivityPeer implements com.fissy.dialer.main.MainActivityPeer,
 
         private void markMissedCallsAsReadAndRemoveNotification() {
 
-                callLogQueryHandler.markMissedCallsAsRead();
-                CallLogNotificationsService.cancelAllMissedCalls(context);
+            callLogQueryHandler.markMissedCallsAsRead();
+            CallLogNotificationsService.cancelAllMissedCalls(context);
 
         }
 
@@ -1221,8 +1204,8 @@ public class MainActivityPeer implements com.fissy.dialer.main.MainActivityPeer,
             selectedTab = TabIndex.SPEED_DIAL;
 
 
-                Fragment fragment = fragmentManager.findFragmentByTag(SPEED_DIAL_TAG);
-                showFragment(fragment == null ? new OldSpeedDialFragment() : fragment, SPEED_DIAL_TAG);
+            Fragment fragment = fragmentManager.findFragmentByTag(SPEED_DIAL_TAG);
+            showFragment(fragment == null ? new OldSpeedDialFragment() : fragment, SPEED_DIAL_TAG);
 
             fab.show();
         }
@@ -1286,7 +1269,7 @@ public class MainActivityPeer implements com.fissy.dialer.main.MainActivityPeer,
                 transaction.add(R.id.fragment_container, fragment, tag);
             }
 
-                transaction.commit();
+            transaction.commit();
 
 
         }

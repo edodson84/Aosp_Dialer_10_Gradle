@@ -17,7 +17,6 @@
 package com.fissy.dialer.blocking;
 
 import android.content.ContentProviderOperation;
-import android.content.ContentProviderResult;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
@@ -172,11 +171,11 @@ public final class Blocking {
                         });
     }
 
-    private static ContentProviderResult[] applyBatchOps(
+    private static void applyBatchOps(
             ContentResolver resolver, ArrayList<ContentProviderOperation> ops)
             throws BlockingFailedException {
         try {
-            return resolver.applyBatch(BlockedNumberContract.AUTHORITY, ops);
+            resolver.applyBatch(BlockedNumberContract.AUTHORITY, ops);
         } catch (RemoteException | OperationApplicationException | SecurityException e) {
             throw new BlockingFailedException(e);
         }

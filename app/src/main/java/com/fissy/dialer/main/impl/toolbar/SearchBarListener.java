@@ -49,12 +49,12 @@ public interface SearchBarListener {
     boolean onMenuItemClicked(MenuItem menuItem);
 
     /**
-
+     *
      */
     void onActivityPause();
 
     /**
-
+     *
      */
     void onUserLeaveHint();
 

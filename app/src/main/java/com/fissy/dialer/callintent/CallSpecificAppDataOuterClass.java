@@ -4,8 +4,6 @@
 package com.fissy.dialer.callintent;
 
 public final class CallSpecificAppDataOuterClass {
-    static {
-    }
 
     private CallSpecificAppDataOuterClass() {
     }

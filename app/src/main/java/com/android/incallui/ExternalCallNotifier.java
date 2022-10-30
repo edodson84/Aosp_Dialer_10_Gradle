@@ -16,7 +16,6 @@
 
 package com.android.incallui;
 
-import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -25,7 +24,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
-import android.os.Build.VERSION_CODES;
 import android.telecom.Call;
 import android.telecom.PhoneAccount;
 import android.telecom.VideoProfile;
@@ -110,7 +108,6 @@ public class ExternalCallNotifier implements ExternalCallList.ExternalCallListen
 
     /**
      * Handles the addition of a new external call by showing a new notification. Triggered by {@link
-
      */
     @Override
     public void onExternalCallAdded(android.telecom.Call call) {
@@ -124,7 +121,6 @@ public class ExternalCallNotifier implements ExternalCallList.ExternalCallListen
 
     /**
      * Handles the removal of an external call by hiding its associated notification. Triggered by
-
      */
     @Override
     public void onExternalCallRemoved(android.telecom.Call call) {

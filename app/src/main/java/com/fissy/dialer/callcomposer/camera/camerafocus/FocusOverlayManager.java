@@ -386,21 +386,21 @@ public class FocusOverlayManager {
         int areaWidth = (int) (focusWidth * areaMultiple);
         int areaHeight = (int) (focusHeight * areaMultiple);
         final int maxW = previewWidth - areaWidth;
-        int left = maxW > 0 ? clamp(x - areaWidth / 2, 0, maxW) : 0;
+        int left = maxW > 0 ? clamp(x - areaWidth / 2, maxW) : 0;
         final int maxH = previewHeight - areaHeight;
-        int top = maxH > 0 ? clamp(y - areaHeight / 2, 0, maxH) : 0;
+        int top = maxH > 0 ? clamp(y - areaHeight / 2, maxH) : 0;
 
         RectF rectF = new RectF(left, top, left + areaWidth, top + areaHeight);
         matrix.mapRect(rectF);
         rectFToRect(rectF, rect);
     }
 
-    private int clamp(int x, int min, int max) {
-        Assert.checkArgument(max >= min);
+    private int clamp(int x, int max) {
+        Assert.checkArgument(max >= 0);
         if (x > max) {
             return max;
         }
-        return Math.max(x, min);
+        return Math.max(x, 0);
     }
 
     private boolean isAutoExposureLockSupported(Parameters params) {

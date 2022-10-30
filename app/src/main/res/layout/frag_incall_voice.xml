@@ -25,8 +25,8 @@
                 android:layout_width="@dimen/incall_avatar_size"
                 android:layout_height="@dimen/incall_avatar_size"
                 android:layout_marginBottom="8.0dip"
-                android:elevation="2.0dip"
-                android:contentDescription="TODO" />
+                android:contentDescription="TODO"
+                android:elevation="2.0dip" />
 
             <include
                 layout="@layout/incall_contactgrid_top_row"

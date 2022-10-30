@@ -16,13 +16,12 @@
 
 package com.fissy.dialer.blocking;
 
-import android.app.FragmentManager;
+
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.preference.PreferenceManager;
 import android.provider.BlockedNumberContract;
 import android.provider.BlockedNumberContract.BlockedNumbers;
 import android.telecom.TelecomManager;
@@ -30,6 +29,8 @@ import android.telephony.PhoneNumberUtils;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
+import androidx.fragment.app.FragmentManager;
+import androidx.preference.PreferenceManager;
 
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.configprovider.ConfigProviderComponent;
@@ -276,11 +277,6 @@ public class FilteredNumberCompat {
         // TODO(maxwelb): check that we're the system Dialer
         return TelecomUtil.isDefaultDialer(context)
                 && safeBlockedNumbersContractCanCurrentUserBlockNumbers(context);
-    }
-
-    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    public static void setCanAttemptBlockOperationsForTest(boolean canAttempt) {
-        canAttemptBlockOperationsForTest = canAttempt;
     }
 
     /**

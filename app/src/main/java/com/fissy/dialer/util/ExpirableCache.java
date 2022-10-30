@@ -210,8 +210,6 @@ public class ExpirableCache<K, V> {
 
     /**
      * Creates a new {@link CachedValue} instance to be stored in this cache.
-     *
-
      */
     public CachedValue<V> newCachedValue(V value) {
         return new GenerationalCachedValue<>(value, generation);

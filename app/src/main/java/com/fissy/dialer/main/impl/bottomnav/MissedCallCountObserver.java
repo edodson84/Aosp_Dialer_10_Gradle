@@ -25,7 +25,6 @@ import android.provider.CallLog.Calls;
 import androidx.annotation.RequiresPermission;
 
 import com.fissy.dialer.common.concurrent.DialerExecutorComponent;
-import com.fissy.dialer.common.concurrent.SupportUiListener;
 import com.fissy.dialer.common.concurrent.UiListener;
 import com.fissy.dialer.main.impl.bottomnav.BottomNavBar.TabIndex;
 import com.google.common.util.concurrent.ListenableFuture;
@@ -38,10 +37,10 @@ import com.google.common.util.concurrent.ListenableFuture;
 public final class MissedCallCountObserver extends ContentObserver {
     private final Context appContext;
     private final BottomNavBar bottomNavBar;
-    private final SupportUiListener<Integer> uiListener;
+    private final UiListener<Integer> uiListener;
 
     public MissedCallCountObserver(
-            Context appContext, BottomNavBar bottomNavBar, SupportUiListener<Integer> uiListener) {
+            Context appContext, BottomNavBar bottomNavBar, UiListener<Integer> uiListener) {
         super(null);
         this.appContext = appContext;
         this.bottomNavBar = bottomNavBar;

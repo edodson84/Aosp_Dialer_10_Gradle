@@ -49,6 +49,7 @@ import androidx.annotation.IntDef;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresPermission;
 import androidx.appcompat.widget.PopupMenu;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.contacts.common.dialog.CallSubjectDialog;
@@ -1092,7 +1093,7 @@ public final class CallLogListItemViewHolder extends RecyclerView.ViewHolder
 
     private void maybeShowBlockNumberMigrationDialog(BlockedNumbersMigrator.Listener listener) {
         if (FilteredNumberCompat.maybeShowBlockNumberMigrationDialog(
-                context, ((Activity) context).getFragmentManager(), listener)) {
+                context, ((FragmentActivity) context).getSupportFragmentManager(), listener)) {
             listener.onComplete();
         }
     }

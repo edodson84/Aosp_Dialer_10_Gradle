@@ -122,7 +122,7 @@ public final class BlockReportSpamDialogs {
         protected DialogInterface.OnDismissListener dismissListener;
 
         @Override
-        public void onDismiss( @NonNull DialogInterface dialog) {
+        public void onDismiss(@NonNull DialogInterface dialog) {
             if (dismissListener != null) {
                 dismissListener.onDismiss(dialog);
             }

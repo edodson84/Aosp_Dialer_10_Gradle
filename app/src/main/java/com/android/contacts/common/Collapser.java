@@ -18,7 +18,6 @@ package com.android.contacts.common;
 
 import android.content.Context;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 

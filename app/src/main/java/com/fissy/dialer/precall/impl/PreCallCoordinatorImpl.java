@@ -16,12 +16,12 @@
 
 package com.fissy.dialer.precall.impl;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.fissy.dialer.callintent.CallIntentBuilder;
 import com.fissy.dialer.common.Assert;
@@ -51,7 +51,7 @@ public class PreCallCoordinatorImpl implements PreCallCoordinator {
     private static final String SAVED_STATE_CURRENT_ACTION = "current_action";
 
     @NonNull
-    private final Activity activity;
+    private final AppCompatActivity activity;
 
     private CallIntentBuilder builder;
     private ImmutableList<PreCallAction> actions;
@@ -62,7 +62,7 @@ public class PreCallCoordinatorImpl implements PreCallCoordinator {
 
     private UiListener<Object> uiListener;
 
-    PreCallCoordinatorImpl(@NonNull Activity activity) {
+    PreCallCoordinatorImpl(@NonNull AppCompatActivity activity) {
         this.activity = Assert.isNotNull(activity);
     }
 
@@ -76,7 +76,7 @@ public class PreCallCoordinatorImpl implements PreCallCoordinator {
         }
         uiListener =
                 DialerExecutorComponent.get(activity)
-                        .createUiListener(activity.getFragmentManager(), "PreCallCoordinatorImpl.uiListener");
+                        .createUiListener(uiListener.getChildFragmentManager(), "PreCallCoordinatorImpl.uiListener");
     }
 
     void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -145,7 +145,7 @@ public class PreCallCoordinatorImpl implements PreCallCoordinator {
 
     @NonNull
     @Override
-    public Activity getActivity() {
+    public AppCompatActivity getActivity() {
         return activity;
     }
 

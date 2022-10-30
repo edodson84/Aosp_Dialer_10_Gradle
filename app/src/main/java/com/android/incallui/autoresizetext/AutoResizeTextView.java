@@ -56,23 +56,23 @@ public class AutoResizeTextView extends MaterialTextView {
 
     public AutoResizeTextView(Context context) {
         super(context, null, 0);
-        initialize(context, null, 0, 0);
+        initialize(context, null, 0);
     }
 
     public AutoResizeTextView(Context context, AttributeSet attrs) {
         super(context, attrs, 0);
-        initialize(context, attrs, 0, 0);
+        initialize(context, attrs, 0);
     }
 
     public AutoResizeTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initialize(context, attrs, defStyleAttr, 0);
+        initialize(context, attrs, defStyleAttr);
     }
 
     private void initialize(
-            Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+            Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         TypedArray typedArray = context.getTheme().obtainStyledAttributes(
-                attrs, R.styleable.AutoResizeTextView, defStyleAttr, defStyleRes);
+                attrs, R.styleable.AutoResizeTextView, defStyleAttr, 0);
         readAttrs(typedArray);
         typedArray.recycle();
         textPaint.set(getPaint());

@@ -17,9 +17,9 @@
 package com.android.incallui.answer.impl.classifier;
 
 class Point {
-    public float x;
-    public float y;
-    public long timeOffsetNano;
+    public final float x;
+    public final float y;
+    public final long timeOffsetNano;
 
     public Point(float x, float y) {
         this.x = x;

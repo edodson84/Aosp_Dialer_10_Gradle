@@ -18,11 +18,9 @@ package com.fissy.dialer.app.list;
 
 import static androidx.viewpager.widget.ViewPager.SCROLL_STATE_SETTLING;
 
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Trace;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +43,6 @@ import com.fissy.dialer.logging.UiAction;
 import com.fissy.dialer.performancereport.PerformanceReport;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 /**
  * Fragment that is used as the main screen of the Dialer.
@@ -73,18 +70,19 @@ public class ListsFragment extends Fragment
      * The position of the currently selected tab.
      */
     private int tabIndex = DialtactsPagerAdapter.TAB_INDEX_SPEED_DIAL;
-    private boolean paused;
     private CallLogQueryHandler callLogQueryHandler;
     private UiAction.Type[] actionTypeList;
     // Only for detecting page selected by swiping or clicking.
     private boolean onPageScrolledBeforeScrollStateSettling;
+
+    public ListsFragment() {
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         LogUtil.d("ListsFragment.onCreate", null);
         Trace.beginSection(TAG + " onCreate");
         super.onCreate(savedInstanceState);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(requireActivity().getApplicationContext());
         Trace.endSection();
     }
 
@@ -93,8 +91,6 @@ public class ListsFragment extends Fragment
         LogUtil.enterBlock("ListsFragment.onResume");
         Trace.beginSection(TAG + " onResume");
         super.onResume();
-
-        paused = false;
 
         if (getUserVisibleHint()) {
             sendScreenViewForCurrentPosition();
@@ -112,7 +108,6 @@ public class ListsFragment extends Fragment
         LogUtil.enterBlock("ListsFragment.onPause");
         super.onPause();
 
-        paused = true;
     }
 
     @Override
@@ -165,7 +160,7 @@ public class ListsFragment extends Fragment
         tabIcons[DialtactsPagerAdapter.TAB_INDEX_HISTORY] = R.drawable.quantum_ic_schedule_white_24;
         tabIcons[DialtactsPagerAdapter.TAB_INDEX_ALL_CONTACTS] = R.drawable.quantum_ic_people_white_24;
 
-        viewPager = (DialerViewPager) parentView.findViewById(R.id.lists_pager);
+        viewPager = parentView.findViewById(R.id.lists_pager);
 
         // This is deliberate. See cl/172018946 for the app startup implications of using 1 here
         // versus loading more fragments upfront.
@@ -174,11 +169,11 @@ public class ListsFragment extends Fragment
         viewPager.addOnPageChangeListener(this);
         showTab(DialtactsPagerAdapter.TAB_INDEX_SPEED_DIAL);
 
-        viewPagerTabs = (ViewPagerTabs) parentView.findViewById(R.id.lists_pager_header);
+        viewPagerTabs = parentView.findViewById(R.id.lists_pager_header);
         viewPagerTabs.configureTabIcons(tabIcons);
         viewPagerTabs.setViewPager(viewPager);
         addOnPageChangeListener(viewPagerTabs);
-        removeView = (RemoveView) parentView.findViewById(R.id.remove_view);
+        removeView = parentView.findViewById(R.id.remove_view);
         removeViewContent = parentView.findViewById(R.id.remove_view_content);
 
         Trace.endSection();

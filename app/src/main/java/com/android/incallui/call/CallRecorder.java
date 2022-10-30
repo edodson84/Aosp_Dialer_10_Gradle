@@ -62,12 +62,12 @@ public class CallRecorder implements CallList.Listener {
     private static final HashMap<String, Boolean> RECORD_ALLOWED_STATE_BY_COUNTRY = new HashMap<>();
     private static final int UPDATE_INTERVAL = 500;
     private static CallRecorder instance = null;
-    private Context context;
-    private boolean initialized = false;
-    private ICallRecorderService service = null;
     private final HashSet<RecordingProgressListener> progressListeners =
             new HashSet<>();
     private final Handler handler = new Handler();
+    private Context context;
+    private boolean initialized = false;
+    private ICallRecorderService service = null;
     private final ServiceConnection connection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
@@ -141,9 +141,9 @@ public class CallRecorder implements CallList.Listener {
         }
     }
 
-    public boolean startRecording(final String phoneNumber, final long creationTime) {
+    public void startRecording(final String phoneNumber, final long creationTime) {
         if (service == null) {
-            return false;
+            return;
         }
 
         try {
@@ -152,7 +152,6 @@ public class CallRecorder implements CallList.Listener {
                     l.onStartRecording();
                 }
                 updateRecordingProgressTask.run();
-                return true;
             } else {
                 Toast.makeText(context, R.string.call_recording_failed_message, Toast.LENGTH_SHORT)
                         .show();
@@ -161,7 +160,6 @@ public class CallRecorder implements CallList.Listener {
             Log.w(TAG, "Failed to start recording " + phoneNumber + ", " + new Date(creationTime), e);
         }
 
-        return false;
     }
 
     public boolean isRecording() {

@@ -19,8 +19,6 @@ package com.fissy.dialer.compat.telephony;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build.VERSION;
-import android.os.Build.VERSION_CODES;
 import android.telecom.PhoneAccountHandle;
 import android.telephony.TelephonyManager;
 
@@ -29,8 +27,6 @@ import androidx.core.os.BuildCompat;
 
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.telecom.TelecomUtil;
-
-import java.lang.reflect.InvocationTargetException;
 
 /**
  * Hidden APIs in {@link android.telephony.TelephonyManager}.

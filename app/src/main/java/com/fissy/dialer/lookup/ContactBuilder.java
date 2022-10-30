@@ -71,14 +71,14 @@ public class ContactBuilder {
     private Name name;
     private Uri photoUri;
 
-    private ContactBuilder(long directoryId, String normalizedNumber, String formattedNumber) {
-        this.directoryId = directoryId;
-        this.normalizedNumber = normalizedNumber;
+    private ContactBuilder(String formattedNumber) {
+        this.directoryId = DirectoryId.NEARBY;
+        this.normalizedNumber = null;
         this.formattedNumber = formattedNumber;
     }
 
     public static ContactBuilder forForwardLookup(String number) {
-        return new ContactBuilder(DirectoryId.NEARBY, null, number);
+        return new ContactBuilder(number);
     }
 
     public ContactBuilder addAddress(Address address) {
@@ -120,10 +120,9 @@ public class ContactBuilder {
         return this;
     }
 
-    public ContactBuilder setPhotoUri(Uri photoUri) {
+    public void setPhotoUri(Uri photoUri) {
         if (DEBUG) Log.d(TAG, "Setting photo URI");
         this.photoUri = photoUri;
-        return this;
     }
 
     public ContactInfo build() {

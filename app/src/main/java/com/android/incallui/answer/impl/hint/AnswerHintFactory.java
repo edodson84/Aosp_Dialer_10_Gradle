@@ -34,10 +34,10 @@ import com.fissy.dialer.storage.StorageComponent;
  */
 public class AnswerHintFactory {
 
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    @VisibleForTesting()
     static final String CONFIG_ANSWER_HINT_ANSWERED_THRESHOLD_KEY = "answer_hint_answered_threshold";
 
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    @VisibleForTesting()
     static final String CONFIG_ANSWER_HINT_WHITELISTED_DEVICES_KEY =
             "answer_hint_whitelisted_devices";
     @VisibleForTesting
@@ -57,7 +57,7 @@ public class AnswerHintFactory {
     }
 
     @VisibleForTesting
-    static boolean shouldShowAnswerHint(Context context, String device) {
+    static boolean shouldShowAnswerHint(Context context) {
         if (AccessibilityUtil.isTouchExplorationEnabled(context)) {
             return false;
         }
@@ -84,8 +84,8 @@ public class AnswerHintFactory {
     }
 
     /**
-     * @param device         should be the value of{@link Build#PRODUCT}.
-     *                       string.
+     * @param device should be the value of{@link Build#PRODUCT}.
+     *               string.
      */
     private static boolean isDeviceWhitelisted(Context context, String device) {
         return ConfigProviderComponent.get(context)
@@ -96,7 +96,7 @@ public class AnswerHintFactory {
 
     @NonNull
     public AnswerHint create(Context context, long puckUpDuration, long puckUpDelay) {
-        if (shouldShowAnswerHint(context, Build.PRODUCT)) {
+        if (shouldShowAnswerHint(context)) {
             return new DotAnswerHint(context, puckUpDuration, puckUpDelay);
         }
         return new EmptyAnswerHint();

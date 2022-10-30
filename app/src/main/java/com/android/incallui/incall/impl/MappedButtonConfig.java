@@ -187,7 +187,7 @@ final class MappedButtonConfig {
 
         /**
          * Returns an integer representing a button for which the given button conflicts. Defaults to
-
+         *
          *
          * <p>If the mutually exclusive button is chosen, the associated button should never be chosen.
          */

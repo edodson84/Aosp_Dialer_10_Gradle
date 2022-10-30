@@ -41,7 +41,6 @@ import com.fissy.dialer.logging.DialerImpression;
 import com.fissy.dialer.logging.Logger;
 
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * Fragment for call control buttons
@@ -98,7 +97,7 @@ public class DialpadFragment extends BaseFragment<DialpadPresenter, DialpadUi>
         if (v.getId() == R.id.dialpad_back) {
             Logger.get(getContext())
                     .logImpression(DialerImpression.Type.IN_CALL_DIALPAD_CLOSE_BUTTON_PRESSED);
-            Objects.requireNonNull(getActivity()).onBackPressed();
+            requireActivity().onBackPressed();
         }
     }
 
@@ -199,7 +198,7 @@ public class DialpadFragment extends BaseFragment<DialpadPresenter, DialpadUi>
      * Starts the slide up animation for the Dialpad keys when the Dialpad is revealed.
      */
     public void animateShowDialpad() {
-        final DialpadView dialpadView = (DialpadView) Objects.requireNonNull(getView()).findViewById(R.id.dialpad_view);
+        final DialpadView dialpadView = (DialpadView) requireView().findViewById(R.id.dialpad_view);
         dialpadView.animateShow();
     }
 

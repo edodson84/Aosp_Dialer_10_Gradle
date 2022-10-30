@@ -113,7 +113,7 @@ public class CallDetailsHeaderViewHolder extends RecyclerView.ViewHolder
             callDetailsHeaderListener.createAssistedDialerNumberParserTask(
                     new CallDetailsActivityCommon.AssistedDialingNumberParseWorker(),
                     this::updateAssistedDialingText,
-                    this::onFailure);
+                    this);
 
         } else {
             showAssistedDialingContainer(false);
@@ -147,7 +147,7 @@ public class CallDetailsHeaderViewHolder extends RecyclerView.ViewHolder
     }
 
     @Override
-    public void onFailure( @NonNull Throwable unused) {
+    public void onFailure(@NonNull Throwable unused) {
         assistedDialingInternationalDirectDialCodeAndCountryCodeText.setText(
                 R.string.assisted_dialing_country_code_entry_failure);
     }

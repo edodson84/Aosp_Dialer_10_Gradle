@@ -121,7 +121,7 @@ public class FloatingActionButtonController {
      * @param animate Whether or not to animate the transition.
      */
     public void align(int align, boolean animate) {
-        align(align, 0 /*offsetX */, 0 /* offsetY */, animate);
+        align(align, 0 /*offsetX */,  /* offsetY */ animate);
     }
 
     /**
@@ -129,10 +129,9 @@ public class FloatingActionButtonController {
      *
      * @param align   One of ALIGN_MIDDLE, ALIGN_QUARTER_RIGHT, or ALIGN_RIGHT.
      * @param offsetX Additional offsetX to translate by.
-     * @param offsetY Additional offsetY to translate by.
      * @param animate Whether or not to animate the transition.
      */
-    private void align(int align, int offsetX, int offsetY, boolean animate) {
+    private void align(int align, int offsetX, boolean animate) {
         if (screenWidth == 0) {
             return;
         }
@@ -143,13 +142,13 @@ public class FloatingActionButtonController {
         if (animate && fab.isShown()) {
             fab.animate()
                     .translationX(translationX + offsetX)
-                    .translationY(offsetY)
+                    .translationY(0)
                     .setInterpolator(fabInterpolator)
                     .setDuration(animationDuration)
                     .start();
         } else {
             fab.setTranslationX(translationX + offsetX);
-            fab.setTranslationY(offsetY);
+            fab.setTranslationY(0);
         }
     }
 

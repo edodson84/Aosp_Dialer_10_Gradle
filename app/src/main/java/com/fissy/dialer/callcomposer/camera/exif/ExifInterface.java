@@ -303,7 +303,6 @@ public class ExifInterface {
     /**
      * Puts an ExifTag into this ExifInterface object's tags, removing a previous ExifTag with the
      * same TID and IFD. The IFD it is put into will be the one the tag was created with in {@link
-
      *
      * @param tag an ExifTag to put into this ExifInterface's tags.
      * @return the previous ExifTag with the same TID and IFD or null if none exists.

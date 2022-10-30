@@ -34,7 +34,9 @@ public class BlockedNumbersSettingsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.blocked_numbers_activity);
 
         // If savedInstanceState != null, the Activity will automatically restore the last fragment.
@@ -49,12 +51,12 @@ public class BlockedNumbersSettingsActivity extends AppCompatActivity {
     public void showManagementUi() {
         BlockedNumbersFragment fragment =
                 (BlockedNumbersFragment)
-                        getFragmentManager().findFragmentByTag(TAG_BLOCKED_MANAGEMENT_FRAGMENT);
+                        getSupportFragmentManager().findFragmentByTag(TAG_BLOCKED_MANAGEMENT_FRAGMENT);
         if (fragment == null) {
             fragment = new BlockedNumbersFragment();
         }
 
-        getFragmentManager()
+        getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.blocked_numbers_activity_container, fragment, TAG_BLOCKED_MANAGEMENT_FRAGMENT)
                 .commit();
@@ -69,12 +71,12 @@ public class BlockedNumbersSettingsActivity extends AppCompatActivity {
     public void showNumbersToImportPreviewUi() {
         ViewNumbersToImportFragment fragment =
                 (ViewNumbersToImportFragment)
-                        getFragmentManager().findFragmentByTag(TAG_VIEW_NUMBERS_TO_IMPORT_FRAGMENT);
+                        getSupportFragmentManager().findFragmentByTag(TAG_VIEW_NUMBERS_TO_IMPORT_FRAGMENT);
         if (fragment == null) {
             fragment = new ViewNumbersToImportFragment();
         }
 
-        getFragmentManager()
+        getSupportFragmentManager()
                 .beginTransaction()
                 .replace(
                         R.id.blocked_numbers_activity_container, fragment, TAG_VIEW_NUMBERS_TO_IMPORT_FRAGMENT)
@@ -94,8 +96,8 @@ public class BlockedNumbersSettingsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         // TODO: Achieve back navigation without overriding onBackPressed.
-        if (getFragmentManager().getBackStackEntryCount() > 0) {
-            getFragmentManager().popBackStack();
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack();
         } else {
             super.onBackPressed();
         }

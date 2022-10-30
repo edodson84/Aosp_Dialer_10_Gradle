@@ -319,7 +319,7 @@ public class ExchangeAccountType extends BaseAccountType {
         return kind;
     }
 
-    protected DataKind addDataKindEvent(Context context) throws DefinitionException {
+    protected void addDataKindEvent(Context context) throws DefinitionException {
         DataKind kind =
                 addKind(
                         new DataKind(Event.CONTENT_ITEM_TYPE, R.string.eventLabelsGroup, Weight.EVENT, true));
@@ -337,7 +337,6 @@ public class ExchangeAccountType extends BaseAccountType {
         kind.fieldList = new ArrayList<>();
         kind.fieldList.add(new EditField(Event.DATA, R.string.eventLabelsGroup, FLAGS_EVENT));
 
-        return kind;
     }
 
     @Override

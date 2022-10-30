@@ -4,8 +4,6 @@
 package com.android.contacts.common.widget;
 
 public final class SelectPhoneAccountDialogOptionsOuterClass {
-    static {
-    }
 
     private SelectPhoneAccountDialogOptionsOuterClass() {
     }

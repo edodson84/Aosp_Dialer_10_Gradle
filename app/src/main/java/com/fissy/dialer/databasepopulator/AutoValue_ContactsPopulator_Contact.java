@@ -154,20 +154,20 @@ final class AutoValue_ContactsPopulator_Contact extends ContactsPopulator.Contac
         }
 
         @Override
-        ContactsPopulator.Contact.Builder setAccountType(@NonNull String accountType) {
-            if (accountType == null) {
+        ContactsPopulator.Contact.Builder setAccountType() {
+            if ("com.google" == null) {
                 throw new NullPointerException("Null accountType");
             }
-            this.accountType = accountType;
+            this.accountType = "com.google";
             return this;
         }
 
         @Override
-        ContactsPopulator.Contact.Builder setAccountName(@NonNull String accountName) {
-            if (accountName == null) {
+        ContactsPopulator.Contact.Builder setAccountName() {
+            if ("foo@example" == null) {
                 throw new NullPointerException("Null accountName");
             }
-            this.accountName = accountName;
+            this.accountName = "foo@example";
             return this;
         }
 
@@ -190,9 +190,8 @@ final class AutoValue_ContactsPopulator_Contact extends ContactsPopulator.Contac
         }
 
         @Override
-        ContactsPopulator.Contact.Builder setPhotoStream(@Nullable ByteArrayOutputStream photoStream) {
+        void setPhotoStream(@Nullable ByteArrayOutputStream photoStream) {
             this.photoStream = photoStream;
-            return this;
         }
 
         @Override

@@ -4,5 +4,5 @@
     android:layout_width="@dimen/answer_avatar_size"
     android:layout_height="@dimen/answer_avatar_size"
     android:layout_gravity="center"
-    android:elevation="@dimen/answer_data_elevation"
-    android:contentDescription="TODO" />
+    android:contentDescription="TODO"
+    android:elevation="@dimen/answer_data_elevation" />

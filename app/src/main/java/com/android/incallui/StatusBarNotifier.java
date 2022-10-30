@@ -41,8 +41,6 @@ import android.graphics.drawable.Icon;
 import android.media.AudioAttributes;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Build.VERSION;
-import android.os.Build.VERSION_CODES;
 import android.os.Trace;
 import android.telecom.Call.Details;
 import android.telecom.CallAudioState;

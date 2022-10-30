@@ -4,8 +4,6 @@
 package com.fissy.dialer.historyitemactions;
 
 public final class HistoryItemActionModuleInfoOuterClass {
-    static {
-    }
 
     private HistoryItemActionModuleInfoOuterClass() {
     }

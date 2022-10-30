@@ -107,7 +107,7 @@ public abstract class MultimediaData {
     @AutoValue.Builder
     public abstract static class Builder {
 
-        public abstract Builder setText(@NonNull String subject);
+        public abstract void setText(@NonNull String subject);
 
         public abstract Builder setLocation(@NonNull Location location);
 
@@ -117,9 +117,9 @@ public abstract class MultimediaData {
             return this;
         }
 
-        abstract Builder setImageUri(@NonNull Uri image);
+        abstract void setImageUri(@NonNull Uri image);
 
-        abstract Builder setImageContentType(@NonNull String imageContentType);
+        abstract void setImageContentType(@NonNull String imageContentType);
 
         public abstract Builder setImportant(boolean isImportant);
 

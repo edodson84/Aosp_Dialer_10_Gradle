@@ -19,7 +19,8 @@ package com.fissy.dialer.contacts.displaypreference;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.UserManager;
-import android.preference.PreferenceManager;
+
+import androidx.preference.PreferenceManager;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.inject.ApplicationContext;
@@ -80,7 +81,7 @@ public final class ContactDisplayPreferencesImpl implements ContactDisplayPrefer
      *
      * <p>Usually preferences are stored in {@code package.name_preferences.xml}. However the old
      * com.android.contacts.common.preference.ContactsPreferences stored it in {@code
-     * package.name.xml} which is incompatible with the regular {@link android.preference.Preference}
+     * package.name.xml} which is incompatible with the regular
      * widgets.
      */
     private void migrate() {

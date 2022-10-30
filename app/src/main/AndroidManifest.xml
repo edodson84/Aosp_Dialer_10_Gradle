@@ -88,7 +88,7 @@
             android:exported="false"
             android:label="@string/manage_blocked_numbers_label"
             android:parentActivityName="com.fissy.dialer.app.settings.DialerSettingsActivity"
-            android:theme="@style/ManageBlockedNumbersStyle">
+            android:theme="@style/Dialer">
             <intent-filter>
                 <action android:name="com.fissy.dialer.action.BLOCKED_NUMBERS_SETTINGS" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -149,17 +149,6 @@
                 <data android:scheme="header" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.fissy.dialer.assisteddialing.ui.AssistedDialingSettingActivity"
-            android:label="@string/assisted_dialing_setting_title"
-            android:parentActivityName="com.fissy.dialer.app.settings.DialerSettingsActivity"
-            android:theme="@style/Dialer"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.fissy.dialer.app.settings.SHOW_ASSISTED_DIALING_SETTINGS" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
 
         <provider
             android:name="com.fissy.dialer.blocking.FilteredNumberProvider"
@@ -201,7 +190,8 @@
             android:name="com.fissy.dialer.interactions.ContactUpdateService"
             android:exported="false" />
 
-        <receiver android:name="com.fissy.dialer.interactions.UndemoteOutgoingCallReceiver"
+        <receiver
+            android:name="com.fissy.dialer.interactions.UndemoteOutgoingCallReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.NEW_OUTGOING_CALL" />

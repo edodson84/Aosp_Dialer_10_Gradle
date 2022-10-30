@@ -15,11 +15,7 @@
  */
 package com.fissy.dialer.app.filterednumber;
 
-import android.app.ListFragment;
-import android.app.LoaderManager;
 import android.content.Context;
-import android.content.CursorLoader;
-import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
@@ -27,12 +23,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.ListFragment;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.CursorLoader;
+import androidx.loader.content.Loader;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.blocking.FilteredNumbersUtil;
-import com.fissy.dialer.blocking.FilteredNumbersUtil.ImportSendToVoicemailContactsListener;
 
 import java.util.Objects;
 
@@ -56,7 +56,7 @@ public class ViewNumbersToImportFragment extends ListFragment
         if (adapter == null) {
             adapter =
                     ViewNumbersToImportAdapter.newViewNumbersToImportAdapter(
-                            getContext(), getActivity().getFragmentManager());
+                            getContext(), requireActivity().getSupportFragmentManager());
         }
         setListAdapter(adapter);
     }
@@ -70,22 +70,22 @@ public class ViewNumbersToImportFragment extends ListFragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getLoaderManager().initLoader(0, null, this);
+        androidx.loader.app.LoaderManager.getInstance(this).initLoader(0, null, this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
 
-        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
         Objects.requireNonNull(actionBar).setTitle(R.string.import_send_to_voicemail_numbers_label);
         actionBar.setDisplayShowCustomEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setDisplayShowTitleEnabled(true);
 
-        getActivity().findViewById(R.id.cancel_button).setOnClickListener(this);
-        getActivity().findViewById(R.id.import_button).setOnClickListener(this);
+        requireActivity().findViewById(R.id.cancel_button).setOnClickListener(this);
+        requireActivity().findViewById(R.id.import_button).setOnClickListener(this);
     }
 
     @Override
@@ -94,10 +94,11 @@ public class ViewNumbersToImportFragment extends ListFragment
         return inflater.inflate(R.layout.view_numbers_to_import_fragment, container, false);
     }
 
+    @NonNull
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         return new CursorLoader(
-                getContext(),
+                requireContext(),
                 Phone.CONTENT_URI,
                 FilteredNumbersUtil.PhoneQuery.PROJECTION,
                 FilteredNumbersUtil.PhoneQuery.SELECT_SEND_TO_VOICEMAIL_TRUE,
@@ -106,12 +107,12 @@ public class ViewNumbersToImportFragment extends ListFragment
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+    public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
         adapter.swapCursor(data);
     }
 
     @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
+    public void onLoaderReset(@NonNull Loader<Cursor> loader) {
         adapter.swapCursor(null);
     }
 
@@ -126,7 +127,7 @@ public class ViewNumbersToImportFragment extends ListFragment
                         }
                     });
         } else if (view.getId() == R.id.cancel_button) {
-            getActivity().onBackPressed();
+            requireActivity().onBackPressed();
         }
     }
 }

@@ -16,11 +16,10 @@
 
 package com.fissy.dialer.precall;
 
-import android.app.Activity;
-
 import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.fissy.dialer.callintent.CallIntentBuilder;
 import com.fissy.dialer.function.Consumer;
@@ -42,7 +41,7 @@ public interface PreCallCoordinator {
      * @return the activity to attach the UI to.
      */
     @NonNull
-    Activity getActivity();
+    AppCompatActivity getActivity();
 
     /**
      * Called by a {@link PreCallAction} to abort the call. For example, the user has dismissed the

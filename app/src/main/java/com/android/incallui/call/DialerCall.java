@@ -292,6 +292,15 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
 
     public RttTranscript getRttTranscript() {
         return rttTranscript;
+    }
+
+    public void setRttTranscript(RttTranscript rttTranscript) {
+        this.rttTranscript = rttTranscript;
+    }
+
+    public void addListener(DialerCallListener listener) {
+        Assert.isMainThread();
+        listeners.add(listener);
     }    private final Call.Callback telecomCallCallback =
             new Call.Callback() {
                 @Override
@@ -445,15 +454,6 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
                     }
                 }
             };
-
-    public void setRttTranscript(RttTranscript rttTranscript) {
-        this.rttTranscript = rttTranscript;
-    }
-
-    public void addListener(DialerCallListener listener) {
-        Assert.isMainThread();
-        listeners.add(listener);
-    }
 
     public void removeListener(DialerCallListener listener) {
         Assert.isMainThread();

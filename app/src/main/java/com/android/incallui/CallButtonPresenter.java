@@ -21,13 +21,13 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Trace;
-import android.preference.PreferenceManager;
 import android.telecom.CallAudioState;
 import android.telecom.PhoneAccountHandle;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.os.UserManagerCompat;
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
 
 import com.android.contacts.common.compat.CallCompat;
 import com.android.incallui.InCallCameraManager.Listener;
@@ -50,6 +50,7 @@ import com.android.incallui.incall.protocol.InCallButtonUiDelegate;
 import com.android.incallui.multisim.SwapSimWorker;
 import com.android.incallui.videotech.utils.VideoUtils;
 import com.fissy.dialer.R;
+import com.fissy.dialer.callrecord.impl.CallRecorderService;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.common.concurrent.DialerExecutorComponent;
@@ -80,12 +81,6 @@ public class CallButtonPresenter
 
     private final Context context;
     private InCallButtonUi inCallButtonUi;
-    private DialerCall call;
-    private boolean automaticallyMutedByAddCall = false;
-    private boolean previousMuteState = false;
-    private boolean isInCallButtonUiReady;
-    private PhoneAccountHandle otherAccount;
-
     private final CallRecorder.RecordingProgressListener recordingProgressListener =
             new CallRecorder.RecordingProgressListener() {
                 @Override
@@ -104,6 +99,11 @@ public class CallButtonPresenter
                     inCallButtonUi.setCallRecordingDuration(elapsedTimeMs);
                 }
             };
+    private DialerCall call;
+    private boolean automaticallyMutedByAddCall = false;
+    private boolean previousMuteState = false;
+    private boolean isInCallButtonUiReady;
+    private PhoneAccountHandle otherAccount;
 
     public CallButtonPresenter(Context context) {
         this.context = context.getApplicationContext();
@@ -370,7 +370,7 @@ public class CallButtonPresenter
     }
 
     private void startCallRecordingOrAskForPermission() {
-        if (hasAllPermissions(CallRecorder.REQUIRED_PERMISSIONS)) {
+        if (hasAllPermissions()) {
             CallRecorder recorder = CallRecorder.getInstance();
             recorder.startRecording(call.getNumber(), call.getCreationTimeMillis());
         } else {
@@ -378,8 +378,8 @@ public class CallButtonPresenter
         }
     }
 
-    private boolean hasAllPermissions(String[] permissions) {
-        for (String p : permissions) {
+    private boolean hasAllPermissions() {
+        for (String p : CallRecorder.REQUIRED_PERMISSIONS) {
             if (context.checkSelfPermission(p) != PackageManager.PERMISSION_GRANTED) {
                 return false;
             }
@@ -571,7 +571,7 @@ public class CallButtonPresenter
 
         final CallRecorder recorder = CallRecorder.getInstance();
         final boolean showCallRecordOption = recorder.canRecordInCurrentCountry()
-                && !isVideo && call.getState() == DialerCallState.ACTIVE;
+                && !isVideo && call.getState() == DialerCallState.ACTIVE && CallRecorderService.isEnabled(context);
 
         otherAccount = TelecomUtil.getOtherAccount(getContext(), call.getAccountHandle());
         boolean showSwapSim =

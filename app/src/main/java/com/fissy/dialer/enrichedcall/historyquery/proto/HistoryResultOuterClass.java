@@ -4,8 +4,6 @@
 package com.fissy.dialer.enrichedcall.historyquery.proto;
 
 public final class HistoryResultOuterClass {
-    static {
-    }
 
     private HistoryResultOuterClass() {
     }

@@ -1250,8 +1250,8 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
         inCallUiListeners.add(listener);
     }
 
-    public boolean removeInCallUiListener(InCallUiListener listener) {
-        return inCallUiListeners.remove(listener);
+    public void removeInCallUiListener(InCallUiListener listener) {
+        inCallUiListeners.remove(listener);
     }
 
     /*package*/

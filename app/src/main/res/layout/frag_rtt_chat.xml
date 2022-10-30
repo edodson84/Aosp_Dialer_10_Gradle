@@ -29,6 +29,7 @@
             android:layout_width="0.0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1.0"
+            android:autofillHints=""
             android:background="@drawable/input_bubble_background"
             android:hint="@string/rtt_input_hint"
             android:imeOptions="actionSend"
@@ -41,8 +42,7 @@
             android:textColor="#dd000000"
             android:textColorHint="#ff757575"
             android:textSize="16.0sp"
-            android:visibility="gone"
-            android:autofillHints="" />
+            android:visibility="gone" />
 
         <ImageButton
             android:id="@id/rtt_chat_submit_button"

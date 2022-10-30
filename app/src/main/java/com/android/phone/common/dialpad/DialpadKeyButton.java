@@ -48,17 +48,14 @@ public class DialpadKeyButton extends FrameLayout {
      * Timeout before switching to long-click accessibility mode.
      */
     private static final int LONG_HOVER_TIMEOUT = ViewConfiguration.getLongPressTimeout() * 2;
-
-    /**
-     * Accessibility manager instance used to check touch exploration state.
-     */
-    private AccessibilityManager mAccessibilityManager;
-
     /**
      * Bounds used to filter HOVER_EXIT events.
      */
     private final RectF mHoverBounds = new RectF();
-
+    /**
+     * Accessibility manager instance used to check touch exploration state.
+     */
+    private AccessibilityManager mAccessibilityManager;
     /**
      * Whether this view is currently in the long-hover state.
      */

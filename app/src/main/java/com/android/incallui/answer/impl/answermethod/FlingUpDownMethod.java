@@ -120,8 +120,8 @@ public class FlingUpDownMethod extends AnswerMethod implements OnProgressChanged
         view.setTranslationY(MathUtil.lerp(view.getTranslationY(), newY, SWIPE_LERP_PROGRESS_FACTOR));
     }
 
-    private static void moveTowardX(View view, float newX) {
-        view.setTranslationX(MathUtil.lerp(view.getTranslationX(), newX, SWIPE_LERP_PROGRESS_FACTOR));
+    private static void moveTowardX(View view) {
+        view.setTranslationX(MathUtil.lerp(view.getTranslationX(), (float) 0, SWIPE_LERP_PROGRESS_FACTOR));
     }
 
     private static void fadeToward(View view, float newAlpha) {
@@ -419,7 +419,7 @@ public class FlingUpDownMethod extends AnswerMethod implements OnProgressChanged
         fadeToward(incomingDisconnectText, incomingWillDisconnect ? swipeTextAlpha : 0);
 
         // Move swipe text back to zero.
-        moveTowardX(swipeToAnswerText, 0 /* newX */);
+        moveTowardX(swipeToAnswerText  /* newX */);
         moveTowardY(swipeToAnswerText, 0 /* newY */);
 
         // Animate puck color
@@ -835,17 +835,17 @@ public class FlingUpDownMethod extends AnswerMethod implements OnProgressChanged
         iconRotation.setDuration(SETTLE_ANIMATION_DURATION_MILLIS);
 
         ObjectAnimator swipeToAnswerTextFade =
-                createFadeAnimation(swipeToAnswerText, 1, SETTLE_ANIMATION_DURATION_MILLIS);
+                createFadeAnimation(swipeToAnswerText, 1);
 
         ObjectAnimator contactPuckContainerFade =
-                createFadeAnimation(contactPuckContainer, 1, SETTLE_ANIMATION_DURATION_MILLIS);
+                createFadeAnimation(contactPuckContainer, 1);
 
         ObjectAnimator contactPuckBackgroundFade =
-                createFadeAnimation(contactPuckBackground, 1, SETTLE_ANIMATION_DURATION_MILLIS);
+                createFadeAnimation(contactPuckBackground, 1);
 
         ObjectAnimator contactPuckIconFade =
                 createFadeAnimation(
-                        contactPuckIcon, shouldShowPhotoInPuck() ? 0 : 1, SETTLE_ANIMATION_DURATION_MILLIS);
+                        contactPuckIcon, shouldShowPhotoInPuck() ? 0 : 1);
 
         ObjectAnimator contactPuckTranslation =
                 ObjectAnimator.ofPropertyValuesHolder(
@@ -891,9 +891,9 @@ public class FlingUpDownMethod extends AnswerMethod implements OnProgressChanged
         }
     }
 
-    private ObjectAnimator createFadeAnimation(View target, float targetAlpha, long duration) {
+    private ObjectAnimator createFadeAnimation(View target, float targetAlpha) {
         ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(target, View.ALPHA, targetAlpha);
-        objectAnimator.setDuration(duration);
+        objectAnimator.setDuration(FlingUpDownMethod.SETTLE_ANIMATION_DURATION_MILLIS);
         return objectAnimator;
     }
 

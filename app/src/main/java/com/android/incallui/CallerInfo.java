@@ -156,7 +156,7 @@ public class CallerInfo {
         // TODO: Move all the basic initialization here?
         isEmergency = false;
         isVoiceMail = false;
-        userType = (int)ContactsUtils.USER_TYPE_CURRENT;
+        userType = (int) ContactsUtils.USER_TYPE_CURRENT;
     }
 
     static String[] getDefaultPhoneLookupProjection() {
@@ -184,7 +184,7 @@ public class CallerInfo {
         info.numberType = 0;
         info.phoneLabel = null;
         info.photoResource = 0;
-        info.userType = (int)ContactsUtils.USER_TYPE_CURRENT;
+        info.userType = (int) ContactsUtils.USER_TYPE_CURRENT;
 
         Log.v(TAG, "getCallerInfo() based on cursor...");
 

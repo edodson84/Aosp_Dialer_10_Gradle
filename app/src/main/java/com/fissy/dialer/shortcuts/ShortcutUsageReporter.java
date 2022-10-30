@@ -17,15 +17,12 @@
 package com.fissy.dialer.shortcuts;
 
 import android.Manifest;
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.pm.ShortcutManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
-import android.os.Build.VERSION_CODES;
 import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.PhoneLookup;
 import android.text.TextUtils;
@@ -50,7 +47,7 @@ import com.fissy.dialer.common.concurrent.AsyncTaskExecutors;
  * <p>This allows launcher applications to provide users with shortcut suggestions, even if the user
  * isn't already using shortcuts.
  */
- // Shortcuts introduced in N_MR1
+// Shortcuts introduced in N_MR1
 public class ShortcutUsageReporter {
 
     private static final AsyncTaskExecutor EXECUTOR = AsyncTaskExecutors.createThreadPoolExecutor();

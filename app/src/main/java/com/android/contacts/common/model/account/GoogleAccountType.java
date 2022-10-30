@@ -121,7 +121,7 @@ public class GoogleAccountType extends BaseAccountType {
         return kind;
     }
 
-    private DataKind addDataKindRelation(Context context) throws DefinitionException {
+    private void addDataKindRelation(Context context) throws DefinitionException {
         DataKind kind =
                 addKind(
                         new DataKind(
@@ -157,10 +157,9 @@ public class GoogleAccountType extends BaseAccountType {
         kind.fieldList = new ArrayList<>();
         kind.fieldList.add(new EditField(Relation.DATA, R.string.relationLabelsGroup, FLAGS_RELATION));
 
-        return kind;
     }
 
-    private DataKind addDataKindEvent(Context context) throws DefinitionException {
+    private void addDataKindEvent(Context context) throws DefinitionException {
         DataKind kind =
                 addKind(
                         new DataKind(Event.CONTENT_ITEM_TYPE, R.string.eventLabelsGroup, Weight.EVENT, true));
@@ -183,7 +182,6 @@ public class GoogleAccountType extends BaseAccountType {
         kind.fieldList = new ArrayList<>();
         kind.fieldList.add(new EditField(Event.DATA, R.string.eventLabelsGroup, FLAGS_EVENT));
 
-        return kind;
     }
 
     @Override

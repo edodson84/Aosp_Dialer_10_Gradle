@@ -11,10 +11,10 @@
         android:layout_width="16.0dip"
         android:layout_height="16.0dip"
         android:layout_gravity="center_horizontal"
+        android:contentDescription="TODO"
         android:src="@drawable/quantum_ic_question_answer_vd_theme_24"
         android:tintMode="src_in"
-        app:tint="#deffffff"
-        android:contentDescription="TODO" />
+        app:tint="#deffffff" />
 
     <TextView
         android:layout_width="fill_parent"

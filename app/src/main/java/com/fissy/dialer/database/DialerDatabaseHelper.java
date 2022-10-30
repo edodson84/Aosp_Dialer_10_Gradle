@@ -93,8 +93,8 @@ public class DialerDatabaseHelper extends SQLiteOpenHelper {
 
     private boolean isTestInstance = false;
 
-    protected DialerDatabaseHelper(Context context, String databaseName, int dbVersion) {
-        super(context, databaseName, null, dbVersion);
+    protected DialerDatabaseHelper(Context context) {
+        super(context, DialerDatabaseHelper.DATABASE_NAME, null, DialerDatabaseHelper.DATABASE_VERSION);
         this.context = Objects.requireNonNull(context, "Context must not be null");
     }
 

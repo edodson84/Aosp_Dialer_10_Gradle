@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:title="@string/settings">
+
+    <PreferenceCategory
+        android:title="Theme Options"
+        app:iconSpaceReserved="false">
+        <ListPreference
+            android:defaultValue="@string/theme_default"
+            android:dialogTitle="@string/theme_options_title"
+            android:entries="@array/theme_entry_values"
+            android:entryValues="@array/theme_entries"
+            android:key="@string/theme_options_key"
+            android:summary="%s"
+            android:title="@string/theme_options_title" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="Lookup Options"
+        app:iconSpaceReserved="false">
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="enable_forward_lookup"
+            android:persistent="false"
+            android:summary="@string/enable_forward_lookup_summary"
+            android:title="@string/enable_forward_lookup_title" />
+        <Preference android:summary="@string/lookup_disclaimer" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="Display Options"
+        app:iconSpaceReserved="false">
+        <ListPreference
+            android:defaultValue="@string/display_options_sort_by_given_name_value"
+            android:dialogTitle="@string/display_options_sort_list_by"
+            android:entries="@array/contact_sort_order_entries"
+            android:entryValues="@array/contact_sort_order_values"
+            android:key="@string/display_options_sort_list_by_key"
+            android:summary="%s"
+            android:title="@string/display_options_sort_list_by" />
+        <ListPreference
+            android:defaultValue="@string/display_options_view_given_name_first_value"
+            android:dialogTitle="@string/display_options_view_names_as"
+            android:entries="@array/contact_display_order_entries"
+            android:entryValues="@array/contact_display_order_values"
+            android:key="@string/display_options_view_names_as_key"
+            android:summary="%s"
+            android:title="@string/display_options_view_names_as" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="Sound Options"
+        app:iconSpaceReserved="false">
+        <Preference
+            android:key="@string/ringtone_preference_key"
+            android:persistent="false"
+            android:title="@string/ringtone_title" />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="@string/vibrate_on_preference_key"
+            android:persistent="false"
+            android:title="@string/vibrate_on_ring_title" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/play_dtmf_preference_key"
+            android:persistent="false"
+            android:title="@string/dtmf_tone_enable_title" />
+
+        <ListPreference
+            android:entries="@array/dtmf_tone_length_entries"
+            android:entryValues="@array/dtmf_tone_length_entry_values"
+            android:key="@string/dtmf_tone_length_preference_key"
+            android:title="@string/dtmf_tone_length_title" />
+        <PreferenceCategory
+            android:key="@string/call_recording_category_key"
+            android:title="@string/call_recording_category_title">
+            <ListPreference
+                android:defaultValue="0"
+                android:entries="@array/call_recording_encoder_entries"
+                android:entryValues="@array/call_recording_encoder_values"
+                android:key="@string/call_recording_format_key"
+                android:summary="%s"
+                android:title="@string/call_recording_format" />
+        </PreferenceCategory>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="SMS Options"
+        app:iconSpaceReserved="false">
+        <Preference
+            android:key="quick_response_key"
+            android:persistent="false"
+            android:title="Quick responses" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="Call Options"
+        app:iconSpaceReserved="false">
+        <Preference
+            android:key="call_settings_key"
+            android:persistent="false"
+            android:title="Call settings" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="Call Blocking Options"
+        app:iconSpaceReserved="false">
+        <Preference
+            android:key="call_blocking_key"
+            android:persistent="false"
+            android:title="Call blocking" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="Accessibility Options"
+        app:iconSpaceReserved="false">
+        <Preference
+            android:key="accessibility_key"
+            android:persistent="false"
+            android:title="Accessibility" />
+    </PreferenceCategory>
+</PreferenceScreen>

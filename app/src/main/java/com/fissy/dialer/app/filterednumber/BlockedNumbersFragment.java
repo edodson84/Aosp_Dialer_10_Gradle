@@ -15,33 +15,26 @@
  */
 package com.fissy.dialer.app.filterednumber;
 
-import android.app.ListFragment;
-import android.app.LoaderManager;
 import android.content.Context;
-import android.content.CursorLoader;
-import android.content.Loader;
 import android.database.Cursor;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.ListFragment;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.CursorLoader;
+import androidx.loader.content.Loader;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.blocking.BlockedNumbersMigrator;
-import com.fissy.dialer.blocking.BlockedNumbersMigrator.Listener;
 import com.fissy.dialer.blocking.FilteredNumberCompat;
 import com.fissy.dialer.blocking.FilteredNumbersUtil;
-import com.fissy.dialer.blocking.FilteredNumbersUtil.CheckForSendToVoicemailContactListener;
-import com.fissy.dialer.blocking.FilteredNumbersUtil.ImportSendToVoicemailContactsListener;
 import com.fissy.dialer.database.FilteredNumberContract;
-import com.fissy.dialer.lettertile.LetterTileDrawable;
-
-import java.util.Objects;
 
 /**
  * TODO(calderwoodra): documentation
@@ -50,9 +43,7 @@ public class BlockedNumbersFragment extends ListFragment
         implements LoaderManager.LoaderCallbacks<Cursor>,
         View.OnClickListener {
 
-    private static final char ADD_BLOCKED_NUMBER_ICON_LETTER = '+';
     protected View migratePromoView;
-    private BlockedNumbersMigrator blockedNumbersMigratorForTest;
     private TextView blockedNumbersText;
     private TextView footerText;
     private BlockedNumbersAdapter adapter;
@@ -60,43 +51,38 @@ public class BlockedNumbersFragment extends ListFragment
     private View blockedNumbersDisabledForEmergency;
     private View blockedNumberListDivider;
 
+    public BlockedNumbersFragment() {
+    }
+
     @Override
     public Context getContext() {
         return getActivity();
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
-        LayoutInflater inflater =
-                (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        getListView().addHeaderView(inflater.inflate(R.layout.blocked_number_header, null));
-        getListView().addFooterView(inflater.inflate(R.layout.blocked_number_footer, null));
-        //replace the icon for add number with LetterTileDrawable(), so it will have identical style
-        LetterTileDrawable drawable = new LetterTileDrawable(getResources());
-        drawable.setLetter(ADD_BLOCKED_NUMBER_ICON_LETTER);
-        drawable.setColor(android.R.attr.colorPrimary);
-        drawable.setIsCircular(true);
+        getListView().addHeaderView(View.inflate(getContext(), R.layout.blocked_number_header, null));
+        getListView().addFooterView(View.inflate(getContext(), R.layout.blocked_number_footer, null));
 
         if (adapter == null) {
             adapter =
                     BlockedNumbersAdapter.newBlockedNumbersAdapter(
-                            getContext(), getActivity().getFragmentManager());
+                            getContext(), requireActivity().getSupportFragmentManager());
         }
         setListAdapter(adapter);
 
-        blockedNumbersText = (TextView) getListView().findViewById(R.id.blocked_number_text_view);
+        blockedNumbersText = getListView().findViewById(R.id.blocked_number_text_view);
         migratePromoView = getListView().findViewById(R.id.migrate_promo);
         getListView().findViewById(R.id.migrate_promo_allow_button).setOnClickListener(this);
         importSettings = getListView().findViewById(R.id.import_settings);
         blockedNumbersDisabledForEmergency =
                 getListView().findViewById(R.id.blocked_numbers_disabled_for_emergency);
-        blockedNumberListDivider = getActivity().findViewById(R.id.blocked_number_list_divider);
+        blockedNumberListDivider = requireActivity().findViewById(R.id.blocked_number_list_divider);
         getListView().findViewById(R.id.import_button).setOnClickListener(this);
         getListView().findViewById(R.id.view_numbers_button).setOnClickListener(this);
 
-        footerText = (TextView) getActivity().findViewById(R.id.blocked_number_footer_textview);
+        footerText = requireActivity().findViewById(R.id.blocked_number_footer_textview);
     }
 
     @Override
@@ -107,23 +93,15 @@ public class BlockedNumbersFragment extends ListFragment
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        getLoaderManager().initLoader(0, null, this);
+
+        LoaderManager.getInstance(this).initLoader(0, null, this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
-        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        ColorDrawable backgroundDrawable =
-                new ColorDrawable(android.R.attr.colorPrimary);
-        Objects.requireNonNull(actionBar).setBackgroundDrawable(backgroundDrawable);
-        actionBar.setDisplayShowCustomEnabled(false);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(R.string.manage_blocked_numbers_label);
 
         // If the device can use the framework blocking solution, users should not be able to add
         // new blocked numbers from the Blocked Management UI. They will be shown a promo card
@@ -162,6 +140,7 @@ public class BlockedNumbersFragment extends ListFragment
         return inflater.inflate(R.layout.blocked_number_fragment, container, false);
     }
 
+    @NonNull
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         final String[] projection = {
@@ -175,7 +154,7 @@ public class BlockedNumbersFragment extends ListFragment
                         + "="
                         + FilteredNumberContract.FilteredNumberTypes.BLOCKED_NUMBER;
         return new CursorLoader(
-                getContext(),
+                requireContext(),
                 FilteredNumberContract.FilteredNumber.CONTENT_URI,
                 projection,
                 selection,
@@ -184,7 +163,7 @@ public class BlockedNumbersFragment extends ListFragment
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+    public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
         adapter.swapCursor(data);
         if (FilteredNumberCompat.canUseNewFiltering() || data.getCount() == 0) {
             blockedNumberListDivider.setVisibility(View.INVISIBLE);
@@ -194,7 +173,7 @@ public class BlockedNumbersFragment extends ListFragment
     }
 
     @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
+    public void onLoaderReset(@NonNull Loader<Cursor> loader) {
         adapter.swapCursor(null);
     }
 
@@ -214,12 +193,10 @@ public class BlockedNumbersFragment extends ListFragment
                     () -> importSettings.setVisibility(View.GONE));
         } else if (resId == R.id.migrate_promo_allow_button) {
             view.setEnabled(false);
-            (blockedNumbersMigratorForTest != null
-                    ? blockedNumbersMigratorForTest
-                    : new BlockedNumbersMigrator(getContext()))
+            new BlockedNumbersMigrator(getContext())
                     .migrate(
                             () -> {
-                                getContext()
+                                requireContext()
                                         .startActivity(
                                                 FilteredNumberCompat.createManageBlockedNumbersIntent(getContext()));
                                 // Remove this activity from the backstack
@@ -229,7 +206,4 @@ public class BlockedNumbersFragment extends ListFragment
     }
 
 
-    void setBlockedNumbersMigratorForTest(BlockedNumbersMigrator blockedNumbersMigrator) {
-        blockedNumbersMigratorForTest = blockedNumbersMigrator;
-    }
 }

@@ -16,6 +16,8 @@
 
 package com.android.incallui;
 
+import static com.fissy.dialer.app.settings.DialerSettingsActivity.PrefsFragment.getThemeButtonBehavior;
+
 import android.app.ActivityManager;
 import android.app.ActivityManager.AppTask;
 import android.app.AlertDialog;
@@ -24,7 +26,6 @@ import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Trace;
 import android.telecom.Call;
@@ -83,7 +84,7 @@ import com.android.incallui.video.protocol.VideoCallScreenDelegateFactory;
 import com.fissy.dialer.R;
 import com.fissy.dialer.animation.AnimUtils;
 import com.fissy.dialer.animation.AnimationListenerAdapter;
-import com.fissy.dialer.app.settings.ThemeOptionsSettingsFragment;
+import com.fissy.dialer.app.settings.DialerSettingsActivity;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.common.concurrent.DialerExecutorComponent;
@@ -123,13 +124,12 @@ public class InCallActivity extends TransactionSafeFragmentActivity
     private static final int DIALPAD_REQUEST_NONE = 1;
     private static final int DIALPAD_REQUEST_SHOW = 2;
     private static final int DIALPAD_REQUEST_HIDE = 3;
-    private static Optional<Integer> audioRouteForTesting = Optional.empty();
+    private static final Optional<Integer> audioRouteForTesting = Optional.empty();
     private SelectPhoneAccountListener selectPhoneAccountListener;
     private UiListener<Result> preferredAccountWorkerResultListener;
     private Animation dialpadSlideInAnimation;
     private Animation dialpadSlideOutAnimation;
     private Dialog errorDialog;
-    private GradientDrawable backgroundDrawable;
     private InCallOrientationEventListener inCallOrientationEventListener;
     private View pseudoBlackScreenOverlay;
     private SelectPhoneAccountDialogFragment selectPhoneAccountDialogFragment;
@@ -148,7 +148,6 @@ public class InCallActivity extends TransactionSafeFragmentActivity
     private boolean isVisible;
     private boolean needDismissPendingDialogs;
     private boolean touchDownWhenPseudoScreenOff;
-    private int[] backgroundDrawableColors;
     @DialpadRequestType
     private int showDialpadRequest = DIALPAD_REQUEST_NONE;
     private SpeakEasyCallManager speakEasyCallManager;
@@ -170,11 +169,6 @@ public class InCallActivity extends TransactionSafeFragmentActivity
     private static int getAudioRoute() {
         return audioRouteForTesting.orElseGet(() -> AudioModeProvider.getInstance().getAudioState().getRoute());
 
-    }
-
-    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    public static void setAudioRouteForTesting(int audioRoute) {
-        audioRouteForTesting = Optional.of(audioRoute);
     }
 
     private static ShouldShowUiResult getShouldShowVideoUi() {
@@ -228,18 +222,18 @@ public class InCallActivity extends TransactionSafeFragmentActivity
     @Override
     protected void onCreate(Bundle bundle) {
         Trace.beginSection("InCallActivity.onCreate");
-        ThemeOptionsSettingsFragment.ThemeButtonBehavior mThemeBehavior = ThemeOptionsSettingsFragment.getThemeButtonBehavior(MainActivityPeer.themeprefs);
+        DialerSettingsActivity.PrefsFragment.ThemeButtonBehavior mThemeBehavior = getThemeButtonBehavior(MainActivityPeer.themeprefs);
 
-        if (mThemeBehavior == ThemeOptionsSettingsFragment.ThemeButtonBehavior.DARK) {
+        if (mThemeBehavior == DialerSettingsActivity.PrefsFragment.ThemeButtonBehavior.DARK) {
             getTheme().applyStyle(R.style.DialerDark, true);
         }
-        if (mThemeBehavior == ThemeOptionsSettingsFragment.ThemeButtonBehavior.LIGHT) {
+        if (mThemeBehavior == DialerSettingsActivity.PrefsFragment.ThemeButtonBehavior.LIGHT) {
             getTheme().applyStyle(R.style.DialerLight, true);
         }
         super.onCreate(bundle);
         preferredAccountWorkerResultListener =
                 DialerExecutorComponent.get(this)
-                        .createUiListener(getFragmentManager(), "preferredAccountWorkerResultListener");
+                        .createUiListener(getSupportFragmentManager(), "preferredAccountWorkerResultListener");
 
         selectPhoneAccountListener = new SelectPhoneAccountListener(getApplicationContext());
 
@@ -292,7 +286,7 @@ public class InCallActivity extends TransactionSafeFragmentActivity
 
             SelectPhoneAccountDialogFragment selectPhoneAccountDialogFragment =
                     (SelectPhoneAccountDialogFragment)
-                            getFragmentManager().findFragmentByTag(Tags.SELECT_ACCOUNT_FRAGMENT);
+                            getSupportFragmentManager().findFragmentByTag(Tags.SELECT_ACCOUNT_FRAGMENT);
             if (selectPhoneAccountDialogFragment != null) {
                 selectPhoneAccountDialogFragment.setListener(selectPhoneAccountListener);
             }
@@ -320,7 +314,7 @@ public class InCallActivity extends TransactionSafeFragmentActivity
         // Allow the activity to be shown when the screen is locked and filter out touch events that are
         // "too fat".
         int flags =
-                WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
+                android.R.attr.showWhenLocked
                         | WindowManager.LayoutParams.FLAG_IGNORE_CHEEK_PRESSES;
 
         // When the audio stream is not via Bluetooth, turn on the screen once the activity is shown.
@@ -328,7 +322,7 @@ public class InCallActivity extends TransactionSafeFragmentActivity
         final int audioRoute = getAudioRoute();
         if (audioRoute != CallAudioState.ROUTE_BLUETOOTH
                 || CallList.getInstance().getIncomingCall() != null) {
-            flags |= WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON;
+            flags |= android.R.attr.turnScreenOn;
         }
 
         getWindow().addFlags(flags);
@@ -408,7 +402,7 @@ public class InCallActivity extends TransactionSafeFragmentActivity
         List<PhoneAccountHandle> phoneAccountHandles =
                 extras == null
                         ? new ArrayList<>()
-                        : extras.getParcelableArrayList(Call.AVAILABLE_PHONE_ACCOUNTS);
+                        : extras.getParcelableArrayList(Call.EXTRA_SUGGESTED_PHONE_ACCOUNTS);
 
         ListenableFuture<PreferredAccountWorker.Result> preferredAccountFuture =
                 preferredAccountWorker.selectAccount(
@@ -440,7 +434,7 @@ public class InCallActivity extends TransactionSafeFragmentActivity
                             SelectPhoneAccountDialogFragment.newInstance(
                                     result.getDialogOptionsBuilder().get().setCallId(callId).build(),
                                     selectPhoneAccountListener);
-                    selectPhoneAccountDialogFragment.show(getFragmentManager(), Tags.SELECT_ACCOUNT_FRAGMENT);
+                    selectPhoneAccountDialogFragment.show(getSupportFragmentManager(), Tags.SELECT_ACCOUNT_FRAGMENT);
                 },
                 throwable -> {
                     throw new RuntimeException(throwable);
@@ -833,8 +827,8 @@ public class InCallActivity extends TransactionSafeFragmentActivity
                 showDialpadFragment();
                 Objects.requireNonNull(getDialpadFragment()).animateShowDialpad();
             }
-            Objects.requireNonNull(getDialpadFragment()
-                            .getView())
+            Objects.requireNonNull(getDialpadFragment())
+                    .requireView()
                     .startAnimation(show ? dialpadSlideInAnimation : dialpadSlideOutAnimation);
         }
 
@@ -926,9 +920,9 @@ public class InCallActivity extends TransactionSafeFragmentActivity
 
         dismissKeyguard = dismiss;
         if (dismiss) {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+            getWindow().addFlags(android.R.attr.showWhenLocked);
         } else {
-            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+            getWindow().clearFlags(android.R.attr.showWhenLocked);
         }
     }
 
@@ -1111,7 +1105,7 @@ public class InCallActivity extends TransactionSafeFragmentActivity
         View dialogCheckBoxView =
                 View.inflate(builder.getContext(), R.layout.video_call_lte_to_wifi_failed, null /* root */);
         CheckBox wifiHandoverFailureCheckbox =
-                (CheckBox) dialogCheckBoxView.findViewById(R.id.video_call_lte_to_wifi_failed_checkbox);
+                dialogCheckBoxView.findViewById(R.id.video_call_lte_to_wifi_failed_checkbox);
         wifiHandoverFailureCheckbox.setChecked(false);
 
         InCallUiLock lock = InCallPresenter.getInstance().acquireInCallUiLock("WifiFailedDialog");
@@ -1663,7 +1657,6 @@ public class InCallActivity extends TransactionSafeFragmentActivity
     public static final class PendingIntentRequestCodes {
         static final int NON_FULL_SCREEN = 0;
         static final int FULL_SCREEN = 1;
-        static final int BUBBLE = 2;
     }
 
     private static final class Tags {

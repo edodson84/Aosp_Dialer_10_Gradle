@@ -52,7 +52,7 @@ public class AccelerometerListener {
     // mOrientation.
     private int pendingOrientation;
     private OrientationListener listener;
-    Handler handler =
+    final Handler handler =
             new Handler() {
                 @Override
                 public void handleMessage(Message msg) {
@@ -74,7 +74,7 @@ public class AccelerometerListener {
                     }
                 }
             };
-    SensorEventListener sensorListener =
+    final SensorEventListener sensorListener =
             new SensorEventListener() {
                 @Override
                 public void onSensorChanged(SensorEvent event) {

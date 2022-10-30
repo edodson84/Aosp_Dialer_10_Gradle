@@ -1099,8 +1099,8 @@ public final class DaggerAospDialerRootComponent implements AospDialerRootCompon
         }
 
         @Override
-        public HighResolutionPhotoRequester highResolutionPhotoLoader() {
-            return toHighResolutionPhotoRequesterImplProvider.get();
+        public void highResolutionPhotoLoader() {
+            toHighResolutionPhotoRequesterImplProvider.get();
         }
     }
 

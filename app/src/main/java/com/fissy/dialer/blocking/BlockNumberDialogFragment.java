@@ -18,17 +18,16 @@ package com.fissy.dialer.blocking;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
-import android.app.FragmentManager;
-import android.content.ContentValues;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.telephony.PhoneNumberUtils;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.android.contacts.common.util.ContactDisplayUtils;
 import com.fissy.dialer.R;
@@ -42,7 +41,7 @@ import com.google.android.material.snackbar.Snackbar;
  * Fragment for confirming and enacting blocking/unblocking a number. Also invokes snackbar
  * providing undo functionality.
  */
-@Deprecated
+
 public class BlockNumberDialogFragment extends DialogFragment {
 
     private static final String BLOCK_DIALOG_FRAGMENT = "BlockNumberDialog";
@@ -96,19 +95,16 @@ public class BlockNumberDialogFragment extends DialogFragment {
         return fragment;
     }
 
-    public void setFilteredNumberAsyncQueryHandlerForTesting(
-            FilteredNumberAsyncQueryHandler handler) {
-        this.handler = handler;
-    }
-
     @Override
     public Context getContext() {
         return getActivity();
     }
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
+        assert getArguments() != null;
         final boolean isBlocked = getArguments().containsKey(ARG_BLOCK_ID);
 
         number = getArguments().getString(ARG_NUMBER);
@@ -119,10 +115,10 @@ public class BlockNumberDialogFragment extends DialogFragment {
             displayNumber = number;
         }
 
-        handler = new FilteredNumberAsyncQueryHandler(getContext());
+        handler = new FilteredNumberAsyncQueryHandler(requireContext());
         // Choose not to update VoicemailEnabledChecker, as checks should already been done in
         // all current use cases.
-        parentView = getActivity().findViewById(getArguments().getInt(ARG_PARENT_VIEW_ID));
+        parentView = requireActivity().findViewById(getArguments().getInt(ARG_PARENT_VIEW_ID));
 
         CharSequence title;
         String okText;
@@ -202,7 +198,7 @@ public class BlockNumberDialogFragment extends DialogFragment {
     }
 
     private int getActionTextColor() {
-        return getContext().getResources().getColor(R.color.dialer_snackbar_action_text_color);
+        return requireContext().getResources().getColor(R.color.dialer_snackbar_action_text_color, null);
     }
 
     private void blockNumber() {
@@ -210,7 +206,7 @@ public class BlockNumberDialogFragment extends DialogFragment {
         final CharSequence undoMessage = getUnblockedMessage();
         final Callback callback = this.callback;
         final int actionTextColor = getActionTextColor();
-        final Context applicationContext = getContext().getApplicationContext();
+        final Context applicationContext = requireContext().getApplicationContext();
 
         final OnUnblockNumberListener onUndoListener =
                 (rows, values) -> {
@@ -252,7 +248,7 @@ public class BlockNumberDialogFragment extends DialogFragment {
         final CharSequence undoMessage = getBlockedMessage();
         final Callback callback = this.callback;
         final int actionTextColor = getActionTextColor();
-        final Context applicationContext = getContext().getApplicationContext();
+        final Context applicationContext = requireContext().getApplicationContext();
 
         final OnBlockNumberListener onUndoListener =
                 uri -> {
@@ -281,7 +277,7 @@ public class BlockNumberDialogFragment extends DialogFragment {
                         callback.onUnfilterNumberSuccess();
                     }
                 },
-                getArguments().getInt(ARG_BLOCK_ID));
+                requireArguments().getInt(ARG_BLOCK_ID));
     }
 
     /**

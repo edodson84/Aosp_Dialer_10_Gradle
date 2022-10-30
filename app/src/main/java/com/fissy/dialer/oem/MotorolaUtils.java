@@ -157,11 +157,6 @@ public class MotorolaUtils {
         return supportSprintWifiCall;
     }
 
-    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    public static void setDisablePhoneNumberFormattingForTest(boolean disablePhoneNumberFormatting) {
-        disablePhoneNumberFormattingForTest = disablePhoneNumberFormatting;
-    }
-
     @VisibleForTesting
     public static void resetForTest() {
         hasCheckedSprintWifiCall = false;

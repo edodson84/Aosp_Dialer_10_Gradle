@@ -16,7 +16,6 @@
 
 package com.android.incallui.call;
 
-import android.annotation.TargetApi;
 import android.app.Notification;
 import android.bluetooth.BluetoothDevice;
 import android.content.ActivityNotFoundException;

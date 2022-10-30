@@ -73,7 +73,7 @@ public class RttTranscriptActivity extends AppCompatActivity {
 
         rttTranscriptUiListener =
                 DialerExecutorComponent.get(this)
-                        .createUiListener(getFragmentManager(), "Load RTT transcript");
+                        .createUiListener(getSupportFragmentManager(), "Load RTT transcript");
         handleIntent(getIntent());
     }
 

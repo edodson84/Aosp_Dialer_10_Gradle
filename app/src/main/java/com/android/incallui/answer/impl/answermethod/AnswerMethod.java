@@ -43,7 +43,7 @@ public abstract class AnswerMethod extends Fragment {
     }
 
     @Override
-    public void onAttach( @NonNull Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         FragmentUtils.checkParent(this, AnswerMethodHolder.class);
     }

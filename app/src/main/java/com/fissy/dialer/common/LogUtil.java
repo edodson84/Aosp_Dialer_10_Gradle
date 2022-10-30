@@ -48,7 +48,7 @@ public class LogUtil {
      * @see {@link android.util.Log#v(String, String)}
      */
     public static void v(@NonNull String tag, @Nullable String msg, @Nullable Object... args) {
-        println(android.util.Log.VERBOSE, TAG, tag, msg, args);
+        println(android.util.Log.VERBOSE, tag, msg, args);
     }
 
     /**
@@ -64,7 +64,7 @@ public class LogUtil {
      * @see {@link android.util.Log#d(String, String)}
      */
     public static void d(@NonNull String tag, @Nullable String msg, @Nullable Object... args) {
-        println(android.util.Log.DEBUG, TAG, tag, msg, args);
+        println(android.util.Log.DEBUG, tag, msg, args);
     }
 
     /**
@@ -79,7 +79,7 @@ public class LogUtil {
      * @see {@link android.util.Log#i(String, String)}
      */
     public static void i(@NonNull String tag, @Nullable String msg, @Nullable Object... args) {
-        println(android.util.Log.INFO, TAG, tag, msg, args);
+        println(android.util.Log.INFO, tag, msg, args);
     }
 
     /**
@@ -89,7 +89,7 @@ public class LogUtil {
      *            'Class.method'.
      */
     public static void enterBlock(String tag) {
-        println(android.util.Log.INFO, TAG, tag, "enter");
+        println(android.util.Log.INFO, tag, "enter");
     }
 
     /**
@@ -106,7 +106,7 @@ public class LogUtil {
      * @see {@link android.util.Log#w(String, String)}
      */
     public static void w(@NonNull String tag, @Nullable String msg, @Nullable Object... args) {
-        println(android.util.Log.WARN, TAG, tag, msg, args);
+        println(android.util.Log.WARN, tag, msg, args);
     }
 
     /**
@@ -122,7 +122,7 @@ public class LogUtil {
      * @see {@link android.util.Log#e(String, String)}
      */
     public static void e(@NonNull String tag, @Nullable String msg, @Nullable Object... args) {
-        println(android.util.Log.ERROR, TAG, tag, msg, args);
+        println(android.util.Log.ERROR, tag, msg, args);
     }
 
     /**
@@ -141,7 +141,6 @@ public class LogUtil {
         if (!TextUtils.isEmpty(msg)) {
             println(
                     android.util.Log.ERROR,
-                    TAG,
                     tag,
                     msg + "\n" + android.util.Log.getStackTraceString(throwable));
         }
@@ -208,7 +207,6 @@ public class LogUtil {
 
     private static void println(
             int level,
-            @NonNull String tag,
             @NonNull String localTag,
             @Nullable String msg,
             @Nullable Object... args) {
@@ -216,12 +214,12 @@ public class LogUtil {
         String formattedMsg;
         // Either null is passed as a single argument or more than one argument is passed.
         boolean hasArgs = args == null || args.length > 0;
-        if ((level >= android.util.Log.INFO) || android.util.Log.isLoggable(tag, level)) {
+        if ((level >= android.util.Log.INFO) || android.util.Log.isLoggable(LogUtil.TAG, level)) {
             formattedMsg = localTag;
             if (!TextUtils.isEmpty(msg)) {
                 formattedMsg += SEPARATOR + (hasArgs ? String.format(Objects.requireNonNull(msg), Objects.requireNonNull(args)) : msg);
             }
-            android.util.Log.println(level, tag, formattedMsg);
+            android.util.Log.println(level, LogUtil.TAG, formattedMsg);
         }
     }
 }

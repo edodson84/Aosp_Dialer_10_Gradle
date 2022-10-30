@@ -18,7 +18,6 @@ package com.android.incallui.incall.impl;
 
 import androidx.annotation.NonNull;
 
-import com.android.incallui.incall.impl.MappedButtonConfig.MappingInfo;
 import com.android.incallui.incall.protocol.InCallButtonIds;
 import com.fissy.dialer.common.Assert;
 

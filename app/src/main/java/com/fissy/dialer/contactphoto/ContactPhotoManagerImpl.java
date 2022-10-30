@@ -489,7 +489,7 @@ class ContactPhotoManagerImpl extends ContactPhotoManager implements Callback {
     }
 
     private void loadPhotoByIdOrUri(ImageView view, Request request) {
-        boolean loaded = loadCachedPhoto(view, request, false);
+        boolean loaded = loadCachedPhoto(view, request);
         if (loaded) {
             pendingRequests.remove(view);
         } else {
@@ -553,7 +553,7 @@ class ContactPhotoManagerImpl extends ContactPhotoManager implements Callback {
      * @return false if the photo needs to be (re)loaded from the provider.
      */
     @UiThread
-    private boolean loadCachedPhoto(ImageView view, Request request, boolean fadeIn) {
+    private boolean loadCachedPhoto(ImageView view, Request request) {
         BitmapHolder holder = bitmapHolderCache.get(request.getKey());
         if (holder == null) {
             // The bitmap has not been loaded ==> show default avatar
@@ -573,7 +573,7 @@ class ContactPhotoManagerImpl extends ContactPhotoManager implements Callback {
         }
 
         final Drawable previousDrawable = view.getDrawable();
-        if (fadeIn && previousDrawable != null) {
+        if (false && previousDrawable != null) {
             final Drawable[] layers = new Drawable[2];
             // Prevent cascade of TransitionDrawables.
             if (previousDrawable instanceof TransitionDrawable) {
@@ -703,7 +703,7 @@ class ContactPhotoManagerImpl extends ContactPhotoManager implements Callback {
             final Entry<ImageView, Request> entry = iterator.next();
             // TODO: Temporarily disable contact photo fading in, until issues with
             // RoundedBitmapDrawables overlapping the default image drawables are resolved.
-            final boolean loaded = loadCachedPhoto(entry.getKey(), entry.getValue(), false);
+            final boolean loaded = loadCachedPhoto(entry.getKey(), entry.getValue());
             if (loaded) {
                 iterator.remove();
             }

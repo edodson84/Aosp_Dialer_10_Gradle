@@ -18,7 +18,6 @@ package com.android.phone.common.compat;
 
 import android.graphics.Path;
 import android.graphics.PathMeasure;
-import android.os.Build;
 import android.view.animation.Interpolator;
 import android.view.animation.PathInterpolator;
 

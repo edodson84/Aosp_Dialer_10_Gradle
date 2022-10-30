@@ -9,20 +9,20 @@
     <ImageView
         android:id="@id/contactgrid_workIcon"
         style="@style/BottomRowIcon"
-        android:src="@drawable/quantum_ic_enterprise_vd_theme_24"
-        android:contentDescription="TODO" />
+        android:contentDescription="TODO"
+        android:src="@drawable/quantum_ic_enterprise_vd_theme_24" />
 
     <ImageView
         android:id="@id/contactgrid_hdIcon"
         style="@style/BottomRowIcon"
-        android:visibility="gone"
-        android:contentDescription="TODO" />
+        android:contentDescription="TODO"
+        android:visibility="gone" />
 
     <ImageView
         android:id="@id/contactgrid_forwardIcon"
         style="@style/BottomRowIcon"
-        android:src="@drawable/quantum_ic_forward_vd_theme_24"
-        android:contentDescription="TODO" />
+        android:contentDescription="TODO"
+        android:src="@drawable/quantum_ic_forward_vd_theme_24" />
 
     <TextView
         android:id="@id/contactgrid_forwardNumber"
@@ -35,8 +35,8 @@
     <ImageView
         android:id="@id/contactgrid_spamIcon"
         style="@style/BottomRowIcon"
-        android:src="@drawable/quantum_ic_report_vd_theme_24"
-        android:contentDescription="TODO" />
+        android:contentDescription="TODO"
+        android:src="@drawable/quantum_ic_report_vd_theme_24" />
 
     <ViewAnimator
         android:id="@id/contactgrid_bottom_text_switcher"

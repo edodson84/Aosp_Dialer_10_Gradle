@@ -41,7 +41,7 @@
         <item>##4382#</item>    <!--CMAS/WEA-->
     </string-array>
 
-    <string name="motorola_hidden_menu_intent">com.motorola.intent.action.LAUNCH_HIDDEN_MENU</string>
+    <string name="motorola_hidden_menu_intent" translatable="false">com.motorola.intent.action.LAUNCH_HIDDEN_MENU</string>
 
     <!-- This defines the intents that will be send out when the key sequence is matched, this must be
          in the same order with he KeySequence array. -->

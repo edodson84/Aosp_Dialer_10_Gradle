@@ -4,8 +4,6 @@
 package com.fissy.dialer;
 
 public final class CoalescedIdsOuterClass {
-    static {
-    }
 
     private CoalescedIdsOuterClass() {
     }

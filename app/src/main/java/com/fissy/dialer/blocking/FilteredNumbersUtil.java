@@ -34,7 +34,6 @@ import androidx.core.os.BuildCompat;
 import androidx.core.os.UserManagerCompat;
 
 import com.fissy.dialer.R;
-import com.fissy.dialer.blocking.FilteredNumberAsyncQueryHandler.OnHasBlockedNumbersListener;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.database.FilteredNumberContract;
 import com.fissy.dialer.logging.InteractionEvent;
@@ -49,7 +48,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Utility to help with tasks related to filtered numbers.
  */
-@Deprecated
+
 public class FilteredNumbersUtil {
 
     public static final String CALL_BLOCKING_NOTIFICATION_TAG = "call_blocking";

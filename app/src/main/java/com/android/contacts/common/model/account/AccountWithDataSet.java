@@ -85,7 +85,7 @@ public class AccountWithDataSet implements Parcelable {
         return TextUtils.isEmpty(text) ? null : text;
     }
 
-    private static StringBuilder addStringified(StringBuilder sb, AccountWithDataSet account) {
+    private static void addStringified(StringBuilder sb, AccountWithDataSet account) {
         if (!TextUtils.isEmpty(account.name)) {
             sb.append(account.name);
         }
@@ -98,7 +98,6 @@ public class AccountWithDataSet implements Parcelable {
             sb.append(account.dataSet);
         }
 
-        return sb;
     }
 
     /**

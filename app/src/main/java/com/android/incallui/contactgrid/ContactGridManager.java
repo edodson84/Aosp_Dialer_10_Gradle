@@ -28,7 +28,6 @@ import android.view.View;
 import android.view.accessibility.AccessibilityEvent;
 import android.widget.Chronometer;
 import android.widget.ImageView;
-import android.widget.Space;
 import android.widget.TextView;
 import android.widget.ViewAnimator;
 

@@ -17,7 +17,6 @@
 package com.fissy.dialer.app.calllog;
 
 import static android.Manifest.permission.READ_CALL_LOG;
-
 import static com.fissy.dialer.app.contactinfo.ExpirableCacheHeadlessFragment.attach;
 
 import android.annotation.SuppressLint;
@@ -156,7 +155,14 @@ public class CallLogFragment extends Fragment
     private boolean isCallLogActivity = false;
     private boolean selectAllMode;
     private ViewGroup modalAlertView;
-    @SuppressLint("HandlerLeak")
+
+    public CallLogFragment() {
+        this(CallLogQueryHandler.CALL_TYPE_ALL, NO_LOG_LIMIT);
+    }
+
+    public CallLogFragment(int filterType) {
+        this(filterType, NO_LOG_LIMIT);
+    }    @SuppressLint("HandlerLeak")
     private final Handler displayUpdateHandler =
             new Handler(Looper.myLooper()) {
                 @Override
@@ -169,14 +175,6 @@ public class CallLogFragment extends Fragment
                     }
                 }
             };
-
-    public CallLogFragment() {
-        this(CallLogQueryHandler.CALL_TYPE_ALL, NO_LOG_LIMIT);
-    }
-
-    public CallLogFragment(int filterType) {
-        this(filterType, NO_LOG_LIMIT);
-    }
 
     public CallLogFragment(int filterType, boolean isCallLogActivity) {
         this(filterType, NO_LOG_LIMIT);
@@ -301,12 +299,12 @@ public class CallLogFragment extends Fragment
         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(50, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 
             @Override
-            public boolean onMove( @NonNull RecyclerView recyclerView,  @NonNull RecyclerView.ViewHolder viewHolder,  @NonNull RecyclerView.ViewHolder target) {
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 return false;
             }
 
             @Override
-            public void onSwiped( @NonNull RecyclerView.ViewHolder holder, int direction) {
+            public void onSwiped(@NonNull RecyclerView.ViewHolder holder, int direction) {
                 if (holder instanceof CallLogListItemViewHolder) {
                     CallLogListItemViewHolder viewHolder = ((CallLogListItemViewHolder) holder);
                     if (direction == ItemTouchHelper.LEFT) {
@@ -325,7 +323,7 @@ public class CallLogFragment extends Fragment
             }
 
             @Override
-            public void onChildDraw( @NonNull Canvas canvas,  @NonNull RecyclerView recyclerView,  @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+            public void onChildDraw(@NonNull Canvas canvas, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
                 if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
                     boolean isTowardsRight = dX > 0;
                     Drawable icon = isTowardsRight ? ContextCompat.getDrawable(recyclerView.getContext(), R.drawable.quantum_ic_delete_vd_theme_24) : ContextCompat.getDrawable(recyclerView.getContext(), R.drawable.quantum_ic_message_vd_theme_24);
@@ -615,191 +613,194 @@ public class CallLogFragment extends Fragment
         }
     }
 
-        @Override
-        public void onEmptyViewActionButtonClicked () {
-            final Activity activity = getActivity();
-            if (activity == null) {
-                return;
-            }
-            if (!isCallLogActivity) {
-                LogUtil.i("CallLogFragment.onEmptyViewActionButtonClicked", "showing dialpad");
-                // Show dialpad if we are not in the call log activity.
-                FragmentUtils.getParentUnsafe(this, HostInterface.class).showDialpad();
-            }
+    @Override
+    public void onEmptyViewActionButtonClicked() {
+        final Activity activity = getActivity();
+        if (activity == null) {
+            return;
         }
-
-        @Override
-        public void onRequestPermissionsResult(
-        int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults){
-            if (requestCode == PHONE_PERMISSIONS_REQUEST_CODE) {
-                if (grantResults.length >= 1 && PackageManager.PERMISSION_GRANTED == grantResults[0]) {
-                    // Force a refresh of the data since we were missing the permission before this.
-                    refreshDataRequired = true;
-                }
-            }
+        if (!isCallLogActivity) {
+            LogUtil.i("CallLogFragment.onEmptyViewActionButtonClicked", "showing dialpad");
+            // Show dialpad if we are not in the call log activity.
+            FragmentUtils.getParentUnsafe(this, HostInterface.class).showDialpad();
         }
+    }
 
-        /**
-         * Schedules an update to the relative call times (X mins ago).
-         */
-        private void rescheduleDisplayUpdate () {
-            if (!displayUpdateHandler.hasMessages(EVENT_UPDATE_DISPLAY)) {
-                long time = System.currentTimeMillis();
-                // This value allows us to change the display relatively close to when the time changes
-                // from one minute to the next.
-                long millisUtilNextMinute = MILLIS_IN_MINUTE - (time % MILLIS_IN_MINUTE);
-                displayUpdateHandler.sendEmptyMessageDelayed(EVENT_UPDATE_DISPLAY, millisUtilNextMinute);
-            }
-        }
-
-        /**
-         * Cancels any pending update requests to update the relative call times (X mins ago).
-         */
-        private void cancelDisplayUpdate () {
-            displayUpdateHandler.removeMessages(EVENT_UPDATE_DISPLAY);
-        }
-
-        /**
-         * Mark all missed calls as read if Keyguard not locked and possible.
-         */
-        void markMissedCallsAsReadAndRemoveNotifications () {
-            if (callLogQueryHandler != null
-                    && !requireContext().getSystemService(KeyguardManager.class).isKeyguardLocked()) {
-                callLogQueryHandler.markMissedCallsAsRead();
-                CallLogNotificationsService.cancelAllMissedCalls(getContext());
-            }
-        }
-
-        public void onVisible () {
-            LogUtil.enterBlock("CallLogFragment.onPageSelected");
-            if (getActivity() != null && FragmentUtils.getParent(this, HostInterface.class) != null) {
-                FragmentUtils.getParentUnsafe(this, HostInterface.class)
-                        .enableFloatingButton(!isModalAlertVisible());
-            }
-        }
-
-        public boolean isModalAlertVisible () {
-            return modalAlertManager != null && !modalAlertManager.isEmpty();
-        }
-
-        @CallSuper
-        public void onNotVisible () {
-            LogUtil.enterBlock("CallLogFragment.onPageUnselected");
-        }
-
-        @Override
-        public void onShowModalAlert ( boolean show){
-            LogUtil.d(
-                    "CallLogFragment.onShowModalAlert",
-                    "show: %b, fragment: %s, isVisible: %b",
-                    show,
-                    this,
-                    getUserVisibleHint());
-            getAdapter().notifyDataSetChanged();
-            HostInterface hostInterface = FragmentUtils.getParent(this, HostInterface.class);
-            if (show) {
-                recyclerView.setVisibility(View.GONE);
-                modalAlertView.setVisibility(View.VISIBLE);
-                if (hostInterface != null && getUserVisibleHint()) {
-                    hostInterface.enableFloatingButton(false);
-                }
-            } else {
-                recyclerView.setVisibility(View.VISIBLE);
-                modalAlertView.setVisibility(View.GONE);
-                if (hostInterface != null && getUserVisibleHint()) {
-                    hostInterface.enableFloatingButton(true);
-                }
-            }
-        }
-
-        @Override
-        public void showMultiSelectRemoveView ( boolean show){
-            multiSelectUnSelectAllViewContent.setVisibility(show ? View.VISIBLE : View.GONE);
-            multiSelectUnSelectAllViewContent.setAlpha(show ? 0 : 1);
-            multiSelectUnSelectAllViewContent.animate().alpha(show ? 1 : 0).start();
-            if (show) {
-                FragmentUtils.getParentUnsafe(this, CallLogFragmentListener.class)
-                        .showMultiSelectRemoveView(true);
-            } else {
-                // This method is called after onDestroy. In DialtactsActivity, ListsFragment implements this
-                // interface and never goes away with configuration changes so this is safe. MainActivity
-                // removes that extra layer though, so we need to check if the parent is still there.
-                CallLogFragmentListener listener =
-                        FragmentUtils.getParent(this, CallLogFragmentListener.class);
-                if (listener != null) {
-                    listener.showMultiSelectRemoveView(false);
-                }
-            }
-        }
-
-        @Override
-        public void setSelectAllModeToFalse () {
-            selectAllMode = false;
-            selectUnselectAllIcon.setImageDrawable(
-                    getContext().getDrawable(R.drawable.ic_empty_check_mark_white_24dp));
-        }
-
-        @Override
-        public void tapSelectAll () {
-            LogUtil.i("CallLogFragment.tapSelectAll", "imitating select all");
-            selectAllMode = true;
-            updateSelectAllIcon();
-        }
-
-        @Override
-        public void onClick (View v){
-            selectAllMode = !selectAllMode;
-            if (selectAllMode) {
-                Logger.get(v.getContext()).logImpression(DialerImpression.Type.MULTISELECT_SELECT_ALL);
-            } else {
-                Logger.get(v.getContext()).logImpression(DialerImpression.Type.MULTISELECT_UNSELECT_ALL);
-            }
-            updateSelectAllIcon();
-        }
-
-        private void updateSelectAllIcon () {
-            if (selectAllMode) {
-                selectUnselectAllIcon.setImageDrawable(
-                        getContext().getDrawable(R.drawable.ic_check_mark_blue_24dp));
-                getAdapter().onAllSelected();
-            } else {
-                selectUnselectAllIcon.setImageDrawable(
-                        getContext().getDrawable(R.drawable.ic_empty_check_mark_white_24dp));
-                getAdapter().onAllDeselected();
-            }
-        }
-
-        public interface HostInterface {
-
-            void showDialpad();
-
-            void enableFloatingButton(boolean enabled);
-        }
-
-        /**
-         * Useful callback for ListsFragment children to use to call into ListsFragment.
-         */
-        public interface CallLogFragmentListener {
-
-            /**
-             * External method to update unread count because the unread count changes when the user expands
-             * a voicemail in the call log or when the user expands an unread call in the call history tab.
-             */
-            void updateTabUnreadCounts();
-
-            void showMultiSelectRemoveView(boolean show);
-        }
-
-        protected class CustomContentObserver extends ContentObserver {
-
-            public CustomContentObserver() {
-                super(handler);
-            }
-
-            @Override
-            public void onChange(boolean selfChange) {
+    @Override
+    public void onRequestPermissionsResult(
+            int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == PHONE_PERMISSIONS_REQUEST_CODE) {
+            if (grantResults.length >= 1 && PackageManager.PERMISSION_GRANTED == grantResults[0]) {
+                // Force a refresh of the data since we were missing the permission before this.
                 refreshDataRequired = true;
             }
         }
-
     }
+
+    /**
+     * Schedules an update to the relative call times (X mins ago).
+     */
+    private void rescheduleDisplayUpdate() {
+        if (!displayUpdateHandler.hasMessages(EVENT_UPDATE_DISPLAY)) {
+            long time = System.currentTimeMillis();
+            // This value allows us to change the display relatively close to when the time changes
+            // from one minute to the next.
+            long millisUtilNextMinute = MILLIS_IN_MINUTE - (time % MILLIS_IN_MINUTE);
+            displayUpdateHandler.sendEmptyMessageDelayed(EVENT_UPDATE_DISPLAY, millisUtilNextMinute);
+        }
+    }
+
+    /**
+     * Cancels any pending update requests to update the relative call times (X mins ago).
+     */
+    private void cancelDisplayUpdate() {
+        displayUpdateHandler.removeMessages(EVENT_UPDATE_DISPLAY);
+    }
+
+    /**
+     * Mark all missed calls as read if Keyguard not locked and possible.
+     */
+    void markMissedCallsAsReadAndRemoveNotifications() {
+        if (callLogQueryHandler != null
+                && !requireContext().getSystemService(KeyguardManager.class).isKeyguardLocked()) {
+            callLogQueryHandler.markMissedCallsAsRead();
+            CallLogNotificationsService.cancelAllMissedCalls(getContext());
+        }
+    }
+
+    public void onVisible() {
+        LogUtil.enterBlock("CallLogFragment.onPageSelected");
+        if (getActivity() != null && FragmentUtils.getParent(this, HostInterface.class) != null) {
+            FragmentUtils.getParentUnsafe(this, HostInterface.class)
+                    .enableFloatingButton(!isModalAlertVisible());
+        }
+    }
+
+    public boolean isModalAlertVisible() {
+        return modalAlertManager != null && !modalAlertManager.isEmpty();
+    }
+
+    @CallSuper
+    public void onNotVisible() {
+        LogUtil.enterBlock("CallLogFragment.onPageUnselected");
+    }
+
+    @Override
+    public void onShowModalAlert(boolean show) {
+        LogUtil.d(
+                "CallLogFragment.onShowModalAlert",
+                "show: %b, fragment: %s, isVisible: %b",
+                show,
+                this,
+                getUserVisibleHint());
+        getAdapter().notifyDataSetChanged();
+        HostInterface hostInterface = FragmentUtils.getParent(this, HostInterface.class);
+        if (show) {
+            recyclerView.setVisibility(View.GONE);
+            modalAlertView.setVisibility(View.VISIBLE);
+            if (hostInterface != null && getUserVisibleHint()) {
+                hostInterface.enableFloatingButton(false);
+            }
+        } else {
+            recyclerView.setVisibility(View.VISIBLE);
+            modalAlertView.setVisibility(View.GONE);
+            if (hostInterface != null && getUserVisibleHint()) {
+                hostInterface.enableFloatingButton(true);
+            }
+        }
+    }
+
+    @Override
+    public void showMultiSelectRemoveView(boolean show) {
+        multiSelectUnSelectAllViewContent.setVisibility(show ? View.VISIBLE : View.GONE);
+        multiSelectUnSelectAllViewContent.setAlpha(show ? 0 : 1);
+        multiSelectUnSelectAllViewContent.animate().alpha(show ? 1 : 0).start();
+        if (show) {
+            FragmentUtils.getParentUnsafe(this, CallLogFragmentListener.class)
+                    .showMultiSelectRemoveView(true);
+        } else {
+            // This method is called after onDestroy. In DialtactsActivity, ListsFragment implements this
+            // interface and never goes away with configuration changes so this is safe. MainActivity
+            // removes that extra layer though, so we need to check if the parent is still there.
+            CallLogFragmentListener listener =
+                    FragmentUtils.getParent(this, CallLogFragmentListener.class);
+            if (listener != null) {
+                listener.showMultiSelectRemoveView(false);
+            }
+        }
+    }
+
+    @Override
+    public void setSelectAllModeToFalse() {
+        selectAllMode = false;
+        selectUnselectAllIcon.setImageDrawable(
+                getContext().getDrawable(R.drawable.ic_empty_check_mark_white_24dp));
+    }
+
+    @Override
+    public void tapSelectAll() {
+        LogUtil.i("CallLogFragment.tapSelectAll", "imitating select all");
+        selectAllMode = true;
+        updateSelectAllIcon();
+    }
+
+    @Override
+    public void onClick(View v) {
+        selectAllMode = !selectAllMode;
+        if (selectAllMode) {
+            Logger.get(v.getContext()).logImpression(DialerImpression.Type.MULTISELECT_SELECT_ALL);
+        } else {
+            Logger.get(v.getContext()).logImpression(DialerImpression.Type.MULTISELECT_UNSELECT_ALL);
+        }
+        updateSelectAllIcon();
+    }
+
+    private void updateSelectAllIcon() {
+        if (selectAllMode) {
+            selectUnselectAllIcon.setImageDrawable(
+                    getContext().getDrawable(R.drawable.ic_check_mark_blue_24dp));
+            getAdapter().onAllSelected();
+        } else {
+            selectUnselectAllIcon.setImageDrawable(
+                    getContext().getDrawable(R.drawable.ic_empty_check_mark_white_24dp));
+            getAdapter().onAllDeselected();
+        }
+    }
+
+    public interface HostInterface {
+
+        void showDialpad();
+
+        void enableFloatingButton(boolean enabled);
+    }
+
+    /**
+     * Useful callback for ListsFragment children to use to call into ListsFragment.
+     */
+    public interface CallLogFragmentListener {
+
+        /**
+         * External method to update unread count because the unread count changes when the user expands
+         * a voicemail in the call log or when the user expands an unread call in the call history tab.
+         */
+        void updateTabUnreadCounts();
+
+        void showMultiSelectRemoveView(boolean show);
+    }
+
+    protected class CustomContentObserver extends ContentObserver {
+
+        public CustomContentObserver() {
+            super(handler);
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            refreshDataRequired = true;
+        }
+    }
+
+
+
+
+}

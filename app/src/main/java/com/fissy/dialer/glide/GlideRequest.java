@@ -302,7 +302,7 @@ public class GlideRequest<TranscodeType> extends RequestBuilder<TranscodeType> i
     }
 
     /**
-
+     *
      */
     @NonNull
     @CheckResult
@@ -554,7 +554,7 @@ public class GlideRequest<TranscodeType> extends RequestBuilder<TranscodeType> i
     }
 
     /**
-
+     *
      */
     @NonNull
     @CheckResult
@@ -586,7 +586,7 @@ public class GlideRequest<TranscodeType> extends RequestBuilder<TranscodeType> i
     }
 
     /**
-
+     *
      */
     @NonNull
     @CheckResult
@@ -601,7 +601,7 @@ public class GlideRequest<TranscodeType> extends RequestBuilder<TranscodeType> i
     }
 
     /**
-
+     *
      */
     @NonNull
     @CheckResult

@@ -34,7 +34,7 @@ import java.util.Objects;
  * Class which should be used to migrate numbers from {@link FilteredNumberContract} blocking to
  * {@link android.provider.BlockedNumberContract} blocking.
  */
-@Deprecated
+
 public class BlockedNumbersMigrator {
 
     private final Context context;
@@ -104,18 +104,16 @@ public class BlockedNumbersMigrator {
      * android.provider.BlockedNumberContract} block list.
      *
      * @param listener {@link Listener} called once the migration is complete.
-     * @return {@code true} if the migrate can be attempted, {@code false} otherwise.
      * @throws NullPointerException if listener is null
      */
-    public boolean migrate(final Listener listener) {
+    public void migrate(final Listener listener) {
         LogUtil.i("BlockedNumbersMigrator.migrate", "migrate - start");
         if (!FilteredNumberCompat.canUseNewFiltering()) {
             LogUtil.i("BlockedNumbersMigrator.migrate", "migrate - can't use new filtering");
-            return false;
+            return;
         }
         Objects.requireNonNull(listener);
         new MigratorTask(listener).execute();
-        return true;
     }
 
     /**

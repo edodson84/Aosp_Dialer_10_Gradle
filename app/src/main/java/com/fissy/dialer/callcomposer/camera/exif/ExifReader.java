@@ -34,7 +34,6 @@ class ExifReader {
 
     /**
      * Parses the inputStream and and returns the EXIF data in an {@link ExifData}.
-     *
      */
     protected ExifData read(InputStream inputStream) throws ExifInvalidFormatException, IOException {
         ExifParser parser = ExifParser.parse(inputStream, mInterface);

@@ -20,9 +20,6 @@ import static android.Manifest.permission.READ_CONTACTS;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import androidx.loader.app.LoaderManager;
-import androidx.loader.content.CursorLoader;
-import androidx.loader.content.Loader;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Rect;
@@ -46,6 +43,9 @@ import androidx.annotation.NonNull;
 import androidx.collection.LongSparseArray;
 import androidx.fragment.app.Fragment;
 import androidx.legacy.app.FragmentCompat;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.CursorLoader;
+import androidx.loader.content.Loader;
 
 import com.android.contacts.common.ContactTileLoaderFactory;
 import com.android.contacts.common.list.ContactTileView;
@@ -61,7 +61,6 @@ import com.fissy.dialer.widget.EmptyContentView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Objects;
 
 /**
  * This fragment displays the user's favorite/frequent contacts in a grid.
@@ -245,7 +244,7 @@ public class OldSpeedDialFragment extends Fragment
      * views from their previous positions to their new ones, to give the appearance that the views
      * are sliding into their new positions.
      */
-    private void saveOffsets(int removedItemHeight) {
+    private void saveOffsets() {
         final int firstVisiblePosition = listView.getFirstVisiblePosition();
         for (int i = 0; i < listView.getChildCount(); i++) {
             final View child = listView.getChildAt(i);
@@ -260,7 +259,7 @@ public class OldSpeedDialFragment extends Fragment
             itemIdTopMap.put(itemId, child.getTop());
             itemIdLeftMap.put(itemId, child.getLeft());
         }
-        itemIdTopMap.put(KEY_REMOVED_ITEM_HEIGHT, removedItemHeight);
+        itemIdTopMap.put(KEY_REMOVED_ITEM_HEIGHT, 0);
     }
 
     /*
@@ -349,7 +348,7 @@ public class OldSpeedDialFragment extends Fragment
 
     @Override
     public void cacheOffsetsForDatasetChange() {
-        saveOffsets(0);
+        saveOffsets();
     }
 
     @Override

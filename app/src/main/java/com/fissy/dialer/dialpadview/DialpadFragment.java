@@ -1241,7 +1241,7 @@ public class DialpadFragment extends Fragment
                 // this case.  Note: with a soft dial button, this
                 // can never happens since the dial button is
                 // disabled under these conditons.
-                playTone(ToneGenerator.TONE_PROP_NACK);
+                playTone();
             }
         }
     }
@@ -1249,8 +1249,8 @@ public class DialpadFragment extends Fragment
     /**
      * Plays the specified tone for TONE_LENGTH_MS milliseconds.
      */
-    private void playTone(int tone) {
-        playTone(tone, TONE_LENGTH_MS);
+    private void playTone() {
+        playTone(ToneGenerator.TONE_PROP_NACK, TONE_LENGTH_MS);
     }
 
     /**
@@ -1918,9 +1918,9 @@ public class DialpadFragment extends Fragment
         // Simple struct for a single "choice" item.
         static class ChoiceItem {
 
-            String text;
-            Bitmap icon;
-            int id;
+            final String text;
+            final Bitmap icon;
+            final int id;
 
             ChoiceItem(String s, Bitmap b, int i) {
                 text = s;

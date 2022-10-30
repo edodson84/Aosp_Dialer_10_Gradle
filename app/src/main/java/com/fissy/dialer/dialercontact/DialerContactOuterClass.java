@@ -4,8 +4,6 @@
 package com.fissy.dialer.dialercontact;
 
 public final class DialerContactOuterClass {
-    static {
-    }
 
     private DialerContactOuterClass() {
     }

@@ -220,7 +220,7 @@ public final class CallLogConfigImpl implements CallLogConfig {
                         }
 
                         @Override
-                        public void onFailure( @NonNull Throwable throwable) {
+                        public void onFailure(@NonNull Throwable throwable) {
                             ThreadUtil.getUiThreadHandler()
                                     .post(
                                             () -> {

@@ -18,10 +18,10 @@
         android:id="@id/photo"
         android:layout_width="@dimen/photo_size"
         android:layout_height="@dimen/photo_size"
+        android:contentDescription="TODO"
         android:scaleType="center"
         android:src="@drawable/quantum_ic_person_add_white_24"
-        app:tint="?android:colorPrimary"
-        android:contentDescription="TODO" />
+        app:tint="?android:colorPrimary" />
 
     <TextView
         android:id="@id/contact_name"

@@ -55,7 +55,7 @@ public abstract class TransactionSafeFragmentActivity extends FragmentActivity {
     }
 
     /**
-
+     *
      */
     public boolean isSafeToCommitTransactions() {
         return isSafeToCommitTransactions;

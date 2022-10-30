@@ -260,7 +260,7 @@ public class DialtactsActivity extends AppCompatActivity
     private DragDropController dragDropController;
     private ActionBarController actionBarController;
     private FloatingActionButtonController floatingActionButtonController;
-    AnimationListenerAdapter slideInListener =
+    final AnimationListenerAdapter slideInListener =
             new AnimationListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animation animation) {
@@ -270,7 +270,7 @@ public class DialtactsActivity extends AppCompatActivity
     /**
      * Listener for after slide out animation completes on dialer fragment.
      */
-    AnimationListenerAdapter slideOutListener =
+    final AnimationListenerAdapter slideOutListener =
             new AnimationListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animation animation) {

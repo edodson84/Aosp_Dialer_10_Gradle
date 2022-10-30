@@ -16,6 +16,8 @@
 
 package com.fissy.dialer.lookup.google;
 
+import static com.fissy.dialer.app.settings.DialerSettingsActivity.PrefsFragment.getThemeButtonBehavior;
+
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
@@ -27,7 +29,7 @@ import android.text.Html;
 import android.util.Log;
 
 import com.fissy.dialer.R;
-import com.fissy.dialer.app.settings.ThemeOptionsSettingsFragment;
+import com.fissy.dialer.app.settings.DialerSettingsActivity;
 import com.fissy.dialer.lookup.ContactBuilder;
 import com.fissy.dialer.lookup.LookupUtils;
 import com.fissy.dialer.main.impl.MainActivity;
@@ -179,9 +181,9 @@ public abstract class GoogleForwardLookup {
                 boolean darkmode = typedArray.getBoolean(R.styleable.darkmodeView_darkmode, false);
                 typedArray.recycle();
 
-                ThemeOptionsSettingsFragment.ThemeButtonBehavior mThemeBehavior = ThemeOptionsSettingsFragment.getThemeButtonBehavior(MainActivityPeer.themeprefs);
+                DialerSettingsActivity.PrefsFragment.ThemeButtonBehavior mThemeBehavior = getThemeButtonBehavior(MainActivityPeer.themeprefs);
                 String business;
-                if (mThemeBehavior == ThemeOptionsSettingsFragment.ThemeButtonBehavior.DARK || darkmode) {
+                if (mThemeBehavior == DialerSettingsActivity.PrefsFragment.ThemeButtonBehavior.DARK || darkmode) {
                     business = ContactBuilder.PHOTO_URI_BUSINESS_DARK;
                 } else {
                     business = ContactBuilder.PHOTO_URI_BUSINESS;

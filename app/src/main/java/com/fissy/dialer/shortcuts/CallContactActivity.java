@@ -31,7 +31,6 @@ import com.fissy.dialer.callintent.CallSpecificAppData;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.interactions.PhoneNumberInteraction;
 import com.fissy.dialer.interactions.PhoneNumberInteraction.InteractionErrorCode;
-import com.fissy.dialer.util.TransactionSafeActivity;
 
 /**
  * Invisible activity launched when a shortcut is selected by user. Calls a contact based on URI.
@@ -131,7 +130,7 @@ public class CallContactActivity extends AppCompatActivity
 
     @Override
     public void onRequestPermissionsResult(
-            int requestCode, @NonNull String[] permissions,  @NonNull int[] grantResults) {
+            int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case PhoneNumberInteraction.REQUEST_READ_CONTACTS:

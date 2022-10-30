@@ -123,7 +123,7 @@ public class AnswerScreenPresenter
                     }
 
                     @Override
-                    public void onFailure( @NonNull Throwable t) {
+                    public void onFailure(@NonNull Throwable t) {
                         onAnswerCallback(answerVideoAsAudio);
                         // TODO(erfanian): Enumerate all error states and specify recovery strategies.
                         throw new RuntimeException("Failed to successfully complete pre call tasks.", t);

@@ -4,8 +4,6 @@
 package com.fissy.dialer.callintent;
 
 public final class SpeedDialContactTypeOuterClass {
-    static {
-    }
 
     private SpeedDialContactTypeOuterClass() {
     }

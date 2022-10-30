@@ -45,8 +45,8 @@ import java.util.concurrent.LinkedBlockingQueue;
  * #LOG_FILE_COUNT_LIMIT}. The log writing is batched and there is a {@link #FLUSH_DELAY_MILLIS}
  * delay before the logs are committed to disk to avoid excessive IO. If the app is terminated
  * before the logs are committed it will be lost. {@link
-
-
+ *
+ *
  *
  * <p>{@link #logText(String, String)} should be used to log ad-hoc text logs. TODO(twyen): switch
  * to structured logging
@@ -167,7 +167,7 @@ public final class PersistentLogger {
 
     private static byte[] buildTextLog(String tag, String string) {
         Calendar c = StrictModeUtils.bypass(() -> Calendar.getInstance());
-        return String.format(Locale.US,"%tm-%td %tH:%tM:%tS.%tL - %s - %s", c, c, c, c, c, c, tag, string)
+        return String.format(Locale.US, "%tm-%td %tH:%tM:%tS.%tL - %s - %s", c, c, c, c, c, c, tag, string)
                 .getBytes(StandardCharsets.UTF_8);
     }
 

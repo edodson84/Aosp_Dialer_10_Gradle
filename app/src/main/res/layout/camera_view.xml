@@ -33,9 +33,9 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:background="#ff000000"
+            android:contentDescription="TODO"
             android:scaleType="centerCrop"
-            android:visibility="gone"
-            android:contentDescription="TODO" />
+            android:visibility="gone" />
 
         <FrameLayout
             android:id="@id/camera_button_container"
@@ -87,8 +87,8 @@
                 android:layout_marginStart="@dimen/camera_view_button_margin"
                 android:layout_marginBottom="@dimen/camera_view_button_margin"
                 android:background="@drawable/transparent_button_background"
-                android:src="@drawable/front_back_switch_button_animation"
-                android:contentDescription="TODO" />
+                android:contentDescription="TODO"
+                android:src="@drawable/front_back_switch_button_animation" />
 
             <ImageButton
                 android:id="@id/camera_cancel_button"

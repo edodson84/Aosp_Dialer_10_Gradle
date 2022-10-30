@@ -35,6 +35,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_toStartOf="@id/count_and_send_container"
+            android:autofillHints=""
             android:background="?android:colorBackground"
             android:hint="@string/custom_message_hint"
             android:imeOptions="actionSend|flagNoExtractUi"
@@ -43,8 +44,7 @@
             android:textColor="?android:textColorPrimary"
             android:textColorHint="?android:textColorHint"
             android:textCursorDrawable="@drawable/edittext_custom_cursor"
-            android:textSize="@dimen/message_item_text_size"
-            android:autofillHints="" />
+            android:textSize="@dimen/message_item_text_size" />
 
         <LinearLayout
             android:id="@id/count_and_send_container"
@@ -61,10 +61,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="?android:selectableItemBackgroundBorderless"
+                android:contentDescription="TODO"
                 android:src="@drawable/quantum_ic_send_white_24"
                 android:visibility="gone"
-                app:tint="@color/dialer_tint_state"
-                android:contentDescription="TODO" />
+                app:tint="@color/dialer_tint_state" />
 
             <TextView
                 android:id="@id/remaining_characters"

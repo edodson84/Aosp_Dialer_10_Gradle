@@ -27,7 +27,6 @@ import android.os.Message;
 import android.util.Log;
 
 import java.util.HashMap;
-import java.util.Iterator;
 
 /**
  * A wrapper for a broadcast receiver that provides network connectivity
@@ -41,27 +40,23 @@ import java.util.Iterator;
 public class NetworkConnectivityListener {
     private static final String TAG = "NetworkConnectivityListener";
     private static final boolean DBG = false;
-
-    private Context mContext;
     private final HashMap<Handler, Integer> mHandlers = new HashMap<>();
+    private final ConnectivityBroadcastReceiver mReceiver;
+    private Context mContext;
     private State mState;
     private boolean mListening;
     private String mReason;
     private boolean mIsFailover;
-
     /**
      * Network connectivity information
      */
     private NetworkInfo mNetworkInfo;
-
     /**
      * In case of a Disconnect, the connectivity manager may have
      * already established, or may be attempting to establish, connectivity
      * with another network. If so, {@code mOtherNetworkInfo} will be non-null.
      */
     private NetworkInfo mOtherNetworkInfo;
-
-    private final ConnectivityBroadcastReceiver mReceiver;
 
     /**
      * Create a new NetworkConnectivityListener.
@@ -73,7 +68,6 @@ public class NetworkConnectivityListener {
 
     /**
      * This method starts listening for network connectivity state changes.
-     *
      */
     public synchronized void startListening(Context context) {
         if (!mListening) {
@@ -114,7 +108,6 @@ public class NetworkConnectivityListener {
 
     /**
      * This methods unregisters the specified Handler.
-     *
      */
     public void unregisterHandler(Handler target) {
         mHandlers.remove(target);

@@ -192,10 +192,6 @@ public class MainSearchController implements SearchBarListener {
 
     /**
      * Hides the dialpad, reveals the FAB and slides the toolbar back onto the screen.
-     *
-
-     *
-
      */
     private void hideDialpad(boolean animate) {
         LogUtil.enterBlock("MainSearchController.hideDialpad");
@@ -435,7 +431,7 @@ public class MainSearchController implements SearchBarListener {
                 query.isPresent() ? query.get() : "", CallInitiationType.Type.REGULAR_SEARCH);
 
 
-            transaction.commit();
+        transaction.commit();
 
 
         notifyListenersOnSearchOpen();

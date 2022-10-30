@@ -1,50 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="theme_options_title">Theme options</string>
-    <string name="theme_options_key">key_theme</string>
-    <string name="theme_default">0</string>
+    <string name="theme_options_title" translatable="false">Theme</string>
+    <string name="theme_options_key" translatable="false">key_theme</string>
+    <string name="theme_default" translatable="false">0</string>
     <!-- Forward lookup -->
-    <string name="nearby_places">Nearby places</string>
+    <string name="nearby_places" translatable="false">Nearby places</string>
 
     <!-- Number lookup -->
-    <string name="lookup_settings_label">Forward lookup</string>
-    <string name="enable_forward_lookup_title">Forward lookup</string>
-    <string name="enable_forward_lookup_summary">Show nearby places when searching in the dialer</string>
+    <string name="lookup_settings_label" translatable="false">Forward lookup</string>
+    <string name="enable_forward_lookup_title" translatable="false">Forward lookup</string>
+    <string name="enable_forward_lookup_summary" translatable="false">Show nearby places when searching in the dialer</string>
 
     <!-- Disclaimer -->
-    <string name="lookup_disclaimer">Lookups may send queries over a secure protocol (https) to remote websites to gather information. The query may include the other party\'s phone number or the search query</string>
-    <string name="dialpad_0_letters">+</string>
-    <string name="dialpad_2_letters">ABC</string>
-    <string name="dialpad_3_letters">DEF</string>
-    <string name="dialpad_4_letters">GHI</string>
-    <string name="dialpad_5_letters">JKL</string>
-    <string name="dialpad_6_letters">MNO</string>
-    <string name="dialpad_7_letters">PQRS</string>
-    <string name="dialpad_8_letters">TUV</string>
-    <string name="dialpad_9_letters">WXYZ</string>
-    <string name="dialpad_1_letters" />
-    <string name="dialpad_star_letters" />
-    <string name="dialpad_pound_letters" />
+    <string name="lookup_disclaimer" translatable="false">Lookups may send queries over a secure protocol (https) to remote websites to gather information. The query may include the other party\'s phone number or the search query</string>
+    <string name="dialpad_0_letters" translatable="false">+</string>
+    <string name="dialpad_2_letters" translatable="false">ABC</string>
+    <string name="dialpad_3_letters" translatable="false">DEF</string>
+    <string name="dialpad_4_letters" translatable="false">GHI</string>
+    <string name="dialpad_5_letters" translatable="false">JKL</string>
+    <string name="dialpad_6_letters" translatable="false">MNO</string>
+    <string name="dialpad_7_letters" translatable="false">PQRS</string>
+    <string name="dialpad_8_letters" translatable="false">TUV</string>
+    <string name="dialpad_9_letters" translatable="false">WXYZ</string>
+    <string name="dialpad_1_letters" translatable="false" />
+    <string name="dialpad_star_letters" translatable="false" />
+    <string name="dialpad_pound_letters" translatable="false" />
     <string name="wb_amr_format" translatable="false">AMR-WB</string>
     <string name="aac_format" translatable="false">AAC</string>
-    <string name="call_playback_no_app_found_toast">No app could be found for playback of the selected recording.</string>
-    <string name="call_recording_failed_message">Failed to start call recording</string>
-    <string name="call_recording_file_location">Saved call recording to <xliff:g id="filename">%s</xliff:g></string>
-    <string name="onscreenCallRecordText">Record call</string>
-    <string name="onscreenCallRecordingText">Recording call - <xliff:g example="00:10" id="duration">%1$s</xliff:g></string>
-    <string name="onscreenStopCallRecordText">Stop recording</string>
-    <string name="recording_warning_title">Enable call recording?</string>
-    <string name="recording_warning_text">Notice: You are responsible for compliance with any laws, regulations and rules that apply to the use of call recording functionality and the use or distribution of those recordings.</string>
+    <string name="call_playback_no_app_found_toast" translatable="false">No app could be found for playback of the selected recording.</string>
+    <string name="call_recording_failed_message" translatable="false">Failed to start call recording</string>
+    <string name="call_recording_file_location" translatable="false">Saved call recording to <xliff:g id="filename">%s</xliff:g></string>
+    <string name="onscreenCallRecordText" translatable="false">Record call</string>
+    <string name="onscreenCallRecordingText" translatable="false">Recording call - <xliff:g example="00:10" id="duration">%1$s</xliff:g></string>
+    <string name="onscreenStopCallRecordText" translatable="false">Stop recording</string>
+    <string name="recording_warning_title" translatable="false">Enable call recording?</string>
+    <string name="recording_warning_text" translatable="false">Notice: You are responsible for compliance with any laws, regulations and rules that apply to the use of call recording functionality and the use or distribution of those recordings.</string>
     <string name="call_recording_category_key" translatable="false">call_recording_category</string>
-    <string name="call_recording_category_title">Call recording</string>
+    <string name="call_recording_category_title" translatable="false">Call recording</string>
     <string name="call_recording_format_key" translatable="false">call_recording_format</string>
-    <string name="call_recording_format">Audio format</string>
-    <string name="ringtone_title">Phone ringtone</string>
-    <string name="vibrate_on_ring_title">"Also vibrate for calls</string>
+    <string name="call_recording_format" translatable="false">Recording audio format</string>
+    <string name="ringtone_title" translatable="false">Phone ringtone</string>
+    <string name="vibrate_on_ring_title" translatable="false">"Also vibrate for calls</string>
     <!-- Setting option name to enable or disable DTMF tone sound [CHAR LIMIT=30] -->
-    <string name="dtmf_tone_enable_title">Keypad tones</string>
+    <string name="dtmf_tone_enable_title" translatable="false">Keypad tones</string>
     <!-- Label for setting to adjust the length of DTMF tone sounds. [CHAR LIMIT=40] -->
-    <string name="dtmf_tone_length_title">Keypad tone length</string>
+    <string name="dtmf_tone_length_title" translatable="false">Keypad tone length</string>
     <!-- Options displayed for the length of DTMF tone sounds. [CHAR LIMIT=40] -->
     <string-array name="dtmf_tone_length_entries">
         <item>Normal</item>
@@ -62,738 +62,738 @@
     <string name="play_dtmf_preference_key" translatable="false">button_play_dtmf_tone</string>
     <!-- Internal key for DTMF tone length preference. -->
     <string name="dtmf_tone_length_preference_key" translatable="false">button_dtmf_settings</string>
-    <string name="a11y_call_duration_format">%1$d %2$s %3$d %4$s</string>
-    <string name="a11y_call_duration_short_format">%1$d %2$s</string>
-    <string name="a11y_call_incoming_answer_description">Answer</string>
-    <string name="a11y_call_incoming_decline_description">Decline</string>
-    <string name="a11y_description_incall_label_manage_content">Manage callers</string>
-    <string name="a11y_description_incoming_call_answer_and_release">Answer and end ongoing call</string>
-    <string name="a11y_description_incoming_call_answer_video_as_audio">Answer as audio call</string>
-    <string name="a11y_description_incoming_call_reject_with_sms">Reject with message</string>
-    <string name="a11y_glide_photo_manager_contact_photo_description">Quick contact for ^1</string>
-    <string name="a11y_incoming_call_answer_and_release">Answer and end ongoing call</string>
-    <string name="a11y_incoming_call_answer_video_as_audio">Answer as audio call</string>
-    <string name="a11y_incoming_call_reject_with_sms">Reject this call with a message</string>
-    <string name="a11y_incoming_call_swipe_gesture_prompt">Two finger swipe up to answer. Two finger swipe down to decline.</string>
-    <string name="a11y_incoming_call_swipe_to_answer">Swipe up with two fingers to answer or down to reject the call</string>
-    <string name="a11y_new_call_log_entry_full_description_with_phone_account_info">^1, ^2, ^3.</string>
-    <string name="a11y_new_call_log_entry_full_description_without_phone_account_info">^1, ^2.</string>
-    <string name="a11y_new_call_log_entry_phone_account">on ^1, via ^2</string>
-    <string name="accessibility_settings_title">Accessibility</string>
-    <string name="account_phone">Device-only, unsynced</string>
-    <string name="action_copy_number_text">Copy number</string>
-    <string name="action_edit_number_before_call">Edit number before call</string>
-    <string name="action_menu_back_from_search">stop searching</string>
-    <string name="action_menu_call_history_description">Call history</string>
-    <string name="action_menu_dialpad_button">key pad</string>
-    <string name="action_menu_overflow_description">More options</string>
-    <string name="activity_not_available">No app for that on this device</string>
-    <string name="add_2sec_pause">Add 2-sec pause</string>
-    <string name="add_contact_not_available">No contacts app available</string>
-    <string name="add_to_contacts">Add contact</string>
-    <string name="add_wait">Add wait</string>
-    <string name="all_contacts">All contacts</string>
-    <string name="all_contacts_empty">"You don't have any contacts yet"</string>
-    <string name="all_contacts_empty_add_contact_action">Create new contact</string>
-    <string name="allow">Allow</string>
-    <string name="always_warn">Show warning every time</string>
-    <string name="appbar_scrolling_view_behavior">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
-    <string name="applicationLabel">Phone</string>
-    <string name="assisted_dialing_country_code_entry">Assisted dialing: Used country code +%1$s</string>
-    <string name="assisted_dialing_country_code_entry_failure">Assisted dialing was used</string>
-    <string name="assisted_dialing_setting_cc_category_title">Home country</string>
-    <string name="assisted_dialing_setting_cc_default_summary">Automatically detected • %1$s</string>
-    <string name="assisted_dialing_setting_cc_default_summary_fallback">Automatically detected</string>
-    <string name="assisted_dialing_setting_cc_key">assisted_dialing_setting_cc_key</string>
-    <string name="assisted_dialing_setting_cc_title">Default home country</string>
-    <string name="assisted_dialing_setting_summary">Predict and add a country code when you call while traveling abroad</string>
-    <string name="assisted_dialing_setting_title">Assisted dialing</string>
-    <string name="assisted_dialing_setting_toggle_key">assisted_dialing_setting_toggle_key</string>
-    <string name="audioroute_bluetooth">Bluetooth</string>
-    <string name="audioroute_headset">Wired headset</string>
-    <string name="audioroute_phone">Phone</string>
-    <string name="audioroute_speaker">Speaker</string>
-    <string name="block_and_optionally_report_spam">Block/Report spam</string>
-    <string name="block_list">Blocked numbers</string>
-    <string name="block_number">Block</string>
-    <string name="block_number_alert_details">%1$s This call will be reported as spam.</string>
-    <string name="block_number_confirmation_message_new_filtering">You will no longer receive calls or texts from this number.</string>
-    <string name="block_number_confirmation_message_no_vvm">Calls from this number will be blocked, but the caller may still be able to leave you voicemails.</string>
-    <string name="block_number_confirmation_title">Block %1$s?</string>
-    <string name="block_number_failed_toast">Problem blocking this number</string>
-    <string name="block_number_footer_message_vvm">Calls from these numbers will be blocked and voicemails will be automatically deleted.</string>
-    <string name="block_number_ok">BLOCK</string>
-    <string name="block_report_number_alert_details">You will no longer receive calls from this number.</string>
-    <string name="block_report_number_alert_title">Block %1$s?</string>
-    <string name="blocked_call_settings_import_button">Import</string>
-    <string name="blocked_call_settings_import_description">You previously marked some callers to be automatically sent to voicemail via other apps.</string>
-    <string name="blocked_call_settings_view_numbers_button">View Numbers</string>
-    <string name="blocked_number_call_log_label">Blocked</string>
-    <string name="blocked_numbers_disabled_emergency_desc">Call blocking has been disabled because you contacted emergency services from this phone within the last 48 hours. It will be automatically reenabled once the 48 hour period expires.</string>
-    <string name="blocked_numbers_disabled_emergency_header_label">Call blocking temporarily off</string>
-    <string name="bottom_nav_count_99_plus">99+</string>
-    <string name="bottom_nav_count_9_plus">9+</string>
-    <string name="bubble_return_to_call">Back to call</string>
-    <string name="call">Call</string>
-    <string name="callFailed_simError">No SIM or SIM error</string>
-    <string name="call_assistant">Call %s</string>
-    <string name="call_blocking_disabled_notification_text">Disabled because an emergency call was made.</string>
-    <string name="call_blocking_disabled_notification_title">Call blocking disabled for 48 hours</string>
-    <string name="call_callback">Call callback</string>
-    <string name="call_car">Call car</string>
-    <string name="call_company_main">Call company main</string>
-    <string name="call_composer_connection_failed">"%1$s is offline and can't be reached"</string>
-    <string name="call_composer_image_uploading">Sending image…</string>
-    <string name="call_custom">Call %s</string>
-    <string name="call_details">Call details</string>
-    <string name="call_details_copy_number">Copy number</string>
-    <string name="call_details_edit_number">Edit number before call</string>
-    <string name="call_details_menu_label">Call details</string>
-    <string name="call_details_minutes_abbreviation">m</string>
-    <string name="call_details_report_call_id">Report inaccurate number</string>
-    <string name="call_details_seconds_abbreviation">s</string>
-    <string name="call_disambig_title">Choose number</string>
-    <string name="call_duration_format_pattern">"%1$s'%2$s' %3$s'%4$s'"</string>
-    <string name="call_duration_short_format_pattern">"%1$s'%2$s'"</string>
-    <string name="call_fax_home">Call home fax</string>
-    <string name="call_fax_work">Call work fax</string>
-    <string name="call_home">Call home</string>
-    <string name="call_incoming_answer">Answer</string>
-    <string name="call_incoming_custom_message_cancel">Cancel</string>
-    <string name="call_incoming_custom_message_send">Send</string>
-    <string name="call_incoming_decline">Decline</string>
-    <string name="call_incoming_default_label_answer_and_release_second">Swipe up to answer and hold ongoing call</string>
-    <string name="call_incoming_default_label_answer_and_release_third">Swipe up to answer and end call on hold</string>
-    <string name="call_incoming_important">Important</string>
-    <string name="call_incoming_message_custom">Write your own…</string>
-    <string name="call_incoming_respond_via_sms_custom_message">Write your own…</string>
-    <string name="call_incoming_swipe_to_answer">Swipe up to answer</string>
-    <string name="call_incoming_swipe_to_answer_and_release">Swipe from icon to answer and end ongoing call</string>
-    <string name="call_incoming_swipe_to_answer_video_as_audio">Swipe from icon to answer as an audio call</string>
-    <string name="call_incoming_swipe_to_decline_with_message">Swipe from icon to decline with message</string>
-    <string name="call_incoming_swipe_to_reject">Swipe down to reject</string>
-    <string name="call_incoming_video_is_off">Video is off</string>
-    <string name="call_incoming_will_disconnect">Answering this call will end your video call</string>
-    <string name="call_isdn">Call ISDN</string>
-    <string name="call_log_action_block_number">Block number</string>
-    <string name="call_log_action_block_report_number">Block/report spam</string>
-    <string name="call_log_action_call">Call ^1</string>
-    <string name="call_log_action_details">Call details</string>
-    <string name="call_log_action_invite_video">Invite to video call</string>
-    <string name="call_log_action_remove_spam">Not spam</string>
-    <string name="call_log_action_send_message">Send a message</string>
-    <string name="call_log_action_set_up_video">Set up video calling</string>
-    <string name="call_log_action_share_voicemail">Send to …</string>
-    <string name="call_log_action_unblock_number">Unblock number</string>
-    <string name="call_log_action_video_call">Video call</string>
-    <string name="call_log_activity_title">Call History</string>
-    <string name="call_log_all_empty">Your call history is empty</string>
-    <string name="call_log_all_empty_action">Make a call</string>
-    <string name="call_log_all_title">All</string>
-    <string name="call_log_delete_all">Clear call history</string>
-    <string name="call_log_header_other">Older</string>
-    <string name="call_log_header_today">Today</string>
-    <string name="call_log_header_yesterday">Yesterday</string>
-    <string name="call_log_item_count_and_date">(%1$d) %2$s</string>
-    <string name="call_log_missed_empty">You have no missed calls.</string>
-    <string name="call_log_missed_title">Missed</string>
-    <string name="call_log_via_number">via %1$s</string>
-    <string name="call_log_via_number_phone_account">%1$s via %2$s</string>
-    <string name="call_log_voicemail_empty">Your voicemail inbox is empty.</string>
-    <string name="call_main">Call main</string>
-    <string name="call_mms">Call MMS</string>
-    <string name="call_mobile">Call mobile</string>
-    <string name="call_other">Call</string>
-    <string name="call_other_fax">Call fax</string>
-    <string name="call_pager">Call pager</string>
-    <string name="call_radio">Call radio</string>
-    <string name="call_settings_label">Calls</string>
-    <string name="call_subject_hint">Type a note to send with call …</string>
-    <string name="call_subject_limit">%1$s / %2$s</string>
-    <string name="call_subject_type_and_number">%1$s %2$s</string>
-    <string name="call_telex">Call telex</string>
-    <string name="call_tty_tdd">Call TTY/TDD</string>
-    <string name="call_with_a_note">Call with a note</string>
-    <string name="call_work">Call work</string>
-    <string name="call_work_mobile">Call work mobile</string>
-    <string name="call_work_pager">Call work pager</string>
-    <string name="camera_media_failure">"Couldn't load camera image"</string>
-    <string name="camera_permission_text">To take a photo, give access to Camera</string>
-    <string name="camera_privacy_text">Camera permission enabled</string>
-    <string name="character_counter_content_description">Character limit exceeded %1$d of %2$d</string>
-    <string name="character_counter_pattern">%1$d / %2$d</string>
-    <string name="chat">Chat</string>
-    <string name="chat_aim">Chat using AIM</string>
-    <string name="chat_gtalk">Chat using Google Talk</string>
-    <string name="chat_icq">Chat using ICQ</string>
-    <string name="chat_jabber">Chat using Jabber</string>
-    <string name="chat_msn">Chat using Windows Live</string>
-    <string name="chat_qq">Chat using QQ</string>
-    <string name="chat_skype">Chat using Skype</string>
-    <string name="chat_yahoo">Chat using Yahoo</string>
-    <string name="checkbox_report_as_spam_action">Report call as spam</string>
-    <string name="child_number">via %s</string>
-    <string name="clearCallLogConfirmation">This will delete all calls from your history</string>
-    <string name="clearCallLogConfirmation_title">Clear call history?</string>
-    <string name="clearCallLogProgress_title">Clearing call history…</string>
-    <string name="clearFrequentsConfirmation">"You'll clear the frequently contacted list in the Contacts and Phone apps, and force email apps to learn your addressing preferences from scratch."</string>
-    <string name="clearFrequentsConfirmation_title">Clear frequently contacted?</string>
-    <string name="clearFrequentsProgress_title">Clearing frequently contacted…</string>
-    <string name="conference_call_name">Conference call</string>
-    <string name="conference_caller_disconnect_content_description">End call</string>
-    <string name="config_prohibited_phone_number_regexp" />
-    <string name="contact_grid_callback_number">"This phone's number: %1$s"</string>
-    <string name="contact_grid_incoming_suspected_spam">Suspected spam caller</string>
-    <string name="contact_grid_incoming_via_template">Call via %s from</string>
-    <string name="contact_grid_incoming_video_call">Carrier video call from</string>
-    <string name="contact_grid_incoming_voice_call">Call from</string>
-    <string name="contact_grid_incoming_wifi_video_call">Wi-Fi carrier video call from</string>
-    <string name="contact_grid_incoming_work_call">Work call from</string>
-    <string name="contact_menu_contact_info">Contact info</string>
-    <string name="contact_menu_message">Message</string>
-    <string name="contact_menu_remove">Remove</string>
-    <string name="contact_menu_video_call">Video Call</string>
-    <string name="contact_menu_voice_call">Voice Call</string>
-    <string name="content_description_overflow">More options</string>
-    <string name="content_description_rtt_chat_avatar">Avatar</string>
-    <string name="content_description_rtt_check_button">Go ahead</string>
-    <string name="copy_number">Copy number</string>
-    <string name="custom_message_hint">Write a custom message</string>
-    <string name="dec">DEC:</string>
-    <string name="default_notification_description">Default sound (%1$s)</string>
-    <string name="delete">Delete</string>
-    <string name="description_add_to_existing_contact_action">Add ^1 to existing contact</string>
-    <string name="description_blocked_number_list_delete">Unblock number</string>
-    <string name="description_call_action">Call ^1</string>
-    <string name="description_call_composer_camera">Take a picture</string>
-    <string name="description_call_composer_message">Send a message</string>
-    <string name="description_call_composer_photo">Choose a photo</string>
-    <string name="description_camera_cancel_photo">Retake photo</string>
-    <string name="description_camera_switch_camera_facing">Switch to front facing camera</string>
-    <string name="description_camera_switch_camera_rear">Switch to back facing camera</string>
-    <string name="description_camera_switch_full_screen">Switch to full screen camera</string>
-    <string name="description_camera_switch_preview_screen">Switch to camera preview</string>
-    <string name="description_camera_take_picture">Take photo</string>
-    <string name="description_clear_search">Clear search</string>
-    <string name="description_contact_details">Contact details for %1$s</string>
-    <string name="description_create_new_contact_action">Create contact for ^1</string>
-    <string name="description_delete_button">backspace</string>
-    <string name="description_details_action">Call details for ^1</string>
-    <string name="description_dial_button">dial</string>
-    <string name="description_dialpad_back">Navigate back</string>
-    <string name="description_dialpad_overflow">More options</string>
-    <string name="description_entering_bulk_action_mode">Entering bulk action mode</string>
-    <string name="description_image_button_plus">dial plus</string>
-    <string name="description_incoming_answered_call">Answered call from ^1, ^2, ^3, ^4.</string>
-    <string name="description_incoming_missed_call">Missed call from ^1, ^2, ^3, ^4.</string>
-    <string name="description_leaving_bulk_action_mode">Left bulk action mode</string>
-    <string name="description_num_calls">%1$s calls.</string>
-    <string name="description_outgoing_call">Call to ^1, ^2, ^3, ^4.</string>
-    <string name="description_phone_account">on ^1</string>
-    <string name="description_quick_contact_for">Quick contact for %1$s</string>
-    <string name="description_rating_bad">Dislike</string>
-    <string name="description_rating_good">Like</string>
-    <string name="description_read_voicemail">Voicemail from ^1, ^2, ^3, ^4.</string>
-    <string name="description_search_call_and_share">Share and call</string>
-    <string name="description_search_video_call">Video call</string>
-    <string name="description_selecting_bulk_action_mode">Selected %1$s</string>
-    <string name="description_spam_contact_details">Contact details for suspected spam caller %1$s</string>
-    <string name="description_start_voice_search">Start voice search</string>
-    <string name="description_unread_voicemail">Unread voicemail from ^1, ^2, ^3, ^4.</string>
-    <string name="description_unselecting_bulk_action_mode">Unselected %1$s</string>
-    <string name="description_via_number">via %1$s</string>
-    <string name="description_via_number_phone_account">on %1$s, via %2$s</string>
-    <string name="description_video_call">Video call.</string>
-    <string name="description_video_call_action">Video call ^1.</string>
-    <string name="description_view_contact_detail">View contact</string>
-    <string name="description_voicemail_action">Listen to voicemail from ^1</string>
-    <string name="description_voicemail_button">call voicemail</string>
-    <string name="details">You are calling an international number and charges may apply.</string>
-    <string name="dialer_addAnotherCall">Add call</string>
-    <string name="dialer_hint_find_contact">Search contacts</string>
-    <string name="dialer_returnToInCallScreen">Return to call in progress</string>
-    <string name="dialer_settings_label">Settings</string>
-    <string name="dialer_shortcut_contact_not_found_or_has_no_number">Contact no longer available.</string>
-    <string name="dialer_shortcut_disabled_message">Shortcut not working. Drag to remove.</string>
-    <string name="dialer_shortcut_no_permissions">Cannot call without permissions.</string>
-    <string name="dialer_useDtmfDialpad">Use touch-tone keypad</string>
-    <string name="dialog_continue">Continue</string>
-    <string name="dialog_phone_call_prohibited_message">"Can't call this number"</string>
-    <string name="dialog_voicemail_airplane_mode_message">To call voicemail, first turn off Airplane mode.</string>
-    <string name="dialog_voicemail_not_ready_message">To set up voicemail, go to Menu > Settings.</string>
-    <string name="dialpad_activity_title">Phone Keypad</string>
-    <string name="dialpad_button_content_description">key pad</string>
-    <string name="dialpad_hint_emergency_calling_not_available">"Can't make emergency calls over WiFi"</string>
-    <string name="dialpad_pound_number">\#</string>
-    <string name="dialpad_star_number">*</string>
-    <string name="directory">Directory %1$s</string>
-    <string name="directory_search_label">Directory</string>
-    <string name="directory_search_label_work">Work directory</string>
-    <string name="disambig_option_video_call">Video call</string>
-    <string name="disambig_option_voice_call">Call</string>
-    <string name="display_options_sort_by_family_name">Last name</string>
-    <string name="display_options_sort_by_family_name_value">sort_by_family_name</string>
-    <string name="display_options_sort_by_given_name">First name</string>
-    <string name="display_options_sort_by_given_name_value">sort_by_given_name</string>
-    <string name="display_options_sort_list_by">Sort by</string>
-    <string name="display_options_sort_list_by_key">android.contacts.SORT_ORDER</string>
-    <string name="display_options_title">Display options</string>
-    <string name="display_options_view_family_name_first">Last name first</string>
-    <string name="display_options_view_family_name_first_value">view_family_name_first</string>
-    <string name="display_options_view_given_name_first">First name first</string>
-    <string name="display_options_view_given_name_first_value">view_given_name_first</string>
-    <string name="display_options_view_names_as">Name format</string>
-    <string name="display_options_view_names_as_key">android.contacts.DISPLAY_ORDER</string>
-    <string name="do_not_show_again">Do not show again</string>
-    <string name="duo_disclosure_details">Google Duo video calling lets you chat with friends and family face-to-face. Data charges may apply. %1$s</string>
-    <string name="duo_disclosure_title">Make video calls with Duo</string>
-    <string name="ec_data_deleted">Call deleted. View and delete attachments shared during this call in Messages.</string>
-    <string name="email">Email</string>
-    <string name="emailLabelsGroup">Email</string>
-    <string name="email_custom">Email %s</string>
-    <string name="email_home">Email home</string>
-    <string name="email_mobile">Email mobile</string>
-    <string name="email_other">Email</string>
-    <string name="email_work">Email work</string>
-    <string name="emergency_number">Emergency number</string>
-    <string name="enriched_call_simulator_activity">Enriched Call Simulator Activity</string>
-    <string name="eventLabelsGroup">Special date</string>
-    <string name="fab_transformation_scrim_behavior">android.support.design.transformation.FabTransformationScrimBehavior</string>
-    <string name="fab_transformation_sheet_behavior">android.support.design.transformation.FabTransformationSheetBehavior</string>
-    <string name="favorites_header">Favorites</string>
-    <string name="full_name">Name</string>
-    <string name="gallery_item_description">image %1$tB %1$te %1$tY %1$tl %1$tM %1$tp</string>
-    <string name="gallery_item_description_no_date">image</string>
-    <string name="gallery_permission_text">To share an image, give access to Media</string>
-    <string name="general_learn_more">Learn more</string>
-    <string name="generic_conference_call_name">In call</string>
-    <string name="ghostData_company">Company</string>
-    <string name="ghostData_title">Title</string>
-    <string name="goPrivate">go private</string>
-    <string name="groupsLabel">Groups</string>
-    <string name="handle_restricted">RESTRICTED</string>
-    <string name="hex">HEX:</string>
-    <string name="hide_bottom_view_on_scroll_behavior">android.support.design.behavior.HideBottomViewOnScrollBehavior</string>
-    <string name="imLabelsGroup">IM</string>
-    <string name="image_sent_messages">Photo sent via Messages</string>
-    <string name="imei">IMEI</string>
-    <string name="import_send_to_voicemail_numbers_label">Import numbers</string>
-    <string name="important_notification_incoming_call">Important incoming call</string>
-    <string name="important_notification_incoming_call_attachments">Important incoming call with attachments</string>
-    <string name="important_notification_incoming_call_with_location">Important incoming call with location</string>
-    <string name="important_notification_incoming_call_with_message">Important incoming call with message</string>
-    <string name="important_notification_incoming_call_with_message_location">Important incoming call with message and location</string>
-    <string name="important_notification_incoming_call_with_photo">Important incoming call with photo</string>
-    <string name="important_notification_incoming_call_with_photo_location">Important incoming call with photo and location</string>
-    <string name="important_notification_incoming_call_with_photo_message">Important incoming call with photo and message</string>
-    <string name="important_notification_incoming_call_with_photo_message_location">Important incoming call with photo, message and location</string>
-    <string name="incall_call_ended">Call ended</string>
-    <string name="incall_calling_on_recent_choice_template">Calling on recent choice %s</string>
-    <string name="incall_calling_on_same_carrier_template">Calling on same carrier %s</string>
-    <string name="incall_calling_via_template">Calling via %s</string>
-    <string name="incall_connecting">Calling…</string>
-    <string name="incall_connecting_assited_dialed">Calling using +%1$s (%2$s)…</string>
-    <string name="incall_connecting_assited_dialed_component">Using +%1$s (%2$s)…</string>
-    <string name="incall_content_description_bluetooth">Bluetooth</string>
-    <string name="incall_content_description_earpiece">Handset earpiece</string>
-    <string name="incall_content_description_end_call">End call</string>
-    <string name="incall_content_description_headset">Wired headset</string>
-    <string name="incall_content_description_hold">Hold call</string>
-    <string name="incall_content_description_merge_calls">Merge calls</string>
-    <string name="incall_content_description_muted">Muted</string>
-    <string name="incall_content_description_speaker">Speaker</string>
-    <string name="incall_content_description_swap_calls">Swap calls</string>
-    <string name="incall_content_description_swap_sim">Change SIM</string>
-    <string name="incall_content_description_swap_video">Swap video</string>
-    <string name="incall_content_description_unhold">Resume call</string>
-    <string name="incall_content_description_unmuted">Unmuted</string>
-    <string name="incall_content_description_video_off">Video off</string>
-    <string name="incall_content_description_video_on">Video on</string>
-    <string name="incall_enable_wifi_calling_button">Enable</string>
-    <string name="incall_error_supp_service_unknown">Service not supported.</string>
-    <string name="incall_hanging_up">Hanging up</string>
-    <string name="incall_label_add_call">Add call</string>
-    <string name="incall_label_audio">Sound</string>
-    <string name="incall_label_dialpad">Keypad</string>
-    <string name="incall_label_end_call">End call</string>
-    <string name="incall_label_hold">Hold</string>
-    <string name="incall_label_manage">Manage</string>
-    <string name="incall_label_merge">Merge</string>
-    <string name="incall_label_mute">Mute</string>
-    <string name="incall_label_rttcall">RTT</string>
-    <string name="incall_label_speaker">Speaker</string>
-    <string name="incall_label_swap">Swap</string>
-    <string name="incall_label_swap_sim">Change SIM</string>
-    <string name="incall_label_videocall">Video call</string>
-    <string name="incall_note_sent">Note sent</string>
-    <string name="incall_on_hold">On hold</string>
-    <string name="incall_remotely_held">On hold</string>
-    <string name="incall_talkback_speaker_off">, is Off</string>
-    <string name="incall_talkback_speaker_on">, is on</string>
-    <string name="incall_transferring">Transferring…</string>
-    <string name="incall_video_call_request_failed">Unable to connect</string>
-    <string name="incall_video_call_request_rejected">Call declined</string>
-    <string name="incall_video_call_request_timed_out">Call timed out</string>
-    <string name="incall_video_call_requesting">Carrier video calling…</string>
-    <string name="incall_video_call_upgrade_request">Switching to carrier video…</string>
-    <string name="incall_wifi_video_call_requesting">Wi-Fi carrier video calling…</string>
-    <string name="invalidNumber">%1$sis invalid.</string>
-    <string name="just_now">Just now</string>
-    <string name="label_notes">Notes</string>
-    <string name="label_sip_address">SIP</string>
-    <string name="launcherActivityLabel">Phone</string>
-    <string name="launcherDialpadActivityLabel">Phone Keypad</string>
-    <string name="listAllContactsInAccount">Contacts in %s</string>
-    <string name="listCustomView">Contacts in custom view</string>
-    <string name="listSingleContact">Single contact</string>
-    <string name="list_filter_all_accounts">All contacts</string>
-    <string name="list_filter_phones">All contacts with phone numbers</string>
-    <string name="main_activity_label">Phone</string>
-    <string name="main_menu_call_history">Call history</string>
-    <string name="main_menu_clear_frequents">Clear frequents</string>
-    <string name="main_remove_contact">Remove</string>
-    <string name="make_primary">Remember this choice</string>
-    <string name="manageConferenceLabel">Manage conference call</string>
-    <string name="manage_blocked_numbers_label">Blocked numbers</string>
-    <string name="map_custom">View %s address</string>
-    <string name="map_home">View home address</string>
-    <string name="map_other">View address</string>
-    <string name="map_work">View work address</string>
-    <string name="meid">MEID</string>
-    <string name="menu_callNumber">Call %s</string>
-    <string name="menu_clear_frequents">Clear frequents</string>
-    <string name="message_composer_custom_message_hint">Write a custom message</string>
-    <string name="message_in_quotes">\"%1$s\"</string>
-    <string name="message_sent_messages">Message sent via Messages</string>
-    <string name="migrate_blocked_numbers_dialog_allow_button">Allow</string>
-    <string name="migrate_blocked_numbers_dialog_cancel_button">@android:string/cancel</string>
-    <string name="migrate_blocked_numbers_dialog_message">To better protect you, Phone needs to change how blocking works. Your blocked numbers will now stop both calls and texts and may be shared with other apps.</string>
-    <string name="migrate_blocked_numbers_dialog_title">New, simplified blocking</string>
-    <string name="missing_name">(No name)</string>
-    <string name="mtrl_chip_close_icon_content_description">Remove %1$s</string>
-    <string name="multiple_ec_data_deleted">Calls deleted. View and delete attachments shared during calls in Messages.</string>
-    <string name="nameLabelsGroup">Name</string>
-    <string name="name_family">Last name</string>
-    <string name="name_given">First name</string>
-    <string name="name_middle">Middle name</string>
-    <string name="name_phonetic">Phonetic name</string>
-    <string name="name_phonetic_family">Phonetic last name</string>
-    <string name="name_phonetic_given">Phonetic first name</string>
-    <string name="name_phonetic_middle">Phonetic middle name</string>
-    <string name="name_prefix">Name prefix</string>
-    <string name="name_suffix">Name suffix</string>
-    <string name="nearby_places_allow">Allow</string>
-    <string name="nearby_places_dismiss">Dismiss</string>
-    <string name="network_name_mobile">Mobile</string>
-    <string name="network_name_wifi">Wifi</string>
-    <string name="new_call_log_carrier_video">Carrier video</string>
-    <string name="new_call_log_duo_video">Duo video</string>
-    <string name="new_call_log_secondary_blocked">Blocked</string>
-    <string name="new_call_log_secondary_spam">Spam</string>
-    <string name="new_call_log_unknown">Unknown</string>
-    <string name="new_permission_no_search">To search your contacts, turn on the Contacts permissions.</string>
-    <string name="nicknameLabelsGroup">Nickname</string>
-    <string name="non_spam_notification_title">Know %1$s?</string>
-    <string name="not_spam">Not spam</string>
-    <string name="notification_action_accept">Accept</string>
-    <string name="notification_action_answer">Answer</string>
-    <string name="notification_action_answer_video">Video</string>
-    <string name="notification_action_dismiss">Decline</string>
-    <string name="notification_action_end_call">Hang up</string>
-    <string name="notification_action_speaker_off">Turn speaker off</string>
-    <string name="notification_action_speaker_on">Turn speaker on</string>
-    <string name="notification_call_wifi_brand">Wi‑Fi call</string>
-    <string name="notification_call_wifi_work_brand">Wi‑Fi work call</string>
-    <string name="notification_channel_incoming_call">Incoming calls</string>
-    <string name="notification_channel_misc">Default</string>
-    <string name="notification_channel_missed_call">Missed calls</string>
-    <string name="notification_channel_ongoing_call">Ongoing calls</string>
-    <string name="notification_dialing">Dialing</string>
-    <string name="notification_external_call">Ongoing call on another device</string>
-    <string name="notification_external_video_call">Ongoing video call on another device</string>
-    <string name="notification_incoming_call">Incoming call</string>
-    <string name="notification_incoming_call_attachments">Incoming call with attachments</string>
-    <string name="notification_incoming_call_mutli_sim">Incoming call via %1$s</string>
-    <string name="notification_incoming_call_wifi_template">Incoming %1$s</string>
-    <string name="notification_incoming_call_with_location">Incoming call with location</string>
-    <string name="notification_incoming_call_with_message">Incoming call with message</string>
-    <string name="notification_incoming_call_with_message_location">Incoming call with message and location</string>
-    <string name="notification_incoming_call_with_photo">Incoming call with photo</string>
-    <string name="notification_incoming_call_with_photo_location">Incoming call with photo and location</string>
-    <string name="notification_incoming_call_with_photo_message">Incoming call with photo and message</string>
-    <string name="notification_incoming_call_with_photo_message_location">Incoming call with photo, message and location</string>
-    <string name="notification_incoming_spam_call">Incoming suspected spam call</string>
-    <string name="notification_incoming_video_call">Incoming video call</string>
-    <string name="notification_incoming_work_call">Incoming work call</string>
-    <string name="notification_missedCallTitle">Missed call</string>
-    <string name="notification_missedCall_call_back">Call back</string>
-    <string name="notification_missedCall_message">Message</string>
-    <string name="notification_missedCallsMsg">%d missed calls</string>
-    <string name="notification_missedCallsTitle">Missed calls</string>
-    <string name="notification_missedWorkCallTitle">Missed work call</string>
-    <string name="notification_on_hold">On hold</string>
-    <string name="notification_ongoing_call">Ongoing call</string>
-    <string name="notification_ongoing_call_wifi_template">Ongoing %1$s</string>
-    <string name="notification_ongoing_paused_video_call">Ongoing video call ‑ video paused</string>
-    <string name="notification_ongoing_video_call">Ongoing video call</string>
-    <string name="notification_ongoing_work_call">Ongoing work call</string>
-    <string name="notification_requesting_video_call">Incoming video request</string>
-    <string name="notification_take_call">Take Call</string>
-    <string name="notification_take_video_call">Take Video Call</string>
-    <string name="nui_simulator_submenu_label">Simulator</string>
-    <string name="ok_got_it">OK, got it</string>
-    <string name="old_block_number_confirmation_title">Block%1$s?</string>
-    <string name="old_call_subject_type_and_number">%1$s %2$s</string>
-    <string name="organizationLabelsGroup">Organization</string>
-    <string name="outgoing_wps_warning">Placing a WPS call will disconnect your existing call.</string>
-    <string name="password_toggle_content_description">Show password</string>
-    <string name="path_password_eye">M12,4.5C7,4.5 2.73,7.61 1,12c1.73,4.39 6,7.5 11,7.5s9.27,-3.11 11,-7.5c-1.73,-4.39 -6,-7.5 -11,-7.5zM12,17c-2.76,0 -5,-2.24 -5,-5s2.24,-5 5,-5 5,2.24 5,5 -2.24,5 -5,5zM12,9c-1.66,0 -3,1.34 -3,3s1.34,3 3,3 3,-1.34 3,-3 -1.34,-3 -3,-3z</string>
-    <string name="path_password_eye_mask_strike_through">M2,4.27 L19.73,22 L22.27,19.46 L4.54,1.73 L4.54,1 L23,1 L23,23 L1,23 L1,4.27 Z</string>
-    <string name="path_password_eye_mask_visible">M2,4.27 L2,4.27 L4.54,1.73 L4.54,1.73 L4.54,1 L23,1 L23,23 L1,23 L1,4.27 Z</string>
-    <string name="path_password_strike_through">M3.27,4.27 L19.74,20.74</string>
-    <string name="pause_prompt_no">No</string>
-    <string name="pause_prompt_yes">Yes</string>
-    <string name="payphone">Payphone</string>
-    <string name="permission_no_calllog">To see your call log, turn on the Phone permission.</string>
-    <string name="permission_no_contacts">To see your contacts, turn on the Contacts permission.</string>
-    <string name="permission_no_speeddial">To enable speed dial, turn on the Contacts permission.</string>
-    <string name="permission_single_turn_on">Turn on</string>
-    <string name="phoneAppLabel">Phone</string>
-    <string name="phoneLabelsGroup">Phone</string>
-    <string name="phone_account_settings_label">Calling accounts</string>
-    <string name="post_call_add_message">Add message</string>
-    <string name="post_call_message">Say why you called</string>
-    <string name="post_call_message_1">This is urgent. Call me back.</string>
-    <string name="post_call_message_2">Call me back when you have some time.</string>
-    <string name="post_call_message_3">Not urgent, we can chat later.</string>
-    <string name="post_call_message_sent">Message sent</string>
-    <string name="post_call_notification_message">%1$s: %2$s</string>
-    <string name="post_call_send_message">Send message</string>
-    <string name="postalLabelsGroup">Address</string>
-    <string name="postal_address">Address</string>
-    <string name="postal_city">City</string>
-    <string name="postal_country">Country</string>
-    <string name="postal_postcode">ZIP code</string>
-    <string name="postal_region">State</string>
-    <string name="postal_street">Street</string>
-    <string name="pre_call_permission_check_no_phone_permission">Cannot make call without phone permission</string>
-    <string name="pre_call_select_phone_account">Choose SIM for this call</string>
-    <string name="pre_call_select_phone_account_hint_frequent">Recently used</string>
-    <string name="pre_call_select_phone_account_hint_intra_carrier">Uses same carrier</string>
-    <string name="pre_call_select_phone_account_hint_other_sim_in_use">Not available while using %1$s</string>
-    <string name="pre_call_select_phone_account_remember">Remember this choice</string>
-    <string name="private_num_non_verizon">Private number</string>
-    <string name="private_num_verizon">Restricted</string>
-    <string name="quick_question">Quick question…</string>
-    <string name="received_a_photo">Received a photo</string>
-    <string name="refresh">refresh</string>
-    <string name="relationLabelsGroup">Relationship</string>
-    <string name="remove_contact">Remove</string>
-    <string name="report_caller_id_dialog_title">Report incorrect number</string>
-    <string name="report_caller_id_failed">"Couldn't report number"</string>
-    <string name="report_caller_id_toast">Number reported</string>
-    <string name="report_not_spam_alert_button">Report</string>
-    <string name="report_not_spam_alert_details">Future calls from %1$s will no longer be identified as spam.</string>
-    <string name="report_not_spam_alert_title">Report a mistake?</string>
-    <string name="respond_via_sms_setting_title">Quick responses</string>
-    <string name="ringtone_silent">None</string>
-    <string name="ringtone_unknown">Unknown ringtone</string>
-    <string name="rtt_button_accept_request">Join RTT</string>
-    <string name="rtt_button_back">Back</string>
-    <string name="rtt_button_decline_request">No thanks</string>
-    <string name="rtt_call_not_available_toast">RTT not available for this call</string>
-    <string name="rtt_input_hint">Type a message</string>
-    <string name="rtt_promotion_details">RTT assists callers who are deaf, hard of hearing, have a speech disability, or need more than voice alone. RTT messaging transcripts are stored on your device in the call history. %1$s</string>
-    <string name="rtt_promotion_title">Real-time text messaging within a call</string>
-    <string name="rtt_request_dialog_details">%1$s wants to use messaging within your voice call.</string>
-    <string name="rtt_request_dialog_more_information">RTT assists callers who are deaf, hard of hearing, have a speech disability, or need more than voice alone.</string>
-    <string name="rtt_request_dialog_title">Join RTT call?</string>
-    <string name="rtt_status_banner_text">Waiting for %s to join RTT call…</string>
-    <string name="rtt_transcript_advisory">The other party can see you typing. Transcripts are stored on your device in the call history.</string>
-    <string name="rtt_transcript_link">See transcript</string>
-    <string name="rtt_transcript_not_available">Transcript available only for calls with messaging</string>
-    <string name="search_location_permission">To get contact information for places near you, allow access to your location.</string>
+    <string name="a11y_call_duration_format" translatable="false">%1$d %2$s %3$d %4$s</string>
+    <string name="a11y_call_duration_short_format" translatable="false">%1$d %2$s</string>
+    <string name="a11y_call_incoming_answer_description" translatable="false">Answer</string>
+    <string name="a11y_call_incoming_decline_description" translatable="false">Decline</string>
+    <string name="a11y_description_incall_label_manage_content" translatable="false">Manage callers</string>
+    <string name="a11y_description_incoming_call_answer_and_release" translatable="false">Answer and end ongoing call</string>
+    <string name="a11y_description_incoming_call_answer_video_as_audio" translatable="false">Answer as audio call</string>
+    <string name="a11y_description_incoming_call_reject_with_sms" translatable="false">Reject with message</string>
+    <string name="a11y_glide_photo_manager_contact_photo_description" translatable="false">Quick contact for ^1</string>
+    <string name="a11y_incoming_call_answer_and_release" translatable="false">Answer and end ongoing call</string>
+    <string name="a11y_incoming_call_answer_video_as_audio" translatable="false">Answer as audio call</string>
+    <string name="a11y_incoming_call_reject_with_sms" translatable="false">Reject this call with a message</string>
+    <string name="a11y_incoming_call_swipe_gesture_prompt" translatable="false">Two finger swipe up to answer. Two finger swipe down to decline.</string>
+    <string name="a11y_incoming_call_swipe_to_answer" translatable="false">Swipe up with two fingers to answer or down to reject the call</string>
+    <string name="a11y_new_call_log_entry_full_description_with_phone_account_info" translatable="false">^1, ^2, ^3.</string>
+    <string name="a11y_new_call_log_entry_full_description_without_phone_account_info" translatable="false">^1, ^2.</string>
+    <string name="a11y_new_call_log_entry_phone_account" translatable="false">on ^1, via ^2</string>
+    <string name="accessibility_settings_title" translatable="false">Accessibility</string>
+    <string name="account_phone" translatable="false">Device-only, unsynced</string>
+    <string name="action_copy_number_text" translatable="false">Copy number</string>
+    <string name="action_edit_number_before_call" translatable="false">Edit number before call</string>
+    <string name="action_menu_back_from_search" translatable="false">stop searching</string>
+    <string name="action_menu_call_history_description" translatable="false">Call history</string>
+    <string name="action_menu_dialpad_button" translatable="false">key pad</string>
+    <string name="action_menu_overflow_description" translatable="false">More options</string>
+    <string name="activity_not_available" translatable="false">No app for that on this device</string>
+    <string name="add_2sec_pause" translatable="false">Add 2-sec pause</string>
+    <string name="add_contact_not_available" translatable="false">No contacts app available</string>
+    <string name="add_to_contacts" translatable="false">Add contact</string>
+    <string name="add_wait" translatable="false">Add wait</string>
+    <string name="all_contacts" translatable="false">All contacts</string>
+    <string name="all_contacts_empty" translatable="false">"You don't have any contacts yet"</string>
+    <string name="all_contacts_empty_add_contact_action" translatable="false">Create new contact</string>
+    <string name="allow" translatable="false">Allow</string>
+    <string name="always_warn" translatable="false">Show warning every time</string>
+    <string name="appbar_scrolling_view_behavior" translatable="false">com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior</string>
+    <string name="applicationLabel" translatable="false">Phone</string>
+    <string name="assisted_dialing_country_code_entry" translatable="false">Assisted dialing: Used country code +%1$s</string>
+    <string name="assisted_dialing_country_code_entry_failure" translatable="false">Assisted dialing was used</string>
+    <string name="assisted_dialing_setting_cc_category_title" translatable="false">Home country</string>
+    <string name="assisted_dialing_setting_cc_default_summary" translatable="false">Automatically detected • %1$s</string>
+    <string name="assisted_dialing_setting_cc_default_summary_fallback" translatable="false">Automatically detected</string>
+    <string name="assisted_dialing_setting_cc_key" translatable="false">assisted_dialing_setting_cc_key</string>
+    <string name="assisted_dialing_setting_cc_title" translatable="false">Default home country</string>
+    <string name="assisted_dialing_setting_summary" translatable="false">Predict and add a country code when you call while traveling abroad</string>
+    <string name="assisted_dialing_setting_title" translatable="false">Assisted dialing</string>
+    <string name="assisted_dialing_setting_toggle_key" translatable="false">assisted_dialing_setting_toggle_key</string>
+    <string name="audioroute_bluetooth" translatable="false">Bluetooth</string>
+    <string name="audioroute_headset" translatable="false">Wired headset</string>
+    <string name="audioroute_phone" translatable="false">Phone</string>
+    <string name="audioroute_speaker" translatable="false">Speaker</string>
+    <string name="block_and_optionally_report_spam" translatable="false">Block/Report spam</string>
+    <string name="block_list" translatable="false">Blocked numbers</string>
+    <string name="block_number" translatable="false">Block</string>
+    <string name="block_number_alert_details" translatable="false">%1$s This call will be reported as spam.</string>
+    <string name="block_number_confirmation_message_new_filtering" translatable="false">You will no longer receive calls or texts from this number.</string>
+    <string name="block_number_confirmation_message_no_vvm" translatable="false">Calls from this number will be blocked, but the caller may still be able to leave you voicemails.</string>
+    <string name="block_number_confirmation_title" translatable="false">Block %1$s?</string>
+    <string name="block_number_failed_toast" translatable="false">Problem blocking this number</string>
+    <string name="block_number_footer_message_vvm" translatable="false">Calls from these numbers will be blocked and voicemails will be automatically deleted.</string>
+    <string name="block_number_ok" translatable="false">BLOCK</string>
+    <string name="block_report_number_alert_details" translatable="false">You will no longer receive calls from this number.</string>
+    <string name="block_report_number_alert_title" translatable="false">Block %1$s?</string>
+    <string name="blocked_call_settings_import_button" translatable="false">Import</string>
+    <string name="blocked_call_settings_import_description" translatable="false">You previously marked some callers to be automatically sent to voicemail via other apps.</string>
+    <string name="blocked_call_settings_view_numbers_button" translatable="false">View Numbers</string>
+    <string name="blocked_number_call_log_label" translatable="false">Blocked</string>
+    <string name="blocked_numbers_disabled_emergency_desc" translatable="false">Call blocking has been disabled because you contacted emergency services from this phone within the last 48 hours. It will be automatically reenabled once the 48 hour period expires.</string>
+    <string name="blocked_numbers_disabled_emergency_header_label" translatable="false">Call blocking temporarily off</string>
+    <string name="bottom_nav_count_99_plus" translatable="false">99+</string>
+    <string name="bottom_nav_count_9_plus" translatable="false">9+</string>
+    <string name="bubble_return_to_call" translatable="false">Back to call</string>
+    <string name="call" translatable="false">Call</string>
+    <string name="callFailed_simError" translatable="false">No SIM or SIM error</string>
+    <string name="call_assistant" translatable="false">Call %s</string>
+    <string name="call_blocking_disabled_notification_text" translatable="false">Disabled because an emergency call was made.</string>
+    <string name="call_blocking_disabled_notification_title" translatable="false">Call blocking disabled for 48 hours</string>
+    <string name="call_callback" translatable="false">Call callback</string>
+    <string name="call_car" translatable="false">Call car</string>
+    <string name="call_company_main" translatable="false">Call company main</string>
+    <string name="call_composer_connection_failed" translatable="false">"%1$s is offline and can't be reached"</string>
+    <string name="call_composer_image_uploading" translatable="false">Sending image…</string>
+    <string name="call_custom" translatable="false">Call %s</string>
+    <string name="call_details" translatable="false">Call details</string>
+    <string name="call_details_copy_number" translatable="false">Copy number</string>
+    <string name="call_details_edit_number" translatable="false">Edit number before call</string>
+    <string name="call_details_menu_label" translatable="false">Call details</string>
+    <string name="call_details_minutes_abbreviation" translatable="false">m</string>
+    <string name="call_details_report_call_id" translatable="false">Report inaccurate number</string>
+    <string name="call_details_seconds_abbreviation" translatable="false">s</string>
+    <string name="call_disambig_title" translatable="false">Choose number</string>
+    <string name="call_duration_format_pattern" translatable="false">"%1$s'%2$s' %3$s'%4$s'"</string>
+    <string name="call_duration_short_format_pattern" translatable="false">"%1$s'%2$s'"</string>
+    <string name="call_fax_home" translatable="false">Call home fax</string>
+    <string name="call_fax_work" translatable="false">Call work fax</string>
+    <string name="call_home" translatable="false">Call home</string>
+    <string name="call_incoming_answer" translatable="false">Answer</string>
+    <string name="call_incoming_custom_message_cancel" translatable="false">Cancel</string>
+    <string name="call_incoming_custom_message_send" translatable="false">Send</string>
+    <string name="call_incoming_decline" translatable="false">Decline</string>
+    <string name="call_incoming_default_label_answer_and_release_second" translatable="false">Swipe up to answer and hold ongoing call</string>
+    <string name="call_incoming_default_label_answer_and_release_third" translatable="false">Swipe up to answer and end call on hold</string>
+    <string name="call_incoming_important" translatable="false">Important</string>
+    <string name="call_incoming_message_custom" translatable="false">Write your own…</string>
+    <string name="call_incoming_respond_via_sms_custom_message" translatable="false">Write your own…</string>
+    <string name="call_incoming_swipe_to_answer" translatable="false">Swipe up to answer</string>
+    <string name="call_incoming_swipe_to_answer_and_release" translatable="false">Swipe from icon to answer and end ongoing call</string>
+    <string name="call_incoming_swipe_to_answer_video_as_audio" translatable="false">Swipe from icon to answer as an audio call</string>
+    <string name="call_incoming_swipe_to_decline_with_message" translatable="false">Swipe from icon to decline with message</string>
+    <string name="call_incoming_swipe_to_reject" translatable="false">Swipe down to reject</string>
+    <string name="call_incoming_video_is_off" translatable="false">Video is off</string>
+    <string name="call_incoming_will_disconnect" translatable="false">Answering this call will end your video call</string>
+    <string name="call_isdn" translatable="false">Call ISDN</string>
+    <string name="call_log_action_block_number" translatable="false">Block number</string>
+    <string name="call_log_action_block_report_number" translatable="false">Block/report spam</string>
+    <string name="call_log_action_call" translatable="false">Call ^1</string>
+    <string name="call_log_action_details" translatable="false">Call details</string>
+    <string name="call_log_action_invite_video" translatable="false">Invite to video call</string>
+    <string name="call_log_action_remove_spam" translatable="false">Not spam</string>
+    <string name="call_log_action_send_message" translatable="false">Send a message</string>
+    <string name="call_log_action_set_up_video" translatable="false">Set up video calling</string>
+    <string name="call_log_action_share_voicemail" translatable="false">Send to …</string>
+    <string name="call_log_action_unblock_number" translatable="false">Unblock number</string>
+    <string name="call_log_action_video_call" translatable="false">Video call</string>
+    <string name="call_log_activity_title" translatable="false">Call History</string>
+    <string name="call_log_all_empty" translatable="false">Your call history is empty</string>
+    <string name="call_log_all_empty_action" translatable="false">Make a call</string>
+    <string name="call_log_all_title" translatable="false">All</string>
+    <string name="call_log_delete_all" translatable="false">Clear call history</string>
+    <string name="call_log_header_other" translatable="false">Older</string>
+    <string name="call_log_header_today" translatable="false">Today</string>
+    <string name="call_log_header_yesterday" translatable="false">Yesterday</string>
+    <string name="call_log_item_count_and_date" translatable="false">(%1$d) %2$s</string>
+    <string name="call_log_missed_empty" translatable="false">You have no missed calls.</string>
+    <string name="call_log_missed_title" translatable="false">Missed</string>
+    <string name="call_log_via_number" translatable="false">via %1$s</string>
+    <string name="call_log_via_number_phone_account" translatable="false">%1$s via %2$s</string>
+    <string name="call_log_voicemail_empty" translatable="false">Your voicemail inbox is empty.</string>
+    <string name="call_main" translatable="false">Call main</string>
+    <string name="call_mms" translatable="false">Call MMS</string>
+    <string name="call_mobile" translatable="false">Call mobile</string>
+    <string name="call_other" translatable="false">Call</string>
+    <string name="call_other_fax" translatable="false">Call fax</string>
+    <string name="call_pager" translatable="false">Call pager</string>
+    <string name="call_radio" translatable="false">Call radio</string>
+    <string name="call_settings_label" translatable="false">Calls</string>
+    <string name="call_subject_hint" translatable="false">Type a note to send with call …</string>
+    <string name="call_subject_limit" translatable="false">%1$s / %2$s</string>
+    <string name="call_subject_type_and_number" translatable="false">%1$s %2$s</string>
+    <string name="call_telex" translatable="false">Call telex</string>
+    <string name="call_tty_tdd" translatable="false">Call TTY/TDD</string>
+    <string name="call_with_a_note" translatable="false">Call with a note</string>
+    <string name="call_work" translatable="false">Call work</string>
+    <string name="call_work_mobile" translatable="false">Call work mobile</string>
+    <string name="call_work_pager" translatable="false">Call work pager</string>
+    <string name="camera_media_failure" translatable="false">"Couldn't load camera image"</string>
+    <string name="camera_permission_text" translatable="false">To take a photo, give access to Camera</string>
+    <string name="camera_privacy_text" translatable="false">Camera permission enabled</string>
+    <string name="character_counter_content_description" translatable="false">Character limit exceeded %1$d of %2$d</string>
+    <string name="character_counter_pattern" translatable="false">%1$d / %2$d</string>
+    <string name="chat" translatable="false">Chat</string>
+    <string name="chat_aim" translatable="false">Chat using AIM</string>
+    <string name="chat_gtalk" translatable="false">Chat using Google Talk</string>
+    <string name="chat_icq" translatable="false">Chat using ICQ</string>
+    <string name="chat_jabber" translatable="false">Chat using Jabber</string>
+    <string name="chat_msn" translatable="false">Chat using Windows Live</string>
+    <string name="chat_qq" translatable="false">Chat using QQ</string>
+    <string name="chat_skype" translatable="false">Chat using Skype</string>
+    <string name="chat_yahoo" translatable="false">Chat using Yahoo</string>
+    <string name="checkbox_report_as_spam_action" translatable="false">Report call as spam</string>
+    <string name="child_number" translatable="false">via %s</string>
+    <string name="clearCallLogConfirmation" translatable="false">This will delete all calls from your history</string>
+    <string name="clearCallLogConfirmation_title" translatable="false">Clear call history?</string>
+    <string name="clearCallLogProgress_title" translatable="false">Clearing call history…</string>
+    <string name="clearFrequentsConfirmation" translatable="false">"You'll clear the frequently contacted list in the Contacts and Phone apps, and force email apps to learn your addressing preferences from scratch."</string>
+    <string name="clearFrequentsConfirmation_title" translatable="false">Clear frequently contacted?</string>
+    <string name="clearFrequentsProgress_title" translatable="false">Clearing frequently contacted…</string>
+    <string name="conference_call_name" translatable="false">Conference call</string>
+    <string name="conference_caller_disconnect_content_description" translatable="false">End call</string>
+    <string name="config_prohibited_phone_number_regexp" translatable="false" />
+    <string name="contact_grid_callback_number" translatable="false">"This phone's number: %1$s"</string>
+    <string name="contact_grid_incoming_suspected_spam" translatable="false">Suspected spam caller</string>
+    <string name="contact_grid_incoming_via_template" translatable="false">Call via %s from</string>
+    <string name="contact_grid_incoming_video_call" translatable="false">Carrier video call from</string>
+    <string name="contact_grid_incoming_voice_call" translatable="false">Call from</string>
+    <string name="contact_grid_incoming_wifi_video_call" translatable="false">Wi-Fi carrier video call from</string>
+    <string name="contact_grid_incoming_work_call" translatable="false">Work call from</string>
+    <string name="contact_menu_contact_info" translatable="false">Contact info</string>
+    <string name="contact_menu_message" translatable="false">Message</string>
+    <string name="contact_menu_remove" translatable="false">Remove</string>
+    <string name="contact_menu_video_call" translatable="false">Video Call</string>
+    <string name="contact_menu_voice_call" translatable="false">Voice Call</string>
+    <string name="content_description_overflow" translatable="false">More options</string>
+    <string name="content_description_rtt_chat_avatar" translatable="false">Avatar</string>
+    <string name="content_description_rtt_check_button" translatable="false">Go ahead</string>
+    <string name="copy_number" translatable="false">Copy number</string>
+    <string name="custom_message_hint" translatable="false">Write a custom message</string>
+    <string name="dec" translatable="false">DEC:</string>
+    <string name="default_notification_description" translatable="false">Default sound (%1$s)</string>
+    <string name="delete" translatable="false">Delete</string>
+    <string name="description_add_to_existing_contact_action" translatable="false">Add ^1 to existing contact</string>
+    <string name="description_blocked_number_list_delete" translatable="false">Unblock number</string>
+    <string name="description_call_action" translatable="false">Call ^1</string>
+    <string name="description_call_composer_camera" translatable="false">Take a picture</string>
+    <string name="description_call_composer_message" translatable="false">Send a message</string>
+    <string name="description_call_composer_photo" translatable="false">Choose a photo</string>
+    <string name="description_camera_cancel_photo" translatable="false">Retake photo</string>
+    <string name="description_camera_switch_camera_facing" translatable="false">Switch to front facing camera</string>
+    <string name="description_camera_switch_camera_rear" translatable="false">Switch to back facing camera</string>
+    <string name="description_camera_switch_full_screen" translatable="false">Switch to full screen camera</string>
+    <string name="description_camera_switch_preview_screen" translatable="false">Switch to camera preview</string>
+    <string name="description_camera_take_picture" translatable="false">Take photo</string>
+    <string name="description_clear_search" translatable="false">Clear search</string>
+    <string name="description_contact_details" translatable="false">Contact details for %1$s</string>
+    <string name="description_create_new_contact_action" translatable="false">Create contact for ^1</string>
+    <string name="description_delete_button" translatable="false">backspace</string>
+    <string name="description_details_action" translatable="false">Call details for ^1</string>
+    <string name="description_dial_button" translatable="false">dial</string>
+    <string name="description_dialpad_back" translatable="false">Navigate back</string>
+    <string name="description_dialpad_overflow" translatable="false">More options</string>
+    <string name="description_entering_bulk_action_mode" translatable="false">Entering bulk action mode</string>
+    <string name="description_image_button_plus" translatable="false">dial plus</string>
+    <string name="description_incoming_answered_call" translatable="false">Answered call from ^1, ^2, ^3, ^4.</string>
+    <string name="description_incoming_missed_call" translatable="false">Missed call from ^1, ^2, ^3, ^4.</string>
+    <string name="description_leaving_bulk_action_mode" translatable="false">Left bulk action mode</string>
+    <string name="description_num_calls" translatable="false">%1$s calls.</string>
+    <string name="description_outgoing_call" translatable="false">Call to ^1, ^2, ^3, ^4.</string>
+    <string name="description_phone_account" translatable="false">on ^1</string>
+    <string name="description_quick_contact_for" translatable="false">Quick contact for %1$s</string>
+    <string name="description_rating_bad" translatable="false">Dislike</string>
+    <string name="description_rating_good" translatable="false">Like</string>
+    <string name="description_read_voicemail" translatable="false">Voicemail from ^1, ^2, ^3, ^4.</string>
+    <string name="description_search_call_and_share" translatable="false">Share and call</string>
+    <string name="description_search_video_call" translatable="false">Video call</string>
+    <string name="description_selecting_bulk_action_mode" translatable="false">Selected %1$s</string>
+    <string name="description_spam_contact_details" translatable="false">Contact details for suspected spam caller %1$s</string>
+    <string name="description_start_voice_search" translatable="false">Start voice search</string>
+    <string name="description_unread_voicemail" translatable="false">Unread voicemail from ^1, ^2, ^3, ^4.</string>
+    <string name="description_unselecting_bulk_action_mode" translatable="false">Unselected %1$s</string>
+    <string name="description_via_number" translatable="false">via %1$s</string>
+    <string name="description_via_number_phone_account" translatable="false">on %1$s, via %2$s</string>
+    <string name="description_video_call" translatable="false">Video call.</string>
+    <string name="description_video_call_action" translatable="false">Video call ^1.</string>
+    <string name="description_view_contact_detail" translatable="false">View contact</string>
+    <string name="description_voicemail_action" translatable="false">Listen to voicemail from ^1</string>
+    <string name="description_voicemail_button" translatable="false">call voicemail</string>
+    <string name="details" translatable="false">You are calling an international number and charges may apply.</string>
+    <string name="dialer_addAnotherCall" translatable="false">Add call</string>
+    <string name="dialer_hint_find_contact" translatable="false">Search contacts</string>
+    <string name="dialer_returnToInCallScreen" translatable="false">Return to call in progress</string>
+    <string name="dialer_settings_label" translatable="false">Settings</string>
+    <string name="dialer_shortcut_contact_not_found_or_has_no_number" translatable="false">Contact no longer available.</string>
+    <string name="dialer_shortcut_disabled_message" translatable="false">Shortcut not working. Drag to remove.</string>
+    <string name="dialer_shortcut_no_permissions" translatable="false">Cannot call without permissions.</string>
+    <string name="dialer_useDtmfDialpad" translatable="false">Use touch-tone keypad</string>
+    <string name="dialog_continue" translatable="false">Continue</string>
+    <string name="dialog_phone_call_prohibited_message" translatable="false">"Can't call this number"</string>
+    <string name="dialog_voicemail_airplane_mode_message" translatable="false">To call voicemail, first turn off Airplane mode.</string>
+    <string name="dialog_voicemail_not_ready_message" translatable="false">To set up voicemail, go to Menu > Settings.</string>
+    <string name="dialpad_activity_title" translatable="false">Phone Keypad</string>
+    <string name="dialpad_button_content_description" translatable="false">key pad</string>
+    <string name="dialpad_hint_emergency_calling_not_available" translatable="false">"Can't make emergency calls over WiFi"</string>
+    <string name="dialpad_pound_number" translatable="false">\#</string>
+    <string name="dialpad_star_number" translatable="false">*</string>
+    <string name="directory" translatable="false">Directory %1$s</string>
+    <string name="directory_search_label" translatable="false">Directory</string>
+    <string name="directory_search_label_work" translatable="false">Work directory</string>
+    <string name="disambig_option_video_call" translatable="false">Video call</string>
+    <string name="disambig_option_voice_call" translatable="false">Call</string>
+    <string name="display_options_sort_by_family_name" translatable="false">Last name</string>
+    <string name="display_options_sort_by_family_name_value" translatable="false">sort_by_family_name</string>
+    <string name="display_options_sort_by_given_name" translatable="false">First name</string>
+    <string name="display_options_sort_by_given_name_value" translatable="false">sort_by_given_name</string>
+    <string name="display_options_sort_list_by" translatable="false">Sort by</string>
+    <string name="display_options_sort_list_by_key" translatable="false">android.contacts.SORT_ORDER</string>
+    <string name="display_options_title" translatable="false">Display options</string>
+    <string name="display_options_view_family_name_first" translatable="false">Last name first</string>
+    <string name="display_options_view_family_name_first_value" translatable="false">view_family_name_first</string>
+    <string name="display_options_view_given_name_first" translatable="false">First name first</string>
+    <string name="display_options_view_given_name_first_value" translatable="false">view_given_name_first</string>
+    <string name="display_options_view_names_as" translatable="false">Name format</string>
+    <string name="display_options_view_names_as_key" translatable="false">android.contacts.DISPLAY_ORDER</string>
+    <string name="do_not_show_again" translatable="false">Do not show again</string>
+    <string name="duo_disclosure_details" translatable="false">Google Duo video calling lets you chat with friends and family face-to-face. Data charges may apply. %1$s</string>
+    <string name="duo_disclosure_title" translatable="false">Make video calls with Duo</string>
+    <string name="ec_data_deleted" translatable="false">Call deleted. View and delete attachments shared during this call in Messages.</string>
+    <string name="email" translatable="false">Email</string>
+    <string name="emailLabelsGroup" translatable="false">Email</string>
+    <string name="email_custom" translatable="false">Email %s</string>
+    <string name="email_home" translatable="false">Email home</string>
+    <string name="email_mobile" translatable="false">Email mobile</string>
+    <string name="email_other" translatable="false">Email</string>
+    <string name="email_work" translatable="false">Email work</string>
+    <string name="emergency_number" translatable="false">Emergency number</string>
+    <string name="enriched_call_simulator_activity" translatable="false">Enriched Call Simulator Activity</string>
+    <string name="eventLabelsGroup" translatable="false">Special date</string>
+    <string name="fab_transformation_scrim_behavior" translatable="false">android.support.design.transformation.FabTransformationScrimBehavior</string>
+    <string name="fab_transformation_sheet_behavior" translatable="false">android.support.design.transformation.FabTransformationSheetBehavior</string>
+    <string name="favorites_header" translatable="false">Favorites</string>
+    <string name="full_name" translatable="false">Name</string>
+    <string name="gallery_item_description" translatable="false">image %1$tB %1$te %1$tY %1$tl %1$tM %1$tp</string>
+    <string name="gallery_item_description_no_date" translatable="false">image</string>
+    <string name="gallery_permission_text" translatable="false">To share an image, give access to Media</string>
+    <string name="general_learn_more" translatable="false">Learn more</string>
+    <string name="generic_conference_call_name" translatable="false">In call</string>
+    <string name="ghostData_company" translatable="false">Company</string>
+    <string name="ghostData_title" translatable="false">Title</string>
+    <string name="goPrivate" translatable="false">go private</string>
+    <string name="groupsLabel" translatable="false">Groups</string>
+    <string name="handle_restricted" translatable="false">RESTRICTED</string>
+    <string name="hex" translatable="false">HEX:</string>
+    <string name="hide_bottom_view_on_scroll_behavior" translatable="false">android.support.design.behavior.HideBottomViewOnScrollBehavior</string>
+    <string name="imLabelsGroup" translatable="false">IM</string>
+    <string name="image_sent_messages" translatable="false">Photo sent via Messages</string>
+    <string name="imei" translatable="false">IMEI</string>
+    <string name="import_send_to_voicemail_numbers_label" translatable="false">Import numbers</string>
+    <string name="important_notification_incoming_call" translatable="false">Important incoming call</string>
+    <string name="important_notification_incoming_call_attachments" translatable="false">Important incoming call with attachments</string>
+    <string name="important_notification_incoming_call_with_location" translatable="false">Important incoming call with location</string>
+    <string name="important_notification_incoming_call_with_message" translatable="false">Important incoming call with message</string>
+    <string name="important_notification_incoming_call_with_message_location" translatable="false">Important incoming call with message and location</string>
+    <string name="important_notification_incoming_call_with_photo" translatable="false">Important incoming call with photo</string>
+    <string name="important_notification_incoming_call_with_photo_location" translatable="false">Important incoming call with photo and location</string>
+    <string name="important_notification_incoming_call_with_photo_message" translatable="false">Important incoming call with photo and message</string>
+    <string name="important_notification_incoming_call_with_photo_message_location" translatable="false">Important incoming call with photo, message and location</string>
+    <string name="incall_call_ended" translatable="false">Call ended</string>
+    <string name="incall_calling_on_recent_choice_template" translatable="false">Calling on recent choice %s</string>
+    <string name="incall_calling_on_same_carrier_template" translatable="false">Calling on same carrier %s</string>
+    <string name="incall_calling_via_template" translatable="false">Calling via %s</string>
+    <string name="incall_connecting" translatable="false">Calling…</string>
+    <string name="incall_connecting_assited_dialed" translatable="false">Calling using +%1$s (%2$s)…</string>
+    <string name="incall_connecting_assited_dialed_component" translatable="false">Using +%1$s (%2$s)…</string>
+    <string name="incall_content_description_bluetooth" translatable="false">Bluetooth</string>
+    <string name="incall_content_description_earpiece" translatable="false">Handset earpiece</string>
+    <string name="incall_content_description_end_call" translatable="false">End call</string>
+    <string name="incall_content_description_headset" translatable="false">Wired headset</string>
+    <string name="incall_content_description_hold" translatable="false">Hold call</string>
+    <string name="incall_content_description_merge_calls" translatable="false">Merge calls</string>
+    <string name="incall_content_description_muted" translatable="false">Muted</string>
+    <string name="incall_content_description_speaker" translatable="false">Speaker</string>
+    <string name="incall_content_description_swap_calls" translatable="false">Swap calls</string>
+    <string name="incall_content_description_swap_sim" translatable="false">Change SIM</string>
+    <string name="incall_content_description_swap_video" translatable="false">Swap video</string>
+    <string name="incall_content_description_unhold" translatable="false">Resume call</string>
+    <string name="incall_content_description_unmuted" translatable="false">Unmuted</string>
+    <string name="incall_content_description_video_off" translatable="false">Video off</string>
+    <string name="incall_content_description_video_on" translatable="false">Video on</string>
+    <string name="incall_enable_wifi_calling_button" translatable="false">Enable</string>
+    <string name="incall_error_supp_service_unknown" translatable="false">Service not supported.</string>
+    <string name="incall_hanging_up" translatable="false">Hanging up</string>
+    <string name="incall_label_add_call" translatable="false">Add call</string>
+    <string name="incall_label_audio" translatable="false">Sound</string>
+    <string name="incall_label_dialpad" translatable="false">Keypad</string>
+    <string name="incall_label_end_call" translatable="false">End call</string>
+    <string name="incall_label_hold" translatable="false">Hold</string>
+    <string name="incall_label_manage" translatable="false">Manage</string>
+    <string name="incall_label_merge" translatable="false">Merge</string>
+    <string name="incall_label_mute" translatable="false">Mute</string>
+    <string name="incall_label_rttcall" translatable="false">RTT</string>
+    <string name="incall_label_speaker" translatable="false">Speaker</string>
+    <string name="incall_label_swap" translatable="false">Swap</string>
+    <string name="incall_label_swap_sim" translatable="false">Change SIM</string>
+    <string name="incall_label_videocall" translatable="false">Video call</string>
+    <string name="incall_note_sent" translatable="false">Note sent</string>
+    <string name="incall_on_hold" translatable="false">On hold</string>
+    <string name="incall_remotely_held" translatable="false">On hold</string>
+    <string name="incall_talkback_speaker_off" translatable="false">, is Off</string>
+    <string name="incall_talkback_speaker_on" translatable="false">, is on</string>
+    <string name="incall_transferring" translatable="false">Transferring…</string>
+    <string name="incall_video_call_request_failed" translatable="false">Unable to connect</string>
+    <string name="incall_video_call_request_rejected" translatable="false">Call declined</string>
+    <string name="incall_video_call_request_timed_out" translatable="false">Call timed out</string>
+    <string name="incall_video_call_requesting" translatable="false">Carrier video calling…</string>
+    <string name="incall_video_call_upgrade_request" translatable="false">Switching to carrier video…</string>
+    <string name="incall_wifi_video_call_requesting" translatable="false">Wi-Fi carrier video calling…</string>
+    <string name="invalidNumber" translatable="false">%1$sis invalid.</string>
+    <string name="just_now" translatable="false">Just now</string>
+    <string name="label_notes" translatable="false">Notes</string>
+    <string name="label_sip_address" translatable="false">SIP</string>
+    <string name="launcherActivityLabel" translatable="false">Phone</string>
+    <string name="launcherDialpadActivityLabel" translatable="false">Phone Keypad</string>
+    <string name="listAllContactsInAccount" translatable="false">Contacts in %s</string>
+    <string name="listCustomView" translatable="false">Contacts in custom view</string>
+    <string name="listSingleContact" translatable="false">Single contact</string>
+    <string name="list_filter_all_accounts" translatable="false">All contacts</string>
+    <string name="list_filter_phones" translatable="false">All contacts with phone numbers</string>
+    <string name="main_activity_label" translatable="false">Phone</string>
+    <string name="main_menu_call_history" translatable="false">Call history</string>
+    <string name="main_menu_clear_frequents" translatable="false">Clear frequents</string>
+    <string name="main_remove_contact" translatable="false">Remove</string>
+    <string name="make_primary" translatable="false">Remember this choice</string>
+    <string name="manageConferenceLabel" translatable="false">Manage conference call</string>
+    <string name="manage_blocked_numbers_label" translatable="false">Blocked numbers</string>
+    <string name="map_custom" translatable="false">View %s address</string>
+    <string name="map_home" translatable="false">View home address</string>
+    <string name="map_other" translatable="false">View address</string>
+    <string name="map_work" translatable="false">View work address</string>
+    <string name="meid" translatable="false">MEID</string>
+    <string name="menu_callNumber" translatable="false">Call %s</string>
+    <string name="menu_clear_frequents" translatable="false">Clear frequents</string>
+    <string name="message_composer_custom_message_hint" translatable="false">Write a custom message</string>
+    <string name="message_in_quotes" translatable="false">\"%1$s\"</string>
+    <string name="message_sent_messages" translatable="false">Message sent via Messages</string>
+    <string name="migrate_blocked_numbers_dialog_allow_button" translatable="false">Allow</string>
+    <string name="migrate_blocked_numbers_dialog_cancel_button" translatable="false">@android:string/cancel</string>
+    <string name="migrate_blocked_numbers_dialog_message" translatable="false">To better protect you, Phone needs to change how blocking works. Your blocked numbers will now stop both calls and texts and may be shared with other apps.</string>
+    <string name="migrate_blocked_numbers_dialog_title" translatable="false">New, simplified blocking</string>
+    <string name="missing_name" translatable="false">(No name)</string>
+    <string name="mtrl_chip_close_icon_content_description" translatable="false">Remove %1$s</string>
+    <string name="multiple_ec_data_deleted" translatable="false">Calls deleted. View and delete attachments shared during calls in Messages.</string>
+    <string name="nameLabelsGroup" translatable="false">Name</string>
+    <string name="name_family" translatable="false">Last name</string>
+    <string name="name_given" translatable="false">First name</string>
+    <string name="name_middle" translatable="false">Middle name</string>
+    <string name="name_phonetic" translatable="false">Phonetic name</string>
+    <string name="name_phonetic_family" translatable="false">Phonetic last name</string>
+    <string name="name_phonetic_given" translatable="false">Phonetic first name</string>
+    <string name="name_phonetic_middle" translatable="false">Phonetic middle name</string>
+    <string name="name_prefix" translatable="false">Name prefix</string>
+    <string name="name_suffix" translatable="false">Name suffix</string>
+    <string name="nearby_places_allow" translatable="false">Allow</string>
+    <string name="nearby_places_dismiss" translatable="false">Dismiss</string>
+    <string name="network_name_mobile" translatable="false">Mobile</string>
+    <string name="network_name_wifi" translatable="false">Wifi</string>
+    <string name="new_call_log_carrier_video" translatable="false">Carrier video</string>
+    <string name="new_call_log_duo_video" translatable="false">Duo video</string>
+    <string name="new_call_log_secondary_blocked" translatable="false">Blocked</string>
+    <string name="new_call_log_secondary_spam" translatable="false">Spam</string>
+    <string name="new_call_log_unknown" translatable="false">Unknown</string>
+    <string name="new_permission_no_search" translatable="false">To search your contacts, turn on the Contacts permissions.</string>
+    <string name="nicknameLabelsGroup" translatable="false">Nickname</string>
+    <string name="non_spam_notification_title" translatable="false">Know %1$s?</string>
+    <string name="not_spam" translatable="false">Not spam</string>
+    <string name="notification_action_accept" translatable="false">Accept</string>
+    <string name="notification_action_answer" translatable="false">Answer</string>
+    <string name="notification_action_answer_video" translatable="false">Video</string>
+    <string name="notification_action_dismiss" translatable="false">Decline</string>
+    <string name="notification_action_end_call" translatable="false">Hang up</string>
+    <string name="notification_action_speaker_off" translatable="false">Turn speaker off</string>
+    <string name="notification_action_speaker_on" translatable="false">Turn speaker on</string>
+    <string name="notification_call_wifi_brand" translatable="false">Wi‑Fi call</string>
+    <string name="notification_call_wifi_work_brand" translatable="false">Wi‑Fi work call</string>
+    <string name="notification_channel_incoming_call" translatable="false">Incoming calls</string>
+    <string name="notification_channel_misc" translatable="false">Default</string>
+    <string name="notification_channel_missed_call" translatable="false">Missed calls</string>
+    <string name="notification_channel_ongoing_call" translatable="false">Ongoing calls</string>
+    <string name="notification_dialing" translatable="false">Dialing</string>
+    <string name="notification_external_call" translatable="false">Ongoing call on another device</string>
+    <string name="notification_external_video_call" translatable="false">Ongoing video call on another device</string>
+    <string name="notification_incoming_call" translatable="false">Incoming call</string>
+    <string name="notification_incoming_call_attachments" translatable="false">Incoming call with attachments</string>
+    <string name="notification_incoming_call_mutli_sim" translatable="false">Incoming call via %1$s</string>
+    <string name="notification_incoming_call_wifi_template" translatable="false">Incoming %1$s</string>
+    <string name="notification_incoming_call_with_location" translatable="false">Incoming call with location</string>
+    <string name="notification_incoming_call_with_message" translatable="false">Incoming call with message</string>
+    <string name="notification_incoming_call_with_message_location" translatable="false">Incoming call with message and location</string>
+    <string name="notification_incoming_call_with_photo" translatable="false">Incoming call with photo</string>
+    <string name="notification_incoming_call_with_photo_location" translatable="false">Incoming call with photo and location</string>
+    <string name="notification_incoming_call_with_photo_message" translatable="false">Incoming call with photo and message</string>
+    <string name="notification_incoming_call_with_photo_message_location" translatable="false">Incoming call with photo, message and location</string>
+    <string name="notification_incoming_spam_call" translatable="false">Incoming suspected spam call</string>
+    <string name="notification_incoming_video_call" translatable="false">Incoming video call</string>
+    <string name="notification_incoming_work_call" translatable="false">Incoming work call</string>
+    <string name="notification_missedCallTitle" translatable="false">Missed call</string>
+    <string name="notification_missedCall_call_back" translatable="false">Call back</string>
+    <string name="notification_missedCall_message" translatable="false">Message</string>
+    <string name="notification_missedCallsMsg" translatable="false">%d missed calls</string>
+    <string name="notification_missedCallsTitle" translatable="false">Missed calls</string>
+    <string name="notification_missedWorkCallTitle" translatable="false">Missed work call</string>
+    <string name="notification_on_hold" translatable="false">On hold</string>
+    <string name="notification_ongoing_call" translatable="false">Ongoing call</string>
+    <string name="notification_ongoing_call_wifi_template" translatable="false">Ongoing %1$s</string>
+    <string name="notification_ongoing_paused_video_call" translatable="false">Ongoing video call ‑ video paused</string>
+    <string name="notification_ongoing_video_call" translatable="false">Ongoing video call</string>
+    <string name="notification_ongoing_work_call" translatable="false">Ongoing work call</string>
+    <string name="notification_requesting_video_call" translatable="false">Incoming video request</string>
+    <string name="notification_take_call" translatable="false">Take Call</string>
+    <string name="notification_take_video_call" translatable="false">Take Video Call</string>
+    <string name="nui_simulator_submenu_label" translatable="false">Simulator</string>
+    <string name="ok_got_it" translatable="false">OK, got it</string>
+    <string name="old_block_number_confirmation_title" translatable="false">Block%1$s?</string>
+    <string name="old_call_subject_type_and_number" translatable="false">%1$s %2$s</string>
+    <string name="organizationLabelsGroup" translatable="false">Organization</string>
+    <string name="outgoing_wps_warning" translatable="false">Placing a WPS call will disconnect your existing call.</string>
+    <string name="password_toggle_content_description" translatable="false">Show password</string>
+    <string name="path_password_eye" translatable="false">M12,4.5C7,4.5 2.73,7.61 1,12c1.73,4.39 6,7.5 11,7.5s9.27,-3.11 11,-7.5c-1.73,-4.39 -6,-7.5 -11,-7.5zM12,17c-2.76,0 -5,-2.24 -5,-5s2.24,-5 5,-5 5,2.24 5,5 -2.24,5 -5,5zM12,9c-1.66,0 -3,1.34 -3,3s1.34,3 3,3 3,-1.34 3,-3 -1.34,-3 -3,-3z</string>
+    <string name="path_password_eye_mask_strike_through" translatable="false">M2,4.27 L19.73,22 L22.27,19.46 L4.54,1.73 L4.54,1 L23,1 L23,23 L1,23 L1,4.27 Z</string>
+    <string name="path_password_eye_mask_visible" translatable="false">M2,4.27 L2,4.27 L4.54,1.73 L4.54,1.73 L4.54,1 L23,1 L23,23 L1,23 L1,4.27 Z</string>
+    <string name="path_password_strike_through" translatable="false">M3.27,4.27 L19.74,20.74</string>
+    <string name="pause_prompt_no" translatable="false">No</string>
+    <string name="pause_prompt_yes" translatable="false">Yes</string>
+    <string name="payphone" translatable="false">Payphone</string>
+    <string name="permission_no_calllog" translatable="false">To see your call log, turn on the Phone permission.</string>
+    <string name="permission_no_contacts" translatable="false">To see your contacts, turn on the Contacts permission.</string>
+    <string name="permission_no_speeddial" translatable="false">To enable speed dial, turn on the Contacts permission.</string>
+    <string name="permission_single_turn_on" translatable="false">Turn on</string>
+    <string name="phoneAppLabel" translatable="false">Phone</string>
+    <string name="phoneLabelsGroup" translatable="false">Phone</string>
+    <string name="phone_account_settings_label" translatable="false">Calling accounts</string>
+    <string name="post_call_add_message" translatable="false">Add message</string>
+    <string name="post_call_message" translatable="false">Say why you called</string>
+    <string name="post_call_message_1" translatable="false">This is urgent. Call me back.</string>
+    <string name="post_call_message_2" translatable="false">Call me back when you have some time.</string>
+    <string name="post_call_message_3" translatable="false">Not urgent, we can chat later.</string>
+    <string name="post_call_message_sent" translatable="false">Message sent</string>
+    <string name="post_call_notification_message" translatable="false">%1$s: %2$s</string>
+    <string name="post_call_send_message" translatable="false">Send message</string>
+    <string name="postalLabelsGroup" translatable="false">Address</string>
+    <string name="postal_address" translatable="false">Address</string>
+    <string name="postal_city" translatable="false">City</string>
+    <string name="postal_country" translatable="false">Country</string>
+    <string name="postal_postcode" translatable="false">ZIP code</string>
+    <string name="postal_region" translatable="false">State</string>
+    <string name="postal_street" translatable="false">Street</string>
+    <string name="pre_call_permission_check_no_phone_permission" translatable="false">Cannot make call without phone permission</string>
+    <string name="pre_call_select_phone_account" translatable="false">Choose SIM for this call</string>
+    <string name="pre_call_select_phone_account_hint_frequent" translatable="false">Recently used</string>
+    <string name="pre_call_select_phone_account_hint_intra_carrier" translatable="false">Uses same carrier</string>
+    <string name="pre_call_select_phone_account_hint_other_sim_in_use" translatable="false">Not available while using %1$s</string>
+    <string name="pre_call_select_phone_account_remember" translatable="false">Remember this choice</string>
+    <string name="private_num_non_verizon" translatable="false">Private number</string>
+    <string name="private_num_verizon" translatable="false">Restricted</string>
+    <string name="quick_question" translatable="false">Quick question…</string>
+    <string name="received_a_photo" translatable="false">Received a photo</string>
+    <string name="refresh" translatable="false">refresh</string>
+    <string name="relationLabelsGroup" translatable="false">Relationship</string>
+    <string name="remove_contact" translatable="false">Remove</string>
+    <string name="report_caller_id_dialog_title" translatable="false">Report incorrect number</string>
+    <string name="report_caller_id_failed" translatable="false">"Couldn't report number"</string>
+    <string name="report_caller_id_toast" translatable="false">Number reported</string>
+    <string name="report_not_spam_alert_button" translatable="false">Report</string>
+    <string name="report_not_spam_alert_details" translatable="false">Future calls from %1$s will no longer be identified as spam.</string>
+    <string name="report_not_spam_alert_title" translatable="false">Report a mistake?</string>
+    <string name="respond_via_sms_setting_title" translatable="false">Quick responses</string>
+    <string name="ringtone_silent" translatable="false">None</string>
+    <string name="ringtone_unknown" translatable="false">Unknown ringtone</string>
+    <string name="rtt_button_accept_request" translatable="false">Join RTT</string>
+    <string name="rtt_button_back" translatable="false">Back</string>
+    <string name="rtt_button_decline_request" translatable="false">No thanks</string>
+    <string name="rtt_call_not_available_toast" translatable="false">RTT not available for this call</string>
+    <string name="rtt_input_hint" translatable="false">Type a message</string>
+    <string name="rtt_promotion_details" translatable="false">RTT assists callers who are deaf, hard of hearing, have a speech disability, or need more than voice alone. RTT messaging transcripts are stored on your device in the call history. %1$s</string>
+    <string name="rtt_promotion_title" translatable="false">Real-time text messaging within a call</string>
+    <string name="rtt_request_dialog_details" translatable="false">%1$s wants to use messaging within your voice call.</string>
+    <string name="rtt_request_dialog_more_information" translatable="false">RTT assists callers who are deaf, hard of hearing, have a speech disability, or need more than voice alone.</string>
+    <string name="rtt_request_dialog_title" translatable="false">Join RTT call?</string>
+    <string name="rtt_status_banner_text" translatable="false">Waiting for %s to join RTT call…</string>
+    <string name="rtt_transcript_advisory" translatable="false">The other party can see you typing. Transcripts are stored on your device in the call history.</string>
+    <string name="rtt_transcript_link" translatable="false">See transcript</string>
+    <string name="rtt_transcript_not_available" translatable="false">Transcript available only for calls with messaging</string>
+    <string name="search_location_permission" translatable="false">To get contact information for places near you, allow access to your location.</string>
     <string name="search_menu_title">Search</string>
-    <string name="search_shortcut_add_to_contact">Add to a contact</string>
-    <string name="search_shortcut_create_new_contact">Create new contact</string>
-    <string name="search_shortcut_make_video_call">Make video call</string>
-    <string name="search_shortcut_make_voice_call">Call %1$s</string>
-    <string name="search_shortcut_send_sms_message">Send SMS</string>
-    <string name="select_account_dialog_title">Account</string>
-    <string name="select_all">Select all</string>
-    <string name="send_a_message">Message</string>
-    <string name="send_and_call">Send and call</string>
-    <string name="send_and_call_button">SEND &amp; CALL</string>
-    <string name="send_to_voicemail_import_failed">Import failed</string>
-    <string name="sent_a_photo">Sent a photo</string>
-    <string name="set_default_account">Always use this for calls</string>
-    <string name="settings">Settings</string>
-    <string name="share_and_call">Share and call</string>
-    <string name="simContacts_emptyLoading">Loading from SIM card…</string>
-    <string name="simContacts_title">SIM card contacts</string>
-    <string name="simulator_submenu_label">Simulator</string>
-    <string name="sms">Text message</string>
-    <string name="sms_assistant">Text %s</string>
-    <string name="sms_callback">Text callback</string>
-    <string name="sms_car">Text car</string>
-    <string name="sms_company_main">Text company main</string>
-    <string name="sms_custom">Text %s</string>
-    <string name="sms_disambig_title">Choose number</string>
-    <string name="sms_fax_home">Text home fax</string>
-    <string name="sms_fax_work">Text work fax</string>
-    <string name="sms_home">Text home</string>
-    <string name="sms_isdn">Text ISDN</string>
-    <string name="sms_main">Text main</string>
-    <string name="sms_mms">Text MMS</string>
-    <string name="sms_mobile">Text mobile</string>
-    <string name="sms_other">Text</string>
-    <string name="sms_other_fax">Text fax</string>
-    <string name="sms_pager">Text pager</string>
-    <string name="sms_radio">Text radio</string>
-    <string name="sms_telex">Text telex</string>
-    <string name="sms_tty_tdd">Text TTY/TDD</string>
-    <string name="sms_work">Text work</string>
-    <string name="sms_work_mobile">Text work mobile</string>
-    <string name="sms_work_pager">Text work pager</string>
-    <string name="snackbar_number_blocked">%1$s blocked</string>
-    <string name="snackbar_number_unblocked">%1$sunblocked</string>
-    <string name="snackbar_undo">UNDO</string>
-    <string name="sounds_and_vibration_title">Sounds and vibration</string>
-    <string name="spam_blocking_promo_action_dismiss">Dismiss</string>
-    <string name="spam_blocking_promo_action_filter_spam">Filter Spam</string>
-    <string name="spam_blocking_promo_text">Calls like the one you just blocked will no longer disturb you</string>
-    <string name="spam_blocking_promo_title">Filter all suspected spam calls?</string>
-    <string name="spam_blocking_setting_prompt">Settings</string>
-    <string name="spam_blocking_settings_enable_complete_text">Spam filtering turned on</string>
-    <string name="spam_blocking_settings_enable_error_text">Problem turning on spam filtering</string>
-    <string name="spam_message_text">Answer to reveal message</string>
-    <string name="spam_notification_action_dismiss">Dismiss</string>
-    <string name="spam_notification_add_contact_action_text">Add contact</string>
-    <string name="spam_notification_block_report_toast_text">%1$s blocked and call was reported as spam.</string>
-    <string name="spam_notification_block_report_toast_text_230151">%1$s blocked and call was reported as junk.</string>
-    <string name="spam_notification_block_report_toast_text_230152">%1$s blocked and call was reported as junk/spam.</string>
-    <string name="spam_notification_block_report_toast_text_230153">%1$s blocked and call was reported as unwanted.</string>
-    <string name="spam_notification_block_report_toast_text_230154">%1$s blocked and call was reported as spam/unwanted.</string>
-    <string name="spam_notification_block_report_toast_text_230155">%1$s blocked and call was reported as junk/unwanted.</string>
-    <string name="spam_notification_block_spam_action_text">Yes, block number</string>
-    <string name="spam_notification_dialog_add_contact_action_text">Add to contacts</string>
-    <string name="spam_notification_dialog_block_report_spam_action_text">Block &amp; report spam</string>
-    <string name="spam_notification_dialog_block_report_spam_action_text_230151">Block &amp; report junk</string>
-    <string name="spam_notification_dialog_block_report_spam_action_text_230152">Block &amp; report junk/spam</string>
-    <string name="spam_notification_dialog_block_report_spam_action_text_230153">Block &amp; report unwanted</string>
-    <string name="spam_notification_dialog_block_report_spam_action_text_230154">Block &amp; report spam/unwanted</string>
-    <string name="spam_notification_dialog_block_report_spam_action_text_230155">Block &amp; report junk/unwanted</string>
-    <string name="spam_notification_non_spam_call_collapsed_text">Tap to add to contacts or block spam number.</string>
-    <string name="spam_notification_non_spam_call_collapsed_text_230151">Tap to add to contacts or block junk number.</string>
-    <string name="spam_notification_non_spam_call_collapsed_text_230152">Tap to add to contacts or block junk/spam number.</string>
-    <string name="spam_notification_non_spam_call_collapsed_text_230153">Tap to add to contacts or block unwanted number.</string>
-    <string name="spam_notification_non_spam_call_collapsed_text_230154">Tap to add to contacts or block spam/unwanted number.</string>
-    <string name="spam_notification_non_spam_call_collapsed_text_230155">Tap to add to contacts or block junk/unwanted number.</string>
-    <string name="spam_notification_non_spam_call_expanded_text">This is the first time this number called you. If this call was spam, you can block this number and report it.</string>
-    <string name="spam_notification_non_spam_call_expanded_text_230151">This is the first time this number called you. If this call was junk, you can block this number and report it.</string>
-    <string name="spam_notification_non_spam_call_expanded_text_230152">This is the first time this number called you. If this call was junk/spam, you can block this number and report it.</string>
-    <string name="spam_notification_non_spam_call_expanded_text_230153">This is the first time this number called you. If this call was unwanted, you can block this number and report it.</string>
-    <string name="spam_notification_non_spam_call_expanded_text_230154">This is the first time this number called you. If this call was spam/unwanted, you can block this number and report it.</string>
-    <string name="spam_notification_non_spam_call_expanded_text_230155">This is the first time this number called you. If this call was junk/unwanted, you can block this number and report it.</string>
-    <string name="spam_notification_not_spam_toast_text">Call from %1$s reported as not spam.</string>
-    <string name="spam_notification_not_spam_toast_text_230151">Call from %1$s reported as not junk.</string>
-    <string name="spam_notification_not_spam_toast_text_230152">Call from %1$s reported as not junk/spam.</string>
-    <string name="spam_notification_not_spam_toast_text_230153">Call from %1$s reported as useful.</string>
-    <string name="spam_notification_not_spam_toast_text_230154">Call from %1$s reported as not spam/unwanted.</string>
-    <string name="spam_notification_not_spam_toast_text_230155">Call from %1$s reported as not junk/unwanted.</string>
-    <string name="spam_notification_report_spam_action_text">Block &amp; report</string>
-    <string name="spam_notification_spam_call_collapsed_text">Tap to report as not spam or block it</string>
-    <string name="spam_notification_spam_call_collapsed_text_230151">Tap to report as not junk or block it</string>
-    <string name="spam_notification_spam_call_collapsed_text_230152">Tap to report as not junk/spam or block it</string>
-    <string name="spam_notification_spam_call_collapsed_text_230153">Tap to report as useful or block it</string>
-    <string name="spam_notification_spam_call_collapsed_text_230154">Tap to report as not spam/unwanted or block it</string>
-    <string name="spam_notification_spam_call_collapsed_text_230155">Tap to report as not junk/unwanted or block it</string>
-    <string name="spam_notification_title">Was %1$s a spam caller?</string>
-    <string name="spam_notification_title_230151">Was %1$s a junk caller?</string>
-    <string name="spam_notification_title_230152">Was %1$s a junk/spam caller?</string>
-    <string name="spam_notification_title_230153">Was %1$s an unwanted caller?</string>
-    <string name="spam_notification_title_230154">Was %1$s a spam/unwanted caller?</string>
-    <string name="spam_notification_title_230155">Was %1$s a junk/unwanted caller?</string>
-    <string name="spam_notification_was_not_spam_action_text">No, not spam</string>
-    <string name="spam_notification_was_not_spam_action_text_230151">No, not junk</string>
-    <string name="spam_notification_was_not_spam_action_text_230152">No, not junk/spam</string>
-    <string name="spam_notification_was_not_spam_action_text_230153">No, not unwanted</string>
-    <string name="spam_notification_was_not_spam_action_text_230154">No, not spam/unwanted</string>
-    <string name="spam_notification_was_not_spam_action_text_230155">No, not junk/unwanted</string>
-    <string name="spam_number_call_log_label">Spam</string>
-    <string name="spam_photo_text">Answer to reveal photo</string>
-    <string name="speed_dial_add_button_text">Add</string>
-    <string name="speed_dial_contacts_permission_description">To enable speed dial, turn on the Contacts permission.</string>
-    <string name="speed_dial_disambig_dialog_title">Choose call type</string>
-    <string name="speed_dial_empty">No one is on your speed dial yet</string>
-    <string name="speed_dial_empty_add_favorite_action">Add a favorite</string>
-    <string name="speed_dial_no_contacts_action_text">Add favorite</string>
-    <string name="speed_dial_no_contacts_description">"You haven't added any favorites yet"</string>
-    <string name="speed_dial_remember_this_choice">Remember this choice</string>
-    <string name="speed_dial_remove_favorites">Remove from favorites</string>
-    <string name="speed_dial_turn_on_contacts_permission">Turn on</string>
-    <string name="status_available">Available</string>
-    <string name="status_away">Away</string>
+    <string name="search_shortcut_add_to_contact" translatable="false">Add to a contact</string>
+    <string name="search_shortcut_create_new_contact" translatable="false">Create new contact</string>
+    <string name="search_shortcut_make_video_call" translatable="false">Make video call</string>
+    <string name="search_shortcut_make_voice_call" translatable="false">Call %1$s</string>
+    <string name="search_shortcut_send_sms_message" translatable="false">Send SMS</string>
+    <string name="select_account_dialog_title" translatable="false">Account</string>
+    <string name="select_all" translatable="false">Select all</string>
+    <string name="send_a_message" translatable="false">Message</string>
+    <string name="send_and_call" translatable="false">Send and call</string>
+    <string name="send_and_call_button" translatable="false">SEND &amp; CALL</string>
+    <string name="send_to_voicemail_import_failed" translatable="false">Import failed</string>
+    <string name="sent_a_photo" translatable="false">Sent a photo</string>
+    <string name="set_default_account" translatable="false">Always use this for calls</string>
+    <string name="settings" translatable="false">Settings</string>
+    <string name="share_and_call" translatable="false">Share and call</string>
+    <string name="simContacts_emptyLoading" translatable="false">Loading from SIM card…</string>
+    <string name="simContacts_title" translatable="false">SIM card contacts</string>
+    <string name="simulator_submenu_label" translatable="false">Simulator</string>
+    <string name="sms" translatable="false">Text message</string>
+    <string name="sms_assistant" translatable="false">Text %s</string>
+    <string name="sms_callback" translatable="false">Text callback</string>
+    <string name="sms_car" translatable="false">Text car</string>
+    <string name="sms_company_main" translatable="false">Text company main</string>
+    <string name="sms_custom" translatable="false">Text %s</string>
+    <string name="sms_disambig_title" translatable="false">Choose number</string>
+    <string name="sms_fax_home" translatable="false">Text home fax</string>
+    <string name="sms_fax_work" translatable="false">Text work fax</string>
+    <string name="sms_home" translatable="false">Text home</string>
+    <string name="sms_isdn" translatable="false">Text ISDN</string>
+    <string name="sms_main" translatable="false">Text main</string>
+    <string name="sms_mms" translatable="false">Text MMS</string>
+    <string name="sms_mobile" translatable="false">Text mobile</string>
+    <string name="sms_other" translatable="false">Text</string>
+    <string name="sms_other_fax" translatable="false">Text fax</string>
+    <string name="sms_pager" translatable="false">Text pager</string>
+    <string name="sms_radio" translatable="false">Text radio</string>
+    <string name="sms_telex" translatable="false">Text telex</string>
+    <string name="sms_tty_tdd" translatable="false">Text TTY/TDD</string>
+    <string name="sms_work" translatable="false">Text work</string>
+    <string name="sms_work_mobile" translatable="false">Text work mobile</string>
+    <string name="sms_work_pager" translatable="false">Text work pager</string>
+    <string name="snackbar_number_blocked" translatable="false">%1$s blocked</string>
+    <string name="snackbar_number_unblocked" translatable="false">%1$sunblocked</string>
+    <string name="snackbar_undo" translatable="false">UNDO</string>
+    <string name="sounds_and_vibration_title" translatable="false">Sounds and vibration</string>
+    <string name="spam_blocking_promo_action_dismiss" translatable="false">Dismiss</string>
+    <string name="spam_blocking_promo_action_filter_spam" translatable="false">Filter Spam</string>
+    <string name="spam_blocking_promo_text" translatable="false">Calls like the one you just blocked will no longer disturb you</string>
+    <string name="spam_blocking_promo_title" translatable="false">Filter all suspected spam calls?</string>
+    <string name="spam_blocking_setting_prompt" translatable="false">Settings</string>
+    <string name="spam_blocking_settings_enable_complete_text" translatable="false">Spam filtering turned on</string>
+    <string name="spam_blocking_settings_enable_error_text" translatable="false">Problem turning on spam filtering</string>
+    <string name="spam_message_text" translatable="false">Answer to reveal message</string>
+    <string name="spam_notification_action_dismiss" translatable="false">Dismiss</string>
+    <string name="spam_notification_add_contact_action_text" translatable="false">Add contact</string>
+    <string name="spam_notification_block_report_toast_text" translatable="false">%1$s blocked and call was reported as spam.</string>
+    <string name="spam_notification_block_report_toast_text_230151" translatable="false">%1$s blocked and call was reported as junk.</string>
+    <string name="spam_notification_block_report_toast_text_230152" translatable="false">%1$s blocked and call was reported as junk/spam.</string>
+    <string name="spam_notification_block_report_toast_text_230153" translatable="false">%1$s blocked and call was reported as unwanted.</string>
+    <string name="spam_notification_block_report_toast_text_230154" translatable="false">%1$s blocked and call was reported as spam/unwanted.</string>
+    <string name="spam_notification_block_report_toast_text_230155" translatable="false">%1$s blocked and call was reported as junk/unwanted.</string>
+    <string name="spam_notification_block_spam_action_text" translatable="false">Yes, block number</string>
+    <string name="spam_notification_dialog_add_contact_action_text" translatable="false">Add to contacts</string>
+    <string name="spam_notification_dialog_block_report_spam_action_text" translatable="false">Block &amp; report spam</string>
+    <string name="spam_notification_dialog_block_report_spam_action_text_230151" translatable="false">Block &amp; report junk</string>
+    <string name="spam_notification_dialog_block_report_spam_action_text_230152" translatable="false">Block &amp; report junk/spam</string>
+    <string name="spam_notification_dialog_block_report_spam_action_text_230153" translatable="false">Block &amp; report unwanted</string>
+    <string name="spam_notification_dialog_block_report_spam_action_text_230154" translatable="false">Block &amp; report spam/unwanted</string>
+    <string name="spam_notification_dialog_block_report_spam_action_text_230155" translatable="false">Block &amp; report junk/unwanted</string>
+    <string name="spam_notification_non_spam_call_collapsed_text" translatable="false">Tap to add to contacts or block spam number.</string>
+    <string name="spam_notification_non_spam_call_collapsed_text_230151" translatable="false">Tap to add to contacts or block junk number.</string>
+    <string name="spam_notification_non_spam_call_collapsed_text_230152" translatable="false">Tap to add to contacts or block junk/spam number.</string>
+    <string name="spam_notification_non_spam_call_collapsed_text_230153" translatable="false">Tap to add to contacts or block unwanted number.</string>
+    <string name="spam_notification_non_spam_call_collapsed_text_230154" translatable="false">Tap to add to contacts or block spam/unwanted number.</string>
+    <string name="spam_notification_non_spam_call_collapsed_text_230155" translatable="false">Tap to add to contacts or block junk/unwanted number.</string>
+    <string name="spam_notification_non_spam_call_expanded_text" translatable="false">This is the first time this number called you. If this call was spam, you can block this number and report it.</string>
+    <string name="spam_notification_non_spam_call_expanded_text_230151" translatable="false">This is the first time this number called you. If this call was junk, you can block this number and report it.</string>
+    <string name="spam_notification_non_spam_call_expanded_text_230152" translatable="false">This is the first time this number called you. If this call was junk/spam, you can block this number and report it.</string>
+    <string name="spam_notification_non_spam_call_expanded_text_230153" translatable="false">This is the first time this number called you. If this call was unwanted, you can block this number and report it.</string>
+    <string name="spam_notification_non_spam_call_expanded_text_230154" translatable="false">This is the first time this number called you. If this call was spam/unwanted, you can block this number and report it.</string>
+    <string name="spam_notification_non_spam_call_expanded_text_230155" translatable="false">This is the first time this number called you. If this call was junk/unwanted, you can block this number and report it.</string>
+    <string name="spam_notification_not_spam_toast_text" translatable="false">Call from %1$s reported as not spam.</string>
+    <string name="spam_notification_not_spam_toast_text_230151" translatable="false">Call from %1$s reported as not junk.</string>
+    <string name="spam_notification_not_spam_toast_text_230152" translatable="false">Call from %1$s reported as not junk/spam.</string>
+    <string name="spam_notification_not_spam_toast_text_230153" translatable="false">Call from %1$s reported as useful.</string>
+    <string name="spam_notification_not_spam_toast_text_230154" translatable="false">Call from %1$s reported as not spam/unwanted.</string>
+    <string name="spam_notification_not_spam_toast_text_230155" translatable="false">Call from %1$s reported as not junk/unwanted.</string>
+    <string name="spam_notification_report_spam_action_text" translatable="false">Block &amp; report</string>
+    <string name="spam_notification_spam_call_collapsed_text" translatable="false">Tap to report as not spam or block it</string>
+    <string name="spam_notification_spam_call_collapsed_text_230151" translatable="false">Tap to report as not junk or block it</string>
+    <string name="spam_notification_spam_call_collapsed_text_230152" translatable="false">Tap to report as not junk/spam or block it</string>
+    <string name="spam_notification_spam_call_collapsed_text_230153" translatable="false">Tap to report as useful or block it</string>
+    <string name="spam_notification_spam_call_collapsed_text_230154" translatable="false">Tap to report as not spam/unwanted or block it</string>
+    <string name="spam_notification_spam_call_collapsed_text_230155" translatable="false">Tap to report as not junk/unwanted or block it</string>
+    <string name="spam_notification_title" translatable="false">Was %1$s a spam caller?</string>
+    <string name="spam_notification_title_230151" translatable="false">Was %1$s a junk caller?</string>
+    <string name="spam_notification_title_230152" translatable="false">Was %1$s a junk/spam caller?</string>
+    <string name="spam_notification_title_230153" translatable="false">Was %1$s an unwanted caller?</string>
+    <string name="spam_notification_title_230154" translatable="false">Was %1$s a spam/unwanted caller?</string>
+    <string name="spam_notification_title_230155" translatable="false">Was %1$s a junk/unwanted caller?</string>
+    <string name="spam_notification_was_not_spam_action_text" translatable="false">No, not spam</string>
+    <string name="spam_notification_was_not_spam_action_text_230151" translatable="false">No, not junk</string>
+    <string name="spam_notification_was_not_spam_action_text_230152" translatable="false">No, not junk/spam</string>
+    <string name="spam_notification_was_not_spam_action_text_230153" translatable="false">No, not unwanted</string>
+    <string name="spam_notification_was_not_spam_action_text_230154" translatable="false">No, not spam/unwanted</string>
+    <string name="spam_notification_was_not_spam_action_text_230155" translatable="false">No, not junk/unwanted</string>
+    <string name="spam_number_call_log_label" translatable="false">Spam</string>
+    <string name="spam_photo_text" translatable="false">Answer to reveal photo</string>
+    <string name="speed_dial_add_button_text" translatable="false">Add</string>
+    <string name="speed_dial_contacts_permission_description" translatable="false">To enable speed dial, turn on the Contacts permission.</string>
+    <string name="speed_dial_disambig_dialog_title" translatable="false">Choose call type</string>
+    <string name="speed_dial_empty" translatable="false">No one is on your speed dial yet</string>
+    <string name="speed_dial_empty_add_favorite_action" translatable="false">Add a favorite</string>
+    <string name="speed_dial_no_contacts_action_text" translatable="false">Add favorite</string>
+    <string name="speed_dial_no_contacts_description" translatable="false">"You haven't added any favorites yet"</string>
+    <string name="speed_dial_remember_this_choice" translatable="false">Remember this choice</string>
+    <string name="speed_dial_remove_favorites" translatable="false">Remove from favorites</string>
+    <string name="speed_dial_turn_on_contacts_permission" translatable="false">Turn on</string>
+    <string name="status_available" translatable="false">Available</string>
+    <string name="status_away" translatable="false">Away</string>
     <string name="status_bar_notification_info_overflow">999+</string>
-    <string name="status_busy">Busy</string>
-    <string name="suggested_contact_bottom_sheet_add_favorite_option">Add favorite</string>
-    <string name="suggestions_header">Frequents</string>
-    <string name="tab_all_contacts">Contacts</string>
-    <string name="tab_history">Call History</string>
-    <string name="tab_speed_dial">Speed dial</string>
-    <string name="tab_title">%1$s tab.</string>
-    <string name="tab_title_call_history">Recents</string>
-    <string name="tab_title_contacts">Contacts</string>
-    <string name="tab_title_speed_dial">Favorites</string>
-    <string name="toast_cannot_write_system_settings">Phone app does not have permission to write to system settings.</string>
-    <string name="toast_text_copied">Text copied</string>
-    <string name="toolbar_close">Close</string>
-    <string name="type_answered_elsewhere">Call answered on another device</string>
-    <string name="type_blocked">Blocked call</string>
-    <string name="type_incoming">Incoming call</string>
-    <string name="type_incoming_pulled">Incoming call transferred to another device</string>
-    <string name="type_incoming_video">Incoming video call</string>
-    <string name="type_incoming_video_pulled">Incoming video call transferred to another device</string>
-    <string name="type_missed">Missed call</string>
-    <string name="type_missed_video">Missed video call</string>
-    <string name="type_outgoing">Outgoing call</string>
-    <string name="type_outgoing_pulled">Outgoing call transferred to another device</string>
-    <string name="type_outgoing_video">Outgoing video call</string>
-    <string name="type_outgoing_video_pulled">Outgoing video call transferred to another device</string>
-    <string name="type_rejected">Declined call</string>
-    <string name="type_voicemail">Voicemail</string>
-    <string name="unblock_number">Unblock</string>
-    <string name="unblock_number_alert_details">"This number will be unblocked and reported as not spam. Future calls won't be identified as spam."</string>
-    <string name="unblock_number_confirmation_title">Unblock%1$s?</string>
-    <string name="unblock_number_failed_toast">Problem unblocking this number</string>
-    <string name="unblock_number_ok">UNBLOCK</string>
-    <string name="unblock_report_number_alert_title">Unblock %1$s?</string>
-    <string name="unknown">Unknown</string>
-    <string name="unknown_counter">%1$s %2$d</string>
-    <string name="urgent">Urgent! Please pick up!</string>
-    <string name="video_call">Video call</string>
-    <string name="video_call_lte_to_wifi_failed_do_not_show">Do not show this again</string>
-    <string name="video_call_lte_to_wifi_failed_message">Video call will remain on the mobile network. Standard data charges may apply.</string>
-    <string name="video_call_lte_to_wifi_failed_title">"Couldn't switch to Wi‑Fi network"</string>
-    <string name="video_call_lte_to_wifi_handover_toast">Continuing call using Wi‑Fi…</string>
-    <string name="video_call_not_available_message">Try calling again later or continue the call as a voice call.</string>
-    <string name="video_call_not_available_title">Video calling is currently not available</string>
-    <string name="video_call_wifi_to_lte_handover_toast">Continuing call using mobile data…</string>
-    <string name="videocall_charges_alert_dialog_description">Video calls made over the mobile network use both data and voice minutes. Charges may apply.</string>
-    <string name="videocall_remote_video_off">Their video is off</string>
-    <string name="videocall_remote_video_on">Their video is on</string>
-    <string name="videocall_remotely_held">Call on hold</string>
-    <string name="videocall_remotely_resumed">Call resumed</string>
-    <string name="view">View</string>
-    <string name="view_conversation">View</string>
-    <string name="view_updates_from_group">View updates</string>
-    <string name="voice_call">Voice call</string>
-    <string name="voice_search_not_available">Voice search not available</string>
-    <string name="voicemailMultiSelectActionBarTitle">%1$s selected</string>
-    <string name="voicemail_string">Voicemail</string>
-    <string name="voicemail_transcription_rating">Rate transcription quality</string>
-    <string name="wait_prompt_str">"Send the following tones?
+    <string name="status_busy" translatable="false">Busy</string>
+    <string name="suggested_contact_bottom_sheet_add_favorite_option" translatable="false">Add favorite</string>
+    <string name="suggestions_header" translatable="false">Frequents</string>
+    <string name="tab_all_contacts" translatable="false">Contacts</string>
+    <string name="tab_history" translatable="false">Call History</string>
+    <string name="tab_speed_dial" translatable="false">Speed dial</string>
+    <string name="tab_title" translatable="false">%1$s tab.</string>
+    <string name="tab_title_call_history" translatable="false">Recents</string>
+    <string name="tab_title_contacts" translatable="false">Contacts</string>
+    <string name="tab_title_speed_dial" translatable="false">Favorites</string>
+    <string name="toast_cannot_write_system_settings" translatable="false">Phone app does not have permission to write to system settings.</string>
+    <string name="toast_text_copied" translatable="false">Text copied</string>
+    <string name="toolbar_close" translatable="false">Close</string>
+    <string name="type_answered_elsewhere" translatable="false">Call answered on another device</string>
+    <string name="type_blocked" translatable="false">Blocked call</string>
+    <string name="type_incoming" translatable="false">Incoming call</string>
+    <string name="type_incoming_pulled" translatable="false">Incoming call transferred to another device</string>
+    <string name="type_incoming_video" translatable="false">Incoming video call</string>
+    <string name="type_incoming_video_pulled" translatable="false">Incoming video call transferred to another device</string>
+    <string name="type_missed" translatable="false">Missed call</string>
+    <string name="type_missed_video" translatable="false">Missed video call</string>
+    <string name="type_outgoing" translatable="false">Outgoing call</string>
+    <string name="type_outgoing_pulled" translatable="false">Outgoing call transferred to another device</string>
+    <string name="type_outgoing_video" translatable="false">Outgoing video call</string>
+    <string name="type_outgoing_video_pulled" translatable="false">Outgoing video call transferred to another device</string>
+    <string name="type_rejected" translatable="false">Declined call</string>
+    <string name="type_voicemail" translatable="false">Voicemail</string>
+    <string name="unblock_number" translatable="false">Unblock</string>
+    <string name="unblock_number_alert_details" translatable="false">"This number will be unblocked and reported as not spam. Future calls won't be identified as spam."</string>
+    <string name="unblock_number_confirmation_title" translatable="false">Unblock%1$s?</string>
+    <string name="unblock_number_failed_toast" translatable="false">Problem unblocking this number</string>
+    <string name="unblock_number_ok" translatable="false">UNBLOCK</string>
+    <string name="unblock_report_number_alert_title" translatable="false">Unblock %1$s?</string>
+    <string name="unknown" translatable="false">Unknown</string>
+    <string name="unknown_counter" translatable="false">%1$s %2$d</string>
+    <string name="urgent" translatable="false">Urgent! Please pick up!</string>
+    <string name="video_call" translatable="false">Video call</string>
+    <string name="video_call_lte_to_wifi_failed_do_not_show" translatable="false">Do not show this again</string>
+    <string name="video_call_lte_to_wifi_failed_message" translatable="false">Video call will remain on the mobile network. Standard data charges may apply.</string>
+    <string name="video_call_lte_to_wifi_failed_title" translatable="false">"Couldn't switch to Wi‑Fi network"</string>
+    <string name="video_call_lte_to_wifi_handover_toast" translatable="false">Continuing call using Wi‑Fi…</string>
+    <string name="video_call_not_available_message" translatable="false">Try calling again later or continue the call as a voice call.</string>
+    <string name="video_call_not_available_title" translatable="false">Video calling is currently not available</string>
+    <string name="video_call_wifi_to_lte_handover_toast" translatable="false">Continuing call using mobile data…</string>
+    <string name="videocall_charges_alert_dialog_description" translatable="false">Video calls made over the mobile network use both data and voice minutes. Charges may apply.</string>
+    <string name="videocall_remote_video_off" translatable="false">Their video is off</string>
+    <string name="videocall_remote_video_on" translatable="false">Their video is on</string>
+    <string name="videocall_remotely_held" translatable="false">Call on hold</string>
+    <string name="videocall_remotely_resumed" translatable="false">Call resumed</string>
+    <string name="view" translatable="false">View</string>
+    <string name="view_conversation" translatable="false">View</string>
+    <string name="view_updates_from_group" translatable="false">View updates</string>
+    <string name="voice_call" translatable="false">Voice call</string>
+    <string name="voice_search_not_available" translatable="false">Voice search not available</string>
+    <string name="voicemailMultiSelectActionBarTitle" translatable="false">%1$s selected</string>
+    <string name="voicemail_string" translatable="false">Voicemail</string>
+    <string name="voicemail_transcription_rating" translatable="false">Rate transcription quality</string>
+    <string name="wait_prompt_str" translatable="false">"Send the following tones?
 "</string>
-    <string name="want_to_chat">Want to chat?</string>
-    <string name="websiteLabelsGroup">Website</string>
+    <string name="want_to_chat" translatable="false">Want to chat?</string>
+    <string name="websiteLabelsGroup" translatable="false">Website</string>
 </resources>

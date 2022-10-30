@@ -16,13 +16,10 @@
 
 package com.fissy.dialer.phonenumbercache;
 
-import android.os.Build.VERSION;
-import android.os.Build.VERSION_CODES;
 import android.provider.CallLog;
 import android.provider.CallLog.Calls;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 
 import java.util.ArrayList;
 import java.util.Arrays;

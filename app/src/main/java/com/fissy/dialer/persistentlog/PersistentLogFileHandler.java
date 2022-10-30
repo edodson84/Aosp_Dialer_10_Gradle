@@ -18,7 +18,6 @@ package com.fissy.dialer.persistentlog;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
 import androidx.annotation.AnyThread;
 import androidx.annotation.MainThread;
@@ -26,6 +25,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
 import androidx.core.os.UserManagerCompat;
+import androidx.preference.PreferenceManager;
 
 import com.fissy.dialer.common.LogUtil;
 

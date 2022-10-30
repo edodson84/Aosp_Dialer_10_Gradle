@@ -20,12 +20,12 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
-import androidx.exifinterface.media.ExifInterface;
 import android.net.Uri;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.util.Pair;
+import androidx.exifinterface.media.ExifInterface;
 
 import com.fissy.dialer.callcomposer.util.BitmapResizer;
 import com.fissy.dialer.common.Assert;

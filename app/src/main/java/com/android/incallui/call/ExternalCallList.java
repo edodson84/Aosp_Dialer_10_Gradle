@@ -84,16 +84,7 @@ public class ExternalCallList {
                     "attempt to remove unregistered listener.");
         }
         externalCallListeners.remove(listener);
-    }    /**
-     * Handles {@link android.telecom.Call.Callback} callbacks.
-     */
-    private final Call.Callback telecomCallCallback =
-            new Call.Callback() {
-                @Override
-                public void onDetailsChanged(Call call, Call.Details details) {
-                    notifyExternalCallUpdated(call);
-                }
-            };
+    }
 
     public boolean isCallTracked(@NonNull android.telecom.Call telecomCall) {
         return externalCalls.contains(telecomCall);
@@ -106,7 +97,16 @@ public class ExternalCallList {
         for (ExternalCallListener listener : externalCallListeners) {
             listener.onExternalCallAdded(call);
         }
-    }
+    }    /**
+     * Handles {@link android.telecom.Call.Callback} callbacks.
+     */
+    private final Call.Callback telecomCallCallback =
+            new Call.Callback() {
+                @Override
+                public void onDetailsChanged(Call call, Call.Details details) {
+                    notifyExternalCallUpdated(call);
+                }
+            };
 
     /**
      * Notifies listeners of the removal of an external call.

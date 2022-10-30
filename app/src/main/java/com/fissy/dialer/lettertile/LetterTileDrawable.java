@@ -315,9 +315,8 @@ public class LetterTileDrawable extends Drawable {
      * @param scale The ratio the letter tile should be scaled to as a percentage of its default size,
      *              from a scale of 0 to 2.0f. The default is 1.0f.
      */
-    public LetterTileDrawable setScale(float scale) {
+    public void setScale(float scale) {
         this.scale = scale;
-        return this;
     }
 
     /**
@@ -330,10 +329,9 @@ public class LetterTileDrawable extends Drawable {
      *               the canvas it is being drawn on, which means it will be drawn with the center of the letter
      *               starting at the bottom edge of the canvas. The default is 0.0f.
      */
-    public LetterTileDrawable setOffset(float offset) {
+    public void setOffset(float offset) {
         Assert.checkArgument(offset >= -0.5f && offset <= 0.5f);
         this.offset = offset;
-        return this;
     }
 
     public Character getLetter() {
@@ -345,7 +343,7 @@ public class LetterTileDrawable extends Drawable {
         return this;
     }
 
-    private LetterTileDrawable setLetterAndColorFromContactDetails(
+    private void setLetterAndColorFromContactDetails(
             final String displayName, final String identifier) {
         if (!TextUtils.isEmpty(displayName) && isEnglishLetter(displayName.charAt(0))) {
             letter = Character.toUpperCase(displayName.charAt(0));
@@ -353,7 +351,6 @@ public class LetterTileDrawable extends Drawable {
             letter = null;
         }
         color = pickColor(identifier);
-        return this;
     }
 
     @ContactType
@@ -361,14 +358,12 @@ public class LetterTileDrawable extends Drawable {
         return this.contactType;
     }
 
-    private LetterTileDrawable setContactType(@ContactType int contactType) {
+    private void setContactType(@ContactType int contactType) {
         this.contactType = contactType;
-        return this;
     }
 
-    public LetterTileDrawable setIsCircular(boolean isCircle) {
+    public void setIsCircular(boolean isCircle) {
         this.isCircle = isCircle;
-        return this;
     }
 
     public boolean tileIsCircular() {
@@ -383,9 +378,8 @@ public class LetterTileDrawable extends Drawable {
      * @param identifierForTileColor The string used to produce the tile color.
      * @param shape                  The shape of the tile.
      * @param contactType            The type of contact, e.g. TYPE_VOICEMAIL.
-     * @return this
      */
-    public LetterTileDrawable setCanonicalDialerLetterTileDetails(
+    public void setCanonicalDialerLetterTileDetails(
             @Nullable final String displayName,
             @Nullable final String identifierForTileColor,
             @Shape final int shape,
@@ -396,7 +390,7 @@ public class LetterTileDrawable extends Drawable {
         if (contactType == TYPE_DEFAULT
                 && ((displayName == null && identifierForTileColor == null)
                 || (displayName != null && displayName.equals(this.displayName)))) {
-            return this;
+            return;
         }
 
         this.displayName = displayName;
@@ -412,7 +406,6 @@ public class LetterTileDrawable extends Drawable {
                 this.setLetterAndColorFromContactDetails(displayName, displayName);
             }
         }
-        return this;
     }
 
     /**

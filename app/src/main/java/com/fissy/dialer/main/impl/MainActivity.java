@@ -16,23 +16,22 @@
 
 package com.fissy.dialer.main.impl;
 
-import android.Manifest;
+import static com.fissy.dialer.app.settings.DialerSettingsActivity.PrefsFragment.getThemeButtonBehavior;
+
 import android.app.Activity;
 import android.app.role.RoleManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Build;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.telecom.TelecomManager;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.fissy.dialer.R;
+import com.fissy.dialer.app.settings.DialerSettingsActivity;
 import com.fissy.dialer.blockreportspam.ShowBlockReportSpamDialogReceiver;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
@@ -41,14 +40,9 @@ import com.fissy.dialer.interactions.PhoneNumberInteraction.DisambigDialogDismis
 import com.fissy.dialer.interactions.PhoneNumberInteraction.InteractionErrorCode;
 import com.fissy.dialer.interactions.PhoneNumberInteraction.InteractionErrorListener;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
-/**
- * This is the main activity for dialer. It hosts favorites, call log, search, dialpad, etc...
- */
-// TODO(calderwoodra): Do not extend TransactionSafeActivity after new SpeedDial is launched
+
 public class MainActivity extends AppCompatActivity
         implements com.fissy.dialer.main.MainActivityPeer.PeerSupplier,
         // TODO(calderwoodra): remove these 2 interfaces when we migrate to new speed dial fragment
@@ -56,7 +50,7 @@ public class MainActivity extends AppCompatActivity
         DisambigDialogDismissedListener {
 
 
-
+    public static Activity main;
     private com.fissy.dialer.main.MainActivityPeer activePeer;
     /**
      * {@link android.content.BroadcastReceiver} that shows a dialog to block a number and/or report
@@ -79,9 +73,20 @@ public class MainActivity extends AppCompatActivity
                 .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     }
 
-    public static Activity main;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences themeprefs = DialerSettingsActivity.PrefsFragment.getSharedPreferences(this);
+        DialerSettingsActivity.PrefsFragment.ThemeButtonBehavior mThemeBehavior = getThemeButtonBehavior(themeprefs);
+
+        if (mThemeBehavior == DialerSettingsActivity.PrefsFragment.ThemeButtonBehavior.DARK) {
+            LogUtil.enterBlock("MainActivity.dark");
+            this.getTheme().applyStyle(R.style.MainActivityThemeDark, true);
+        }
+        if (mThemeBehavior == DialerSettingsActivity.PrefsFragment.ThemeButtonBehavior.LIGHT) {
+            LogUtil.enterBlock("MainActivity.light");
+            this.getTheme().applyStyle(R.style.MainActivityThemeLight, true);
+        }
+
         super.onCreate(savedInstanceState);
         main = this;
         LogUtil.enterBlock("MainActivity.onCreate");
@@ -93,13 +98,13 @@ public class MainActivity extends AppCompatActivity
                 new ShowBlockReportSpamDialogReceiver(getSupportFragmentManager());
         setdialer();
     }
-// function to set default dialer
-    private void setdialer(){
+
+    // function to set default dialer
+    private void setdialer() {
         TelecomManager manager = (TelecomManager) getSystemService(Context.TELECOM_SERVICE);
-        if(Objects.equals(manager.getDefaultDialerPackage(), getPackageName())){
+        if (Objects.equals(manager.getDefaultDialerPackage(), getPackageName())) {
             LogUtil.enterBlock("App Already Default Dialer");
-        }
-        else{
+        } else {
             launchSetDefaultDialerIntent();
         }
     }
@@ -170,7 +175,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-            activePeer.onActivityResult(requestCode, resultCode, data);
+        activePeer.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

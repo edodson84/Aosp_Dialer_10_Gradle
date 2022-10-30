@@ -4,8 +4,6 @@
 package com.fissy.dialer.rtt;
 
 public final class RttTranscriptOuterClass {
-    static {
-    }
 
     private RttTranscriptOuterClass() {
     }

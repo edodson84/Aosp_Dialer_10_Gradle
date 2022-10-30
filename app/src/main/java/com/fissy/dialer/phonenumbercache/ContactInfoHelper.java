@@ -248,7 +248,7 @@ public class ContactInfoHelper {
     private ContactInfo createEmptyContactInfoForNumber(String number, String countryIso) {
         ContactInfo contactInfo = new ContactInfo();
         contactInfo.number = number;
-        contactInfo.formattedNumber = formatPhoneNumber(number, null, countryIso);
+        contactInfo.formattedNumber = formatPhoneNumber(number, countryIso);
         contactInfo.normalizedNumber = PhoneNumberUtils.formatNumberToE164(number, countryIso);
         contactInfo.lookupUri = createTemporaryContactUri(contactInfo.formattedNumber);
         return contactInfo;
@@ -413,7 +413,7 @@ public class ContactInfoHelper {
             LogUtil.d("ContactInfoHelper.queryContactInfoForPhoneNumber", "info looked up is null");
         }
         if (info != null && info != ContactInfo.EMPTY) {
-            info.formattedNumber = formatPhoneNumber(number, null, countryIso);
+            info.formattedNumber = formatPhoneNumber(number, countryIso);
             if (directoryId == -1) {
                 // Contact found in the default directory
                 info.sourceType = ContactSource.Type.SOURCE_TYPE_DIRECTORY;
@@ -438,13 +438,12 @@ public class ContactInfoHelper {
     /**
      * Format the given phone number
      *
-     * @param number           the number to be formatted.
-     * @param normalizedNumber the normalized number of the given number.
-     * @param countryIso       the ISO 3166-1 two letters country code, the country's convention will be
-     *                         used to format the number if the normalized phone is null.
+     * @param number     the number to be formatted.
+     * @param countryIso the ISO 3166-1 two letters country code, the country's convention will be
+     *                   used to format the number if the normalized phone is null.
      * @return the formatted number, or the given number if it was formatted.
      */
-    private String formatPhoneNumber(String number, String normalizedNumber, String countryIso) {
+    private String formatPhoneNumber(String number, String countryIso) {
         if (TextUtils.isEmpty(number)) {
             return "";
         }
@@ -455,7 +454,7 @@ public class ContactInfoHelper {
         if (TextUtils.isEmpty(countryIso)) {
             countryIso = currentCountryIso;
         }
-        return PhoneNumberHelper.formatNumber(context, number, normalizedNumber, countryIso);
+        return PhoneNumberHelper.formatNumber(context, number, null, countryIso);
     }
 
     /**

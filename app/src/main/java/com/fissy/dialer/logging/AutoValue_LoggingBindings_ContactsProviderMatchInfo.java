@@ -122,9 +122,8 @@ final class AutoValue_LoggingBindings_ContactsProviderMatchInfo extends LoggingB
         }
 
         @Override
-        public LoggingBindings.ContactsProviderMatchInfo.Builder setInputNumberValid(boolean inputNumberValid) {
+        public void setInputNumberValid(boolean inputNumberValid) {
             this.inputNumberValid = inputNumberValid;
-            return this;
         }
 
         @Override

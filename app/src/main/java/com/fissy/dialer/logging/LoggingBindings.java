@@ -155,7 +155,7 @@ public interface LoggingBindings {
         public abstract static class Builder {
             public abstract Builder setMatchedContact(boolean value);
 
-            public abstract Builder setInputNumberValid(boolean value);
+            public abstract void setInputNumberValid(boolean value);
 
             public abstract Builder setInputNumberLength(int value);
 

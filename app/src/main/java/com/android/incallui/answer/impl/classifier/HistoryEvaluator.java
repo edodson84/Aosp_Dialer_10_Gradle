@@ -106,7 +106,7 @@ class HistoryEvaluator {
      * to 1.0
      */
     private static class Data {
-        public float evaluation;
+        public final float evaluation;
         public float weight;
 
         public Data(float evaluation) {

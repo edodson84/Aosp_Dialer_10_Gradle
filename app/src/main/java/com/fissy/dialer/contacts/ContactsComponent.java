@@ -19,7 +19,6 @@ package com.fissy.dialer.contacts;
 import android.content.Context;
 
 import com.fissy.dialer.contacts.displaypreference.ContactDisplayPreferences;
-import com.fissy.dialer.contacts.hiresphoto.HighResolutionPhotoRequester;
 import com.fissy.dialer.inject.HasRootComponent;
 import com.fissy.dialer.inject.IncludeInDialerRoot;
 
@@ -38,7 +37,7 @@ public abstract class ContactsComponent {
 
     public abstract ContactDisplayPreferences contactDisplayPreferences();
 
-    public abstract HighResolutionPhotoRequester highResolutionPhotoLoader();
+    public abstract void highResolutionPhotoLoader();
 
     /**
      * Used to refer to the root application component.

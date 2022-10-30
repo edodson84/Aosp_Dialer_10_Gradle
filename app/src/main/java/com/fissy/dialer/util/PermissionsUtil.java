@@ -18,18 +18,14 @@ package com.fissy.dialer.util;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
-import static android.Manifest.permission.ADD_VOICEMAIL;
 import static android.Manifest.permission.CALL_PHONE;
 import static android.Manifest.permission.MODIFY_PHONE_STATE;
-import static android.Manifest.permission.NEARBY_WIFI_DEVICES;
 import static android.Manifest.permission.READ_CALL_LOG;
 import static android.Manifest.permission.READ_CONTACTS;
 import static android.Manifest.permission.READ_PHONE_STATE;
-import static android.Manifest.permission.READ_VOICEMAIL;
 import static android.Manifest.permission.SEND_SMS;
 import static android.Manifest.permission.WRITE_CALL_LOG;
 import static android.Manifest.permission.WRITE_CONTACTS;
-import static android.Manifest.permission.WRITE_VOICEMAIL;
 
 import android.Manifest.permission;
 import android.content.BroadcastReceiver;

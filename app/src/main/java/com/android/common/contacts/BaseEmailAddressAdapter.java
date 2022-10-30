@@ -94,10 +94,10 @@ public abstract class BaseEmailAddressAdapter extends CompositeCursorAdapter imp
      */
     private static final String SEARCHING_CURSOR_MARKER = "searching";
     protected final ContentResolver mContentResolver;
-    private boolean mDirectoriesLoaded;
-    private Account mAccount;
     private final int mPreferredMaxResultCount;
     private final Handler mHandler;
+    private boolean mDirectoriesLoaded;
+    private Account mAccount;
 
     public BaseEmailAddressAdapter(Context context) {
         this(context, DEFAULT_PREFERRED_MAX_RESULT_COUNT);
@@ -442,7 +442,6 @@ public abstract class BaseEmailAddressAdapter extends CompositeCursorAdapter imp
             return new Rfc822Token(displayName, emailAddress, null).toString();
         }
     }
-
 
 
     public final static class DirectoryPartition extends CompositeCursorAdapter.Partition {

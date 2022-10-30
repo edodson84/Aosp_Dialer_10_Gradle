@@ -4,8 +4,6 @@
 package com.fissy.dialer.glidephotomanager;
 
 public final class PhotoInfoOuterClass {
-    static {
-    }
 
     private PhotoInfoOuterClass() {
     }

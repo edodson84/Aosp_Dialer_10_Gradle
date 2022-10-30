@@ -23,8 +23,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build.VERSION;
-import android.os.Build.VERSION_CODES;
 import android.provider.CallLog.Calls;
 import android.telecom.PhoneAccount;
 import android.telecom.PhoneAccountHandle;

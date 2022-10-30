@@ -23,7 +23,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.provider.CallLog.Calls;
 import android.provider.VoicemailContract.Voicemails;
 import android.telephony.PhoneNumberUtils;

@@ -82,15 +82,15 @@ class CountedDataInputStream extends FilterInputStream {
         skipOrThrow(diff);
     }
 
-    private void readOrThrow(byte[] b, int off, int len) throws IOException {
-        int r = read(b, off, len);
+    private void readOrThrow(byte[] b, int len) throws IOException {
+        int r = read(b, 0, len);
         if (r != len) {
             throw new EOFException();
         }
     }
 
     private void readOrThrow(byte[] b) throws IOException {
-        readOrThrow(b, 0, b.length);
+        readOrThrow(b, b.length);
     }
 
     ByteOrder getByteOrder() {
@@ -102,7 +102,7 @@ class CountedDataInputStream extends FilterInputStream {
     }
 
     short readShort() throws IOException {
-        readOrThrow(byteArray, 0, 2);
+        readOrThrow(byteArray, 2);
         byteBuffer.rewind();
         return byteBuffer.getShort();
     }
@@ -112,7 +112,7 @@ class CountedDataInputStream extends FilterInputStream {
     }
 
     int readInt() throws IOException {
-        readOrThrow(byteArray, 0, 4);
+        readOrThrow(byteArray, 4);
         byteBuffer.rewind();
         return byteBuffer.getInt();
     }

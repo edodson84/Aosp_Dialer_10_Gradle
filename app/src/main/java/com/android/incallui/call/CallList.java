@@ -169,7 +169,7 @@ public class CallList implements DialerCallDelegate {
                         }
 
                         @Override
-                        public void onFailure( @NonNull Throwable t) {
+                        public void onFailure(@NonNull Throwable t) {
                             LogUtil.e("CallList.onFailure", "unable to query spam status", t);
                         }
                     },
@@ -226,22 +226,7 @@ public class CallList implements DialerCallDelegate {
         }
 
         Trace.endSection();
-    }    /**
-     * Handles the timeout for destroying disconnected calls.
-     */
-    @SuppressLint("HandlerLeak")
-    private final Handler handler =
-            new Handler() {
-                @Override
-                public void handleMessage(Message msg) {
-                    if (msg.what == EVENT_DISCONNECTED_TIMEOUT) {
-                        LogUtil.d("CallList.handleMessage", "EVENT_DISCONNECTED_TIMEOUT ", msg.obj);
-                        finishDisconnectedCall((DialerCall) msg.obj);
-                    } else {
-                        LogUtil.e("CallList.handleMessage", "Message not expected: " + msg.what);
-                    }
-                }
-            };
+    }
 
     private void logSecondIncomingCall(
             @NonNull Context context, @NonNull DialerCall firstCall, @NonNull DialerCall incomingCall) {
@@ -268,7 +253,22 @@ public class CallList implements DialerCallDelegate {
     @Override
     public DialerCall getDialerCallFromTelecomCall(Call telecomCall) {
         return callByTelecomCall.get(telecomCall);
-    }
+    }    /**
+     * Handles the timeout for destroying disconnected calls.
+     */
+    @SuppressLint("HandlerLeak")
+    private final Handler handler =
+            new Handler() {
+                @Override
+                public void handleMessage(Message msg) {
+                    if (msg.what == EVENT_DISCONNECTED_TIMEOUT) {
+                        LogUtil.d("CallList.handleMessage", "EVENT_DISCONNECTED_TIMEOUT ", msg.obj);
+                        finishDisconnectedCall((DialerCall) msg.obj);
+                    } else {
+                        LogUtil.e("CallList.handleMessage", "Message not expected: " + msg.what);
+                    }
+                }
+            };
 
     public void onCallRemoved(Context context, android.telecom.Call telecomCall) {
         if (callByTelecomCall.containsKey(telecomCall)) {
@@ -316,7 +316,6 @@ public class CallList implements DialerCallDelegate {
 
     /**
      * Handles the case where an internal call has become an exteral call. We need to
-     *
      */
     public void onInternalCallMadeExternal(Context context, android.telecom.Call telecomCall) {
 

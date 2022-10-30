@@ -188,7 +188,7 @@ public class ProximitySensor
         if (proximityWakeLock != null) {
             if (!proximityWakeLock.isHeld()) {
                 LogUtil.i("ProximitySensor.turnOnProximitySensor", "acquiring wake lock");
-                proximityWakeLock.acquire(10*60*1000L /*10 minutes*/);
+                proximityWakeLock.acquire(10 * 60 * 1000L /*10 minutes*/);
             } else {
                 LogUtil.i("ProximitySensor.turnOnProximitySensor", "wake lock already acquired");
             }

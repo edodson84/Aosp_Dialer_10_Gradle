@@ -43,12 +43,9 @@ import java.util.Locale;
 public class CallRecorderService extends Service {
     private static final String TAG = "CallRecorderService";
     private static final boolean DBG = false;
-
+    private final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyMMdd_HHmmssSSS", Locale.US);
     private MediaRecorder mMediaRecorder = null;
     private CallRecording mCurrentRecording = null;
-
-    private final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyMMdd_HHmmssSSS", Locale.US);
-
     private final ICallRecorderService.Stub mBinder = new ICallRecorderService.Stub() {
         @Override
         public CallRecording stopRecording() {

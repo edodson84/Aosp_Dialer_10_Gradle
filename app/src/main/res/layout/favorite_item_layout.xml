@@ -32,15 +32,15 @@
             <ImageView
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:src="@drawable/favorite_icon"
-                android:contentDescription="TODO" />
+                android:contentDescription="TODO"
+                android:src="@drawable/favorite_icon" />
 
             <ImageView
                 android:layout_width="24.0dip"
                 android:layout_height="24.0dip"
                 android:layout_gravity="center"
-                android:src="@drawable/quantum_ic_videocam_vd_white_24"
-                android:contentDescription="TODO" />
+                android:contentDescription="TODO"
+                android:src="@drawable/quantum_ic_videocam_vd_white_24" />
         </FrameLayout>
     </FrameLayout>
 

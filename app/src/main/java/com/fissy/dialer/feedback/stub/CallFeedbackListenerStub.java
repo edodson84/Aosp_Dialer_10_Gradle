@@ -28,7 +28,7 @@ import com.fissy.dialer.inject.ApplicationContext;
 import javax.inject.Inject;
 
 /**
-
+ *
  */
 public class CallFeedbackListenerStub implements CallList.Listener {
 

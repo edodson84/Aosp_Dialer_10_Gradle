@@ -15,6 +15,8 @@
  */
 package com.fissy.dialer.app.calllog;
 
+import static com.fissy.dialer.app.settings.DialerSettingsActivity.PrefsFragment.getThemeButtonBehavior;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -29,6 +31,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -36,7 +39,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.android.contacts.common.list.ViewPagerTabs;
 import com.fissy.dialer.R;
-import com.fissy.dialer.app.settings.ThemeOptionsSettingsFragment;
+import com.fissy.dialer.app.settings.DialerSettingsActivity;
 import com.fissy.dialer.calldetails.OldCallDetailsActivity;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.constants.ActivityRequestCodes;
@@ -77,23 +80,23 @@ public class CallLogActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        ThemeOptionsSettingsFragment.ThemeButtonBehavior mThemeBehavior = ThemeOptionsSettingsFragment.getThemeButtonBehavior(MainActivityPeer.themeprefs);
+        DialerSettingsActivity.PrefsFragment.ThemeButtonBehavior mThemeBehavior = getThemeButtonBehavior(MainActivityPeer.themeprefs);
 
-        if (mThemeBehavior == ThemeOptionsSettingsFragment.ThemeButtonBehavior.DARK) {
+        if (mThemeBehavior == DialerSettingsActivity.PrefsFragment.ThemeButtonBehavior.DARK) {
             getTheme().applyStyle(R.style.DialerDark, true);
         }
-        if (mThemeBehavior == ThemeOptionsSettingsFragment.ThemeButtonBehavior.LIGHT) {
+        if (mThemeBehavior == DialerSettingsActivity.PrefsFragment.ThemeButtonBehavior.LIGHT) {
             getTheme().applyStyle(R.style.DialerLight, true);
         }
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.call_log_activity);
 
-        final ActionBar actionBar = getSupportActionBar();
-        Objects.requireNonNull(actionBar).setDisplayShowHomeEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setElevation(0);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar ab = getSupportActionBar();
+        Objects.requireNonNull(ab).setTitle("Call History");
+        (ab).setDisplayHomeAsUpEnabled(true);
 
         int startingTab = TAB_INDEX_ALL;
         final Intent intent = getIntent();
@@ -115,7 +118,7 @@ public class CallLogActivity extends AppCompatActivity
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(viewPagerAdapter);
         viewPager.setOffscreenPageLimit(1);
-        viewPager.setOnPageChangeListener(this);
+        viewPager.addOnPageChangeListener(this);
 
         viewPagerTabs = findViewById(R.id.viewpager_header);
 
@@ -256,7 +259,7 @@ public class CallLogActivity extends AppCompatActivity
                         .setAction(
                                 R.string.view_conversation,
                                 v -> startActivity(IntentProvider.getSendSmsIntentProvider(number).getIntent(this)))
-                        .setActionTextColor(getResources().getColor(R.color.dialer_snackbar_action_text_color))
+                        .setActionTextColor(getResources().getColor(R.color.dialer_snackbar_action_text_color, null))
                         .show();
             }
         }
@@ -300,7 +303,7 @@ public class CallLogActivity extends AppCompatActivity
 
         @NonNull
         @Override
-        public Object instantiateItem(ViewGroup container, int position) {
+        public Object instantiateItem(@NonNull ViewGroup container, int position) {
             final CallLogFragment fragment = (CallLogFragment) super.instantiateItem(container, position);
             switch (getRtlPosition(position)) {
                 case TAB_INDEX_ALL:

@@ -4,8 +4,6 @@
 package com.fissy.dialer.phonelookup;
 
 public final class PhoneLookupInfoOuterClass {
-    static {
-    }
 
     private PhoneLookupInfoOuterClass() {
     }

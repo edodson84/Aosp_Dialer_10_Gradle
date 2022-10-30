@@ -49,8 +49,8 @@ import com.fissy.dialer.common.FragmentUtils;
 import com.fissy.dialer.common.LogUtil;
 import com.fissy.dialer.common.concurrent.DefaultFutureCallback;
 import com.fissy.dialer.common.concurrent.DialerExecutorComponent;
-import com.fissy.dialer.common.concurrent.SupportUiListener;
 import com.fissy.dialer.common.concurrent.ThreadUtil;
+import com.fissy.dialer.common.concurrent.UiListener;
 import com.fissy.dialer.constants.ActivityRequestCodes;
 import com.fissy.dialer.historyitemactions.DividerModule;
 import com.fissy.dialer.historyitemactions.HistoryItemActionBottomSheet;
@@ -98,7 +98,7 @@ public class SpeedDialFragment extends Fragment {
     private final SpeedDialHeaderListener headerListener = new SpeedDialFragmentHeaderListener();
     private final SpeedDialSuggestedListener suggestedListener = new SpeedDialSuggestedListener();
     private SpeedDialAdapter adapter;
-    private SupportUiListener<ImmutableList<SpeedDialUiItem>> speedDialLoaderListener;
+    private UiListener<ImmutableList<SpeedDialUiItem>> speedDialLoaderListener;
     private SpeedDialFavoritesListener favoritesListener;
     private EmptyContentView emptyContentView;
     /**
@@ -143,7 +143,7 @@ public class SpeedDialFragment extends Fragment {
         emptyContentView.setImage(R.drawable.empty_speed_dial);
 
         speedDialLoaderListener =
-                DialerExecutorComponent.get(Objects.requireNonNull(getContext()))
+                DialerExecutorComponent.get(requireContext())
                         .createUiListener(getChildFragmentManager(), "speed_dial_loader_listener");
 
         // Setup our RecyclerView
@@ -206,19 +206,19 @@ public class SpeedDialFragment extends Fragment {
         }
 
         Futures.addCallback(
-                DialerExecutorComponent.get(Objects.requireNonNull(getContext()))
+                DialerExecutorComponent.get(requireContext())
                         .backgroundExecutor()
                         .submit(
                                 () -> {
-                                    UiItemLoaderComponent.get(getContext())
+                                    UiItemLoaderComponent.get(requireContext())
                                             .speedDialUiItemMutator()
                                             .updatePinnedPosition(adapter.getSpeedDialUiItems());
                                     return null;
                                 }),
                 new DefaultFutureCallback<>(),
-                DialerExecutorComponent.get(getContext()).backgroundExecutor());
+                DialerExecutorComponent.get(requireContext()).backgroundExecutor());
         ShortcutRefresher.refresh(
-                getContext(),
+                requireContext(),
                 ShortcutRefresher.speedDialUiItemsToContactEntries(adapter.getSpeedDialUiItems()));
     }
 
@@ -245,7 +245,7 @@ public class SpeedDialFragment extends Fragment {
 
         speedDialLoaderListener.listen(
                 getContext(),
-                UiItemLoaderComponent.get(Objects.requireNonNull(getContext())).speedDialUiItemMutator().loadSpeedDialUiItems(),
+                UiItemLoaderComponent.get(requireContext()).speedDialUiItemMutator().loadSpeedDialUiItems(),
                 this::onSpeedDialUiItemListLoaded,
                 throwable -> {
                     throw new RuntimeException(throwable);
@@ -260,7 +260,7 @@ public class SpeedDialFragment extends Fragment {
                 updateSpeedDialItemsOnResume = false;
                 speedDialLoaderListener.listen(
                         getContext(),
-                        UiItemLoaderComponent.get(Objects.requireNonNull(getContext()))
+                        UiItemLoaderComponent.get(requireContext())
                                 .speedDialUiItemMutator()
                                 .starContact(data.getData()),
                         this::onSpeedDialUiItemListLoaded,
@@ -275,7 +275,7 @@ public class SpeedDialFragment extends Fragment {
         LogUtil.enterBlock("SpeedDialFragment.onSpeedDialUiItemListLoaded");
         // TODO(calderwoodra): Use DiffUtil to properly update and animate the change
         adapter.setSpeedDialUiItems(
-                UiItemLoaderComponent.get(Objects.requireNonNull(getContext()))
+                UiItemLoaderComponent.get(requireContext())
                         .speedDialUiItemMutator()
                         .insertDuoChannels(getContext(), speedDialUiItems));
         adapter.notifyDataSetChanged();
@@ -322,7 +322,7 @@ public class SpeedDialFragment extends Fragment {
         PermissionsUtil.registerPermissionReceiver(
                 getActivity(), readContactsPermissionGrantedReceiver, Manifest.permission.READ_CONTACTS);
         if (PermissionsUtil.hasContactsReadPermissions(getContext())) {
-            Objects.requireNonNull(getContext())
+            requireContext()
                     .getContentResolver()
                     .registerContentObserver(Contacts.CONTENT_STREQUENT_URI, true, strequentsContentObserver);
         }
@@ -333,7 +333,7 @@ public class SpeedDialFragment extends Fragment {
         super.onStop();
         PermissionsUtil.unregisterPermissionReceiver(
                 getContext(), readContactsPermissionGrantedReceiver);
-        Objects.requireNonNull(getContext()).getContentResolver().unregisterContentObserver(strequentsContentObserver);
+        requireContext().getContentResolver().unregisterContentObserver(strequentsContentObserver);
     }
 
     /**
@@ -353,7 +353,7 @@ public class SpeedDialFragment extends Fragment {
         private final FragmentManager childFragmentManager;
         private final SpeedDialLayoutManager layoutManager;
         private final UpdateSpeedDialAdapterListener updateAdapterListener;
-        private final SupportUiListener<ImmutableList<SpeedDialUiItem>> speedDialLoaderListener;
+        private final UiListener<ImmutableList<SpeedDialUiItem>> speedDialLoaderListener;
 
         private final SpeedDialContextMenuItemListener speedDialContextMenuItemListener =
                 new SpeedDialContextMenuItemListener();
@@ -365,7 +365,7 @@ public class SpeedDialFragment extends Fragment {
                 FragmentManager childFragmentManager,
                 SpeedDialLayoutManager layoutManager,
                 UpdateSpeedDialAdapterListener updateAdapterListener,
-                SupportUiListener<ImmutableList<SpeedDialUiItem>> speedDialLoaderListener) {
+                UiListener<ImmutableList<SpeedDialUiItem>> speedDialLoaderListener) {
             this.activity = activity;
             this.childFragmentManager = childFragmentManager;
             this.layoutManager = layoutManager;
@@ -430,10 +430,6 @@ public class SpeedDialFragment extends Fragment {
                 contextMenu.hide();
                 contextMenu = null;
             }
-        }
-
-        public SpeedDialContextMenuItemListener getSpeedDialContextMenuItemListener() {
-            return speedDialContextMenuItemListener;
         }
 
         class SpeedDialContextMenuItemListener implements ContextMenuItemListener {
@@ -633,7 +629,7 @@ public class SpeedDialFragment extends Fragment {
             public boolean onClick() {
                 speedDialLoaderListener.listen(
                         getContext(),
-                        UiItemLoaderComponent.get(Objects.requireNonNull(getContext()))
+                        UiItemLoaderComponent.get(requireContext())
                                 .speedDialUiItemMutator()
                                 .starContact(
                                         Uri.withAppendedPath(

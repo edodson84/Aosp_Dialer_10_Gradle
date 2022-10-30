@@ -1,3 +1,9 @@
-# Dialer_10
+Android Dialer
 
-Android 10 Dialer
+based on aosp dialer source
+
+updated to m3 design
+
+updated to androidx
+
+updated to latest api

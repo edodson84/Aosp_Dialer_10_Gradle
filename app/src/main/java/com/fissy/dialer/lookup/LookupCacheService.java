@@ -19,7 +19,6 @@ package com.fissy.dialer.lookup;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.telephony.PhoneNumberUtils;
 import android.telephony.TelephonyManager;
 
@@ -72,7 +71,7 @@ public class LookupCacheService implements CachedNumberLookupService {
 
     @Override
     public @Nullable
-    Uri addPhoto(Context context, String number, InputStream in) {
+    void addPhoto(Context context, String number, InputStream in) {
         TelephonyManager tm = context.getSystemService(TelephonyManager.class);
         String countryIso = tm.getSimCountryIso().toUpperCase();
         String normalized = number != null
@@ -80,10 +79,9 @@ public class LookupCacheService implements CachedNumberLookupService {
         if (normalized != null) {
             Bitmap bitmap = BitmapFactory.decodeStream(in, null, null);
             if (bitmap != null) {
-                return LookupCache.cacheImage(context, normalized, bitmap);
+                LookupCache.cacheImage(context, normalized, bitmap);
             }
         }
-        return null;
     }
 
     private static class LookupCachedContactInfo implements CachedContactInfo {

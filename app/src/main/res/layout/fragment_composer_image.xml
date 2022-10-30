@@ -16,10 +16,10 @@
         android:layout_marginBottom="4.0dip"
         android:adjustViewBounds="true"
         android:background="@drawable/answer_data_background"
+        android:contentDescription="TODO"
         android:elevation="@dimen/answer_data_elevation"
         android:outlineProvider="background"
-        android:scaleType="centerCrop"
-        android:contentDescription="TODO" />
+        android:scaleType="centerCrop" />
 
     <ProgressBar
         android:id="@id/loading_spinner"
@@ -33,6 +33,6 @@
         android:layout_width="@dimen/answer_message_avatar_size"
         android:layout_height="@dimen/answer_message_avatar_size"
         android:layout_centerHorizontal="true"
-        android:elevation="@dimen/answer_avatar_elevation"
-        android:contentDescription="TODO" />
+        android:contentDescription="TODO"
+        android:elevation="@dimen/answer_avatar_elevation" />
 </RelativeLayout>

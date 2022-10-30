@@ -101,9 +101,8 @@ final class AutoValue_MultimediaData extends MultimediaData {
         }
 
         @Override
-        public MultimediaData.Builder setText(@Nullable String text) {
+        public void setText(@Nullable String text) {
             this.text = text;
-            return this;
         }
 
         @Override
@@ -113,15 +112,13 @@ final class AutoValue_MultimediaData extends MultimediaData {
         }
 
         @Override
-        MultimediaData.Builder setImageUri(@Nullable Uri imageUri) {
+        void setImageUri(@Nullable Uri imageUri) {
             this.imageUri = imageUri;
-            return this;
         }
 
         @Override
-        MultimediaData.Builder setImageContentType(@Nullable String imageContentType) {
+        void setImageContentType(@Nullable String imageContentType) {
             this.imageContentType = imageContentType;
-            return this;
         }
 
         @Override

@@ -16,8 +16,6 @@
 
 package com.android.contacts.common.compat;
 
-import android.os.Build.VERSION;
-import android.os.Build.VERSION_CODES;
 import android.telecom.Call;
 
 import androidx.annotation.NonNull;

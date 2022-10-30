@@ -17,9 +17,9 @@ package com.fissy.dialer.storage;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
 import androidx.core.content.ContextCompat;
+import androidx.preference.PreferenceManager;
 
 import com.fissy.dialer.inject.ApplicationContext;
 import com.fissy.dialer.inject.DialerVariant;

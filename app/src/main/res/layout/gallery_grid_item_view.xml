@@ -10,9 +10,9 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="@drawable/gallery_grid_item_view_background"
+        android:contentDescription="TODO"
         android:outlineProvider="background"
-        android:scaleType="centerCrop"
-        android:contentDescription="TODO" />
+        android:scaleType="centerCrop" />
 
     <FrameLayout
         android:id="@id/checkbox"
@@ -26,8 +26,8 @@
             android:layout_width="@dimen/gallery_check_size"
             android:layout_height="@dimen/gallery_check_size"
             android:layout_gravity="center"
-            android:src="@drawable/gallery_item_selected_drawable"
-            android:contentDescription="TODO" />
+            android:contentDescription="TODO"
+            android:src="@drawable/gallery_item_selected_drawable" />
     </FrameLayout>
 
     <ImageView
@@ -36,9 +36,9 @@
         android:layout_height="fill_parent"
         android:layout_gravity="center"
         android:background="@drawable/gallery_background"
+        android:contentDescription="TODO"
         android:outlineProvider="background"
         android:scaleType="center"
         android:src="@drawable/quantum_ic_photo_library_white_24"
-        android:visibility="gone"
-        android:contentDescription="TODO" />
+        android:visibility="gone" />
 </com.fissy.dialer.callcomposer.GalleryGridItemView>

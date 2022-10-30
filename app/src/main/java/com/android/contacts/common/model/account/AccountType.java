@@ -25,7 +25,6 @@ import android.provider.ContactsContract.CommonDataKinds.StructuredPostal;
 import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.RawContacts;
 import android.util.ArrayMap;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
@@ -35,7 +34,6 @@ import androidx.core.content.ContextCompat;
 import com.android.contacts.common.model.dataitem.DataKind;
 import com.fissy.dialer.R;
 
-import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -343,8 +341,8 @@ public abstract class AccountType {
      */
     public static class EditType {
 
-        public int rawValue;
-        public int labelRes;
+        public final int rawValue;
+        public final int labelRes;
         public boolean secondary;
         /**
          * The number of entries allowed for the type. -1 if not specified.
@@ -439,8 +437,8 @@ public abstract class AccountType {
      */
     public static final class EditField {
 
-        public String column;
-        public int titleRes;
+        public final String column;
+        public final int titleRes;
         public int inputType;
         public int minLines;
         public boolean optional;
@@ -472,15 +470,6 @@ public abstract class AccountType {
             return this;
         }
 
-        public EditField setMinLines(int minLines) {
-            this.minLines = minLines;
-            return this;
-        }
-
-        public boolean isMultiLine() {
-            return (inputType & EditorInfo.TYPE_TEXT_FLAG_MULTI_LINE) != 0;
-        }
-
 
         @NonNull
         @Override
@@ -504,30 +493,4 @@ public abstract class AccountType {
         }
     }
 
-    /**
-     * Compare two {@link AccountType} by their {@link AccountType#getDisplayLabel} with the current
-     * locale.
-     */
-    public static class DisplayLabelComparator implements Comparator<AccountType> {
-
-        private final Context mContext;
-        /**
-         * {@link Comparator} for the current locale.
-         */
-        private final Collator mCollator = Collator.getInstance();
-
-        public DisplayLabelComparator(Context context) {
-            mContext = context;
-        }
-
-        private String getDisplayLabel(AccountType type) {
-            CharSequence label = type.getDisplayLabel(mContext);
-            return (label == null) ? "" : label.toString();
-        }
-
-        @Override
-        public int compare(AccountType lhs, AccountType rhs) {
-            return mCollator.compare(getDisplayLabel(lhs), getDisplayLabel(rhs));
-        }
-    }
 }

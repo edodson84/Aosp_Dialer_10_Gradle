@@ -22,15 +22,12 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.KeyguardManager;
 import android.app.KeyguardManager.KeyguardDismissCallback;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
-import android.os.Build.VERSION;
-import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -40,9 +37,7 @@ import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.AccessibilityDelegate;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.view.accessibility.AccessibilityNodeInfo.AccessibilityAction;
@@ -114,22 +109,22 @@ public class AnswerFragment extends Fragment
         AnswerMethodHolder,
         MultimediaFragment.Holder {
 
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    @VisibleForTesting()
     static final String ARG_CALL_ID = "call_id";
 
     static final String ARG_IS_RTT_CALL = "is_rtt_call";
 
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    @VisibleForTesting()
     static final String ARG_IS_VIDEO_CALL = "is_video_call";
 
     static final String ARG_ALLOW_ANSWER_AND_RELEASE = "allow_answer_and_release";
 
     static final String ARG_HAS_CALL_ON_HOLD = "has_call_on_hold";
 
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    @VisibleForTesting()
     static final String ARG_IS_VIDEO_UPGRADE_REQUEST = "is_video_upgrade_request";
 
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    @VisibleForTesting()
     static final String ARG_IS_SELF_MANAGED_CAMERA = "is_self_managed_camera";
 
     static final String ARG_ALLOW_SPEAK_EASY = "allow_speak_easy";
@@ -807,7 +802,7 @@ public class AnswerFragment extends Fragment
     }
 
     @Override
-    public void onSaveInstanceState( @NonNull Bundle bundle) {
+    public void onSaveInstanceState(@NonNull Bundle bundle) {
         super.onSaveInstanceState(bundle);
         bundle.putBoolean(STATE_HAS_ANIMATED_ENTRY, hasAnimatedEntry);
     }
@@ -1185,7 +1180,7 @@ public class AnswerFragment extends Fragment
         }
 
         @Override
-        public void onViewCreated( @NonNull View view, @Nullable Bundle bundle) {
+        public void onViewCreated(@NonNull View view, @Nullable Bundle bundle) {
             super.onViewCreated(view, bundle);
             avatarImageView = ((ImageView) view.findViewById(R.id.contactgrid_avatar));
             FragmentUtils.getParentUnsafe(this, MultimediaFragment.Holder.class).updateAvatar(this);

@@ -16,6 +16,8 @@
 
 package com.fissy.dialer.calldetails;
 
+import static com.fissy.dialer.app.settings.DialerSettingsActivity.PrefsFragment.getThemeButtonBehavior;
+
 import android.Manifest.permission;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -37,8 +39,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fissy.dialer.R;
-import com.fissy.dialer.app.settings.ThemeOptionsSettingsFragment;
-import com.fissy.dialer.assisteddialing.ui.AssistedDialingSettingActivity;
+import com.fissy.dialer.app.settings.DialerSettingsActivity;
 import com.fissy.dialer.calldetails.CallDetailsEntries.CallDetailsEntry;
 import com.fissy.dialer.callintent.CallInitiationType;
 import com.fissy.dialer.callintent.CallIntentBuilder;
@@ -128,12 +129,12 @@ abstract class CallDetailsActivityCommon extends AppCompatActivity {
     @Override
     @CallSuper
     protected void onCreate(Bundle savedInstanceState) {
-        ThemeOptionsSettingsFragment.ThemeButtonBehavior mThemeBehavior = ThemeOptionsSettingsFragment.getThemeButtonBehavior(MainActivityPeer.themeprefs);
+        DialerSettingsActivity.PrefsFragment.ThemeButtonBehavior mThemeBehavior = getThemeButtonBehavior(MainActivityPeer.themeprefs);
 
-        if (mThemeBehavior == ThemeOptionsSettingsFragment.ThemeButtonBehavior.DARK) {
+        if (mThemeBehavior == DialerSettingsActivity.PrefsFragment.ThemeButtonBehavior.DARK) {
             getTheme().applyStyle(R.style.DialerDark, true);
         }
-        if (mThemeBehavior == ThemeOptionsSettingsFragment.ThemeButtonBehavior.LIGHT) {
+        if (mThemeBehavior == DialerSettingsActivity.PrefsFragment.ThemeButtonBehavior.LIGHT) {
             getTheme().applyStyle(R.style.DialerLight, true);
         }
         super.onCreate(savedInstanceState);
@@ -147,7 +148,7 @@ abstract class CallDetailsActivityCommon extends AppCompatActivity {
                 });
         checkRttTranscriptAvailabilityListener =
                 DialerExecutorComponent.get(this)
-                        .createUiListener(getFragmentManager(), "Query RTT transcript availability");
+                        .createUiListener(getSupportFragmentManager(), "Query RTT transcript availability");
         callRecordingDataStore = new CallRecordingDataStore();
         handleIntent(getIntent());
         setupRecyclerViewForEntries();
@@ -240,10 +241,6 @@ abstract class CallDetailsActivityCommon extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         PerformanceReport.logOnScrollStateChange(recyclerView);
-    }
-
-    final CallDetailsAdapterCommon getAdapter() {
-        return adapter;
     }
 
     @Override
@@ -385,8 +382,6 @@ abstract class CallDetailsActivityCommon extends AppCompatActivity {
 
         @Override
         public void openAssistedDialingSettings(View unused) {
-            Intent intent = new Intent(getActivity(), AssistedDialingSettingActivity.class);
-            getActivity().startActivity(intent);
         }
 
         @Override
@@ -464,30 +459,6 @@ abstract class CallDetailsActivityCommon extends AppCompatActivity {
         }
     }
 
-    private final class ReportCallIdListener
-            implements CallDetailsFooterViewHolder.ReportCallIdListener {
-        private final WeakReference<Activity> activityWeakReference;
-
-        ReportCallIdListener(Activity activity) {
-            this.activityWeakReference = new WeakReference<>(activity);
-        }
-
-        @Override
-        public void reportCallId(String number) {
-            ReportDialogFragment fragment = ReportDialogFragment.newInstance(number);
-            fragment.show(getSupportFragmentManager(), null /* tag */);
-        }
-
-        @Override
-        public boolean canReportCallerId(String number) {
-            return getActivity().getIntent().getExtras().getBoolean(EXTRA_CAN_REPORT_CALLER_ID, false);
-        }
-
-        private Activity getActivity() {
-            return Preconditions.checkNotNull(activityWeakReference.get());
-        }
-    }
-
     private static final class EnrichedCallHistoricalDataChangedListener
             implements EnrichedCallManager.HistoricalDataChangedListener {
         private final WeakReference<CallDetailsActivityCommon> activityWeakReference;
@@ -549,6 +520,30 @@ abstract class CallDetailsActivityCommon extends AppCompatActivity {
                 return Collections.emptyMap();
             }
             return historicalData;
+        }
+    }
+
+    private final class ReportCallIdListener
+            implements CallDetailsFooterViewHolder.ReportCallIdListener {
+        private final WeakReference<Activity> activityWeakReference;
+
+        ReportCallIdListener(Activity activity) {
+            this.activityWeakReference = new WeakReference<>(activity);
+        }
+
+        @Override
+        public void reportCallId(String number) {
+            ReportDialogFragment fragment = ReportDialogFragment.newInstance(number);
+            fragment.show(getSupportFragmentManager(), null /* tag */);
+        }
+
+        @Override
+        public boolean canReportCallerId(String number) {
+            return getActivity().getIntent().getExtras().getBoolean(EXTRA_CAN_REPORT_CALLER_ID, false);
+        }
+
+        private Activity getActivity() {
+            return Preconditions.checkNotNull(activityWeakReference.get());
         }
     }
 }

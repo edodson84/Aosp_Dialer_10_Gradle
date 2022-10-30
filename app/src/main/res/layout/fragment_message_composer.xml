@@ -43,6 +43,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_toStartOf="@id/remaining_characters"
+            android:autofillHints=""
             android:background="?android:colorBackground"
             android:hint="@string/message_composer_custom_message_hint"
             android:imeOptions="actionSend|flagNoExtractUi"
@@ -54,8 +55,7 @@
             android:textColor="?android:textColorPrimary"
             android:textColorHint="?android:textColorHint"
             android:textCursorDrawable="@drawable/searchedittext_custom_cursor"
-            android:textSize="@dimen/message_compose_item_text_size"
-            android:autofillHints="" />
+            android:textSize="@dimen/message_compose_item_text_size" />
 
         <TextView
             android:id="@id/remaining_characters"

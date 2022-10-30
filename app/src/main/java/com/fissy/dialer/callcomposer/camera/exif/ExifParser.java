@@ -31,7 +31,7 @@ import java.util.TreeMap;
 
 /**
  * This class provides a low-level EXIF parsing API. Given a JPEG format InputStream, the caller can
-
+ *
  *
  * <p>Below is an example of getting EXIF data from IFD 0 and EXIF IFD using the parser.
  *
@@ -154,6 +154,7 @@ public class ExifParser {
     private final int options;
     private final ExifInterface mInterface;
     private final TreeMap<Integer, Object> correspondingEvent = new TreeMap<>();
+    private final boolean containExifData;
     private int ifdStartOffset = 0;
     private int numOfTagInIfd = 0;
     private int ifdType;
@@ -162,7 +163,6 @@ public class ExifParser {
     private ExifTag stripSizeTag;
     private ExifTag jpegSizeTag;
     private boolean needToParseOffsetsInCurrentIfd;
-    private boolean containExifData;
     private int app1End;
     private byte[] dataAboveIfd0;
     private int ifd0Position;
@@ -201,7 +201,6 @@ public class ExifParser {
 
     /**
      * Parses the the given InputStream with the given options
-     *
      */
     protected static ExifParser parse(InputStream inputStream, int options, ExifInterface iRef)
             throws IOException, ExifInvalidFormatException {
@@ -348,7 +347,6 @@ public class ExifParser {
 
     /**
      * Skips the tags area of current IFD, if the parser is not in the tag area, nothing will happen.
-     *
      */
     private void skipRemainingTagsInCurrentIfd() throws IOException, ExifInvalidFormatException {
         int endOfTags = ifdStartOffset + OFFSET_SIZE + TAG_SIZE * numOfTagInIfd;
@@ -489,11 +487,11 @@ public class ExifParser {
     }
 
     private void registerCompressedImage(long offset) {
-        correspondingEvent.put((int) offset, new ImageEvent(EVENT_COMPRESSED_IMAGE));
+        correspondingEvent.put((int) offset, new ImageEvent());
     }
 
     private void registerUncompressedStrip(int stripIndex, long offset) {
-        correspondingEvent.put((int) offset, new ImageEvent(EVENT_UNCOMPRESSED_STRIP, stripIndex));
+        correspondingEvent.put((int) offset, new ImageEvent(stripIndex));
     }
 
     @SuppressLint("DefaultLocale")
@@ -829,23 +827,23 @@ public class ExifParser {
     }
 
     private static class ImageEvent {
-        int stripIndex;
-        int type;
+        final int stripIndex;
+        final int type;
 
-        ImageEvent(int type) {
+        ImageEvent() {
             this.stripIndex = 0;
-            this.type = type;
+            this.type = ExifParser.EVENT_COMPRESSED_IMAGE;
         }
 
-        ImageEvent(int type, int stripIndex) {
-            this.type = type;
+        ImageEvent(int stripIndex) {
+            this.type = ExifParser.EVENT_UNCOMPRESSED_STRIP;
             this.stripIndex = stripIndex;
         }
     }
 
     private static class IfdEvent {
-        int ifd;
-        boolean isRequested;
+        final int ifd;
+        final boolean isRequested;
 
         IfdEvent(int ifd, boolean isInterestedIfd) {
             this.ifd = ifd;
@@ -854,8 +852,8 @@ public class ExifParser {
     }
 
     private static class ExifTagEvent {
-        ExifTag tag;
-        boolean isRequested;
+        final ExifTag tag;
+        final boolean isRequested;
 
         ExifTagEvent(ExifTag tag, boolean isRequireByUser) {
             this.tag = tag;

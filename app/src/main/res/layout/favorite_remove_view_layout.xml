@@ -16,8 +16,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8.0dip"
         android:layout_marginBottom="8.0dip"
-        android:src="@drawable/quantum_ic_close_vd_theme_24"
-        android:contentDescription="TODO" />
+        android:contentDescription="TODO"
+        android:src="@drawable/quantum_ic_close_vd_theme_24" />
 
     <TextView
         android:id="@id/remove_view_text"

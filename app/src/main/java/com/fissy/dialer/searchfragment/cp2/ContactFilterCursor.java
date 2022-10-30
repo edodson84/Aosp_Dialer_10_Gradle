@@ -294,7 +294,7 @@ final class ContactFilterCursor implements Cursor {
      *
      * <ul>
      *   <li>A phone number
-
+     *
      *   <li>A name
      * </ul>
      *

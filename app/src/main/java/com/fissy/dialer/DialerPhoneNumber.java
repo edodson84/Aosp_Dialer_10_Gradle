@@ -568,7 +568,7 @@ public final class DialerPhoneNumber extends
         return size;
     }
 
-    protected final Object dynamicMethod(
+    protected Object dynamicMethod(
             com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
             Object arg0, Object arg1) {
         switch (method) {

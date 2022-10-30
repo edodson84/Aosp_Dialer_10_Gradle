@@ -4,8 +4,6 @@
 package com.fissy.dialer.calldetails;
 
 public final class CallDetailsHeaderInfoOuterClass {
-    static {
-    }
 
     private CallDetailsHeaderInfoOuterClass() {
     }

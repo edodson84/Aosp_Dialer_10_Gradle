@@ -4,8 +4,6 @@
 package com.fissy.dialer.blockreportspam;
 
 public final class BlockReportSpamDialogInfoOuterClass {
-    static {
-    }
 
     private BlockReportSpamDialogInfoOuterClass() {
     }

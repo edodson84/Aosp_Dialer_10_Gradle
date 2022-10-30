@@ -82,8 +82,7 @@ public class BlockedNumberContentObserver extends ContentObserver
         if (didFindEntry) {
             unregister();
         }
-    }    private final Runnable timeoutRunnable =
-            () -> unregister();
+    }
 
     /**
      * Registers this {@link ContentObserver} to listen for changes to the {@link CallLog}. If the
@@ -105,7 +104,8 @@ public class BlockedNumberContentObserver extends ContentObserver
         LogUtil.i("BlockedNumberContentObserver.unregister", null);
         handler.removeCallbacks(timeoutRunnable);
         context.getContentResolver().unregisterContentObserver(this);
-    }
+    }    private final Runnable timeoutRunnable =
+            () -> unregister();
 
 
 

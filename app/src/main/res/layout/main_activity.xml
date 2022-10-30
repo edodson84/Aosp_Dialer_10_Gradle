@@ -29,10 +29,10 @@
             android:id="@id/toolbar_shadow"
             android:layout_width="fill_parent"
             android:layout_height="2.0dip"
+            android:contentDescription="TODO"
             android:scaleType="fitXY"
             android:src="@drawable/search_shadow"
-            android:visibility="gone"
-            android:contentDescription="TODO" />
+            android:visibility="gone" />
 
         <com.fissy.dialer.widget.DialerFloatingActionButton
             android:id="@id/fab"

@@ -55,7 +55,7 @@ public class SystemProximityWakeLock implements AnswerProximityWakeLock, Display
 
     @Override
     public void acquire() {
-        wakeLock.acquire(10*60*1000L /*10 minutes*/);
+        wakeLock.acquire(10 * 60 * 1000L /*10 minutes*/);
         context.getSystemService(DisplayManager.class).registerDisplayListener(this, null);
     }
 

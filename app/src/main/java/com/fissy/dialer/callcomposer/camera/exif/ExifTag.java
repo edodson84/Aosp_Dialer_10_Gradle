@@ -25,7 +25,6 @@ import java.util.Objects;
 
 /**
  * This class stores information of an EXIF tag. For more information about defined EXIF tags,
-
  */
 public class ExifTag {
     /**
@@ -246,132 +245,6 @@ public class ExifTag {
     }
 
     /**
-     * Sets integer values into this tag. This method should be used for tags of type {@link
-     * #TYPE_UNSIGNED_SHORT}. This method will fail if:
-     *
-     * <ul>
-     *   <li>The component type of this tag is not {@link #TYPE_UNSIGNED_SHORT}, {@link
-     *       #TYPE_UNSIGNED_LONG}, or {@link #TYPE_LONG}.
-     *   <li>The value overflows.
-     *   <li>The value.length does NOT match the component count in the definition for this tag.
-     * </ul>
-     */
-    boolean setValue(int[] value) {
-        if (checkBadComponentCount(value.length)) {
-            return false;
-        }
-        if (dataType != TYPE_UNSIGNED_SHORT
-                && dataType != TYPE_LONG
-                && dataType != TYPE_UNSIGNED_LONG) {
-            return false;
-        }
-        if (dataType == TYPE_UNSIGNED_SHORT && checkOverflowForUnsignedShort(value)) {
-            return false;
-        } else if (dataType == TYPE_UNSIGNED_LONG && checkOverflowForUnsignedLong(value)) {
-            return false;
-        }
-
-        long[] data = new long[value.length];
-        for (int i = 0; i < value.length; i++) {
-            data[i] = value[i];
-        }
-        this.value = data;
-        componentCountActual = value.length;
-        return true;
-    }
-
-    /**
-     * Sets long values into this tag. This method should be used for tags of type {@link
-     * #TYPE_UNSIGNED_LONG}. This method will fail if:
-     *
-     * <ul>
-     *   <li>The component type of this tag is not {@link #TYPE_UNSIGNED_LONG}.
-     *   <li>The value overflows.
-     *   <li>The value.length does NOT match the component count in the definition for this tag.
-     * </ul>
-     */
-    boolean setValue(long[] value) {
-        if (checkBadComponentCount(value.length) || dataType != TYPE_UNSIGNED_LONG) {
-            return false;
-        }
-        if (checkOverflowForUnsignedLong(value)) {
-            return false;
-        }
-        this.value = value;
-        componentCountActual = value.length;
-        return true;
-    }
-
-    /**
-     * Sets a string value into this tag. This method should be used for tags of type {@link
-     * #TYPE_ASCII}. The string is converted to an ASCII string. Characters that cannot be converted
-     * are replaced with '?'. The length of the string must be equal to either (component count -1) or
-     * (component count). The final byte will be set to the string null terminator '\0', overwriting
-     * the last character in the string if the value.length is equal to the component count. This
-     * method will fail if:
-     *
-     * <ul>
-     *   <li>The data type is not {@link #TYPE_ASCII} or {@link #TYPE_UNDEFINED}.
-     *   <li>The length of the string is not equal to (component count -1) or (component count) in the
-     *       definition for this tag.
-     * </ul>
-     */
-    boolean setValue(String value) {
-        if (dataType != TYPE_ASCII && dataType != TYPE_UNDEFINED) {
-            return false;
-        }
-
-        byte[] buf = value.getBytes(US_ASCII);
-        byte[] finalBuf = buf;
-        if (buf.length > 0) {
-            finalBuf =
-                    (buf[buf.length - 1] == 0 || dataType == TYPE_UNDEFINED)
-                            ? buf
-                            : Arrays.copyOf(buf, buf.length + 1);
-        } else if (dataType == TYPE_ASCII && componentCountActual == 1) {
-            finalBuf = new byte[]{0};
-        }
-        int count = finalBuf.length;
-        if (checkBadComponentCount(count)) {
-            return false;
-        }
-        componentCountActual = count;
-        this.value = finalBuf;
-        return true;
-    }
-
-    /**
-     * Sets Rational values into this tag. This method should be used for tags of type {@link
-     * #TYPE_UNSIGNED_RATIONAL}, or {@link #TYPE_RATIONAL}. This method will fail if:
-     *
-     * <ul>
-     *   <li>The component type of this tag is not {@link #TYPE_UNSIGNED_RATIONAL} or {@link
-     *       #TYPE_RATIONAL}.
-     *   <li>The value overflows.
-     *   <li>The value.length does NOT match the component count in the definition for this tag.
-     * </ul>
-     *
-     * @see Rational
-     */
-    boolean setValue(Rational[] value) {
-        if (checkBadComponentCount(value.length)) {
-            return false;
-        }
-        if (dataType != TYPE_UNSIGNED_RATIONAL && dataType != TYPE_RATIONAL) {
-            return false;
-        }
-        if (dataType == TYPE_UNSIGNED_RATIONAL && checkOverflowForUnsignedRational(value)) {
-            return false;
-        } else if (dataType == TYPE_RATIONAL && checkOverflowForRational(value)) {
-            return false;
-        }
-
-        this.value = value;
-        componentCountActual = value.length;
-        return true;
-    }
-
-    /**
      * Sets byte values into this tag. This method should be used for tags of type {@link
      * #TYPE_UNSIGNED_BYTE} or {@link #TYPE_UNDEFINED}. This method will fail if:
      *
@@ -381,7 +254,7 @@ public class ExifTag {
      *   <li>The length does NOT match the component count in the definition for this tag.
      * </ul>
      */
-    private boolean setValue(byte[] value, int offset, int length) {
+    private boolean setValue(byte[] value, int length) {
         if (checkBadComponentCount(length)) {
             return false;
         }
@@ -389,16 +262,9 @@ public class ExifTag {
             return false;
         }
         this.value = new byte[length];
-        System.arraycopy(value, offset, this.value, 0, length);
+        System.arraycopy(value, 0, this.value, 0, length);
         componentCountActual = length;
         return true;
-    }
-
-    /**
-     * Equivalent to setValue(value, 0, value.length).
-     */
-    boolean setValue(byte[] value) {
-        return setValue(value, 0, value.length);
     }
 
     /**
@@ -427,6 +293,135 @@ public class ExifTag {
      */
     public Object getValue() {
         return value;
+    }
+
+    /**
+     * Sets integer values into this tag. This method should be used for tags of type {@link
+     * #TYPE_UNSIGNED_SHORT}. This method will fail if:
+     *
+     * <ul>
+     *   <li>The component type of this tag is not {@link #TYPE_UNSIGNED_SHORT}, {@link
+     *       #TYPE_UNSIGNED_LONG}, or {@link #TYPE_LONG}.
+     *   <li>The value overflows.
+     *   <li>The value.length does NOT match the component count in the definition for this tag.
+     * </ul>
+     */
+    void setValue(int[] value) {
+        if (checkBadComponentCount(value.length)) {
+            return;
+        }
+        if (dataType != TYPE_UNSIGNED_SHORT
+                && dataType != TYPE_LONG
+                && dataType != TYPE_UNSIGNED_LONG) {
+            return;
+        }
+        if (dataType == TYPE_UNSIGNED_SHORT && checkOverflowForUnsignedShort(value)) {
+            return;
+        } else if (dataType == TYPE_UNSIGNED_LONG && checkOverflowForUnsignedLong(value)) {
+            return;
+        }
+
+        long[] data = new long[value.length];
+        for (int i = 0; i < value.length; i++) {
+            data[i] = value[i];
+        }
+        this.value = data;
+        componentCountActual = value.length;
+    }
+
+    /**
+     * Sets long values into this tag. This method should be used for tags of type {@link
+     * #TYPE_UNSIGNED_LONG}. This method will fail if:
+     *
+     * <ul>
+     *   <li>The component type of this tag is not {@link #TYPE_UNSIGNED_LONG}.
+     *   <li>The value overflows.
+     *   <li>The value.length does NOT match the component count in the definition for this tag.
+     * </ul>
+     */
+    void setValue(long[] value) {
+        if (checkBadComponentCount(value.length) || dataType != TYPE_UNSIGNED_LONG) {
+            return;
+        }
+        if (checkOverflowForUnsignedLong(value)) {
+            return;
+        }
+        this.value = value;
+        componentCountActual = value.length;
+    }
+
+    /**
+     * Sets a string value into this tag. This method should be used for tags of type {@link
+     * #TYPE_ASCII}. The string is converted to an ASCII string. Characters that cannot be converted
+     * are replaced with '?'. The length of the string must be equal to either (component count -1) or
+     * (component count). The final byte will be set to the string null terminator '\0', overwriting
+     * the last character in the string if the value.length is equal to the component count. This
+     * method will fail if:
+     *
+     * <ul>
+     *   <li>The data type is not {@link #TYPE_ASCII} or {@link #TYPE_UNDEFINED}.
+     *   <li>The length of the string is not equal to (component count -1) or (component count) in the
+     *       definition for this tag.
+     * </ul>
+     */
+    void setValue(String value) {
+        if (dataType != TYPE_ASCII && dataType != TYPE_UNDEFINED) {
+            return;
+        }
+
+        byte[] buf = value.getBytes(US_ASCII);
+        byte[] finalBuf = buf;
+        if (buf.length > 0) {
+            finalBuf =
+                    (buf[buf.length - 1] == 0 || dataType == TYPE_UNDEFINED)
+                            ? buf
+                            : Arrays.copyOf(buf, buf.length + 1);
+        } else if (dataType == TYPE_ASCII && componentCountActual == 1) {
+            finalBuf = new byte[]{0};
+        }
+        int count = finalBuf.length;
+        if (checkBadComponentCount(count)) {
+            return;
+        }
+        componentCountActual = count;
+        this.value = finalBuf;
+    }
+
+    /**
+     * Sets Rational values into this tag. This method should be used for tags of type {@link
+     * #TYPE_UNSIGNED_RATIONAL}, or {@link #TYPE_RATIONAL}. This method will fail if:
+     *
+     * <ul>
+     *   <li>The component type of this tag is not {@link #TYPE_UNSIGNED_RATIONAL} or {@link
+     *       #TYPE_RATIONAL}.
+     *   <li>The value overflows.
+     *   <li>The value.length does NOT match the component count in the definition for this tag.
+     * </ul>
+     *
+     * @see Rational
+     */
+    void setValue(Rational[] value) {
+        if (checkBadComponentCount(value.length)) {
+            return;
+        }
+        if (dataType != TYPE_UNSIGNED_RATIONAL && dataType != TYPE_RATIONAL) {
+            return;
+        }
+        if (dataType == TYPE_UNSIGNED_RATIONAL && checkOverflowForUnsignedRational(value)) {
+            return;
+        } else if (dataType == TYPE_RATIONAL && checkOverflowForRational(value)) {
+            return;
+        }
+
+        this.value = value;
+        componentCountActual = value.length;
+    }
+
+    /**
+     * Equivalent to setValue(value, 0, value.length).
+     */
+    void setValue(byte[] value) {
+        setValue(value, value.length);
     }
 
     /**

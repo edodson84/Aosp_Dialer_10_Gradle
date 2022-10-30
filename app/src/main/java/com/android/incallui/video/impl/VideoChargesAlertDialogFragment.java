@@ -21,7 +21,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.telecom.Call.Details;
 import android.view.View;
 import android.widget.CheckBox;
@@ -30,14 +29,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 import androidx.core.os.UserManagerCompat;
 import androidx.fragment.app.DialogFragment;
+import androidx.preference.PreferenceManager;
 
 import com.android.incallui.call.CallList;
 import com.android.incallui.call.DialerCall;
 import com.fissy.dialer.R;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
-
-import java.util.Objects;
 
 /**
  * Alert dialog for video charges.
@@ -117,7 +115,7 @@ public class VideoChargesAlertDialogFragment extends DialogFragment {
         super.onCreateDialog(bundle);
 
         if (!VideoChargesAlertDialogFragment.shouldShow(
-                Objects.requireNonNull(getActivity()), Objects.requireNonNull(getArguments()).getString(ARG_CALL_ID))) {
+                requireActivity(), requireArguments().getString(ARG_CALL_ID))) {
             throw new IllegalStateException(
                     "shouldShow indicated VideoChargesAlertDialogFragment should not have showed");
         }
@@ -126,7 +124,7 @@ public class VideoChargesAlertDialogFragment extends DialogFragment {
 
         CheckBox alertCheckBox = dialogView.findViewById(R.id.do_not_show);
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireActivity());
         AlertDialog alertDialog =
                 new AlertDialog.Builder(getActivity())
                         .setView(dialogView)
@@ -144,7 +142,7 @@ public class VideoChargesAlertDialogFragment extends DialogFragment {
         preferences.edit().putBoolean(KEY_DO_NOT_SHOW_VIDEO_CHARGES_ALERT, isChecked).apply();
 
         DialerCall dialerCall =
-                CallList.getInstance().getCallById(Objects.requireNonNull(getArguments()).getString(ARG_CALL_ID));
+                CallList.getInstance().getCallById(requireArguments().getString(ARG_CALL_ID));
         if (dialerCall != null) {
             dialerCall.setDidDismissVideoChargesAlertDialog(true);
         }

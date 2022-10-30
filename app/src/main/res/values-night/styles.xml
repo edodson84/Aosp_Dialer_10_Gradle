@@ -15,19 +15,23 @@
   -->
 <resources>
 
-    <style name="Dialer" parent="@style/Theme.Material3.Dark">
+    <style name="Dialer" parent="@style/Theme.Material3.Dark.NoActionBar">
         <item name="darkmode">true</item>
+        <item name="android:dialogCornerRadius">20dp</item>
+        <item name="checkboxStyle">@style/Widget.CheckBox</item>
+        <item name="switchStyle">@style/SwitchStyle</item>
         <item name="popupMenuBackground">@drawable/popup_background</item>
-        <item name="android:popupMenuStyle">@style/PopupMenu</item>
+        <item name="popupMenuStyle">@style/PopupMenu</item>
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:windowLightNavigationBar">false</item>
         <item name="android:textColorHighlight">@color/highlighted_text_material</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:alertDialogTheme">@style/AlertDialogTheme</item>
+        <item name="alertDialogTheme">@style/AlertDialogTheme</item>
+        <item name="alertDialogStyle">@style/alertdialogstyle</item>
         <item name="android:navigationBarColor">?android:colorBackground</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="colorPrimary">@color/md_theme_dark_primary</item>
-        <item name="android:colorControlActivated">@color/md_theme_dark_primary</item>
+        <item name="colorControlActivated">@color/md_theme_dark_primary</item>
         <item name="colorOnPrimary">@color/md_theme_dark_onPrimary</item>
         <item name="colorPrimaryContainer">@color/md_theme_dark_primaryContainer</item>
         <item name="colorOnPrimaryContainer">@color/md_theme_dark_onPrimaryContainer</item>

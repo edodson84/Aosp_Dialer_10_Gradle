@@ -387,7 +387,7 @@ public class MissedCallNotifier implements Worker<Pair<Integer, String>, Void> {
                                         context, call.callsUri))
                         .setContentIntent(createCallLogPendingIntent(call.callsUri));
 
-            builder.setChannelId(NotificationChannelId.MISSED_CALL);
+        builder.setChannelId(NotificationChannelId.MISSED_CALL);
 
         return builder;
     }

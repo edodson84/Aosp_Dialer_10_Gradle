@@ -18,8 +18,6 @@ package com.android.incallui.videosurface.impl;
 
 import android.graphics.Point;
 import android.graphics.SurfaceTexture;
-import android.os.Build.VERSION;
-import android.os.Build.VERSION_CODES;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;

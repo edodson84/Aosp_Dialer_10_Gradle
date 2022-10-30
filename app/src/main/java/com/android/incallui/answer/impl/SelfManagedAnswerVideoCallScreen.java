@@ -44,7 +44,6 @@ import com.fissy.dialer.R;
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 /**

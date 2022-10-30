@@ -18,14 +18,12 @@ package com.fissy.dialer.blocking;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnShowListener;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.fragment.app.DialogFragment;
+
 import com.fissy.dialer.R;
-import com.fissy.dialer.blocking.BlockedNumbersMigrator.Listener;
 
 import java.util.Objects;
 
@@ -33,7 +31,6 @@ import java.util.Objects;
  * Dialog fragment shown to users when they need to migrate to use {@link
  * android.provider.BlockedNumberContract} for blocking.
  */
-@Deprecated
 public class MigrateBlockedNumbersDialogFragment extends DialogFragment {
 
     private BlockedNumbersMigrator blockedNumbersMigrator;

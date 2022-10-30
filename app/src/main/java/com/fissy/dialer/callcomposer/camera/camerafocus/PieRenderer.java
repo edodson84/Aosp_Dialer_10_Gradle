@@ -219,7 +219,6 @@ public class PieRenderer extends OverlayRenderer implements FocusIndicator {
 
     /**
      * guaranteed has center set
-     *
      */
     private void show(boolean show) {
         if (show) {
@@ -483,7 +482,6 @@ public class PieRenderer extends OverlayRenderer implements FocusIndicator {
 
     /**
      * enter a slice for a view updates model only
-     *
      */
     private void onEnter(PieItem item) {
         if (currentItem != null) {
@@ -686,7 +684,7 @@ public class PieRenderer extends OverlayRenderer implements FocusIndicator {
     @Override
     public void showSuccess(boolean timeout) {
         if (state == STATE_FOCUSING) {
-            startAnimation(SCALING_DOWN_TIME, timeout, startAnimationAngle);
+            startAnimation(timeout, startAnimationAngle);
             state = STATE_FINISHING;
             focused = true;
         }
@@ -695,7 +693,7 @@ public class PieRenderer extends OverlayRenderer implements FocusIndicator {
     @Override
     public void showFail(boolean timeout) {
         if (state == STATE_FOCUSING) {
-            startAnimation(SCALING_DOWN_TIME, timeout, startAnimationAngle);
+            startAnimation(timeout, startAnimationAngle);
             state = STATE_FINISHING;
             focused = false;
         }
@@ -719,8 +717,8 @@ public class PieRenderer extends OverlayRenderer implements FocusIndicator {
         overlay.post(disappear);
     }
 
-    private void startAnimation(long duration, boolean timeout, float toScale) {
-        startAnimation(duration, timeout, dialAngle, toScale);
+    private void startAnimation(boolean timeout, float toScale) {
+        startAnimation(PieRenderer.SCALING_DOWN_TIME, timeout, dialAngle, toScale);
     }
 
     private void startAnimation(long duration, boolean timeout, float fromScale, float toScale) {

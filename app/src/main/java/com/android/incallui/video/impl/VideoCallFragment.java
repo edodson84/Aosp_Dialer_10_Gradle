@@ -37,7 +37,6 @@ import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnLayoutChangeListener;
 import android.view.View.OnSystemUiVisibilityChangeListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.MarginLayoutParams;
@@ -102,7 +101,7 @@ public class VideoCallFragment extends Fragment
         AudioRouteSelectorPresenter,
         OnSystemUiVisibilityChangeListener {
 
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    @VisibleForTesting()
     static final String ARG_CALL_ID = "call_id";
     @VisibleForTesting
     static final float BLUR_PREVIEW_RADIUS = 16.0f;

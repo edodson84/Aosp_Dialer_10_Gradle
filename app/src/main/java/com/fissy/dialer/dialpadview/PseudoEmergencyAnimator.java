@@ -79,7 +79,7 @@ public class PseudoEmergencyAnimator {
                         @Override
                         public void onAnimationRepeat(Animator animation) {
                             try {
-                                vibrate(VIBRATE_LENGTH_MILLIS);
+                                vibrate();
                             } catch (Exception e) {
                                 animation.cancel();
                             }
@@ -100,7 +100,7 @@ public class PseudoEmergencyAnimator {
                                         .postDelayed(
                                                 () -> {
                                                     try {
-                                                        vibrate(VIBRATE_LENGTH_MILLIS);
+                                                        vibrate();
                                                     } catch (Exception e) {
                                                         // ignored
                                                     }
@@ -127,12 +127,12 @@ public class PseudoEmergencyAnimator {
         }
     }
 
-    private void vibrate(long milliseconds) {
+    private void vibrate() {
         Context context = viewProvider.getContext();
         if (context != null) {
             Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
             if (vibrator != null) {
-                vibrator.vibrate(milliseconds);
+                vibrator.vibrate(PseudoEmergencyAnimator.VIBRATE_LENGTH_MILLIS);
             }
         }
     }

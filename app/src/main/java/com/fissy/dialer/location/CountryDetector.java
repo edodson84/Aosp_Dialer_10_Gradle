@@ -27,7 +27,6 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
-import android.preference.PreferenceManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
@@ -35,6 +34,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.core.os.UserManagerCompat;
+import androidx.preference.PreferenceManager;
 
 import com.fissy.dialer.common.Assert;
 import com.fissy.dialer.common.LogUtil;
@@ -118,10 +118,9 @@ public class CountryDetector {
 
         final Intent activeIntent = new Intent(context, LocationChangedReceiver.class);
         int flags;
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S){
-           flags = PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_MUTABLE;
-        }
-        else{
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            flags = PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_MUTABLE;
+        } else {
             flags = PendingIntent.FLAG_UPDATE_CURRENT;
         }
         final PendingIntent pendingIntent =

@@ -18,13 +18,13 @@ package com.android.contacts.common.dialog;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.telecom.PhoneAccount;
 import android.telecom.PhoneAccountHandle;
 import android.telecom.TelecomManager;
@@ -41,6 +41,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.QuickContactBadge;
 import android.widget.TextView;
+
+import androidx.preference.PreferenceManager;
 
 import com.fissy.dialer.R;
 import com.fissy.dialer.animation.AnimUtils;
@@ -260,7 +262,7 @@ public class CallSubjectDialog extends Activity {
      */
     public static List<String> loadSubjectHistory(SharedPreferences prefs) {
         int historySize = prefs.getInt(PREF_KEY_SUBJECT_HISTORY_COUNT, 0);
-        List<String> subjects = new ArrayList(historySize);
+        List<String> subjects = new ArrayList<>(historySize);
 
         for (int ix = 0; ix < historySize; ix++) {
             String historyItem = prefs.getString(PREF_KEY_SUBJECT_HISTORY_ITEM + ix, null);
@@ -363,6 +365,7 @@ public class CallSubjectDialog extends Activity {
      * Updates the character limit display, coloring the text RED when the limit is reached or
      * exceeded.
      */
+    @SuppressLint("StringFormatMatches")
     private void updateCharacterLimit() {
         String subjectText = mCallSubjectView.getText().toString();
         final int length;
@@ -378,10 +381,10 @@ public class CallSubjectDialog extends Activity {
         mCharacterLimitView.setText(getString(R.string.call_subject_limit, length, mLimit));
         if (length >= mLimit) {
             mCharacterLimitView.setTextColor(
-                    getResources().getColor(R.color.call_subject_limit_exceeded));
+                    getResources().getColor(R.color.call_subject_limit_exceeded, null));
         } else {
             mCharacterLimitView.setTextColor(
-                    getResources().getColor(R.color.dialer_secondary_text_color));
+                    getResources().getColor(R.color.dialer_secondary_text_color, null));
         }
     }
 

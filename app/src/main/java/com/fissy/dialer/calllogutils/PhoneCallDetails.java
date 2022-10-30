@@ -19,7 +19,6 @@ package com.fissy.dialer.calllogutils;
 import android.content.Context;
 import android.content.res.Resources;
 import android.net.Uri;
-import android.provider.CallLog;
 import android.provider.CallLog.Calls;
 import android.telecom.PhoneAccount;
 import android.telecom.PhoneAccountHandle;
@@ -40,13 +39,13 @@ import com.fissy.dialer.phonenumbercache.ContactInfo;
 public class PhoneCallDetails {
 
     // The number of the other party involved in the call.
-    public CharSequence number;
+    public final CharSequence number;
     // Post-dial digits associated with the outgoing call.
-    public String postDialDigits;
+    public final String postDialDigits;
+    // The number presenting rules set by the network, e.g., {@link Calls#PRESENTATION_ALLOWED}
+    public final int numberPresentation;
     // The secondary line number the call was received via.
     public String viaNumber;
-    // The number presenting rules set by the network, e.g., {@link Calls#PRESENTATION_ALLOWED}
-    public int numberPresentation;
     // The country corresponding with the phone number.
     public String countryIso;
     // The geocoded location for the phone number.

@@ -6,9 +6,9 @@
         android:layout_width="fill_parent"
         android:layout_height="108.0dip"
         android:layout_weight="1.0"
+        android:contentDescription="TODO"
         android:gravity="center_horizontal"
-        android:maxHeight="126.0dip"
-        android:contentDescription="TODO" />
+        android:maxHeight="126.0dip" />
 
     <TextView
         android:id="@id/empty_list_view_message"

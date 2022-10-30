@@ -17,7 +17,6 @@
 package com.fissy.dialer.phonenumbercache;
 
 import android.content.Context;
-import android.net.Uri;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -53,10 +52,10 @@ public interface CachedNumberLookupService {
     boolean reportAsInvalid(Context context, CachedContactInfo cachedContactInfo);
 
     /**
-     * @return return {@link Uri} to the photo or return {@code null} when failing to add photo
+     *
      */
     @Nullable
-    Uri addPhoto(Context context, String number, InputStream in);
+    void addPhoto(Context context, String number, InputStream in);
 
     /**
      * Remove all cached phone number entries from the cache, regardless of how old they are.

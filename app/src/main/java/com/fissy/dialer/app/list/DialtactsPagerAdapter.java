@@ -16,11 +16,11 @@
 
 package com.fissy.dialer.app.list;
 
-import androidx.fragment.app.Fragment;
 import android.view.ViewGroup;
 
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;

@@ -45,10 +45,10 @@
         android:layout_width="@dimen/search_row_height"
         android:layout_height="@dimen/search_row_height"
         android:layout_alignParentEnd="true"
+        android:contentDescription="TODO"
         android:padding="@dimen/call_to_action_padding"
         android:scaleType="center"
-        android:visibility="gone"
-        android:contentDescription="TODO" />
+        android:visibility="gone" />
 
     <ImageView
         android:id="@id/work_icon"
@@ -56,9 +56,9 @@
         android:layout_height="@dimen/search_row_height"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
+        android:contentDescription="TODO"
         android:padding="@dimen/call_to_action_padding"
         android:scaleType="centerInside"
         android:src="@drawable/ic_work_profile"
-        android:visibility="gone"
-        android:contentDescription="TODO" />
+        android:visibility="gone" />
 </RelativeLayout>

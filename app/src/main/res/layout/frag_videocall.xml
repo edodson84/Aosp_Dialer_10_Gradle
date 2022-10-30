@@ -20,8 +20,8 @@
         android:layout_height="fill_parent"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:scaleType="fitCenter"
-        android:contentDescription="TODO" />
+        android:contentDescription="TODO"
+        android:scaleType="fitCenter" />
 
     <TextView
         android:id="@id/videocall_remote_video_off"
@@ -63,8 +63,8 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="@dimen/videocall_preview_margin_start"
         android:layout_marginBottom="@dimen/videocall_preview_margin_bottom"
-        android:scaleType="center"
-        android:contentDescription="TODO" />
+        android:contentDescription="TODO"
+        android:scaleType="center" />
 
     <View
         android:id="@id/videocall_green_screen_background"

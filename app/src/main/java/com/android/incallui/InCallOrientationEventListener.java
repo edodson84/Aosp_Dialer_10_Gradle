@@ -68,16 +68,16 @@ public class InCallOrientationEventListener extends OrientationEventListener {
         return value >= begin && value < end;
     }
 
-    private static boolean isWithinThreshold(int value, int center, int threshold) {
-        return isWithinRange(value, center - threshold, center + threshold);
+    private static boolean isWithinThreshold(int value, int center) {
+        return isWithinRange(value, center - InCallOrientationEventListener.ROTATION_THRESHOLD, center + InCallOrientationEventListener.ROTATION_THRESHOLD);
     }
 
-    private static boolean isInLeftRange(int value, int center, int threshold) {
-        return isWithinRange(value, center - threshold, center);
+    private static boolean isInLeftRange(int value) {
+        return isWithinRange(value, InCallOrientationEventListener.SCREEN_ORIENTATION_360 - InCallOrientationEventListener.ROTATION_THRESHOLD, InCallOrientationEventListener.SCREEN_ORIENTATION_360);
     }
 
-    private static boolean isInRightRange(int value, int center, int threshold) {
-        return isWithinRange(value, center, center + threshold);
+    private static boolean isInRightRange(int value) {
+        return isWithinRange(value, InCallOrientationEventListener.SCREEN_ORIENTATION_0, InCallOrientationEventListener.SCREEN_ORIENTATION_0 + InCallOrientationEventListener.ROTATION_THRESHOLD);
     }
 
     @ScreenOrientation
@@ -174,14 +174,14 @@ public class InCallOrientationEventListener extends OrientationEventListener {
         // Sensor orientation 90 is equivalent to screen orientation 270 and vice versa. This
         // function returns the screen orientation. So we convert sensor rotation 90 to 270 and
         // vice versa here.
-        if (isInLeftRange(rotation, SCREEN_ORIENTATION_360, ROTATION_THRESHOLD)
-                || isInRightRange(rotation, SCREEN_ORIENTATION_0, ROTATION_THRESHOLD)) {
+        if (isInLeftRange(rotation)
+                || isInRightRange(rotation)) {
             return SCREEN_ORIENTATION_0;
-        } else if (isWithinThreshold(rotation, SCREEN_ORIENTATION_90, ROTATION_THRESHOLD)) {
+        } else if (isWithinThreshold(rotation, SCREEN_ORIENTATION_90)) {
             return SCREEN_ORIENTATION_270;
-        } else if (isWithinThreshold(rotation, SCREEN_ORIENTATION_180, ROTATION_THRESHOLD)) {
+        } else if (isWithinThreshold(rotation, SCREEN_ORIENTATION_180)) {
             return SCREEN_ORIENTATION_180;
-        } else if (isWithinThreshold(rotation, SCREEN_ORIENTATION_270, ROTATION_THRESHOLD)) {
+        } else if (isWithinThreshold(rotation, SCREEN_ORIENTATION_270)) {
             return SCREEN_ORIENTATION_90;
         }
         return SCREEN_ORIENTATION_UNKNOWN;

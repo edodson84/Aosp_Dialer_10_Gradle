@@ -80,7 +80,7 @@ public class MultimediaFragment extends Fragment implements AvatarPresenter {
                 isSpam);
     }
 
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    @VisibleForTesting()
     public static MultimediaFragment newInstance(
             @Nullable String subject,
             @Nullable Uri imageUri,

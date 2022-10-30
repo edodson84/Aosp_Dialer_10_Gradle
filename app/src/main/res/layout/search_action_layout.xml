@@ -11,9 +11,9 @@
         android:layout_height="48.0dip"
         android:layout_gravity="start|center"
         android:layout_marginStart="8.0dip"
+        android:contentDescription="TODO"
         android:padding="12.0dip"
-        app:tint="?android:colorPrimary"
-        android:contentDescription="TODO" />
+        app:tint="?android:colorPrimary" />
 
     <TextView
         android:id="@id/search_action_text"

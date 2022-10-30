@@ -26,7 +26,6 @@ import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.OrientationEventListener;
 import android.view.Surface;
-import android.view.View;
 import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
@@ -41,7 +40,6 @@ import com.fissy.dialer.common.concurrent.DialerExecutorComponent;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -285,13 +283,12 @@ public class CameraManager implements FocusOverlayManager.Listener {
      * camera in the desired direction
      *
      * @param desiredFacing One of the CameraInfo.CAMERA_FACING_* constants
-     * @return True if a camera was selected, or false if selecting a camera failed
      */
-    public boolean selectCamera(final int desiredFacing) {
+    public void selectCamera(final int desiredFacing) {
         try {
             // We already selected a camera facing that direction
             if (cameraIndex >= 0 && this.cameraInfo.facing == desiredFacing) {
-                return true;
+                return;
             }
 
             final int cameraCount = Camera.getNumberOfCameras();
@@ -320,13 +317,11 @@ public class CameraManager implements FocusOverlayManager.Listener {
                 // The camera is open, so reopen with the newly selected camera
                 openCamera();
             }
-            return true;
         } catch (final RuntimeException e) {
             LogUtil.e("CameraManager.selectCamera", "RuntimeException in CameraManager.selectCamera", e);
             if (listener != null) {
                 listener.onCameraError(ERROR_OPENING_CAMERA, e);
             }
-            return false;
         }
     }
 
@@ -388,12 +383,9 @@ public class CameraManager implements FocusOverlayManager.Listener {
         }
 
         // True if the task to open the camera has to be delayed until the current one completes
-        boolean delayTask = false;
+        boolean delayTask = openCameraTask != null;
 
         // Cancel any previous open camera tasks
-        if (openCameraTask != null) {
-            delayTask = true;
-        }
 
         pendingOpenCameraIndex = this.cameraIndex;
         openCameraTask =

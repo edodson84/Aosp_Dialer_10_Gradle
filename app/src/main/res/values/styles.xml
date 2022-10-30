@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="DialerLight" parent="@style/Theme.Material3.Light">
+    <style name="DialerLight" parent="@style/Theme.Material3.Light.NoActionBar">
         <item name="darkmode">false</item>
+        <item name="android:dialogCornerRadius">20dp</item>
+        <item name="switchStyle">@style/SwitchStyle</item>
+        <item name="checkboxStyle">@style/Widget.CheckBox</item>
         <item name="popupMenuBackground">@drawable/popup_background</item>
         <item name="android:popupMenuStyle">@style/PopupMenu</item>
         <item name="android:textColorHighlight">@color/highlighted_text_material</item>
@@ -38,7 +41,12 @@
         <item name="colorOnSurfaceInverse">@color/md_theme_light_inverseOnSurface</item>
         <item name="colorSurfaceInverse">@color/md_theme_light_inverseSurface</item>
         <item name="colorPrimaryInverse">@color/md_theme_light_inversePrimary</item>
-        <item name="android:alertDialogTheme">@style/AlertDialogTheme</item>
+        <item name="alertDialogTheme">@style/AlertDialogTheme</item>
+        <item name="alertDialogStyle">@style/alertdialogstyle</item>
+    </style>
+
+    <style name="alertdialogstyle" parent="@style/AlertDialog.AppCompat">
+        <item name="singleChoiceItemLayout">@layout/dialoglayout</item>
     </style>
 
     <style name="PopupMenu" parent="Widget.Material3.PopupMenu">
@@ -60,15 +68,19 @@
         <item name="dialpad_style">@style/Dialpad.Themed</item>
     </style>
 
-    <style name="DialerDark" parent="@style/Theme.Material3.Dark">
+    <style name="DialerDark" parent="@style/Theme.Material3.Dark.NoActionBar">
         <item name="darkmode">true</item>
+        <item name="android:dialogCornerRadius">20dp</item>
+        <item name="checkboxStyle">@style/Widget.CheckBox</item>
+        <item name="switchStyle">@style/SwitchStyle</item>
         <item name="popupMenuBackground">@drawable/popup_background</item>
         <item name="android:popupMenuStyle">@style/PopupMenu</item>
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:windowLightNavigationBar">false</item>
         <item name="android:textColorHighlight">@color/highlighted_text_material</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:alertDialogTheme">@style/AlertDialogTheme</item>
+        <item name="alertDialogTheme">@style/AlertDialogTheme</item>
+        <item name="alertDialogStyle">@style/alertdialogstyle</item>
         <item name="android:navigationBarColor">?android:colorBackground</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="colorPrimary">@color/md_theme_dark_primary</item>
@@ -115,8 +127,32 @@
         <item name="dialpad_style">@style/Dialpad.Themed</item>
     </style>
 
-    <style name="Dialer" parent="@style/Theme.Material3.Light">
+    <style name="CollapsingToolbar" parent="@style/Widget.Material3.CollapsingToolbar">
+        <item name="collapsedTitleTextColor">?android:textColorPrimary</item>
+        <item name="expandedTitleMarginBottom">24.0dip</item>
+        <item name="expandedTitleMarginEnd">24.0dip</item>
+        <item name="expandedTitleMarginStart">24.0dip</item>
+        <item name="expandedTitleTextAppearance">@style/TextAppearance.Title.Expanded</item>
+        <item name="expandedTitleTextColor">?android:textColorPrimary</item>
+        <item name="maxLines">1</item>
+        <item name="scrimVisibleHeightTrigger">122.0dip</item>
+        <item name="statusBarScrim">@null</item>
+        <item name="titleCollapseMode">fade</item>
+    </style>
+
+    <style name="TextAppearance.Title.Expanded" parent="@style/TextAppearance.Title">
+        <item name="android:textSize">36.0sp</item>
+    </style>
+
+    <style name="TextAppearance.Title" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textSize">22.0sp</item>
+    </style>
+
+    <style name="Dialer" parent="@style/Theme.Material3.Light.NoActionBar">
         <item name="darkmode">false</item>
+        <item name="android:dialogCornerRadius">20dp</item>
+        <item name="checkboxStyle">@style/Widget.CheckBox</item>
+        <item name="switchStyle">@style/SwitchStyle</item>
         <item name="popupMenuBackground">@drawable/popup_background</item>
         <item name="android:popupMenuStyle">@style/PopupMenu</item>
         <item name="android:textColorHighlight">@color/highlighted_text_material</item>
@@ -152,7 +188,22 @@
         <item name="colorOnSurfaceInverse">@color/md_theme_light_inverseOnSurface</item>
         <item name="colorSurfaceInverse">@color/md_theme_light_inverseSurface</item>
         <item name="colorPrimaryInverse">@color/md_theme_light_inversePrimary</item>
-        <item name="android:alertDialogTheme">@style/AlertDialogTheme</item>
+        <item name="alertDialogTheme">@style/AlertDialogTheme</item>
+        <item name="alertDialogStyle">@style/alertdialogstyle</item>
+    </style>
+
+    <style name="Widget.CheckBox" parent="@style/Widget.Material3.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/selector_checkbox_material</item>
+        <item name="android:minWidth">48dp</item>
+        <item name="android:minHeight">48dp</item>
+    </style>
+
+    <style name="SwitchStyle" parent="@style/Widget.Material3.CompoundButton.Switch">
+        <item name="android:thumb">@drawable/switch_thumb</item>
+        <item name="switchMinWidth">52.0dip</item>
+        <item name="thumbTint">@color/switch_thumb_color</item>
+        <item name="track">@drawable/switch_track</item>
+        <item name="trackTint">@color/switch_track_color</item>
     </style>
 
     <style name="Theme.InCallScreen" parent="@style/Dialer.ThemeBase.NoActionBar">

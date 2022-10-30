@@ -41,7 +41,7 @@ public abstract class GroupingListAdapter extends BaseAdapter {
     private static final long GROUP_OFFSET_MASK = 0x00000000FFFFFFFFL;
     private static final long GROUP_SIZE_MASK = 0x7FFFFFFF00000000L;
     private static final long EXPANDED_GROUP_MASK = 0x8000000000000000L;
-    protected ContentObserver mChangeObserver = new ContentObserver(new Handler()) {
+    protected final ContentObserver mChangeObserver = new ContentObserver(new Handler()) {
 
         @Override
         public boolean deliverSelfNotifications() {
@@ -53,7 +53,7 @@ public abstract class GroupingListAdapter extends BaseAdapter {
             onContentChanged();
         }
     };
-    protected DataSetObserver mDataSetObserver = new DataSetObserver() {
+    protected final DataSetObserver mDataSetObserver = new DataSetObserver() {
 
         @Override
         public void onChanged() {
@@ -66,6 +66,11 @@ public abstract class GroupingListAdapter extends BaseAdapter {
         }
     };
     private final Context mContext;
+    private final SparseIntArray mPositionCache = new SparseIntArray();
+    /**
+     * A reusable temporary instance of PositionMetadata
+     */
+    private final PositionMetadata mPositionMetadata = new PositionMetadata();
     private Cursor mCursor;
     /**
      * Count of list items.
@@ -81,14 +86,9 @@ public abstract class GroupingListAdapter extends BaseAdapter {
      * and whether they are expanded.
      */
     private long[] mGroupMetadata;
-    private final SparseIntArray mPositionCache = new SparseIntArray();
     private int mLastCachedListPosition;
     private int mLastCachedCursorPosition;
     private int mLastCachedGroup;
-    /**
-     * A reusable temporary instance of PositionMetadata
-     */
-    private final PositionMetadata mPositionMetadata = new PositionMetadata();
 
     public GroupingListAdapter(Context context) {
         mContext = context;

@@ -4,8 +4,6 @@
 package com.fissy.dialer.calllog.model;
 
 public final class CoalescedRowOuterClass {
-    static {
-    }
 
     private CoalescedRowOuterClass() {
     }

@@ -38,11 +38,11 @@ public final class CallRecording implements Parcelable {
                     return new CallRecording[size];
                 }
             };
-    public String phoneNumber;
-    public long creationTime;
-    public String fileName;
-    public long startRecordingTime;
-    public long mediaId;
+    public final String phoneNumber;
+    public final long creationTime;
+    public final String fileName;
+    public final long startRecordingTime;
+    public final long mediaId;
 
     public CallRecording(String phoneNumber, long creationTime,
                          String fileName, long startRecordingTime, long mediaId) {

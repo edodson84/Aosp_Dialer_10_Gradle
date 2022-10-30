@@ -651,7 +651,7 @@ public class CallLogAdapter extends GroupingListAdapter
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder( @NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == VIEW_TYPE_ALERT) {
             return callLogAlertManager.createViewHolder(parent);
         }
@@ -695,7 +695,7 @@ public class CallLogAdapter extends GroupingListAdapter
      * @param position   The position of the entry.
      */
     @Override
-    public void onBindViewHolder( @NonNull ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
         Trace.beginSection("onBindViewHolder: " + position);
         if (getItemViewType(position) == VIEW_TYPE_ALERT) {// Do nothing
         } else {
